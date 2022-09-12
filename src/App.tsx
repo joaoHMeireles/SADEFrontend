@@ -9,7 +9,6 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <Sidebar />
       <div id="content">
         <Routes>
           <Route path="/" element={<Login />} />

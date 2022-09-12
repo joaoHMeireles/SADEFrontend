@@ -1,11 +1,15 @@
+@import "../../variables.scss";
 
 #navbar{
-    // width: 100%;
     height: 10vh;
-    padding: 20px 40px;
     position: sticky;
     top: 0;
     left: 0;
     display: flex;
-    background-color: blue;
+    background-color: $azul-weg;
+
+    .cima-sidebar{
+        position: relative;
+        left: -18vw;
+    }
 }
