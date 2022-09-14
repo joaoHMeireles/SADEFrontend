@@ -25,7 +25,8 @@ function Navbar() {
                 console.log(valor);
                 atributo.value = valor.replace("aberto", "fechado")
                 console.log(atributo.value);
-
+            } else {
+                atributo.value = valor.replace("fechado", "aberto")
             }
         }
 
