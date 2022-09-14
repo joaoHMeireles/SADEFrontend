@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     font-size: 16px;
-    font-family: 'Inter', Helvetica ,sans-serif, arial;
+    font-family: 'Inter', Helvetica, sans-serif, arial;
 }
 
 h1 {
@@ -15,8 +15,32 @@ h2 {
     font-size: 24px;
 }
 
-#content{
+i {
+    width: 32px;
+    height: 32px;
+
+    &::before {
+        font-size: 200%;
+    }
+}
+
+#content {
     position: relative;
     left: 18vw;
     width: 82vw;
+}
+
+.menu-width-aberto {
+    width: 18vw;
+    max-width: 18vw;
+}
+
+.menu-width-fechado {
+    width: 12vw;
+    max-width: 12vw;
+}
+
+.navbar-heigth{
+    height: 12vh;
+    max-height: 12vh;
 }

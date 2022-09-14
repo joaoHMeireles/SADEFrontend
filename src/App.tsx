@@ -3,7 +3,6 @@ import './App.scss'
 import Login from "./Login/Login";
 import Navbar from "./Components/Navbar/Navbar";
 import Home from "./Home/Home";
-import Sidebar from "./Components/Sidebar/Sidebar";
 
 function App() {
   return (

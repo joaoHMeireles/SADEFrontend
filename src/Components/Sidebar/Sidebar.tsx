@@ -2,8 +2,9 @@
 import './Sidebar.scss'
 
 function Sidebar(){
+    
     return(
-        <div id='sidebar'>
+        <div id='sidebar' className='menu-width-aberto'>
             sidebar
         </div>
     )
