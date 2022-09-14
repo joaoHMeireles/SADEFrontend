@@ -24,10 +24,16 @@ i {
     }
 }
 
-#content {
+.content {
     position: relative;
     left: 18vw;
     width: 82vw;
+}
+
+.content-menu-fechado{
+    position: relative;
+    left: 12vw;
+    width: 88vw;
 }
 
 .menu-width-aberto {

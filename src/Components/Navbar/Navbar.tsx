@@ -9,27 +9,39 @@ function Navbar() {
     const [aberto, setAberto] = useState(true);
 
     useEffect(() => {
-        const elementos = document.getElementsByClassName("menu-width-aberto")
-        console.log(elementos);
+        // const elementos = document.getElementsByClassName("menu-width-aberto")
+        // console.log(elementos);
     })
 
     function mudarSidebar() {
         setAberto(!aberto)
         
-        //arrumar as posições dos componentes que se baseiam na sidebar
+        
 
         const elemento = document.getElementById("sidebar")
         for (const atributo of elemento?.attributes) {
             const valor = atributo.value
             if (valor.includes("menu-width-aberto")) {
-                console.log(valor);
                 atributo.value = valor.replace("aberto", "fechado")
-                console.log(atributo.value);
             } else {
                 atributo.value = valor.replace("fechado", "aberto")
             }
         }
 
+        const content = document.getElementById("content")
+        console.log(content?.attributes)
+        for (const atributo of content?.attributes) {
+            
+            const valor = atributo.value
+            if (valor.includes("content")) {
+                atributo.value = valor.replace("content", "content-menu-fechado")
+            } else if (valor.includes("content-menu-fechado")){
+                atributo.value = valor.replace("content-menu-fechado", "content")
+            }
+        }
+
+        //arrumar a posição do cima-sidebar
+        
         // if(aberto){
         //     for(let i = 0; i < elementos.length; i++){
         //         // elementos[i].
@@ -46,7 +58,7 @@ function Navbar() {
             {path.pathname != "/" &&
                 <div id='navbar' className='navbar-heigth'>
                     <Sidebar />
-                    <div className="cima-sidebar menu-width-aberto">
+                    <div id='cima-sidebar' className="cima-sidebar menu-width-aberto">
                         <i onClick={mudarSidebar} className="fi fi-rr-menu-burger"></i>
                         <img src={logo} alt="" />
                     </div>
