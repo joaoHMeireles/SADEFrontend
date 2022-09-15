@@ -1,6 +1,16 @@
 @import "../../variables.scss";
 
+@keyframes normal {
+    from{
+        top: 0; 
+    }
+    to{
+        top: 0;
+    }
+}
+
 #navbar{
+    animation: normal;
     position: sticky;
     top: 0;
     left: 0;
@@ -9,16 +19,36 @@
 
     .cima-sidebar{
         color: white;
-        position: relative;
-        left: -18vw;
         display: flex;
         justify-content:space-around;
         align-items: center;
-        padding: 10px, 15px;
 
         img {
-            width: 100px;
-            height: 65px;
+            width: 7vw;
+            height: 8.7vh;
         }
+    }
+
+    .cima-sidebar-aberto{
+        position: relative;
+        right: 18vw;
+    }
+
+    .cima-sidebar-fechado{
+        position: relative;
+        right: 8vw;
+    }
+
+    .container-sidebar{
+        display: flex;
+        width: 36vw;
+
+        #tamanho-sidebar{
+            width: 18vw;
+        }
+    }
+
+    .personal{
+        min-width: 82vw;
     }
 }

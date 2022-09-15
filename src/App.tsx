@@ -8,7 +8,8 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <div id="content" className="content">
+      <div id="content" className="content-menu-aberto">
+        <div className="menu-width menu-width-aberto"></div>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />

@@ -3,7 +3,7 @@ import './Home.scss'
 
 function Home(){
     return(
-        <div>
+        <div id='home'>
             Home
             <Link to="/"> logout</Link>
         </div>

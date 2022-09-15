@@ -2,65 +2,56 @@ import { useLocation } from 'react-router-dom';
 import logo from '../../Assets/wegLogo.png';
 import './Navbar.scss';
 import Sidebar from '../Sidebar/Sidebar';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function Navbar() {
     const path = useLocation()
     const [aberto, setAberto] = useState(true);
 
-    useEffect(() => {
-        // const elementos = document.getElementsByClassName("menu-width-aberto")
-        // console.log(elementos);
-    })
-
     function mudarSidebar() {
         setAberto(!aberto)
-        
-        
 
-        const elemento = document.getElementById("sidebar")
-        for (const atributo of elemento?.attributes) {
-            const valor = atributo.value
-            if (valor.includes("menu-width-aberto")) {
-                atributo.value = valor.replace("aberto", "fechado")
-            } else {
-                atributo.value = valor.replace("fechado", "aberto")
+        // pega a sidebar e altera o tamanho dela para ela ficar pequena
+        const sidebar = document.getElementsByClassName("menu-width")
+
+        for (let i = 0; i < sidebar.length; i++) {
+            for (const atributo of sidebar[i].attributes) {
+                const valor = atributo.value
+                if (valor.includes("menu-width-aberto")) {
+                    atributo.value = valor.replace("menu-width-aberto", "menu-width-fechado")
+                } else {
+                    atributo.value = valor.replace("menu-width-fechado", "menu-width-aberto")
+                }
             }
         }
 
-        const content = document.getElementById("content")
-        console.log(content?.attributes)
-        for (const atributo of content?.attributes) {
-            
-            const valor = atributo.value
-            if (valor.includes("content")) {
-                atributo.value = valor.replace("content", "content-menu-fechado")
-            } else if (valor.includes("content-menu-fechado")){
-                atributo.value = valor.replace("content-menu-fechado", "content")
+        //pega a navbar inteira e adapta ao novo tamanho da sidebar
+        const navBarComponents = document.getElementsByClassName("cima-sidebar")
+        for (let i = 0; i < navBarComponents.length; i++) {
+            for (let atributo of navBarComponents[i].attributes) {
+                const valor = atributo.value
+                if (valor.includes("cima-sidebar-aberto")) {
+                    atributo.value = valor.replace("cima-sidebar-aberto", "cima-sidebar-fechado")
+                } else if (valor.includes("cima-sidebar-fechado")) {
+                    atributo.value = valor.replace("cima-sidebar-fechado", "cima-sidebar-aberto")
+                }
             }
         }
-
-        //arrumar a posição do cima-sidebar
-        
-        // if(aberto){
-        //     for(let i = 0; i < elementos.length; i++){
-        //         // elementos[i].
-        //     }
-        // } else {
-        //     for(let i = 0; i < elementos.length; i++){
-        //         // elementos[i]
-        //     }
-        // }
     }
 
     return (
         <>
             {path.pathname != "/" &&
                 <div id='navbar' className='navbar-heigth'>
-                    <Sidebar />
-                    <div id='cima-sidebar' className="cima-sidebar menu-width-aberto">
-                        <i onClick={mudarSidebar} className="fi fi-rr-menu-burger"></i>
-                        <img src={logo} alt="" />
+                    <div className="container-sidebar">
+                        <Sidebar />
+                        <div id='tamanho-sidebar' className="cima-sidebar cima-sidebar-aberto">
+                            <i onClick={mudarSidebar} className="fi fi-rr-menu-burger"></i>
+                            <img src={logo} alt="" />
+                        </div>
+                    </div>
+                    <div className="cima-sidebar personal cima-sidebar-aberto">
+                        aaaaaaaa
                     </div>
                 </div>
             }
