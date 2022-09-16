@@ -8,12 +8,6 @@
     font-family: 'Inter', Helvetica, sans-serif, arial;
 }
 
-// .preload *{
-//     animation-duration: 0s !important;
-//     -webkit-animation-duration: 0s !important;
-//     transition:background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
-// }
-
 h1 {
     font-size: 32px;
 }
@@ -34,8 +28,10 @@ i {
     }
 }
 
-.icone-azul {
-    color: white;
+.icone {
+    min-width: 2.25vw;
+    min-height: 4.3vh;
+    color: white
 }
 
 #content{
@@ -43,20 +39,6 @@ i {
     position: relative;
     left: auto;
     width: auto;
-}
-
-//fazer a animação do menu abrindo
-@keyframes content-fechando {
-    from{
-        width: 8vw;
-    }
-    to{
-        width: 18vw;
-    }
-}
-
-.menu-width{
-
 }
 
 .menu-width-aberto {
@@ -74,7 +56,10 @@ i {
     max-height: 12vh;
 }
 
-.a{
-    width: 18vw;
-    max-width: 18vw;
+.branco{
+    color: white;
+}
+
+.cinza-escuro{
+    color: $cinza-escuro;
 }

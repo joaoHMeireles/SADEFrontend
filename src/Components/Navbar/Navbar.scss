@@ -1,16 +1,6 @@
 @import "../../variables.scss";
 
-@keyframes normal {
-    from{
-        top: 0; 
-    }
-    to{
-        top: 0;
-    }
-}
-
 #navbar{
-    animation: normal;
     position: sticky;
     top: 0;
     left: 0;
@@ -48,7 +38,19 @@
         }
     }
 
-    .personal{
+    .container-personal{
         min-width: 82vw;
+
+        .espaco{
+            width: 61.5vw;
+        }
+
+        .personal{
+            width: 20.5vw;//tenta auto qualquer coisa
+
+            .select-idioma{
+                // border-bottom: 1px solid white ;
+            }
+        }
     }
 }

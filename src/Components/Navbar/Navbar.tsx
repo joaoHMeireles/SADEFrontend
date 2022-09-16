@@ -1,10 +1,16 @@
 import { useLocation } from 'react-router-dom';
-//setar mui react
-import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
+import { useState } from 'react';
 import logo from '../../Assets/wegLogo.png';
 import './Navbar.scss';
 import Sidebar from '../Sidebar/Sidebar';
-import { useState } from 'react';
+import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 function Navbar() {
     const path = useLocation()
@@ -48,12 +54,51 @@ function Navbar() {
                     <div className="container-sidebar">
                         <Sidebar />
                         <div id='tamanho-sidebar' className="cima-sidebar cima-sidebar-aberto">
-                            <DehazeRoundedIcon onClick={mudarSidebar} className='icone-azul'/>
+                            <IconButton aria-label='sidebar' className='icone'>
+                                <DehazeRoundedIcon onClick={mudarSidebar} className='icone' />
+                            </IconButton>
                             <img src={logo} alt="" />
                         </div>
                     </div>
-                    <div className="cima-sidebar personal cima-sidebar-aberto">
-                        aaaaaaaa
+                    <div className="cima-sidebar container-personal cima-sidebar-aberto">
+                        <div className="espaco" />
+                        <div className="personal">
+                            {/* <Box sx={{ maxWidth: 120 }}>
+                                <FormControl fullWidth className="branco ">
+                                    <NativeSelect
+                                        className="branco"
+                                        defaultValue={10}
+                                        inputProps={{
+                                            name: 'idioma',
+                                            id: 'uncontrolled-native',
+                                        }}
+                                    >
+                                        <option value={10} className="cinza-escuro">Português</option>
+                                        <option value={20} className="cinza-escuro">Inglês(EUA)</option>
+                                        <option value={30} className="cinza-escuro">Espanhol</option>
+                                        <option value={40} className="cinza-escuro">Inglês(RU)</option>
+                                        <option value={50} className="cinza-escuro">Francês</option>
+                                    </NativeSelect>
+                                </FormControl>
+                            </Box> */}
+                            <FormControl sx={{ minWidth: 120 }} variant="standard">
+                                {/* <InputLabel id="demo-customized-select-label">Age</InputLabel> */}
+                                <Select
+                                    labelId="demo-customized-select-label"
+                                    id="demo-customized-select"
+                                    defaultValue={10}
+                                // value={age}
+                                // onChange={handleChange}
+                                // input={<BootstrapInput />}
+                                >
+                                    <MenuItem value={10} className="cinza-escuro">Português</MenuItem>
+                                    <MenuItem value={20} className="cinza-escuro">Inglês(EUA)</MenuItem>
+                                    <MenuItem value={30} className="cinza-escuro">Espanhol</MenuItem>
+                                    <MenuItem value={40} className="cinza-escuro">Inglês(RU)</MenuItem>
+                                    <MenuItem value={50} className="cinza-escuro">Francês</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </div>
                     </div>
                 </div>
             }

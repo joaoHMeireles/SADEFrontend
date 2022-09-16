@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <div id="content" className="content-menu-aberto">
-        <div className="menu-width menu-width-aberto"></div>
+        <div className="menu-width menu-width-aberto" />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
