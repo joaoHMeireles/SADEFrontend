@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 //setar mui react
-// import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
+import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
 import logo from '../../Assets/wegLogo.png';
 import './Navbar.scss';
 import Sidebar from '../Sidebar/Sidebar';
@@ -48,8 +48,7 @@ function Navbar() {
                     <div className="container-sidebar">
                         <Sidebar />
                         <div id='tamanho-sidebar' className="cima-sidebar cima-sidebar-aberto">
-                            {/* <i onClick={mudarSidebar} className="fi fi-rr-menu-burger"></i> */}
-                            {/* <DehazeRoundedIcon className='icone-azul'/> */}
+                            <DehazeRoundedIcon onClick={mudarSidebar} className='icone-azul'/>
                             <img src={logo} alt="" />
                         </div>
                     </div>
