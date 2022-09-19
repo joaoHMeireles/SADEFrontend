@@ -7,23 +7,23 @@ import Home from "./Home/Home";
 import Sidebar from "./Components/Sidebar/Sidebar";
 
 function App() {
-  const [aberto, setAberto] = useState(true)
-  const [tamanhoSideBar, setTamanhoSideBar] = useState(4)
+  const [aberto, setAberto] = useState(false)
+  const [tamanhoSideBar, setTamanhoSideBar] = useState("180")
 
   useEffect(() => {
     //fununcia mas tem que ver certinho o tamanho de 18vw e 8vw pra ficar mudando
-    if(aberto){
-      setTamanhoSideBar(100)
-    } else {
-      setTamanhoSideBar(50)
-    }
+    // if(aberto){
+    //   setTamanhoSideBar("")
+    // } else {
+    //   setTamanhoSideBar("")
+    // }
   })
 
   return (
     <BrowserRouter>
       <Navbar aberto={aberto} setAberto={setAberto}/>
-      <div id="content" className="content-menu-aberto">
-        <Sidebar open={aberto} tamanhoSideBar={tamanhoSideBar}/>
+      <div id="content">
+        <Sidebar  open={aberto} />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
