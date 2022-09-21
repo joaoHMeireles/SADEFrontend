@@ -1,12 +1,22 @@
+import { Box } from '@mui/material'
+import { useEffect } from 'react'
 import {Link} from 'react-router-dom'
 import './Login.scss'
 
-function Login(){
+function Login(props: {setAberto: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string}){
+
+    useEffect(() => {
+        props.setAberto(false)
+    })
+
+    function colocaPessoa(){
+        localStorage.setItem("TIPOUSUARIO", "solicitante")
+    }
     return(
-        <div id='login'>
+        <Box id='login' sx={{position: "relative", top: `-${props.tamanhoNavbar}`}}>
             Login
-            <Link to="/home"> inicio</Link>
-        </div>
+            <Link onClick={colocaPessoa} to="/home"> inicio</Link>
+        </Box>
     )
 }
 

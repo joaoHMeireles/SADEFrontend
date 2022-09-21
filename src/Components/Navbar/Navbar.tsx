@@ -4,10 +4,10 @@ import './Navbar.scss';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
 import IconButton from '@mui/material/IconButton';
 import AppBar from '@mui/material/AppBar';
-import { Button, Toolbar, Typography } from '@mui/material';
+import Toolbar from '@mui/material/Toolbar';
 
 
-function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>> }) {
+function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
     const path = useLocation()
     function mudarSidebar() {
         props.setAberto(!props.aberto)
@@ -16,7 +16,7 @@ function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetSta
     return (
         <>
             {path.pathname != "/" &&
-                <AppBar position="fixed" sx={{ zIndex: 10, height: "12vh", display: "flex", justifyContent: "center" }}>
+                <AppBar position="fixed" sx={{ zIndex: 10, height: props.tamanhoNavbar, display: "flex", justifyContent: "center" }}>
                     <Toolbar>
                         <IconButton
                             size="large"
