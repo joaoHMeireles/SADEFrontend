@@ -12,9 +12,7 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import ChatBubbleRoundedIcon from '@mui/icons-material/ChatBubbleRounded';
-
-//temporario pra mostrar o que eu não sei
-import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
+import FolderRoundedIcon from '@mui/icons-material/FolderRounded';
 import Box from "@mui/material/Box";
 import Icon from "@mui/material/Icon";
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
@@ -32,7 +30,7 @@ const lista = [
         id: 2,
         nome: "Solicitações",
         rota: "home",
-        icone: <QuestionMarkRoundedIcon />
+        icone: <FolderRoundedIcon />
     },
     {
         id: 3,

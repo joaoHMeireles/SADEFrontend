@@ -49,7 +49,7 @@ function App() {
         <Navbar aberto={aberto} setAberto={setAberto} tamanhoNavbar={tamanhoNavbar}/>
         <Box sx={{ marginLeft: aberto ? `${tamanhoSideBar}px` : 0, display: "flex" }}>
           <Sidebar open={aberto} tamanho={tamanhoSideBar} />
-          <Box>
+          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
             <Toolbar variant="dense"/>
             <Routes>
               <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar}/>} />
