@@ -103,7 +103,6 @@ export default function MiniDrawer(props: {open: boolean, tamanho: string}) {
   useEffect(() => {
     drawerWidth = props.tamanho
     console.log(props.open);
-    
   })
 
   return (
@@ -136,7 +135,7 @@ export default function MiniDrawer(props: {open: boolean, tamanho: string}) {
         </List>
         {/* arrumar a posição dessa budega de logout */}
         <Box sx={{width: "100%", height: "100%", display: "flex", alignItems: "flex-end"}}>
-            <Box sx={{width: "30%", paddingBottom: "3rem", paddingLeft: "1rem", display: "flex", justifyContent: "space-around"}}>
+            <Box sx={{width: "40%", paddingBottom: "3rem", paddingLeft: "1rem", display: "flex", justifyContent: "space-around"}}>
                 <Box sx={{width: "20px", height: "20px"}}>
                     <Icon>
                         <LogoutRoundedIcon />

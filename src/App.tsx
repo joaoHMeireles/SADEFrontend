@@ -32,10 +32,9 @@ const temaEspacoNav = createTheme({
 
 function App() {
   const [aberto, setAberto] = useState(true)
-  const [tamanhoSideBar, setTamanhoSideBar] = useState("0")
+  const [tamanhoSideBar, setTamanhoSideBar] = useState("200")
 
   useEffect(() => {
-    //fununcia mas tem que ver certinho o tamanho de 18vw e 8vw pra ficar mudando
     if (aberto) {
       setTamanhoSideBar("200")
     } else {

@@ -3,20 +3,64 @@ import logo from '../../Assets/wegLogo.png';
 import './Navbar.scss';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
 import IconButton from '@mui/material/IconButton';
-import AppBar from '@mui/material/AppBar';
+import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import { Box } from '@mui/system';
+import { styled } from '@mui/material/styles';
+import MenuItem from '@mui/material/MenuItem';
+import MuiTextField from '@mui/material/TextField';
+import { useState } from 'react';
+
+const AppBar = styled(MuiAppBar)(
+    {
+        zIndex: 10,
+        display: "flex",
+        justifyContent: "center"
+    }
+);
+
+const TextField = styled(MuiTextField)(
+    {
+        // ver como deixar a borda de baixo do MuiInputBase-root branca
+        p: 2,
+        ':: before': {
+            borderBottom: "white"
+        },
+        '& .MuiSelect-select': {
+            color: "white"
+        },
+        '& .MuiSvgIcon-root': {
+            color: "white"
+        }
+    }
+)
+
+
+const listaLinguas = [
+    "Português",
+    "Inglês(EUA)",
+    "Espanhol",
+    "Inglês(RU)",
+    "Francês"
+]
 
 
 function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
+    const [lingua, setLingua] = useState("Português")
     const path = useLocation()
+
     function mudarSidebar() {
         props.setAberto(!props.aberto)
     }
 
+    const mudarLingua = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setLingua(event.target.value);
+      };
+
     return (
         <>
             {path.pathname != "/" &&
-                <AppBar position="fixed" sx={{ zIndex: 10, height: props.tamanhoNavbar, display: "flex", justifyContent: "center" }}>
+                <AppBar position="fixed" sx={{ height: props.tamanhoNavbar }}>
                     <Toolbar>
                         <IconButton
                             size="large"
@@ -28,7 +72,22 @@ function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetSta
                         >
                             <DehazeRoundedIcon />
                         </IconButton>
-                        <img src={logo} alt=""/>
+                        <Box sx={{ flexGrow: 1 }}>
+                            <img src={logo} alt="" />
+                        </Box>
+                        <TextField
+                            id="standard-select-currency"
+                            select
+                            value={lingua}
+                            onChange={mudarLingua}
+                            variant="standard"
+                        >
+                            {listaLinguas.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                     </Toolbar>
                 </AppBar>
             }
