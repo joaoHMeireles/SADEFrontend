@@ -1,50 +1,6 @@
 @import "../../variables.scss";
 
 img {
-    width: 100px;
-    height: 60px;
+    width: 40px;
+    height: 30px;
 }
-
-// #navbar{
-//     position: sticky;
-//     top: 0;
-//     left: 0;
-//     display: flex;
-//     background-color: $azul-weg;
-
-//     .cima-sidebar{
-//         color: white;
-//         display: flex;
-//         justify-content:space-around;
-//         align-items: center;
-
-//         img {
-            
-//         }
-//     }
-    
-//     .container-sidebar{
-//         display: flex;
-//         width: 36vw;
-
-//         #tamanho-sidebar{
-//             width: 18vw;
-//         }
-//     }
-
-//     .container-personal{
-//         min-width: 82vw;
-
-//         .espaco{
-//             width: 61.5vw;
-//         }
-
-//         .personal{
-//             width: 20.5vw;//tenta auto qualquer coisa
-
-//             .select-idioma{
-//                 // border-bottom: 1px solid white ;
-//             }
-//         }
-//     }
-// }

@@ -6,32 +6,86 @@ import IconButton from '@mui/material/IconButton';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { Box } from '@mui/system';
-import { styled } from '@mui/material/styles';
+import { createTheme, styled } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import MuiTextField from '@mui/material/TextField';
 import { useState } from 'react';
+import { InputBase } from '@mui/material';
 
 const AppBar = styled(MuiAppBar)(
     {
-        zIndex: 10,
+        zIndex: 1200,
         display: "flex",
         justifyContent: "center"
     }
 );
 
+const temaSelect = createTheme({
+    components:{
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    
+                }
+            },
+            defaultProps: {
+                InputProps: {
+                    sx: {
+                        borderColor: "white"
+                    }
+                }
+            },
+            variants: [
+                // InputBase: {
+                //     props: {
+
+                //     },
+                //     style: {
+
+                //     }
+                // }
+            ]
+        }
+    }
+})
+
 const TextField = styled(MuiTextField)(
     {
         // ver como deixar a borda de baixo do MuiInputBase-root branca
         p: 2,
-        ':: before': {
-            borderBottom: "white"
-        },
         '& .MuiSelect-select': {
             color: "white"
         },
         '& .MuiSvgIcon-root': {
             color: "white"
-        }
+        },
+        '& .MuiInputBase-root': {
+            borderBottom: "white solid 1px",
+
+            '& :hover': {
+                borderBottom: "white solid 2px",
+            },
+
+            '& :before': {
+                borderBottom: "white solid 1px",
+
+                '& :hover': {
+                    borderBottom: "white solid 2px",
+                },
+            },
+
+            '& :after': {
+                    borderBottom: "white",
+
+                    '& :hover': {
+                        borderBottom: "white solid 2px",
+                    },
+            }
+        },
+        '& .MuiInputBase-root::before': {
+            
+        },
+        // '& .MuiInputBase-root
     }
 )
 

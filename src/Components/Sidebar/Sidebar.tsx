@@ -85,7 +85,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
-    zIndex: 5,
+    zIndex: 1100,
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
@@ -102,7 +102,6 @@ export default function MiniDrawer(props: {open: boolean, tamanho: string}) {
 
   useEffect(() => {
     drawerWidth = props.tamanho
-    console.log(props.open);
   })
 
   return (
