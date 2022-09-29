@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import logo from '../../Assets/wegLogo.png';
+import fotoPerfil from '../../Assets/fotoPerfil.jpg'
 import './Navbar.scss';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
 import IconButton from '@mui/material/IconButton';
@@ -10,7 +11,7 @@ import { createTheme, styled } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import MuiTextField from '@mui/material/TextField';
 import { useState } from 'react';
-import { InputBase } from '@mui/material';
+import { Avatar } from '@mui/material';
 
 const AppBar = styled(MuiAppBar)(
     {
@@ -21,11 +22,11 @@ const AppBar = styled(MuiAppBar)(
 );
 
 const temaSelect = createTheme({
-    components:{
+    components: {
         MuiTextField: {
             styleOverrides: {
                 root: {
-                    
+
                 }
             },
             defaultProps: {
@@ -53,6 +54,7 @@ const TextField = styled(MuiTextField)(
     {
         // ver como deixar a borda de baixo do MuiInputBase-root branca
         p: 2,
+        // marginRight: 20,
         '& .MuiSelect-select': {
             color: "white"
         },
@@ -75,15 +77,15 @@ const TextField = styled(MuiTextField)(
             },
 
             '& :after': {
-                    borderBottom: "white",
+                borderBottom: "white",
 
-                    '& :hover': {
-                        borderBottom: "white solid 2px",
-                    },
+                '& :hover': {
+                    borderBottom: "white solid 2px",
+                },
             }
         },
         '& .MuiInputBase-root::before': {
-            
+
         },
         // '& .MuiInputBase-root
     }
@@ -98,6 +100,32 @@ const listaLinguas = [
     "Francês"
 ]
 
+function stringToColor(string: string) {
+    let hash = 0;
+    let i;
+
+    for (i = 0; i < string.length; i += 1) {
+        hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = '#';
+
+    for (i = 0; i < 3; i += 1) {
+        const value = (hash >> (i * 8)) & 0xff;
+        color += `00${value.toString(16)}`.slice(-2);
+    }
+
+    return color;
+}
+
+function stringAvatar(name: string) {
+    return {
+        sx: {
+            bgcolor: stringToColor(name),
+        }
+    };
+}
+
 
 function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
     const [lingua, setLingua] = useState("Português")
@@ -109,7 +137,7 @@ function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetSta
 
     const mudarLingua = (event: React.ChangeEvent<HTMLInputElement>) => {
         setLingua(event.target.value);
-      };
+    };
 
     return (
         <>
@@ -129,19 +157,22 @@ function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetSta
                         <Box sx={{ flexGrow: 1 }}>
                             <img src={logo} alt="" />
                         </Box>
-                        <TextField
-                            id="standard-select-currency"
-                            select
-                            value={lingua}
-                            onChange={mudarLingua}
-                            variant="standard"
-                        >
-                            {listaLinguas.map((option) => (
-                                <MenuItem key={option} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))}
-                        </TextField>
+                        <Box sx={{display: "flex", width: "17vw", justifyContent: "space-evenly"}}>
+                            <TextField
+                                id="standard-select-currency"
+                                select
+                                value={lingua}
+                                onChange={mudarLingua}
+                                variant="standard"
+                            >
+                                {listaLinguas.map((option) => (
+                                    <MenuItem key={option} value={option}>
+                                        {option}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                            <Avatar {...stringAvatar('Romário')} src={fotoPerfil} />
+                        </Box>
                     </Toolbar>
                 </AppBar>
             }
