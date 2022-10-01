@@ -8,18 +8,19 @@ import Sidebar from "./Components/Sidebar/Sidebar";
 import { Box, Toolbar } from "@mui/material";
 import { ThemeProvider } from '@mui/material';
 import { MainTheme } from "./Themes";
+import Breadcrumb from "./Components/Breadcrumb/Breadcrumb";
 
 const tamanhoNavbar = "8.5vh"
 
 function App() {
   const [aberto, setAberto] = useState(true)
-  const [tamanhoSideBar, setTamanhoSideBar] = useState("200")
+  const [tamanhoSideBar, setTamanhoSideBar] = useState("220")
 
   useEffect(() => {
     if (aberto) {
-      setTamanhoSideBar("200")
+      setTamanhoSideBar("220")
     } else {
-      setTamanhoSideBar("120")
+      setTamanhoSideBar("65")
     }
   })
 
@@ -29,8 +30,10 @@ function App() {
         <Navbar aberto={aberto} setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} />
         <Box sx={{ marginLeft: aberto ? `${tamanhoSideBar}px` : 0, display: "flex" }}>
           <Sidebar open={aberto} tamanho={tamanhoSideBar} />
-          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <Box component="main" sx={{ flexGrow: 1, p: 3, width: "auto", marginLeft: tamanhoSideBar}}>
             <Toolbar variant="dense" />
+            {/* Adiciona o BreadCrumb aqui como um componente para ele dinâmicamente mudar o link e palavra*/}
+            <Breadcrumb />
             <Routes>
               <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} />} />
               <Route path="/home" element={<Home />} />
