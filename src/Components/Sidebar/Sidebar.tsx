@@ -38,12 +38,12 @@ const lista = [
           {
             id: 1,
             nome: "Enviadas",
-            rota: "solitations\\sent"
+            rota: "my-demands"
           },
           {
             id: 2,
             nome: "Rascunhos",
-            rota: "solitations\\drafts"
+            rota: "my-drafts"
           }
         ]
     },

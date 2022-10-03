@@ -13,7 +13,7 @@ import Breadcrumb from "./Components/Breadcrumb/Breadcrumb";
 const tamanhoNavbar = "8.5vh"
 
 function App() {
-  const [aberto, setAberto] = useState(true)
+  const [aberto, setAberto] = useState(false)
   const [tamanhoSideBar, setTamanhoSideBar] = useState("220")
 
   useEffect(() => {
@@ -32,7 +32,6 @@ function App() {
           <Sidebar open={aberto} tamanho={tamanhoSideBar} />
           <Box component="main" sx={{ flexGrow: 1, p: 3, width: "auto", marginLeft: tamanhoSideBar}}>
             <Toolbar variant="dense" />
-            {/* Adiciona o BreadCrumb aqui como um componente para ele dinâmicamente mudar o link e palavra*/}
             <Breadcrumb />
             <Routes>
               <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} />} />
