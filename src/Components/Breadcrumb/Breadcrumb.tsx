@@ -1,22 +1,52 @@
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import Link from "@mui/material/Link";
 import { Box } from "@mui/system";
-import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
 
+function getNome(palavra: string){
+    const nomesRotas = {
+        home: "Início",
+        create: "Criar",
+        demand: "Demanda",
+        proposal: "Proposta",
+        agenda: "Pauta",
+        ata: "ATA",
+        mydemands: "Minhas demandas",
+        notifications: "Notificações",
+        profile: "Perfil",
+        draft: "Rascunho",
+        mydrafts: "Meus rascunhos",
+        chats: "Chats",
+        chat: "Chat",
+        history: "Histórico",
+        alter: "Alteração"
+    }
+
+    return (nomesRotas as any)[palavra]
+}
+
 function pegarBreadcrumb(pathname: string) {
-    let links: {name: string, path: string}[] = []
+    let links: {key: number, name: string, path: string}[] = []
+    let palavra = "", key = 1, tamanho = pathname.length, etapaUrl= 0, primeiro = true
 
-    if (pathname.includes("/home")) {
-        links.push({ name: "Início", path: "/home" })
-    }
-    if (pathname.includes("/create")) {
-        links.push({ name: "Criar", path: "/create" })
-    }
-    if (pathname.includes("/demand")) {
-        links.push({ name: "Demanda", path: "/demand" })
-    }
+    for(let letra of pathname){
+        if(letra != "/"){
+            palavra += letra
+        }
+        
+        if((letra == "/" && !primeiro)||etapaUrl + 1 == tamanho){
+            links.push({key: key, name: getNome(palavra), path: "/" + palavra})
+            palavra = ""
+            key++
+        }
 
+        if(primeiro){
+            primeiro = false
+        }
+
+        etapaUrl++
+    }
+    
     return links
 }
 
@@ -34,13 +64,13 @@ export default function Breadcrumb() {
 
         if (i == breadcrumb.length - 1) {
             linksBreadcrumb.push(
-                <div>
+                <div key={i}>
                     {breadcrumb[i].name}
                 </div>
             )
         } else {
             linksBreadcrumb.push(
-                <Link href={rotaComponente + breadcrumb[i].path}>
+                <Link key={i} href={rotaComponente + breadcrumb[i].path}>
                     {breadcrumb[i].name}
                 </Link>
             )
@@ -50,9 +80,7 @@ export default function Breadcrumb() {
     return (
         <div id="breadCrumb">
             <Box sx={{display: "flex"}}>
-                {linksBreadcrumb.map((e) => {
-                    return e
-                })}
+                {linksBreadcrumb}
             </Box>
         </div>
     )
