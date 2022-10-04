@@ -11,7 +11,9 @@ const ListItem = styled(MuiListItem)({
 
 const ListItemButton = styled(MuiListItemButton)({
     px: 2.5,
-    minHeight: 48
+    minHeight: 48,
+    color: "#595959",
+    textDecorationColor: "transparent"
 })
 
 const ListItemIcon = styled(MuiListItemIcon)({

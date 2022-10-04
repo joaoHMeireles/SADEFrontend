@@ -23,41 +23,21 @@ const AppBar = styled(MuiAppBar)(
 const TextField = styled(MuiTextField)(
     {
         // ver como deixar a borda de baixo do MuiInputBase-root branca
-        p: 2,
-        // marginRight: 20,
+         marginRight: 20,
         '& .MuiSelect-select': {
             color: "white"
         },
         '& .MuiSvgIcon-root': {
             color: "white"
         },
-        '& .MuiInputBase-root': {
-            borderBottom: "white solid 1px",
 
-            '& :hover': {
-                borderBottom: "white solid 2px",
-            },
-
-            '& :before': {
-                borderBottom: "white solid 1px",
-
-                '& :hover': {
-                    borderBottom: "white solid 2px",
-                },
-            },
-
-            '& :after': {
-                borderBottom: "white",
-
-                '& :hover': {
-                    borderBottom: "white solid 2px",
-                },
-            }
+        '& .MuiInput-root:before': {
+            borderBottom: "white solid 1px"
         },
-        '& .MuiInputBase-root::before': {
 
-        },
-        // '& .MuiInputBase-root
+        '& .MuiInput-root:after': {
+            borderBottom: "white solid 1px"
+        }
     }
 )
 

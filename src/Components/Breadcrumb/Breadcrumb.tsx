@@ -5,7 +5,9 @@ import { Box } from "@mui/system";
 function getNome(palavra: string){
     const nomesRotas = {
         home: "Início",
-        create: "Criar",
+        createdemand: "Criar Demanda",
+        createproposal: "Criar Proposta",
+        createagenda: "Criar Agenda",
         demand: "Demanda",
         proposal: "Proposta",
         agenda: "Pauta",

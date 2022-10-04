@@ -55,17 +55,17 @@ const lista = [
       {
         id: 1,
         nome: "Demanda",
-        rota: "create\\demand"
+        rota: "createdemand"
       },
       {
         id: 2,
         nome: "Proposta",
-        rota: "create\\proposal"
+        rota: "createproposal"
       },
       {
         id: 3,
         nome: "Pauta",
-        rota: "create\\agenda"
+        rota: "createagenda"
       }
     ]
   },
@@ -90,11 +90,13 @@ const openedMixin = (): CSSObject => ({
   minWidth: drawerWidth,
   color: "#595959",
   overflowX: 'hidden',
+  boxSizing: 'border-box',
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
   color: "#595959",
   overflowX: 'hidden',
+  boxSizing: 'border-box',
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
