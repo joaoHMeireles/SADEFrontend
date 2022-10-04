@@ -1,17 +1,16 @@
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logo from '../../Assets/wegLogo.png';
-import fotoPerfil from '../../Assets/fotoPerfil.jpg'
 import './Navbar.scss';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
 import IconButton from '@mui/material/IconButton';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import { Box } from '@mui/system';
-import { createTheme, styled } from '@mui/material/styles';
+import Box from '@mui/system/Box';
 import MenuItem from '@mui/material/MenuItem';
 import MuiTextField from '@mui/material/TextField';
-import { useState } from 'react';
-import { Avatar } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import { styled } from '@mui/material/styles';
 
 const AppBar = styled(MuiAppBar)(
     {
@@ -20,35 +19,6 @@ const AppBar = styled(MuiAppBar)(
         justifyContent: "center"
     }
 );
-
-const temaSelect = createTheme({
-    components: {
-        MuiTextField: {
-            styleOverrides: {
-                root: {
-
-                }
-            },
-            defaultProps: {
-                InputProps: {
-                    sx: {
-                        borderColor: "white"
-                    }
-                }
-            },
-            variants: [
-                // InputBase: {
-                //     props: {
-
-                //     },
-                //     style: {
-
-                //     }
-                // }
-            ]
-        }
-    }
-})
 
 const TextField = styled(MuiTextField)(
     {
@@ -90,7 +60,6 @@ const TextField = styled(MuiTextField)(
         // '& .MuiInputBase-root
     }
 )
-
 
 const listaLinguas = [
     "Português",
@@ -157,7 +126,7 @@ function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetSta
                         <Box sx={{ flexGrow: 1 }}>
                             <img src={logo} alt="" />
                         </Box>
-                        <Box sx={{display: "flex", width: "17vw", justifyContent: "space-evenly"}}>
+                        <Box sx={{ display: "flex", width: "17vw", justifyContent: "space-evenly" }}>
                             <TextField
                                 id="standard-select-currency"
                                 select
@@ -171,7 +140,7 @@ function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetSta
                                     </MenuItem>
                                 ))}
                             </TextField>
-                            <Avatar {...stringAvatar('Romário')} src={fotoPerfil} />
+                            <Avatar {...stringAvatar('ROMÁRIO')} />
                         </Box>
                     </Toolbar>
                 </AppBar>

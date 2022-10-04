@@ -1,7 +1,6 @@
+import { useLocation, Link } from "react-router-dom"
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
-import Link from "@mui/material/Link";
 import { Box } from "@mui/system";
-import { useLocation } from "react-router-dom"
 
 function getNome(palavra: string){
     const nomesRotas = {
@@ -35,9 +34,11 @@ function pegarBreadcrumb(pathname: string) {
         }
         
         if((letra == "/" && !primeiro)||etapaUrl + 1 == tamanho){
-            links.push({key: key, name: getNome(palavra), path: "/" + palavra})
+            if(getNome(palavra) != null){
+                links.push({key: key, name: getNome(palavra), path: "/" + palavra})
+                key++
+            }
             palavra = ""
-            key++
         }
 
         if(primeiro){
@@ -70,7 +71,7 @@ export default function Breadcrumb() {
             )
         } else {
             linksBreadcrumb.push(
-                <Link key={i} href={rotaComponente + breadcrumb[i].path}>
+                <Link key={i} to={rotaComponente + breadcrumb[i].path}>
                     {breadcrumb[i].name}
                 </Link>
             )

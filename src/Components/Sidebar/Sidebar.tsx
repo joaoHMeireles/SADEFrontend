@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { styled, Theme, CSSObject } from '@mui/material/styles';
+import { useLocation, Link } from "react-router-dom";
 import MuiDrawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
+import Box from "@mui/material/Box";
+import Icon from "@mui/material/Icon";
 import List from '@mui/material/List';
-import MuiListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import ListItemText from "@mui/material/ListItemText";
+import Collapse from "@mui/material/Collapse";
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import ChatBubbleRoundedIcon from '@mui/icons-material/ChatBubbleRounded';
 import FolderRoundedIcon from '@mui/icons-material/FolderRounded';
-import Box from "@mui/material/Box";
-import Icon from "@mui/material/Icon";
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import { Collapse, Link } from "@mui/material";
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
+import { styled, Theme, CSSObject } from '@mui/material/styles';
+import styles from './Sidebar.styles';
+const ListItem = styles.ListItem
+const ListItemButton = styles.ListItemButton
+const ListItemIcon = styles.ListItemIcon
+const Typography = styles.Typography
 
 //listas de ícones e opções do menu
 const lista = [
@@ -117,12 +119,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const ListItem = styled(MuiListItem)(
-  {
-    width: "220px"
-  }
-)
-
 
 //Tipos de itens do menu
 function DropMenuItem(props: {
@@ -134,11 +130,13 @@ function DropMenuItem(props: {
   const [aberto, setAberto] = useState(false);
   const rotasSecundarias = props.item.children.map((rotaSecundaria) => {
     return (
-      <Link href={rotaSecundaria.rota}>
-        <ListItemButton key={rotaSecundaria.id} sx={{ pl: 4 }}>
-          <ListItemText primary={rotaSecundaria.nome} />
-        </ListItemButton>
-      </Link>
+      <Typography >
+        <Link key={rotaSecundaria.id} to={rotaSecundaria.rota} >
+          <ListItemButton sx={{ pl: 4 }}>
+            <ListItemText primary={rotaSecundaria.nome} />
+          </ListItemButton>
+        </Link>
+      </Typography>
     )
   })
 
@@ -156,22 +154,9 @@ function DropMenuItem(props: {
   }
 
   return (
-    <ListItem key={props.item.id} disablePadding sx={{ display: 'block' }}>
-      <ListItemButton
-        sx={{
-          minHeight: 48,
-          justifyContent: props.open ? 'initial' : 'center',
-          px: 2.5,
-        }}
-        onClick={verRotas}
-      >
-        <ListItemIcon
-          sx={{
-            minWidth: 0,
-            mr: props.open ? 3 : 'auto',
-            justifyContent: 'center',
-          }}
-        >
+    <ListItem key={props.item.id} disablePadding>
+      <ListItemButton sx={{ justifyContent: props.open ? 'initial' : 'center' }} onClick={verRotas}>
+        <ListItemIcon sx={{ mr: props.open ? 3 : 'auto' }} >
           {props.item.icone}
         </ListItemIcon>
         <ListItemText primary={props.item.nome} sx={{ opacity: props.open ? 1 : 0 }} />
@@ -195,24 +180,11 @@ function DropMenuItem(props: {
 }
 
 function MenuItem(props: { item: { id: number, nome: string, rota: string, icone: JSX.Element }, open: boolean }) {
-
   return (
-    <Link href={props.item.rota}>
+    <Link to={props.item.rota}>
       <ListItem key={props.item.id} disablePadding sx={{ display: 'block' }}>
-        <ListItemButton
-          sx={{
-            minHeight: 48,
-            justifyContent: props.open ? 'initial' : 'center',
-            px: 2.5,
-          }}
-        >
-          <ListItemIcon
-            sx={{
-              minWidth: 0,
-              mr: props.open ? 3 : 'auto',
-              justifyContent: 'center',
-            }}
-          >
+        <ListItemButton sx={{ justifyContent: props.open ? 'initial' : 'center' }}>
+          <ListItemIcon sx={{ mr: props.open ? 3 : 'auto' }} >
             {props.item.icone}
           </ListItemIcon>
           <ListItemText primary={props.item.nome} sx={{ opacity: props.open ? 1 : 0 }} />

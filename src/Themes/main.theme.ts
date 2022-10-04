@@ -5,6 +5,9 @@ export const MainTheme = createTheme({
     primary: {
       main: "#00579d"
     },
+    grey: {
+      "100": "#595959"
+    },
     background: {
       default: "#f6fff8",
       //colocar esa cor somenrte para os cards principais

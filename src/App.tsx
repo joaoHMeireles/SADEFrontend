@@ -1,14 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.scss'
 import Login from "./Login/Login";
 import Navbar from "./Components/Navbar/Navbar";
 import Home from "./Home/Home";
 import Sidebar from "./Components/Sidebar/Sidebar";
-import { Box, Toolbar } from "@mui/material";
-import { ThemeProvider } from '@mui/material';
-import { MainTheme } from "./Themes";
 import Breadcrumb from "./Components/Breadcrumb/Breadcrumb";
+import { Box, Toolbar, ThemeProvider } from "@mui/material";
+import { MainTheme } from "./Themes";
 
 const tamanhoNavbar = "8.5vh"
 
