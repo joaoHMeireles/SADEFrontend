@@ -1,8 +1,11 @@
 import { useLocation, Link } from "react-router-dom"
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { Box } from "@mui/system";
+import Typography from "@mui/material/Typography";
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import Icon from "@mui/material/Icon";
 
-function getNome(palavra: string){
+function getNome(palavra: string) {
     const nomesRotas = {
         home: "Início",
         createdemand: "Criar Demanda",
@@ -27,29 +30,29 @@ function getNome(palavra: string){
 }
 
 function pegarBreadcrumb(pathname: string) {
-    let links: {key: number, name: string, path: string}[] = []
-    let palavra = "", key = 1, tamanho = pathname.length, etapaUrl= 0, primeiro = true
+    let links: { key: number, name: string, path: string }[] = []
+    let palavra = "", key = 1, tamanho = pathname.length, etapaUrl = 0, primeiro = true
 
-    for(let letra of pathname){
-        if(letra != "/"){
+    for (let letra of pathname) {
+        if (letra != "/") {
             palavra += letra
         }
-        
-        if((letra == "/" && !primeiro)||etapaUrl + 1 == tamanho){
-            if(getNome(palavra) != null){
-                links.push({key: key, name: getNome(palavra), path: "/" + palavra})
+
+        if ((letra == "/" && !primeiro) || etapaUrl + 1 == tamanho) {
+            if (getNome(palavra) != null) {
+                links.push({ key: key, name: getNome(palavra), path: "/" + palavra })
                 key++
             }
             palavra = ""
         }
 
-        if(primeiro){
+        if (primeiro) {
             primeiro = false
         }
 
         etapaUrl++
     }
-    
+
     return links
 }
 
@@ -67,22 +70,31 @@ export default function Breadcrumb() {
 
         if (i == breadcrumb.length - 1) {
             linksBreadcrumb.push(
-                <div key={i}>
-                    {breadcrumb[i].name}
-                </div>
+                <Box key={i} sx={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                    <Typography color="primary" variant="h5">
+                        {breadcrumb[i].name}
+                    </Typography>
+                </Box>
             )
         } else {
             linksBreadcrumb.push(
-                <Link key={i} to={rotaComponente + breadcrumb[i].path}>
-                    {breadcrumb[i].name}
-                </Link>
+                <Box sx={{display: "flex", alignItems: "center", justifyContent: "center", color: "#595959"}}>
+                    <Link key={i} to={rotaComponente + breadcrumb[i].path} >
+                        <Typography component="h5" variant="h6" sx={{color: "#595959"}}>
+                            {breadcrumb[i].name}
+                        </Typography>
+                    </Link>
+                    <Icon>
+                        <ArrowForwardIosRoundedIcon sx={{ width: 16, height: 16 }} />
+                    </Icon>
+                </Box>
             )
         }
     }
 
     return (
         <div id="breadCrumb">
-            <Box sx={{display: "flex"}}>
+            <Box sx={{ display: "flex" }}>
                 {linksBreadcrumb}
             </Box>
         </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
+import './Sidebar.scss'
 import MuiDrawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import Box from "@mui/material/Box";
@@ -219,15 +220,17 @@ export default function MiniDrawer(props: { open: boolean, tamanho: string, setO
         </List>
         {/* arrumar a posição dessa budega de logout */}
         <Box sx={{ width: "100%", height: "100%", display: "flex", alignItems: "flex-end" }}>
-          <Box sx={{ width: "40%", paddingBottom: "3rem", paddingLeft: "1rem", display: "flex", justifyContent: "space-around" }}>
-            <Box sx={{ width: "20px", height: "20px" }}>
-              <Icon>
-                <LogoutRoundedIcon />
-              </Icon>
-            </Box>
-            {props.open &&
-              `Sair`
-            }
+          <Box sx={{ width: "50%", paddingBottom: "3rem", paddingLeft: "1rem", display: "flex", justifyContent: "space-around" }}>
+            <Link to="/" className="link">
+              <Box sx={{ width: "20px", height: "20px" }}>
+                <Icon>
+                  <LogoutRoundedIcon />
+                </Icon>
+              </Box>
+              {props.open &&
+                `Sair`
+              }
+            </Link>
           </Box>
         </Box>
       </Drawer>
