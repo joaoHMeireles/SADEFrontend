@@ -3,7 +3,7 @@ import './Home.scss'
 import Breadcrumb from '../Components/Breadcrumb/Breadcrumb'
 import ProcessComponent from '../Components/ProcessComponent/ProcessComponent'
 import Box from '@mui/material/Box'
-const processComponent = require("../DefinitionFiles/interfaces");
+// import processComponent from "../DefinitionFiles/interfaces"
 
 const lista = [
     {
@@ -12,7 +12,7 @@ const lista = [
         tamanho: "pequeno",
         solicitante: "um fia da puta ae",
         status: "Aguardando análise",
-        tipo: processComponent.Demanda
+        // tipo: processComponent.processComponent.Ata
     }
 ]
 
