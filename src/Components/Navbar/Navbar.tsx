@@ -78,12 +78,26 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
 }
 
 /**
+ * Com base no nome da pessoa passado, cria um objeto de style in line
+ * 
+ * @param name 
+ * @returns 
+ */
+function stringAvatar(name: string) {
+    return {
+        sx: {
+            bgcolor: stringToColor(name),
+        }
+    };
+}
+
+/**
  * Recebe um nome e o transforma em um código hexadecimal de uma cor
  * 
  * @param string 
  * @returns 
  */
-function stringToColor(string: string) {
+ function stringToColor(string: string) {
     let hash = 0;
     let i;
 
@@ -99,18 +113,4 @@ function stringToColor(string: string) {
     }
 
     return color;
-}
-
-/**
- * Com base no nome da pessoa passado, cria um objeto de style in line
- * 
- * @param name 
- * @returns 
- */
-function stringAvatar(name: string) {
-    return {
-        sx: {
-            bgcolor: stringToColor(name),
-        }
-    };
 }
