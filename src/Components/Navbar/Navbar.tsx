@@ -18,34 +18,13 @@ const listaLinguas = [
     "Francês"
 ]
 
-function stringToColor(string: string) {
-    let hash = 0;
-    let i;
-
-    for (i = 0; i < string.length; i += 1) {
-        hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    let color = '#';
-
-    for (i = 0; i < 3; i += 1) {
-        const value = (hash >> (i * 8)) & 0xff;
-        color += `00${value.toString(16)}`.slice(-2);
-    }
-
-    return color;
-}
-
-function stringAvatar(name: string) {
-    return {
-        sx: {
-            bgcolor: stringToColor(name),
-        }
-    };
-}
-
-
-function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
+/**
+ * Navbar principal do sistema
+ * 
+ * @param props 
+ * @returns 
+ */
+export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
     const [lingua, setLingua] = useState("Português")
     const path = useLocation()
 
@@ -98,4 +77,40 @@ function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetSta
     )
 }
 
-export default Navbar;
+/**
+ * Recebe um nome e o transforma em um código hexadecimal de uma cor
+ * 
+ * @param string 
+ * @returns 
+ */
+function stringToColor(string: string) {
+    let hash = 0;
+    let i;
+
+    for (i = 0; i < string.length; i += 1) {
+        hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = '#';
+
+    for (i = 0; i < 3; i += 1) {
+        const value = (hash >> (i * 8)) & 0xff;
+        color += `00${value.toString(16)}`.slice(-2);
+    }
+
+    return color;
+}
+
+/**
+ * Com base no nome da pessoa passado, cria um objeto de style in line
+ * 
+ * @param name 
+ * @returns 
+ */
+function stringAvatar(name: string) {
+    return {
+        sx: {
+            bgcolor: stringToColor(name),
+        }
+    };
+}

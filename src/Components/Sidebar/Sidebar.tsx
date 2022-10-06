@@ -84,7 +84,55 @@ const lista = [
   },
 ]
 
-//Menu configuration
+/**
+ * Menu lateral principal do sistema
+ * 
+ * @param props 
+ * @returns 
+ */
+export default function MiniDrawer(props: { open: boolean, tamanho: string, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+  const location = useLocation()
+  const itensMenu = lista.map((rota, index) => {
+    if (rota.children) {
+      return <DropMenuItem key={index} item={rota} open={props.open} setOpen={props.setOpen} />
+    } else {
+      return <MenuItem key={index} item={rota} open={props.open} />
+    }
+  })
+
+  useEffect(() => {
+    drawerWidth = props.tamanho
+  })
+
+  return (
+    <>
+      {location.pathname != "/" && <Drawer variant="permanent" open={props.open}>
+        <Toolbar variant="dense" />
+        <List>
+          {itensMenu}
+        </List>
+        {/* arrumar a posição dessa budega de logout */}
+        <Box sx={{ width: "100%", height: "100%", display: "flex", alignItems: "flex-end" }}>
+          <Box sx={{ width: "50%", paddingBottom: "3rem", paddingLeft: "1rem", display: "flex", justifyContent: "space-around" }}>
+            <Link to="/" className="link">
+              <Box sx={{ width: "20px", height: "20px" }}>
+                <Icon>
+                  <LogoutRoundedIcon />
+                </Icon>
+              </Box>
+              {props.open &&
+                `Sair`
+              }
+            </Link>
+          </Box>
+        </Box>
+      </Drawer>
+      }
+    </>
+  );
+}
+
+//estilos próprios da aplicação que necessitam das variáveis aqui presentes
 let drawerWidth = "240";
 
 const openedMixin = (): CSSObject => ({
@@ -122,8 +170,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-
-//Tipos de itens do menu
+/**
+ * Item do menu principal com links em dropdown
+ * 
+ * @param props 
+ * @returns 
+ */
 function DropMenuItem(props: {
   item: {
     id: number, nome: string, icone: JSX.Element,
@@ -133,8 +185,8 @@ function DropMenuItem(props: {
   const [aberto, setAberto] = useState(false);
   const rotasSecundarias = props.item.children.map((rotaSecundaria) => {
     return (
-      <Typography >
-        <Link key={rotaSecundaria.id} to={rotaSecundaria.rota} >
+      <Typography key={rotaSecundaria.id}>
+        <Link to={rotaSecundaria.rota} >
           <ListItemButton sx={{ pl: 4 }}>
             <ListItemText primary={rotaSecundaria.nome} />
           </ListItemButton>
@@ -182,6 +234,12 @@ function DropMenuItem(props: {
   )
 }
 
+/**
+ * Item padrão do menu principal
+ * 
+ * @param props 
+ * @returns 
+ */
 function MenuItem(props: { item: { id: number, nome: string, rota: string, icone: JSX.Element }, open: boolean }) {
   return (
     <Link to={props.item.rota}>
@@ -195,46 +253,4 @@ function MenuItem(props: { item: { id: number, nome: string, rota: string, icone
       </ListItem>
     </Link>
   )
-}
-
-export default function MiniDrawer(props: { open: boolean, tamanho: string, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
-  const location = useLocation()
-  const itensMenu = lista.map((rota, index) => {
-    if (rota.children) {
-      return <DropMenuItem key={index} item={rota} open={props.open} setOpen={props.setOpen} />
-    } else {
-      return <MenuItem key={index} item={rota} open={props.open} />
-    }
-  })
-
-  useEffect(() => {
-    drawerWidth = props.tamanho
-  })
-
-  return (
-    <>
-      {location.pathname != "/" && <Drawer variant="permanent" open={props.open}>
-        <Toolbar variant="dense" />
-        <List>
-          {itensMenu}
-        </List>
-        {/* arrumar a posição dessa budega de logout */}
-        <Box sx={{ width: "100%", height: "100%", display: "flex", alignItems: "flex-end" }}>
-          <Box sx={{ width: "50%", paddingBottom: "3rem", paddingLeft: "1rem", display: "flex", justifyContent: "space-around" }}>
-            <Link to="/" className="link">
-              <Box sx={{ width: "20px", height: "20px" }}>
-                <Icon>
-                  <LogoutRoundedIcon />
-                </Icon>
-              </Box>
-              {props.open &&
-                `Sair`
-              }
-            </Link>
-          </Box>
-        </Box>
-      </Drawer>
-      }
-    </>
-  );
 }
