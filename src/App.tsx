@@ -6,14 +6,15 @@ import Navbar from "./Components/Navbar/Navbar";
 import Home from "./Home/Home";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Breadcrumb from "./Components/Breadcrumb/Breadcrumb";
-import { Box, Toolbar, ThemeProvider } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
+import { MainBox } from "./App.styles";
+import { ThemeProvider } from "@emotion/react";
 import { MainTheme, ContentTheme } from "./Themes";
-
-const tamanhoNavbar = "8.5vh"
 
 function App() {
   const [aberto, setAberto] = useState(false)
   const [tamanhoSideBar, setTamanhoSideBar] = useState("220")
+  const tamanhoNavbar = "8.5vh"
 
   useEffect(() => {
     if (aberto) {
@@ -29,7 +30,7 @@ function App() {
         <Navbar aberto={aberto} setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} />
         <Box sx={{ marginLeft: aberto ? `${tamanhoSideBar}px` : 0, display: "flex" }}>
           <Sidebar open={aberto} tamanho={tamanhoSideBar} setOpen={setAberto} />
-          <Box component="main" sx={{ flexGrow: 1, p: 3, width: "auto", marginLeft: tamanhoSideBar }}>
+          <MainBox component="main" sx={{ marginLeft: tamanhoSideBar }}>
             <Toolbar variant="dense" />
             <Breadcrumb />
             <ThemeProvider theme={ContentTheme}>
@@ -38,7 +39,7 @@ function App() {
                 <Route path="/home" element={<Home />} />
               </Routes>
             </ThemeProvider>
-          </Box>
+          </MainBox>
         </Box>
       </ThemeProvider>
     </BrowserRouter>

@@ -1,9 +1,14 @@
 import { useLocation, Link } from "react-router-dom"
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
-import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
-import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import Icon from "@mui/material/Icon";
+import { BoxRota, BoxBreadcrumb, ArrowIcon } from "./Breadcrumb.styles";
+
+function getId(palavra: string, search: string){
+    let index = search.indexOf(palavra)
+    console.log(index);
+    
+}
 
 function getNome(palavra: string) {
     const nomesRotas = {
@@ -23,24 +28,29 @@ function getNome(palavra: string) {
         chats: "Chats",
         chat: "Chat",
         history: "Histórico",
-        alter: "Alteração"
+        alteration: "Alteração"
     }
 
     return (nomesRotas as any)[palavra]
 }
 
-function pegarBreadcrumb(pathname: string) {
+function pegarBreadcrumb(location: {pathname: string, search: string}) {
     let links: { key: number, name: string, path: string }[] = []
-    let palavra = "", key = 1, tamanho = pathname.length, etapaUrl = 0, primeiro = true
+    let palavra = "", key = 1, tamanho = location.pathname.length, etapaUrl = 0, primeiro = true
 
-    for (let letra of pathname) {
+    for (let letra of location.pathname) {
         if (letra != "/") {
             palavra += letra
         }
 
         if ((letra == "/" && !primeiro) || etapaUrl + 1 == tamanho) {
             if (getNome(palavra) != null) {
-                links.push({ key: key, name: getNome(palavra), path: "/" + palavra })
+                let rotaId: string = "";
+                if(palavra == "demand" || palavra == "proposal" || palavra == "agenda" || palavra == "ata" 
+                || palavra == "alteration" || palavra == "draft" || palavra == "chat"){
+                    rotaId = palavra + getId(palavra, location.search)
+                }
+                links.push({ key: key, name: getNome(palavra), path: "/" + (rotaId == "" ? palavra : rotaId)})
                 key++
             }
             palavra = ""
@@ -58,7 +68,8 @@ function pegarBreadcrumb(pathname: string) {
 
 export default function Breadcrumb() {
     const location = useLocation();
-    const breadcrumb = pegarBreadcrumb(location.pathname)
+    console.log(getId("demand", location.search));
+    const breadcrumb = pegarBreadcrumb(location)
     let linksBreadcrumb: ReactJSXElement[] = []
 
     for (let i = 0; i < breadcrumb.length; i++) {
@@ -70,33 +81,37 @@ export default function Breadcrumb() {
 
         if (i == breadcrumb.length - 1) {
             linksBreadcrumb.push(
-                <Box key={i} sx={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                <BoxRota key={i} >
                     <Typography color="primary" variant="h5">
                         {breadcrumb[i].name}
                     </Typography>
-                </Box>
+                </BoxRota>
             )
         } else {
             linksBreadcrumb.push(
-                <Box sx={{display: "flex", alignItems: "center", justifyContent: "center", color: "#595959"}}>
+                <BoxRota sx={{ color: "#595959" }}>
                     <Link key={i} to={rotaComponente + breadcrumb[i].path} >
                         <Typography component="h5" variant="h6" sx={{color: "#595959"}}>
                             {breadcrumb[i].name}
                         </Typography>
                     </Link>
                     <Icon>
-                        <ArrowForwardIosRoundedIcon sx={{ width: 16, height: 16 }} />
+                        <ArrowIcon />
                     </Icon>
-                </Box>
+                </BoxRota>
             )
         }
     }
 
     return (
-        <div id="breadCrumb">
-            <Box sx={{ display: "flex" }}>
-                {linksBreadcrumb}
-            </Box>
-        </div>
+        <>
+            {location.pathname != "/" &&
+                <div>
+                    <BoxBreadcrumb>
+                        {linksBreadcrumb}
+                    </BoxBreadcrumb>
+                </div>
+            }
+        </>
     )
 }

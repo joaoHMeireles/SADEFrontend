@@ -4,42 +4,11 @@ import logo from '../../Assets/wegLogo.png';
 import './Navbar.scss';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
 import IconButton from '@mui/material/IconButton';
-import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/system/Box';
 import MenuItem from '@mui/material/MenuItem';
-import MuiTextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
-import { styled } from '@mui/material/styles';
-
-const AppBar = styled(MuiAppBar)(
-    {
-        zIndex: 1200,
-        display: "flex",
-        justifyContent: "center"
-    }
-);
-
-const TextField = styled(MuiTextField)(
-    {
-        // ver como deixar a borda de baixo do MuiInputBase-root branca
-         marginRight: 20,
-        '& .MuiSelect-select': {
-            color: "white"
-        },
-        '& .MuiSvgIcon-root': {
-            color: "white"
-        },
-
-        '& .MuiInput-root:before': {
-            borderBottom: "white solid 1px"
-        },
-
-        '& .MuiInput-root:after': {
-            borderBottom: "white solid 1px"
-        }
-    }
-)
+import { AppBar, TextField, TextFieldBox } from './Navbar.styles';
 
 const listaLinguas = [
     "Português",
@@ -106,7 +75,7 @@ function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetSta
                         <Box sx={{ flexGrow: 1 }}>
                             <img src={logo} alt="" />
                         </Box>
-                        <Box sx={{ display: "flex", width: "17vw", justifyContent: "space-evenly" }}>
+                        <TextFieldBox>
                             <TextField
                                 id="standard-select-currency"
                                 select
@@ -121,7 +90,7 @@ function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetSta
                                 ))}
                             </TextField>
                             <Avatar {...stringAvatar('ROMÁRIO')} />
-                        </Box>
+                        </TextFieldBox>
                     </Toolbar>
                 </AppBar>
             }
