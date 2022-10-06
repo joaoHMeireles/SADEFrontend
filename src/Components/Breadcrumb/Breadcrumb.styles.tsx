@@ -10,8 +10,7 @@ export const BoxRota = styled(MuiBox)({
 
 
 export const BoxBreadcrumb = styled(MuiBox)({
-    display: "flex", 
-    margin: "24px"
+    display: "flex"
 })
 
 export const ArrowIcon = styled(ArrowForwardIosRoundedIcon)({

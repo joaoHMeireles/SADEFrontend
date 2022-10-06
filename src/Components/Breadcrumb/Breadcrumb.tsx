@@ -10,7 +10,7 @@ import { BoxRota, BoxBreadcrumb, ArrowIcon } from "./Breadcrumb.styles";
  * 
  * @returns 
  */
- export default function Breadcrumb() {
+export default function Breadcrumb() {
     const location = useLocation();
     const breadcrumb = pegarBreadcrumb(location)
     let linksBreadcrumb: ReactJSXElement[] = []
@@ -26,7 +26,7 @@ import { BoxRota, BoxBreadcrumb, ArrowIcon } from "./Breadcrumb.styles";
         if (i == breadcrumb.length - 1) {
             linksBreadcrumb.push(
                 <BoxRota key={i} >
-                    <Typography color="primary" variant="h5">
+                    <Typography variant="h5" sx={{color: "#00579d"}}>
                         {breadcrumb[i].name}
                     </Typography>
                 </BoxRota>
@@ -35,7 +35,7 @@ import { BoxRota, BoxBreadcrumb, ArrowIcon } from "./Breadcrumb.styles";
             linksBreadcrumb.push(
                 <BoxRota sx={{ color: "#595959" }}>
                     <Link key={i} to={rotaComponente + breadcrumb[i].path + searchComponente + breadcrumb[i].search} >
-                        <Typography component="h5" variant="h6" sx={{color: "#595959"}}>
+                        <Typography component="h5" variant="h6" sx={{ color: "#595959" }}>
                             {breadcrumb[i].name}
                         </Typography>
                     </Link>
@@ -50,11 +50,9 @@ import { BoxRota, BoxBreadcrumb, ArrowIcon } from "./Breadcrumb.styles";
     return (
         <>
             {location.pathname != "/" &&
-                <div>
-                    <BoxBreadcrumb>
-                        {linksBreadcrumb}
-                    </BoxBreadcrumb>
-                </div>
+                <BoxBreadcrumb>
+                    {linksBreadcrumb}
+                </BoxBreadcrumb>
             }
         </>
     )
@@ -71,7 +69,7 @@ import { BoxRota, BoxBreadcrumb, ArrowIcon } from "./Breadcrumb.styles";
  * @param location 
  * @returns 
  */
- function pegarBreadcrumb(location: {pathname: string, search: string}) {
+function pegarBreadcrumb(location: { pathname: string, search: string }) {
     let links: { key: number, name: string, path: string, search: string }[] = []
     let palavra = "", key = 1, tamanho = location.pathname.length, etapaUrl = 0, primeiro = true
 
@@ -82,11 +80,11 @@ import { BoxRota, BoxBreadcrumb, ArrowIcon } from "./Breadcrumb.styles";
 
         if ((letra == "/" && !primeiro) || etapaUrl + 1 == tamanho) {
             if (getNome(palavra) != null) {
-                let rotaId = getId(palavra, location.search) 
-                if(rotaId == ""){
-                    links.push({ key: key, name: getNome(palavra), path: "/" + palavra, search: ""})
+                let rotaId = getId(palavra, location.search)
+                if (rotaId == "") {
+                    links.push({ key: key, name: getNome(palavra), path: "/" + palavra, search: "" })
                 } else {
-                    links.push({ key: key, name: getNome(palavra), path: "/" + palavra + "/" + rotaId, search:  "?id_" + palavra + "=" + rotaId})
+                    links.push({ key: key, name: getNome(palavra), path: "/" + palavra + "/" + rotaId, search: "?id_" + palavra + "=" + rotaId })
                 }
                 key++
             }
@@ -111,18 +109,18 @@ import { BoxRota, BoxBreadcrumb, ArrowIcon } from "./Breadcrumb.styles";
  * @param search 
  * @returns 
  */
-function getId(palavra: string, search: string){
+function getId(palavra: string, search: string) {
     let index = search.indexOf(palavra)
     let pegarId = false
     let idPalavra = ""
 
-    for(let letra of search.slice(index)){
-        if(letra == "="){
+    for (let letra of search.slice(index)) {
+        if (letra == "=") {
             pegarId = true
             continue
         }
-        if(pegarId){
-            if(letra == "?"){
+        if (pegarId) {
+            if (letra == "?") {
                 break;
             }
             idPalavra += letra

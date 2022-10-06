@@ -5,18 +5,18 @@ import Login from "./Login/Login";
 import Navbar from "./Components/Navbar/Navbar";
 import Home from "./Home/Home";
 import Sidebar from "./Components/Sidebar/Sidebar";
-import Breadcrumb from "./Components/Breadcrumb/Breadcrumb";
 import { Box, Toolbar } from "@mui/material";
 import { MainBox } from "./App.styles";
 import { ThemeProvider } from "@emotion/react";
 import { MainTheme, ContentTheme } from "./Themes";
 
-function App() {
+export default function App() {
   const [aberto, setAberto] = useState(false)
   const [tamanhoSideBar, setTamanhoSideBar] = useState("220")
   const tamanhoNavbar = "8.5vh"
 
   useEffect(() => {
+    
     if (aberto) {
       setTamanhoSideBar("220")
     } else {
@@ -32,7 +32,6 @@ function App() {
           <Sidebar open={aberto} tamanho={tamanhoSideBar} setOpen={setAberto} />
           <MainBox component="main" sx={{ marginLeft: tamanhoSideBar }}>
             <Toolbar variant="dense" />
-            <Breadcrumb />
             <ThemeProvider theme={ContentTheme}>
               <Routes>
                 <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} />} />
@@ -45,5 +44,3 @@ function App() {
     </BrowserRouter>
   )
 }
-
-export default App
