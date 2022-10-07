@@ -9,6 +9,7 @@ import { Box, Toolbar } from "@mui/material";
 import { MainBox } from "./App.styles";
 import { ThemeProvider } from "@emotion/react";
 import { MainTheme, ContentTheme } from "./Themes";
+import Notifications from "./Notifications/Notifications";
 
 export default function App() {
   const [aberto, setAberto] = useState(false)
@@ -16,7 +17,7 @@ export default function App() {
   const tamanhoNavbar = "8.5vh"
 
   useEffect(() => {
-    
+
     if (aberto) {
       setTamanhoSideBar("220")
     } else {
@@ -36,6 +37,7 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/notifications" element={<Notifications />} />
               </Routes>
             </ThemeProvider>
           </MainBox>
