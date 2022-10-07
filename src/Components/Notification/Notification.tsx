@@ -12,7 +12,7 @@ export default function Notification(props: {
     return (
         <>
             <Box sx={{
-                width: "90%",
+                width: "100%",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItens: "center",
