@@ -13,6 +13,7 @@ import { MainTheme, ContentTheme } from "./Themes";
 export default function App() {
   const [aberto, setAberto] = useState(false)
   const [tamanhoSideBar, setTamanhoSideBar] = useState("220")
+  const [filtrar, setFiltrar] = useState(false)
   const tamanhoNavbar = "8.5vh"
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function App() {
             <ThemeProvider theme={ContentTheme}>
               <Routes>
                 <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} />} />
-                <Route path="/home" element={<Home />} />
+                <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar}/>} />
               </Routes>
             </ThemeProvider>
           </MainBox>

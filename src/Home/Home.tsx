@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import './Home.scss'
+import Searchbar from '../Components/Searchbar/Searchbar'
 import Breadcrumb from '../Components/Breadcrumb/Breadcrumb'
 import ProcessComponent from '../Components/ProcessComponent/ProcessComponent'
 import Box from '@mui/material/Box'
@@ -16,11 +17,12 @@ const lista = [
     }
 ]
 
-function Home() {
+function Home(props: {filtrar: boolean, setFiltrar: React.Dispatch<React.SetStateAction<boolean>>}) {
+
     return (
         <Box sx={{margin: "24px"}}>
             <Breadcrumb />
-            
+            <Searchbar setFiltrar={props.setFiltrar} filtrar={props.filtrar}/>
         </Box>
     )
 }
