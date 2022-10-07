@@ -24,9 +24,10 @@ export default function Notification(props: {
                     <Box>
                         <props.Icone sx={{ color: "#595959" }}></props.Icone>
                     </Box>
-                    <Box sx={{ marginRight: 5 }}>
+                    <Box sx={{ marginRight: 5, "@media(maxWidth: 720px)": {fontSize: "12px"} }}>
+                        <div className="text">
                         <Box>
-                            <Typography variant="h6" component="h1">
+                            <Typography variant="h6" component="h1" >
                                 {props.titulo}
                             </Typography>
                         </Box>
@@ -35,6 +36,7 @@ export default function Notification(props: {
                                 {props.mensagem}
                             </Typography>
                         </Box>
+                        </div>
                     </Box>
                 </Box>
                 <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginRight: 2 }}>
