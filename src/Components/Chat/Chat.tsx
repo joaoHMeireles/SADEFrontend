@@ -23,7 +23,12 @@ export default function Chat(props: {
           marginY: 3,
         }}
       >
-        <Box className="containerIconPessoa" sx={{ marginX: 3 }}>{<PersonRoundedIcon />}</Box>
+        <Box
+          className="containerIconPessoa"
+          sx={{ marginX: 3, color: "#595959" }}
+        >
+          {<PersonRoundedIcon />}
+        </Box>
         <Box
           className="containerChat"
           sx={{
@@ -36,12 +41,17 @@ export default function Chat(props: {
           }}
         >
           <Box className="containerTitulo" sx={{ width: "100%" }}>
-            <Typography variant="h6" component="h1">
+            <Typography variant="h6" component="h1" sx={{ color: "#595959" }}>
               {props.titulo}
             </Typography>
           </Box>
           <Box className="containerPessoaMensagem" sx={{ width: "100%" }}>
-            <Typography variant="caption" component="h2" gutterBottom>
+            <Typography
+              variant="caption"
+              component="h2"
+              gutterBottom
+              sx={{ color: "#999999" }}
+            >
               {props.pessoa}: {props.mensagem}
             </Typography>
           </Box>

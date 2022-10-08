@@ -20,7 +20,7 @@ export default function Notification(props: {
           display: "flex",
           justifyContent: "space-between",
           alignItens: "center",
-          backgroundColor: "#DDDDDD",
+          backgroundColor: "#EEEEEE",
           borderRadius: "5px",
           margin: 2,
         }}
@@ -29,21 +29,31 @@ export default function Notification(props: {
           sx={{
             width: "40%",
             display: "flex",
-            justifyContent: "space-around",
+            justifyContent: "start",
             alignItems: "center",
           }}
         >
-          <Box className="containerIconEsquerdo">
+          <Box className="containerIconEsquerdo" sx={{marginX: 3}}>
             <props.Icone sx={{ color: "#595959" }}></props.Icone>
           </Box>
           <Box className="containerConteudo">
             <Box>
-              <Typography className="h1" variant="h6" component="h1">
+              <Typography
+                className="h1"
+                variant="h6"
+                component="h1"
+                sx={{ color: "#595959" }}
+              >
                 {props.titulo}
               </Typography>
             </Box>
             <Box>
-              <Typography className="h2" variant="caption" component="h2">
+              <Typography
+                className="h2"
+                variant="caption"
+                component="h2"
+                sx={{ color: "#999999" }}
+              >
                 {props.mensagem}
               </Typography>
             </Box>
