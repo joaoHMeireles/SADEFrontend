@@ -5,10 +5,12 @@ import Login from "./Login/Login";
 import Navbar from "./Components/Navbar/Navbar";
 import Home from "./Home/Home";
 import Sidebar from "./Components/Sidebar/Sidebar";
+// import Filter from "./Components/Filter/Filter";
 import { Box, Toolbar } from "@mui/material";
 import { MainBox } from "./App.styles";
 import { ThemeProvider } from "@emotion/react";
 import { MainTheme, ContentTheme } from "./Themes";
+import Breadcrumb from "./Components/Breadcrumb/Breadcrumb";
 
 export default function App() {
   const [aberto, setAberto] = useState(false)
@@ -40,6 +42,7 @@ export default function App() {
               </Routes>
             </ThemeProvider>
           </MainBox>
+          {/* <Filter /> */}
         </Box>
       </ThemeProvider>
     </BrowserRouter>

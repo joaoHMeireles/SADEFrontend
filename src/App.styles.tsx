@@ -5,3 +5,7 @@ export const MainBox = styled(Box)({
     paddingTop: "8px",
     width: "auto",
 })
+
+export const ContentBox = styled(Box)({
+    margin: "24px"
+})

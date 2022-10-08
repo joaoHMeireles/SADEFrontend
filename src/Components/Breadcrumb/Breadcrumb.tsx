@@ -84,7 +84,7 @@ function pegarBreadcrumb(location: { pathname: string, search: string }) {
                 if (rotaId == "") {
                     links.push({ key: key, name: getNome(palavra), path: "/" + palavra, search: "" })
                 } else {
-                    links.push({ key: key, name: getNome(palavra), path: "/" + palavra + "/" + rotaId, search: "?id_" + palavra + "=" + rotaId })
+                    links.push({ key: key, name: getNome(palavra), path: "/" + palavra, search: "?id_" + palavra + "=" + rotaId })
                 }
                 key++
             }
