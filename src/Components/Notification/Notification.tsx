@@ -1,4 +1,4 @@
-import { makeStyles, responsiveFontSizes, SvgIconTypeMap } from "@mui/material";
+import { SvgIconTypeMap } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { Box } from "@mui/system";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
@@ -33,7 +33,7 @@ export default function Notification(props: {
             alignItems: "center",
           }}
         >
-          <Box>
+          <Box className="containerIconEsquerdo">
             <props.Icone sx={{ color: "#595959" }}></props.Icone>
           </Box>
           <Box className="containerConteudo">
@@ -49,7 +49,7 @@ export default function Notification(props: {
             </Box>
           </Box>
         </Box>
-        <Box
+        <Box className="containerIconLixo"
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -57,7 +57,7 @@ export default function Notification(props: {
             marginRight: 2,
           }}
         >
-          <DeleteRoundedIcon sx={{ color: "#595959" }} />
+          <DeleteRoundedIcon className="iconLixo" sx={{ color: "#595959" }} />
         </Box>
       </Box>
     </>
