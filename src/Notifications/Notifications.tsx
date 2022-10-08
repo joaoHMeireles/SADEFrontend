@@ -2,6 +2,7 @@ import Notification from "../Components/Notification/Notification";
 import EditNotificationsRoundedIcon from "@mui/icons-material/EditNotificationsRounded";
 import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded";
+import NewReleasesRoundedIcon from '@mui/icons-material/NewReleasesRounded';
 import Breadcrumb from "../Components/Breadcrumb/Breadcrumb";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -43,7 +44,7 @@ function Notifications() {
             mensagem="Nome da demanda"
           />
           <Notification
-            Icone={EditNotificationsRoundedIcon}
+            Icone={NewReleasesRoundedIcon}
             titulo="Redefinição requisitada"
             mensagem="Nome da demanda"
           />
@@ -53,7 +54,7 @@ function Notifications() {
             mensagem="Nome da demanda"
           />
           <Notification
-            Icone={EventAvailableRoundedIcon}
+            Icone={NewReleasesRoundedIcon}
             titulo="Redefinição requisitada"
             mensagem="Nome da demanda"
           />
