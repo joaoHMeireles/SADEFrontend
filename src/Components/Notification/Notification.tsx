@@ -43,13 +43,14 @@ export default function Notification(props: {
               </Typography>
             </Box>
             <Box>
-              <Typography className="h2" variant="body2" component="h2">
+              <Typography className="h2" variant="caption" component="h2">
                 {props.mensagem}
               </Typography>
             </Box>
           </Box>
         </Box>
-        <Box className="containerIconLixo"
+        <Box
+          className="containerIconLixo"
           sx={{
             display: "flex",
             justifyContent: "center",

@@ -12,7 +12,7 @@ function Notifications() {
     <Box sx={{ margin: "24px" }}>
       <Breadcrumb />
       <Container>
-        <Box sx={{ marginTop: 5 }}>
+        <Box sx={{ marginY: 3 }}>
           <Notification
             Icone={EditNotificationsRoundedIcon}
             titulo="Redefinição requisitada"

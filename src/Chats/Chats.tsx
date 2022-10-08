@@ -9,9 +9,23 @@ export default function Chats() {
       <Box sx={{ margin: "24px" }}>
         <Breadcrumb />
         <Container>
-            <Box>
-                <Chat titulo="Titulo da demanda" pessoa="Pessoa" mensagem="última mensagem"></Chat>
-            </Box>
+          <Box marginY={3}>
+            <Chat
+              titulo="Titulo da demanda"
+              pessoa="Pessoa"
+              mensagem="última mensagem"
+            ></Chat>
+            <Chat
+              titulo="Titulo da demanda"
+              pessoa="Pessoa"
+              mensagem="última mensagem"
+            ></Chat>
+            <Chat
+              titulo="Titulo da demanda"
+              pessoa="Pessoa"
+              mensagem="última mensagem"
+            ></Chat>
+          </Box>
         </Container>
       </Box>
     </>
