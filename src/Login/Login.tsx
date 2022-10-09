@@ -163,11 +163,14 @@ function Login(props: {
                     width: "80%",
                     height: "25%",
                     backgroundColor: "#00579D",
+                    textDecoration: "none",
                   }}
                   variant="contained"
                   startIcon={<InputRoundedIcon />}
                 >
-                  Entrar
+                  <Link onClick={colocaPessoa} to="/home">
+                    Entrar
+                  </Link>
                 </Button>
               </Box>
             </Box>
