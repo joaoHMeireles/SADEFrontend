@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.scss";
-import Login from "./Login/Login";
-import Navbar from "./Components/Navbar/Navbar";
-import Home from "./Home/Home";
 import Sidebar from "./Components/Sidebar/Sidebar";
-import { Box, Toolbar } from "@mui/material";
+import Navbar from "./Components/Navbar/Navbar";
+import Toolbar from "./Components/Toolbar/Toolbar";
+import Login from "./Login/Login";
+import Home from "./Home/Home";
+import Notifications from "./Notifications/Notifications";
+import Chats from "./Chats/Chats";
+import Box from "@mui/material/Box";
 import { MainBox } from "./App.styles";
 import { ThemeProvider } from "@emotion/react";
 import { MainTheme, ContentTheme } from "./Themes";
-import Notifications from "./Notifications/Notifications";
-import Chats from "./Chats/Chats";
 
 export default function App() {
   const [aberto, setAberto] = useState(false);
@@ -41,7 +42,7 @@ export default function App() {
         >
           <Sidebar open={aberto} tamanho={tamanhoSideBar} setOpen={setAberto} />
           <MainBox component="main" sx={{ marginLeft: tamanhoSideBar }}>
-            <Toolbar variant="dense" />
+            <Toolbar />
             <ThemeProvider theme={ContentTheme}>
               <Routes>
                 <Route
