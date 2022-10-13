@@ -15,8 +15,8 @@ export enum processComponentSize {
 export enum processComponentStatus {
     Backlog = "Backlog",
     Assesment = "Assesment",
-    BusinessCase = "Business Case",
-    Canceled = "Cancelled",
-    ToDo = "To Do"
+    BusinessCase = "BusinessCase",
+    Canceled = "Canceled",
+    ToDo = "ToDo"
 }
 

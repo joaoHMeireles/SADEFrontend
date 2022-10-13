@@ -21,7 +21,7 @@ const listaComponents: ProcessComponentInterface[] = [
     },
     {
         id: 2,
-        titulo: "titulozao pra ver como fica muito grande responsividade total uauauau",
+        titulo: "titulozao pra ver como fica muito grande a responsividade da bagaça",
         tamanho: processComponentSize.Grande,
         solicitante: "esse aqui é legal",
         status: processComponentStatus.Assesment,
@@ -54,11 +54,11 @@ const listaComponents: ProcessComponentInterface[] = [
 ]
 
 function Home(props: { filtrar: boolean, setFiltrar: React.Dispatch<React.SetStateAction<boolean>> }) {
-    const [grid, setGrid] = useState(false)
+    const [grid, setGrid] = useState(true)
 
     const processComponents = listaComponents.map((e) => {
         return (
-            <Grid item xs={(grid ? 6 : 12)}>
+            <Grid key={e.id} item xs={(grid ? 6 : 12)}>
                 <Box sx={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <ProcessComponent processComponentAtributes={e} processCollectionComponentAtributes={""} grid={grid} />
                 </Box>
@@ -71,7 +71,7 @@ function Home(props: { filtrar: boolean, setFiltrar: React.Dispatch<React.SetSta
             <Breadcrumb />
             <Searchbar setFiltrar={props.setFiltrar} filtrar={props.filtrar} grid={grid} setGrid={setGrid} />
             <Box sx={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <Box sx={{ width: "80%" }}>
+                <Box sx={{ width: "90%" }}>
                     <Grid container spacing={2}>
                         {processComponents}
                     </Grid>             
