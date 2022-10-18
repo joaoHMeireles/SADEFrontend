@@ -3,20 +3,22 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.scss";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Navbar from "./Components/Navbar/Navbar";
-import Toolbar from "./Components/Toolbar/Toolbar";
 import Login from "./Login/Login";
 import Home from "./Home/Home";
 import Notifications from "./Notifications/Notifications";
 import Chats from "./Chats/Chats";
-import Box from "@mui/material/Box";
+// import Filter from "./Components/Filter/Filter";
+import { Box, Toolbar } from "@mui/material";
 import { MainBox } from "./App.styles";
 import { ThemeProvider } from "@emotion/react";
 import { MainTheme, ContentTheme } from "./Themes";
+import Breadcrumb from "./Components/Breadcrumb/Breadcrumb";
 
 export default function App() {
-  const [aberto, setAberto] = useState(false);
-  const [tamanhoSideBar, setTamanhoSideBar] = useState("220");
-  const tamanhoNavbar = "8.5vh";
+  const [aberto, setAberto] = useState(false)
+  const [tamanhoSideBar, setTamanhoSideBar] = useState("220")
+  const [filtrar, setFiltrar] = useState(false)
+  const tamanhoNavbar = "8.5vh"
 
   useEffect(() => {
     if (aberto) {
@@ -45,21 +47,14 @@ export default function App() {
             <Toolbar />
             <ThemeProvider theme={ContentTheme}>
               <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <Login
-                      setAberto={setAberto}
-                      tamanhoNavbar={tamanhoNavbar}
-                    />
-                  }
-                />
-                <Route path="/home" element={<Home />} />
                 <Route path="/notifications" element={<Notifications />} />
                 <Route path="/chats" element={<Chats />}></Route>
+                <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} />} />
+                <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar}/>} />
               </Routes>
             </ThemeProvider>
           </MainBox>
+          {/* <Filter /> */}
         </Box>
       </ThemeProvider>
     </BrowserRouter>

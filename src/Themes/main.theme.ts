@@ -20,6 +20,9 @@ export const MainTheme = createTheme({
     },
     background: {
       default: "#f6fff8"
+    },
+    action: {
+      focus: "#00579d"
     }
   },
   components: {
