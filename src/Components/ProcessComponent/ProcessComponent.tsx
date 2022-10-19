@@ -1,68 +1,30 @@
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
-import { MainPaper } from './ProcessComponent.styles'
+import { 
+    MainPaper, 
+    GridProccessColorBox, 
+    GridProccessComponent, 
+    GridTypography, 
+    ListProccessColorBox,
+    ListProccessComponent, 
+    ListTypography 
+} from './ProcessComponent.styles'
 import { processComponent } from '../../DefinitionFiles/enuns'
 import { ProcessComponentInterface } from '../../DefinitionFiles/interfaces'
 
-
-export default function ProcessComponent(props: { processComponentAtributes: ProcessComponentInterface, processCollectionComponentAtributes: string, grid: boolean }) {
+/**
+ * Componente TSX de card e linha de um compoente de processo
+ * 
+ * @param props 
+ * @returns 
+ */
+export default function ProcessComponent(props: { grid: boolean, processComponentAtributes: ProcessComponentInterface, processCollectionComponentAtributes: string }) {
     const componente = props.processComponentAtributes
-    let processElement
-
-    if (props.grid) {
-        processElement = (
-            <>
-                <Grid item xs={1}>
-                    <Box sx={{ backgroundColor: (componente.tipo == processComponent.Demanda ? "#00579d" : "#6aacda"), width: "50%", height: "100%", borderRadius: "5px 0 0 5px" }} />
-                </Grid>
-                <Grid sx={{ display: "grid", padding: "5px", color: "#595959" }} item xs={11}>
-                    <Typography component="h1" variant='h6' sx={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
-                        {componente.titulo}
-                    </Typography>
-                    <Typography variant='subtitle1' sx={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
-                        Score: {componente.score}
-                    </Typography>
-                    <Typography variant='subtitle1' sx={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
-                        Solicitante: {componente.solicitante}
-                    </Typography>
-                    <Typography variant='subtitle1' sx={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
-                        Status: {getNome(componente.status)}
-                    </Typography>
-                    <Typography variant='subtitle1' sx={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
-                        Tamanho: {componente.tamanho}
-                    </Typography>
-                </Grid>
-            </>
-        )
-    } else {
-        processElement = (
-            <>
-                <Grid item xs={0.3}>
-                    <Box sx={{ backgroundColor: (componente.tipo == processComponent.Demanda ? "#00579d" : "#6aacda"), height: "100%", borderRadius: "5px 0 0 5px", maxWidth: "13px" }} />
-                </Grid>
-                <Grid sx={{ display: "flex", padding: "5px", color: "#595959", alignItems: "center" }} item xs={11.7}>
-                    <Typography component="h1" variant='subtitle1' sx={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "20vw" }}>
-                        {componente.id} - {componente.titulo}
-                    </Typography>
-                    <Box sx={{ width: "3vw" }} />
-                    <Typography variant='subtitle2' sx={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "8vw" }}>
-                        Score: {componente.score}
-                    </Typography>
-                    <Typography variant='subtitle2' sx={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "15vw" }}>
-                        Solicitante: {componente.solicitante}
-                    </Typography>
-                    <Box sx={{ width: "2vw" }} />
-                    <Typography variant='subtitle2' sx={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "15vw" }}>
-                        Status: {getNome(componente.status)}
-                    </Typography>
-                    <Typography variant='subtitle2' sx={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "15vw" }}>
-                        Tamanho: {componente.tamanho}
-                    </Typography>
-                </Grid>
-            </>
-        )
-    }
+    const corComponente = (componente.tipo == processComponent.Demanda ? "#00579d" : "#6aacda");
+    const processElement = (props.grid ?
+        <GridComponent componente={componente} corComponente={corComponente} />
+        :
+        <ListComponent componente={componente} corComponente={corComponente} />
+    )
 
     return (
         <MainPaper key={componente.id} >
@@ -73,6 +35,80 @@ export default function ProcessComponent(props: { processComponentAtributes: Pro
     )
 }
 
+/**
+ * Foramtação do componente caso ele esteja em formato de card, ou seja, em grid
+ * 
+ * @param props 
+ * @returns 
+ */
+function GridComponent(props: { componente: ProcessComponentInterface, corComponente: string }) {
+
+    return (
+        <>
+            <Grid item xs={1}>
+                <GridProccessColorBox sx={{ backgroundColor: props.corComponente }} />
+            </Grid>
+            <GridProccessComponent item xs={11}>
+                <GridTypography variant='h6' >
+                    {props.componente.titulo}
+                </GridTypography>
+                <GridTypography variant='subtitle1' >
+                    Score: {props.componente.score}
+                </GridTypography>
+                <GridTypography variant='subtitle1' >
+                    Solicitante: {props.componente.solicitante}
+                </GridTypography>
+                <GridTypography variant='subtitle1' >
+                    Status: {getNome(props.componente.status)}
+                </GridTypography>
+                <GridTypography variant='subtitle1' >
+                    Tamanho: {props.componente.tamanho}
+                </GridTypography>
+            </GridProccessComponent>
+        </>
+    )
+}
+
+/**
+ * Formatação do componente caso ele esteja em formato de linha ou seja, em forma de lista
+ * 
+ * @param props 
+ * @returns 
+ */
+function ListComponent(props: { componente: ProcessComponentInterface, corComponente: string }) {
+
+    return (
+        <>
+            <Grid item xs={0.3}>
+                <ListProccessColorBox sx={{ backgroundColor: props.corComponente }} />
+            </Grid>
+            <ListProccessComponent item xs={11.7}>
+                <ListTypography variant='subtitle1' sx={{ minWidth: "20vw" }}>
+                    {props.componente.id} - {props.componente.titulo}
+                </ListTypography>
+                <ListTypography variant='subtitle2' sx={{ maxWidth: "8vw" }}>
+                    Score: {props.componente.score}
+                </ListTypography>
+                <ListTypography variant='subtitle2' >
+                    Solicitante: {props.componente.solicitante}
+                </ListTypography>
+                <ListTypography variant='subtitle2' >
+                    Status: {getNome(props.componente.status)}
+                </ListTypography>
+                <ListTypography variant='subtitle2' >
+                    Tamanho: {props.componente.tamanho}
+                </ListTypography>
+            </ListProccessComponent>
+        </>
+    )
+}
+
+/**
+ * Função que transforma o nome de um status do banco para uma conversão mais compreensível
+ * 
+ * @param status 
+ * @returns 
+ */
 function getNome(status: string) {
     const nomeStatus = {
         Backlog: "Aguardando revisão",

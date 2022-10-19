@@ -3,9 +3,9 @@ import { processComponent, processComponentSize, processComponentStatus } from '
 export interface ProcessComponentInterface {
     id: number,
     titulo: string,
-    tamanho: processComponentSize,
+    score: number,
     solicitante: string,
     status: processComponentStatus,
+    tamanho: processComponentSize,
     tipo: processComponent,
-    score: number
 }

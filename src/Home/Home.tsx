@@ -26,7 +26,7 @@ const listaComponents: ProcessComponentInterface[] = [
         tamanho: processComponentSize.Grande,
         solicitante: "esse aqui é legal",
         status: processComponentStatus.Assesment,
-        tipo: processComponent.Proposta,
+        tipo: processComponent.Demanda,
         score: 12.5
     },
     {
@@ -44,7 +44,7 @@ const listaComponents: ProcessComponentInterface[] = [
         tamanho: processComponentSize.Medio,
         solicitante: "um fia da puta ae 2",
         status: processComponentStatus.BusinessCase,
-        tipo: processComponent.Demanda,
+        tipo: processComponent.Proposta,
         score: 12.5
     },
     {
@@ -56,6 +56,15 @@ const listaComponents: ProcessComponentInterface[] = [
         tipo: processComponent.Demanda,
         score: 12.5
     },
+    {
+        id: 6,
+        titulo: "eu quero janta de 3 horas",
+        tamanho: processComponentSize.Pequeno,
+        solicitante: "um gênio",
+        status: processComponentStatus.Backlog,
+        tipo: processComponent.Demanda,
+        score: 10000
+    }
 ]
 
 function Home(props: { filtrar: boolean, setFiltrar: React.Dispatch<React.SetStateAction<boolean>> }) {
