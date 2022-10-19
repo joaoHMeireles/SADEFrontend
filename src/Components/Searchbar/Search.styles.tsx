@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box"
 import MuiTextField from '@mui/material/TextField';
 import MuiGrid from '@mui/material/Grid';
+import IconButton from "@mui/material/IconButton";
 import styled from "@emotion/styled"
 
 export const BoxContainerInput = styled(Box)({
@@ -26,3 +27,6 @@ export const ContainerGrid = styled(MuiGrid)({
     width: "48vw"
 })
 
+export const GridIconButton = styled(IconButton)({
+    marginTop: "6px"
+})

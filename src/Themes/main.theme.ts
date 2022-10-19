@@ -40,7 +40,7 @@ export const ContentTheme = createTheme({
   palette: {
     background: {
       default: "#f6fff8",
-      paper: "#DDDDDD",
+      paper: "#EEEEEE",
     }
   }
 })

@@ -17,7 +17,8 @@ const listaComponents: ProcessComponentInterface[] = [
         tamanho: processComponentSize.Pequeno,
         solicitante: "um fia da puta ae",
         status: processComponentStatus.Backlog,
-        tipo: processComponent.Demanda
+        tipo: processComponent.Demanda,
+        score: 12.5
     },
     {
         id: 2,
@@ -25,7 +26,8 @@ const listaComponents: ProcessComponentInterface[] = [
         tamanho: processComponentSize.Grande,
         solicitante: "esse aqui é legal",
         status: processComponentStatus.Assesment,
-        tipo: processComponent.Proposta
+        tipo: processComponent.Proposta,
+        score: 12.5
     },
     {
         id: 3,
@@ -33,7 +35,8 @@ const listaComponents: ProcessComponentInterface[] = [
         tamanho: processComponentSize.MuitoGrande,
         solicitante: "Jefferson Rodrigues",
         status: processComponentStatus.Canceled,
-        tipo: processComponent.Demanda
+        tipo: processComponent.Proposta,
+        score: 12.5
     },
     {
         id: 4,
@@ -41,7 +44,8 @@ const listaComponents: ProcessComponentInterface[] = [
         tamanho: processComponentSize.Medio,
         solicitante: "um fia da puta ae 2",
         status: processComponentStatus.BusinessCase,
-        tipo: processComponent.Demanda
+        tipo: processComponent.Demanda,
+        score: 12.5
     },
     {
         id: 5,
@@ -49,7 +53,8 @@ const listaComponents: ProcessComponentInterface[] = [
         tamanho: processComponentSize.Pequeno,
         solicitante: "um fia da puta ae",
         status: processComponentStatus.Backlog,
-        tipo: processComponent.Proposta
+        tipo: processComponent.Demanda,
+        score: 12.5
     },
 ]
 
@@ -58,7 +63,7 @@ function Home(props: { filtrar: boolean, setFiltrar: React.Dispatch<React.SetSta
 
     const processComponents = listaComponents.map((e) => {
         return (
-            <Grid key={e.id} item xs={(grid ? 6 : 12)}>
+            <Grid key={e.id} item xs={(grid ? 4 : 12)}>
                 <Box sx={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <ProcessComponent processComponentAtributes={e} processCollectionComponentAtributes={""} grid={grid} />
                 </Box>

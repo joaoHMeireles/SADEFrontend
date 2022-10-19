@@ -5,7 +5,7 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import IconButton from '@mui/material/IconButton';
 import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
-import { BoxContainerInput, TextField, ContainerGrid } from './Search.styles';
+import { BoxContainerInput, TextField, ContainerGrid, GridIconButton } from './Search.styles';
 
 /**
  * Componente principal de barra de pesquisa
@@ -13,10 +13,11 @@ import { BoxContainerInput, TextField, ContainerGrid } from './Search.styles';
  * @param props 
  * @returns 
  */
-export default function Searchbar(props: 
-    {filtrar: boolean, setFiltrar: React.Dispatch<React.SetStateAction<boolean>>,
-    grid: boolean, setGrid: React.Dispatch<React.SetStateAction<boolean>>}) {
-    
+export default function Searchbar(props:
+    {
+        filtrar: boolean, setFiltrar: React.Dispatch<React.SetStateAction<boolean>>,
+        grid: boolean, setGrid: React.Dispatch<React.SetStateAction<boolean>>
+    }) {
 
     const lupaAdornment = (
         <InputAdornment position='start'>
@@ -27,37 +28,37 @@ export default function Searchbar(props:
     const filtroAdorment = (
         <InputAdornment position='start'>
             <IconButton aria-label="filter" onClick={filtrar}>
-                <TuneRoundedIcon sx={{color:( props.filtrar ? "#00579d": "") }}/>
+                <TuneRoundedIcon sx={{ color: (props.filtrar ? "#00579d" : "") }} />
             </IconButton>
         </InputAdornment>
     )
 
-    function filtrar(){
+    function filtrar() {
         props.setFiltrar(!props.filtrar)
     }
 
-    function viewGrid(){
-        props.setGrid(true)
-    }
-
-    function viewList(){
-        props.setGrid(false)
+    function toggleGrid() {
+        props.setGrid(!props.grid)
     }
 
     return (
         <BoxContainerInput>
             <ContainerGrid container spacing={2}>
                 <Grid item xs={10}>
-                    <TextField InputProps={{ startAdornment: lupaAdornment, endAdornment: filtroAdorment, 
-                        placeholder: "Pesquisar Título, Solicitante ou Gerente responsável"}} />
+                    <TextField InputProps={{
+                        startAdornment: lupaAdornment, endAdornment: filtroAdorment,
+                        placeholder: "Pesquisar Título, Solicitante ou Gerente responsável"
+                    }} />
                 </Grid>
                 <Grid item xs={2}>
-                    <IconButton aria-label="grid" onClick={viewGrid}>
-                        <GridViewRoundedIcon sx={{color:( props.grid ? "#00579d": "") }} />
-                    </IconButton>
-                    <IconButton aria-label="list" onClick={viewList}>
-                        <ViewListRoundedIcon sx={{color:( !props.grid ? "#00579d": "") }}/>
-                    </IconButton>
+                    <GridIconButton aria-label="grid" onClick={toggleGrid}>
+                        {!props.grid ?
+                            <GridViewRoundedIcon sx={{ color: (!props.grid ? "#00579d" : "") }} />
+                            :
+                            <ViewListRoundedIcon sx={{ color: (props.grid ? "#00579d" : "") }} />
+                        }
+                    </GridIconButton>
+
                 </Grid>
             </ContainerGrid>
         </BoxContainerInput>

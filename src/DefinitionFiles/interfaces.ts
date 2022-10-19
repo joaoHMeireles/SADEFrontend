@@ -6,5 +6,6 @@ export interface ProcessComponentInterface {
     tamanho: processComponentSize,
     solicitante: string,
     status: processComponentStatus,
-    tipo: processComponent
+    tipo: processComponent,
+    score: number
 }
