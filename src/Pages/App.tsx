@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.scss";
-import Sidebar from "./Components/Sidebar/Sidebar";
-import Navbar from "./Components/Navbar/Navbar";
-import Toolbar from "./Components/Toolbar/Toolbar";
+import Sidebar from "../Components/Sidebar/Sidebar";
+import Navbar from "../Components/Navbar/Navbar";
+import Toolbar from "../Components/Toolbar/Toolbar";
+import Breadcrumb from "../Components/Breadcrumb/Breadcrumb";
+// import Filter from "../Components/Filter/Filter";
 import Login from "./Login/Login";
 import Home from "./Home/Home";
 import Notifications from "./Notifications/Notifications";
 import Chats from "./Chats/Chats";
-// import Filter from "./Components/Filter/Filter";
 import { Box } from "@mui/material";
 import { MainBox } from "./App.styles";
 import { ThemeProvider } from "@emotion/react";
-import { MainTheme, ContentTheme } from "./Themes";
-import Breadcrumb from "./Components/Breadcrumb/Breadcrumb";
+import { MainTheme, ContentTheme } from "../Themes";
 
 export default function App() {
   const [aberto, setAberto] = useState(false)

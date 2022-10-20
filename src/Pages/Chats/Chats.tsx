@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import Breadcrumb from "../Components/Breadcrumb/Breadcrumb";
-import Chat from "../Components/Chat/Chat";
+import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
+import Chat from "../../Components/Chat/Chat";
 
 export default function Chats() {
   return (
