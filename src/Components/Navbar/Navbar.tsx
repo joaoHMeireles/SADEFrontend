@@ -56,7 +56,6 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                         </Box>
                         <TextFieldBox>
                             <TextField
-                                id="standard-select-currency"
                                 select
                                 value={lingua}
                                 onChange={mudarLingua}

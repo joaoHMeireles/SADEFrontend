@@ -139,7 +139,7 @@ const openedMixin = (): CSSObject => ({
   minWidth: drawerWidth,
   color: "#595959",
   overflowX: 'hidden',
-  boxSizing: 'border-box',
+  boxSizing: 'border-box'
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
