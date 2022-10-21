@@ -1,12 +1,12 @@
 import Grid from '@mui/material/Grid'
-import { 
-    MainPaper, 
-    GridProccessColorBox, 
-    GridProccessComponent, 
-    GridTypography, 
+import {
+    MainPaper,
+    GridProccessColorBox,
+    GridProccessComponent,
+    GridTypography,
     ListProccessColorBox,
-    ListProccessComponent, 
-    ListTypography 
+    ListProccessComponent,
+    ListTypography
 } from './ProcessComponent.styles'
 import { processComponent } from '../../DefinitionFiles/enuns'
 import { ProcessComponentInterface } from '../../DefinitionFiles/interfaces'
@@ -17,7 +17,7 @@ import { ProcessComponentInterface } from '../../DefinitionFiles/interfaces'
  * @param props 
  * @returns 
  */
-export default function ProcessComponent(props: { grid: boolean, processComponentAtributes: ProcessComponentInterface, processCollectionComponentAtributes: string }) {
+export default function ProcessComponent(props: { grid: boolean, processComponentAtributes: ProcessComponentInterface }) {
     const componente = props.processComponentAtributes
     const corComponente = (componente.tipo == processComponent.Demanda ? "#00579d" : "#6aacda");
     const processElement = (props.grid ?
@@ -33,6 +33,7 @@ export default function ProcessComponent(props: { grid: boolean, processComponen
             </Grid>
         </MainPaper>
     )
+
 }
 
 /**
@@ -41,7 +42,7 @@ export default function ProcessComponent(props: { grid: boolean, processComponen
  * @param props 
  * @returns 
  */
-function GridComponent(props: { componente: ProcessComponentInterface, corComponente: string }) {
+function GridComponent(props: ComponentProps) {
 
     return (
         <>
@@ -53,10 +54,10 @@ function GridComponent(props: { componente: ProcessComponentInterface, corCompon
                     {props.componente.titulo}
                 </GridTypography>
                 <GridTypography variant='subtitle1' >
-                    Score: {props.componente.score}
+                    Solicitante: {props.componente.solicitante}
                 </GridTypography>
                 <GridTypography variant='subtitle1' >
-                    Solicitante: {props.componente.solicitante}
+                    Score: {props.componente.score}
                 </GridTypography>
                 <GridTypography variant='subtitle1' >
                     Status: {getNome(props.componente.status)}
@@ -75,7 +76,7 @@ function GridComponent(props: { componente: ProcessComponentInterface, corCompon
  * @param props 
  * @returns 
  */
-function ListComponent(props: { componente: ProcessComponentInterface, corComponente: string }) {
+function ListComponent(props: ComponentProps) {
 
     return (
         <>
@@ -86,11 +87,11 @@ function ListComponent(props: { componente: ProcessComponentInterface, corCompon
                 <ListTypography variant='subtitle1' sx={{ minWidth: "20vw" }}>
                     {props.componente.id} - {props.componente.titulo}
                 </ListTypography>
-                <ListTypography variant='subtitle2' sx={{ maxWidth: "8vw" }}>
-                    Score: {props.componente.score}
-                </ListTypography>
                 <ListTypography variant='subtitle2' >
                     Solicitante: {props.componente.solicitante}
+                </ListTypography>
+                <ListTypography variant='subtitle2' sx={{ maxWidth: "7.5vw" }}>
+                    Score: {props.componente.score}
                 </ListTypography>
                 <ListTypography variant='subtitle2' >
                     Status: {getNome(props.componente.status)}
@@ -119,4 +120,10 @@ function getNome(status: string) {
     }
 
     return (nomeStatus as any)[status]
+}
+
+
+interface ComponentProps {
+    componente: ProcessComponentInterface, 
+    corComponente: string
 }

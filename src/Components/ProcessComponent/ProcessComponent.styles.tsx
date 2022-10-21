@@ -19,7 +19,8 @@ export const GridProccessColorBox = styled(Box)({
 export const GridProccessComponent = styled(Grid)({
     display: "grid", 
     padding: "5px", 
-    color: "#595959"
+    color: "#595959",
+    // height: "19vh"
 })
 
 export const GridTypography = styled(Typography)({

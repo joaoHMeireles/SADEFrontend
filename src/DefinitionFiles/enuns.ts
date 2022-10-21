@@ -4,6 +4,11 @@ export enum processComponent {
     Rascunho = "Rascunho"
 }
 
+export enum processComponentCollection {
+    Pauta = "Pauta",
+    ATA = "ATA"
+}
+
 export enum processComponentSize {
     MuitoPequeno = "Muito Pequeno",
     Pequeno = "Pequeno",
