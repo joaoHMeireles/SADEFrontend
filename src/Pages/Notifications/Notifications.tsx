@@ -7,7 +7,7 @@ import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
-function Notifications() {
+export default function Notifications() {
   return (
     <Box sx={{ margin: "24px" }}>
       <Breadcrumb />
@@ -63,5 +63,3 @@ function Notifications() {
     </Box>
   );
 }
-
-export default Notifications;

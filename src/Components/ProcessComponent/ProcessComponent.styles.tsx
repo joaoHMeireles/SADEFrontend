@@ -3,6 +3,8 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import styled from '@emotion/styled'
+const styledBox = styled(Box)
+const styledGrid = styled(Grid)
 
 export const MainPaper = styled(Paper)({
     width: "90%", 
@@ -10,13 +12,13 @@ export const MainPaper = styled(Paper)({
     borderRadius: "5px"
 })
 
-export const GridProccessColorBox = styled(Box)({
+export const GridProccessColorBox = styledBox({
     width: "50%", 
     height: "100%", 
     borderRadius: "5px 0 0 5px"
 })
 
-export const GridProccessComponent = styled(Grid)({
+export const GridProccessComponent = styledGrid({
     display: "grid", 
     padding: "5px", 
     color: "#595959",
@@ -32,13 +34,13 @@ export const GridTypography = styled(Typography)({
     }
 })
 
-export const ListProccessColorBox = styled(Box)({
+export const ListProccessColorBox = styledBox({
     height: "100%", 
     borderRadius: "5px 0 0 5px", 
     maxWidth: "13px"
 })
 
-export const ListProccessComponent = styled(Grid)({
+export const ListProccessComponent = styledGrid({
     display: "flex", 
     padding: "5px", 
     color: "#595959", 

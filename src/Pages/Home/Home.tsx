@@ -1,15 +1,15 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { processComponent, processComponentCollection, processComponentSize, processComponentStatus } from '../../DefinitionFiles/enuns'
+import { ProcessComponentInterface, ProcessComponentCollectionInterface } from '../../DefinitionFiles/interfaces'
 import './Home.scss'
 import Searchbar from '../../Components/Searchbar/Searchbar'
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb'
 import ProcessComponent from '../../Components/ProcessComponent/ProcessComponent'
-import ProcessComponentCollection from '../../Components/ProcessComponentCollection/ProcessComponentCollection'
-import { ContentBox } from '../App.styles'
-import { processComponent, processComponentCollection, processComponentSize, processComponentStatus } from '../../DefinitionFiles/enuns'
-import { ProcessComponentInterface, ProcessComponentCollectionInterface } from '../../DefinitionFiles/interfaces'
+import ProcessComponentCollection from '../../Components/ProcessComponent/ProcessComponentCollection/ProcessComponentCollection'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
+import { ContentBox } from '../App.styles'
+import { ContainerBox } from "./Home.styles"
 
 const listaComponents: (ProcessComponentInterface | ProcessComponentCollectionInterface)[] = [
     {
@@ -164,6 +164,12 @@ const listaComponents: (ProcessComponentInterface | ProcessComponentCollectionIn
     }
 ]
 
+/**
+ * Componente da página de início
+ * 
+ * @param props 
+ * @returns 
+ */
 export default function Home(props: { filtrar: boolean, setFiltrar: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [grid, setGrid] = useState(true)
 
@@ -177,9 +183,9 @@ export default function Home(props: { filtrar: boolean, setFiltrar: React.Dispat
 
         return (
             <Grid key={e.id} item xs={(grid ? 4 : 12)}>
-                <Box sx={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <ContainerBox >
                     {componente}
-                </Box>
+                </ContainerBox>
             </Grid>
         )
     })
@@ -188,17 +194,23 @@ export default function Home(props: { filtrar: boolean, setFiltrar: React.Dispat
         <ContentBox >
             <Breadcrumb />
             <Searchbar setFiltrar={props.setFiltrar} filtrar={props.filtrar} grid={grid} setGrid={setGrid} />
-            <Box sx={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <ContainerBox>
                 <Box sx={{ width: "90%" }}>
                     <Grid container spacing={2}>
                         {processComponents}
                     </Grid>
                 </Box>
-            </Box>
+            </ContainerBox>
         </ContentBox>
     )
 }
 
+/**
+ * Função para ver se os dados passados são do tipo ProcessComponentInterface
+ * 
+ * @param data 
+ * @returns 
+ */
 function instanceOfProcessoComponent(data: any): data is ProcessComponentInterface {
     return 'titulo' in data;
 }

@@ -1,3 +1,5 @@
+import { processComponent } from '../../DefinitionFiles/enuns'
+import { ProcessComponentInterface } from '../../DefinitionFiles/interfaces'
 import Grid from '@mui/material/Grid'
 import Tooltip from '@mui/material/Tooltip'
 import {
@@ -9,8 +11,6 @@ import {
     ListProccessComponent,
     ListTypography
 } from './ProcessComponent.styles'
-import { processComponent } from '../../DefinitionFiles/enuns'
-import { ProcessComponentInterface } from '../../DefinitionFiles/interfaces'
 
 /**
  * Componente TSX de card e linha de um compoente de processo

@@ -17,11 +17,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
-import styles from './Sidebar.styles';
-const ListItem = styles.ListItem
-const ListItemButton = styles.ListItemButton
-const ListItemIcon = styles.ListItemIcon
-const Typography = styles.Typography
+import {ListItem, ListItemButton, ListItemIcon, Typography} from './Sidebar.styles';
 
 //listas de ícones e opções do menu
 const lista = [
@@ -84,6 +80,9 @@ const lista = [
   },
 ]
 
+//estilos próprios da aplicação que necessitam das variáveis aqui presentes
+let drawerWidth = "240";
+
 /**
  * Menu lateral principal do sistema
  * 
@@ -131,44 +130,6 @@ export default function MiniDrawer(props: { open: boolean, tamanho: string, setO
     </>
   );
 }
-
-//estilos próprios da aplicação que necessitam das variáveis aqui presentes
-let drawerWidth = "240";
-
-const openedMixin = (): CSSObject => ({
-  minWidth: drawerWidth,
-  color: "#595959",
-  overflowX: 'hidden',
-  boxSizing: 'border-box'
-});
-
-const closedMixin = (theme: Theme): CSSObject => ({
-  color: "#595959",
-  overflowX: 'hidden',
-  boxSizing: 'border-box',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    minWidth: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    zIndex: 1100,
-    ...(open && {
-      ...openedMixin(),
-      '& .MuiDrawer-paper': openedMixin(),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
-  }),
-);
 
 /**
  * Item do menu principal com links em dropdown
@@ -254,3 +215,39 @@ function MenuItem(props: { item: { id: number, nome: string, rota: string, icone
     </Link>
   )
 }
+
+
+const openedMixin = (): CSSObject => ({
+  minWidth: drawerWidth,
+  color: "#595959",
+  overflowX: 'hidden',
+  boxSizing: 'border-box'
+});
+
+const closedMixin = (theme: Theme): CSSObject => ({
+  color: "#595959",
+  overflowX: 'hidden',
+  boxSizing: 'border-box',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    minWidth: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    zIndex: 1100,
+    ...(open && {
+      ...openedMixin(),
+      '& .MuiDrawer-paper': openedMixin(),
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
+    }),
+  }),
+);

@@ -1,15 +1,16 @@
 import styled from "@emotion/styled";
-import MuiBox from "@mui/system/Box";
+import Box from "@mui/system/Box";
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+const styledBox = styled(Box)
 
-export const BoxRota = styled(MuiBox)({
+export const BoxRota = styledBox({
     display: "flex", 
     alignItems: "center", 
     justifyContent: "center"
 })
 
 
-export const BoxBreadcrumb = styled(MuiBox)({
+export const BoxBreadcrumb = styledBox({
     display: "flex"
 })
 
