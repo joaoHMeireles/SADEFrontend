@@ -1,7 +1,6 @@
 export enum processComponent {
     Demanda = "Demanda",
-    Proposta = "Proposta",
-    Rascunho = "Rascunho"
+    Proposta = "Proposta"
 }
 
 export enum processComponentCollection {

@@ -23,74 +23,12 @@ const listaComponents: (ProcessComponentInterface | ProcessComponentCollectionIn
     },
     {
         id: 2,
-        titulo: "titulozao pra ver como fica muito grande a responsividade da bagaça",
-        tamanho: processComponentSize.Grande,
-        solicitante: "esse aqui é legal",
-        status: processComponentStatus.Assesment,
-        tipo: processComponent.Demanda,
-        score: 12.5
-    },
-    {
-        id: 3,
-        titulo: "Demandinha de um cara legal",
-        tamanho: processComponentSize.MuitoGrande,
-        solicitante: "Jefferson Rodrigues",
-        status: processComponentStatus.Canceled,
-        tipo: processComponent.Proposta,
-        score: 12.5
-    },
-    {
-        id: 4,
-        titulo: "me da droga",
-        tamanho: processComponentSize.Medio,
-        solicitante: "um fia da puta ae 2",
-        status: processComponentStatus.BusinessCase,
-        tipo: processComponent.Proposta,
-        score: 12.5
-    },
-    {
-        id: 5,
         dataReuniao: new Date(),
-        comissao: "comission fodelastica aaaa",
+        comissao: "Comissao do diretor geral fodao matematico ultimate",
         tipo: processComponentCollection.Pauta,
         propostas: [
             {
-                id: 4,
-                titulo: "me da droga",
-                tamanho: processComponentSize.Medio,
-                solicitante: "um fia da puta ae 2",
-                status: processComponentStatus.BusinessCase,
-                tipo: processComponent.Proposta,
-                score: 12.5
-            },
-            {
-                id: 2,
-                titulo: "titulozao pra ver como fica muito grande a responsividade da bagaça",
-                tamanho: processComponentSize.Grande,
-                solicitante: "esse aqui é legal",
-                status: processComponentStatus.Assesment,
-                tipo: processComponent.Demanda,
-                score: 12.5
-            }
-        ]
-    },
-    {
-        id: 6,
-        titulo: "lerolerolerolero",
-        tamanho: processComponentSize.Pequeno,
-        solicitante: "um fia da puta ae",
-        status: processComponentStatus.Backlog,
-        tipo: processComponent.Demanda,
-        score: 12.5
-    },
-    {
-        id: 7,
-        dataReuniao: new Date(),
-        comissao: "Uma comissão doida lá",
-        tipo: processComponentCollection.ATA,
-        propostas: [
-            {
-                id: 1,
+                id: 7,
                 titulo: "lerolerolerolero",
                 tamanho: processComponentSize.Pequeno,
                 solicitante: "um fia da puta ae",
@@ -99,7 +37,7 @@ const listaComponents: (ProcessComponentInterface | ProcessComponentCollectionIn
                 score: 12.5
             },
             {
-                id: 7,
+                id: 9,
                 titulo: "eu quero janta de 3 horas",
                 tamanho: processComponentSize.Pequeno,
                 solicitante: "um gênio",
@@ -110,12 +48,118 @@ const listaComponents: (ProcessComponentInterface | ProcessComponentCollectionIn
         ]
     },
     {
+        id: 3,
+        titulo: "titulozao pra ver como fica muito grande a responsividade da bagaça",
+        tamanho: processComponentSize.Grande,
+        solicitante: "esse aqui é legal",
+        status: processComponentStatus.Assesment,
+        tipo: processComponent.Demanda,
+        score: 12.5
+    },
+    {
+        id: 4,
+        titulo: "Demandinha de um cara legal",
+        tamanho: processComponentSize.MuitoGrande,
+        solicitante: "Jefferson Rodrigues",
+        status: processComponentStatus.Canceled,
+        tipo: processComponent.Proposta,
+        score: 12.5
+    },
+    {
+        id: 5,
+        titulo: "me da droga",
+        tamanho: processComponentSize.Medio,
+        solicitante: "um fia da puta ae caraiudo",
+        status: processComponentStatus.BusinessCase,
+        tipo: processComponent.Proposta,
+        score: 12.5
+    },
+    {
+        id: 6,
+        dataReuniao: new Date(),
+        comissao: "comission fodelastica aaaa",
+        tipo: processComponentCollection.Pauta,
+        propostas: [
+            {
+                id: 5,
+                titulo: "me da droga",
+                tamanho: processComponentSize.Medio,
+                solicitante: "um fia da puta ae 2",
+                status: processComponentStatus.BusinessCase,
+                tipo: processComponent.Proposta,
+                score: 12.5
+            },
+            {
+                id: 3,
+                titulo: "titulozao pra ver como fica muito grande a responsividade da bagaça",
+                tamanho: processComponentSize.Grande,
+                solicitante: "esse aqui é legal",
+                status: processComponentStatus.Assesment,
+                tipo: processComponent.Demanda,
+                score: 12.5
+            },
+            {
+                id: 4,
+                titulo: "Demandinha de um cara legal",
+                tamanho: processComponentSize.MuitoGrande,
+                solicitante: "Jefferson Rodrigues",
+                status: processComponentStatus.Canceled,
+                tipo: processComponent.Proposta,
+                score: 12.5
+            },
+            {
+                id: 1,
+                titulo: "primeiro titulo ae",
+                tamanho: processComponentSize.Pequeno,
+                solicitante: "um fia da puta ae",
+                status: processComponentStatus.Backlog,
+                tipo: processComponent.Demanda,
+                score: 12.5
+            }
+        ]
+    },
+    {
+        id: 7,
+        titulo: "lerolerolerolero",
+        tamanho: processComponentSize.Pequeno,
+        solicitante: "um fia da puta ae",
+        status: processComponentStatus.Backlog,
+        tipo: processComponent.Demanda,
+        score: 12.5
+    },
+    {
         id: 8,
+        dataReuniao: new Date(),
+        comissao: "Uma comissão doida lá",
+        tipo: processComponentCollection.ATA,
+        propostas: [
+            {
+                id: 7,
+                titulo: "lerolerolerolero",
+                tamanho: processComponentSize.Pequeno,
+                solicitante: "um fia da puta ae",
+                status: processComponentStatus.Backlog,
+                tipo: processComponent.Demanda,
+                score: 12.5
+            },
+            {
+                id: 9,
+                titulo: "eu quero janta de 3 horas",
+                tamanho: processComponentSize.Pequeno,
+                solicitante: "um gênio",
+                status: processComponentStatus.Backlog,
+                tipo: processComponent.Demanda,
+                score: 10000
+            }
+        ]
+    },
+    {
+        id: 9,
         titulo: "eu quero janta de 3 horas",
         tamanho: processComponentSize.Pequeno,
         solicitante: "um gênio",
         status: processComponentStatus.Backlog,
-        tipo: processComponent.Demanda,
+        tipo: processComponent.Proposta,
         score: 10000
     }
 ]

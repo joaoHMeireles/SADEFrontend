@@ -4,7 +4,6 @@ import "./App.scss";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import Navbar from "../Components/Navbar/Navbar";
 import Toolbar from "../Components/Toolbar/Toolbar";
-import Breadcrumb from "../Components/Breadcrumb/Breadcrumb";
 // import Filter from "../Components/Filter/Filter";
 import Login from "./Login/Login";
 import Home from "./Home/Home";
@@ -24,9 +23,14 @@ export default function App() {
   useEffect(() => {
     if (aberto) {
       setTamanhoSideBar("220");
+      // setFiltrar(false)
     } else {
       setTamanhoSideBar("65");
     }
+
+    // if(filtrar){
+    //   setAberto(false)
+    // }
   });
 
   return (

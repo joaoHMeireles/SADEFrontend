@@ -20,13 +20,16 @@ export const GridProccessComponent = styled(Grid)({
     display: "grid", 
     padding: "5px", 
     color: "#595959",
-    // height: "19vh"
+    height: "21vh"
 })
 
 export const GridTypography = styled(Typography)({
     textOverflow: "ellipsis", 
     whiteSpace: "nowrap", 
-    overflow: "hidden"
+    overflow: "hidden",
+    '& span': {
+        fontWeight: '500'
+    }
 })
 
 export const ListProccessColorBox = styled(Box)({

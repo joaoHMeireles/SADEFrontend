@@ -1,4 +1,5 @@
 import Grid from '@mui/material/Grid'
+import Tooltip from '@mui/material/Tooltip'
 import {
     MainPaper,
     GridProccessColorBox,
@@ -19,11 +20,18 @@ import { ProcessComponentInterface } from '../../DefinitionFiles/interfaces'
  */
 export default function ProcessComponent(props: { grid: boolean, processComponentAtributes: ProcessComponentInterface }) {
     const componente = props.processComponentAtributes
-    const corComponente = (componente.tipo == processComponent.Demanda ? "#00579d" : "#6aacda");
+    let corComponente, tituloToolTip
+    if (componente.tipo == processComponent.Demanda) {
+        corComponente = "#00579d"
+        tituloToolTip = "Demanda"
+    } else {
+        corComponente = "#6aacda"
+        tituloToolTip = "Proposta"
+    }
     const processElement = (props.grid ?
-        <GridComponent componente={componente} corComponente={corComponente} />
+        <GridComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} />
         :
-        <ListComponent componente={componente} corComponente={corComponente} />
+        <ListComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} />
     )
 
     return (
@@ -37,7 +45,7 @@ export default function ProcessComponent(props: { grid: boolean, processComponen
 }
 
 /**
- * Foramtação do componente caso ele esteja em formato de card, ou seja, em grid
+ * Formatação do componente caso ele esteja em formato de card, ou seja, em grid
  * 
  * @param props 
  * @returns 
@@ -46,24 +54,26 @@ function GridComponent(props: ComponentProps) {
 
     return (
         <>
-            <Grid item xs={1}>
-                <GridProccessColorBox sx={{ backgroundColor: props.corComponente }} />
-            </Grid>
+            <Tooltip title={props.tituloToolTip} placement="left">
+                <Grid item xs={1}>
+                    <GridProccessColorBox sx={{ backgroundColor: props.corComponente }} />
+                </Grid>
+            </Tooltip>
             <GridProccessComponent item xs={11}>
                 <GridTypography variant='h6' >
                     {props.componente.titulo}
                 </GridTypography>
                 <GridTypography variant='subtitle1' >
-                    Solicitante: {props.componente.solicitante}
+                    <span>Solicitante:</span> {props.componente.solicitante}
                 </GridTypography>
                 <GridTypography variant='subtitle1' >
-                    Score: {props.componente.score}
+                    <span>Score:</span> {props.componente.score}
                 </GridTypography>
                 <GridTypography variant='subtitle1' >
-                    Status: {getNome(props.componente.status)}
+                    <span>Status:</span> {getNome(props.componente.status)}
                 </GridTypography>
                 <GridTypography variant='subtitle1' >
-                    Tamanho: {props.componente.tamanho}
+                    <span>Tamanho:</span> {props.componente.tamanho}
                 </GridTypography>
             </GridProccessComponent>
         </>
@@ -80,24 +90,26 @@ function ListComponent(props: ComponentProps) {
 
     return (
         <>
-            <Grid item xs={0.3}>
-                <ListProccessColorBox sx={{ backgroundColor: props.corComponente }} />
-            </Grid>
+            <Tooltip title={props.tituloToolTip} placement="left">
+                <Grid item xs={0.3}>
+                    <ListProccessColorBox sx={{ backgroundColor: props.corComponente }} />
+                </Grid>
+            </Tooltip>
             <ListProccessComponent item xs={11.7}>
                 <ListTypography variant='subtitle1' sx={{ minWidth: "20vw" }}>
                     {props.componente.id} - {props.componente.titulo}
                 </ListTypography>
                 <ListTypography variant='subtitle2' >
-                    Solicitante: {props.componente.solicitante}
+                    <span>Solicitante:</span> {props.componente.solicitante}
                 </ListTypography>
                 <ListTypography variant='subtitle2' sx={{ maxWidth: "7.5vw" }}>
-                    Score: {props.componente.score}
+                    <span>Score:</span> {props.componente.score}
                 </ListTypography>
                 <ListTypography variant='subtitle2' >
-                    Status: {getNome(props.componente.status)}
+                    <span>Status:</span> {getNome(props.componente.status)}
                 </ListTypography>
                 <ListTypography variant='subtitle2' >
-                    Tamanho: {props.componente.tamanho}
+                    <span>Tamanho:</span> {props.componente.tamanho}
                 </ListTypography>
             </ListProccessComponent>
         </>
@@ -122,8 +134,11 @@ function getNome(status: string) {
     return (nomeStatus as any)[status]
 }
 
-
+/**
+ * Interface base para as propriedados de um Grid ou List Component
+ */
 interface ComponentProps {
-    componente: ProcessComponentInterface, 
+    componente: ProcessComponentInterface,
     corComponente: string
+    tituloToolTip: string
 }
