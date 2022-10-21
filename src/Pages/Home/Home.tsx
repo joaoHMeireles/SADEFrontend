@@ -8,8 +8,7 @@ import ProcessComponent from '../../Components/ProcessComponent/ProcessComponent
 import ProcessComponentCollection from '../../Components/ProcessComponent/ProcessComponentCollection/ProcessComponentCollection'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-import { ContentBox } from '../App.styles'
-import { ContainerBox } from "./Home.styles"
+import { ContentBox, ContainerBox } from '../App.styles'
 
 const listaComponents: (ProcessComponentInterface | ProcessComponentCollectionInterface)[] = [
     {

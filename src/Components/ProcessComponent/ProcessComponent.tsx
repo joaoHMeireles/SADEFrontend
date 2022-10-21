@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { processComponent } from '../../DefinitionFiles/enuns'
 import { ProcessComponentInterface } from '../../DefinitionFiles/interfaces'
 import Grid from '@mui/material/Grid'
@@ -11,6 +12,7 @@ import {
     ListProccessComponent,
     ListTypography
 } from './ProcessComponent.styles'
+import { Box } from '@mui/material'
 
 /**
  * Componente TSX de card e linha de um compoente de processo
@@ -51,6 +53,10 @@ export default function ProcessComponent(props: { grid: boolean, processComponen
  * @returns 
  */
 function GridComponent(props: ComponentProps) {
+    const linkComponente = `/${props.componente.tipo}/${props.componente.id}?id-demand=${props.componente.id}`
+
+    console.log(linkComponente);
+
 
     return (
         <>
@@ -72,8 +78,15 @@ function GridComponent(props: ComponentProps) {
                 <GridTypography variant='subtitle1' >
                     <span>Status:</span> {getNome(props.componente.status)}
                 </GridTypography>
-                <GridTypography variant='subtitle1' >
-                    <span>Tamanho:</span> {props.componente.tamanho}
+                <GridTypography variant='subtitle1' sx={{display: "flex"}}>
+
+                    {/* Têm de diminuir o tamanho do ver mais, ver como fazer para a lista e 
+                    adicionar a funcionalidade nas coleções de processos também */}
+
+                    <Box sx={{width: "70%", margin: "none"}}>
+                        <span>Tamanho:</span> {props.componente.tamanho}
+                    </Box>
+                    <Link to={linkComponente} >Ver mais</Link>
                 </GridTypography>
             </GridProccessComponent>
         </>

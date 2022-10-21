@@ -7,6 +7,7 @@ import Toolbar from "../Components/Toolbar/Toolbar";
 // import Filter from "../Components/Filter/Filter";
 import Login from "./Login/Login";
 import Home from "./Home/Home";
+import ProcessComponent from "./ProcessComponent/ProcessComponent";
 import Notifications from "./Notifications/Notifications";
 import Chats from "./Chats/Chats";
 import { Box } from "@mui/material";
@@ -56,6 +57,7 @@ export default function App() {
                 <Route path="/chats" element={<Chats />}></Route>
                 <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} />} />
                 <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar}/>} />
+                <Route path="/demand/:id" element={<ProcessComponent tipo={"demanda"}/>} />
               </Routes>
             </ThemeProvider>
           </MainBox>

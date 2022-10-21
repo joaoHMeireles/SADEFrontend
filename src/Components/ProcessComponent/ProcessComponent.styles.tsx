@@ -26,6 +26,10 @@ export const GridProccessComponent = styledGrid({
 })
 
 export const GridTypography = styled(Typography)({
+    '& a':{
+        
+        // color: "#595959"
+    },
     textOverflow: "ellipsis", 
     whiteSpace: "nowrap", 
     overflow: "hidden",
