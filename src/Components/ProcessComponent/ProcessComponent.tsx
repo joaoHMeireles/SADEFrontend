@@ -3,16 +3,19 @@ import { processComponent } from '../../DefinitionFiles/enuns'
 import { ProcessComponentInterface } from '../../DefinitionFiles/interfaces'
 import Grid from '@mui/material/Grid'
 import Tooltip from '@mui/material/Tooltip'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import {
     MainPaper,
     GridProccessColorBox,
     GridProccessComponent,
     GridTypography,
+    GridLinkTypograpfy,
     ListProccessColorBox,
     ListProccessComponent,
-    ListTypography
+    ListTypography,
+    LastListTypography
 } from './ProcessComponent.styles'
-import { Box } from '@mui/material'
 
 /**
  * Componente TSX de card e linha de um compoente de processo
@@ -22,18 +25,20 @@ import { Box } from '@mui/material'
  */
 export default function ProcessComponent(props: { grid: boolean, processComponentAtributes: ProcessComponentInterface }) {
     const componente = props.processComponentAtributes
-    let corComponente, tituloToolTip
+    let corComponente, tituloToolTip, nomeTipoLink
     if (componente.tipo == processComponent.Demanda) {
         corComponente = "#00579d"
         tituloToolTip = "Demanda"
+        nomeTipoLink = `/${componente.tipo}/${componente.id}?id-demand=${componente.id}`
     } else {
         corComponente = "#6aacda"
         tituloToolTip = "Proposta"
+        nomeTipoLink = `/${componente.tipo}/${componente.id}?id-proposal=${componente.id}`
     }
     const processElement = (props.grid ?
-        <GridComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} />
+        <GridComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink}/>
         :
-        <ListComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} />
+        <ListComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink}/>
     )
 
     return (
@@ -53,11 +58,7 @@ export default function ProcessComponent(props: { grid: boolean, processComponen
  * @returns 
  */
 function GridComponent(props: ComponentProps) {
-    const linkComponente = `/${props.componente.tipo}/${props.componente.id}?id-demand=${props.componente.id}`
-
-    console.log(linkComponente);
-
-
+    
     return (
         <>
             <Tooltip title={props.tituloToolTip} placement="left">
@@ -78,15 +79,17 @@ function GridComponent(props: ComponentProps) {
                 <GridTypography variant='subtitle1' >
                     <span>Status:</span> {getNome(props.componente.status)}
                 </GridTypography>
-                <GridTypography variant='subtitle1' sx={{display: "flex"}}>
+                <GridTypography variant='subtitle1' sx={{ display: "flex" }}>
 
                     {/* Têm de diminuir o tamanho do ver mais, ver como fazer para a lista e 
                     adicionar a funcionalidade nas coleções de processos também */}
 
-                    <Box sx={{width: "70%", margin: "none"}}>
+                    <Box sx={{ width: "70%", margin: "none" }}>
                         <span>Tamanho:</span> {props.componente.tamanho}
                     </Box>
-                    <Link to={linkComponente} >Ver mais</Link>
+                    <GridLinkTypograpfy variant='body2'>
+                        <Link to={props.linkComponente} >Ver mais</Link>
+                    </GridLinkTypograpfy>
                 </GridTypography>
             </GridProccessComponent>
         </>
@@ -100,7 +103,7 @@ function GridComponent(props: ComponentProps) {
  * @returns 
  */
 function ListComponent(props: ComponentProps) {
-
+    
     return (
         <>
             <Tooltip title={props.tituloToolTip} placement="left">
@@ -121,9 +124,9 @@ function ListComponent(props: ComponentProps) {
                 <ListTypography variant='subtitle2' >
                     <span>Status:</span> {getNome(props.componente.status)}
                 </ListTypography>
-                <ListTypography variant='subtitle2' >
-                    <span>Tamanho:</span> {props.componente.tamanho}
-                </ListTypography>
+                <LastListTypography variant='body2' >
+                    <Link to={props.linkComponente} >Ver mais</Link>
+                </LastListTypography>
             </ListProccessComponent>
         </>
     )
@@ -154,4 +157,5 @@ interface ComponentProps {
     componente: ProcessComponentInterface,
     corComponente: string
     tituloToolTip: string
+    linkComponente: string
 }
