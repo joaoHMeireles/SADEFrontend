@@ -21,6 +21,9 @@ export default function Chat(props: {
           backgroundColor: "#EEEEEE",
           borderRadius: "5px",
           marginY: 3,
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
         }}
       >
         <Box

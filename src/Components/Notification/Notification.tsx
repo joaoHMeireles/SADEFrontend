@@ -23,6 +23,9 @@ export default function Notification(props: {
           backgroundColor: "#EEEEEE",
           borderRadius: "5px",
           margin: 2,
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
         }}
       >
         <Box
@@ -33,7 +36,7 @@ export default function Notification(props: {
             alignItems: "center",
           }}
         >
-          <Box className="containerIconEsquerdo" sx={{marginX: 3}}>
+          <Box className="containerIconEsquerdo" sx={{ marginX: 3 }}>
             <props.Icone sx={{ color: "#595959" }}></props.Icone>
           </Box>
           <Box className="containerConteudo">
