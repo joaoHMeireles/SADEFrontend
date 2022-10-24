@@ -4,12 +4,12 @@ import "./App.scss";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import Navbar from "../Components/Navbar/Navbar";
 import Toolbar from "../Components/Toolbar/Toolbar";
-// import Filter from "../Components/Filter/Filter";
 import Login from "./Login/Login";
 import Home from "./Home/Home";
 import ProcessComponent from "./ProcessComponent/ProcessComponent";
 import Notifications from "./Notifications/Notifications";
 import Chats from "./Chats/Chats";
+import Filter from "../Components/Filter/Filter";
 import { Box } from "@mui/material";
 import { MainBox } from "./App.styles";
 import { ThemeProvider } from "@emotion/react";
@@ -24,14 +24,9 @@ export default function App() {
   useEffect(() => {
     if (aberto) {
       setTamanhoSideBar("220");
-      // setFiltrar(false)
     } else {
       setTamanhoSideBar("65");
     }
-
-    // if(filtrar){
-    //   setAberto(false)
-    // }
   });
 
   return (
@@ -61,7 +56,7 @@ export default function App() {
               </Routes>
             </ThemeProvider>
           </MainBox>
-          {/* <Filter /> */}
+          <Filter open={filtrar} setOpen={setFiltrar}/>
         </Box>
       </ThemeProvider>
     </BrowserRouter>

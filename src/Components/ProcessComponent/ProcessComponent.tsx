@@ -14,7 +14,8 @@ import {
     ListProccessColorBox,
     ListProccessComponent,
     ListTypography,
-    LastListTypography
+    LastListTypography,
+    BoxCollectionComponent
 } from './ProcessComponent.styles'
 
 /**
@@ -80,13 +81,9 @@ function GridComponent(props: ComponentProps) {
                     <span>Status:</span> {getNome(props.componente.status)}
                 </GridTypography>
                 <GridTypography variant='subtitle1' sx={{ display: "flex" }}>
-
-                    {/* Têm de diminuir o tamanho do ver mais, ver como fazer para a lista e 
-                    adicionar a funcionalidade nas coleções de processos também */}
-
-                    <Box sx={{ width: "70%", margin: "none" }}>
+                    <BoxCollectionComponent>
                         <span>Tamanho:</span> {props.componente.tamanho}
-                    </Box>
+                    </BoxCollectionComponent>
                     <GridLinkTypograpfy variant='body2'>
                         <Link to={props.linkComponente} >Ver mais</Link>
                     </GridLinkTypograpfy>
