@@ -15,10 +15,12 @@ import InputRoundedIcon from "@mui/icons-material/InputRounded";
 
 function Login(props: {
   setAberto: React.Dispatch<React.SetStateAction<boolean>>;
+  setFiltro: React.Dispatch<React.SetStateAction<boolean>>;
   tamanhoNavbar: string;
 }) {
   useEffect(() => {
     props.setAberto(false);
+    props.setFiltro(false);
   });
 
   function colocaPessoa() {

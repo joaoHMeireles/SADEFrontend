@@ -49,11 +49,11 @@ export default function App() {
             <Toolbar />
             <ThemeProvider theme={ContentTheme}>
               <Routes>
-                <Route path="/notifications" element={<Notifications />} />
-                <Route path="/chats" element={<Chats />}></Route>
-                <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} />} />
+                <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar}/>} />
                 <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar}/>} />
                 <Route path="/demand/:id" element={<ProcessComponent tipo={"demanda"}/>} />
+                <Route path="/notifications" element={<Notifications />} />
+                <Route path="/chats" element={<Chats />}></Route>
               </Routes>
             </ThemeProvider>
           </MainBox>
