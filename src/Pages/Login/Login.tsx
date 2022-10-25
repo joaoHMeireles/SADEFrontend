@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Login.scss";
+import logo from "../../Assets/wegLogo.png";
 import {
   Box,
   InputAdornment,
@@ -29,29 +30,38 @@ function Login(props: {
     <>
       <Box
         id="login"
-        sx={{ position: "relative", top: `-${props.tamanhoNavbar}` }}
       >
         <Box
           sx={{
             width: "100%",
             height: "100%",
             display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
+            justifyContent: "space-between"
           }}
         >
+          <Box sx={{
+            display: "flex",
+            justifyContent: "start",
+            alignItems: "flex-start",
+            padding: 3
+          }}>
+            <img className="imagemLogo" src={logo} alt="logoWeg" />
+          </Box>
           <Box
             sx={{
-              width: "30%",
+              width: "35%",
               height: "75%",
-              //   display: "flex",
-              //   justifyContent: "space-around",
-              //   alignItems: "center",
-              //   flexDirection: "column",
-              backgroundColor: "#00579D",
-              opacity: "75%",
+              display: "flex",
+              justifyContent: "space-around",
+              alignItems: "center",
+              flexDirection: "column",
+              backgroundColor: "#FFFFFF",
+              opacity: "30%",
               borderRadius: "5px",
-              marginRight: 20,
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              marginRight: 10,
             }}
           >
             <Box
@@ -62,17 +72,18 @@ function Login(props: {
                 flexDirection: "column",
                 marginTop: 3,
                 marginBottom: 10,
+                // color: "#ffffffff"
               }}
             >
               <Typography
-                sx={{ color: "#ffffffff", marginBottom: 2 }}
+                sx={{ marginBottom: 2 }}
                 variant="h4"
                 component="h1"
               >
-                Bem vindo!
+                Bem vindo ao SOD!
               </Typography>
-              <Typography sx={{ color: "#ffffffff" }}>
-                Que bom te ver de novo...
+              <Typography>
+                Sistema Sustentável de Organização de Demandas de TI
               </Typography>
             </Box>
             <Box
@@ -164,11 +175,12 @@ function Login(props: {
                     height: "25%",
                     backgroundColor: "#00579D",
                     textDecoration: "none",
+                    color: "#fffffff"
                   }}
                   variant="contained"
                   startIcon={<InputRoundedIcon />}
                 >
-                  <Link onClick={colocaPessoa} to="/home">
+                  <Link className="textBotao" onClick={colocaPessoa} to="/home">
                     Entrar
                   </Link>
                 </Button>
