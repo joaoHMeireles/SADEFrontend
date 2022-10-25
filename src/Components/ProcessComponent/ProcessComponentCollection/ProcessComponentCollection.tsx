@@ -101,7 +101,7 @@ function GridComponent(props: ComponentCollectionProps) {
  */
 function ListComponent(props: ComponentCollectionProps) {
     const propostas = props.listaPropostas.map((e, index) => {
-        if (index >= 3) {
+        if (index >= 2) {
             return null
         }
         return (
@@ -122,14 +122,14 @@ function ListComponent(props: ComponentCollectionProps) {
                 <ListTypography variant='subtitle1' sx={{ minWidth: "20vw" }}>
                     {props.componente.id} - {props.componente.comissao}
                 </ListTypography>
-                <ListTypography variant='subtitle2'  sx={{ minWidth: "14.7vw" }}>
+                <ListTypography variant='subtitle2'  sx={{ minWidth: "14.3vw" }}>
                     <span> Data: </span> {props.componente.dataReuniao.toLocaleDateString()}
                 </ListTypography>
                 <ListTypography variant='subtitle2' sx={{ maxWidth: "8vw" }}>
                     <span> Propostas: </span>
                 </ListTypography>
                 {propostas}
-                <LastListTypography variant='body2'>
+                <LastListTypography variant='body2' sx={{maxWidth: "8.5vw"}}>
                     <Link to={props.linkComponente} >Ver mais</Link>
                 </LastListTypography>
                 {/* fazer uma linha listando as propostas até chegar no limite dalinha */}

@@ -17,7 +17,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
-import {ListItem, ListItemButton, ListItemIcon, Typography} from './Sidebar.styles';
+import { ListItem, ListItemButton, ListItemIcon, Typography } from './Sidebar.styles';
 
 //listas de ícones e opções do menu
 const lista = [
@@ -105,27 +105,28 @@ export default function MiniDrawer(props: { open: boolean, tamanho: string, setO
 
   return (
     <>
-      {location.pathname != "/" && <Drawer variant="permanent" open={props.open}>
-        <Toolbar variant="dense" />
-        <List>
-          {itensMenu}
-        </List>
-        {/* arrumar a posição dessa budega de logout */}
-        <Box sx={{ width: "100%", height: "100%", display: "flex", alignItems: "flex-end" }}>
-          <Box sx={{ width: "50%", paddingBottom: "3rem", paddingLeft: "1rem", display: "flex", justifyContent: "space-around" }}>
-            <Link to="/" className="link">
-              <Box sx={{ width: "20px", height: "20px" }}>
-                <Icon>
-                  <LogoutRoundedIcon />
-                </Icon>
-              </Box>
-              {props.open &&
-                `Sair`
-              }
-            </Link>
+      {location.pathname != "/" &&
+        <Drawer variant="permanent" open={props.open}>
+          <Toolbar variant="dense" />
+          <List>
+            {itensMenu}
+          </List>
+          {/* arrumar a posição dessa budega de logout */}
+          <Box sx={{ width: "100%", height: "100%", display: "flex", alignItems: "flex-end" }}>
+            <Box sx={{ width: "50%", paddingBottom: "3rem", paddingLeft: "1rem", display: "flex", justifyContent: "space-around" }}>
+              <Link to="/" className="link">
+                <Box sx={{ width: "20px", height: "20px" }}>
+                  <Icon>
+                    <LogoutRoundedIcon />
+                  </Icon>
+                </Box>
+                {props.open &&
+                  `Sair`
+                }
+              </Link>
+            </Box>
           </Box>
-        </Box>
-      </Drawer>
+        </Drawer>
       }
     </>
   );

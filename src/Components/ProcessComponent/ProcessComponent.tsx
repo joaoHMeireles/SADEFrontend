@@ -121,7 +121,7 @@ function ListComponent(props: ComponentProps) {
                 <ListTypography variant='subtitle2' >
                     <span>Status:</span> {getNome(props.componente.status)}
                 </ListTypography>
-                <LastListTypography variant='body2' >
+                <LastListTypography variant='body2' sx={{maxWidth: "10vw"}}>
                     <Link to={props.linkComponente} >Ver mais</Link>
                 </LastListTypography>
             </ListProccessComponent>
