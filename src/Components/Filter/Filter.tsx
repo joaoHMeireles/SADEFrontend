@@ -15,12 +15,13 @@ const Drawer = styled(MuiDrawer)(({ theme }) => ({
     zIndex: 1100,
 }));
 
-export default function Filter(props: { open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function Filter(props: { open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>>, setSidebar: React.Dispatch<React.SetStateAction<boolean>>}) {
     const [drawerWidth, setDrawerWidth] = useState("0px")
 
     useEffect(() => {
         if(props.open){
             setDrawerWidth("240px")
+            props.setSidebar(false)
         } else {
             setDrawerWidth("0px")
         }

@@ -24,12 +24,13 @@ const listaLinguas = [
  * @param props 
  * @returns 
  */
-export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
+export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<React.SetStateAction<boolean>> ,tamanhoNavbar: string }) {
     const [lingua, setLingua] = useState("Português")
     const path = useLocation()
 
     function mudarSidebar() {
         props.setAberto(!props.aberto)
+        props.setFiltro(false)
     }
 
     const mudarLingua = (event: React.ChangeEvent<HTMLInputElement>) => {

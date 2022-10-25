@@ -36,6 +36,7 @@ export default function App() {
           aberto={aberto}
           setAberto={setAberto}
           tamanhoNavbar={tamanhoNavbar}
+          setFiltro={setFiltrar}
         />
         <Box
           sx={{
@@ -56,7 +57,7 @@ export default function App() {
               </Routes>
             </ThemeProvider>
           </MainBox>
-          <Filter open={filtrar} setOpen={setFiltrar}/>
+          <Filter open={filtrar} setOpen={setFiltrar} setSidebar={setAberto}/>
         </Box>
       </ThemeProvider>
     </BrowserRouter>
