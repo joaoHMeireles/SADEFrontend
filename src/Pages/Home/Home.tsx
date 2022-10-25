@@ -6,9 +6,14 @@ import Searchbar from '../../Components/Searchbar/Searchbar'
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb'
 import ProcessComponent from '../../Components/ProcessComponent/ProcessComponent'
 import ProcessComponentCollection from '../../Components/ProcessComponent/ProcessComponentCollection/ProcessComponentCollection'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import { ContentBox, ContainerBox } from '../App.styles'
+import { 
+    Grid, 
+    Box 
+} from '@mui/material'
+import {
+    ContentBox,
+    ContainerBox
+} from '../App.styles'
 
 const listaComponents: (ProcessComponentInterface | ProcessComponentCollectionInterface)[] = [
     {

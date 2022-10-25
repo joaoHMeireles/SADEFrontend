@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 import { processComponent } from '../../DefinitionFiles/enuns'
 import { ProcessComponentInterface } from '../../DefinitionFiles/interfaces'
-import Grid from '@mui/material/Grid'
-import Tooltip from '@mui/material/Tooltip'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { 
+    Grid,
+    Tooltip 
+} from '@mui/material'
 import {
     MainPaper,
     GridProccessColorBox,

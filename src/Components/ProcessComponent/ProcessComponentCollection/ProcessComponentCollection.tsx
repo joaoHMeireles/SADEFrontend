@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { processComponentCollection } from '../../../DefinitionFiles/enuns'
 import { ProcessComponentInterface, ProcessComponentCollectionInterface } from "../../../DefinitionFiles/interfaces";
-import Grid from '@mui/material/Grid';
-import Tooltip from '@mui/material/Tooltip';
+import { 
+    Grid,
+    Tooltip 
+} from '@mui/material'
 import {
     MainPaper,
     GridProccessColorBox,
@@ -15,8 +17,6 @@ import {
     LastListTypography,
     BoxCollectionComponent
 } from '../ProcessComponent.styles'
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 /**
  * Componente TSX de card e linha de uma coleção de compoentes de processo

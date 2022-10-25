@@ -1,19 +1,27 @@
 import { useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import MuiDrawer from "@mui/material/Drawer";
-import Toolbar from "@mui/material/Toolbar";
-import { Checkbox, Collapse, Divider, FormGroup, Grid, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+import { useLocation } from "react-router-dom";
+import {
+  Box,
+  Checkbox,
+  Collapse,
+  Divider,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  IconButton,
+  InputAdornment,
+  Radio,
+  RadioGroup,
+  TextField,
+  Toolbar
+} from "@mui/material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import { Location, useLocation } from "react-router-dom";
+import { FilterDrawer, ItemHeaderBox, ItemHeaderTypography } from "./Filter.styles";
 
+
+//listas base para os itens do filtros
 const tiposDeComponentes = [
   {
     id: 1,
@@ -117,6 +125,12 @@ const status = [
   },
 ];
 
+/**
+ * Componente principal do filtro utilizado nas páginas
+ * 
+ * @param props 
+ * @returns 
+ */
 export default function Filter(props: {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -140,32 +154,40 @@ export default function Filter(props: {
 
   return (
     <>
-      {location.pathname != "/" && <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
+      {location.pathname != "/" &&
+        <FilterDrawer
+          sx={{
             width: drawerWidth,
-          },
-        }}
-        variant="persistent"
-        anchor="right"
-        open={props.open}
-      >
-        <Toolbar variant="dense" sx={{ marginBottom: "10px" }} />
-        <Item itens={tiposDeComponentes} titulo="Tipo" tipo={1} />
-        <Item itens={[]} titulo="Código PPM" tipo={3} />
-        <Item itens={[]} titulo="Número" tipo={3} />
-        <Item itens={foruns} titulo="Fórum" tipo={2} />
-        <Item itens={departamentos} titulo="Departamento" tipo={2} />
-        <Item itens={tamanhos} titulo="Departamento" tipo={2} />
-        <Item itens={status} titulo="Status" tipo={1} />
-      </Drawer>
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+            },
+          }}
+          variant="persistent"
+          anchor="right"
+          open={props.open}
+        >
+          <Toolbar variant="dense" sx={{ marginBottom: "10px" }} />
+          <Item itens={tiposDeComponentes} titulo="Tipo" tipo={1} />
+          <Item itens={[]} titulo="Código PPM" tipo={3} />
+          <Item itens={[]} titulo="Número" tipo={3} />
+          <Item itens={foruns} titulo="Fórum" tipo={2} />
+          <Item itens={departamentos} titulo="Departamento" tipo={2} />
+          <Item itens={tamanhos} titulo="Departamento" tipo={2} />
+          <Item itens={status} titulo="Status" tipo={1} />
+        </FilterDrawer>
       }
     </>
   );
 }
 
+/**
+ * Item do filtro que pode conter um RadioOptions (tipo = 1), um CheckOptions
+ * (tipo = 2) ou um InputOption (tipo = 3) e controla se está aberto ou não
+ * para ser usado
+ * 
+ * @param props 
+ * @returns 
+ */
 function Item(props: {
   itens: { id: number; nome: string }[];
   titulo: string;
@@ -189,18 +211,12 @@ function Item(props: {
   return (
     <>
       <Box sx={{ padding: "8px" }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <ItemHeaderBox>
           <ItemHeader titulo={props.titulo} />
           <IconButton onClick={mudarAberto}>
             {aberto ? <RemoveRoundedIcon /> : <AddRoundedIcon />}
           </IconButton>
-        </Box>
+        </ItemHeaderBox>
         <Collapse in={aberto} timeout="auto" unmountOnExit>
           {aberto && opcao}
         </Collapse>
@@ -216,7 +232,7 @@ function Item(props: {
  * @param props
  */
 function ItemHeader(props: { titulo: string }) {
-  return <Typography variant="subtitle1" sx={{ fontWeight: "600", color: "#595959" }}>{props.titulo}</Typography>;
+  return <ItemHeaderTypography variant="subtitle1">{props.titulo}</ItemHeaderTypography>;
 }
 
 /**
@@ -290,20 +306,19 @@ function InputOption() {
   )
 }
 
+/**
+ * Função para realizar algo quando a página for trocada
+ * 
+ * @param action 
+ */
 function useLocationChange(action: any) {
   const newLocation = useLocation()
   useEffect(() => { action(newLocation) }, [newLocation])
 }
 
+/**
+ * Interface dos atributos dos componentes Options
+ */
 interface OptionInterface {
   itens: { id: number; nome: string }[]
 }
-
-const Drawer = styled(MuiDrawer)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-  justifyContent: "flex-start",
-  zIndex: 1100,
-}));
