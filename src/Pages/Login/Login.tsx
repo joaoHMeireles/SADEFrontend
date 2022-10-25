@@ -64,22 +64,24 @@ function Login(props: {
                 alignItems: "center",
                 flexDirection: "column",
                 width: "60%",
-                height: "75%",
+                height: "80%",
                 background: "rgba(255, 255, 255, 0.25)",
                 borderRadius: "5px",
               }}
             >
               <Box
                 sx={{
+                  width: "100%",
+                  height: "25%",
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "space-around",
                   alignItems: "center",
                   flexDirection: "column",
                   color: "#FFF",
                 }}
               >
                 <Typography sx={{ color: "#FFF" }} variant="h5">
-                  Bem vindo
+                  Bem vindo ao SOD
                 </Typography>
                 <Typography sx={{ color: "#FFF" }} variant="body2">
                   Sistema Sustentável de Organização de Demandas de TI
@@ -88,8 +90,9 @@ function Login(props: {
               <Box
                 sx={{
                   width: "100%",
+                  height: "50%",
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "space-around",
                   alignItems: "center",
                   flexDirection: "column",
                 }}
@@ -118,13 +121,23 @@ function Login(props: {
                     color: "#FFF",
                   }}
                 >
-                  <Typography variant="body2">Esqueci minha senha</Typography>
+                  <Typography variant="body2" component="span">
+                    Esqueci minha senha
+                  </Typography>
                 </Box>
               </Box>
-              <Box>
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "25%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Button
                   sx={{
-                    width: "100%",
+                    width: "150px",
                     backgroundColor: "#00579D",
                     textDecoration: "none",
                     color: "#fffffff",
