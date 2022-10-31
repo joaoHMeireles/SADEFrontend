@@ -74,13 +74,13 @@ function Login(props: {
                   width: "100%",
                   height: "25%",
                   display: "flex",
-                  justifyContent: "space-around",
+                  justifyContent: "center",
                   alignItems: "center",
                   flexDirection: "column",
                   color: "#FFF",
                 }}
               >
-                <Typography sx={{ color: "#FFF" }} variant="h5">
+                <Typography sx={{ color: "#FFF", marginBottom: 2 }} variant="h5">
                   Bem vindo ao SOD
                 </Typography>
                 <Typography sx={{ color: "#FFF" }} variant="body2">
@@ -92,24 +92,24 @@ function Login(props: {
                   width: "100%",
                   height: "50%",
                   display: "flex",
-                  justifyContent: "space-around",
+                  justifyContent: "center",
                   alignItems: "center",
                   flexDirection: "column",
                 }}
               >
                 <TextField
-                  sx={{ width: "70%", color: "#FFF", background: "#FFF" }}
+                  sx={{ width: "70%", background: "#FFF", marginBottom: 5, borderRadius: "5px", boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)" }}
                   placeholder="Usuário"
                   InputProps={{
-                    startAdornment: <AccountCircle />,
+                    startAdornment: <AccountCircle sx={{ color: "#595959" }} />,
                   }}
                 />
-                <TextField
-                  sx={{ width: "70%", color: "#FFF", background: "#FFF" }}
+                <TextField type={"password"}
+                  sx={{ width: "70%", color: "#FFF", background: "#FFF", borderRadius: "5px", boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)" }}
                   placeholder="Senha"
                   InputProps={{
-                    startAdornment: <LockRoundedIcon />,
-                    endAdornment: <RemoveRedEyeRoundedIcon />,
+                    startAdornment: <LockRoundedIcon sx={{ color: "#595959" }} />,
+                    endAdornment: <RemoveRedEyeRoundedIcon sx={{ color: "#595959" }} />,
                   }}
                 />
                 <Box
@@ -119,9 +119,10 @@ function Login(props: {
                     justifyContent: "start",
                     alignContent: "center",
                     color: "#FFF",
+                    marginTop: 1
                   }}
                 >
-                  <Typography variant="body2" component="span">
+                  <Typography sx={{ textDecoration: "underline" }} variant="body2" component="span">
                     Esqueci minha senha
                   </Typography>
                 </Box>
