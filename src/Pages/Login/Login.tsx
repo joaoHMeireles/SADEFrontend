@@ -13,12 +13,14 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import RemoveRedEyeRoundedIcon from "@mui/icons-material/RemoveRedEyeRounded";
 import InputRoundedIcon from "@mui/icons-material/InputRounded";
-import { positions } from "@mui/system";
 
 function Login(props: {
   setAberto: React.Dispatch<React.SetStateAction<boolean>>;
   tamanhoNavbar: string;
 }) {
+
+  localStorage.setItem("PESSOA", "Solicitante");
+
   useEffect(() => {
     props.setAberto(false);
   });
