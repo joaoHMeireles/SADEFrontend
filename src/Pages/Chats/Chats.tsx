@@ -112,24 +112,6 @@ export default function Chats() {
               {listaMessages.map((messages) => (
                 <Messages mensagem={messages.mensagem} pessoa={messages.pessoa} />
               ))}
-              {/* <Messages mensagem="teste" pessoa="Solicitante" />
-              <Messages mensagem="teste" pessoa="Diego" />
-              <Messages mensagem="teste" pessoa="Solicitante" />
-              <Messages mensagem="teste" pessoa="Diego" />
-              <Messages mensagem="teste" pessoa="Solicitante" />
-              <Messages mensagem="teste" pessoa="Diego" />
-              <Messages mensagem="teste" pessoa="Solicitante" />
-              <Messages mensagem="teste" pessoa="Diego" />
-              <Messages mensagem="teste" pessoa="Solicitante" />
-              <Messages mensagem="teste" pessoa="Diego" />
-              <Messages mensagem="teste" pessoa="Solicitante" />
-              <Messages mensagem="teste" pessoa="Diego" />
-              <Messages mensagem="teste" pessoa="Solicitante" />
-              <Messages mensagem="teste" pessoa="Diego" />
-              <Messages mensagem="teste" pessoa="Solicitante" />
-              <Messages mensagem="teste" pessoa="Diego" />
-              <Messages mensagem="teste" pessoa="Solicitante" />
-              <Messages mensagem="teste" pessoa="Diego" /> */}
             </Box>
             <Box sx={{ width: "100%", height: "10%" }}>
               <TextField sx={{ width: "100%", zIndex: 10 }} InputProps={{
