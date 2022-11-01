@@ -26,16 +26,17 @@ import {
  */
 export default function ProcessComponentCollection(props: { processComponentCollectionAtributes: ProcessComponentCollectionInterface, grid: boolean }) {
     const componente = props.processComponentCollectionAtributes
+    const paginaAtual = localStorage.getItem("PAGINATUAL")
     const listaPropostas = props.processComponentCollectionAtributes.propostas
     let corComponente, tituloToolTip, nomeTipoLink
     if (componente.tipo == processComponentCollection.ATA) {
         corComponente = "#28B9DA"
         tituloToolTip = "Ata"
-        nomeTipoLink = `/${componente.tipo}/${componente.id}?id-ata=${componente.id}`
+        nomeTipoLink = `/${paginaAtual}/ata/${componente.id}?id-ata=${componente.id}`
     } else {
         corComponente = "#2382BA"
         tituloToolTip = "Pauta"
-        nomeTipoLink = `/${componente.tipo}/${componente.id}?id-agenda=${componente.id}`
+        nomeTipoLink = `/${paginaAtual}/agenda/${componente.id}?id-agenda=${componente.id}`
     }
     const processElement = (props.grid ?
         <GridComponent componente={componente} corComponente={corComponente} listaPropostas={listaPropostas} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} />

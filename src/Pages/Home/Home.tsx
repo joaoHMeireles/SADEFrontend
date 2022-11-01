@@ -127,7 +127,7 @@ const listaComponents: (ProcessComponentInterface | ProcessComponentCollectionIn
         titulo: "lerolerolerolero",
         tamanho: processComponentSize.Pequeno,
         solicitante: "um fia da puta ae",
-        status: processComponentStatus.Backlog,
+        status: processComponentStatus.Assesment,
         tipo: processComponent.Demanda,
         score: 12.5
     },
@@ -176,6 +176,7 @@ const listaComponents: (ProcessComponentInterface | ProcessComponentCollectionIn
  */
 export default function Home(props: { filtrar: boolean, setFiltrar: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [grid, setGrid] = useState(true)
+    localStorage.setItem("PAGINATUAL", "home")
 
     const processComponents = listaComponents.map((e: ProcessComponentInterface | ProcessComponentCollectionInterface) => {
         let componente

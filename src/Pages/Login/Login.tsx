@@ -18,6 +18,8 @@ function Login(props: {
   setFiltro: React.Dispatch<React.SetStateAction<boolean>>;
   tamanhoNavbar: string;
 }) {
+  localStorage.setItem("PAGINATUAL", "login")
+
   useEffect(() => {
     props.setAberto(false);
     props.setFiltro(false);

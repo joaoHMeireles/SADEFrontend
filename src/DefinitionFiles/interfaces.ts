@@ -1,4 +1,4 @@
-import { processComponent, processComponentCollection ,processComponentSize, processComponentStatus } from '../DefinitionFiles/enuns'
+import { processComponent, processComponentCollection ,processComponentSize, processComponentStatus, ITsession } from '../DefinitionFiles/enuns'
 
 export interface ProcessComponentInterface {
     id: number,
