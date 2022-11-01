@@ -504,7 +504,7 @@ function PageHeader() {
 
     return (
         <>
-            <Box sx={{ width: "100%", position: "fixed", top: "8vh", display: "flex", backgroundColor: "rgb(255,255,255, 0.9)", padding: "24px" }}>
+            <Box sx={{ width: "100%", position: "fixed", top: "8vh", display: "flex", backgroundColor: "rgb(255,255,255, 0.9)", padding: "24px",zIndex: 10 }}>
                 <Breadcrumb />
             </Box>
             <Toolbar />
@@ -526,8 +526,8 @@ function ProcessContainer() {
                 <Box sx={{ borderRadius: "10px 0 0 10px", backgroundColor: getColorStatus(processoInfo?.status), width: "100%", height: "100%" }}></Box>
             </Grid>
             <Grid item xs={11.8} sx={{ backgroundColor: "white", borderRadius: "0 10px 10px 0", padding: "25px"}}>
-                <Grid container sx={{marginBottom: "15px" }}>
-                    <Grid item xs={10}>
+                <Grid container sx={{marginBottom: "15px", minHeight: "80px" }}>
+                    <Grid item xs={10} sx={{display: "flex", alignItems: "center"}}>
                         <Typography variant='h4'>
                             {processoInfo?.titulo}
                         </Typography>
@@ -548,7 +548,7 @@ function Flag(props: { cor: string }) {
     //fazer uma div para ser a bandeirinha bunitinha
     return (
         <Box sx={{ display: "flex", justifyContent: "center", height: '100%' }}>
-            <Box sx={{width: "40px", heigth: "180px", backgroundColor: props.cor, display: "flex", alignItems: "end", position: "relative", top: "-25px"}}>
+            <Box sx={{width: 40, maxHeight: 84 , backgroundColor: props.cor, display: "flex", alignItems: "end", position: "relative", top: -25, zIndex: 0}}>
                 <Box sx={{
                     width: 0,
                     height: 0,
