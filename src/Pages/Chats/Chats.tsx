@@ -3,6 +3,8 @@ import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Chat from "../../Components/Chat/Chat";
 import { TextField, Typography } from "@mui/material";
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
+import "./Chats.scss"
 
 export default function Chats() {
 
@@ -57,21 +59,27 @@ export default function Chats() {
   function Messages(props: { mensagem: string, pessoa: string }) {
     if (pessoaLocalStorage == props.pessoa) {
       return (
-        <Box sx={{ display: "flex", justifyContent: "end", alignItems: "center" }}>
-          <Box sx={{ width: "10%", height: "100%", position: "relative", top: 30, right: 10 }}>
-            <Typography sx={{ background: "#FFF", borderRadius: "5px", marginY: 1 }}>
-              teste
-            </Typography>
+        <Box sx={{ display: "flex", justifyContent: "end", alignItems: "center", borderRadius: "5px", }}>
+          <Box sx={{ width: "10%", height: "100%", position: "relative", top: 30, right: 10, marginY: 1 }}>
+            <Box sx={{ background: "#FFF", borderRadius: "5px 5px 0 5px", padding: 0.5, boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)" }}>
+              <Typography variant="body1" component="div" sx={{ color: "#00579D", fontWeight: "bold", fontSize: "14px" }}>Diego</Typography>
+              <Typography variant="body2" component="div" sx={{ color: "#595959" }}>
+                teste
+              </Typography>
+            </Box>
           </Box>
         </Box>
       )
     } else {
       return (
         <Box sx={{ display: "flex", justifyContent: "start", alignItems: "center" }}>
-          <Box sx={{ width: "10%", height: "100%", position: "relative", left: 10, top: 30 }}>
-            <Typography sx={{ background: "#FFF", borderRadius: "5px", marginY: 1 }}>
-              teste
-            </Typography>
+          <Box sx={{ width: "10%", height: "100%", position: "relative", left: 10, top: 30, marginY: 1 }}>
+            <Box sx={{ background: "#FFF", borderRadius: "5px 5px 5px 0", padding: 0.5, boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)" }}>
+              <Typography variant="body1" component="div" sx={{ color: "#00579D", fontWeight: "bold", fontSize: "14px" }}>Diego</Typography>
+              <Typography variant="body2" component="div" sx={{ color: "#595959" }}>
+                teste
+              </Typography>
+            </Box>
           </Box>
         </Box>
       )
@@ -103,8 +111,8 @@ export default function Chats() {
           }}>
             <Box sx={{
               width: "100%",
-              minHeight: "73vh",
-              maxHeight: "73vh",
+              minHeight: "70vh",
+              maxHeight: "75vh",
               overflowX: "hidden",
               overflowY: "scroll",
               '&::-webkit-scrollbar': { backgroundColor: "transparent" },
@@ -113,9 +121,15 @@ export default function Chats() {
                 <Messages mensagem={messages.mensagem} pessoa={messages.pessoa} />
               ))}
             </Box>
-            <Box sx={{ width: "100%", height: "10%" }}>
-              <TextField sx={{ width: "100%", zIndex: 10 }} InputProps={{
-                endAdornment: <SendRoundedIcon sx={{ color: "#595959" }} />
+            <Box sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center", width: "100%", height: "10%",
+              padding: 1
+            }}>
+              <AttachmentRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
+              <TextField sx={{ width: "80%", padding: "5px", "& input": { padding: "5px", fontSize: "14px" } }} InputProps={{
+                endAdornment: <SendRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
               }} />
             </Box>
           </Box>
