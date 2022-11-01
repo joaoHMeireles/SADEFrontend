@@ -54,7 +54,7 @@ export default function App() {
             <ThemeProvider theme={ContentTheme}>
               <Routes>
                 <Route path="/notifications" element={<Notifications />} />
-                <Route path="/chats" element={<Chats />}></Route>
+                <Route path="/chats" element={<Chats aberto={aberto} />}></Route>
                 <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} />} />
                 <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar}/>} />
                 <Route path="/demand/:id" element={<ProcessComponent tipo={"demanda"}/>} />
