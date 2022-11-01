@@ -548,13 +548,13 @@ function Flag(props: { cor: string }) {
     //fazer uma div para ser a bandeirinha bunitinha
     return (
         <Box sx={{ display: "flex", justifyContent: "center", height: '100%' }}>
-            <Box sx={{width: "40px", heigth: "80px", backgroundColor: props.cor, display: "flex", alignItems: "end", position: "relative", top: "-25px"}}>
+            <Box sx={{width: "40px", heigth: "180px", backgroundColor: props.cor, display: "flex", alignItems: "end", position: "relative", top: "-25px"}}>
                 <Box sx={{
                     width: 0,
                     height: 0,
-                    borderLeft: "13px solid transparent",
-                    borderRight: "13px solid transparent",
-                    borderBottom: "22px solid black"
+                    borderLeft: "20px solid transparent",
+                    borderRight: "20px solid transparent",
+                    borderBottom: "22px solid white"
                 }} />
             </Box>
         </Box>
