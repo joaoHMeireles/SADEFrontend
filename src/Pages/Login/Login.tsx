@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Login.scss";
 import logo from "../../Assets/wegLogo.png";
@@ -10,15 +10,16 @@ import {
   Button,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import InputRoundedIcon from "@mui/icons-material/InputRounded";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import RemoveRedEyeRoundedIcon from "@mui/icons-material/RemoveRedEyeRounded";
-import InputRoundedIcon from "@mui/icons-material/InputRounded";
+import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 
 function Login(props: {
   setAberto: React.Dispatch<React.SetStateAction<boolean>>;
   tamanhoNavbar: string;
 }) {
-
+  const [tipo, setTipo] = useState("password");
   localStorage.setItem("PESSOA", "Solicitante");
 
   useEffect(() => {
@@ -27,6 +28,14 @@ function Login(props: {
 
   function colocaPessoa() {
     localStorage.setItem("TIPOUSUARIO", "solicitante");
+  }
+
+  function mostrarSenha() {
+    if (tipo == "text") {
+      setTipo("password")
+    } else {
+      setTipo("text")
+    }
   }
 
   return (
@@ -103,15 +112,16 @@ function Login(props: {
                   sx={{ width: "70%", background: "#FFF", marginBottom: 5, borderRadius: "5px", boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)" }}
                   placeholder="Usuário"
                   InputProps={{
-                    startAdornment: <AccountCircle sx={{ color: "#595959" }} />,
+                    startAdornment: <AccountCircle sx={{ color: "#595959", paddingRight: 1 }} />,
                   }}
                 />
-                <TextField type={"password"}
+                <TextField type={tipo} id="inputSenha"
                   sx={{ width: "70%", color: "#FFF", background: "#FFF", borderRadius: "5px", boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)" }}
                   placeholder="Senha"
                   InputProps={{
-                    startAdornment: <LockRoundedIcon sx={{ color: "#595959" }} />,
-                    endAdornment: <RemoveRedEyeRoundedIcon sx={{ color: "#595959" }} />,
+                    startAdornment: <LockRoundedIcon sx={{ color: "#595959", paddingRight: 1 }} />,
+                    endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959" }} />)
+                    // <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959" }} />,
                   }}
                 />
                 <Box
