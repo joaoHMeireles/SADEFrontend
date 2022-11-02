@@ -17,13 +17,16 @@ import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 
 function Login(props: {
   setAberto: React.Dispatch<React.SetStateAction<boolean>>;
+  setFiltro: React.Dispatch<React.SetStateAction<boolean>>;
   tamanhoNavbar: string;
 }) {
   const [tipo, setTipo] = useState("password");
   localStorage.setItem("PESSOA", "Solicitante");
+  localStorage.setItem("PAGINATUAL", "login")
 
   useEffect(() => {
     props.setAberto(false);
+    props.setFiltro(false);
   });
 
   function colocaPessoa() {

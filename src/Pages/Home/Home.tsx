@@ -6,9 +6,14 @@ import Searchbar from '../../Components/Searchbar/Searchbar'
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb'
 import ProcessComponent from '../../Components/ProcessComponent/ProcessComponent'
 import ProcessComponentCollection from '../../Components/ProcessComponent/ProcessComponentCollection/ProcessComponentCollection'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import { ContentBox, ContainerBox } from '../App.styles'
+import { 
+    Grid, 
+    Box 
+} from '@mui/material'
+import {
+    ContentBox,
+    ContainerBox
+} from '../App.styles'
 
 const listaComponents: (ProcessComponentInterface | ProcessComponentCollectionInterface)[] = [
     {
@@ -122,7 +127,7 @@ const listaComponents: (ProcessComponentInterface | ProcessComponentCollectionIn
         titulo: "lerolerolerolero",
         tamanho: processComponentSize.Pequeno,
         solicitante: "um fia da puta ae",
-        status: processComponentStatus.Backlog,
+        status: processComponentStatus.Assesment,
         tipo: processComponent.Demanda,
         score: 12.5
     },
@@ -171,6 +176,7 @@ const listaComponents: (ProcessComponentInterface | ProcessComponentCollectionIn
  */
 export default function Home(props: { filtrar: boolean, setFiltrar: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [grid, setGrid] = useState(true)
+    localStorage.setItem("PAGINATUAL", "home")
 
     const processComponents = listaComponents.map((e: ProcessComponentInterface | ProcessComponentCollectionInterface) => {
         let componente

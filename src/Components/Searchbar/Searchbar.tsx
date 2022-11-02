@@ -1,11 +1,18 @@
-import Grid from '@mui/material/Grid';
-import InputAdornment from '@mui/material/InputAdornment';
+import {
+    Grid,
+    IconButton,
+    InputAdornment
+} from '@mui/material';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import IconButton from '@mui/material/IconButton';
 import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
-import { BoxContainerInput, TextField, ContainerGrid, GridIconButton } from './Search.styles';
+import { 
+    BoxContainerInput, 
+    SearchTextField, 
+    ContainerGrid, 
+    GridIconButton 
+} from './Search.styles';
 
 /**
  * Componente principal de barra de pesquisa
@@ -45,7 +52,7 @@ export default function Searchbar(props:
         <BoxContainerInput>
             <ContainerGrid container spacing={2}>
                 <Grid item xs={10}>
-                    <TextField InputProps={{
+                    <SearchTextField InputProps={{
                         startAdornment: lupaAdornment, endAdornment: filtroAdorment,
                         placeholder: "Pesquisar Título, Solicitante ou Gerente responsável"
                     }} />

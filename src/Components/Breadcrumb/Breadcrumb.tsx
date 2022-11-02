@@ -1,8 +1,12 @@
-import { useLocation, Link } from "react-router-dom"
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
+import { useLocation, Link } from "react-router-dom"
 import Typography from "@mui/material/Typography";
-import Icon from "@mui/material/Icon";
-import { BoxRota, BoxBreadcrumb, ArrowIcon } from "./Breadcrumb.styles";
+import { 
+    ArrowIcon,
+    BoxRota, 
+    BoxBreadcrumb, 
+    IconRota
+} from "./Breadcrumb.styles";
 
 
 /**
@@ -33,15 +37,15 @@ export default function Breadcrumb() {
             )
         } else {
             linksBreadcrumb.push(
-                <BoxRota sx={{ color: "#595959" }}>
-                    <Link key={i} to={rotaComponente + breadcrumb[i].path + searchComponente + breadcrumb[i].search} >
+                <BoxRota key={i} sx={{ color: "#595959" }}>
+                    <Link to={rotaComponente + breadcrumb[i].path + searchComponente + breadcrumb[i].search} >
                         <Typography component="h5" variant="h6" sx={{ color: "#595959" }}>
                             {breadcrumb[i].name}
                         </Typography>
                     </Link>
-                    <Icon>
+                    <IconRota>
                         <ArrowIcon />
-                    </Icon>
+                    </IconRota>
                 </BoxRota>
             )
         }

@@ -4,10 +4,10 @@ import "./App.scss";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import Navbar from "../Components/Navbar/Navbar";
 import Toolbar from "../Components/Toolbar/Toolbar";
-// import Filter from "../Components/Filter/Filter";
+import Filter from "../Components/Filter/Filter";
 import Login from "./Login/Login";
 import Home from "./Home/Home";
-import ProcessComponent from "./ProcessComponent/ProcessComponent";
+import ProcessComponentPage from "./ProcessComponentPage/ProcessComponentPage";
 import Notifications from "./Notifications/Notifications";
 import Chats from "./Chats/Chats";
 import { Box } from "@mui/material";
@@ -24,14 +24,9 @@ export default function App() {
   useEffect(() => {
     if (aberto) {
       setTamanhoSideBar("220");
-      // setFiltrar(false)
     } else {
       setTamanhoSideBar("65");
     }
-
-    // if(filtrar){
-    //   setAberto(false)
-    // }
   });
 
   return (
@@ -41,6 +36,7 @@ export default function App() {
           aberto={aberto}
           setAberto={setAberto}
           tamanhoNavbar={tamanhoNavbar}
+          setFiltro={setFiltrar}
         />
         <Box
           sx={{
@@ -53,15 +49,24 @@ export default function App() {
             <Toolbar />
             <ThemeProvider theme={ContentTheme}>
               <Routes>
+                <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar}/>} />
+                <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar}/>}/>
                 <Route path="/notifications" element={<Notifications />} />
                 <Route path="/chats" element={<Chats aberto={aberto} />}></Route>
-                <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} />} />
                 <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar}/>} />
-                <Route path="/demand/:id" element={<ProcessComponent tipo={"demanda"}/>} />
+                <Route path="/home/demand/:id" element={<ProcessComponentPage />} />
+                <Route path="/mydemands/demand/:id" element={<ProcessComponentPage />} />
+                <Route path="/proposal/demand/:id" element={<ProcessComponentPage />} />
+                <Route path="/notifications/demand/:id" element={<ProcessComponentPage />} />
+                <Route path="/home/proposal/:id" element={<ProcessComponentPage />} />
+                <Route path="/agenda/proposal/:id" element={<ProcessComponentPage />} />
+                <Route path="/ata/proposal/:id" element={<ProcessComponentPage />} />
+                {/* <Route path="/home/agenda/:id" element={<ProcessComponentPage />} />
+                <Route path="/home/ata/:id" element={<ProcessComponentPage />} /> */}
               </Routes>
             </ThemeProvider>
           </MainBox>
-          {/* <Filter /> */}
+          <Filter open={filtrar} setOpen={setFiltrar} setSidebar={setAberto}/>
         </Box>
       </ThemeProvider>
     </BrowserRouter>

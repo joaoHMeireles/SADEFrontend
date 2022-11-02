@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import './Sidebar.scss'
-import MuiDrawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
-import Box from "@mui/material/Box";
-import Icon from "@mui/material/Icon";
-import List from '@mui/material/List';
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
+import {
+  Drawer,
+  Toolbar,
+  Box,
+  Icon, 
+  List, 
+  ListItemText, 
+  Collapse
+} from "@mui/material";
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
@@ -17,7 +19,12 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
-import {ListItem, ListItemButton, ListItemIcon, Typography} from './Sidebar.styles';
+import {
+  SidebarListItem,
+  SidebarListItemButton,
+  SidebarListItemIcon,
+  SidebarTypography
+} from './Sidebar.styles';
 
 //listas de ícones e opções do menu
 const lista = [
@@ -105,27 +112,28 @@ export default function MiniDrawer(props: { open: boolean, tamanho: string, setO
 
   return (
     <>
-      {location.pathname != "/" && <Drawer variant="permanent" open={props.open}>
-        <Toolbar variant="dense" />
-        <List>
-          {itensMenu}
-        </List>
-        {/* arrumar a posição dessa budega de logout */}
-        <Box sx={{ width: "100%", height: "100%", display: "flex", alignItems: "flex-end" }}>
-          <Box sx={{ width: "50%", paddingBottom: "3rem", paddingLeft: "1rem", display: "flex", justifyContent: "space-around" }}>
-            <Link to="/" className="link">
-              <Box sx={{ width: "20px", height: "20px" }}>
-                <Icon>
-                  <LogoutRoundedIcon />
-                </Icon>
-              </Box>
-              {props.open &&
-                `Sair`
-              }
-            </Link>
+      {location.pathname != "/" &&
+        <Sidebar variant="permanent" open={props.open}>
+          <Toolbar variant="dense" />
+          <List>
+            {itensMenu}
+          </List>
+          {/* arrumar a posição dessa budega de logout */}
+          <Box sx={{ width: "100%", height: "100%", display: "flex", alignItems: "flex-end" }}>
+            <Box sx={{ width: "50%", paddingBottom: "3rem", paddingLeft: "1rem", display: "flex", justifyContent: "space-around" }}>
+              <Link to="/" className="link">
+                <Box sx={{ width: "20px", height: "20px" }}>
+                  <Icon>
+                    <LogoutRoundedIcon />
+                  </Icon>
+                </Box>
+                {props.open &&
+                  `Sair`
+                }
+              </Link>
+            </Box>
           </Box>
-        </Box>
-      </Drawer>
+        </Sidebar>
       }
     </>
   );
@@ -146,13 +154,13 @@ function DropMenuItem(props: {
   const [aberto, setAberto] = useState(false);
   const rotasSecundarias = props.item.children.map((rotaSecundaria) => {
     return (
-      <Typography key={rotaSecundaria.id}>
+      <SidebarTypography key={rotaSecundaria.id}>
         <Link to={rotaSecundaria.rota} >
-          <ListItemButton sx={{ pl: 4 }}>
+          <SidebarListItemButton sx={{ pl: 4 }}>
             <ListItemText primary={rotaSecundaria.nome} />
-          </ListItemButton>
+          </SidebarListItemButton>
         </Link>
-      </Typography>
+      </SidebarTypography>
     )
   })
 
@@ -170,11 +178,11 @@ function DropMenuItem(props: {
   }
 
   return (
-    <ListItem key={props.item.id} disablePadding>
-      <ListItemButton sx={{ justifyContent: props.open ? 'initial' : 'center' }} onClick={verRotas}>
-        <ListItemIcon sx={{ mr: props.open ? 3 : 'auto' }} >
+    <SidebarListItem key={props.item.id} disablePadding>
+      <SidebarListItemButton sx={{ justifyContent: props.open ? 'initial' : 'center' }} onClick={verRotas}>
+        <SidebarListItemIcon sx={{ mr: props.open ? 3 : 'auto' }} >
           {props.item.icone}
-        </ListItemIcon>
+        </SidebarListItemIcon>
         <ListItemText primary={props.item.nome} sx={{ opacity: props.open ? 1 : 0 }} />
         {props.open &&
           <>
@@ -185,13 +193,13 @@ function DropMenuItem(props: {
             }
           </>
         }
-      </ListItemButton>
+      </SidebarListItemButton>
       <Collapse in={aberto} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {rotasSecundarias}
         </List>
       </Collapse>
-    </ListItem>
+    </SidebarListItem>
   )
 }
 
@@ -204,18 +212,17 @@ function DropMenuItem(props: {
 function MenuItem(props: { item: { id: number, nome: string, rota: string, icone: JSX.Element }, open: boolean }) {
   return (
     <Link to={props.item.rota}>
-      <ListItem key={props.item.id} disablePadding sx={{ display: 'block' }}>
-        <ListItemButton sx={{ justifyContent: props.open ? 'initial' : 'center' }}>
-          <ListItemIcon sx={{ mr: props.open ? 3 : 'auto' }} >
+      <SidebarListItem key={props.item.id} disablePadding sx={{ display: 'block' }}>
+        <SidebarListItemButton sx={{ justifyContent: props.open ? 'initial' : 'center' }}>
+          <SidebarListItemIcon sx={{ mr: props.open ? 3 : 'auto' }} >
             {props.item.icone}
-          </ListItemIcon>
+          </SidebarListItemIcon>
           <ListItemText primary={props.item.nome} sx={{ opacity: props.open ? 1 : 0 }} />
-        </ListItemButton>
-      </ListItem>
+        </SidebarListItemButton>
+      </SidebarListItem>
     </Link>
   )
 }
-
 
 const openedMixin = (): CSSObject => ({
   minWidth: drawerWidth,
@@ -234,7 +241,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+const Sidebar = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     minWidth: drawerWidth,
     flexShrink: 0,

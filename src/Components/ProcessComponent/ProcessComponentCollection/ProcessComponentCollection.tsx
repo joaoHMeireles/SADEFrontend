@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { processComponentCollection } from '../../../DefinitionFiles/enuns'
 import { ProcessComponentInterface, ProcessComponentCollectionInterface } from "../../../DefinitionFiles/interfaces";
-import Grid from '@mui/material/Grid';
-import Tooltip from '@mui/material/Tooltip';
+import { 
+    Grid,
+    Tooltip 
+} from '@mui/material'
 import {
     MainPaper,
     GridProccessColorBox,
@@ -15,8 +17,6 @@ import {
     LastListTypography,
     BoxCollectionComponent
 } from '../ProcessComponent.styles'
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 /**
  * Componente TSX de card e linha de uma coleção de compoentes de processo
@@ -26,16 +26,17 @@ import Typography from '@mui/material/Typography';
  */
 export default function ProcessComponentCollection(props: { processComponentCollectionAtributes: ProcessComponentCollectionInterface, grid: boolean }) {
     const componente = props.processComponentCollectionAtributes
+    const paginaAtual = localStorage.getItem("PAGINATUAL")
     const listaPropostas = props.processComponentCollectionAtributes.propostas
     let corComponente, tituloToolTip, nomeTipoLink
     if (componente.tipo == processComponentCollection.ATA) {
         corComponente = "#28B9DA"
         tituloToolTip = "Ata"
-        nomeTipoLink = `/${componente.tipo}/${componente.id}?id-ata=${componente.id}`
+        nomeTipoLink = `/${paginaAtual}/ata/${componente.id}?id-ata=${componente.id}`
     } else {
         corComponente = "#2382BA"
         tituloToolTip = "Pauta"
-        nomeTipoLink = `/${componente.tipo}/${componente.id}?id-agenda=${componente.id}`
+        nomeTipoLink = `/${paginaAtual}/agenda/${componente.id}?id-agenda=${componente.id}`
     }
     const processElement = (props.grid ?
         <GridComponent componente={componente} corComponente={corComponente} listaPropostas={listaPropostas} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} />
@@ -101,7 +102,7 @@ function GridComponent(props: ComponentCollectionProps) {
  */
 function ListComponent(props: ComponentCollectionProps) {
     const propostas = props.listaPropostas.map((e, index) => {
-        if (index >= 3) {
+        if (index >= 2) {
             return null
         }
         return (
@@ -122,14 +123,14 @@ function ListComponent(props: ComponentCollectionProps) {
                 <ListTypography variant='subtitle1' sx={{ minWidth: "20vw" }}>
                     {props.componente.id} - {props.componente.comissao}
                 </ListTypography>
-                <ListTypography variant='subtitle2'  sx={{ minWidth: "14.7vw" }}>
+                <ListTypography variant='subtitle2'  sx={{ minWidth: "14.3vw" }}>
                     <span> Data: </span> {props.componente.dataReuniao.toLocaleDateString()}
                 </ListTypography>
                 <ListTypography variant='subtitle2' sx={{ maxWidth: "8vw" }}>
                     <span> Propostas: </span>
                 </ListTypography>
                 {propostas}
-                <LastListTypography variant='body2'>
+                <LastListTypography variant='body2' sx={{maxWidth: "8.5vw"}}>
                     <Link to={props.linkComponente} >Ver mais</Link>
                 </LastListTypography>
                 {/* fazer uma linha listando as propostas até chegar no limite dalinha */}

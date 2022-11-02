@@ -8,7 +8,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/system/Box';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
-import { AppBar, TextField, TextFieldBox } from './Navbar.styles';
+import { NavBar, LanguageTextField, TextFieldBox } from './Navbar.styles';
 
 const listaLinguas = [
     "Português",
@@ -24,12 +24,13 @@ const listaLinguas = [
  * @param props 
  * @returns 
  */
-export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
+export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<React.SetStateAction<boolean>> ,tamanhoNavbar: string }) {
     const [lingua, setLingua] = useState("Português")
     const path = useLocation()
 
     function mudarSidebar() {
         props.setAberto(!props.aberto)
+        props.setFiltro(false)
     }
 
     const mudarLingua = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +40,7 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
     return (
         <>
             {path.pathname != "/" &&
-                <AppBar position="fixed" sx={{ height: props.tamanhoNavbar }}>
+                <NavBar position="fixed" sx={{ height: props.tamanhoNavbar }}>
                     <Toolbar>
                         <IconButton
                             size="large"
@@ -55,7 +56,7 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                             <img src={logo} alt="" />
                         </Box>
                         <TextFieldBox>
-                            <TextField
+                            <LanguageTextField
                                 select
                                 value={lingua}
                                 onChange={mudarLingua}
@@ -66,11 +67,11 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                                         {option}
                                     </MenuItem>
                                 ))}
-                            </TextField>
+                            </LanguageTextField>
                             <Avatar {...stringAvatar('ROMÁRIO')} />
                         </TextFieldBox>
                     </Toolbar>
-                </AppBar>
+                </NavBar>
             }
         </>
     )

@@ -24,3 +24,17 @@ export enum processComponentStatus {
     ToDo = "ToDo"
 }
 
+export enum ITsession {
+    STD = "Sistemas de Tecnologias Digitais",
+    AGD = "Arquitetura e Governança de Dados",
+    SEG = "Segurança",
+    SGI = "Suporte",
+    TIN = "Tecnologias",
+    AAS = "Atendimento",
+    PTI = "Projetos de TI",
+    SCO = "Sistemas Corporativos",
+    SIM = "Sistemas de Manufatura",
+    SIE = "Sistemas de Engenharia",
+    SVE = "Sistemas de Vendas e E Commerce "
+
+}

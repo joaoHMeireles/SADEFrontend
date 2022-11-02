@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 import { processComponent } from '../../DefinitionFiles/enuns'
 import { ProcessComponentInterface } from '../../DefinitionFiles/interfaces'
-import Grid from '@mui/material/Grid'
-import Tooltip from '@mui/material/Tooltip'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { 
+    Grid,
+    Tooltip 
+} from '@mui/material'
 import {
     MainPaper,
     GridProccessColorBox,
@@ -14,8 +14,10 @@ import {
     ListProccessColorBox,
     ListProccessComponent,
     ListTypography,
-    LastListTypography
+    LastListTypography,
+    BoxCollectionComponent
 } from './ProcessComponent.styles'
+import { MouseEventHandler } from 'react'
 
 /**
  * Componente TSX de card e linha de um compoente de processo
@@ -25,21 +27,28 @@ import {
  */
 export default function ProcessComponent(props: { grid: boolean, processComponentAtributes: ProcessComponentInterface }) {
     const componente = props.processComponentAtributes
+    const paginaAtual = localStorage.getItem("PAGINATUAL")
     let corComponente, tituloToolTip, nomeTipoLink
     if (componente.tipo == processComponent.Demanda) {
         corComponente = "#00579d"
         tituloToolTip = "Demanda"
-        nomeTipoLink = `/${componente.tipo}/${componente.id}?id-demand=${componente.id}`
+        nomeTipoLink = `/${paginaAtual}/demand/${componente.id}?id-demand=${componente.id}`
     } else {
         corComponente = "#6aacda"
         tituloToolTip = "Proposta"
-        nomeTipoLink = `/${componente.tipo}/${componente.id}?id-proposal=${componente.id}`
+        nomeTipoLink = `/${paginaAtual}/proposal/${componente.id}?id-proposal=${componente.id}`
     }
+
     const processElement = (props.grid ?
-        <GridComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink}/>
+        <GridComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} setProcesso={setProcesso}/>
         :
-        <ListComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink}/>
+        <ListComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} setProcesso={setProcesso}/>
     )
+
+    function setProcesso(){
+        localStorage.setItem(`CHOOSEDPROCESS`, JSON.stringify({id: componente.id, tipo: componente.tipo}))
+    }
+
 
     return (
         <MainPaper key={componente.id} >
@@ -80,15 +89,11 @@ function GridComponent(props: ComponentProps) {
                     <span>Status:</span> {getNome(props.componente.status)}
                 </GridTypography>
                 <GridTypography variant='subtitle1' sx={{ display: "flex" }}>
-
-                    {/* Têm de diminuir o tamanho do ver mais, ver como fazer para a lista e 
-                    adicionar a funcionalidade nas coleções de processos também */}
-
-                    <Box sx={{ width: "70%", margin: "none" }}>
+                    <BoxCollectionComponent>
                         <span>Tamanho:</span> {props.componente.tamanho}
-                    </Box>
+                    </BoxCollectionComponent>
                     <GridLinkTypograpfy variant='body2'>
-                        <Link to={props.linkComponente} >Ver mais</Link>
+                        <Link to={props.linkComponente} onClick={props.setProcesso}>Ver mais</Link>
                     </GridLinkTypograpfy>
                 </GridTypography>
             </GridProccessComponent>
@@ -124,8 +129,8 @@ function ListComponent(props: ComponentProps) {
                 <ListTypography variant='subtitle2' >
                     <span>Status:</span> {getNome(props.componente.status)}
                 </ListTypography>
-                <LastListTypography variant='body2' >
-                    <Link to={props.linkComponente} >Ver mais</Link>
+                <LastListTypography variant='body2' sx={{maxWidth: "10vw"}}>
+                    <Link to={props.linkComponente} onClick={props.setProcesso}>Ver mais</Link>
                 </LastListTypography>
             </ListProccessComponent>
         </>
@@ -158,4 +163,5 @@ interface ComponentProps {
     corComponente: string
     tituloToolTip: string
     linkComponente: string
+    setProcesso: MouseEventHandler<HTMLAnchorElement>
 }
