@@ -538,6 +538,10 @@ function ProcessContainer() {
                 </Grid>
                 <Divider />
                 {informacoesGerais}
+                <Divider />
+                {informacoesComerciais}
+                <Divider />
+                {contextualizacao}
             </Grid>
         </Grid>
     )
@@ -563,10 +567,10 @@ function Flag(props: { cor: string }) {
 
 function getAttributes(processo: any) {
     const infoGeral = getInfoGeral(processo)
-    // const infoComercial = getInfoComercial(processo)
-    // const contextualizacao = getContextualizacao(processo)
+    const infoComercial = getInfoComercial(processo)
+    const contextualizacao = getContextualizacao(processo)
 
-    return [infoGeral, 1, 2]
+    return [infoGeral, infoComercial, contextualizacao]
 }
 
 function getInfoGeral(processo: any) {
@@ -600,11 +604,32 @@ function getInfoGeral(processo: any) {
 }
 
 function getInfoComercial(processo: any) {
+    const atributos = {
+        
+    }
+
+
+    //retornar componente das infromações comerciais
+    return (
+        <Box>
+            bbb
+        </Box>
+    )
 
 }
 
 function getContextualizacao(processo: any) {
+    const atributos = {
+        
+    }
 
+
+    //retornar componente das contextualizacoes
+    return (
+        <Box>
+            ccc
+        </Box>
+    )
 }
 
 function getColorStatus(status: string | undefined) {
