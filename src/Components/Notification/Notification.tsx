@@ -8,7 +8,7 @@ import "./Notification.scss";
 export default function Notification(props: {
   Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
-  };
+}
   titulo: string;
   mensagem: string;
 }) {

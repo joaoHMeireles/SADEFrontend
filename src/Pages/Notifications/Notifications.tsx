@@ -1,65 +1,62 @@
-import Notification from "../../Components/Notification/Notification";
-import EditNotificationsRoundedIcon from "@mui/icons-material/EditNotificationsRounded";
-import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
-import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded";
-import NewReleasesRoundedIcon from '@mui/icons-material/NewReleasesRounded';
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
+import Notification from "../../Components/Notification/Notification";
 import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
+import EditNotificationsRoundedIcon from "@mui/icons-material/EditNotificationsRounded";
+import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded";
+
+import { BoxContainerNotifications, BoxNotification } from "./Notifications.styles";
+import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { SvgIconTypeMap } from "@mui/material";
+
+const listNotifications: {
+  Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
+    muiName: string;
+  }, titulo: string, mensagem: string
+}[] = [
+    {
+      Icone: EditNotificationsRoundedIcon,
+      titulo: "Redefinição requisitada",
+      mensagem: "Nome da demanda"
+    },
+    {
+      Icone: CheckBoxRoundedIcon,
+      titulo: "Redefinição requisitada",
+      mensagem: "Nome da demanda"
+    },
+    {
+      Icone: EventAvailableRoundedIcon,
+      titulo: "Redefinição requisitada",
+      mensagem: "Nome da demanda"
+    },
+    {
+      Icone: EditNotificationsRoundedIcon,
+      titulo: "Redefinição requisitada",
+      mensagem: "Nome da demanda"
+    },
+    {
+      Icone: CheckBoxRoundedIcon,
+      titulo: "Redefinição requisitada",
+      mensagem: "Nome da demanda"
+    },
+    {
+      Icone: EventAvailableRoundedIcon,
+      titulo: "Redefinição requisitada",
+      mensagem: "Nome da demanda"
+    },
+  ]
 
 export default function Notifications() {
   return (
-    <Box sx={{ margin: "24px" }}>
+    <BoxContainerNotifications>
       <Breadcrumb />
       <Container>
-        <Box sx={{ marginY: 3 }}>
-          <Notification
-            Icone={EditNotificationsRoundedIcon}
-            titulo="Redefinição requisitada"
-            mensagem="Nome da demanda"
-          />
-          <Notification
-            Icone={CheckBoxRoundedIcon}
-            titulo="Redefinição requisitada"
-            mensagem="Nome da demanda"
-          />
-          <Notification
-            Icone={EventAvailableRoundedIcon}
-            titulo="Redefinição requisitada"
-            mensagem="Nome da demanda"
-          />
-          <Notification
-            Icone={EditNotificationsRoundedIcon}
-            titulo="Redefinição requisitada"
-            mensagem="Nome da demanda"
-          />
-          <Notification
-            Icone={CheckBoxRoundedIcon}
-            titulo="Redefinição requisitada"
-            mensagem="Nome da demanda"
-          />
-          <Notification
-            Icone={EventAvailableRoundedIcon}
-            titulo="Redefinição requisitada"
-            mensagem="Nome da demanda"
-          />
-          <Notification
-            Icone={NewReleasesRoundedIcon}
-            titulo="Redefinição requisitada"
-            mensagem="Nome da demanda"
-          />
-          <Notification
-            Icone={CheckBoxRoundedIcon}
-            titulo="Redefinição requisitada"
-            mensagem="Nome da demanda"
-          />
-          <Notification
-            Icone={NewReleasesRoundedIcon}
-            titulo="Redefinição requisitada"
-            mensagem="Nome da demanda"
-          />
-        </Box>
+        <BoxNotification >
+          {listNotifications.map((notification, index) => (
+            <Notification key={index} Icone={notification.Icone} titulo={notification.titulo} mensagem={notification.mensagem} />
+          ))}
+        </BoxNotification>
       </Container>
-    </Box>
+    </BoxContainerNotifications>
   );
 }
