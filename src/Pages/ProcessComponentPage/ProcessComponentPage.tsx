@@ -504,7 +504,7 @@ function PageHeader() {
 
     return (
         <>
-            <Box sx={{ width: "100%", position: "fixed", top: "8vh", display: "flex", backgroundColor: "rgb(255,255,255, 0.9)", padding: "24px",zIndex: 10 }}>
+            <Box sx={{ width: "100%", position: "fixed", top: "8vh", display: "flex", backgroundColor: "rgb(255,255,255, 0.9)", padding: "24px", zIndex: 10 }}>
                 <Breadcrumb />
             </Box>
             <Toolbar />
@@ -516,18 +516,18 @@ function ProcessContainer() {
     const processoLocalStrorage = localStorage.getItem("CHOOSEDPROCESS")
     const processoEscolhido = JSON.parse(processoLocalStrorage != null ? processoLocalStrorage : "");
     const processoInfo = listaProcessos.find(p => p.id == processoEscolhido.id && processoEscolhido.tipo == p.tipo)
-
-    //separar as informações para mecher melhor nos componentes de cada uma das 3 partes
-    const [informacoesGerais, informacoesComerciais, contextualizacao] = getAttributes(processoInfo)
+    const informacoesGerais = getInfoGeral(processoInfo)
+    const informacoesComerciais = getInfoComercial(processoInfo)
+    const contextualizacao = getContextualizacao(processoInfo)
 
     return (
         <Grid container sx={{ width: "100%", height: "auto", marginTop: "2.5vh", boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)", borderRadius: "10px" }}>
             <Grid item xs={0.2}>
                 <Box sx={{ borderRadius: "10px 0 0 10px", backgroundColor: getColorStatus(processoInfo?.status), width: "100%", height: "100%" }}></Box>
             </Grid>
-            <Grid item xs={11.8} sx={{ backgroundColor: "white", borderRadius: "0 10px 10px 0", padding: "25px"}}>
-                <Grid container sx={{marginBottom: "15px", minHeight: "80px" }}>
-                    <Grid item xs={10} sx={{display: "flex", alignItems: "center"}}>
+            <Grid item xs={11.8} sx={{ backgroundColor: "white", borderRadius: "0 10px 10px 0", padding: "25px" }}>
+                <Grid container sx={{ marginBottom: "15px", minHeight: "80px" }}>
+                    <Grid item xs={10} sx={{ display: "flex", alignItems: "center" }}>
                         <Typography variant='h4'>
                             {processoInfo?.titulo}
                         </Typography>
@@ -552,7 +552,7 @@ function Flag(props: { cor: string }) {
     //fazer uma div para ser a bandeirinha bunitinha
     return (
         <Box sx={{ display: "flex", justifyContent: "center", height: '100%' }}>
-            <Box sx={{width: 40, maxHeight: 84 , backgroundColor: props.cor, display: "flex", alignItems: "end", position: "relative", top: -25, zIndex: 0}}>
+            <Box sx={{ width: 40, maxHeight: 84, backgroundColor: props.cor, display: "flex", alignItems: "end", position: "relative", top: -25, zIndex: 0 }}>
                 <Box sx={{
                     width: 0,
                     height: 0,
@@ -565,16 +565,8 @@ function Flag(props: { cor: string }) {
     )
 }
 
-function getAttributes(processo: any) {
-    const infoGeral = getInfoGeral(processo)
-    const infoComercial = getInfoComercial(processo)
-    const contextualizacao = getContextualizacao(processo)
-
-    return [infoGeral, infoComercial, contextualizacao]
-}
-
 function getInfoGeral(processo: any) {
-    const atributos = {
+    const atributosPequenos = {
         numero: processo.id,
         status: processo.status,
         solicitante: processo.solicitante,
@@ -585,8 +577,10 @@ function getInfoGeral(processo: any) {
         sessaoTIResponsavel: processo.secaoTIResponsavel,
         BUSolicitante: processo.BUSolicitante,
         prazoElaboracao: processo.prazoElaboracao,
-        codigoPPM: processo.codigoPPM,
-        //dados que podem ser maiores que só uma linha
+        codigoPPM: processo.codigoPPM
+    }
+
+    const atributosGrandes = {
         centrosDeCusto: processo.centrosDeCusto,
         beneficioQualitativo: processo.beneficioQualitativo,
         BUsBeneficiadas: processo.BUsBeneficiadas,
@@ -594,18 +588,82 @@ function getInfoGeral(processo: any) {
         responsaveis: processo.responsaveis
     }
 
+    const gridAtributosPequenos = []
+    let count = 1
 
-    //retornar componente das infromações gerais
+    for(let atributo in atributosPequenos){
+        count++
+        const nomeAtributo = getNomeAtributo(atributo)
+        let valorAtributo = (atributosPequenos as any)[atributo]
+
+        if(!valorAtributo){
+            continue
+        }
+
+        if(typeof valorAtributo === typeof new Date()){
+            valorAtributo = valorAtributo.toLocaleDateString()
+        }
+
+        gridAtributosPequenos.push(
+            <Grid key={count} item xs={6} sx={{display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
+                <Typography variant='body1' sx={{fontWeight: "bold"}}>
+                    {nomeAtributo}
+                </Typography>
+                <Typography variant='body1' sx={{marginLeft: "5px"}}>
+                    {valorAtributo}
+                </Typography>
+            </Grid>
+        )
+    }
+
+    const gridAtributosGrandes = []
+
+    for(let atributo in atributosGrandes){
+        const nomeAtributo = getNomeAtributo(atributo)
+        let valorAtributo = (atributosGrandes as any)[atributo]
+
+        if(!valorAtributo){
+            continue
+        }
+        
+        console.log(valorAtributo)
+        
+        
+        //fazer para utilizar lista de números, string, lista de string e lista de Data
+        gridAtributosGrandes.push( ""
+            // <Grid key={atributosPequenos.numero} item xs={6} sx={{display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
+            //     <Typography variant='body1' sx={{fontWeight: "bold"}}>
+            //         {nomeAtributo}
+            //     </Typography>
+            //     <Typography variant='body1' sx={{marginLeft: "5px"}}>
+            //         {valorAtributo}
+            //     </Typography>
+            // </Grid>
+        )
+    }
+
+
+
     return (
-        <Box>
-            aaa
-        </Box>
+        <Grid container>
+            <Typography variant='h5' sx={{marginY: "20px" }}>
+                Informações Gerais
+            </Typography>
+            <Grid item xs={12}>
+                <Grid container spacing={1}>
+                    {gridAtributosPequenos}
+                    {gridAtributosGrandes}
+                </Grid>
+            </Grid >
+        </Grid >
     )
 }
-
 function getInfoComercial(processo: any) {
     const atributos = {
-        
+        beneficiosReais: processo.beneficiosReais,
+        beneficiosPotenciais: processo.beneficiosPotenciais,
+        payback: processo.payback,
+        tabelasDeCusto: processo.tabelasCusto
     }
 
 
@@ -620,7 +678,9 @@ function getInfoComercial(processo: any) {
 
 function getContextualizacao(processo: any) {
     const atributos = {
-        
+        objetivo: processo.objetivo,
+        situacaoAtual: processo.situacaoAtual,
+        escopo: processo.escopo
     }
 
 
@@ -630,6 +690,31 @@ function getContextualizacao(processo: any) {
             ccc
         </Box>
     )
+}
+
+function getNomeAtributo(nomeAtributo: any){
+    const nomesAtributos = {
+        numero: "Número do processo:",
+        status: "Status:",
+        solicitante: "Solicitante:",
+        departamento: "Departamento:",
+        gerenteResponsavel: "Gerente responsável:",
+        frequenciaDeUso: "Frequência de uso:",
+        tamanho: "Tamanho:",
+        sessaoTIResponsavel: "Sessão de TI Responsável:",
+        BUSolicitante: "BU Solicitante:",
+        prazoElaboracao: "Prazo de elaboração:",
+        codigoPPM: "Código PPM:",
+        centrosDeCusto: "Centros de custo:",
+        beneficioQualitativo: "Benefício qualitativo:",
+        BUsBeneficiadas: "BUs beneficiadas:",
+        periodoDeExecucao: "Período de execução:",
+        responsaveis: "Responsáveis:"
+    }
+
+    if (nomeAtributo != undefined) {
+        return (nomesAtributos as any)[nomeAtributo]
+    }
 }
 
 function getColorStatus(status: string | undefined) {
@@ -647,7 +732,6 @@ function getColorStatus(status: string | undefined) {
 }
 
 function getColorType(tipo: string | undefined) {
-
     const coresStatus = {
         Demanda: "#00579D",
         Proposta: "#6AACDA",
