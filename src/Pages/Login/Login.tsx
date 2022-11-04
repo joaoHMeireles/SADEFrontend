@@ -58,7 +58,7 @@ function Login(props: {
               display: "flex",
               justifyContent: "start",
               alignItems: "flex-start",
-              padding: 3,
+              padding: 6,
             }}
           >
             <img className="imagemLogo" src={logo} alt="logoWeg" />
