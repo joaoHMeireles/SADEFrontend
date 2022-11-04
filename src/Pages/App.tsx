@@ -52,7 +52,8 @@ export default function App() {
                 <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar}/>} />
                 <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar}/>}/>
                 <Route path="/notifications" element={<Notifications />} />
-                <Route path="/chats" element={<Chats />} />
+                <Route path="/chats" element={<Chats aberto={aberto} />}></Route>
+                <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar}/>} />
                 <Route path="/home/demand/:id" element={<ProcessComponentPage />} />
                 <Route path="/mydemands/demand/:id" element={<ProcessComponentPage />} />
                 <Route path="/proposal/demand/:id" element={<ProcessComponentPage />} />

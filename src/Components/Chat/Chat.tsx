@@ -20,7 +20,10 @@ export default function Chat(props: {
           alignItems: "center",
           backgroundColor: "#EEEEEE",
           borderRadius: "5px",
-          marginY: 3,
+          marginBottom: "15px",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
         }}
       >
         <Box
