@@ -1,9 +1,10 @@
-
 import { processComponent, processComponentSize, processComponentStatus, ITsession } from '../../DefinitionFiles/enuns'
-import { Box, Container, Divider, Grid, Typography } from '@mui/material'
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb'
 import Toolbar from '../../Components/Toolbar/Toolbar'
+import { Box, Container, Divider, Grid, List, ListItem, ListItemIcon, Typography } from '@mui/material'
+import CircleIcon from '@mui/icons-material/Circle';
 import { ContentBox, ContainerBox } from '../App.styles'
+import { HeaderBox, MainContainerGrid, StatusColorBox, MainInfoGrid, HeaderContainerGrid, TitleGrid, FlagContainerBox, FlagBox, FlagTriangleBox } from './ProcessComponentPage.styles';
 
 const listaProcessos = [
     {
@@ -395,7 +396,7 @@ const listaProcessos = [
         departamento: "sgdaho",
         gerenteResponsavel: "Carlos Salles Morales",
         frequenciaUso: 98,
-        beneficioQualitativo: "b e n e f i c i o",
+        beneficioQualitativo: "b e n e f i c i o There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarras",
         centrosDeCusto: [
             9678,
             9674,
@@ -485,7 +486,14 @@ const listaProcessos = [
     }
 ]
 
-export default function ProcessComponentPage() {
+/**
+ * Componente principal das páginas de proposta de demanda sendo dinâmico conforme
+ * as informações vão sendo inseridas
+ * 
+ * @param props 
+ * @returns 
+ */
+export default function ProcessComponentPage(props: any) {
     return (
         <>
             <PageHeader />
@@ -500,116 +508,133 @@ export default function ProcessComponentPage() {
     )
 }
 
-function PageHeader() {
+/**
+ * Componente para o header da página que controlará os botões que aparecerão
+ * de acordo com o status atual daquele processo
+ * 
+ * @param props 
+ * @returns 
+ */
+function PageHeader(props: any) {
+
+    //FALTA OS BOTÔES
 
     return (
         <>
-            <Box sx={{ width: "100%", position: "fixed", top: "8vh", display: "flex", backgroundColor: "rgb(255,255,255, 0.9)", padding: "24px", zIndex: 10 }}>
+            <HeaderBox>
                 <Breadcrumb />
-            </Box>
+            </HeaderBox>
             <Toolbar />
         </>
     )
 }
 
-function ProcessContainer() {
-    const processoLocalStrorage = localStorage.getItem("CHOOSEDPROCESS")
-    const processoEscolhido = JSON.parse(processoLocalStrorage != null ? processoLocalStrorage : "");
-    const processoInfo = listaProcessos.find(p => p.id == processoEscolhido.id && processoEscolhido.tipo == p.tipo)
-    const informacoesGerais = getInfoGeral(processoInfo)
-    const informacoesComerciais = getInfoComercial(processoInfo)
-    const contextualizacao = getContextualizacao(processoInfo)
+/**
+ * Container principal para todas as informações de uma proposta/demanda
+ * 
+ * @param props 
+ * @returns 
+ */
+function ProcessContainer(props: any) {
+    const processLocalStorage = localStorage.getItem("CHOOSEDPROCESS")
+    const choosedProcess = JSON.parse(processLocalStorage != null ? processLocalStorage : "");
+    const processoInfo = listaProcessos.find(p => p.id == choosedProcess.id && choosedProcess.tipo == p.tipo)
 
+    //ver porque raios o grid não pega a estilização que eu quero
     return (
-        <Grid container sx={{ width: "100%", height: "auto", marginTop: "2.5vh", boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)", borderRadius: "10px" }}>
+        <Grid container sx={{ width: "100%", height: "auto", marginTop: "2.5vh", boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)", borderRadius: "10px"}} >
             <Grid item xs={0.2}>
-                <Box sx={{ borderRadius: "10px 0 0 10px", backgroundColor: getColorStatus(processoInfo?.status), width: "100%", height: "100%" }}></Box>
+                <StatusColorBox sx={{backgroundColor: getColorStatus(processoInfo?.status) }} >a</StatusColorBox>
             </Grid>
             <Grid item xs={11.8} sx={{ backgroundColor: "white", borderRadius: "0 10px 10px 0", padding: "25px" }}>
-                <Grid container sx={{ marginBottom: "15px", minHeight: "80px" }}>
-                    <Grid item xs={10} sx={{ display: "flex", alignItems: "center" }}>
+                <HeaderContainerGrid container>
+                    <TitleGrid item xs={10} >
                         <Typography variant='h4'>
                             {processoInfo?.titulo}
                         </Typography>
-                    </Grid>
+                    </TitleGrid>
                     <Grid item xs={2}>
                         <Flag cor={getColorType(processoInfo?.tipo)} />
                     </Grid>
-                </Grid>
+                </HeaderContainerGrid>
                 <Divider />
-                {informacoesGerais}
+                <InfoGeral processo={processoInfo} />
                 <Divider />
-                {informacoesComerciais}
+                <InfoComercial processo={processoInfo} />
                 <Divider />
-                {contextualizacao}
+                <Contextualizacao processo={processoInfo} />
             </Grid>
         </Grid>
     )
 }
 
+/**
+ * Componente da bandeira que altera a cor de acordo com o valor que recebe e que
+ * se localiza no canto superior direito container principal
+ * 
+ * @param props 
+ * @returns 
+ */
 function Flag(props: { cor: string }) {
-
-    //fazer uma div para ser a bandeirinha bunitinha
     return (
-        <Box sx={{ display: "flex", justifyContent: "center", height: '100%' }}>
-            <Box sx={{ width: 40, maxHeight: 84, backgroundColor: props.cor, display: "flex", alignItems: "end", position: "relative", top: -25, zIndex: 0 }}>
-                <Box sx={{
-                    width: 0,
-                    height: 0,
-                    borderLeft: "20px solid transparent",
-                    borderRight: "20px solid transparent",
-                    borderBottom: "22px solid white"
-                }} />
-            </Box>
-        </Box>
+        <FlagContainerBox >
+            <FlagBox sx={{ backgroundColor: props.cor }}>
+                <FlagTriangleBox />
+            </FlagBox>
+        </FlagContainerBox>
     )
 }
 
-function getInfoGeral(processo: any) {
+/**
+ * Componente dinâmico das informações gerais de um processo
+ * 
+ * @param props 
+ * @returns 
+ */
+function InfoGeral(props: { processo: any }) {
     const atributosPequenos = {
-        numero: processo.id,
-        status: processo.status,
-        solicitante: processo.solicitante,
-        departamento: processo.departamento,
-        gerenteResponsavel: processo.gerenteResponsavel,
-        frequenciaDeUso: processo.frequenciaUso,
-        tamanho: processo.tamanho,
-        sessaoTIResponsavel: processo.secaoTIResponsavel,
-        BUSolicitante: processo.BUSolicitante,
-        prazoElaboracao: processo.prazoElaboracao,
-        codigoPPM: processo.codigoPPM
+        numero: props.processo.id,
+        status: props.processo.status,
+        solicitante: props.processo.solicitante,
+        departamento: props.processo.departamento,
+        gerenteResponsavel: props.processo.gerenteResponsavel,
+        frequenciaDeUso: props.processo.frequenciaUso,
+        tamanho: props.processo.tamanho,
+        sessaoTIResponsavel: props.processo.secaoTIResponsavel,
+        BUSolicitante: props.processo.BUSolicitante,
+        prazoElaboracao: props.processo.prazoElaboracao,
+        codigoPPM: props.processo.codigoPPM
     }
 
     const atributosGrandes = {
-        centrosDeCusto: processo.centrosDeCusto,
-        beneficioQualitativo: processo.beneficioQualitativo,
-        BUsBeneficiadas: processo.BUsBeneficiadas,
-        periodoDeExecucao: processo.periodoExecucao,
-        responsaveis: processo.responsaveis
+        centrosDeCusto: props.processo.centrosDeCusto,
+        BUsBeneficiadas: props.processo.BUsBeneficiadas,
+        periodoDeExecucao: props.processo.periodoExecucao,
+        responsaveis: props.processo.responsaveis
     }
 
     const gridAtributosPequenos = []
-    let count = 1
+    let chaveComponente = 0
 
-    for(let atributo in atributosPequenos){
-        count++
+    for (let atributo in atributosPequenos) {
+        chaveComponente++
         const nomeAtributo = getNomeAtributo(atributo)
         let valorAtributo = (atributosPequenos as any)[atributo]
 
-        if(!valorAtributo){
+        if (!valorAtributo) {
             continue
         }
 
-        if(typeof valorAtributo === typeof new Date()){
+        if (typeof valorAtributo === typeof new Date()) {
             valorAtributo = valorAtributo.toLocaleDateString()
         }
 
         gridAtributosPequenos.push(
-            <Grid key={count} item xs={6} sx={{display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
-                <Typography variant='body1' sx={{fontWeight: "bold"}}>
+            <Grid key={chaveComponente} item xs={6} sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
+                <Typography variant='body1' sx={{ fontWeight: "bold" }}>
                     {nomeAtributo}
                 </Typography>
-                <Typography variant='body1' sx={{marginLeft: "5px"}}>
+                <Typography variant='body1' sx={{ marginLeft: "5px" }}>
                     {valorAtributo}
                 </Typography>
             </Grid>
@@ -617,53 +642,65 @@ function getInfoGeral(processo: any) {
     }
 
     const gridAtributosGrandes = []
+    chaveComponente = 0
 
-    for(let atributo in atributosGrandes){
+    for (let atributo in atributosGrandes) {
+        chaveComponente++
         const nomeAtributo = getNomeAtributo(atributo)
         let valorAtributo = (atributosGrandes as any)[atributo]
 
-        if(!valorAtributo){
+        if (!valorAtributo) {
             continue
         }
-        
-        console.log(valorAtributo)
-        
-        
-        //fazer para utilizar lista de números, string, lista de string e lista de Data
-        gridAtributosGrandes.push( ""
-            // <Grid key={atributosPequenos.numero} item xs={6} sx={{display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
-            //     <Typography variant='body1' sx={{fontWeight: "bold"}}>
-            //         {nomeAtributo}
-            //     </Typography>
-            //     <Typography variant='body1' sx={{marginLeft: "5px"}}>
-            //         {valorAtributo}
-            //     </Typography>
-            // </Grid>
+
+        gridAtributosGrandes.push(
+            <Grid key={chaveComponente} item xs={6} >
+                <Typography variant='body1' sx={{ fontWeight: "bold" }}>
+                    {nomeAtributo}
+                </Typography>
+                <AtributeList valorAtributo={valorAtributo} />
+            </Grid>
         )
     }
 
 
 
     return (
-        <Grid container>
-            <Typography variant='h5' sx={{marginY: "20px" }}>
+        <Grid container sx={{ marginY: "20px" }}>
+            <Typography variant='h5' sx={{ marginBottom: "20px" }}>
                 Informações Gerais
             </Typography>
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{ marginBottom: "8px" }}>
                 <Grid container spacing={1}>
                     {gridAtributosPequenos}
+                </Grid>
+            </Grid >
+            <Grid item xs={12}>
+                <Grid container spacing={1}>
                     {gridAtributosGrandes}
                 </Grid>
             </Grid >
+            <Grid item>
+                <Typography variant='body1' sx={{ textAlign: 'justify' }}>
+                    <b>{getNomeAtributo("beneficioQualitativo")}</b> {props.processo.beneficioQualitativo}
+                </Typography>
+            </Grid>
         </Grid >
     )
 }
-function getInfoComercial(processo: any) {
+
+/**
+ * Componente dinâmico das informações comerciais de um processo
+ * 
+ * @param props 
+ * @returns 
+ */
+function InfoComercial(props: { processo: any }) {
     const atributos = {
-        beneficiosReais: processo.beneficiosReais,
-        beneficiosPotenciais: processo.beneficiosPotenciais,
-        payback: processo.payback,
-        tabelasDeCusto: processo.tabelasCusto
+        beneficiosReais: props.processo.beneficiosReais,
+        beneficiosPotenciais: props.processo.beneficiosPotenciais,
+        payback: props.processo.payback,
+        tabelasDeCusto: props.processo.tabelasCusto
     }
 
 
@@ -676,11 +713,17 @@ function getInfoComercial(processo: any) {
 
 }
 
-function getContextualizacao(processo: any) {
+/**
+ * Componente dinâmico da contextualização de um processo
+ * 
+ * @param props 
+ * @returns 
+ */
+function Contextualizacao(props: { processo: any }) {
     const atributos = {
-        objetivo: processo.objetivo,
-        situacaoAtual: processo.situacaoAtual,
-        escopo: processo.escopo
+        objetivo: props.processo.objetivo,
+        situacaoAtual: props.processo.situacaoAtual,
+        escopo: props.processo.escopo
     }
 
 
@@ -692,7 +735,55 @@ function getContextualizacao(processo: any) {
     )
 }
 
-function getNomeAtributo(nomeAtributo: any){
+/**
+ * Componente dos atributos em lista das informações gerais
+ * 
+ * @param props 
+ * @returns 
+ */
+function AtributeList(props: { valorAtributo: [] }) {
+    let contadorPeriodoExecucao = 0
+    const valores = props.valorAtributo.map((valor) => {
+        if (typeof valor === typeof new Date()) {
+            contadorPeriodoExecucao++
+            const valorData: Date = valor
+            return (
+                <ListItem>
+                    <ListItemIcon>
+                        <CircleIcon sx={{ fontSize: "10px" }} />
+                    </ListItemIcon>
+                    {contadorPeriodoExecucao == 1 ? "Início: " : "Fim: "}
+                    {valorData.toLocaleDateString()}
+                </ListItem>
+            )
+        }
+
+        return (
+            <ListItem>
+                <ListItemIcon>
+                    <CircleIcon sx={{ fontSize: "10px" }} />
+                </ListItemIcon>
+                {valor}
+            </ListItem>
+        )
+    })
+
+
+    return (
+        <List>
+            {valores}
+        </List>
+    )
+}
+
+/**
+ * Função que retorna o Título formatado de acordo com o atributo de um processo 
+ * que receber
+ * 
+ * @param nomeAtributo 
+ * @returns 
+ */
+function getNomeAtributo(nomeAtributo: any) {
     const nomesAtributos = {
         numero: "Número do processo:",
         status: "Status:",
@@ -717,6 +808,12 @@ function getNomeAtributo(nomeAtributo: any){
     }
 }
 
+/**
+ * Função que retorna a cor dependendo do status que receber
+ * 
+ * @param status 
+ * @returns 
+ */
 function getColorStatus(status: string | undefined) {
     const coresStatus = {
         Backlog: "#DDDDDD",
@@ -731,6 +828,12 @@ function getColorStatus(status: string | undefined) {
     }
 }
 
+/**
+ * Função que retorna a cor dependendo do tipo de processo que receber
+ * 
+ * @param tipo 
+ * @returns 
+ */
 function getColorType(tipo: string | undefined) {
     const coresStatus = {
         Demanda: "#00579D",
