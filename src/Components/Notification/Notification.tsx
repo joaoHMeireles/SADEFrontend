@@ -3,12 +3,13 @@ import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { Box } from "@mui/system";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import Typography from "@mui/material/Typography";
-import "./Notification.scss";
+
+import { NotificationBox, NotificationBoxIcon, NotificationLeftSide, NotificationRightSide, TypographyMessage, TypographyTitle } from "./Notification.styles";
 
 export default function Notification(props: {
   Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
-}
+  }
   titulo: string;
   mensagem: string;
 }) {
@@ -36,13 +37,12 @@ export default function Notification(props: {
             alignItems: "center",
           }}
         >
-          <Box className="containerIconEsquerdo" sx={{ marginX: 3 }}>
+          <Box sx={{ marginX: 3 }}>
             <props.Icone sx={{ color: "#595959" }}></props.Icone>
           </Box>
-          <Box className="containerConteudo">
+          <Box >
             <Box>
               <Typography
-                className="h1"
                 variant="h6"
                 component="h1"
                 sx={{ color: "#595959" }}
@@ -52,7 +52,6 @@ export default function Notification(props: {
             </Box>
             <Box>
               <Typography
-                className="h2"
                 variant="caption"
                 component="h2"
                 sx={{ color: "#999999" }}
@@ -63,7 +62,6 @@ export default function Notification(props: {
           </Box>
         </Box>
         <Box
-          className="containerIconLixo"
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -71,7 +69,7 @@ export default function Notification(props: {
             marginRight: 2,
           }}
         >
-          <DeleteRoundedIcon className="iconLixo" sx={{ color: "#595959" }} />
+          <DeleteRoundedIcon sx={{ color: "#595959" }} />
         </Box>
       </Box>
     </>
