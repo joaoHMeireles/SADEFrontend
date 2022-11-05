@@ -1,7 +1,9 @@
-import styled from "@emotion/styled"
-import { Box, Container, Divider, Grid, List, ListItem, ListItemIcon, Typography } from '@mui/material'
+import { Box, Container, Divider, Grid, List, ListItem, ListItemIcon, TableCell, tableCellClasses, TableRow, Typography } from '@mui/material'
+import { styled, Theme, CSSObject } from '@mui/material/styles';
+import CircleIcon from '@mui/icons-material/Circle';
 const styledBox = styled(Box)
 const styledGrid = styled(Grid)
+const styledTypography = styled(Typography)
 
 export const HeaderBox = styledBox({
     backgroundColor: "rgb(255,255,255, 0.9)",
@@ -68,3 +70,47 @@ export const FlagTriangleBox = styledBox({
     height: 0,
     width: 0
 })
+
+export const SmallAttributesGrid = styledGrid({
+    alignItems: "center",
+    display: "flex",  
+    justifyContent: "flex-start"
+})
+
+
+export const TitleTypography =styledTypography({
+    marginBottom: "20px"
+})
+
+export const AttributeTitleTypography = styledTypography({
+    fontWeight: "bold"
+})
+
+export const TextTypography = styledTypography({
+    textAlign: 'justify'
+})
+
+export const DotCircleIcon = styled(CircleIcon)({
+    fontSize: "10px"
+})
+
+
+export const StyledTableCell = styled(TableCell)(({ theme: Theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: "#00579d",
+        color: Theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+}));
+
+export const StyledTableRow = styled(TableRow)(({ theme: Theme }) => ({
+    '&:nth-of-type(even)': {
+        backgroundColor: Theme.palette.action.hover,
+    },
+    
+    '&:last-child td, &:last-child th': {
+        border: 0,
+    },
+}));

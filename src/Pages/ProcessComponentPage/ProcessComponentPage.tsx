@@ -2,9 +2,20 @@ import { processComponent, processComponentSize, processComponentStatus, ITsessi
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb'
 import Toolbar from '../../Components/Toolbar/Toolbar'
 import { Box, Container, Divider, Grid, List, ListItem, ListItemIcon, Typography } from '@mui/material'
-import CircleIcon from '@mui/icons-material/Circle';
 import { ContentBox, ContainerBox } from '../App.styles'
-import { HeaderBox, MainContainerGrid, StatusColorBox, MainInfoGrid, HeaderContainerGrid, TitleGrid, FlagContainerBox, FlagBox, FlagTriangleBox } from './ProcessComponentPage.styles';
+import {
+    HeaderBox, MainContainerGrid, StatusColorBox, MainInfoGrid, HeaderContainerGrid, TitleGrid, FlagContainerBox,
+    FlagBox, FlagTriangleBox, SmallAttributesGrid, TitleTypography, AttributeTitleTypography, TextTypography,
+    DotCircleIcon, StyledTableCell, StyledTableRow
+} from './ProcessComponentPage.styles';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const listaProcessos = [
     {
@@ -18,7 +29,7 @@ const listaProcessos = [
         departamento: "não sei nenhum departamento",
         gerenteResponsavel: "tal fiote de cruz credo",
         frequenciaUso: 200,
-        beneficioQualitativo: "textin dizendo como é bom",
+        beneficioQualitativo: "textin ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything dizendo como é bom",
         centrosDeCusto: [
             1234,
             5678
@@ -66,7 +77,7 @@ const listaProcessos = [
         departamento: "7825678256782437813",
         gerenteResponsavel: "riomar silveira pinto nunes",
         frequenciaUso: 329,
-        beneficioQualitativo: "é bem bonzin bão memo bom",
+        beneficioQualitativo: "é bem bonzin bão memo bom ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything",
         centrosDeCusto: [
             3864,
             9863
@@ -134,7 +145,7 @@ const listaProcessos = [
         departamento: "o da diretoria fodão grandoes",
         gerenteResponsavel: "marcello taz do cqc",
         frequenciaUso: 160,
-        beneficioQualitativo: "vai dar isso isso isso e isso de beneficios",
+        beneficioQualitativo: "vai dar isso isso of Lorem Ipsum available, but the majoritailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anythingy have suffered alteration in some form, by injected humour, or  randomised word benefi isso e isso de beneficios",
         centrosDeCusto: [
             9425,
             9678
@@ -224,7 +235,7 @@ const listaProcessos = [
         departamento: "o da diretoria fodão grandoes",
         gerenteResponsavel: "romero britto",
         frequenciaUso: 540,
-        beneficioQualitativo: "beneficios",
+        beneficioQualitativo: "ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word beneficios",
         centrosDeCusto: [
             9678
         ],
@@ -343,7 +354,7 @@ const listaProcessos = [
         departamento: "o da diretoria fodão grandoes",
         gerenteResponsavel: "marcello taz do cqc",
         frequenciaUso: 160,
-        beneficioQualitativo: "vai dar isso isso isso e isso de beneficios",
+        beneficioQualitativo: "vai dar isso isso isso e isso de beneficios ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word",
         centrosDeCusto: [
             9425,
             9678
@@ -540,13 +551,12 @@ function ProcessContainer(props: any) {
     const choosedProcess = JSON.parse(processLocalStorage != null ? processLocalStorage : "");
     const processoInfo = listaProcessos.find(p => p.id == choosedProcess.id && choosedProcess.tipo == p.tipo)
 
-    //ver porque raios o grid não pega a estilização que eu quero
     return (
-        <Grid container sx={{ width: "100%", height: "auto", marginTop: "2.5vh", boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)", borderRadius: "10px"}} >
+        <MainContainerGrid container>
             <Grid item xs={0.2}>
-                <StatusColorBox sx={{backgroundColor: getColorStatus(processoInfo?.status) }} >a</StatusColorBox>
+                <StatusColorBox sx={{ backgroundColor: getColorStatus(processoInfo?.status) }} ></StatusColorBox>
             </Grid>
-            <Grid item xs={11.8} sx={{ backgroundColor: "white", borderRadius: "0 10px 10px 0", padding: "25px" }}>
+            <MainInfoGrid item xs={11.8}>
                 <HeaderContainerGrid container>
                     <TitleGrid item xs={10} >
                         <Typography variant='h4'>
@@ -563,8 +573,8 @@ function ProcessContainer(props: any) {
                 <InfoComercial processo={processoInfo} />
                 <Divider />
                 <Contextualizacao processo={processoInfo} />
-            </Grid>
-        </Grid>
+            </MainInfoGrid>
+        </MainContainerGrid>
     )
 }
 
@@ -602,6 +612,7 @@ function InfoGeral(props: { processo: any }) {
         tamanho: props.processo.tamanho,
         sessaoTIResponsavel: props.processo.secaoTIResponsavel,
         BUSolicitante: props.processo.BUSolicitante,
+        payback: props.processo.payback,
         prazoElaboracao: props.processo.prazoElaboracao,
         codigoPPM: props.processo.codigoPPM
     }
@@ -630,14 +641,14 @@ function InfoGeral(props: { processo: any }) {
         }
 
         gridAtributosPequenos.push(
-            <Grid key={chaveComponente} item xs={6} sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
-                <Typography variant='body1' sx={{ fontWeight: "bold" }}>
+            <SmallAttributesGrid key={chaveComponente} item xs={6}>
+                <AttributeTitleTypography variant='body1'>
                     {nomeAtributo}
-                </Typography>
-                <Typography variant='body1' sx={{ marginLeft: "5px" }}>
+                </AttributeTitleTypography>
+                <TextTypography variant='body1' sx={{ marginLeft: "5px" }}>
                     {valorAtributo}
-                </Typography>
-            </Grid>
+                </TextTypography>
+            </SmallAttributesGrid>
         )
     }
 
@@ -655,9 +666,9 @@ function InfoGeral(props: { processo: any }) {
 
         gridAtributosGrandes.push(
             <Grid key={chaveComponente} item xs={6} >
-                <Typography variant='body1' sx={{ fontWeight: "bold" }}>
+                <AttributeTitleTypography variant='body1'>
                     {nomeAtributo}
-                </Typography>
+                </AttributeTitleTypography>
                 <AtributeList valorAtributo={valorAtributo} />
             </Grid>
         )
@@ -667,9 +678,9 @@ function InfoGeral(props: { processo: any }) {
 
     return (
         <Grid container sx={{ marginY: "20px" }}>
-            <Typography variant='h5' sx={{ marginBottom: "20px" }}>
+            <TitleTypography variant='h5'>
                 Informações Gerais
-            </Typography>
+            </TitleTypography>
             <Grid item xs={12} sx={{ marginBottom: "8px" }}>
                 <Grid container spacing={1}>
                     {gridAtributosPequenos}
@@ -681,9 +692,9 @@ function InfoGeral(props: { processo: any }) {
                 </Grid>
             </Grid >
             <Grid item>
-                <Typography variant='body1' sx={{ textAlign: 'justify' }}>
+                <TextTypography variant='body1' >
                     <b>{getNomeAtributo("beneficioQualitativo")}</b> {props.processo.beneficioQualitativo}
-                </Typography>
+                </TextTypography>
             </Grid>
         </Grid >
     )
@@ -697,18 +708,49 @@ function InfoGeral(props: { processo: any }) {
  */
 function InfoComercial(props: { processo: any }) {
     const atributos = {
-        beneficiosReais: props.processo.beneficiosReais,
-        beneficiosPotenciais: props.processo.beneficiosPotenciais,
-        payback: props.processo.payback,
-        tabelasDeCusto: props.processo.tabelasCusto
+        realBenefits: props.processo.beneficiosReais,
+        potencialBenefits: props.processo.beneficiosPotenciais,
+        costTables: props.processo.tabelasCusto
     }
 
+    const benefitsTableTitles = (
+        <>
+            <StyledTableCell align='center'>Descrição</StyledTableCell>
+            <StyledTableCell align='center'>Moeda</StyledTableCell>
+            <StyledTableCell align='center'>Valor</StyledTableCell>
+        </>
+    )
 
-    //retornar componente das infromações comerciais
+    const realBenefits = atributos.realBenefits.map((benefit: { descricao: string, moeda: string, valor: string }, index: number) => {
+        return (
+            <StyledTableRow key={index}>
+                <StyledTableCell align='center'>{benefit.descricao}</StyledTableCell>
+                <StyledTableCell align='center'>{benefit.moeda}</StyledTableCell>
+                <StyledTableCell align='center'>{benefit.valor}</StyledTableCell>
+            </StyledTableRow>
+        )
+    })
+
+    const potencialBenefits = atributos.potencialBenefits.map((benefit: { descricao: string, moeda: string, valor: string }, index: number) => {
+        return (
+            <StyledTableRow key={index}>
+                <StyledTableCell align='center'>{benefit.descricao}</StyledTableCell>
+                <StyledTableCell align='center'>{benefit.moeda}</StyledTableCell>
+                <StyledTableCell align='center'>{benefit.valor}</StyledTableCell>
+            </StyledTableRow>
+        )
+    })
+
+    
+
     return (
-        <Box>
-            bbb
-        </Box>
+        <Box sx={{ marginY: "20px" }}>
+            <TitleTypography variant='h5'>
+                Informações Gerais
+            </TitleTypography>
+            <StyledTable title='Benefícios reais' valuesList={realBenefits} attributesList={benefitsTableTitles} length={"50vh"}/>
+            <StyledTable title='Benefícios potenciais' valuesList={potencialBenefits} attributesList={benefitsTableTitles} length={"50vh"}/>
+        </Box >
     )
 
 }
@@ -750,7 +792,7 @@ function AtributeList(props: { valorAtributo: [] }) {
             return (
                 <ListItem>
                     <ListItemIcon>
-                        <CircleIcon sx={{ fontSize: "10px" }} />
+                        <DotCircleIcon />
                     </ListItemIcon>
                     {contadorPeriodoExecucao == 1 ? "Início: " : "Fim: "}
                     {valorData.toLocaleDateString()}
@@ -761,7 +803,7 @@ function AtributeList(props: { valorAtributo: [] }) {
         return (
             <ListItem>
                 <ListItemIcon>
-                    <CircleIcon sx={{ fontSize: "10px" }} />
+                    <DotCircleIcon />
                 </ListItemIcon>
                 {valor}
             </ListItem>
@@ -773,6 +815,35 @@ function AtributeList(props: { valorAtributo: [] }) {
         <List>
             {valores}
         </List>
+    )
+}
+
+/**
+ * Componente que constrói uma tabela já estilizada dinâmicamente
+ * 
+ * @param props 
+ * @returns 
+ */
+ function StyledTable(props: { valuesList: [], attributesList: any, title: string, length: string }) {
+
+    return (
+        <Box sx={{ width: "100%", display: 'flex', flexDirection: "column", alignItems: "center", marginBottom: "20px" }}>
+            <TitleTypography variant='subtitle1'>
+                {props.title}
+            </TitleTypography>
+            <TableContainer component={Paper} sx={{ width: props.length }}>
+                <Table aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            {props.attributesList}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {props.valuesList}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Box>
     )
 }
 
@@ -799,6 +870,7 @@ function getNomeAtributo(nomeAtributo: any) {
         centrosDeCusto: "Centros de custo:",
         beneficioQualitativo: "Benefício qualitativo:",
         BUsBeneficiadas: "BUs beneficiadas:",
+        payback: "Payback:",
         periodoDeExecucao: "Período de execução:",
         responsaveis: "Responsáveis:"
     }
@@ -846,3 +918,4 @@ function getColorType(tipo: string | undefined) {
         return (coresStatus as any)[tipo]
     }
 }
+
