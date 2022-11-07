@@ -1,12 +1,16 @@
-import Box from "@mui/material/Box";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Chat from "../../Components/Chat/Chat";
-import { TextField, Typography } from "@mui/material";
-import SendRoundedIcon from '@mui/icons-material/SendRounded';
-import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
-import "./Chats.scss"
 import Toolbar from "../../Components/Toolbar/Toolbar";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
+
+import { BoxSearchBar, ContainerChats, ContainerGeneralChats, LeftSideChat, LeftSideChats, RightSideChat, RightSideChats, SearchBar } from "./Chats.styles";
+
+
+import { BoxGeneralMessagesRightSide, BoxGeneralMessagesLeftSide, BoxMessagesRightSides, BoxMessagesLeftSides, BoxMessagesRightSide, BoxMessagesLeftSide, TypographyPerson, TypographyMessage } from "./Chats.styles";
 
 const listaMessages = [
   { mensagem: "Mensagem 1", pessoa: "Diego" },
@@ -58,52 +62,31 @@ export default function Chats(props: { aberto: boolean }) {
 
   return (
     <>
-      <Box sx={{ margin: "24px" }}>
+      <ContainerGeneralChats>
         <Breadcrumb />
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: (props.aberto ? "80vw" : "92vw"), height: "80%" }}>
-          <Box marginY={1} sx={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start", width: "25%", maxHeight: "80vh", overflowX: "hidden", overflowY: "scroll", '&::-webkit-scrollbar': { backgroundColor: "transparent" } }}>
-            <Box sx={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start", flexDirection: "column", width: "100%", maxHeight: "auto" }}>
+        <ContainerChats sx={{ width: (props.aberto ? "80vw" : "92vw") }}>
+          <LeftSideChats>
+            <LeftSideChat>
               {listaChats.map((chats) => (
                 <Chat titulo={chats.titulo} pessoa={chats.pessoa} mensagem={chats.mensagem} />
               ))}
-            </Box>
-          </Box>
-          <Box sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            width: "75%",
-            minHeight: "80vh",
-            background: "#EEEEEE",
-            borderRadius: "5px"
-          }}>
-            <Box sx={{
-              width: "100%",
-              minHeight: "70vh",
-              maxHeight: "75vh",
-              overflowX: "hidden",
-              overflowY: "scroll",
-              '&::-webkit-scrollbar': { backgroundColor: "transparent" },
-            }}>
+            </LeftSideChat>
+          </LeftSideChats>
+          <RightSideChats>
+            <RightSideChat>
               {listaMessages.map((messages) => (
                 <Messages mensagem={messages.mensagem} pessoa={messages.pessoa} />
               ))}
               <Toolbar />
-            </Box>
-            <Box sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center", width: "100%", height: "10%",
-              padding: 1, backgroundColor: "transparent"
-            }}>
+            </RightSideChat>
+            <BoxSearchBar>
               <AttachmentRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
-              <TextField sx={{ width: "85%", padding: "5px", "& input": { padding: "5px", fontSize: "14px" } }} />
+              <SearchBar />
               <SendRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
-            </Box>
-          </Box>
-        </Box>
-      </Box>
+            </BoxSearchBar>
+          </RightSideChats>
+        </ContainerChats>
+      </ContainerGeneralChats>
     </>
   );
 }
@@ -113,29 +96,29 @@ function Messages(props: { mensagem: string, pessoa: string }) {
 
   if (pessoaLocalStorage == props.pessoa) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "end", alignItems: "center", borderRadius: "5px", }}>
-        <Box sx={{ maxWidth: "50%", wordWrap: "break-word", height: "100%", position: "relative", top: 30, right: 10, marginY: 1 }}>
-          <Box sx={{ background: "#FFF", borderRadius: "5px 5px 0 5px", padding: 0.5, boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)", width: "auto", height: "auto" }}>
-            <Typography variant="body1" component="div" sx={{ color: "#00579D", fontWeight: "bold", fontSize: "12px" }}>{props.pessoa}</Typography>
-            <Typography variant="body2" component="div" sx={{ color: "#595959", fontSize: "12px" }}>
+      <BoxGeneralMessagesRightSide>
+        <BoxMessagesRightSides>
+          <BoxMessagesRightSide>
+            <TypographyPerson variant="body1">{props.pessoa}</TypographyPerson>
+            <TypographyMessage variant="body2">
               {props.mensagem}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
+            </TypographyMessage>
+          </BoxMessagesRightSide>
+        </BoxMessagesRightSides>
+      </BoxGeneralMessagesRightSide>
     )
   } else {
     return (
-      <Box sx={{ display: "flex", justifyContent: "start", alignItems: "center" }}>
-        <Box sx={{ width: "10%", height: "100%", position: "relative", left: 10, top: 30, marginY: 1 }}>
-          <Box sx={{ background: "#FFF", borderRadius: "5px 5px 5px 0", padding: 0.5, boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)" }}>
-            <Typography variant="body1" component="div" sx={{ color: "#00579D", fontWeight: "bold", fontSize: "12px" }}>{props.pessoa}</Typography>
-            <Typography variant="body2" component="div" sx={{ color: "#595959", fontSize: "12px" }}>
+      <BoxGeneralMessagesLeftSide>
+        <BoxMessagesLeftSides>
+          <BoxMessagesLeftSide>
+            <TypographyPerson variant="body1">{props.pessoa}</TypographyPerson>
+            <TypographyMessage variant="body2">
               {props.mensagem}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
+            </TypographyMessage>
+          </BoxMessagesLeftSide>
+        </BoxMessagesLeftSides>
+      </BoxGeneralMessagesLeftSide>
     )
   }
 }
