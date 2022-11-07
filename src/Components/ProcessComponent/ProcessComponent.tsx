@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { processComponent } from '../../DefinitionFiles/enuns'
 import { ProcessComponentInterface } from '../../DefinitionFiles/interfaces'
 import { 
+    Box,
     Grid,
     Tooltip 
 } from '@mui/material'

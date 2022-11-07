@@ -114,3 +114,49 @@ export const StyledTableRow = styled(TableRow)(({ theme: Theme }) => ({
         border: 0,
     },
 }));
+
+export const TableBox = styledBox({
+    alignItems: "center",
+    display: 'flex',
+    flexDirection: "column",
+    width: "100%",  
+})
+
+export const CostTableBox = styledBox({
+    display: 'flex',
+    justifyContent: "space-between",
+    marginBottom: "30px", 
+    minWidth: "40vw", 
+    width: "auto"  
+})
+
+export const ContainerTableBox = styledBox({
+    alignItems: "center",
+    display: 'flex',
+    flexDirection: "column",
+    width: "auto", 
+})
+
+export const TitleCostCentersBox = styledBox({
+    alignItems: "center",
+    backgroundColor: "#00579d",
+    borderRadius: "4px 4px 0 0",
+    boxSizing: 'border-box',
+    color: "#ffffff", 
+    display: 'flex',
+    fontFamily: "'Roboto','Helvetica','Arial',sans-serif",
+    fontSize: "0.875rem",
+    heigth: "auto",
+    justifyContent: "center",
+    padding: "19px",
+    width: "100%"    
+})
+
+export const CostCentersBox = styledBox({
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column", 
+    height: "75%",
+    justifyContent: "space-evenly",
+    width: "100%"
+})

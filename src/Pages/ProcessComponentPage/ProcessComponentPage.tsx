@@ -6,12 +6,11 @@ import { ContentBox, ContainerBox } from '../App.styles'
 import {
     HeaderBox, MainContainerGrid, StatusColorBox, MainInfoGrid, HeaderContainerGrid, TitleGrid, FlagContainerBox,
     FlagBox, FlagTriangleBox, SmallAttributesGrid, TitleTypography, AttributeTitleTypography, TextTypography,
-    DotCircleIcon, StyledTableCell, StyledTableRow
+    DotCircleIcon, StyledTableCell, StyledTableRow, TableBox, CostTableBox, ContainerTableBox, TitleCostCentersBox,
+    CostCentersBox
 } from './ProcessComponentPage.styles';
-import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -190,6 +189,7 @@ const listaProcessos = [
         tabelasCusto: [
             {
                 titulo: "gastos tandam",
+                isLicenca: false,
                 centrosCusto: [
                     {
                         centroCusto: 6135,
@@ -203,13 +203,13 @@ const listaProcessos = [
                 linhas: [
                     {
                         recurso: "analista funcional",
-                        esforco: "150h",
-                        valorHora: 35
+                        esforco: 150,
+                        valor: 35
                     },
                     {
                         recurso: "mão de obra",
-                        esforco: "48h",
-                        valorHora: 35
+                        esforco: 48,
+                        valor: 35
                     },
                 ]
             }
@@ -280,6 +280,7 @@ const listaProcessos = [
         tabelasCusto: [
             {
                 titulo: "gastos",
+                isLicenca: false,
                 centrosCusto: [
                     {
                         centroCusto: 6135,
@@ -293,18 +294,19 @@ const listaProcessos = [
                 linhas: [
                     {
                         recurso: "analista funcional",
-                        esforco: "150h",
-                        valorHora: 35
+                        esforco: 150,
+                        valor: 35
                     },
                     {
                         recurso: "macaco anti-stress",
-                        esforco: "48h",
-                        valorHora: 39
+                        esforco: 48,
+                        valor: 39
                     },
                 ]
             },
             {
                 titulo: "mais gastos",
+                isLicenca: true,
                 centrosCusto: [
                     {
                         centroCusto: 6789,
@@ -321,14 +323,14 @@ const listaProcessos = [
                 ],
                 linhas: [
                     {
-                        recurso: "rapaz do café",
-                        esforco: "350h",
-                        valorHora: 15
+                        recurso: "Oracle",
+                        esforco: 3,
+                        valor: 479.99
                     },
                     {
-                        recurso: "mão de obra",
-                        esforco: "48h",
-                        valorHora: 350
+                        recurso: "Visual Studio premium",
+                        esforco: 2,
+                        valor: 156
                     },
                 ]
             }
@@ -398,7 +400,7 @@ const listaProcessos = [
     },
     {
         id: 9,
-        titulo: "eu quero janta de 3 horas",
+        titulo: "eu quero janta de 3 s",
         tamanho: processComponentSize.Pequeno,
         solicitante: "um gênio",
         status: processComponentStatus.Backlog,
@@ -457,6 +459,7 @@ const listaProcessos = [
         tabelasCusto: [
             {
                 titulo: "mais gastos",
+                isLicenca: false,
                 centrosCusto: [
                     {
                         centroCusto: 7643,
@@ -474,13 +477,13 @@ const listaProcessos = [
                 linhas: [
                     {
                         recurso: "rapaz do café",
-                        esforco: "350h",
-                        valorHora: 15
+                        esforco: 350,
+                        valor: 15
                     },
                     {
                         recurso: "mão de obra",
-                        esforco: "48h",
-                        valorHora: 350
+                        esforco: 48,
+                        valor: 350
                     },
                 ]
             }
@@ -713,20 +716,12 @@ function InfoComercial(props: { processo: any }) {
         costTables: props.processo.tabelasCusto
     }
 
-    const benefitsTableTitles = (
-        <>
-            <StyledTableCell align='center'>Descrição</StyledTableCell>
-            <StyledTableCell align='center'>Moeda</StyledTableCell>
-            <StyledTableCell align='center'>Valor</StyledTableCell>
-        </>
-    )
-
     const realBenefits = atributos.realBenefits.map((benefit: { descricao: string, moeda: string, valor: string }, index: number) => {
         return (
             <StyledTableRow key={index}>
-                <StyledTableCell align='center'>{benefit.descricao}</StyledTableCell>
+                <StyledTableCell align='center' sx={{ width: "50%" }}>{benefit.descricao}</StyledTableCell>
                 <StyledTableCell align='center'>{benefit.moeda}</StyledTableCell>
-                <StyledTableCell align='center'>{benefit.valor}</StyledTableCell>
+                <StyledTableCell align='center'>R$ {benefit.valor}</StyledTableCell>
             </StyledTableRow>
         )
     })
@@ -734,22 +729,97 @@ function InfoComercial(props: { processo: any }) {
     const potencialBenefits = atributos.potencialBenefits.map((benefit: { descricao: string, moeda: string, valor: string }, index: number) => {
         return (
             <StyledTableRow key={index}>
-                <StyledTableCell align='center'>{benefit.descricao}</StyledTableCell>
+                <StyledTableCell align='center' sx={{ width: "50%" }}>{benefit.descricao}</StyledTableCell>
                 <StyledTableCell align='center'>{benefit.moeda}</StyledTableCell>
-                <StyledTableCell align='center'>{benefit.valor}</StyledTableCell>
+                <StyledTableCell align='center'>R$ {benefit.valor}</StyledTableCell>
             </StyledTableRow>
         )
     })
 
-    
+    let costTables
+
+    if (atributos.costTables) {
+        costTables = atributos.costTables.map((table: any, index: number) => {
+            let totalTime = 0, totalValue = 0
+
+            const tableLines = table.linhas.map((linha: { recurso: string, esforco: number, valor: number }, lineIndex: number) => {
+                const total = linha.valor * linha.esforco
+                totalTime += linha.esforco
+                totalValue += total
+
+                return (
+                    <StyledTableRow key={lineIndex}>
+                        <StyledTableCell align='center'>{linha.recurso}</StyledTableCell>
+                        <StyledTableCell align='center'>{linha.esforco}{!table.isLicenca ? "h" : ""} </StyledTableCell>
+                        <StyledTableCell align='center'>R$ {linha.valor}</StyledTableCell>
+                        <StyledTableCell align='center'>R$ {total}</StyledTableCell>
+                    </StyledTableRow>
+                )
+            })
+
+            const tableCCs = table.centrosCusto.map((centroDeCusto: any, centerIndex: number) => {
+                const porcentagem = centroDeCusto.porcentagem * 100
+
+                return (
+                    <Typography key={centerIndex} variant="body1">
+                        {centroDeCusto.centroCusto} - {porcentagem}%
+                    </Typography>
+                )
+            })
+
+            return (
+                <CostTableBox key={index} >
+                    <ContainerTableBox>
+                        <TableContainer component={Paper} sx={{ width: "auto" }}>
+                            <TableHead >
+                                <TableRow >
+                                    <StyledTableCell align='center'>{table.titulo}</StyledTableCell>
+                                    <StyledTableCell align='center'>{!table.isLicenca ? "Esforço" : "Licenças"}</StyledTableCell>
+                                    <StyledTableCell align='center'>Valor </StyledTableCell>
+                                    <StyledTableCell align='center'>Total</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody >
+                                {tableLines}
+                                <StyledTableRow>
+                                    <StyledTableCell align='center'> <b>Total {table.titulo}</b></StyledTableCell>
+                                    <StyledTableCell align='center'> <b>{totalTime}{!table.isLicenca ? "h" : ""}</b></StyledTableCell>
+                                    <StyledTableCell align='center'> </StyledTableCell>
+                                    <StyledTableCell align='center'> <b>R$ {totalValue}</b></StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>
+                        </TableContainer>
+                    </ContainerTableBox>
+                    <Box sx={{ width: "25%" }} component={Paper}>
+                        <TitleCostCentersBox>
+                            Centros de Custo
+                        </TitleCostCentersBox>
+                        <CostCentersBox>
+                            {tableCCs}
+                        </CostCentersBox>
+                    </Box>
+                </CostTableBox>
+            )
+        })
+    }
+
+
 
     return (
         <Box sx={{ marginY: "20px" }}>
             <TitleTypography variant='h5'>
-                Informações Gerais
+                Informações Comerciais
             </TitleTypography>
-            <StyledTable title='Benefícios reais' valuesList={realBenefits} attributesList={benefitsTableTitles} length={"50vh"}/>
-            <StyledTable title='Benefícios potenciais' valuesList={potencialBenefits} attributesList={benefitsTableTitles} length={"50vh"}/>
+            <StyledBenefitTable title='Benefícios reais' valuesList={realBenefits} />
+            <StyledBenefitTable title='Benefícios potenciais' valuesList={potencialBenefits} />
+            {atributos.costTables &&
+                <TableBox>
+                    <TitleTypography variant='subtitle1'>
+                        Tabelas de custo
+                    </TitleTypography>
+                    {costTables}
+                </TableBox>
+            }
         </Box >
     )
 
@@ -819,23 +889,25 @@ function AtributeList(props: { valorAtributo: [] }) {
 }
 
 /**
- * Componente que constrói uma tabela já estilizada dinâmicamente
+ * Componente que constrói uma tabela de benefício
  * 
  * @param props 
  * @returns 
  */
- function StyledTable(props: { valuesList: [], attributesList: any, title: string, length: string }) {
+function StyledBenefitTable(props: { valuesList: [], title: string }) {
 
     return (
-        <Box sx={{ width: "100%", display: 'flex', flexDirection: "column", alignItems: "center", marginBottom: "20px" }}>
+        <TableBox sx={{ marginBottom: "20px" }}>
             <TitleTypography variant='subtitle1'>
                 {props.title}
             </TitleTypography>
-            <TableContainer component={Paper} sx={{ width: props.length }}>
+            <TableContainer component={Paper} sx={{ width: "40vw" }}>
                 <Table aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            {props.attributesList}
+                            <StyledTableCell align='center'>Descrição</StyledTableCell>
+                            <StyledTableCell align='center'>Moeda</StyledTableCell>
+                            <StyledTableCell align='center'>Valor</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -843,7 +915,7 @@ function AtributeList(props: { valorAtributo: [] }) {
                     </TableBody>
                 </Table>
             </TableContainer>
-        </Box>
+        </TableBox>
     )
 }
 
