@@ -9,6 +9,7 @@ const styledTypograpfy = styled(Typography)
 
 export const MainPaper = styled(Paper)({
     borderRadius: "5px",
+    boxShadow: "5px 5px 10px 0 #00000050",
     heigth: "90%",
     width: "90%"
 })
@@ -39,7 +40,15 @@ export const GridLinkTypograpfy = styledTypograpfy({
     alignItems: "center",
     display: 'flex', 
     justifyContent: "end", 
-    width: "25%"
+    width: "25%",
+    '& a': {
+        color: "#2382BA",
+
+        "&:hover": {
+            fontWeight: "500",
+            color: "#00579d"
+        }
+    }
 })
 
 export const ListProccessColorBox = styledBox({
@@ -62,7 +71,15 @@ export const ListTypography = styled(GridTypography)({
 export const LastListTypography = styled(ListTypography)({
     display: "flex", 
     justifyContent: "end", 
-    paddingRight: "10px"
+    paddingRight: "10px",
+    '& a': {
+        color: "#2382BA",
+
+        "&:hover": {
+            fontWeight: "500",
+            color: "#00579d"
+        }
+    }
 })
 
 export const BoxCollectionComponent = styledBox({

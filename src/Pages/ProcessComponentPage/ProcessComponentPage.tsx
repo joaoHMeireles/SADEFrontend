@@ -1,9 +1,14 @@
-
-import { processComponent, processComponentSize, processComponentStatus, ITsession } from '../../DefinitionFiles/enuns'
-import { Box, Container, Divider, Grid, Typography } from '@mui/material'
-import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb'
-import Toolbar from '../../Components/Toolbar/Toolbar'
-import { ContentBox, ContainerBox } from '../App.styles'
+import { processComponent, processComponentSize, processComponentStatus, ITsession } from '../../DefinitionFiles/enuns';
+import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
+import Toolbar from '../../Components/Toolbar/Toolbar';
+import { Box, Container, Divider, Grid, List, ListItem, ListItemIcon, Paper, Table, TableBody, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { ContentBox, ContainerBox } from '../App.styles';
+import {
+    HeaderBox, MainContainerGrid, StatusColorBox, MainInfoGrid, HeaderContainerGrid, TitleGrid, FlagContainerBox,
+    FlagBox, FlagTriangleBox, SmallAttributesGrid, TitleTypography, AttributeTitleTypography, TextTypography,
+    DotCircleIcon, StyledTableCell, StyledTableRow, TableBox, CostTableBox, ContainerTableBox, TitleCostCentersBox,
+    CostCentersBox
+} from './ProcessComponentPage.styles';
 
 const listaProcessos = [
     {
@@ -17,7 +22,7 @@ const listaProcessos = [
         departamento: "não sei nenhum departamento",
         gerenteResponsavel: "tal fiote de cruz credo",
         frequenciaUso: 200,
-        beneficioQualitativo: "textin dizendo como é bom",
+        beneficioQualitativo: "textin ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything dizendo como é bom",
         centrosDeCusto: [
             1234,
             5678
@@ -65,7 +70,7 @@ const listaProcessos = [
         departamento: "7825678256782437813",
         gerenteResponsavel: "riomar silveira pinto nunes",
         frequenciaUso: 329,
-        beneficioQualitativo: "é bem bonzin bão memo bom",
+        beneficioQualitativo: "é bem bonzin bão memo bom ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything",
         centrosDeCusto: [
             3864,
             9863
@@ -133,7 +138,7 @@ const listaProcessos = [
         departamento: "o da diretoria fodão grandoes",
         gerenteResponsavel: "marcello taz do cqc",
         frequenciaUso: 160,
-        beneficioQualitativo: "vai dar isso isso isso e isso de beneficios",
+        beneficioQualitativo: "vai dar isso isso of Lorem Ipsum available, but the majoritailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anythingy have suffered alteration in some form, by injected humour, or  randomised word benefi isso e isso de beneficios",
         centrosDeCusto: [
             9425,
             9678
@@ -178,6 +183,7 @@ const listaProcessos = [
         tabelasCusto: [
             {
                 titulo: "gastos tandam",
+                isLicenca: false,
                 centrosCusto: [
                     {
                         centroCusto: 6135,
@@ -191,13 +197,13 @@ const listaProcessos = [
                 linhas: [
                     {
                         recurso: "analista funcional",
-                        esforco: "150h",
-                        valorHora: 35
+                        esforco: 150,
+                        valor: 35
                     },
                     {
                         recurso: "mão de obra",
-                        esforco: "48h",
-                        valorHora: 35
+                        esforco: 48,
+                        valor: 35
                     },
                 ]
             }
@@ -223,7 +229,7 @@ const listaProcessos = [
         departamento: "o da diretoria fodão grandoes",
         gerenteResponsavel: "romero britto",
         frequenciaUso: 540,
-        beneficioQualitativo: "beneficios",
+        beneficioQualitativo: "ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word beneficios",
         centrosDeCusto: [
             9678
         ],
@@ -268,6 +274,7 @@ const listaProcessos = [
         tabelasCusto: [
             {
                 titulo: "gastos",
+                isLicenca: false,
                 centrosCusto: [
                     {
                         centroCusto: 6135,
@@ -281,18 +288,19 @@ const listaProcessos = [
                 linhas: [
                     {
                         recurso: "analista funcional",
-                        esforco: "150h",
-                        valorHora: 35
+                        esforco: 150,
+                        valor: 35
                     },
                     {
                         recurso: "macaco anti-stress",
-                        esforco: "48h",
-                        valorHora: 39
+                        esforco: 48,
+                        valor: 39
                     },
                 ]
             },
             {
                 titulo: "mais gastos",
+                isLicenca: true,
                 centrosCusto: [
                     {
                         centroCusto: 6789,
@@ -309,14 +317,14 @@ const listaProcessos = [
                 ],
                 linhas: [
                     {
-                        recurso: "rapaz do café",
-                        esforco: "350h",
-                        valorHora: 15
+                        recurso: "Oracle",
+                        esforco: 3,
+                        valor: 479.99
                     },
                     {
-                        recurso: "mão de obra",
-                        esforco: "48h",
-                        valorHora: 350
+                        recurso: "Visual Studio premium",
+                        esforco: 2,
+                        valor: 156
                     },
                 ]
             }
@@ -342,7 +350,7 @@ const listaProcessos = [
         departamento: "o da diretoria fodão grandoes",
         gerenteResponsavel: "marcello taz do cqc",
         frequenciaUso: 160,
-        beneficioQualitativo: "vai dar isso isso isso e isso de beneficios",
+        beneficioQualitativo: "vai dar isso isso isso e isso de beneficios ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word",
         centrosDeCusto: [
             9425,
             9678
@@ -386,7 +394,7 @@ const listaProcessos = [
     },
     {
         id: 9,
-        titulo: "eu quero janta de 3 horas",
+        titulo: "eu quero janta de 3 s",
         tamanho: processComponentSize.Pequeno,
         solicitante: "um gênio",
         status: processComponentStatus.Backlog,
@@ -395,7 +403,7 @@ const listaProcessos = [
         departamento: "sgdaho",
         gerenteResponsavel: "Carlos Salles Morales",
         frequenciaUso: 98,
-        beneficioQualitativo: "b e n e f i c i o",
+        beneficioQualitativo: "b e n e f i c i o There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarras",
         centrosDeCusto: [
             9678,
             9674,
@@ -445,6 +453,7 @@ const listaProcessos = [
         tabelasCusto: [
             {
                 titulo: "mais gastos",
+                isLicenca: false,
                 centrosCusto: [
                     {
                         centroCusto: 7643,
@@ -462,13 +471,13 @@ const listaProcessos = [
                 linhas: [
                     {
                         recurso: "rapaz do café",
-                        esforco: "350h",
-                        valorHora: 15
+                        esforco: 350,
+                        valor: 15
                     },
                     {
                         recurso: "mão de obra",
-                        esforco: "48h",
-                        valorHora: 350
+                        esforco: 48,
+                        valor: 350
                     },
                 ]
             }
@@ -485,7 +494,14 @@ const listaProcessos = [
     }
 ]
 
-export default function ProcessComponentPage() {
+/**
+ * Componente principal das páginas de proposta de demanda sendo dinâmico conforme
+ * as informações vão sendo inseridas
+ * 
+ * @param props 
+ * @returns 
+ */
+export default function ProcessComponentPage(props: any) {
     return (
         <>
             <PageHeader />
@@ -500,187 +516,320 @@ export default function ProcessComponentPage() {
     )
 }
 
-function PageHeader() {
+/**
+ * Componente para o header da página que controlará os botões que aparecerão
+ * de acordo com o status atual daquele processo
+ * 
+ * @param props 
+ * @returns 
+ */
+function PageHeader(props: any) {
+
+    //FALTA OS BOTÔES
 
     return (
         <>
-            <Box sx={{ width: "100%", position: "fixed", top: "8vh", display: "flex", backgroundColor: "rgb(255,255,255, 0.9)", padding: "24px", zIndex: 10 }}>
+            <HeaderBox>
                 <Breadcrumb />
-            </Box>
+            </HeaderBox>
             <Toolbar />
         </>
     )
 }
 
-function ProcessContainer() {
-    const processoLocalStrorage = localStorage.getItem("CHOOSEDPROCESS")
-    const processoEscolhido = JSON.parse(processoLocalStrorage != null ? processoLocalStrorage : "");
-    const processoInfo = listaProcessos.find(p => p.id == processoEscolhido.id && processoEscolhido.tipo == p.tipo)
-    const informacoesGerais = getInfoGeral(processoInfo)
-    const informacoesComerciais = getInfoComercial(processoInfo)
-    const contextualizacao = getContextualizacao(processoInfo)
+/**
+ * Container principal para todas as informações de uma proposta/demanda
+ * 
+ * @param props 
+ * @returns 
+ */
+function ProcessContainer(props: any) {
+    const processLocalStorage = localStorage.getItem("CHOOSEDPROCESS")
+    const choosedProcess = JSON.parse(processLocalStorage != null ? processLocalStorage : "");
+    const processoInfo = listaProcessos.find(p => p.id == choosedProcess.id && choosedProcess.tipo == p.tipo)
 
     return (
-        <Grid container sx={{ width: "100%", height: "auto", marginTop: "2.5vh", boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)", borderRadius: "10px" }}>
+        <MainContainerGrid container>
             <Grid item xs={0.2}>
-                <Box sx={{ borderRadius: "10px 0 0 10px", backgroundColor: getColorStatus(processoInfo?.status), width: "100%", height: "100%" }}></Box>
+                <StatusColorBox sx={{ backgroundColor: getColorStatus(processoInfo?.status) }} ></StatusColorBox>
             </Grid>
-            <Grid item xs={11.8} sx={{ backgroundColor: "white", borderRadius: "0 10px 10px 0", padding: "25px" }}>
-                <Grid container sx={{ marginBottom: "15px", minHeight: "80px" }}>
-                    <Grid item xs={10} sx={{ display: "flex", alignItems: "center" }}>
+            <MainInfoGrid item xs={11.8}>
+                <HeaderContainerGrid container>
+                    <TitleGrid item xs={10} >
                         <Typography variant='h4'>
                             {processoInfo?.titulo}
                         </Typography>
-                    </Grid>
+                    </TitleGrid>
                     <Grid item xs={2}>
                         <Flag cor={getColorType(processoInfo?.tipo)} />
                     </Grid>
-                </Grid>
+                </HeaderContainerGrid>
                 <Divider />
-                {informacoesGerais}
+                <InfoGeral processo={processoInfo} />
                 <Divider />
-                {informacoesComerciais}
+                <InfoComercial processo={processoInfo} />
                 <Divider />
-                {contextualizacao}
-            </Grid>
-        </Grid>
+                <Contextualizacao processo={processoInfo} />
+            </MainInfoGrid>
+        </MainContainerGrid>
     )
 }
 
+/**
+ * Componente da bandeira que altera a cor de acordo com o valor que recebe e que
+ * se localiza no canto superior direito container principal
+ * 
+ * @param props 
+ * @returns 
+ */
 function Flag(props: { cor: string }) {
-
-    //fazer uma div para ser a bandeirinha bunitinha
     return (
-        <Box sx={{ display: "flex", justifyContent: "center", height: '100%' }}>
-            <Box sx={{ width: 40, maxHeight: 84, backgroundColor: props.cor, display: "flex", alignItems: "end", position: "relative", top: -25, zIndex: 0 }}>
-                <Box sx={{
-                    width: 0,
-                    height: 0,
-                    borderLeft: "20px solid transparent",
-                    borderRight: "20px solid transparent",
-                    borderBottom: "22px solid white"
-                }} />
-            </Box>
-        </Box>
+        <FlagContainerBox >
+            <FlagBox sx={{ backgroundColor: props.cor }}>
+                <FlagTriangleBox />
+            </FlagBox>
+        </FlagContainerBox>
     )
 }
 
-function getInfoGeral(processo: any) {
+/**
+ * Componente dinâmico das informações gerais de um processo
+ * 
+ * @param props 
+ * @returns 
+ */
+function InfoGeral(props: { processo: any }) {
     const atributosPequenos = {
-        numero: processo.id,
-        status: processo.status,
-        solicitante: processo.solicitante,
-        departamento: processo.departamento,
-        gerenteResponsavel: processo.gerenteResponsavel,
-        frequenciaDeUso: processo.frequenciaUso,
-        tamanho: processo.tamanho,
-        sessaoTIResponsavel: processo.secaoTIResponsavel,
-        BUSolicitante: processo.BUSolicitante,
-        prazoElaboracao: processo.prazoElaboracao,
-        codigoPPM: processo.codigoPPM
+        numero: props.processo.id,
+        status: props.processo.status,
+        solicitante: props.processo.solicitante,
+        departamento: props.processo.departamento,
+        gerenteResponsavel: props.processo.gerenteResponsavel,
+        frequenciaDeUso: props.processo.frequenciaUso,
+        tamanho: props.processo.tamanho,
+        sessaoTIResponsavel: props.processo.secaoTIResponsavel,
+        BUSolicitante: props.processo.BUSolicitante,
+        payback: props.processo.payback,
+        prazoElaboracao: props.processo.prazoElaboracao,
+        codigoPPM: props.processo.codigoPPM
     }
 
     const atributosGrandes = {
-        centrosDeCusto: processo.centrosDeCusto,
-        beneficioQualitativo: processo.beneficioQualitativo,
-        BUsBeneficiadas: processo.BUsBeneficiadas,
-        periodoDeExecucao: processo.periodoExecucao,
-        responsaveis: processo.responsaveis
+        centrosDeCusto: props.processo.centrosDeCusto,
+        BUsBeneficiadas: props.processo.BUsBeneficiadas,
+        periodoDeExecucao: props.processo.periodoExecucao,
+        responsaveis: props.processo.responsaveis
     }
 
     const gridAtributosPequenos = []
-    let count = 1
+    let chaveComponente = 0
 
-    for(let atributo in atributosPequenos){
-        count++
+    for (let atributo in atributosPequenos) {
+        chaveComponente++
         const nomeAtributo = getNomeAtributo(atributo)
         let valorAtributo = (atributosPequenos as any)[atributo]
 
-        if(!valorAtributo){
+        if (!valorAtributo) {
             continue
         }
 
-        if(typeof valorAtributo === typeof new Date()){
+        if (typeof valorAtributo === typeof new Date()) {
             valorAtributo = valorAtributo.toLocaleDateString()
         }
 
         gridAtributosPequenos.push(
-            <Grid key={count} item xs={6} sx={{display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
-                <Typography variant='body1' sx={{fontWeight: "bold"}}>
+            <SmallAttributesGrid key={chaveComponente} item xs={6}>
+                <AttributeTitleTypography variant='body1'>
                     {nomeAtributo}
-                </Typography>
-                <Typography variant='body1' sx={{marginLeft: "5px"}}>
+                </AttributeTitleTypography>
+                <TextTypography variant='body1' sx={{ marginLeft: "5px" }}>
                     {valorAtributo}
-                </Typography>
-            </Grid>
+                </TextTypography>
+            </SmallAttributesGrid>
         )
     }
 
     const gridAtributosGrandes = []
+    chaveComponente = 0
 
-    for(let atributo in atributosGrandes){
+    for (let atributo in atributosGrandes) {
+        chaveComponente++
         const nomeAtributo = getNomeAtributo(atributo)
         let valorAtributo = (atributosGrandes as any)[atributo]
 
-        if(!valorAtributo){
+        if (!valorAtributo) {
             continue
         }
-        
-        console.log(valorAtributo)
-        
-        
-        //fazer para utilizar lista de números, string, lista de string e lista de Data
-        gridAtributosGrandes.push( ""
-            // <Grid key={atributosPequenos.numero} item xs={6} sx={{display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
-            //     <Typography variant='body1' sx={{fontWeight: "bold"}}>
-            //         {nomeAtributo}
-            //     </Typography>
-            //     <Typography variant='body1' sx={{marginLeft: "5px"}}>
-            //         {valorAtributo}
-            //     </Typography>
-            // </Grid>
+
+        gridAtributosGrandes.push(
+            <Grid key={chaveComponente} item xs={6} >
+                <AttributeTitleTypography variant='body1'>
+                    {nomeAtributo}
+                </AttributeTitleTypography>
+                <AtributeList valorAtributo={valorAtributo} />
+            </Grid>
         )
     }
 
 
 
     return (
-        <Grid container>
-            <Typography variant='h5' sx={{marginY: "20px" }}>
+        <Grid container sx={{ marginY: "20px" }}>
+            <TitleTypography variant='h5'>
                 Informações Gerais
-            </Typography>
-            <Grid item xs={12}>
+            </TitleTypography>
+            <Grid item xs={12} sx={{ marginBottom: "8px" }}>
                 <Grid container spacing={1}>
                     {gridAtributosPequenos}
+                </Grid>
+            </Grid >
+            <Grid item xs={12}>
+                <Grid container spacing={1}>
                     {gridAtributosGrandes}
                 </Grid>
             </Grid >
+            <Grid item>
+                <TextTypography variant='body1' >
+                    <b>{getNomeAtributo("beneficioQualitativo")}</b> {props.processo.beneficioQualitativo}
+                </TextTypography>
+            </Grid>
         </Grid >
     )
 }
-function getInfoComercial(processo: any) {
+
+/**
+ * Componente dinâmico das informações comerciais de um processo
+ * 
+ * @param props 
+ * @returns 
+ */
+function InfoComercial(props: { processo: any }) {
     const atributos = {
-        beneficiosReais: processo.beneficiosReais,
-        beneficiosPotenciais: processo.beneficiosPotenciais,
-        payback: processo.payback,
-        tabelasDeCusto: processo.tabelasCusto
+        realBenefits: props.processo.beneficiosReais,
+        potencialBenefits: props.processo.beneficiosPotenciais,
+        costTables: props.processo.tabelasCusto
+    }
+
+    const realBenefits = atributos.realBenefits.map((benefit: { descricao: string, moeda: string, valor: string }, index: number) => {
+        return (
+            <StyledTableRow key={index}>
+                <StyledTableCell align='center' sx={{ width: "50%" }}>{benefit.descricao}</StyledTableCell>
+                <StyledTableCell align='center'>{benefit.moeda}</StyledTableCell>
+                <StyledTableCell align='center'>R$ {benefit.valor}</StyledTableCell>
+            </StyledTableRow>
+        )
+    })
+
+    const potencialBenefits = atributos.potencialBenefits.map((benefit: { descricao: string, moeda: string, valor: string }, index: number) => {
+        return (
+            <StyledTableRow key={index}>
+                <StyledTableCell align='center' sx={{ width: "50%" }}>{benefit.descricao}</StyledTableCell>
+                <StyledTableCell align='center'>{benefit.moeda}</StyledTableCell>
+                <StyledTableCell align='center'>R$ {benefit.valor}</StyledTableCell>
+            </StyledTableRow>
+        )
+    })
+
+    let costTables
+
+    if (atributos.costTables) {
+        costTables = atributos.costTables.map((table: any, index: number) => {
+            let totalTime = 0, totalValue = 0
+
+            const tableLines = table.linhas.map((linha: { recurso: string, esforco: number, valor: number }, lineIndex: number) => {
+                const total = linha.valor * linha.esforco
+                totalTime += linha.esforco
+                totalValue += total
+
+                return (
+                    <StyledTableRow key={lineIndex}>
+                        <StyledTableCell align='center'>{linha.recurso}</StyledTableCell>
+                        <StyledTableCell align='center'>{linha.esforco}{!table.isLicenca ? "h" : ""} </StyledTableCell>
+                        <StyledTableCell align='center'>R$ {linha.valor}</StyledTableCell>
+                        <StyledTableCell align='center'>R$ {total}</StyledTableCell>
+                    </StyledTableRow>
+                )
+            })
+
+            const tableCCs = table.centrosCusto.map((centroDeCusto: any, centerIndex: number) => {
+                const porcentagem = centroDeCusto.porcentagem * 100
+
+                return (
+                    <Typography key={centerIndex} variant="body1">
+                        {centroDeCusto.centroCusto} - {porcentagem}%
+                    </Typography>
+                )
+            })
+
+            return (
+                <CostTableBox key={index} >
+                    <ContainerTableBox>
+                        <TableContainer component={Paper} sx={{ width: "auto" }}>
+                            <TableHead >
+                                <TableRow >
+                                    <StyledTableCell align='center'>{table.titulo}</StyledTableCell>
+                                    <StyledTableCell align='center'>{!table.isLicenca ? "Esforço" : "Licenças"}</StyledTableCell>
+                                    <StyledTableCell align='center'>Valor </StyledTableCell>
+                                    <StyledTableCell align='center'>Total</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody >
+                                {tableLines}
+                                <StyledTableRow>
+                                    <StyledTableCell align='center'> <b>Total {table.titulo}</b></StyledTableCell>
+                                    <StyledTableCell align='center'> <b>{totalTime}{!table.isLicenca ? "h" : ""}</b></StyledTableCell>
+                                    <StyledTableCell align='center'> </StyledTableCell>
+                                    <StyledTableCell align='center'> <b>R$ {totalValue}</b></StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>
+                        </TableContainer>
+                    </ContainerTableBox>
+                    <Box sx={{ width: "25%" }} component={Paper}>
+                        <TitleCostCentersBox>
+                            Centros de Custo
+                        </TitleCostCentersBox>
+                        <CostCentersBox>
+                            {tableCCs}
+                        </CostCentersBox>
+                    </Box>
+                </CostTableBox>
+            )
+        })
     }
 
 
-    //retornar componente das infromações comerciais
+
     return (
-        <Box>
-            bbb
-        </Box>
+        <Box sx={{ marginY: "20px" }}>
+            <TitleTypography variant='h5'>
+                Informações Comerciais
+            </TitleTypography>
+            <StyledBenefitTable title='Benefícios reais' valuesList={realBenefits} />
+            <StyledBenefitTable title='Benefícios potenciais' valuesList={potencialBenefits} />
+            {atributos.costTables &&
+                <TableBox>
+                    <TitleTypography variant='subtitle1'>
+                        Tabelas de custo
+                    </TitleTypography>
+                    {costTables}
+                </TableBox>
+            }
+        </Box >
     )
 
 }
 
-function getContextualizacao(processo: any) {
+/**
+ * Componente dinâmico da contextualização de um processo
+ * 
+ * @param props 
+ * @returns 
+ */
+function Contextualizacao(props: { processo: any }) {
     const atributos = {
-        objetivo: processo.objetivo,
-        situacaoAtual: processo.situacaoAtual,
-        escopo: processo.escopo
+        objetivo: props.processo.objetivo,
+        situacaoAtual: props.processo.situacaoAtual,
+        escopo: props.processo.escopo
     }
 
 
@@ -692,7 +841,86 @@ function getContextualizacao(processo: any) {
     )
 }
 
-function getNomeAtributo(nomeAtributo: any){
+/**
+ * Componente dos atributos em lista das informações gerais
+ * 
+ * @param props 
+ * @returns 
+ */
+function AtributeList(props: { valorAtributo: [] }) {
+    let contadorPeriodoExecucao = 0
+    const valores = props.valorAtributo.map((valor) => {
+        if (typeof valor === typeof new Date()) {
+            contadorPeriodoExecucao++
+            const valorData: Date = valor
+            return (
+                <ListItem>
+                    <ListItemIcon>
+                        <DotCircleIcon />
+                    </ListItemIcon>
+                    {contadorPeriodoExecucao == 1 ? "Início: " : "Fim: "}
+                    {valorData.toLocaleDateString()}
+                </ListItem>
+            )
+        }
+
+        return (
+            <ListItem>
+                <ListItemIcon>
+                    <DotCircleIcon />
+                </ListItemIcon>
+                {valor}
+            </ListItem>
+        )
+    })
+
+
+    return (
+        <List>
+            {valores}
+        </List>
+    )
+}
+
+/**
+ * Componente que constrói uma tabela de benefício
+ * 
+ * @param props 
+ * @returns 
+ */
+function StyledBenefitTable(props: { valuesList: [], title: string }) {
+
+    return (
+        <TableBox sx={{ marginBottom: "20px" }}>
+            <TitleTypography variant='subtitle1'>
+                {props.title}
+            </TitleTypography>
+            <TableContainer component={Paper} sx={{ width: "40vw" }}>
+                <Table aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell align='center'>Descrição</StyledTableCell>
+                            <StyledTableCell align='center'>Moeda</StyledTableCell>
+                            <StyledTableCell align='center'>Valor</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {props.valuesList}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </TableBox>
+    )
+}
+
+/**
+ * Função que retorna o Título formatado de acordo com o atributo de um processo 
+ * que receber
+ * 
+ * @param nomeAtributo 
+ * @returns 
+ */
+function getNomeAtributo(nomeAtributo: any) {
     const nomesAtributos = {
         numero: "Número do processo:",
         status: "Status:",
@@ -708,6 +936,7 @@ function getNomeAtributo(nomeAtributo: any){
         centrosDeCusto: "Centros de custo:",
         beneficioQualitativo: "Benefício qualitativo:",
         BUsBeneficiadas: "BUs beneficiadas:",
+        payback: "Payback:",
         periodoDeExecucao: "Período de execução:",
         responsaveis: "Responsáveis:"
     }
@@ -717,6 +946,12 @@ function getNomeAtributo(nomeAtributo: any){
     }
 }
 
+/**
+ * Função que retorna a cor dependendo do status que receber
+ * 
+ * @param status 
+ * @returns 
+ */
 function getColorStatus(status: string | undefined) {
     const coresStatus = {
         Backlog: "#DDDDDD",
@@ -731,6 +966,12 @@ function getColorStatus(status: string | undefined) {
     }
 }
 
+/**
+ * Função que retorna a cor dependendo do tipo de processo que receber
+ * 
+ * @param tipo 
+ * @returns 
+ */
 function getColorType(tipo: string | undefined) {
     const coresStatus = {
         Demanda: "#00579D",
@@ -743,3 +984,4 @@ function getColorType(tipo: string | undefined) {
         return (coresStatus as any)[tipo]
     }
 }
+

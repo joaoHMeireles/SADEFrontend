@@ -32,28 +32,18 @@ export default function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={MainTheme}>
-        <Navbar
-          aberto={aberto}
-          setAberto={setAberto}
-          tamanhoNavbar={tamanhoNavbar}
-          setFiltro={setFiltrar}
-        />
-        <Box
-          sx={{
-            marginLeft: aberto ? `${tamanhoSideBar}px` : 0,
-            display: "flex",
-          }}
-        >
+        <Navbar aberto={aberto} setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />
+        <Box sx={{ marginLeft: aberto ? `${tamanhoSideBar}px` : 0, display: "flex" }} >
           <Sidebar open={aberto} tamanho={tamanhoSideBar} setOpen={setAberto} />
           <MainBox component="main" sx={{ marginLeft: tamanhoSideBar }}>
             <Toolbar />
             <ThemeProvider theme={ContentTheme}>
               <Routes>
-                <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar}/>} />
-                <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar}/>}/>
+                <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />} />
+                <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar} />} />
                 <Route path="/notifications" element={<Notifications />} />
                 <Route path="/chats" element={<Chats aberto={aberto} />}></Route>
-                <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar}/>} />
+                <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar} />} />
                 <Route path="/home/demand/:id" element={<ProcessComponentPage />} />
                 <Route path="/mydemands/demand/:id" element={<ProcessComponentPage />} />
                 <Route path="/proposal/demand/:id" element={<ProcessComponentPage />} />
@@ -66,7 +56,7 @@ export default function App() {
               </Routes>
             </ThemeProvider>
           </MainBox>
-          <Filter open={filtrar} setOpen={setFiltrar} setSidebar={setAberto}/>
+          <Filter open={filtrar} setOpen={setFiltrar} setSidebar={setAberto} />
         </Box>
       </ThemeProvider>
     </BrowserRouter>
