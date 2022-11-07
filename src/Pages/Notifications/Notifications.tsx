@@ -10,6 +10,9 @@ import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded
 
 import { BoxContainerNotifications } from "./Notifications.styles";
 
+/**
+ * Lista de notificações, cuja função é usar como algo mais dinâmico com o componente de notificação
+ */
 const listNotifications: {
   Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;

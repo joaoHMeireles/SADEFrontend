@@ -77,6 +77,7 @@ export const SearchBar = styled(TextField)({
 })
 
 // ---------------------------------------------------
+
 // Messages component
 
 export const BoxGeneralMessagesRightSide = styledBox({

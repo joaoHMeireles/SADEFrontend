@@ -86,7 +86,7 @@ function Login(props: {
                   placeholder="Senha"
                   InputProps={{
                     startAdornment: <LockRoundedIcon sx={{ color: "#595959", paddingRight: 1 }} />,
-                    endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959" }} />)
+                    endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} />)
                   }}
                 />
                 <BoxForgotPassword>

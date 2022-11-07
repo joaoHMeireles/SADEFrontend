@@ -37,7 +37,11 @@ export const ContainerBackgroundLogin = stylesBox({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-around",
-    height: "80%",
+    height: "auto",
+    maxHeight: "75%",
+    minHeight: "50%",
+    maxWidth: "70%",
+    minWidth: "60%",
     width: "60%",
 })
 
@@ -47,13 +51,19 @@ export const ContainerTitleText = stylesBox({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    height: "25%",
+    height: "20%",
+    maxHeight: "20%",
+    maxWidth: "100%",
+    minHeight: "15%",
+    minWidth: "80%",
     width: "100%",
 })
 
 export const TypographyTitle = stylesTypography({
     color: "#FFF",
-    marginBottom: 16
+    fontSize: "40px",
+    marginBottom: 20,
+    marginTop: 80,
 })
 
 export const TypographyText = stylesTypography({
@@ -65,7 +75,12 @@ export const ContainerInputsLogin = stylesBox({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    height: "50%",
+    height: "60%",
+    margin: "80px 0",
+    maxHeight: "60%",
+    maxWidth: "100%",
+    minHeight: "50%",
+    minWidth: "80%",
     width: "100%",
 })
 
@@ -74,7 +89,8 @@ export const InputEmail = stylesTextField({
     borderRadius: "5px",
     boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)",
     marginBottom: 40,
-    width: "70%",
+    minWidth: "70%",
+    width: "80%",
 })
 
 export const InputPassword = stylesTextField({
@@ -82,7 +98,8 @@ export const InputPassword = stylesTextField({
     background: "#FFF",
     borderRadius: "5px",
     boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)",
-    width: "70%",
+    minWidth: "70%",
+    width: "80%",
 })
 
 export const BoxForgotPassword = stylesBox({
@@ -90,11 +107,12 @@ export const BoxForgotPassword = stylesBox({
     color: "#FFF",
     display: "flex",
     justifyContent: "start",
-    marginTop: 8,
-    width: "70%",
+    marginTop: 20,
+    width: "80%",
 })
 
 export const TextForgotPassword = stylesTypography({
+    cursor: "pointer",
     textDecoration: "underline"
 })
 
@@ -102,13 +120,20 @@ export const ContainerButtonLogin = stylesBox({
     alignItems: "center",
     display: "flex",
     justifyContent: "center",
-    height: "25%",
+    height: "20%",
+    maxHeight: "20%",
+    maxWidth: "100%",
+    minHeight: "10%",
+    minWidth: "80%",
     width: "100%",
 })
 
 export const StylesButton = styled(Button)({
     backgroundColor: "#00579D",
     color: "#fffffff",
+    height: "30%",
+    marginBottom: 80,
+    padding: 12,
     textDecoration: "none",
-    width: "150px",
+    width: "40%",
 })
