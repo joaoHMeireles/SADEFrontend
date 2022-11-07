@@ -1,5 +1,5 @@
-import { Box, Container, Divider, Grid, List, ListItem, ListItemIcon, TableCell, tableCellClasses, TableRow, Typography } from '@mui/material'
-import { styled, Theme, CSSObject } from '@mui/material/styles';
+import { Box, Grid, TableCell, tableCellClasses, TableRow, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles';
 import CircleIcon from '@mui/icons-material/Circle';
 const styledBox = styled(Box)
 const styledGrid = styled(Grid)
@@ -73,12 +73,12 @@ export const FlagTriangleBox = styledBox({
 
 export const SmallAttributesGrid = styledGrid({
     alignItems: "center",
-    display: "flex",  
+    display: "flex",
     justifyContent: "flex-start"
 })
 
 
-export const TitleTypography =styledTypography({
+export const TitleTypography = styledTypography({
     marginBottom: "20px"
 })
 
@@ -109,7 +109,7 @@ export const StyledTableRow = styled(TableRow)(({ theme: Theme }) => ({
     '&:nth-of-type(even)': {
         backgroundColor: Theme.palette.action.hover,
     },
-    
+
     '&:last-child td, &:last-child th': {
         border: 0,
     },
@@ -119,22 +119,22 @@ export const TableBox = styledBox({
     alignItems: "center",
     display: 'flex',
     flexDirection: "column",
-    width: "100%",  
+    width: "100%",
 })
 
 export const CostTableBox = styledBox({
     display: 'flex',
     justifyContent: "space-between",
-    marginBottom: "30px", 
-    minWidth: "40vw", 
-    width: "auto"  
+    marginBottom: "30px",
+    minWidth: "40vw",
+    width: "auto"
 })
 
 export const ContainerTableBox = styledBox({
     alignItems: "center",
     display: 'flex',
     flexDirection: "column",
-    width: "auto", 
+    width: "auto",
 })
 
 export const TitleCostCentersBox = styledBox({
@@ -142,20 +142,20 @@ export const TitleCostCentersBox = styledBox({
     backgroundColor: "#00579d",
     borderRadius: "4px 4px 0 0",
     boxSizing: 'border-box',
-    color: "#ffffff", 
+    color: "#ffffff",
     display: 'flex',
     fontFamily: "'Roboto','Helvetica','Arial',sans-serif",
     fontSize: "0.875rem",
     heigth: "auto",
     justifyContent: "center",
     padding: "19px",
-    width: "100%"    
+    width: "100%"
 })
 
 export const CostCentersBox = styledBox({
     alignItems: "center",
     display: "flex",
-    flexDirection: "column", 
+    flexDirection: "column",
     height: "75%",
     justifyContent: "space-evenly",
     width: "100%"

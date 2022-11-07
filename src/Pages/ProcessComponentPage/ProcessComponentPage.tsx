@@ -1,20 +1,14 @@
-import { processComponent, processComponentSize, processComponentStatus, ITsession } from '../../DefinitionFiles/enuns'
-import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb'
-import Toolbar from '../../Components/Toolbar/Toolbar'
-import { Box, Container, Divider, Grid, List, ListItem, ListItemIcon, Typography } from '@mui/material'
-import { ContentBox, ContainerBox } from '../App.styles'
+import { processComponent, processComponentSize, processComponentStatus, ITsession } from '../../DefinitionFiles/enuns';
+import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
+import Toolbar from '../../Components/Toolbar/Toolbar';
+import { Box, Container, Divider, Grid, List, ListItem, ListItemIcon, Paper, Table, TableBody, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { ContentBox, ContainerBox } from '../App.styles';
 import {
     HeaderBox, MainContainerGrid, StatusColorBox, MainInfoGrid, HeaderContainerGrid, TitleGrid, FlagContainerBox,
     FlagBox, FlagTriangleBox, SmallAttributesGrid, TitleTypography, AttributeTitleTypography, TextTypography,
     DotCircleIcon, StyledTableCell, StyledTableRow, TableBox, CostTableBox, ContainerTableBox, TitleCostCentersBox,
     CostCentersBox
 } from './ProcessComponentPage.styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 
 const listaProcessos = [
     {
