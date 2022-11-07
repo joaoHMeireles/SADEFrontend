@@ -172,7 +172,7 @@ export default function Filter(props: {
           <Item itens={[]} titulo="Número" tipo={3} />
           <Item itens={foruns} titulo="Fórum" tipo={2} />
           <Item itens={departamentos} titulo="Departamento" tipo={2} />
-          <Item itens={tamanhos} titulo="Departamento" tipo={2} />
+          <Item itens={tamanhos} titulo="Tamanho" tipo={2} />
           <Item itens={status} titulo="Status" tipo={1} />
         </FilterDrawer>
       }
