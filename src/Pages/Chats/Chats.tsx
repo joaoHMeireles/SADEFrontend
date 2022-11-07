@@ -5,7 +5,8 @@ import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
 
-import { BoxSearchBar, ContainerChats, ContainerGeneralChats, LeftSideChat, LeftSideChats, RightSideChat, RightSideChats, SearchBar } from "./Chats.styles";
+import { BoxSearchBar, ContainerChats, ContainerGeneralChats, LeftSideChat, 
+  LeftSideChats, RightSideChat, RightSideChats, SearchBar } from "./Chats.styles";
 
 
 import { BoxGeneralMessagesRightSide, BoxGeneralMessagesLeftSide, BoxMessagesRightSides, BoxMessagesLeftSides, BoxMessagesRightSide, BoxMessagesLeftSide, TypographyPerson, TypographyMessage } from "./Chats.styles";

@@ -1,6 +1,7 @@
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 
-import { BoxChat, BoxContainerChat, BoxIconPerson, ContainerGeneralChat, TypographyPersonMessage, TypographyTitle } from "./Chat.styles";
+import { BoxChat, BoxContainerChat, BoxIconPerson, ContainerGeneralChat, 
+  TypographyPersonMessage, TypographyTitle } from "./Chat.styles";
 
 export default function Chat(props: {
   titulo: string;

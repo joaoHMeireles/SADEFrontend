@@ -3,7 +3,8 @@ import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
-import { NotificationBox, NotificationBoxIcon, NotificationLeftSide, NotificationRightSide, TypographyMessage, TypographyTitle } from "./Notification.styles";
+import { NotificationBox, NotificationBoxIcon, NotificationLeftSide, 
+  NotificationRightSide, TypographyMessage, TypographyTitle } from "./Notification.styles";
 
 export default function Notification(props: {
   Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {

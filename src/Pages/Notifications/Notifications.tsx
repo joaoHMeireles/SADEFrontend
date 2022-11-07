@@ -2,13 +2,13 @@ import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Notification from "../../Components/Notification/Notification";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { SvgIconTypeMap } from "@mui/material";
 import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import EditNotificationsRoundedIcon from "@mui/icons-material/EditNotificationsRounded";
 import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded";
 
 import { BoxContainerNotifications } from "./Notifications.styles";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
-import { SvgIconTypeMap } from "@mui/material";
 
 const listNotifications: {
   Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
