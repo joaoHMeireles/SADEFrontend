@@ -47,6 +47,10 @@ const listNotifications: {
     },
   ]
 
+  /**
+   * 
+   * @returns Retorna uma lista de componentes de notificações, sendo que cada componente tem seus dados puxados de um lista estatica
+   */
 export default function Notifications() {
   return (
     <BoxContainerNotifications>

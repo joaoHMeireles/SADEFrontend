@@ -17,6 +17,12 @@ import {
   StylesButton
 } from "./Login.styles";
 
+/**
+ * 
+ * @param props 
+ * @returns Função que retorna a tela de login
+ */
+
 function Login(props: {
   setAberto: React.Dispatch<React.SetStateAction<boolean>>;
   setFiltro: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,15 +32,24 @@ function Login(props: {
   localStorage.setItem("PESSOA", "Solicitante");
   localStorage.setItem("PAGINATUAL", "login")
 
+  /**
+   * Função para setar o filtro e o menu como fechados
+   */
   useEffect(() => {
     props.setAberto(false);
     props.setFiltro(false);
   });
 
+  /**
+   * Função que coloca o  tipo do usuário no localStorage
+   */
   function colocaPessoa() {
     localStorage.setItem("TIPOUSUARIO", "solicitante");
   }
 
+  /**
+   * Função para conseguir ver a senha do input password
+   */
   function mostrarSenha() {
     if (tipo == "text") {
       setTipo("password")

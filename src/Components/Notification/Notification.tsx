@@ -6,6 +6,13 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { NotificationBox, NotificationBoxIcon, NotificationLeftSide, 
   NotificationRightSide, TypographyMessage, TypographyTitle } from "./Notification.styles";
 
+
+  /**
+   * 
+   * @param props 
+   * @returns Retorna um componente de notificação
+   */
+
 export default function Notification(props: {
   Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;

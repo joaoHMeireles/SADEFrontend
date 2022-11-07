@@ -9,7 +9,9 @@ import { BoxSearchBar, ContainerChats, ContainerGeneralChats, LeftSideChat,
   LeftSideChats, RightSideChat, RightSideChats, SearchBar } from "./Chats.styles";
 
 
-import { BoxGeneralMessagesRightSide, BoxGeneralMessagesLeftSide, BoxMessagesRightSides, BoxMessagesLeftSides, BoxMessagesRightSide, BoxMessagesLeftSide, TypographyPerson, TypographyMessage } from "./Chats.styles";
+import { BoxGeneralMessagesRightSide, BoxGeneralMessagesLeftSide, BoxMessagesRightSides, 
+  BoxMessagesLeftSides, BoxMessagesRightSide, BoxMessagesLeftSide, 
+  TypographyPerson, TypographyMessage } from "./Chats.styles";
 
 const listaMessages = [
   { mensagem: "Mensagem 1", pessoa: "Diego" },
@@ -57,6 +59,12 @@ const listaChats = [
   { titulo: "Titulo 20", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
 ]
 
+/**
+ * Função que tem dois componentes jutamente a ela, sendo um para chats e outro para as mensagem de determinado chat
+ * @param props 
+ * @returns Retorna a tela de chat
+ */
+
 export default function Chats(props: { aberto: boolean }) {
 
   return (
@@ -90,6 +98,11 @@ export default function Chats(props: { aberto: boolean }) {
   );
 }
 
+/**
+ * 
+ * @param props 
+ * @returns Retorna uma mensagem que será direcionada de acordo com quem é, e para qual lado a mensagem dever ir, sendo esquerdo ou direito
+ */
 function Messages(props: { mensagem: string, pessoa: string }) {
   const pessoaLocalStorage = localStorage.getItem("PESSOA");
 
