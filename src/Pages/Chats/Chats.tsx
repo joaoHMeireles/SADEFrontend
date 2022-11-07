@@ -1,8 +1,6 @@
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Chat from "../../Components/Chat/Chat";
 import Toolbar from "../../Components/Toolbar/Toolbar";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 

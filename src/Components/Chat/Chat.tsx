@@ -1,8 +1,6 @@
-import Box from "@mui/material/Box";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import { Typography } from "@mui/material";
 
-import "./Chat.scss";
+import { BoxChat, BoxContainerChat, BoxIconPerson, ContainerGeneralChat, TypographyPersonMessage, TypographyTitle } from "./Chat.styles";
 
 export default function Chat(props: {
   titulo: string;
@@ -11,55 +9,24 @@ export default function Chat(props: {
 }) {
   return (
     <>
-      <Box
-        sx={{
-          width: "100%",
-          height: "50px",
-          display: "flex",
-          justifyContent: "start",
-          alignItems: "center",
-          backgroundColor: "#EEEEEE",
-          borderRadius: "5px",
-          marginBottom: "15px",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-        }}
-      >
-        <Box
-          className="containerIconPessoa"
-          sx={{ marginX: 3, color: "#595959" }}
-        >
+      <ContainerGeneralChat>
+        <BoxIconPerson>
           {<PersonRoundedIcon />}
-        </Box>
-        <Box
-          className="containerChat"
-          sx={{
-            width: "30%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "space-around",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
-        >
-          <Box className="containerTitulo" sx={{ width: "100%" }}>
-            <Typography variant="h6" component="h1" sx={{ color: "#595959" }}>
+        </BoxIconPerson>
+        <BoxContainerChat>
+          <BoxChat>
+            <TypographyTitle variant="h6">
               {props.titulo}
-            </Typography>
-          </Box>
-          <Box className="containerPessoaMensagem" sx={{ width: "100%" }}>
-            <Typography
-              variant="caption"
-              component="h2"
-              gutterBottom
-              sx={{ color: "#999999" }}
-            >
+            </TypographyTitle>
+          </BoxChat>
+          <BoxChat>
+            <TypographyPersonMessage
+              variant="caption">
               {props.pessoa}: {props.mensagem}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
+            </TypographyPersonMessage>
+          </BoxChat>
+        </BoxContainerChat>
+      </ContainerGeneralChat>
     </>
   );
 }

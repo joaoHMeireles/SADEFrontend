@@ -80,63 +80,63 @@ export const SearchBar = styled(TextField)({
 // Messages component
 
 export const BoxGeneralMessagesRightSide = styledBox({
+    alignItems: "center",
     display: "flex",
     justifyContent: "end",
-    alignItems: "center",
 })
 
 export const BoxGeneralMessagesLeftSide = styledBox({
+    alignItems: "center",
     display: "flex",
     justifyContent: "start",
-    alignItems: "center",
 })
 
 export const BoxMessagesRightSides = styledBox({
-    width: "10%",
-    maxWidth: "50%",
-    wordWrap: "break-word",
     height: "100%",
-    position: "relative",
-    top: 30,
-    right: 10,
+    marginBottom: 8,
     marginTop: 8,
-    marginBottom: 8
+    maxWidth: "50%",
+    position: "relative",
+    right: 10,
+    top: 30,
+    width: "10%",
+    wordWrap: "break-word",
 })
 
 export const BoxMessagesLeftSides = styledBox({
-    width: "10%",
-    maxWidth: "50%",
-    wordWrap: "break-word",
     height: "100%",
-    position: "relative",
-    top: 30,
-    left: 10,
+    marginBottom: 8,
     marginTop: 8,
-    marginBottom: 8
+    maxWidth: "50%",
+    position: "relative",
+    left: 10,
+    top: 30,
+    width: "10%",
+    wordWrap: "break-word",
 })
 
 export const BoxMessagesRightSide = styledBox({
     background: "#FFF",
     borderRadius: "5px 5px 0 5px",
-    padding: 4,
     boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)",
+    height: "auto",
+    padding: 4,
     width: "auto",
-    height: "auto"
 })
 
 export const BoxMessagesLeftSide = styledBox({
     background: "#FFF",
     borderRadius: "5px 5px 5px 0px",
-    padding: 4,
     boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)",
+    height: "auto",
+    padding: 4,
     width: "auto",
-    height: "auto"
 })
 
 export const TypographyPerson = styledTypography({
     color: "#00579D",
+    fontSize: "12px",
     fontWeight: "bold",
-    fontSize: "12px"
 })
 
 export const TypographyMessage = styledTypography({
