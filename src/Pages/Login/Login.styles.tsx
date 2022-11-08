@@ -57,6 +57,7 @@ export const ContainerTitleText = stylesBox({
     minHeight: "15%",
     minWidth: "80%",
     width: "100%",
+    // background: "#000"
 })
 
 export const TypographyTitle = stylesTypography({
@@ -89,8 +90,9 @@ export const InputEmail = stylesTextField({
     borderRadius: "5px",
     boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)",
     marginBottom: 40,
-    minWidth: "70%",
-    width: "80%",
+    maxWidth: "100%",
+    minWidth: "80%",
+    width: "auto",
 })
 
 export const InputPassword = stylesTextField({
@@ -98,8 +100,9 @@ export const InputPassword = stylesTextField({
     background: "#FFF",
     borderRadius: "5px",
     boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)",
-    minWidth: "70%",
-    width: "80%",
+    maxWidth: "100%",
+    minWidth: "80%",
+    width: "auto",
 })
 
 export const BoxForgotPassword = stylesBox({
@@ -108,7 +111,9 @@ export const BoxForgotPassword = stylesBox({
     display: "flex",
     justifyContent: "start",
     marginTop: 20,
-    width: "80%",
+    maxWidth: "100%",
+    minWidth: "80%",
+    width: "auto",
 })
 
 export const TextForgotPassword = stylesTypography({
@@ -133,7 +138,9 @@ export const StylesButton = styled(Button)({
     color: "#fffffff",
     height: "30%",
     marginBottom: 80,
+    maxWidth: "100%",
+    minWidth: "40%",
     padding: 12,
     textDecoration: "none",
-    width: "40%",
+    width: "auto",
 })

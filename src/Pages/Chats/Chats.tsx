@@ -14,9 +14,9 @@ import { BoxGeneralMessagesRightSide, BoxGeneralMessagesLeftSide, BoxMessagesRig
   TypographyPerson, TypographyMessage } from "./Chats.styles";
 
 const listaMessages = [
-  { mensagem: "Mensagem 1", pessoa: "Diego" },
+  { mensagem: "Mensagem 1 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", pessoa: "Diego" },
   { mensagem: "Mensagem 2", pessoa: "Diego" },
-  { mensagem: "Mensagem 3", pessoa: "Solicitante" },
+  { mensagem: "Mensagem 3aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", pessoa: "Solicitante" },
   { mensagem: "Mensagem 4", pessoa: "Solicitante" },
   { mensagem: "Mensagem 5", pessoa: "Diego" },
   { mensagem: "Mensagem 6", pessoa: "Diego" },

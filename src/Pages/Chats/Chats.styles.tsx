@@ -96,11 +96,12 @@ export const BoxMessagesRightSides = styledBox({
     height: "100%",
     marginBottom: 8,
     marginTop: 8,
-    maxWidth: "50%",
+    maxWidth: "40%",
+    minWidth: "10%",
     position: "relative",
     right: 10,
     top: 30,
-    width: "10%",
+    width: "auto",
     wordWrap: "break-word",
 })
 
@@ -108,11 +109,12 @@ export const BoxMessagesLeftSides = styledBox({
     height: "100%",
     marginBottom: 8,
     marginTop: 8,
-    maxWidth: "50%",
+    maxWidth: "40%",
+    minWidth: "10%",
     position: "relative",
     left: 10,
     top: 30,
-    width: "10%",
+    width: "auto",
     wordWrap: "break-word",
 })
 
@@ -136,11 +138,11 @@ export const BoxMessagesLeftSide = styledBox({
 
 export const TypographyPerson = styledTypography({
     color: "#00579D",
-    fontSize: "12px",
+    fontSize: "16px",
     fontWeight: "bold",
 })
 
 export const TypographyMessage = styledTypography({
     color: "#595959",
-    fontSize: "12px"
+    fontSize: "16px",
 })

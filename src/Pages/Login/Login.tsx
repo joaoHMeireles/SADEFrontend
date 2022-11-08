@@ -65,9 +65,9 @@ function Login(props: {
           <BoxLogoWEG>
             <img className="imagemLogo" src={logo} alt="logoWeg" />
           </BoxLogoWEG>
-          <ContainerLogin>
+          <ContainerLogin className="text">
             <ContainerBackgroundLogin>
-              <ContainerTitleText>
+              <ContainerTitleText >
                 <TypographyTitle variant="h5">
                   Bem vindo ao SOD
                 </TypographyTitle>
