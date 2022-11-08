@@ -43,7 +43,6 @@ export const GridLinkTypograpfy = styledTypograpfy({
     width: "25%",
     '& a': {
         color: "#2382BA",
-
         "&:hover": {
             fontWeight: "500",
             color: "#00579d"

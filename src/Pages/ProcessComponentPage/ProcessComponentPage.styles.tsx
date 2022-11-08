@@ -1,4 +1,4 @@
-import { Box, Grid, TableCell, tableCellClasses, TableRow, Typography } from '@mui/material'
+import { Box, Grid, TableCell, tableCellClasses, TableContainer, TableRow, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import CircleIcon from '@mui/icons-material/Circle';
 const styledBox = styled(Box)
@@ -22,7 +22,8 @@ export const MainContainerGrid = styledGrid({
     flexWrap: "wrap",
     height: "auto",
     marginTop: "2.5vh",
-    width: "100%"
+    width: "100%",
+    color: "#595959"
 })
 
 export const StatusColorBox = styledBox({
@@ -94,8 +95,8 @@ export const DotCircleIcon = styled(CircleIcon)({
     fontSize: "10px"
 })
 
-
 export const StyledTableCell = styled(TableCell)(({ theme: Theme }) => ({
+    color: "#595959",
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: "#00579d",
         color: Theme.palette.common.white,
@@ -122,6 +123,10 @@ export const TableBox = styledBox({
     width: "100%",
 })
 
+export const StyledTableContainer = styled(TableContainer)({
+    boxShadow: "5px 5px 10px 0 #00000050",
+})
+
 export const CostTableBox = styledBox({
     display: 'flex',
     justifyContent: "space-between",
@@ -135,6 +140,11 @@ export const ContainerTableBox = styledBox({
     display: 'flex',
     flexDirection: "column",
     width: "auto",
+})
+
+export const CostCenterContainerBox = styledBox({
+    boxShadow: "5px 5px 10px 0 #00000050",
+    width: "25%"
 })
 
 export const TitleCostCentersBox = styledBox({
@@ -159,4 +169,19 @@ export const CostCentersBox = styledBox({
     height: "75%",
     justifyContent: "space-evenly",
     width: "100%"
+})
+
+export const FooterItemGrid = styledGrid({
+    alignItems: "center",
+    display: "flex", 
+    justifyContent: "space-between",
+    '& a': {
+        color: "#595959",
+        "&:hover": {
+            transition: "ease-in",
+            transitionDuration: "0.5s",
+            fontWeight: "500",
+            color: "#00579d"
+        }
+    }
 })

@@ -1,14 +1,16 @@
 import { processComponent, processComponentSize, processComponentStatus, ITsession } from '../../DefinitionFiles/enuns';
+import { Link } from 'react-router-dom';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
-import { Box, Container, Divider, Grid, List, ListItem, ListItemIcon, Paper, Table, TableBody, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Button, Container, Divider, Grid, List, ListItem, ListItemIcon, Table, TableBody, TableHead, TableRow, Typography } from '@mui/material';
 import { ContentBox, ContainerBox } from '../App.styles';
 import {
-    HeaderBox, MainContainerGrid, StatusColorBox, MainInfoGrid, HeaderContainerGrid, TitleGrid, FlagContainerBox,
-    FlagBox, FlagTriangleBox, SmallAttributesGrid, TitleTypography, AttributeTitleTypography, TextTypography,
-    DotCircleIcon, StyledTableCell, StyledTableRow, TableBox, CostTableBox, ContainerTableBox, TitleCostCentersBox,
-    CostCentersBox
+    AttributeTitleTypography, ContainerTableBox, CostCentersBox, CostCenterContainerBox, CostTableBox, DotCircleIcon,
+    FlagBox, FlagContainerBox, FlagTriangleBox, FooterItemGrid, HeaderBox, HeaderContainerGrid, MainContainerGrid,
+    MainInfoGrid, SmallAttributesGrid, StatusColorBox, StyledTableCell, StyledTableContainer, StyledTableRow, TableBox,
+    TextTypography, TitleCostCentersBox, TitleTypography, TitleGrid,
 } from './ProcessComponentPage.styles';
+
 
 const listaProcessos = [
     {
@@ -22,6 +24,7 @@ const listaProcessos = [
         departamento: "não sei nenhum departamento",
         gerenteResponsavel: "tal fiote de cruz credo",
         frequenciaUso: 200,
+        aprovadoGerente: true,
         beneficioQualitativo: "textin ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything dizendo como é bom",
         centrosDeCusto: [
             1234,
@@ -70,6 +73,7 @@ const listaProcessos = [
         departamento: "7825678256782437813",
         gerenteResponsavel: "riomar silveira pinto nunes",
         frequenciaUso: 329,
+        aprovadoGerente: false,
         beneficioQualitativo: "é bem bonzin bão memo bom ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything",
         centrosDeCusto: [
             3864,
@@ -112,6 +116,8 @@ const listaProcessos = [
         ],
         objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
         situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
+        pessoaDevolucao: "arnaldo pinto",
+        motivoDevolucao: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing h",
         anexos: [
             {
                 nome: "anexoZada",
@@ -138,6 +144,7 @@ const listaProcessos = [
         departamento: "o da diretoria fodão grandoes",
         gerenteResponsavel: "marcello taz do cqc",
         frequenciaUso: 160,
+        aprovadoGerente: true,
         beneficioQualitativo: "vai dar isso isso of Lorem Ipsum available, but the majoritailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anythingy have suffered alteration in some form, by injected humour, or  randomised word benefi isso e isso de beneficios",
         centrosDeCusto: [
             9425,
@@ -152,6 +159,8 @@ const listaProcessos = [
         prazoElaboracao: new Date(),
         codigoPPM: 67237,
         linkJira: "https://jirazadaDoCara",
+        workflowIniciado: false,
+        aprovadoWorkflow: false,
         beneficiosReais: [
             {
                 descricao: "description",
@@ -229,6 +238,7 @@ const listaProcessos = [
         departamento: "o da diretoria fodão grandoes",
         gerenteResponsavel: "romero britto",
         frequenciaUso: 540,
+        aprovadoGerente: true,
         beneficioQualitativo: "ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word beneficios",
         centrosDeCusto: [
             9678
@@ -242,6 +252,9 @@ const listaProcessos = [
         prazoElaboracao: new Date(),
         codigoPPM: 78569,
         linkJira: "https://jirazadaDoCara/fsdfsaf",
+        workflowIniciado: true,
+        prazoWorkflow: new Date(),
+        aprovadoWorkflow: true,
         beneficiosReais: [
             {
                 descricao: "description",
@@ -350,6 +363,7 @@ const listaProcessos = [
         departamento: "o da diretoria fodão grandoes",
         gerenteResponsavel: "marcello taz do cqc",
         frequenciaUso: 160,
+        aprovadoGerente: true,
         beneficioQualitativo: "vai dar isso isso isso e isso de beneficios ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word",
         centrosDeCusto: [
             9425,
@@ -403,6 +417,7 @@ const listaProcessos = [
         departamento: "sgdaho",
         gerenteResponsavel: "Carlos Salles Morales",
         frequenciaUso: 98,
+        aprovadoGerente: true,
         beneficioQualitativo: "b e n e f i c i o There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarras",
         centrosDeCusto: [
             9678,
@@ -417,6 +432,9 @@ const listaProcessos = [
         prazoElaboracao: new Date(),
         codigoPPM: 3241,
         linkJira: "https://jirassssssssCity",
+        workflowIniciado: true,
+        prazoWorkflow: new Date(),
+        aprovadoWorkflow: false,
         beneficiosReais: [
             {
                 descricao: "description",
@@ -502,13 +520,17 @@ const listaProcessos = [
  * @returns 
  */
 export default function ProcessComponentPage(props: any) {
+    const processLocalStorage = localStorage.getItem("CHOOSEDPROCESS")
+    const choosedProcess = JSON.parse(processLocalStorage != null ? processLocalStorage : "");
+    const processInfo = listaProcessos.find(p => p.id == choosedProcess.id && choosedProcess.tipo == p.tipo)
+
     return (
         <>
-            <PageHeader />
+            <PageHeader processInfo={processInfo} />
             <ContentBox >
                 <ContainerBox>
                     <Container>
-                        <ProcessContainer />
+                        <ProcessContainer processInfo={processInfo} />
                     </Container>
                 </ContainerBox>
             </ContentBox>
@@ -518,19 +540,97 @@ export default function ProcessComponentPage(props: any) {
 
 /**
  * Componente para o header da página que controlará os botões que aparecerão
- * de acordo com o status atual daquele processo
+ * de acordo com o status atual daquele processo, informações do processo
+ * e a pessoa tualmente logada
  * 
  * @param props 
  * @returns 
  */
-function PageHeader(props: any) {
+function PageHeader(props: { processInfo: any }) {
+    const process = props.processInfo;
+    const personType = localStorage.getItem("TIPOUSUARIO")
+    const type = process.tipo
+    const size = process.tamanho
+    const aproovedByManager = process.aprovadoGerente
+    const linkJira = process.linkJira
+    const elaborationDeadline = process.prazoElaboracao
+    const isWorkflow = process.workflowIniciado
+    const approvedWorkflow = process.aprovadoWorkflow
+    const workflowDeadline = process.prazoWorkflow
+    let buttonsList = ["chat"]
 
-    //FALTA OS BOTÔES
+    /* 
+        1º chat, reprovar, devolver, aprovar (Analista de TI, demanda)
+        2º chat, histórico, reprovar aprovar (Gerente de negócio, demanda)
+        3º chat, histórico, adicionar informações (Analista de TI, demanda)
+        4º chat, histórico, criar proposta (Analista de TI, demanda)
+        5º chat, histórico, criar proposta sinalização da atraso (Analista de TI, demanda)
+        6º chat, histórico, iniciar workflow, ver demanda, criar pauta (Analista de TI, proposta)
+        7º chat, histórico, ver demanda (Gerente de negócio, proposta)
+        8º chat, histórico, workflow, ver demanda (Gerente de negócio, proposta)
+        9º chat, histórico, workflow (notificaçãozinha que ta atrasado), ver demanda (Gerente de negócio, proposta)
+        10º chat, histórico, workflow, ver demanda, criar pauta (Gerente de TI, proposta)
+        11º chat, histórico, workflow (notificaçãozinha que ta atrasado), ver demanda, criar pauta (Gerente de TI, proposta)
+    */
+    if (type == "Demanda") {
+        if (!size) {
+            if (personType == "analista" || personType == "gerenteTI") {
+                buttonsList.push("reprovar", "devolver", "aprovar")
+            }
+        } else {
+            buttonsList.push("historico")
+            if (personType == "gerenteNegocio") {
+                if (!aproovedByManager) {
+                    buttonsList.push("reprovar", "aprovar")
+                }
+            } else if (personType == "analista" || personType == "gerenteTI") {
+                if (aproovedByManager) {
+                    if (!linkJira) {
+                        buttonsList.push("adicionarInfo")
+                    } else {
+                        if (elaborationDeadline < new Date()) {
+                            buttonsList.push("criarProposta!")
+                        } else {
+                            buttonsList.push("criarProposta")
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        buttonsList.push("historico")
+        if (!isWorkflow) {
+            if (personType == "analista" || personType == "gerenteTI") {
+                buttonsList.push("iniciarWorkflow", "verDemanda", "criarPauta")
+            } else if (personType == "gerenteNegocio") {
+                buttonsList.push("verDemanda")
+            }
+        } else {
+            if (approvedWorkflow) {
+                buttonsList.push("verDemanda")
+                if (personType == "analista" || personType == "gerenteTI") {
+                    buttonsList.push("criarPauta")
+                }
+            } else {
+                if (workflowDeadline < new Date()) {
+                    if (personType == "gerenteTI" || personType == "gerenteNegocio") {
+                        buttonsList.push("workflow!")
+                    }
+                } else {
+                    if (personType == "gerenteTI" || personType == "gerenteNegocio") {
+                        buttonsList.push("workflow")
+                    }
+                }
+                buttonsList.push("verDemanda")
+            }
+        }
+    }
 
     return (
         <>
             <HeaderBox>
                 <Breadcrumb />
+                <ButtonsHeader buttonsList={buttonsList} />
             </HeaderBox>
             <Toolbar />
         </>
@@ -543,33 +643,31 @@ function PageHeader(props: any) {
  * @param props 
  * @returns 
  */
-function ProcessContainer(props: any) {
-    const processLocalStorage = localStorage.getItem("CHOOSEDPROCESS")
-    const choosedProcess = JSON.parse(processLocalStorage != null ? processLocalStorage : "");
-    const processoInfo = listaProcessos.find(p => p.id == choosedProcess.id && choosedProcess.tipo == p.tipo)
+function ProcessContainer(props: { processInfo: any }) {
+    const processInfo = props.processInfo
 
     return (
         <MainContainerGrid container>
             <Grid item xs={0.2}>
-                <StatusColorBox sx={{ backgroundColor: getColorStatus(processoInfo?.status) }} ></StatusColorBox>
+                <StatusColorBox sx={{ backgroundColor: getColorStatus(processInfo?.status) }} ></StatusColorBox>
             </Grid>
             <MainInfoGrid item xs={11.8}>
                 <HeaderContainerGrid container>
                     <TitleGrid item xs={10} >
                         <Typography variant='h4'>
-                            {processoInfo?.titulo}
+                            {processInfo?.titulo}
                         </Typography>
                     </TitleGrid>
                     <Grid item xs={2}>
-                        <Flag cor={getColorType(processoInfo?.tipo)} />
+                        <Flag cor={getColorType(processInfo?.tipo)} />
                     </Grid>
                 </HeaderContainerGrid>
                 <Divider />
-                <InfoGeral processo={processoInfo} />
+                <InfoGeral processo={processInfo} />
                 <Divider />
-                <InfoComercial processo={processoInfo} />
+                <InfoComercial processo={processInfo} />
                 <Divider />
-                <Contextualizacao processo={processoInfo} />
+                <Contextualizacao processo={processInfo} />
             </MainInfoGrid>
         </MainContainerGrid>
     )
@@ -755,7 +853,7 @@ function InfoComercial(props: { processo: any }) {
                 const porcentagem = centroDeCusto.porcentagem * 100
 
                 return (
-                    <Typography key={centerIndex} variant="body1">
+                    <Typography key={centerIndex} variant="body1" sx={{ color: "#595959" }}>
                         {centroDeCusto.centroCusto} - {porcentagem}%
                     </Typography>
                 )
@@ -764,7 +862,7 @@ function InfoComercial(props: { processo: any }) {
             return (
                 <CostTableBox key={index} >
                     <ContainerTableBox>
-                        <TableContainer component={Paper} sx={{ width: "auto" }}>
+                        <StyledTableContainer sx={{ width: "auto" }}>
                             <TableHead >
                                 <TableRow >
                                     <StyledTableCell align='center'>{table.titulo}</StyledTableCell>
@@ -782,16 +880,16 @@ function InfoComercial(props: { processo: any }) {
                                     <StyledTableCell align='center'> <b>R$ {totalValue}</b></StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>
-                        </TableContainer>
+                        </StyledTableContainer>
                     </ContainerTableBox>
-                    <Box sx={{ width: "25%" }} component={Paper}>
+                    <CostCenterContainerBox>
                         <TitleCostCentersBox>
                             Centros de Custo
                         </TitleCostCentersBox>
                         <CostCentersBox>
                             {tableCCs}
                         </CostCentersBox>
-                    </Box>
+                    </CostCenterContainerBox>
                 </CostTableBox>
             )
         })
@@ -819,25 +917,54 @@ function InfoComercial(props: { processo: any }) {
 
 }
 
-/**
- * Componente dinâmico da contextualização de um processo
- * 
- * @param props 
- * @returns 
- */
 function Contextualizacao(props: { processo: any }) {
     const atributos = {
         objetivo: props.processo.objetivo,
         situacaoAtual: props.processo.situacaoAtual,
-        escopo: props.processo.escopo
+        escopo: props.processo.escopo,
+        motivoDevolucao: props.processo.motivoDevolucao
+    }
+    const link = props.processo.linkJira
+    let contexts = []
+
+    for (let atribute in atributos) {
+        let value = (atributos as any)[atribute];
+
+        if (!value) {
+            continue
+        }
+
+        if (atribute == "motivoDevolucao") {
+            value += " - " + props.processo.pessoaDevolucao
+        }
+
+        contexts.push(
+            <Grid item xs={12} sx={{ marginBottom: "20px" }}>
+                <TextTypography variant='body1' >
+                    <b>{getNomeAtributo(atribute)}</b> {value}
+                </TextTypography>
+            </Grid>
+        )
     }
 
-
-    //retornar componente das contextualizacoes
     return (
-        <Box>
-            ccc
-        </Box>
+        <Grid container sx={{ marginY: "20px" }}>
+            <TitleTypography variant='h5'>
+                Contextualização
+            </TitleTypography>
+            {contexts}
+            <Footer link={link} />
+        </Grid>
+    )
+}
+
+function ButtonsHeader(props: { buttonsList: string[] }) {
+
+    console.log(props.buttonsList);
+
+
+    return (
+        <button>ssss</button>
     )
 }
 
@@ -882,20 +1009,14 @@ function AtributeList(props: { valorAtributo: [] }) {
     )
 }
 
-/**
- * Componente que constrói uma tabela de benefício
- * 
- * @param props 
- * @returns 
- */
 function StyledBenefitTable(props: { valuesList: [], title: string }) {
 
     return (
-        <TableBox sx={{ marginBottom: "20px" }}>
+        <TableBox sx={{ marginBottom: "30px" }}>
             <TitleTypography variant='subtitle1'>
                 {props.title}
             </TitleTypography>
-            <TableContainer component={Paper} sx={{ width: "40vw" }}>
+            <StyledTableContainer sx={{ width: "40vw" }}>
                 <Table aria-label="customized table">
                     <TableHead>
                         <TableRow>
@@ -908,8 +1029,31 @@ function StyledBenefitTable(props: { valuesList: [], title: string }) {
                         {props.valuesList}
                     </TableBody>
                 </Table>
-            </TableContainer>
+            </StyledTableContainer>
         </TableBox>
+    )
+}
+
+function Footer(props: { link: string }) {
+
+    return (
+        <Grid container>
+            <Grid item xs={8} />
+            <FooterItemGrid item xs={3.5} >
+                {props.link ?
+                    <Link to={props.link}>
+                        Ver projeto Jira
+                    </Link>
+                    :
+                    <div>
+
+                    </div>
+                }
+                <Button variant='outlined' size='large' sx={{ color: '#595959', borderColor: "#59595980", '&:hover': { transition: 'ease-in-out', transitionDuration: "1s", backgroundColor: "#59595930", border: "1px solid #59595980" } }}>
+                    Ver anexos
+                </Button>
+            </FooterItemGrid>
+        </Grid>
     )
 }
 
@@ -938,7 +1082,11 @@ function getNomeAtributo(nomeAtributo: any) {
         BUsBeneficiadas: "BUs beneficiadas:",
         payback: "Payback:",
         periodoDeExecucao: "Período de execução:",
-        responsaveis: "Responsáveis:"
+        responsaveis: "Responsáveis:",
+        objetivo: "Objetivos:",
+        situacaoAtual: "Situação atual:",
+        escopo: "Escopo:",
+        motivoDevolucao: "Motivo Devolução"
     }
 
     if (nomeAtributo != undefined) {
@@ -946,12 +1094,6 @@ function getNomeAtributo(nomeAtributo: any) {
     }
 }
 
-/**
- * Função que retorna a cor dependendo do status que receber
- * 
- * @param status 
- * @returns 
- */
 function getColorStatus(status: string | undefined) {
     const coresStatus = {
         Backlog: "#DDDDDD",
@@ -966,12 +1108,6 @@ function getColorStatus(status: string | undefined) {
     }
 }
 
-/**
- * Função que retorna a cor dependendo do tipo de processo que receber
- * 
- * @param tipo 
- * @returns 
- */
 function getColorType(tipo: string | undefined) {
     const coresStatus = {
         Demanda: "#00579D",

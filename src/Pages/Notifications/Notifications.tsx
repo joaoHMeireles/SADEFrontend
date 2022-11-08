@@ -48,6 +48,8 @@ const listNotifications: {
   ]
 
 export default function Notifications() {
+  localStorage.setItem("PAGINATUAL", "notification")
+
   return (
     <BoxContainerNotifications>
       <Breadcrumb />

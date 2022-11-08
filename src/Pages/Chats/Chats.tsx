@@ -57,6 +57,7 @@ const listaChats = [
 ]
 
 export default function Chats(props: { aberto: boolean }) {
+  localStorage.setItem("PAGINATUAL", "chat")
 
   return (
     <>

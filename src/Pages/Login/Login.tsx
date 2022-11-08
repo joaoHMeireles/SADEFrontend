@@ -23,7 +23,6 @@ function Login(props: {
   tamanhoNavbar: string;
 }) {
   const [tipo, setTipo] = useState("password");
-  localStorage.setItem("PESSOA", "Solicitante");
   localStorage.setItem("PAGINATUAL", "login")
 
   useEffect(() => {
@@ -32,7 +31,7 @@ function Login(props: {
   });
 
   function colocaPessoa() {
-    localStorage.setItem("TIPOUSUARIO", "solicitante");
+    localStorage.setItem("TIPOUSUARIO", "analista");
   }
 
   function mostrarSenha() {
