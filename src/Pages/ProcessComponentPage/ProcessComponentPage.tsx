@@ -11,7 +11,6 @@ import {
     TextTypography, TitleCostCentersBox, TitleTypography, TitleGrid,
 } from './ProcessComponentPage.styles';
 
-
 const listaProcessos = [
     {
         id: 1,
@@ -559,8 +558,8 @@ function PageHeader(props: { processInfo: any }) {
     const workflowDeadline = process.prazoWorkflow
     let buttonsList = ["chat"]
 
-    /* 
-        1º chat, reprovar, devolver, aprovar (Analista de TI, demanda)
+    /**
+     *  1º chat, reprovar, devolver, aprovar (Analista de TI, demanda)
         2º chat, histórico, reprovar aprovar (Gerente de negócio, demanda)
         3º chat, histórico, adicionar informações (Analista de TI, demanda)
         4º chat, histórico, criar proposta (Analista de TI, demanda)
@@ -571,7 +570,8 @@ function PageHeader(props: { processInfo: any }) {
         9º chat, histórico, workflow (notificaçãozinha que ta atrasado), ver demanda (Gerente de negócio, proposta)
         10º chat, histórico, workflow, ver demanda, criar pauta (Gerente de TI, proposta)
         11º chat, histórico, workflow (notificaçãozinha que ta atrasado), ver demanda, criar pauta (Gerente de TI, proposta)
-    */
+     */
+
     if (type == "Demanda") {
         if (!size) {
             if (personType == "analista" || personType == "gerenteTI") {
@@ -961,6 +961,9 @@ function Contextualizacao(props: { processo: any }) {
 function ButtonsHeader(props: { buttonsList: string[] }) {
 
     console.log(props.buttonsList);
+
+    
+
 
 
     return (
