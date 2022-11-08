@@ -33,19 +33,22 @@ const listaProcessos = [
             {
                 descricao: "description",
                 moeda: "BRL",
-                valor: 10000.00
+                valor: 10000.00,
+                memoriaCalculo: "é que é bem bom mesmo vai dar 10000000 de retorno fodão bem massa mano"
             },
             {
                 descricao: "descricaozona caraio gigantassa pqp muita coisa",
                 moeda: "USD",
-                valor: 1500.00
+                valor: 1500.00,
+                memoriaCalculo: "é que é bem bom mesmo vai dar 10000000 de retorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra"
             },
         ],
         beneficiosPotenciais: [
             {
                 descricao: "bem datalhadadinha",
                 moeda: "USD",
-                valor: 780.00
+                valor: 780.00,
+                memoriaCalculo: "é que é bem bom em massa mano ty have suo fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra"
             }
         ],
         objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
@@ -88,29 +91,34 @@ const listaProcessos = [
             {
                 descricao: "description",
                 moeda: "BRL",
-                valor: 10000.00
+                valor: 10000.00,
+                memoriaCalculo: "é que é bem bom em massa mano ty have suffereetorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra"
             },
             {
                 descricao: "descricaozona caraio gigantassa pqp muita coisa",
                 moeda: "USD",
-                valor: 1500.00
+                valor: 1500.00,
+                memoriaCalculo: "é que é bem bom em massa mano ty have  é bem bom mesmo vai dar 10000000 de retorno fodãected humour, or  ra"
             },
             {
                 descricao: "bem datalhadadinha",
                 moeda: "USD",
-                valor: 780.00
+                valor: 780.00,
+                memoriaCalculo: "é que é bem bom em massa mano ty have suffered alteratvai dar 10000000 de retorno fodão bem massa mano ty have suffered altnjected humour, or  ra"
             }
         ],
         beneficiosPotenciais: [
             {
                 descricao: "bem datalhadadinha",
                 moeda: "USD",
-                valor: 780.00
+                valor: 780.00,
+                memoriaCalculo: "sa mano ty have suffered alteration in some form, by injected humvai dar 10000000 de retorno fod"
             },
             {
                 descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
                 moeda: "USD",
-                valor: 1500.00
+                valor: 1500.00,
+                memoriaCalculo: "bom em massa mano ty have suffered alteration in some form, by injected humour bem massa mano ty have suffered alteration in some form, by injected humour, or"
             },
         ],
         objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
@@ -164,7 +172,8 @@ const listaProcessos = [
             {
                 descricao: "description",
                 moeda: "BRL",
-                valor: 10000.00
+                valor: 10000.00,
+                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some "
             },
         ],
         periodoExecucao: [
@@ -179,12 +188,14 @@ const listaProcessos = [
             {
                 descricao: "bem datalhadadinha",
                 moeda: "USD",
-                valor: 780.00
+                valor: 780.00,
+                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vmo vai dar 10000000 de retorno fodsuffered alteration in som"
             },
             {
                 descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
                 moeda: "USD",
-                valor: 1500.00
+                valor: 1500.00,
+                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some foda bem bom mesmo meudeus"
             },
         ],
         payback: 4356.30,
@@ -258,12 +269,14 @@ const listaProcessos = [
             {
                 descricao: "description",
                 moeda: "BRL",
-                valor: 10000.00
+                valor: 10000.00,
+                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered esteja errado refaz a conta ae"
             },
             {
                 descricao: "uma descrizaozninha bonitinha",
                 moeda: "BRL",
-                valor: 1900.00
+                valor: 1900.00,
+                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 9999999 de retorno fodsuffered alteration in some foda bem bom mesmo meudeus, 9 * 1111111"
             },
         ],
         periodoExecucao: [
@@ -279,7 +292,8 @@ const listaProcessos = [
             {
                 descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
                 moeda: "USD",
-                valor: 1500.00
+                valor: 1500.00,
+                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
             },
         ],
         payback: 783.30,
@@ -381,19 +395,22 @@ const listaProcessos = [
             {
                 descricao: "description",
                 moeda: "BRL",
-                valor: 10000.00
+                valor: 10000.00,
+                memoriaCalculo: "have or  ra é que é bem bom mesmo vai dar 99199111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
             },
         ],
         beneficiosPotenciais: [
             {
                 descricao: "bem datalhadadinha",
                 moeda: "USD",
-                valor: 780.00
+                valor: 780.00,
+                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa"
             },
             {
-                descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
+                descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa ahave or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa",
                 moeda: "USD",
-                valor: 1500.00
+                valor: 1500.00,
+                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
             },
         ],
         objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
@@ -438,12 +455,14 @@ const listaProcessos = [
             {
                 descricao: "description",
                 moeda: "USD",
-                valor: 100.00
+                valor: 100.00,
+                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores"
             },
             {
                 descricao: "uma descrizaozninha",
                 moeda: "BRL",
-                valor: 19000.00
+                valor: 19000.00,
+                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores"
             },
         ],
         periodoExecucao: [
@@ -458,12 +477,14 @@ const listaProcessos = [
             {
                 descricao: "descricao",
                 moeda: "USD",
-                valor: 1500.00
+                valor: 1500.00,
+                memoriaCalculo: "sa mano ty have or  ra é que é bemnda por favorzinho meus queridos su"
             },
             {
                 descricao: "descricaodaCoisa",
                 moeda: "BRL",
-                valor: 10.00
+                valor: 10.00,
+                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
             }
         ],
         payback: 945.37,
@@ -808,22 +829,24 @@ function InfoComercial(props: { processo: any }) {
         costTables: props.processo.tabelasCusto
     }
 
-    const realBenefits = atributos.realBenefits.map((benefit: { descricao: string, moeda: string, valor: string }, index: number) => {
+    const realBenefits = atributos.realBenefits.map((benefit: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
         return (
             <StyledTableRow key={index}>
                 <StyledTableCell align='center' sx={{ width: "50%" }}>{benefit.descricao}</StyledTableCell>
                 <StyledTableCell align='center'>{benefit.moeda}</StyledTableCell>
                 <StyledTableCell align='center'>R$ {benefit.valor}</StyledTableCell>
+                <StyledTableCell align='center'>{benefit.memoriaCalculo}</StyledTableCell>
             </StyledTableRow>
         )
     })
 
-    const potencialBenefits = atributos.potencialBenefits.map((benefit: { descricao: string, moeda: string, valor: string }, index: number) => {
+    const potencialBenefits = atributos.potencialBenefits.map((benefit: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
         return (
             <StyledTableRow key={index}>
                 <StyledTableCell align='center' sx={{ width: "50%" }}>{benefit.descricao}</StyledTableCell>
                 <StyledTableCell align='center'>{benefit.moeda}</StyledTableCell>
                 <StyledTableCell align='center'>R$ {benefit.valor}</StyledTableCell>
+                <StyledTableCell align='center'>{benefit.memoriaCalculo}</StyledTableCell>
             </StyledTableRow>
         )
     })
@@ -962,12 +985,11 @@ function ButtonsHeader(props: { buttonsList: string[] }) {
 
     console.log(props.buttonsList);
 
-    
-
-
 
     return (
-        <button>ssss</button>
+       <>
+            
+       </>
     )
 }
 
@@ -1026,6 +1048,7 @@ function StyledBenefitTable(props: { valuesList: [], title: string }) {
                             <StyledTableCell align='center'>Descrição</StyledTableCell>
                             <StyledTableCell align='center'>Moeda</StyledTableCell>
                             <StyledTableCell align='center'>Valor</StyledTableCell>
+                            <StyledTableCell align='center'>Memória de cálculo</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
