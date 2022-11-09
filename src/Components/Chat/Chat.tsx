@@ -1,7 +1,9 @@
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 
-import { BoxChat, BoxContainerChat, BoxIconPerson, ContainerGeneralChat, 
-  TypographyPersonMessage, TypographyTitle } from "./Chat.styles";
+import {
+  BoxChat, BoxContainerChat, BoxIconePessoa, ContainerGeralChat,
+  TypographyPessoaMensagem, TypographyTitulo
+} from "./Chat.styles";
 
 /**
  * 
@@ -16,24 +18,24 @@ export default function Chat(props: {
 }) {
   return (
     <>
-      <ContainerGeneralChat>
-        <BoxIconPerson>
+      <ContainerGeralChat>
+        <BoxIconePessoa>
           {<PersonRoundedIcon />}
-        </BoxIconPerson>
+        </BoxIconePessoa>
         <BoxContainerChat>
           <BoxChat>
-            <TypographyTitle variant="h6">
+            <TypographyTitulo variant="h6">
               {props.titulo}
-            </TypographyTitle>
+            </TypographyTitulo>
           </BoxChat>
           <BoxChat>
-            <TypographyPersonMessage
+            <TypographyPessoaMensagem
               variant="caption">
               {props.pessoa}: {props.mensagem}
-            </TypographyPersonMessage>
+            </TypographyPessoaMensagem>
           </BoxChat>
         </BoxContainerChat>
-      </ContainerGeneralChat>
+      </ContainerGeralChat>
     </>
   );
 }

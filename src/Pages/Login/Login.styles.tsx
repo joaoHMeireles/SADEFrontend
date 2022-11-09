@@ -8,7 +8,7 @@ const stylesBox = styled(Box);
 const stylesTypography = styled(Typography);
 const stylesTextField = styled(TextField);
 
-export const ContainerGeneralLogin = stylesBox({
+export const ContainerGeralLogin = stylesBox({
     display: "flex",
     justifyContent: "space-between",
     height: "100%",
@@ -45,7 +45,7 @@ export const ContainerBackgroundLogin = stylesBox({
     width: "60%",
 })
 
-export const ContainerTitleText = stylesBox({
+export const ContainerTituloTexto = stylesBox({
     alignItems: "center",
     color: "#FFF",
     display: "flex",
@@ -60,14 +60,14 @@ export const ContainerTitleText = stylesBox({
     // background: "#000"
 })
 
-export const TypographyTitle = stylesTypography({
+export const TypographyTitulo = stylesTypography({
     color: "#FFF",
     fontSize: "40px",
     marginBottom: 20,
     marginTop: 80,
 })
 
-export const TypographyText = stylesTypography({
+export const TypographyTexto = stylesTypography({
     color: "#FFF",
 })
 
@@ -95,7 +95,7 @@ export const InputEmail = stylesTextField({
     width: "auto",
 })
 
-export const InputPassword = stylesTextField({
+export const InputSenha = stylesTextField({
     color: "#FFF",
     background: "#FFF",
     borderRadius: "5px",
@@ -105,7 +105,7 @@ export const InputPassword = stylesTextField({
     width: "auto",
 })
 
-export const BoxForgotPassword = stylesBox({
+export const BoxEsqueceuSenha = stylesBox({
     alignContent: "center",
     color: "#FFF",
     display: "flex",
@@ -116,12 +116,12 @@ export const BoxForgotPassword = stylesBox({
     width: "auto",
 })
 
-export const TextForgotPassword = stylesTypography({
+export const TextoEsqueceuSenha = stylesTypography({
     cursor: "pointer",
     textDecoration: "underline"
 })
 
-export const ContainerButtonLogin = stylesBox({
+export const ContainerBotaoLogin = stylesBox({
     alignItems: "center",
     display: "flex",
     justifyContent: "center",
@@ -133,7 +133,7 @@ export const ContainerButtonLogin = stylesBox({
     width: "100%",
 })
 
-export const StylesButton = styled(Button)({
+export const EstilosBotao = styled(Button)({
     backgroundColor: "#00579D",
     color: "#fffffff",
     height: "30%",

@@ -5,15 +5,19 @@ import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
 
-import { BoxSearchBar, ContainerChats, ContainerGeneralChats, LeftSideChat, 
-  LeftSideChats, RightSideChat, RightSideChats, SearchBar } from "./Chats.styles";
+import {
+  BoxBarraPesquisa, ContainerChats, ContainerGeralChats, LadoEsquerdoChat,
+  LadoEsquerdoGeralChats, LadoDiretoChat, LadoDireitoGeralChats, BarraPesquisa
+} from "./Chats.styles";
 
 
-import { BoxGeneralMessagesRightSide, BoxGeneralMessagesLeftSide, BoxMessagesRightSides, 
-  BoxMessagesLeftSides, BoxMessagesRightSide, BoxMessagesLeftSide, 
-  TypographyPerson, TypographyMessage } from "./Chats.styles";
+import {
+  BoxGeralMensagensLadoDireito, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoDireito,
+  BoxMensagensLadoEsquerdo, BoxMensagemLadoDireito, BoxMensagemLadoEsquerdo,
+  TypographyPessoa, TypographyMensagem
+} from "./Chats.styles";
 
-const listaMessages = [
+const listaMensagens = [
   { mensagem: "Mensagem 1 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", pessoa: "Diego" },
   { mensagem: "Mensagem 2", pessoa: "Diego" },
   { mensagem: "Mensagem 3aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", pessoa: "Solicitante" },
@@ -69,31 +73,31 @@ export default function Chats(props: { aberto: boolean }) {
 
   return (
     <>
-      <ContainerGeneralChats>
+      <ContainerGeralChats>
         <Breadcrumb />
         <ContainerChats sx={{ width: (props.aberto ? "80vw" : "92vw") }}>
-          <LeftSideChats>
-            <LeftSideChat>
-              {listaChats.map((chats) => (
-                <Chat titulo={chats.titulo} pessoa={chats.pessoa} mensagem={chats.mensagem} />
+          <LadoEsquerdoGeralChats>
+            <LadoEsquerdoChat>
+              {listaChats.map((chat) => (
+                <Chat titulo={chat.titulo} pessoa={chat.pessoa} mensagem={chat.mensagem} />
               ))}
-            </LeftSideChat>
-          </LeftSideChats>
-          <RightSideChats>
-            <RightSideChat>
-              {listaMessages.map((messages) => (
-                <Messages mensagem={messages.mensagem} pessoa={messages.pessoa} />
+            </LadoEsquerdoChat>
+          </LadoEsquerdoGeralChats>
+          <LadoDireitoGeralChats>
+            <LadoDiretoChat>
+              {listaMensagens.map((mensagem) => (
+                <Mensagens mensagem={mensagem.mensagem} pessoa={mensagem.pessoa} />
               ))}
               <Toolbar />
-            </RightSideChat>
-            <BoxSearchBar>
+            </LadoDiretoChat>
+            <BoxBarraPesquisa>
               <AttachmentRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
-              <SearchBar />
+              <BarraPesquisa />
               <SendRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
-            </BoxSearchBar>
-          </RightSideChats>
+            </BoxBarraPesquisa>
+          </LadoDireitoGeralChats>
         </ContainerChats>
-      </ContainerGeneralChats>
+      </ContainerGeralChats>
     </>
   );
 }
@@ -103,34 +107,34 @@ export default function Chats(props: { aberto: boolean }) {
  * @param props 
  * @returns Retorna uma mensagem que será direcionada de acordo com quem é, e para qual lado a mensagem dever ir, sendo esquerdo ou direito
  */
-function Messages(props: { mensagem: string, pessoa: string }) {
+function Mensagens(props: { mensagem: string, pessoa: string }) {
   const pessoaLocalStorage = localStorage.getItem("PESSOA");
 
   if (pessoaLocalStorage == props.pessoa) {
     return (
-      <BoxGeneralMessagesRightSide>
-        <BoxMessagesRightSides>
-          <BoxMessagesRightSide>
-            <TypographyPerson variant="body1">{props.pessoa}</TypographyPerson>
-            <TypographyMessage variant="body2">
+      <BoxGeralMensagensLadoDireito>
+        <BoxMensagensLadoDireito>
+          <BoxMensagemLadoDireito>
+            <TypographyPessoa variant="body1">{props.pessoa}</TypographyPessoa>
+            <TypographyMensagem variant="body2">
               {props.mensagem}
-            </TypographyMessage>
-          </BoxMessagesRightSide>
-        </BoxMessagesRightSides>
-      </BoxGeneralMessagesRightSide>
+            </TypographyMensagem>
+          </BoxMensagemLadoDireito>
+        </BoxMensagensLadoDireito>
+      </BoxGeralMensagensLadoDireito>
     )
   } else {
     return (
-      <BoxGeneralMessagesLeftSide>
-        <BoxMessagesLeftSides>
-          <BoxMessagesLeftSide>
-            <TypographyPerson variant="body1">{props.pessoa}</TypographyPerson>
-            <TypographyMessage variant="body2">
+      <BoxGeralMensagensLadoEsquerdo>
+        <BoxMensagensLadoEsquerdo>
+          <BoxMensagemLadoEsquerdo>
+            <TypographyPessoa variant="body1">{props.pessoa}</TypographyPessoa>
+            <TypographyMensagem variant="body2">
               {props.mensagem}
-            </TypographyMessage>
-          </BoxMessagesLeftSide>
-        </BoxMessagesLeftSides>
-      </BoxGeneralMessagesLeftSide>
+            </TypographyMensagem>
+          </BoxMensagemLadoEsquerdo>
+        </BoxMensagensLadoEsquerdo>
+      </BoxGeralMensagensLadoEsquerdo>
     )
   }
 }

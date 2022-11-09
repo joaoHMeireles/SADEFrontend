@@ -1,5 +1,5 @@
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
-import Notification from "../../Components/Notification/Notification";
+import Notificacao from "../../Components/Notification/Notification";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
@@ -8,12 +8,12 @@ import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import EditNotificationsRoundedIcon from "@mui/icons-material/EditNotificationsRounded";
 import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded";
 
-import { BoxContainerNotifications } from "./Notifications.styles";
+import { BoxContainerNotificacoes } from "./Notifications.styles";
 
 /**
  * Lista de notificações, cuja função é usar como algo mais dinâmico com o componente de notificação
  */
-const listNotifications: {
+const listaNotificacoes: {
   Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
   }, titulo: string, mensagem: string
@@ -50,21 +50,21 @@ const listNotifications: {
     },
   ]
 
-  /**
-   * 
-   * @returns Retorna uma lista de componentes de notificações, sendo que cada componente tem seus dados puxados de um lista estatica
-   */
-export default function Notifications() {
+/**
+ * 
+ * @returns Retorna uma lista de componentes de notificações, sendo que cada componente tem seus dados puxados de um lista estatica
+ */
+export default function Notificacoes() {
   return (
-    <BoxContainerNotifications>
+    <BoxContainerNotificacoes>
       <Breadcrumb />
       <Container>
         <Box>
-          {listNotifications.map((notification, index) => (
-            <Notification key={index} Icone={notification.Icone} titulo={notification.titulo} mensagem={notification.mensagem} />
+          {listaNotificacoes.map((notificacao, index) => (
+            <Notificacao key={index} Icone={notificacao.Icone} titulo={notificacao.titulo} mensagem={notificacao.mensagem} />
           ))}
         </Box>
       </Container>
-    </BoxContainerNotifications>
+    </BoxContainerNotificacoes>
   );
 }

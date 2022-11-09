@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 const styledBox = styled(Box);
 const styledTypography = styled(Typography);
 
-export const NotificationBox = styledBox({
+export const BoxNotificacao = styledBox({
     alignItens: "center",
     backgroundColor: "#EEEEEE",
     borderRadius: "5px",
@@ -18,28 +18,28 @@ export const NotificationBox = styledBox({
     whiteSpace: "nowrap",
 })
 
-export const NotificationLeftSide = styledBox({
+export const NotificacaoLadoEsquerdo = styledBox({
     alignItems: "center",
     display: "flex",
     justifyContent: "start",
     width: "40%",
 })
 
-export const NotificationBoxIcon = styledBox({
+export const NotificacaoBoxIcone = styledBox({
     marginLeft: 20,
 })
 
-export const TypographyTitle = styledTypography({
+export const TypographyTitulo = styledTypography({
     color: "#595959",
     marginLeft: 20
 })
 
-export const TypographyMessage = styledTypography({
+export const TypographyMensagem = styledTypography({
     color: "#999999",
     marginLeft: 20
 })
 
-export const NotificationRightSide = styledBox({
+export const NotificacaoLadoDireito = styledBox({
     alignItems: "center",
     display: "flex",
     justifyContent: "center",
