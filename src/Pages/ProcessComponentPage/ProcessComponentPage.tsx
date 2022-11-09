@@ -832,7 +832,7 @@ function InfoComercial(props: { processo: any }) {
     const realBenefits = atributos.realBenefits.map((benefit: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
         return (
             <StyledTableRow key={index}>
-                <StyledTableCell align='center' sx={{ width: "50%" }}>{benefit.descricao}</StyledTableCell>
+                <StyledTableCell align='center' >{benefit.descricao}</StyledTableCell>
                 <StyledTableCell align='center'>{benefit.moeda}</StyledTableCell>
                 <StyledTableCell align='center'>R$ {benefit.valor}</StyledTableCell>
                 <StyledTableCell align='center'>{benefit.memoriaCalculo}</StyledTableCell>
@@ -843,7 +843,7 @@ function InfoComercial(props: { processo: any }) {
     const potencialBenefits = atributos.potencialBenefits.map((benefit: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
         return (
             <StyledTableRow key={index}>
-                <StyledTableCell align='center' sx={{ width: "50%" }}>{benefit.descricao}</StyledTableCell>
+                <StyledTableCell align='center' >{benefit.descricao}</StyledTableCell>
                 <StyledTableCell align='center'>{benefit.moeda}</StyledTableCell>
                 <StyledTableCell align='center'>R$ {benefit.valor}</StyledTableCell>
                 <StyledTableCell align='center'>{benefit.memoriaCalculo}</StyledTableCell>
@@ -958,7 +958,14 @@ function Contextualizacao(props: { processo: any }) {
         }
 
         if (atribute == "motivoDevolucao") {
-            value += " - " + props.processo.pessoaDevolucao
+            contexts.push(
+                <Grid item xs={12} sx={{ marginBottom: "20px" }}>
+                    <TextTypography variant='body1' >
+                        <b>{getNomeAtributo(atribute)}</b> {value} <b> - {props.processo.pessoaDevolucao}</b>
+                    </TextTypography>
+                </Grid>
+            )
+            continue
         }
 
         contexts.push(

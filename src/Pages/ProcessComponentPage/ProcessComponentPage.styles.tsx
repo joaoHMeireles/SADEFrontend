@@ -124,6 +124,7 @@ export const TableBox = styledBox({
 })
 
 export const StyledTableContainer = styled(TableContainer)({
+    borderRadius: "5px",
     boxShadow: "5px 5px 10px 0 #00000050",
 })
 
