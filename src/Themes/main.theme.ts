@@ -42,5 +42,10 @@ export const ContentTheme = createTheme({
       default: "#f6fff8",
       paper: "#EEEEEE",
     }
+  },
+  typography: {
+    button: {
+      textTransform: 'none'
+    }
   }
 })

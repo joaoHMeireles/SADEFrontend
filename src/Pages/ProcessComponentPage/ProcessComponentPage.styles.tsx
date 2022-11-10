@@ -1,60 +1,104 @@
-import { Box, Grid, TableCell, tableCellClasses, TableContainer, TableRow, Typography } from '@mui/material'
+import { Box, Grid, IconButton, TableCell, tableCellClasses, TableContainer, TableRow, Typography } from '@mui/material'
+import { BotaoPrimario, BotaoSecundario, BotaoTerciario } from '../App.styles';
 import { styled } from '@mui/material/styles';
 import CircleIcon from '@mui/icons-material/Circle';
 const styledBox = styled(Box)
 const styledGrid = styled(Grid)
 const styledTypography = styled(Typography)
 
-export const HeaderBox = styledBox({
+export const BoxHeader = styledBox({
     backgroundColor: "rgb(255,255,255, 0.9)",
     display: "flex",
+    justifyContent: "space-between",
     position: "fixed",
     padding: "24px",
     top: "7.2vh",
-    width: "100%",
+    width: "96.5%",
+    boxSizing: "border-box",
     zIndex: 10
 })
 
-export const MainContainerGrid = styledGrid({
+export const BotaoIcone = styled(IconButton)({
+    marginLeft: "1vw"
+})
+
+export const BotaoPrimarioHeader = styled(BotaoPrimario)({
+    marginLeft: "1vw"
+})
+
+export const BotaoSecundarioHeader = styled(BotaoSecundario)({
+    marginLeft: "1vw"
+})
+
+export const BotaoTerciarioHeader = styled(BotaoTerciario)({
+    marginLeft: "1vw"
+})
+
+export const BoxBotoes = styledBox({
+    display: "flex",
+    flexDirection: 'row-reverse',
+    justifyContent: "space-between",
+    width: "auto"
+})
+
+export const BoxAviso = styledBox({
+    alignItems: "center",
+    backgroundColor: "#FAD27190",
+    borderRadius: "30px 0 0 30px",
+    display: "flex",
+    justifyContent: "space-evenly",
+    right: "-155px",
+    position: "fixed",   
+    padding: "20px 10px",   
+    top: "180px",
+    width: "200px", 
+    '&:hover': { 
+        right: "-15px" ,
+        transition: 'ease-in-out', 
+        transitionDuration: "0.3s"
+    }
+})
+
+export const GridContainer = styledGrid({
     borderRadius: "10px",
     boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
     display: "flex",
     flexWrap: "wrap",
     height: "auto",
     marginTop: "2.5vh",
-    width: "100%",
+    width: "96.5%",
     color: "#595959"
 })
 
-export const StatusColorBox = styledBox({
+export const BoxCorStatus = styledBox({
     borderRadius: "10px 0 0 10px",
     height: "100%",
     width: "100%"
 })
 
-export const MainInfoGrid = styledGrid({
+export const GridInformacao = styledGrid({
     backgroundColor: "white",
     borderRadius: "0 10px 10px 0",
     padding: "25px"
 })
 
-export const HeaderContainerGrid = styledGrid({
+export const GridContainerHeader = styledGrid({
     marginBottom: "15px",
     minHeight: "80px"
 })
 
-export const TitleGrid = styledGrid({
+export const GridTitulo = styledGrid({
     alignItems: "center",
     display: "flex"
 })
 
-export const FlagContainerBox = styledBox({
+export const BoxContainerBandeira = styledBox({
     display: "flex",
     height: '100%',
     justifyContent: "center"
 })
 
-export const FlagBox = styledBox({
+export const BoxBandeira = styledBox({
     alignItems: "end",
     display: "flex",
     maxHeight: 84,
@@ -64,7 +108,7 @@ export const FlagBox = styledBox({
     zIndex: 0
 })
 
-export const FlagTriangleBox = styledBox({
+export const BoxTrianguloBandeira = styledBox({
     borderBottom: "22px solid white",
     borderLeft: "20px solid transparent",
     borderRight: "20px solid transparent",
@@ -72,30 +116,41 @@ export const FlagTriangleBox = styledBox({
     width: 0
 })
 
-export const SmallAttributesGrid = styledGrid({
+export const TypographyTitulo = styledTypography({
+    marginBottom: "20px"
+})
+
+export const GridPequenosAtributos = styledGrid({
     alignItems: "center",
     display: "flex",
     justifyContent: "flex-start"
 })
 
-
-export const TitleTypography = styledTypography({
-    marginBottom: "20px"
-})
-
-export const AttributeTitleTypography = styledTypography({
+export const TypographyTituloAtributo = styledTypography({
     fontWeight: "bold"
 })
 
-export const TextTypography = styledTypography({
+export const TypographyTexto = styledTypography({
     textAlign: 'justify'
 })
 
-export const DotCircleIcon = styled(CircleIcon)({
+export const CircleIconPonto = styled(CircleIcon)({
     fontSize: "10px"
 })
 
-export const StyledTableCell = styled(TableCell)(({ theme: Theme }) => ({
+export const BoxTabela = styledBox({
+    alignItems: "center",
+    display: 'flex',
+    flexDirection: "column",
+    width: "100%",
+})
+
+export const TableContainerEstilizado = styled(TableContainer)({
+    borderRadius: "5px",
+    boxShadow: "5px 5px 10px 0 #00000050",
+})
+
+export const TableCellEstilzada = styled(TableCell)(({ theme: Theme }) => ({
     color: "#595959",
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: "#00579d",
@@ -106,7 +161,7 @@ export const StyledTableCell = styled(TableCell)(({ theme: Theme }) => ({
     },
 }));
 
-export const StyledTableRow = styled(TableRow)(({ theme: Theme }) => ({
+export const TableRowEstilizada = styled(TableRow)(({ theme: Theme }) => ({
     '&:nth-of-type(even)': {
         backgroundColor: Theme.palette.action.hover,
     },
@@ -116,19 +171,7 @@ export const StyledTableRow = styled(TableRow)(({ theme: Theme }) => ({
     },
 }));
 
-export const TableBox = styledBox({
-    alignItems: "center",
-    display: 'flex',
-    flexDirection: "column",
-    width: "100%",
-})
-
-export const StyledTableContainer = styled(TableContainer)({
-    borderRadius: "5px",
-    boxShadow: "5px 5px 10px 0 #00000050",
-})
-
-export const CostTableBox = styledBox({
+export const BoxTabelaCusto = styledBox({
     display: 'flex',
     justifyContent: "space-between",
     marginBottom: "30px",
@@ -136,19 +179,19 @@ export const CostTableBox = styledBox({
     width: "auto"
 })
 
-export const ContainerTableBox = styledBox({
+export const BoxContainerTabela = styledBox({
     alignItems: "center",
     display: 'flex',
     flexDirection: "column",
     width: "auto",
 })
 
-export const CostCenterContainerBox = styledBox({
+export const BoxContainerCentroCusto = styledBox({
     boxShadow: "5px 5px 10px 0 #00000050",
     width: "25%"
 })
 
-export const TitleCostCentersBox = styledBox({
+export const BoxTitulosCentroCusto = styledBox({
     alignItems: "center",
     backgroundColor: "#00579d",
     borderRadius: "4px 4px 0 0",
@@ -163,7 +206,7 @@ export const TitleCostCentersBox = styledBox({
     width: "100%"
 })
 
-export const CostCentersBox = styledBox({
+export const BoxCentroCusto = styledBox({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
@@ -172,12 +215,13 @@ export const CostCentersBox = styledBox({
     width: "100%"
 })
 
-export const FooterItemGrid = styledGrid({
+export const GridItemFooter = styledGrid({
     alignItems: "center",
     display: "flex", 
     justifyContent: "space-between",
     '& a': {
         color: "#595959",
+        fontSize: "0.9rem",
         "&:hover": {
             transition: "ease-in",
             transitionDuration: "0.5s",

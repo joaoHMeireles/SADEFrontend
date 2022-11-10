@@ -1,15 +1,26 @@
+import { useState, useEffect } from 'react';
 import { processComponent, processComponentSize, processComponentStatus, ITsession } from '../../DefinitionFiles/enuns';
-import { Link } from 'react-router-dom';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
-import { Box, Button, Container, Divider, Grid, List, ListItem, ListItemIcon, Table, TableBody, TableHead, TableRow, Typography } from '@mui/material';
-import { ContentBox, ContainerBox } from '../App.styles';
+import { 
+    Badge, Box, Container, Divider, Grid, List, ListItem, ListItemIcon, Table, TableBody, TableHead, 
+    TableRow, Typography } 
+    from '@mui/material';
+import ChatBubbleRounded from '@mui/icons-material/ChatBubbleRounded';
+import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
+import LanRoundedIcon from '@mui/icons-material/LanRounded';
+import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
+import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
+import { ContentBox, ContainerBox, BotaoTerciario } from "../App.styles"
 import {
-    AttributeTitleTypography, ContainerTableBox, CostCentersBox, CostCenterContainerBox, CostTableBox, DotCircleIcon,
-    FlagBox, FlagContainerBox, FlagTriangleBox, FooterItemGrid, HeaderBox, HeaderContainerGrid, MainContainerGrid,
-    MainInfoGrid, SmallAttributesGrid, StatusColorBox, StyledTableCell, StyledTableContainer, StyledTableRow, TableBox,
-    TextTypography, TitleCostCentersBox, TitleTypography, TitleGrid,
+    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBandeira, 
+    BoxBotoes, BoxCentroCusto, BoxContainerBandeira, BoxContainerCentroCusto, BoxContainerTabela, BoxCorStatus,
+    BoxHeader, BoxTabela, BoxTabelaCusto, BoxTitulosCentroCusto, BoxTrianguloBandeira, CircleIconPonto, 
+    GridContainer, GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo,
+    TableCellEstilzada, TableContainerEstilizado, TableRowEstilizada, TypographyTexto, TypographyTitulo,
+    TypographyTituloAtributo
 } from './ProcessComponentPage.styles';
+
 
 const listaProcessos = [
     {
@@ -539,18 +550,18 @@ const listaProcessos = [
  * @param props 
  * @returns 
  */
-export default function ProcessComponentPage(props: any) {
+export default function TelaComponenteProcesso(props: any) {
     const processLocalStorage = localStorage.getItem("CHOOSEDPROCESS")
-    const choosedProcess = JSON.parse(processLocalStorage != null ? processLocalStorage : "");
-    const processInfo = listaProcessos.find(p => p.id == choosedProcess.id && choosedProcess.tipo == p.tipo)
+    const processoEscolhido = JSON.parse(processLocalStorage != null ? processLocalStorage : "");
+    const informacaoProcesso = listaProcessos.find(p => p.id == processoEscolhido.id && processoEscolhido.tipo == p.tipo)
 
     return (
         <>
-            <PageHeader processInfo={processInfo} />
+            <Header informacaoProcesso={informacaoProcesso} />
             <ContentBox >
                 <ContainerBox>
                     <Container>
-                        <ProcessContainer processInfo={processInfo} />
+                        <ContainerProcesso informacaoProcesso={informacaoProcesso} />
                     </Container>
                 </ContainerBox>
             </ContentBox>
@@ -566,18 +577,19 @@ export default function ProcessComponentPage(props: any) {
  * @param props 
  * @returns 
  */
-function PageHeader(props: { processInfo: any }) {
-    const process = props.processInfo;
-    const personType = localStorage.getItem("TIPOUSUARIO")
-    const type = process.tipo
-    const size = process.tamanho
-    const aproovedByManager = process.aprovadoGerente
-    const linkJira = process.linkJira
-    const elaborationDeadline = process.prazoElaboracao
-    const isWorkflow = process.workflowIniciado
-    const approvedWorkflow = process.aprovadoWorkflow
-    const workflowDeadline = process.prazoWorkflow
-    let buttonsList = ["chat"]
+function Header(props: { informacaoProcesso: any }) {
+    const [tempoExcedido, setTempoExcedido] = useState(false)
+    let listaBotoes = ["chat"]
+    const processo = props.informacaoProcesso;
+    const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
+    const tipoProcesso = processo.tipo
+    const tamanho = processo.tamanho
+    const aprovadoGerente = processo.aprovadoGerente
+    const linkJira = processo.linkJira
+    const prazoElaboracao = processo.prazoElaboracao
+    const estaEmWorkflow = processo.workflowIniciado
+    const aprovadoWorkflow = processo.aprovadoWorkflow
+    const workflowDeadline = processo.prazoWorkflow
 
     /**
      *  1º chat, reprovar, devolver, aprovar (Analista de TI, demanda)
@@ -592,69 +604,144 @@ function PageHeader(props: { processInfo: any }) {
         10º chat, histórico, workflow, ver demanda, criar pauta (Gerente de TI, proposta)
         11º chat, histórico, workflow (notificaçãozinha que ta atrasado), ver demanda, criar pauta (Gerente de TI, proposta)
      */
-
-    if (type == "Demanda") {
-        if (!size) {
-            if (personType == "analista" || personType == "gerenteTI") {
-                buttonsList.push("reprovar", "devolver", "aprovar")
-            }
-        } else {
-            buttonsList.push("historico")
-            if (personType == "gerenteNegocio") {
-                if (!aproovedByManager) {
-                    buttonsList.push("reprovar", "aprovar")
+        if (tipoProcesso == "Demanda") {
+            if (!tamanho) {
+                if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                    listaBotoes.push("reprovar", "devolver", "aprovar")
                 }
-            } else if (personType == "analista" || personType == "gerenteTI") {
-                if (aproovedByManager) {
-                    if (!linkJira) {
-                        buttonsList.push("adicionarInfo")
-                    } else {
-                        if (elaborationDeadline < new Date()) {
-                            buttonsList.push("criarProposta!")
+            } else {
+                listaBotoes.push("historico")
+                if (tipoPessoa == "gerenteNegocio") {
+                    if (!aprovadoGerente) {
+                        listaBotoes.push("reprovar", "aprovar")
+                    }
+                } else if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                    if (aprovadoGerente) {
+                        if (!linkJira) {
+                            listaBotoes.push("adicionarInfo")
                         } else {
-                            buttonsList.push("criarProposta")
+                            if (prazoElaboracao < new Date()) {
+                                listaBotoes.push("criarProposta!")
+                            } else {
+                                listaBotoes.push("criarProposta")
+                            }
                         }
                     }
                 }
             }
-        }
-    } else {
-        buttonsList.push("historico")
-        if (!isWorkflow) {
-            if (personType == "analista" || personType == "gerenteTI") {
-                buttonsList.push("iniciarWorkflow", "verDemanda", "criarPauta")
-            } else if (personType == "gerenteNegocio") {
-                buttonsList.push("verDemanda")
-            }
         } else {
-            if (approvedWorkflow) {
-                buttonsList.push("verDemanda")
-                if (personType == "analista" || personType == "gerenteTI") {
-                    buttonsList.push("criarPauta")
+            listaBotoes.push("historico")
+            if (!estaEmWorkflow) {
+                if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                    listaBotoes.push("iniciarworkflow", "verDemanda", "criarPauta")
+                } else if (tipoPessoa == "gerenteNegocio") {
+                    listaBotoes.push("verDemanda")
                 }
             } else {
-                if (workflowDeadline < new Date()) {
-                    if (personType == "gerenteTI" || personType == "gerenteNegocio") {
-                        buttonsList.push("workflow!")
+                if (aprovadoWorkflow) {
+                    listaBotoes.push("verDemanda")
+                    if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                        listaBotoes.push("criarPauta")
                     }
                 } else {
-                    if (personType == "gerenteTI" || personType == "gerenteNegocio") {
-                        buttonsList.push("workflow")
+                    if (workflowDeadline < new Date()) {
+                        if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
+                            listaBotoes.push("workflow!")
+                        }
+                    } else {
+                        if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
+                            listaBotoes.push("workflow")
+                        }
                     }
+                    listaBotoes.push("verDemanda")
                 }
-                buttonsList.push("verDemanda")
             }
         }
-    }
+    useEffect(() => {
+        if (prazoElaboracao < new Date() && prazoElaboracao && tipoProcesso == "Demanda") {
+            setTempoExcedido(true)
+        }
+    }, [])
+
+    console.log(listaBotoes);
 
     return (
         <>
-            <HeaderBox>
+            <BoxHeader>
                 <Breadcrumb />
-                <ButtonsHeader buttonsList={buttonsList} />
-            </HeaderBox>
+                <ButtonsHeader listaBotoes={listaBotoes} />
+            </BoxHeader>
             <Toolbar />
+            {tempoExcedido &&
+                <BoxAviso>
+                    <WarningRoundedIcon />
+                    Tempo excedido!
+                </BoxAviso>
+            }
         </>
+    )
+}
+
+function ButtonsHeader(props: { listaBotoes: string[] }) {
+    let contagemBotoesAcoes = 0
+    let botoes = []
+
+    for (let i = props.listaBotoes.length - 1; i >= 0; i--) {
+        const botao = props.listaBotoes[i]
+        const nomeBotao = getTituloBotao(botao)
+
+        if (botao == "chat" || botao == "historico" || botao.includes("workflow")) {
+            const iconeBotao = getBotao(botao)
+
+            if (botao.includes("!")) {
+                botoes.push(
+                    <BotaoIcone>
+                        <Badge badgeContent={<ErrorRoundedIcon fontSize='small' sx={{ color: "#FAD271" }} />}>
+                            {iconeBotao}
+                        </Badge>
+                    </BotaoIcone>
+                )
+                continue
+            }
+
+            botoes.push(
+                <BotaoIcone>
+                    {iconeBotao}
+                </BotaoIcone>
+            )
+        } else {
+            contagemBotoesAcoes++
+            switch (contagemBotoesAcoes) {
+                case 1:
+                    botoes.push(
+                        <BotaoPrimarioHeader variant='contained' >
+                            {nomeBotao}
+                        </BotaoPrimarioHeader>
+                    )
+                    break
+                case 2:
+                    botoes.push(
+                        <BotaoSecundarioHeader variant='outlined'>
+                            {nomeBotao}
+                        </BotaoSecundarioHeader>
+                    )
+                    break
+                case 3:
+                    botoes.push(
+                        <BotaoTerciarioHeader variant='outlined'>
+                            {nomeBotao}
+                        </BotaoTerciarioHeader>
+                    )
+                    break
+            }
+        }
+
+    }
+
+    return (
+        <BoxBotoes>
+            {botoes}
+        </BoxBotoes>
     )
 }
 
@@ -664,33 +751,33 @@ function PageHeader(props: { processInfo: any }) {
  * @param props 
  * @returns 
  */
-function ProcessContainer(props: { processInfo: any }) {
-    const processInfo = props.processInfo
+function ContainerProcesso(props: { informacaoProcesso: any }) {
+    const informacaoProcesso = props.informacaoProcesso
 
     return (
-        <MainContainerGrid container>
+        <GridContainer container>
             <Grid item xs={0.2}>
-                <StatusColorBox sx={{ backgroundColor: getColorStatus(processInfo?.status) }} ></StatusColorBox>
+                <BoxCorStatus sx={{ backgroundColor: getColorStatus(informacaoProcesso?.status) }} ></BoxCorStatus>
             </Grid>
-            <MainInfoGrid item xs={11.8}>
-                <HeaderContainerGrid container>
-                    <TitleGrid item xs={10} >
+            <GridInformacao item xs={11.8}>
+                <GridContainerHeader container>
+                    <GridTitulo item xs={10} >
                         <Typography variant='h4'>
-                            {processInfo?.titulo}
+                            {informacaoProcesso?.titulo}
                         </Typography>
-                    </TitleGrid>
+                    </GridTitulo>
                     <Grid item xs={2}>
-                        <Flag cor={getColorType(processInfo?.tipo)} />
+                        <Bandeira cor={getColorType(informacaoProcesso?.tipo)} />
                     </Grid>
-                </HeaderContainerGrid>
+                </GridContainerHeader>
                 <Divider />
-                <InfoGeral processo={processInfo} />
+                <InfoGeral processo={informacaoProcesso} />
                 <Divider />
-                <InfoComercial processo={processInfo} />
+                <InfoComercial processo={informacaoProcesso} />
                 <Divider />
-                <Contextualizacao processo={processInfo} />
-            </MainInfoGrid>
-        </MainContainerGrid>
+                <Contextualizacao processo={informacaoProcesso} />
+            </GridInformacao>
+        </GridContainer>
     )
 }
 
@@ -701,13 +788,13 @@ function ProcessContainer(props: { processInfo: any }) {
  * @param props 
  * @returns 
  */
-function Flag(props: { cor: string }) {
+function Bandeira(props: { cor: string }) {
     return (
-        <FlagContainerBox >
-            <FlagBox sx={{ backgroundColor: props.cor }}>
-                <FlagTriangleBox />
-            </FlagBox>
-        </FlagContainerBox>
+        <BoxContainerBandeira >
+            <BoxBandeira sx={{ backgroundColor: props.cor }}>
+                <BoxTrianguloBandeira />
+            </BoxBandeira>
+        </BoxContainerBandeira>
     )
 }
 
@@ -757,14 +844,14 @@ function InfoGeral(props: { processo: any }) {
         }
 
         gridAtributosPequenos.push(
-            <SmallAttributesGrid key={chaveComponente} item xs={6}>
-                <AttributeTitleTypography variant='body1'>
+            <GridPequenosAtributos key={chaveComponente} item xs={6}>
+                <TypographyTituloAtributo variant='body1'>
                     {nomeAtributo}
-                </AttributeTitleTypography>
-                <TextTypography variant='body1' sx={{ marginLeft: "5px" }}>
+                </TypographyTituloAtributo>
+                <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
                     {valorAtributo}
-                </TextTypography>
-            </SmallAttributesGrid>
+                </TypographyTexto>
+            </GridPequenosAtributos>
         )
     }
 
@@ -782,9 +869,9 @@ function InfoGeral(props: { processo: any }) {
 
         gridAtributosGrandes.push(
             <Grid key={chaveComponente} item xs={6} >
-                <AttributeTitleTypography variant='body1'>
+                <TypographyTituloAtributo variant='body1'>
                     {nomeAtributo}
-                </AttributeTitleTypography>
+                </TypographyTituloAtributo>
                 <AtributeList valorAtributo={valorAtributo} />
             </Grid>
         )
@@ -794,9 +881,9 @@ function InfoGeral(props: { processo: any }) {
 
     return (
         <Grid container sx={{ marginY: "20px" }}>
-            <TitleTypography variant='h5'>
+            <TypographyTitulo variant='h5'>
                 Informações Gerais
-            </TitleTypography>
+            </TypographyTitulo>
             <Grid item xs={12} sx={{ marginBottom: "8px" }}>
                 <Grid container spacing={1}>
                     {gridAtributosPequenos}
@@ -808,197 +895,14 @@ function InfoGeral(props: { processo: any }) {
                 </Grid>
             </Grid >
             <Grid item>
-                <TextTypography variant='body1' >
+                <TypographyTexto variant='body1' >
                     <b>{getNomeAtributo("beneficioQualitativo")}</b> {props.processo.beneficioQualitativo}
-                </TextTypography>
+                </TypographyTexto>
             </Grid>
         </Grid >
     )
 }
 
-/**
- * Componente dinâmico das informações comerciais de um processo
- * 
- * @param props 
- * @returns 
- */
-function InfoComercial(props: { processo: any }) {
-    const atributos = {
-        realBenefits: props.processo.beneficiosReais,
-        potencialBenefits: props.processo.beneficiosPotenciais,
-        costTables: props.processo.tabelasCusto
-    }
-
-    const realBenefits = atributos.realBenefits.map((benefit: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
-        return (
-            <StyledTableRow key={index}>
-                <StyledTableCell align='center' >{benefit.descricao}</StyledTableCell>
-                <StyledTableCell align='center'>{benefit.moeda}</StyledTableCell>
-                <StyledTableCell align='center'>R$ {benefit.valor}</StyledTableCell>
-                <StyledTableCell align='center'>{benefit.memoriaCalculo}</StyledTableCell>
-            </StyledTableRow>
-        )
-    })
-
-    const potencialBenefits = atributos.potencialBenefits.map((benefit: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
-        return (
-            <StyledTableRow key={index}>
-                <StyledTableCell align='center' >{benefit.descricao}</StyledTableCell>
-                <StyledTableCell align='center'>{benefit.moeda}</StyledTableCell>
-                <StyledTableCell align='center'>R$ {benefit.valor}</StyledTableCell>
-                <StyledTableCell align='center'>{benefit.memoriaCalculo}</StyledTableCell>
-            </StyledTableRow>
-        )
-    })
-
-    let costTables
-
-    if (atributos.costTables) {
-        costTables = atributos.costTables.map((table: any, index: number) => {
-            let totalTime = 0, totalValue = 0
-
-            const tableLines = table.linhas.map((linha: { recurso: string, esforco: number, valor: number }, lineIndex: number) => {
-                const total = linha.valor * linha.esforco
-                totalTime += linha.esforco
-                totalValue += total
-
-                return (
-                    <StyledTableRow key={lineIndex}>
-                        <StyledTableCell align='center'>{linha.recurso}</StyledTableCell>
-                        <StyledTableCell align='center'>{linha.esforco}{!table.isLicenca ? "h" : ""} </StyledTableCell>
-                        <StyledTableCell align='center'>R$ {linha.valor}</StyledTableCell>
-                        <StyledTableCell align='center'>R$ {total}</StyledTableCell>
-                    </StyledTableRow>
-                )
-            })
-
-            const tableCCs = table.centrosCusto.map((centroDeCusto: any, centerIndex: number) => {
-                const porcentagem = centroDeCusto.porcentagem * 100
-
-                return (
-                    <Typography key={centerIndex} variant="body1" sx={{ color: "#595959" }}>
-                        {centroDeCusto.centroCusto} - {porcentagem}%
-                    </Typography>
-                )
-            })
-
-            return (
-                <CostTableBox key={index} >
-                    <ContainerTableBox>
-                        <StyledTableContainer sx={{ width: "auto" }}>
-                            <TableHead >
-                                <TableRow >
-                                    <StyledTableCell align='center'>{table.titulo}</StyledTableCell>
-                                    <StyledTableCell align='center'>{!table.isLicenca ? "Esforço" : "Licenças"}</StyledTableCell>
-                                    <StyledTableCell align='center'>Valor </StyledTableCell>
-                                    <StyledTableCell align='center'>Total</StyledTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody >
-                                {tableLines}
-                                <StyledTableRow>
-                                    <StyledTableCell align='center'> <b>Total {table.titulo}</b></StyledTableCell>
-                                    <StyledTableCell align='center'> <b>{totalTime}{!table.isLicenca ? "h" : ""}</b></StyledTableCell>
-                                    <StyledTableCell align='center'> </StyledTableCell>
-                                    <StyledTableCell align='center'> <b>R$ {totalValue}</b></StyledTableCell>
-                                </StyledTableRow>
-                            </TableBody>
-                        </StyledTableContainer>
-                    </ContainerTableBox>
-                    <CostCenterContainerBox>
-                        <TitleCostCentersBox>
-                            Centros de Custo
-                        </TitleCostCentersBox>
-                        <CostCentersBox>
-                            {tableCCs}
-                        </CostCentersBox>
-                    </CostCenterContainerBox>
-                </CostTableBox>
-            )
-        })
-    }
-
-
-
-    return (
-        <Box sx={{ marginY: "20px" }}>
-            <TitleTypography variant='h5'>
-                Informações Comerciais
-            </TitleTypography>
-            <StyledBenefitTable title='Benefícios reais' valuesList={realBenefits} />
-            <StyledBenefitTable title='Benefícios potenciais' valuesList={potencialBenefits} />
-            {atributos.costTables &&
-                <TableBox>
-                    <TitleTypography variant='subtitle1'>
-                        Tabelas de custo
-                    </TitleTypography>
-                    {costTables}
-                </TableBox>
-            }
-        </Box >
-    )
-
-}
-
-function Contextualizacao(props: { processo: any }) {
-    const atributos = {
-        objetivo: props.processo.objetivo,
-        situacaoAtual: props.processo.situacaoAtual,
-        escopo: props.processo.escopo,
-        motivoDevolucao: props.processo.motivoDevolucao
-    }
-    const link = props.processo.linkJira
-    let contexts = []
-
-    for (let atribute in atributos) {
-        let value = (atributos as any)[atribute];
-
-        if (!value) {
-            continue
-        }
-
-        if (atribute == "motivoDevolucao") {
-            contexts.push(
-                <Grid item xs={12} sx={{ marginBottom: "20px" }}>
-                    <TextTypography variant='body1' >
-                        <b>{getNomeAtributo(atribute)}</b> {value} <b> - {props.processo.pessoaDevolucao}</b>
-                    </TextTypography>
-                </Grid>
-            )
-            continue
-        }
-
-        contexts.push(
-            <Grid item xs={12} sx={{ marginBottom: "20px" }}>
-                <TextTypography variant='body1' >
-                    <b>{getNomeAtributo(atribute)}</b> {value}
-                </TextTypography>
-            </Grid>
-        )
-    }
-
-    return (
-        <Grid container sx={{ marginY: "20px" }}>
-            <TitleTypography variant='h5'>
-                Contextualização
-            </TitleTypography>
-            {contexts}
-            <Footer link={link} />
-        </Grid>
-    )
-}
-
-function ButtonsHeader(props: { buttonsList: string[] }) {
-
-    console.log(props.buttonsList);
-
-
-    return (
-       <>
-            
-       </>
-    )
-}
 
 /**
  * Componente dos atributos em lista das informações gerais
@@ -1006,7 +910,7 @@ function ButtonsHeader(props: { buttonsList: string[] }) {
  * @param props 
  * @returns 
  */
-function AtributeList(props: { valorAtributo: [] }) {
+ function AtributeList(props: { valorAtributo: [] }) {
     let contadorPeriodoExecucao = 0
     const valores = props.valorAtributo.map((valor) => {
         if (typeof valor === typeof new Date()) {
@@ -1015,7 +919,7 @@ function AtributeList(props: { valorAtributo: [] }) {
             return (
                 <ListItem>
                     <ListItemIcon>
-                        <DotCircleIcon />
+                        <CircleIconPonto />
                     </ListItemIcon>
                     {contadorPeriodoExecucao == 1 ? "Início: " : "Fim: "}
                     {valorData.toLocaleDateString()}
@@ -1026,7 +930,7 @@ function AtributeList(props: { valorAtributo: [] }) {
         return (
             <ListItem>
                 <ListItemIcon>
-                    <DotCircleIcon />
+                    <CircleIconPonto />
                 </ListItemIcon>
                 {valor}
             </ListItem>
@@ -1041,29 +945,205 @@ function AtributeList(props: { valorAtributo: [] }) {
     )
 }
 
+/**
+ * Componente dinâmico das informações comerciais de um processo
+ * 
+ * @param props 
+ * @returns 
+ */
+function InfoComercial(props: { processo: any }) {
+    const atributos = {
+        beneficiosReais: props.processo.beneficiosReais,
+        beneficiosPotenciais: props.processo.beneficiosPotenciais,
+        tabelasCusto: props.processo.tabelasCusto
+    }
+
+    const beneficiosReais = atributos.beneficiosReais.map((beneficio: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
+        const valor = "R$" + beneficio.valor
+
+        return (
+            <TableRowEstilizada key={index}>
+                <TableCellEstilzada align='center' >{beneficio.descricao}</TableCellEstilzada>
+                <TableCellEstilzada align='center'>{beneficio.moeda}</TableCellEstilzada>
+                <TableCellEstilzada align='center'>{valor}</TableCellEstilzada>
+                <TableCellEstilzada align='center'>{beneficio.memoriaCalculo}</TableCellEstilzada>
+            </TableRowEstilizada>
+        )
+    })
+
+    const potencialBenefits = atributos.beneficiosPotenciais.map((beneficio: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
+        const valor = "R$" + beneficio.valor
+
+        return (
+            <TableRowEstilizada key={index}>
+                <TableCellEstilzada align='center' >{beneficio.descricao}</TableCellEstilzada>
+                <TableCellEstilzada align='center'>{beneficio.moeda}</TableCellEstilzada>
+                <TableCellEstilzada align='center'>{valor}</TableCellEstilzada>
+                <TableCellEstilzada align='center'>{beneficio.memoriaCalculo}</TableCellEstilzada>
+            </TableRowEstilizada>
+        )
+    })
+
+    let elentosTabelasCusto
+
+    if (atributos.tabelasCusto) {
+        elentosTabelasCusto = atributos.tabelasCusto.map((tabela: any, index: number) => {
+            let tempoTotal = 0, valorTotal = 0
+
+            const linhasTabela = tabela.linhas.map((linha: { recurso: string, esforco: number, valor: number }, indexLinha: number) => {
+                const total = linha.valor * linha.esforco
+                tempoTotal += linha.esforco
+                valorTotal += total
+
+                return (
+                    <TableRowEstilizada key={indexLinha}>
+                        <TableCellEstilzada align='center'>{linha.recurso}</TableCellEstilzada>
+                        <TableCellEstilzada align='center'>{linha.esforco}{!tabela.isLicenca ? "h" : ""} </TableCellEstilzada>
+                        <TableCellEstilzada align='center'>R$ {linha.valor}</TableCellEstilzada>
+                        <TableCellEstilzada align='center'>R$ {total}</TableCellEstilzada>
+                    </TableRowEstilizada>
+                )
+            })
+
+            const centrosCusto = tabela.centrosCusto.map((centroDeCusto: any, indexcentroCusto: number) => {
+                const porcentagem = centroDeCusto.porcentagem * 100
+
+                return (
+                    <Typography key={indexcentroCusto} variant="body1" sx={{ color: "#595959" }}>
+                        {centroDeCusto.centroCusto} - {porcentagem}%
+                    </Typography>
+                )
+            })
+
+            return (
+                <BoxTabelaCusto key={index} >
+                    <BoxContainerTabela>
+                        <TableContainerEstilizado sx={{ width: "auto" }}>
+                            <TableHead >
+                                <TableRow >
+                                    <TableCellEstilzada align='center'>{tabela.titulo}</TableCellEstilzada>
+                                    <TableCellEstilzada align='center'>{!tabela.isLicenca ? "Esforço" : "Licenças"}</TableCellEstilzada>
+                                    <TableCellEstilzada align='center'>Valor </TableCellEstilzada>
+                                    <TableCellEstilzada align='center'>Total</TableCellEstilzada>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody >
+                                {linhasTabela}
+                                <TableRowEstilizada>
+                                    <TableCellEstilzada align='center'> <b>Total {tabela.titulo}</b></TableCellEstilzada>
+                                    <TableCellEstilzada align='center'> <b>{tempoTotal}{!tabela.isLicenca ? "h" : ""}</b></TableCellEstilzada>
+                                    <TableCellEstilzada align='center'> </TableCellEstilzada>
+                                    <TableCellEstilzada align='center'> <b>R$ {valorTotal}</b></TableCellEstilzada>
+                                </TableRowEstilizada>
+                            </TableBody>
+                        </TableContainerEstilizado>
+                    </BoxContainerTabela>
+                    <BoxContainerCentroCusto>
+                        <BoxTitulosCentroCusto>
+                            Centros de Custo
+                        </BoxTitulosCentroCusto>
+                        <BoxCentroCusto>
+                            {centrosCusto}
+                        </BoxCentroCusto>
+                    </BoxContainerCentroCusto>
+                </BoxTabelaCusto>
+            )
+        })
+    }
+
+
+
+    return (
+        <Box sx={{ marginY: "20px" }}>
+            <TypographyTitulo variant='h5'>
+                Informações Comerciais
+            </TypographyTitulo>
+            <StyledBenefitTable title='Benefícios reais' valuesList={beneficiosReais} />
+            <StyledBenefitTable title='Benefícios potenciais' valuesList={potencialBenefits} />
+            {atributos.tabelasCusto &&
+                <BoxTabela>
+                    <TypographyTitulo variant='subtitle1'>
+                        Tabelas de custo
+                    </TypographyTitulo>
+                    {elentosTabelasCusto}
+                </BoxTabela>
+            }
+        </Box >
+    )
+
+}
+
 function StyledBenefitTable(props: { valuesList: [], title: string }) {
 
     return (
-        <TableBox sx={{ marginBottom: "30px" }}>
-            <TitleTypography variant='subtitle1'>
+        <BoxTabela sx={{ marginBottom: "30px" }}>
+            <TypographyTitulo variant='subtitle1'>
                 {props.title}
-            </TitleTypography>
-            <StyledTableContainer sx={{ width: "40vw" }}>
+            </TypographyTitulo>
+            <TableContainerEstilizado sx={{ width: "40vw" }}>
                 <Table aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell align='center'>Descrição</StyledTableCell>
-                            <StyledTableCell align='center'>Moeda</StyledTableCell>
-                            <StyledTableCell align='center'>Valor</StyledTableCell>
-                            <StyledTableCell align='center'>Memória de cálculo</StyledTableCell>
+                            <TableCellEstilzada align='center'>Descrição</TableCellEstilzada>
+                            <TableCellEstilzada align='center'>Moeda</TableCellEstilzada>
+                            <TableCellEstilzada align='center'>Valor</TableCellEstilzada>
+                            <TableCellEstilzada align='center'>Memória de cálculo</TableCellEstilzada>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {props.valuesList}
                     </TableBody>
                 </Table>
-            </StyledTableContainer>
-        </TableBox>
+            </TableContainerEstilizado>
+        </BoxTabela>
+    )
+}
+
+function Contextualizacao(props: { processo: any }) {
+    const atributos = {
+        objetivo: props.processo.objetivo,
+        situacaoAtual: props.processo.situacaoAtual,
+        escopo: props.processo.escopo,
+        motivoDevolucao: props.processo.motivoDevolucao
+    }
+    const link = props.processo.linkJira
+    let contextos = []
+
+    for (let atributo in atributos) {
+        let valor = (atributos as any)[atributo];
+
+        if (!valor) {
+            continue
+        }
+
+        if (atributo == "motivoDevolucao") {
+            contextos.push(
+                <Grid item xs={12} sx={{ marginBottom: "20px" }}>
+                    <TypographyTexto variant='body1' >
+                        <b>{getNomeAtributo(atributo)}</b> {valor} <b> - {props.processo.pessoaDevolucao}</b>
+                    </TypographyTexto>
+                </Grid>
+            )
+            continue
+        }
+
+        contextos.push(
+            <Grid item xs={12} sx={{ marginBottom: "20px" }}>
+                <TypographyTexto variant='body1' >
+                    <b>{getNomeAtributo(atributo)}</b> {valor}
+                </TypographyTexto>
+            </Grid>
+        )
+    }
+
+    return (
+        <Grid container sx={{ marginY: "20px" }}>
+            <TypographyTitulo variant='h5'>
+                Contextualização
+            </TypographyTitulo>
+            {contextos}
+            <Footer link={link} />
+        </Grid>
     )
 }
 
@@ -1072,20 +1152,16 @@ function Footer(props: { link: string }) {
     return (
         <Grid container>
             <Grid item xs={8} />
-            <FooterItemGrid item xs={3.5} >
+            <GridItemFooter item xs={3.5} >
                 {props.link ?
-                    <Link to={props.link}>
-                        Ver projeto Jira
-                    </Link>
+                    <a href={props.link}>Ver projeto Jira</a>
                     :
-                    <div>
-
-                    </div>
+                    <div></div>
                 }
-                <Button variant='outlined' size='large' sx={{ color: '#595959', borderColor: "#59595980", '&:hover': { transition: 'ease-in-out', transitionDuration: "1s", backgroundColor: "#59595930", border: "1px solid #59595980" } }}>
+                <BotaoTerciario variant='outlined' >
                     Ver anexos
-                </Button>
-            </FooterItemGrid>
+                </BotaoTerciario>
+            </GridItemFooter>
         </Grid>
     )
 }
@@ -1154,3 +1230,27 @@ function getColorType(tipo: string | undefined) {
     }
 }
 
+function getBotao(botao: string) {
+    if (botao == "chat") {
+        return <ChatBubbleRounded />
+    } else if (botao == "historico") {
+        return <HistoryRoundedIcon />
+    } else {
+        return <LanRoundedIcon />
+    }
+}
+
+function getTituloBotao(botao: string) {
+    const nomeBotao = botao.replace("!", "")
+    const titulos = {
+        reprovar: "Reprovar",
+        devolver: "Devolver",
+        aprovar: "Aprovar",
+        adicionarInfo: "Adicionar informações",
+        criarProposta: "Criar proposta",
+        verDemanda: "Ver demanda",
+        criarPauta: "Criar pauta"
+    }
+
+    return (titulos as any)[nomeBotao]
+}
