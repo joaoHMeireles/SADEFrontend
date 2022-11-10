@@ -12,13 +12,15 @@ import {
  */
 
 export default function Chat(props: {
+  id: number,
   titulo: string;
   pessoa: string;
   mensagem: string;
+  verChat: any
 }) {
   return (
     <>
-      <ContainerGeralChat>
+      <ContainerGeralChat id={props.id + ""} onClick={props.verChat}>
         <BoxIconePessoa>
           {<PersonRoundedIcon />}
         </BoxIconePessoa>
