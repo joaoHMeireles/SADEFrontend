@@ -2,7 +2,7 @@ import { Box, Button, styled } from "@mui/material";
 const styledBox = styled(Box)
 const styledButton = styled(Button)
 
-export const ContainerBox = styledBox({
+export const BoxContainer = styledBox({
     width: "100%", 
     height: "100%", 
     display: "flex", 
@@ -15,7 +15,7 @@ export const MainBox = styledBox({
     width: "auto",
 })
 
-export const ContentBox = styledBox({
+export const BoxConteudo = styledBox({
     margin: "24px"
 })
 

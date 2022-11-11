@@ -1,24 +1,13 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
-  Box,
-  Checkbox,
-  Collapse,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  IconButton,
-  InputAdornment,
-  Radio,
-  RadioGroup,
-  TextField,
-  Toolbar
+  Box, Checkbox, Collapse, Divider, FormControl, FormControlLabel, FormGroup, IconButton, InputAdornment, Radio,
+  RadioGroup, TextField, Toolbar
 } from "@mui/material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import { FilterDrawer, ItemHeaderBox, ItemHeaderTypography } from "./Filter.styles";
+import { BoxItemHeader, DrawerFiltro, TypographyItemHeader } from "./Filtro.styles";
 
 
 //listas base para os itens do filtros
@@ -125,22 +114,16 @@ const status = [
   },
 ];
 
-/**
- * Componente principal do filtro utilizado nas páginas
- * 
- * @param props 
- * @returns 
- */
-export default function Filter(props: {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+export default function Filtro(props: {
+  aberto: boolean;
+  setAberto: React.Dispatch<React.SetStateAction<boolean>>;
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const location = useLocation()
   const [drawerWidth, setDrawerWidth] = useState("0px");
 
   useEffect(() => {
-    if (props.open) {
+    if (props.aberto) {
       setDrawerWidth("240px");
       props.setSidebar(false);
     } else {
@@ -149,13 +132,13 @@ export default function Filter(props: {
   });
 
   useLocationChange(() => {
-    props.setOpen(false)
+    props.setAberto(false)
   })
 
   return (
     <>
       {location.pathname != "/" &&
-        <FilterDrawer
+        <DrawerFiltro
           sx={{
             width: drawerWidth,
             "& .MuiDrawer-paper": {
@@ -164,7 +147,7 @@ export default function Filter(props: {
           }}
           variant="persistent"
           anchor="right"
-          open={props.open}
+          open={props.aberto}
         >
           <Toolbar variant="dense" sx={{ marginBottom: "10px" }} />
           <Item itens={tiposDeComponentes} titulo="Tipo" tipo={1} />
@@ -174,7 +157,7 @@ export default function Filter(props: {
           <Item itens={departamentos} titulo="Departamento" tipo={2} />
           <Item itens={tamanhos} titulo="Tamanho" tipo={2} />
           <Item itens={status} titulo="Status" tipo={1} />
-        </FilterDrawer>
+        </DrawerFiltro>
       }
     </>
   );
@@ -197,11 +180,11 @@ function Item(props: {
 
   let opcao: JSX.Element;
   if (props.tipo == 1) {
-    opcao = <RadioOptions itens={props.itens} />;
+    opcao = <OpcoesRadio itens={props.itens} />;
   } else if (props.tipo == 2) {
-    opcao = <CheckOptions itens={props.itens} />;
+    opcao = <OpcoesCheck itens={props.itens} />;
   } else {
-    opcao = <InputOption />;
+    opcao = <OpcaoInput />;
   }
 
   function mudarAberto() {
@@ -211,12 +194,12 @@ function Item(props: {
   return (
     <>
       <Box sx={{ padding: "8px" }}>
-        <ItemHeaderBox>
-          <ItemHeader titulo={props.titulo} />
+        <BoxItemHeader>
+          <TypographyItemHeader variant="subtitle1">{props.titulo}</TypographyItemHeader>
           <IconButton onClick={mudarAberto}>
             {aberto ? <RemoveRoundedIcon /> : <AddRoundedIcon />}
           </IconButton>
-        </ItemHeaderBox>
+        </BoxItemHeader>
         <Collapse in={aberto} timeout="auto" unmountOnExit>
           {aberto && opcao}
         </Collapse>
@@ -226,22 +209,7 @@ function Item(props: {
   );
 }
 
-/**
- * Componente que recebe uma string, para usar como título de um item
- *
- * @param props
- */
-function ItemHeader(props: { titulo: string }) {
-  return <ItemHeaderTypography variant="subtitle1">{props.titulo}</ItemHeaderTypography>;
-}
-
-/**
- * Componente que recebe uma lista de atributos possíveis para aquele item do filtro
- * e monta eles coordenando quem está e quem não está selecionado
- *
- * @param props
- */
-function RadioOptions(props: OptionInterface) {
+function OpcoesRadio(props: OptionInterface) {
   const opcoes = props.itens.map((e) => {
     return (
       <FormControlLabel
@@ -269,12 +237,7 @@ function RadioOptions(props: OptionInterface) {
   );
 }
 
-/**
- * Componente que recebe uma lista de atributos possíveis para aquele item do filtro
- * e monta eles
- * @param props
- */
-function CheckOptions(props: OptionInterface) {
+function OpcoesCheck(props: OptionInterface) {
   const opcoes = props.itens.map((e) => {
     return (
       <FormControlLabel control={<Checkbox />} label={e.nome} />
@@ -288,10 +251,7 @@ function CheckOptions(props: OptionInterface) {
   )
 }
 
-/**
- * Componente que dispõem de um input para preencher
- */
-function InputOption() {
+function OpcaoInput() {
   return (
     <TextField id="standard-basic" variant="standard" InputProps={{
       sx: {

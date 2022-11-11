@@ -1,35 +1,19 @@
 import { Link } from 'react-router-dom';
-import { processComponentCollection } from '../../../DefinitionFiles/enuns'
-import { ProcessComponentInterface, ProcessComponentCollectionInterface } from "../../../DefinitionFiles/interfaces";
-import { 
-    Grid,
-    Tooltip 
-} from '@mui/material'
+import { TipoColecaoComponenteProcesso } from '../../../DefinitionFiles/enuns'
+import { InterfaceComponenteProcesso, InterfaceColecaoComponenteProcesso } from "../../../DefinitionFiles/interfaces";
+import { Grid, Tooltip } from '@mui/material'
 import {
-    MainPaper,
-    GridProccessColorBox,
-    GridProccessComponent,
-    GridTypography,
-    GridLinkTypograpfy,
-    ListProccessColorBox,
-    ListProccessComponent,
-    ListTypography,
-    LastListTypography,
-    BoxCollectionComponent
-} from '../ProcessComponent.styles'
+    BoxColecaoComponente, BoxGridCorProcesso, BoxListaCorProcesso, GridComponenteProcesso, GridLinkTypograpfy,
+    GridTypography, ListaComponenteProcesso, ListaTypography, MainPaper, UltimaListaTypography
+} from '../ComponenteProcesso.styles'
 
-/**
- * Componente TSX de card e linha de uma coleção de compoentes de processo
- * 
- * @param props 
- * @returns 
- */
-export default function ProcessComponentCollection(props: { processComponentCollectionAtributes: ProcessComponentCollectionInterface, grid: boolean }) {
+export default function ColecaoComponenteProcesso(props: { processComponentCollectionAtributes: InterfaceColecaoComponenteProcesso, grid: boolean }) {
     const componente = props.processComponentCollectionAtributes
     const paginaAtual = localStorage.getItem("PAGINATUAL")
     const listaPropostas = props.processComponentCollectionAtributes.propostas
     let corComponente, tituloToolTip, nomeTipoLink
-    if (componente.tipo == processComponentCollection.ATA) {
+
+    if (componente.tipo == TipoColecaoComponenteProcesso.ATA) {
         corComponente = "#28B9DA"
         tituloToolTip = "Ata"
         nomeTipoLink = `/${paginaAtual}/ata/${componente.id}?id-ata=${componente.id}`
@@ -38,6 +22,7 @@ export default function ProcessComponentCollection(props: { processComponentColl
         tituloToolTip = "Pauta"
         nomeTipoLink = `/${paginaAtual}/agenda/${componente.id}?id-agenda=${componente.id}`
     }
+
     const processElement = (props.grid ?
         <GridComponent componente={componente} corComponente={corComponente} listaPropostas={listaPropostas} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} />
         :
@@ -53,22 +38,16 @@ export default function ProcessComponentCollection(props: { processComponentColl
     )
 }
 
-/**
- * Formatação do componente caso ele esteja em formato de card, ou seja, em grid
- * 
- * @param props 
- * @returns 
- */
 function GridComponent(props: ComponentCollectionProps) {
 
     return (
         <>
             <Tooltip title={props.tituloToolTip} placement="left">
                 <Grid item xs={1}>
-                    <GridProccessColorBox sx={{ backgroundColor: props.corComponente }} />
+                    <BoxGridCorProcesso sx={{ backgroundColor: props.corComponente }} />
                 </Grid>
             </Tooltip>
-            <GridProccessComponent item xs={11}>
+            <GridComponenteProcesso item xs={11}>
                 <GridTypography variant='h6' >
                     {props.componente.comissao}
                 </GridTypography>
@@ -82,33 +61,27 @@ function GridComponent(props: ComponentCollectionProps) {
                     - {props.componente.propostas[0].titulo}
                 </GridTypography>
                 <GridTypography variant='body1' sx={{ display: 'flex' }}>
-                    <BoxCollectionComponent>
+                    <BoxColecaoComponente>
                         - {props.componente.propostas[1].titulo}
-                    </BoxCollectionComponent>
+                    </BoxColecaoComponente>
                     <GridLinkTypograpfy variant='body2'>
                         <Link to={props.linkComponente} >Ver mais</Link>
                     </GridLinkTypograpfy>
                 </GridTypography>
-            </GridProccessComponent>
+            </GridComponenteProcesso>
         </>
     )
 }
 
-/**
- * Formatação do componente caso ele esteja em formato de linha ou seja, em forma de lista
- * 
- * @param props 
- * @returns 
- */
 function ListComponent(props: ComponentCollectionProps) {
     const propostas = props.listaPropostas.map((e, index) => {
         if (index >= 2) {
             return null
         }
         return (
-            <ListTypography variant='subtitle2' sx={{ maxWidth: "8vw" }}>
+            <ListaTypography variant='subtitle2' sx={{ maxWidth: "8vw" }}>
                 {"- " + e.titulo}
-            </ListTypography>
+            </ListaTypography>
         )
     })
 
@@ -116,25 +89,25 @@ function ListComponent(props: ComponentCollectionProps) {
         <>
             <Tooltip title={props.tituloToolTip} placement="left">
                 <Grid item xs={0.3}>
-                    <ListProccessColorBox sx={{ backgroundColor: props.corComponente }} />
+                    <BoxListaCorProcesso sx={{ backgroundColor: props.corComponente }} />
                 </Grid>
             </Tooltip>
-            <ListProccessComponent item xs={11.7}>
-                <ListTypography variant='subtitle1' sx={{ minWidth: "20vw" }}>
+            <ListaComponenteProcesso item xs={11.7}>
+                <ListaTypography variant='subtitle1' sx={{ minWidth: "20vw" }}>
                     {props.componente.id} - {props.componente.comissao}
-                </ListTypography>
-                <ListTypography variant='subtitle2'  sx={{ minWidth: "14.3vw" }}>
+                </ListaTypography>
+                <ListaTypography variant='subtitle2'  sx={{ minWidth: "14.3vw" }}>
                     <span> Data: </span> {props.componente.dataReuniao.toLocaleDateString()}
-                </ListTypography>
-                <ListTypography variant='subtitle2' sx={{ maxWidth: "8vw" }}>
+                </ListaTypography>
+                <ListaTypography variant='subtitle2' sx={{ maxWidth: "8vw" }}>
                     <span> Propostas: </span>
-                </ListTypography>
+                </ListaTypography>
                 {propostas}
-                <LastListTypography variant='body2' sx={{maxWidth: "8.5vw"}}>
+                <UltimaListaTypography variant='body2' sx={{maxWidth: "8.5vw"}}>
                     <Link to={props.linkComponente} >Ver mais</Link>
-                </LastListTypography>
+                </UltimaListaTypography>
                 {/* fazer uma linha listando as propostas até chegar no limite dalinha */}
-            </ListProccessComponent>
+            </ListaComponenteProcesso>
         </>
     )
 }
@@ -143,9 +116,9 @@ function ListComponent(props: ComponentCollectionProps) {
  * Interface base para as propriedados de um Grid ou List Component
  */
 interface ComponentCollectionProps {
-    componente: ProcessComponentCollectionInterface,
+    componente: InterfaceColecaoComponenteProcesso,
     corComponente: string
-    listaPropostas: ProcessComponentInterface[]
+    listaPropostas: InterfaceComponenteProcesso[]
     tituloToolTip: string
     linkComponente: string
 }

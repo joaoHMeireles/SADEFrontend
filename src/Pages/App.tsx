@@ -4,11 +4,11 @@ import "./App.scss";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import Navbar from "../Components/Navbar/Navbar";
 import Toolbar from "../Components/Toolbar/Toolbar";
-import Filter from "../Components/Filter/Filter";
+import Filter from "../Components/Filtro/Filtro";
 import Login from "./Login/Login";
-import Home from "./Home/Home";
-import ProcessComponentPage from "./ProcessComponentPage/ProcessComponentPage";
-import Notifications from "./Notifications/Notifications";
+import Home from "./Inicio/Inicio";
+import ProcessComponentPage from "./TelaComponenteProcesso/TelaComponenteProcesso";
+import Notifications from "./Notificacoes/Notificacoes";
 import Chats from "./Chats/Chats";
 import { Box } from "@mui/material";
 import { MainBox } from "./App.styles";
@@ -34,7 +34,7 @@ export default function App() {
       <ThemeProvider theme={MainTheme}>
         <Navbar aberto={aberto} setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />
         <Box sx={{ marginLeft: aberto ? `${tamanhoSideBar}px` : 0, display: "flex" }} >
-          <Sidebar open={aberto} tamanho={tamanhoSideBar} setOpen={setAberto} />
+          <Sidebar aberto={aberto} tamanho={tamanhoSideBar} setAberto={setAberto} />
           <MainBox component="main" sx={{ marginLeft: tamanhoSideBar }}>
             <Toolbar />
             <ThemeProvider theme={ContentTheme}>
@@ -56,7 +56,7 @@ export default function App() {
               </Routes>
             </ThemeProvider>
           </MainBox>
-          <Filter open={filtrar} setOpen={setFiltrar} setSidebar={setAberto} />
+          <Filter aberto={filtrar} setAberto={setFiltrar} setSidebar={setAberto} />
         </Box>
       </ThemeProvider>
     </BrowserRouter>

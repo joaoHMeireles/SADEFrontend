@@ -1,14 +1,14 @@
-export enum processComponent {
+export enum TipoComponenteProcesso {
     Demanda = "Demanda",
     Proposta = "Proposta"
 }
 
-export enum processComponentCollection {
+export enum TipoColecaoComponenteProcesso {
     Pauta = "Pauta",
     ATA = "ATA"
 }
 
-export enum processComponentSize {
+export enum TamanhoComponenteProcesso {
     MuitoPequeno = "Muito Pequeno",
     Pequeno = "Pequeno",
     Medio = "Médio",
@@ -16,7 +16,7 @@ export enum processComponentSize {
     MuitoGrande = "Muito Grande"
 }
 
-export enum processComponentStatus {
+export enum StatusComponenteProcesso {
     Backlog = "Backlog",
     Assesment = "Assesment",
     BusinessCase = "BusinessCase",
@@ -24,7 +24,7 @@ export enum processComponentStatus {
     ToDo = "ToDo"
 }
 
-export enum ITsession {
+export enum sessaoTI {
     STD = "Sistemas de Tecnologias Digitais",
     AGD = "Arquitetura e Governança de Dados",
     SEG = "Segurança",

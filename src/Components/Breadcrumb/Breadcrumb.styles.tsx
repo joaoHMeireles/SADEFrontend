@@ -19,7 +19,7 @@ export const ArrowIcon = styled(ArrowForwardIosRoundedIcon)({
     width: "16px", 
 })
 
-export const IconRota = styled(Icon)({
+export const IconeRota = styled(Icon)({
     display: "flex", 
     alignItems: "center", 
     justifyContent: "center"

@@ -1,11 +1,7 @@
-import {
-    Box,
-    Drawer,
-    Typography
-} from "@mui/material";
+import { Box, Drawer, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 
-export const FilterDrawer = styled(Drawer)({
+export const DrawerFiltro = styled(Drawer)({
     alignItems: "center",
     display: "flex",
     flexShrink: 0,
@@ -13,12 +9,12 @@ export const FilterDrawer = styled(Drawer)({
     zIndex: 1100,
 });
 
-export const ItemHeaderBox = styled(Box)({
+export const BoxItemHeader = styled(Box)({
     alignItems: "center",
     display: "flex",
     justifyContent: "space-between"
 })
 
-export const ItemHeaderTypography = styled(Typography)({
+export const TypographyItemHeader = styled(Typography)({
     color: "#595959"
 })

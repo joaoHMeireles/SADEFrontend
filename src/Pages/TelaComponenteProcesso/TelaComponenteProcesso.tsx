@@ -1,35 +1,33 @@
 import { useState, useEffect } from 'react';
-import { processComponent, processComponentSize, processComponentStatus, ITsession } from '../../DefinitionFiles/enuns';
+import { TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso, sessaoTI } from '../../DefinitionFiles/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
-import { 
-    Badge, Box, Container, Divider, Grid, List, ListItem, ListItemIcon, Table, TableBody, TableHead, 
-    TableRow, Typography } 
-    from '@mui/material';
+import {
+    Badge, Box, Container, Divider, Grid, List, ListItem, ListItemIcon, Table, TableBody, TableHead, TableRow, Typography
+} from '@mui/material';
 import ChatBubbleRounded from '@mui/icons-material/ChatBubbleRounded';
 import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
 import LanRoundedIcon from '@mui/icons-material/LanRounded';
 import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
-import { ContentBox, ContainerBox, BotaoTerciario } from "../App.styles"
+import { BoxContainer, BoxConteudo, BotaoTerciario } from "../App.styles"
 import {
-    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBandeira, 
-    BoxBotoes, BoxCentroCusto, BoxContainerBandeira, BoxContainerCentroCusto, BoxContainerTabela, BoxCorStatus,
-    BoxHeader, BoxTabela, BoxTabelaCusto, BoxTitulosCentroCusto, BoxTrianguloBandeira, CircleIconPonto, 
-    GridContainer, GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo,
-    TableCellEstilzada, TableContainerEstilizado, TableRowEstilizada, TypographyTexto, TypographyTitulo,
-    TypographyTituloAtributo
-} from './ProcessComponentPage.styles';
+    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBandeira, BoxBotoes, 
+    BoxCentroCusto, BoxContainerBandeira, BoxContainerCentroCusto, BoxContainerTabela, BoxCorStatus, BoxHeader, 
+    BoxTabela, BoxTabelaCusto, BoxTitulosCentroCusto, BoxTrianguloBandeira, CircleIconPonto, GridContainer, 
+    GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo, TableCellEstilzada, 
+    TableContainerEstilizado, TableRowEstilizada, TypographyTexto, TypographyTitulo, TypographyTituloAtributo
+} from './TelaComponenteProcesso.styles';
 
 
 const listaProcessos = [
     {
         id: 1,
         titulo: "primeiro titulo ae",
-        tamanho: processComponentSize.Pequeno,
+        tamanho: TamanhoComponenteProcesso.Pequeno,
         solicitante: "um fia da puta ae",
-        status: processComponentStatus.Backlog,
-        tipo: processComponent.Demanda,
+        status: StatusComponenteProcesso.Backlog,
+        tipo: TipoComponenteProcesso.Demanda,
         score: 12.5,
         departamento: "não sei nenhum departamento",
         gerenteResponsavel: "tal fiote de cruz credo",
@@ -78,10 +76,10 @@ const listaProcessos = [
     {
         id: 3,
         titulo: "titulozao pra ver como fica muito grande a responsividade da bagaça",
-        tamanho: processComponentSize.Grande,
+        tamanho: TamanhoComponenteProcesso.Grande,
         solicitante: "esse aqui é legal",
-        status: processComponentStatus.Assesment,
-        tipo: processComponent.Demanda,
+        status: StatusComponenteProcesso.Assesment,
+        tipo: TipoComponenteProcesso.Demanda,
         score: 12.5,
         departamento: "7825678256782437813",
         gerenteResponsavel: "riomar silveira pinto nunes",
@@ -92,7 +90,7 @@ const listaProcessos = [
             3864,
             9863
         ],
-        secaoTIResponsavel: ITsession.SEG,
+        secaoTIResponsavel: sessaoTI.SEG,
         BUSolicitante: "Primeira",
         BUsBeneficiadas: [
             "essa aqui",
@@ -154,10 +152,10 @@ const listaProcessos = [
     {
         id: 4,
         titulo: "Demandinha de um cara legal",
-        tamanho: processComponentSize.MuitoGrande,
+        tamanho: TamanhoComponenteProcesso.MuitoGrande,
         solicitante: "Jefferson Rodrigues",
-        status: processComponentStatus.Canceled,
-        tipo: processComponent.Proposta,
+        status: StatusComponenteProcesso.Canceled,
+        tipo: TipoComponenteProcesso.Proposta,
         score: 12.5,
         departamento: "o da diretoria fodão grandoes",
         gerenteResponsavel: "marcello taz do cqc",
@@ -168,7 +166,7 @@ const listaProcessos = [
             9425,
             9678
         ],
-        secaoTIResponsavel: ITsession.SVE,
+        secaoTIResponsavel: sessaoTI.SVE,
         BUSolicitante: "Motores",
         BUsBeneficiadas: [
             "Tintas",
@@ -251,10 +249,10 @@ const listaProcessos = [
     {
         id: 5,
         titulo: "me da droga",
-        tamanho: processComponentSize.Medio,
+        tamanho: TamanhoComponenteProcesso.Medio,
         solicitante: "um fia da puta ae caraiudo",
-        status: processComponentStatus.BusinessCase,
-        tipo: processComponent.Proposta,
+        status: StatusComponenteProcesso.BusinessCase,
+        tipo: TipoComponenteProcesso.Proposta,
         score: 12.5,
         departamento: "o da diretoria fodão grandoes",
         gerenteResponsavel: "romero britto",
@@ -264,7 +262,7 @@ const listaProcessos = [
         centrosDeCusto: [
             9678
         ],
-        secaoTIResponsavel: ITsession.SVE,
+        secaoTIResponsavel: sessaoTI.SVE,
         BUSolicitante: "Motores",
         BUsBeneficiadas: [
             "Tintas",
@@ -379,10 +377,10 @@ const listaProcessos = [
     {
         id: 7,
         titulo: "lerolerolerolero",
-        tamanho: processComponentSize.Pequeno,
+        tamanho: TamanhoComponenteProcesso.Pequeno,
         solicitante: "um fia da puta ae",
-        status: processComponentStatus.Assesment,
-        tipo: processComponent.Demanda,
+        status: StatusComponenteProcesso.Assesment,
+        tipo: TipoComponenteProcesso.Demanda,
         score: 12.5,
         departamento: "o da diretoria fodão grandoes",
         gerenteResponsavel: "marcello taz do cqc",
@@ -393,7 +391,7 @@ const listaProcessos = [
             9425,
             9678
         ],
-        secaoTIResponsavel: ITsession.SVE,
+        secaoTIResponsavel: sessaoTI.SVE,
         BUSolicitante: "Motores",
         BUsBeneficiadas: [
             "Tintas",
@@ -436,10 +434,10 @@ const listaProcessos = [
     {
         id: 9,
         titulo: "eu quero janta de 3 s",
-        tamanho: processComponentSize.Pequeno,
+        tamanho: TamanhoComponenteProcesso.Pequeno,
         solicitante: "um gênio",
-        status: processComponentStatus.Backlog,
-        tipo: processComponent.Proposta,
+        status: StatusComponenteProcesso.Backlog,
+        tipo: TipoComponenteProcesso.Proposta,
         score: 10000,
         departamento: "sgdaho",
         gerenteResponsavel: "Carlos Salles Morales",
@@ -451,7 +449,7 @@ const listaProcessos = [
             9674,
             1415
         ],
-        secaoTIResponsavel: ITsession.SIM,
+        secaoTIResponsavel: sessaoTI.SIM,
         BUSolicitante: "Motores",
         BUsBeneficiadas: [
             "Motores"
@@ -558,13 +556,13 @@ export default function TelaComponenteProcesso(props: any) {
     return (
         <>
             <Header informacaoProcesso={informacaoProcesso} />
-            <ContentBox >
-                <ContainerBox>
+            <BoxConteudo >
+                <BoxContainer>
                     <Container>
                         <ContainerProcesso informacaoProcesso={informacaoProcesso} />
                     </Container>
-                </ContainerBox>
-            </ContentBox>
+                </BoxContainer>
+            </BoxConteudo>
         </>
     )
 }
@@ -604,59 +602,59 @@ function Header(props: { informacaoProcesso: any }) {
         10º chat, histórico, workflow, ver demanda, criar pauta (Gerente de TI, proposta)
         11º chat, histórico, workflow (notificaçãozinha que ta atrasado), ver demanda, criar pauta (Gerente de TI, proposta)
      */
-        if (tipoProcesso == "Demanda") {
-            if (!tamanho) {
-                if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                    listaBotoes.push("reprovar", "devolver", "aprovar")
-                }
-            } else {
-                listaBotoes.push("historico")
-                if (tipoPessoa == "gerenteNegocio") {
-                    if (!aprovadoGerente) {
-                        listaBotoes.push("reprovar", "aprovar")
-                    }
-                } else if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                    if (aprovadoGerente) {
-                        if (!linkJira) {
-                            listaBotoes.push("adicionarInfo")
-                        } else {
-                            if (prazoElaboracao < new Date()) {
-                                listaBotoes.push("criarProposta!")
-                            } else {
-                                listaBotoes.push("criarProposta")
-                            }
-                        }
-                    }
-                }
+    if (tipoProcesso == "Demanda") {
+        if (!tamanho) {
+            if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                listaBotoes.push("reprovar", "devolver", "aprovar")
             }
         } else {
             listaBotoes.push("historico")
-            if (!estaEmWorkflow) {
-                if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                    listaBotoes.push("iniciarworkflow", "verDemanda", "criarPauta")
-                } else if (tipoPessoa == "gerenteNegocio") {
-                    listaBotoes.push("verDemanda")
+            if (tipoPessoa == "gerenteNegocio") {
+                if (!aprovadoGerente) {
+                    listaBotoes.push("reprovar", "aprovar")
                 }
-            } else {
-                if (aprovadoWorkflow) {
-                    listaBotoes.push("verDemanda")
-                    if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                        listaBotoes.push("criarPauta")
-                    }
-                } else {
-                    if (workflowDeadline < new Date()) {
-                        if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
-                            listaBotoes.push("workflow!")
-                        }
+            } else if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                if (aprovadoGerente) {
+                    if (!linkJira) {
+                        listaBotoes.push("adicionarInfo")
                     } else {
-                        if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
-                            listaBotoes.push("workflow")
+                        if (prazoElaboracao < new Date()) {
+                            listaBotoes.push("criarProposta!")
+                        } else {
+                            listaBotoes.push("criarProposta")
                         }
                     }
-                    listaBotoes.push("verDemanda")
                 }
             }
         }
+    } else {
+        listaBotoes.push("historico")
+        if (!estaEmWorkflow) {
+            if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                listaBotoes.push("iniciarworkflow", "verDemanda", "criarPauta")
+            } else if (tipoPessoa == "gerenteNegocio") {
+                listaBotoes.push("verDemanda")
+            }
+        } else {
+            if (aprovadoWorkflow) {
+                listaBotoes.push("verDemanda")
+                if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                    listaBotoes.push("criarPauta")
+                }
+            } else {
+                if (workflowDeadline < new Date()) {
+                    if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
+                        listaBotoes.push("workflow!")
+                    }
+                } else {
+                    if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
+                        listaBotoes.push("workflow")
+                    }
+                }
+                listaBotoes.push("verDemanda")
+            }
+        }
+    }
     useEffect(() => {
         if (prazoElaboracao < new Date() && prazoElaboracao && tipoProcesso == "Demanda") {
             setTempoExcedido(true)
@@ -910,7 +908,7 @@ function InfoGeral(props: { processo: any }) {
  * @param props 
  * @returns 
  */
- function AtributeList(props: { valorAtributo: [] }) {
+function AtributeList(props: { valorAtributo: [] }) {
     let contadorPeriodoExecucao = 0
     const valores = props.valorAtributo.map((valor) => {
         if (typeof valor === typeof new Date()) {

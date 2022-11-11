@@ -1,18 +1,9 @@
-import {
-    Grid,
-    IconButton,
-    InputAdornment
-} from '@mui/material';
+import { Grid, IconButton,InputAdornment } from '@mui/material';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
-import { 
-    BoxContainerInput, 
-    SearchTextField, 
-    ContainerGrid, 
-    GridIconButton 
-} from './Search.styles';
+import {  BoxContainerInput, ContainerGrid, SearchTextField, GridIconButton } from './Search.styles';
 
 /**
  * Componente principal de barra de pesquisa

@@ -8,7 +8,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/system/Box';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
-import { NavBar, LanguageTextField, TextFieldBox } from './Navbar.styles';
+import { NavBar, BoxTextField, TextFieldLinguas } from './Navbar.styles';
 
 const listaLinguas = [
     "Português",
@@ -18,12 +18,6 @@ const listaLinguas = [
     "Francês"
 ]
 
-/**
- * Navbar principal do sistema
- * 
- * @param props 
- * @returns 
- */
 export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<React.SetStateAction<boolean>> ,tamanhoNavbar: string }) {
     const [lingua, setLingua] = useState("Português")
     const path = useLocation()
@@ -55,8 +49,8 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                         <Box sx={{ flexGrow: 1 }}>
                             <img src={logo} alt="" />
                         </Box>
-                        <TextFieldBox>
-                            <LanguageTextField
+                        <BoxTextField>
+                            <TextFieldLinguas
                                 select
                                 value={lingua}
                                 onChange={mudarLingua}
@@ -67,9 +61,9 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                                         {option}
                                     </MenuItem>
                                 ))}
-                            </LanguageTextField>
+                            </TextFieldLinguas>
                             <Avatar {...stringAvatar('ROMÁRIO')} />
-                        </TextFieldBox>
+                        </BoxTextField>
                     </Toolbar>
                 </NavBar>
             }

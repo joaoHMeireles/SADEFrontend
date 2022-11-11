@@ -1,19 +1,8 @@
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useLocation, Link } from "react-router-dom"
 import Typography from "@mui/material/Typography";
-import { 
-    ArrowIcon,
-    BoxRota, 
-    BoxBreadcrumb, 
-    IconRota
-} from "./Breadcrumb.styles";
+import { ArrowIcon, BoxRota, BoxBreadcrumb, IconeRota } from "./Breadcrumb.styles";
 
-
-/**
- * Retorna um breadcrumb com os links para as páginas presentes na url da página atual
- * 
- * @returns 
- */
 export default function Breadcrumb() {
     const location = useLocation();
     const breadcrumb = pegarBreadcrumb(location)
@@ -30,7 +19,7 @@ export default function Breadcrumb() {
         if (i == breadcrumb.length - 1) {
             linksBreadcrumb.push(
                 <BoxRota key={i} >
-                    <Typography variant="h5" sx={{color: "#00579d"}}>
+                    <Typography variant="h5" sx={{ color: "#00579d" }}>
                         {breadcrumb[i].name}
                     </Typography>
                 </BoxRota>
@@ -43,9 +32,9 @@ export default function Breadcrumb() {
                             {breadcrumb[i].name}
                         </Typography>
                     </Link>
-                    <IconRota>
+                    <IconeRota>
                         <ArrowIcon />
-                    </IconRota>
+                    </IconeRota>
                 </BoxRota>
             )
         }

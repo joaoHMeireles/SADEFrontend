@@ -1,15 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import './Sidebar.scss'
-import {
-  Drawer,
-  Toolbar,
-  Box,
-  Icon, 
-  List, 
-  ListItemText, 
-  Collapse
-} from "@mui/material";
+import { Drawer, Toolbar, Box, Icon, List, ListItemText, Collapse } from "@mui/material";
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
@@ -19,12 +11,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
-import {
-  SidebarListItem,
-  SidebarListItemButton,
-  SidebarListItemIcon,
-  SidebarTypography
-} from './Sidebar.styles';
+import { SidebarListItem, SidebarListItemButton, SidebarListItemIcon, SidebarTypography} from './Sidebar.styles';
 
 //listas de ícones e opções do menu
 const lista = [
@@ -96,13 +83,13 @@ let drawerWidth = "240";
  * @param props 
  * @returns 
  */
-export default function MiniDrawer(props: { open: boolean, tamanho: string, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function MiniDrawer(props: { aberto: boolean, tamanho: string, setAberto: React.Dispatch<React.SetStateAction<boolean>> }) {
   const location = useLocation()
   const itensMenu = lista.map((rota, index) => {
     if (rota.children) {
-      return <DropMenuItem key={index} item={rota} open={props.open} setOpen={props.setOpen} />
+      return <DropMenuItem key={index} item={rota} aberto={props.aberto} setAberto={props.setAberto} />
     } else {
-      return <MenuItem key={index} item={rota} open={props.open} />
+      return <MenuItem key={index} item={rota} aberto={props.aberto} />
     }
   })
 
@@ -113,7 +100,7 @@ export default function MiniDrawer(props: { open: boolean, tamanho: string, setO
   return (
     <>
       {location.pathname != "/" &&
-        <Sidebar variant="permanent" open={props.open}>
+        <Sidebar variant="permanent" open={props.aberto}>
           <Toolbar variant="dense" />
           <List>
             {itensMenu}
@@ -127,7 +114,7 @@ export default function MiniDrawer(props: { open: boolean, tamanho: string, setO
                     <LogoutRoundedIcon />
                   </Icon>
                 </Box>
-                {props.open &&
+                {props.aberto &&
                   `Sair`
                 }
               </Link>
@@ -149,9 +136,9 @@ function DropMenuItem(props: {
   item: {
     id: number, nome: string, icone: JSX.Element,
     children: { id: number, nome: string, rota: string, }[]
-  }, open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  }, aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-  const [aberto, setAberto] = useState(false);
+  const [componenteAberto, setComponenteAberto] = useState(false);
   const rotasSecundarias = props.item.children.map((rotaSecundaria) => {
     return (
       <SidebarTypography key={rotaSecundaria.id}>
@@ -165,28 +152,28 @@ function DropMenuItem(props: {
   })
 
   useEffect(() => {
-    if (!props.open) {
-      setAberto(false)
+    if (!props.aberto) {
+      setComponenteAberto(false)
     }
   })
 
   function verRotas() {
-    if (!props.open) {
-      props.setOpen(true)
+    if (!props.aberto) {
+      props.setAberto(true)
     }
-    setAberto(!aberto)
+    setComponenteAberto(!componenteAberto)
   }
 
   return (
     <SidebarListItem key={props.item.id} disablePadding>
-      <SidebarListItemButton sx={{ justifyContent: props.open ? 'initial' : 'center' }} onClick={verRotas}>
-        <SidebarListItemIcon sx={{ mr: props.open ? 3 : 'auto' }} >
+      <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center' }} onClick={verRotas}>
+        <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
           {props.item.icone}
         </SidebarListItemIcon>
-        <ListItemText primary={props.item.nome} sx={{ opacity: props.open ? 1 : 0 }} />
-        {props.open &&
+        <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
+        {props.aberto &&
           <>
-            {!aberto ?
+            {!componenteAberto ?
               <ExpandMoreRoundedIcon color="action" />
               :
               <ExpandLessRoundedIcon color="action" />
@@ -194,7 +181,7 @@ function DropMenuItem(props: {
           </>
         }
       </SidebarListItemButton>
-      <Collapse in={aberto} timeout="auto" unmountOnExit>
+      <Collapse in={componenteAberto} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {rotasSecundarias}
         </List>
@@ -209,15 +196,15 @@ function DropMenuItem(props: {
  * @param props 
  * @returns 
  */
-function MenuItem(props: { item: { id: number, nome: string, rota: string, icone: JSX.Element }, open: boolean }) {
+function MenuItem(props: { item: { id: number, nome: string, rota: string, icone: JSX.Element }, aberto: boolean }) {
   return (
     <Link to={props.item.rota}>
       <SidebarListItem key={props.item.id} disablePadding sx={{ display: 'block' }}>
-        <SidebarListItemButton sx={{ justifyContent: props.open ? 'initial' : 'center' }}>
-          <SidebarListItemIcon sx={{ mr: props.open ? 3 : 'auto' }} >
+        <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center' }}>
+          <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
             {props.item.icone}
           </SidebarListItemIcon>
-          <ListItemText primary={props.item.nome} sx={{ opacity: props.open ? 1 : 0 }} />
+          <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
         </SidebarListItemButton>
       </SidebarListItem>
     </Link>

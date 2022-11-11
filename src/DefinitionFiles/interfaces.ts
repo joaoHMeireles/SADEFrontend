@@ -1,19 +1,19 @@
-import { processComponent, processComponentCollection ,processComponentSize, processComponentStatus, ITsession } from '../DefinitionFiles/enuns'
+import { ColecaoComponenteProcesso, ComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso } from '../DefinitionFiles/enuns'
 
-export interface ProcessComponentInterface {
+export interface InterfaceComponenteProcesso {
     id: number,
     titulo: string,
     score: number,
     solicitante: string,
-    status: processComponentStatus,
-    tamanho: processComponentSize,
-    tipo: processComponent,
+    status: StatusComponenteProcesso,
+    tamanho: TamanhoComponenteProcesso,
+    tipo: ComponenteProcesso,
 }
 
-export interface ProcessComponentCollectionInterface {
+export interface InterfaceColecaoComponenteProcesso {
     id: number,
-    tipo: processComponentCollection,
+    tipo: ColecaoComponenteProcesso,
     dataReuniao: Date,
     comissao: string,
-    propostas: ProcessComponentInterface[]
+    propostas: InterfaceComponenteProcesso[]
 }

@@ -14,13 +14,13 @@ export const MainPaper = styled(Paper)({
     width: "90%"
 })
 
-export const GridProccessColorBox = styledBox({
+export const BoxGridCorProcesso= styledBox({
     borderRadius: "5px 0 0 5px",
     height: "100%",
     width: "50%"
 })
 
-export const GridProccessComponent = styledGrid({
+export const GridComponenteProcesso = styledGrid({
     color: "#595959",
     display: "grid",
     height: "21vh",
@@ -50,24 +50,24 @@ export const GridLinkTypograpfy = styledTypograpfy({
     }
 })
 
-export const ListProccessColorBox = styledBox({
+export const BoxListaCorProcesso = styledBox({
     borderRadius: "5px 0 0 5px",
     height: "100%",
     maxWidth: "13px"
 })
 
-export const ListProccessComponent = styledGrid({
+export const ListaComponenteProcesso = styledGrid({
     alignItems: "center",
     color: "#595959",
     display: "flex",
     padding: "5px"
 })
 
-export const ListTypography = styled(GridTypography)({
+export const ListaTypography = styled(GridTypography)({
     width: "15vw"
 })
 
-export const LastListTypography = styled(ListTypography)({
+export const UltimaListaTypography = styled(ListaTypography)({
     display: "flex", 
     justifyContent: "end", 
     paddingRight: "10px",
@@ -81,7 +81,7 @@ export const LastListTypography = styled(ListTypography)({
     }
 })
 
-export const BoxCollectionComponent = styledBox({
+export const BoxColecaoComponente = styledBox({
     margin: "none", 
     overflow: "hidden",
     textOverflow: "ellipsis",

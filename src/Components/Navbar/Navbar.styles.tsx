@@ -9,7 +9,7 @@ export const NavBar = styled(AppBar)({
     justifyContent: "center"
 })
 
-export const LanguageTextField = styled(TextField)({
+export const TextFieldLinguas = styled(TextField)({
     // ver como deixar a borda de baixo do MuiInputBase-root branca
     marginRight: 20,
     '& .MuiSelect-select': {
@@ -28,7 +28,7 @@ export const LanguageTextField = styled(TextField)({
     }
 })
 
-export const TextFieldBox = styled(Box)({
+export const BoxTextField = styled(Box)({
     display: "flex", 
     width: "17vw", 
     justifyContent: "space-evenly"
