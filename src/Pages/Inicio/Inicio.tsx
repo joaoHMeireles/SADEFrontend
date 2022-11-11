@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso } from '../../DefinitionFiles/enuns'
 import {InterfaceColecaoComponenteProcesso, InterfaceComponenteProcesso } from '../../DefinitionFiles/interfaces'
-import './Home.scss'
+import './Inicio.scss'
 import Searchbar from '../../Components/Searchbar/Searchbar'
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb'
 import ComponenteProcesso from '../../Components/ComponenteProcesso/ComponenteProcesso'
