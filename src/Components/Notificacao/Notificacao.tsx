@@ -2,10 +2,19 @@ import { Box } from "@mui/system";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import {
+  BoxNotificacao, NotificacaoBoxIcone, NotificacaoLadoEsquerdo,
+  NotificacaoLadoDireito, TypographyMensagem, TypographyTitulo
+} from "./Notificacao.styles";
 
-import { NotificationBox, NotificationBoxIcon, NotificationLeftSide, NotificationRightSide, TypographyMessage, TypographyTitle } from "./Notificacao.styles";
 
-export default function Notification(props: {
+/**
+ * 
+ * @param props 
+ * @returns Retorna um componente de notificação
+ */
+
+export default function Notificacao(props: {
   Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
   }
@@ -14,32 +23,32 @@ export default function Notification(props: {
 }) {
   return (
     <>
-      <NotificationBox>
-        <NotificationLeftSide >
-          <NotificationBoxIcon >
+      <BoxNotificacao>
+        <NotificacaoLadoEsquerdo >
+          <NotificacaoBoxIcone >
             <props.Icone sx={{ color: "#595959" }}></props.Icone>
-          </NotificationBoxIcon>
+          </NotificacaoBoxIcone>
           <Box>
             <Box>
-              <TypographyTitle
+              <TypographyTitulo
                 variant="h6"
               >
                 {props.titulo}
-              </TypographyTitle>
+              </TypographyTitulo>
             </Box>
             <Box>
-              <TypographyMessage
+              <TypographyMensagem
                 variant="caption"
               >
                 {props.mensagem}
-              </TypographyMessage>
+              </TypographyMensagem>
             </Box>
           </Box>
-        </NotificationLeftSide>
-        <NotificationRightSide>
+        </NotificacaoLadoEsquerdo>
+        <NotificacaoLadoDireito>
           <DeleteRoundedIcon sx={{ color: "#595959" }} />
-        </NotificationRightSide>
-      </NotificationBox>
+        </NotificacaoLadoDireito>
+      </BoxNotificacao>
     </>
   );
 }

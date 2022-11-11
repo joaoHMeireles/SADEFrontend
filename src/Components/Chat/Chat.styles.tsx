@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 const styledBox = styled(Box);
 const styledTypography = styled(Typography);
 
-export const ContainerGeneralChat = styledBox({
+export const ContainerGeralChat = styledBox({
     alignItems: "center",
     backgroundColor: "#EEEEEE",
     borderRadius: "5px",
@@ -19,7 +19,7 @@ export const ContainerGeneralChat = styledBox({
     whiteSpace: "nowrap",
 })
 
-export const BoxIconPerson = styledBox({
+export const BoxIconePessoa = styledBox({
     color: "#595959",
     marginLeft: 24,
     marginRight: 24,
@@ -38,10 +38,10 @@ export const BoxChat = styledBox({
     width: "100%",
 })
 
-export const TypographyTitle = styledTypography({
+export const TypographyTitulo = styledTypography({
     color: "#595959"
 })
 
-export const TypographyPersonMessage = styledTypography({
+export const TypographyPessoaMensagem = styledTypography({
     color: "#999999"
 })

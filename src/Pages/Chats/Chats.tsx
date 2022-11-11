@@ -1,123 +1,649 @@
+import { useEffect, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Chat from "../../Components/Chat/Chat";
 import Toolbar from "../../Components/Toolbar/Toolbar";
+import Box from "@mui/system/Box";
 import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import {
+  BoxBarraPesquisa, ContainerChats, ContainerGeralChats, LadoEsquerdoChat,
+  LadoEsquerdoGeralChats, LadoDiretoChat, LadoDireitoGeralChats, BarraPesquisa
+} from "./Chats.styles";
+import {
+  BoxGeralMensagensLadoDireito, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoDireito,
+  BoxMensagensLadoEsquerdo, BoxMensagemLadoDireito, BoxMensagemLadoEsquerdo,
+  TypographyPessoa, TypographyMensagem
+} from "./Chats.styles";
 
-
-import { BoxSearchBar, ContainerChats, ContainerGeneralChats, LeftSideChat, LeftSideChats, RightSideChat, RightSideChats, SearchBar } from "./Chats.styles";
-
-
-import { BoxGeneralMessagesRightSide, BoxGeneralMessagesLeftSide, BoxMessagesRightSides, BoxMessagesLeftSides, BoxMessagesRightSide, BoxMessagesLeftSide, TypographyPerson, TypographyMessage } from "./Chats.styles";
-
-const listaMessages = [
-  { mensagem: "Mensagem 1", pessoa: "Diego" },
-  { mensagem: "Mensagem 2", pessoa: "Diego" },
-  { mensagem: "Mensagem 3", pessoa: "Solicitante" },
-  { mensagem: "Mensagem 4", pessoa: "Solicitante" },
-  { mensagem: "Mensagem 5", pessoa: "Diego" },
-  { mensagem: "Mensagem 6", pessoa: "Diego" },
-  { mensagem: "Mensagem 7", pessoa: "Solicitante" },
-  { mensagem: "Mensagem 8", pessoa: "Solicitante" },
-  { mensagem: "Mensagem 9", pessoa: "Diego" },
-  { mensagem: "Mensagem 10", pessoa: "Diego" },
-  { mensagem: "Mensagem 11", pessoa: "Solicitante" },
-  { mensagem: "Mensagem 12", pessoa: "Solicitante" },
-  { mensagem: "Mensagem 13", pessoa: "Diego" },
-  { mensagem: "Mensagem 14", pessoa: "Diego" },
-  { mensagem: "Mensagem 15", pessoa: "Solicitante" },
-  { mensagem: "Mensagem 16", pessoa: "Solicitante" },
-  { mensagem: "Mensagem 17", pessoa: "Diego" },
-  { mensagem: "Mensagem 18", pessoa: "Diego" },
-  { mensagem: "Mensagem 19", pessoa: "Solicitante" },
-  { mensagem: "Mensagem 20", pessoa: "Solicitante" },
-]
 
 const listaChats = [
-  { titulo: "Titulo 01", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-  { titulo: "Titulo 02", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-  { titulo: "Titulo 03", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-  { titulo: "Titulo 04", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-  { titulo: "Titulo 05", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-  { titulo: "Titulo 06", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-  { titulo: "Titulo 07", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-  { titulo: "Titulo 08", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-  { titulo: "Titulo 09", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-  { titulo: "Titulo 10", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-  { titulo: "Titulo 11", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-  { titulo: "Titulo 12", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-  { titulo: "Titulo 13", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-  { titulo: "Titulo 14", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-  { titulo: "Titulo 15", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-  { titulo: "Titulo 16", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-  { titulo: "Titulo 17", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-  { titulo: "Titulo 18", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-  { titulo: "Titulo 19", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-  { titulo: "Titulo 20", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
+  {
+    id: 1,
+    tituloDemanda: "Demanda 01",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 1,
+        mensagem: "njksfdnjksfdnjkdnjksfdnjksfdnjkfnsdndjkndjkfnsdjkfsdnjkfnsdjkfnsjkdjkfjkjdnksfnjksdfnjksdfnksdnkflsdnf"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 3,
+        mensagem: "njksfdnjksfdnjkdnjksfdnjksfdnjkfnsdndjkndjkfnsdjkfsdnjkfnsdjkfnsjkdjkfjkjdnksfnjksdfnjksdfnksdnkflsdnf"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+    ]
+  },
+  {
+    id: 2,
+    tituloDemanda: "Demanda 02",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+    ]
+  },
+  {
+    id: 3,
+    tituloDemanda: "Demanda 03",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 4,
+    tituloDemanda: "Demanda 04",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 5,
+    tituloDemanda: "Demanda 05",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 6,
+    tituloDemanda: "Demanda 06",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 7,
+    tituloDemanda: "Demanda 07",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 8,
+    tituloDemanda: "Demanda 08",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 9,
+    tituloDemanda: "Demanda 09",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 10,
+    tituloDemanda: "Demanda 10",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 11,
+    tituloDemanda: "Demanda 11",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 12,
+    tituloDemanda: "Demanda 12",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 13,
+    tituloDemanda: "Demanda 13",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 14,
+    tituloDemanda: "Demanda 14",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 15,
+    tituloDemanda: "Demanda 15",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 16,
+    tituloDemanda: "Demanda 16",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 17,
+    tituloDemanda: "Demanda 17",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 18,
+    tituloDemanda: "Demanda 18",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 19,
+    tituloDemanda: "Demanda 19",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 20,
+    tituloDemanda: "Demanda 20",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
 ]
+
+const listaPessoas = [
+  {
+    id: 1,
+    nome: "Diego"
+  },
+  {
+    id: 2,
+    nome: "João"
+  },
+  {
+    id: 3,
+    nome: "Solicitante"
+  }
+]
+
+/**
+ * Função que tem dois componentes jutamente a ela, sendo um para chats e outro para as mensagem de determinado chat
+ * @param props 
+ * @returns Retorna a tela de chat
+ */
 
 export default function Chats(props: { aberto: boolean }) {
   localStorage.setItem("PAGINATUAL", "chat")
+  const [listaMensagem, setListaMensagem] = useState<any>([]);
+
+  useEffect(() => {
+    setListaMensagem(listaChats[0].mensagens);
+  }, [])
+
+  function verChat(e: any) {
+    setListaMensagem(listaChats[e.target.id - 1].mensagens);
+  }
 
   return (
     <>
-      <ContainerGeneralChats>
+      <ContainerGeralChats>
         <Breadcrumb />
         <ContainerChats sx={{ width: (props.aberto ? "80vw" : "92vw") }}>
-          <LeftSideChats>
-            <LeftSideChat>
-              {listaChats.map((chats) => (
-                <Chat titulo={chats.titulo} pessoa={chats.pessoa} mensagem={chats.mensagem} />
-              ))}
-            </LeftSideChat>
-          </LeftSideChats>
-          <RightSideChats>
-            <RightSideChat>
-              {listaMessages.map((messages) => (
-                <Messages mensagem={messages.mensagem} pessoa={messages.pessoa} />
-              ))}
+          <LadoEsquerdoGeralChats>
+            <LadoEsquerdoChat>
+              {listaChats.map((chat) => {
+                const ultimaMensagem = chat.mensagens[chat.mensagens.length - 1]
+                const pessoa = listaPessoas.find(pessoa => pessoa.id == ultimaMensagem.idPessoa)
+                return (
+                  <Chat id={chat.id} titulo={chat.tituloDemanda} pessoa={(pessoa?.nome != undefined ? pessoa.nome : "")} mensagem={ultimaMensagem.mensagem} verChat={verChat} />
+                )
+              })}
+            </LadoEsquerdoChat>
+          </LadoEsquerdoGeralChats>
+          <LadoDireitoGeralChats>
+            <LadoDiretoChat>
+              {
+                listaMensagem.map((mensagem: any) => {
+                  const pessoa = listaPessoas.find(p => p.id == mensagem.idPessoa);
+                  return (
+                    <Mensagens mensagem={mensagem.mensagem} pessoa={(pessoa?.nome != undefined ? pessoa.nome : "")} />
+                  )
+                })}
               <Toolbar />
-            </RightSideChat>
-            <BoxSearchBar>
+            </LadoDiretoChat>
+            <BoxBarraPesquisa>
               <AttachmentRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
-              <SearchBar />
+              <BarraPesquisa />
               <SendRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
-            </BoxSearchBar>
-          </RightSideChats>
+            </BoxBarraPesquisa>
+          </LadoDireitoGeralChats>
         </ContainerChats>
-      </ContainerGeneralChats>
+      </ContainerGeralChats>
     </>
   );
 }
 
-function Messages(props: { mensagem: string, pessoa: string }) {
+/**
+ * 
+ * @param props 
+ * @returns Retorna uma mensagem que será direcionada de acordo com quem é, e para qual lado a mensagem dever ir, sendo esquerdo ou direito
+ */
+function Mensagens(props: { mensagem: string, pessoa: string }) {
   const pessoaLocalStorage = localStorage.getItem("PESSOA");
 
   if (pessoaLocalStorage == props.pessoa) {
     return (
-      <BoxGeneralMessagesRightSide>
-        <BoxMessagesRightSides>
-          <BoxMessagesRightSide>
-            <TypographyPerson variant="body1">{props.pessoa}</TypographyPerson>
-            <TypographyMessage variant="body2">
+      <BoxGeralMensagensLadoDireito>
+        <BoxMensagensLadoDireito>
+          <BoxMensagemLadoDireito>
+            <TypographyPessoa variant="body1">{props.pessoa}</TypographyPessoa>
+            <TypographyMensagem variant="body2">
               {props.mensagem}
-            </TypographyMessage>
-          </BoxMessagesRightSide>
-        </BoxMessagesRightSides>
-      </BoxGeneralMessagesRightSide>
+            </TypographyMensagem>
+          </BoxMensagemLadoDireito>
+        </BoxMensagensLadoDireito>
+      </BoxGeralMensagensLadoDireito>
     )
   } else {
     return (
-      <BoxGeneralMessagesLeftSide>
-        <BoxMessagesLeftSides>
-          <BoxMessagesLeftSide>
-            <TypographyPerson variant="body1">{props.pessoa}</TypographyPerson>
-            <TypographyMessage variant="body2">
+      <BoxGeralMensagensLadoEsquerdo>
+        <BoxMensagensLadoEsquerdo>
+          <BoxMensagemLadoEsquerdo>
+            <TypographyPessoa variant="body1">{props.pessoa}</TypographyPessoa>
+            <TypographyMensagem variant="body2">
               {props.mensagem}
-            </TypographyMessage>
-          </BoxMessagesLeftSide>
-        </BoxMessagesLeftSides>
-      </BoxGeneralMessagesLeftSide>
+            </TypographyMensagem>
+          </BoxMensagemLadoEsquerdo>
+        </BoxMensagensLadoEsquerdo>
+      </BoxGeralMensagensLadoEsquerdo>
     )
   }
 }

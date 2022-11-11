@@ -11,11 +11,17 @@ import RemoveRedEyeRoundedIcon from "@mui/icons-material/RemoveRedEyeRounded";
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 
 import {
-  BoxForgotPassword, BoxLogoWEG, ContainerBackgroundLogin, ContainerButtonLogin,
-  ContainerGeneralLogin, ContainerInputsLogin, ContainerLogin, ContainerTitleText,
-  InputEmail, InputPassword, TextForgotPassword, TypographyText, TypographyTitle,
-  StylesButton
+  BoxEsqueceuSenha, BoxLogoWEG, ContainerBackgroundLogin, ContainerBotaoLogin,
+  ContainerGeralLogin, ContainerInputsLogin, ContainerLogin, ContainerTituloTexto,
+  InputEmail, InputSenha, TextoEsqueceuSenha, TypographyTexto, TypographyTitulo,
+  EstilosBotao
 } from "./Login.styles";
+
+/**
+ * 
+ * @param props 
+ * @returns Função que retorna a tela de login
+ */
 
 function Login(props: {
   setAberto: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,15 +31,24 @@ function Login(props: {
   const [tipo, setTipo] = useState("password");
   localStorage.setItem("PAGINATUAL", "login")
 
+  /**
+   * Função para setar o filtro e o menu como fechados
+   */
   useEffect(() => {
     props.setAberto(false);
     props.setFiltro(false);
   });
 
+  /**
+   * Função que coloca o  tipo do usuário no localStorage
+   */
   function colocaPessoa() {
     localStorage.setItem("TIPOUSUARIO", "analista");
   }
 
+  /**
+   * Função para conseguir ver a senha do input password
+   */
   function mostrarSenha() {
     if (tipo == "text") {
       setTipo("password")
@@ -45,20 +60,20 @@ function Login(props: {
   return (
     <>
       <Box id="login">
-        <ContainerGeneralLogin>
+        <ContainerGeralLogin>
           <BoxLogoWEG>
             <img className="imagemLogo" src={logo} alt="logoWeg" />
           </BoxLogoWEG>
-          <ContainerLogin>
+          <ContainerLogin className="text">
             <ContainerBackgroundLogin>
-              <ContainerTitleText>
-                <TypographyTitle variant="h5">
+              <ContainerTituloTexto >
+                <TypographyTitulo variant="h5">
                   Bem vindo ao SOD
-                </TypographyTitle>
-                <TypographyText variant="body2">
+                </TypographyTitulo>
+                <TypographyTexto variant="body2">
                   Sistema Sustentável de Organização de Demandas de TI
-                </TypographyText>
-              </ContainerTitleText>
+                </TypographyTexto>
+              </ContainerTituloTexto>
               <ContainerInputsLogin>
                 <InputEmail
                   placeholder="Usuário"
@@ -66,32 +81,32 @@ function Login(props: {
                     startAdornment: <AccountCircle sx={{ color: "#595959", paddingRight: 1 }} />,
                   }}
                 />
-                <InputPassword type={tipo} id="inputSenha"
+                <InputSenha type={tipo} id="inputSenha"
                   placeholder="Senha"
                   InputProps={{
                     startAdornment: <LockRoundedIcon sx={{ color: "#595959", paddingRight: 1 }} />,
-                    endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959" }} />)
+                    endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} />)
                   }}
                 />
-                <BoxForgotPassword>
-                  <TextForgotPassword variant="body2">
+                <BoxEsqueceuSenha>
+                  <TextoEsqueceuSenha variant="body2">
                     Esqueci minha senha
-                  </TextForgotPassword>
-                </BoxForgotPassword>
+                  </TextoEsqueceuSenha>
+                </BoxEsqueceuSenha>
               </ContainerInputsLogin>
-              <ContainerButtonLogin>
-                <StylesButton
+              <ContainerBotaoLogin>
+                <EstilosBotao
                   variant="contained"
                   startIcon={<InputRoundedIcon />}
                 >
-                  <Link className="textBotao" onClick={colocaPessoa} to="/home">
+                  <Link className="textoBotao" onClick={colocaPessoa} to="/home">
                     Entrar
                   </Link>
-                </StylesButton>
-              </ContainerButtonLogin>
+                </EstilosBotao>
+              </ContainerBotaoLogin>
             </ContainerBackgroundLogin>
           </ContainerLogin>
-        </ContainerGeneralLogin>
+        </ContainerGeralLogin>
       </Box>
     </>
   );

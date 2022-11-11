@@ -8,7 +8,7 @@ const stylesBox = styled(Box);
 const stylesTypography = styled(Typography);
 const stylesTextField = styled(TextField);
 
-export const ContainerGeneralLogin = stylesBox({
+export const ContainerGeralLogin = stylesBox({
     display: "flex",
     justifyContent: "space-between",
     height: "100%",
@@ -37,26 +37,37 @@ export const ContainerBackgroundLogin = stylesBox({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-around",
-    height: "80%",
+    height: "auto",
+    maxHeight: "75%",
+    minHeight: "50%",
+    maxWidth: "70%",
+    minWidth: "60%",
     width: "60%",
 })
 
-export const ContainerTitleText = stylesBox({
+export const ContainerTituloTexto = stylesBox({
     alignItems: "center",
     color: "#FFF",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    height: "25%",
+    height: "20%",
+    maxHeight: "20%",
+    maxWidth: "100%",
+    minHeight: "15%",
+    minWidth: "80%",
     width: "100%",
+    // background: "#000"
 })
 
-export const TypographyTitle = stylesTypography({
+export const TypographyTitulo = stylesTypography({
     color: "#FFF",
-    marginBottom: 16
+    fontSize: "40px",
+    marginBottom: 20,
+    marginTop: 80,
 })
 
-export const TypographyText = stylesTypography({
+export const TypographyTexto = stylesTypography({
     color: "#FFF",
 })
 
@@ -65,7 +76,12 @@ export const ContainerInputsLogin = stylesBox({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    height: "50%",
+    height: "60%",
+    margin: "80px 0",
+    maxHeight: "60%",
+    maxWidth: "100%",
+    minHeight: "50%",
+    minWidth: "80%",
     width: "100%",
 })
 
@@ -74,41 +90,57 @@ export const InputEmail = stylesTextField({
     borderRadius: "5px",
     boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)",
     marginBottom: 40,
-    width: "70%",
+    maxWidth: "100%",
+    minWidth: "80%",
+    width: "auto",
 })
 
-export const InputPassword = stylesTextField({
+export const InputSenha = stylesTextField({
     color: "#FFF",
     background: "#FFF",
     borderRadius: "5px",
     boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)",
-    width: "70%",
+    maxWidth: "100%",
+    minWidth: "80%",
+    width: "auto",
 })
 
-export const BoxForgotPassword = stylesBox({
+export const BoxEsqueceuSenha = stylesBox({
     alignContent: "center",
     color: "#FFF",
     display: "flex",
     justifyContent: "start",
-    marginTop: 8,
-    width: "70%",
+    marginTop: 20,
+    maxWidth: "100%",
+    minWidth: "80%",
+    width: "auto",
 })
 
-export const TextForgotPassword = stylesTypography({
+export const TextoEsqueceuSenha = stylesTypography({
+    cursor: "pointer",
     textDecoration: "underline"
 })
 
-export const ContainerButtonLogin = stylesBox({
+export const ContainerBotaoLogin = stylesBox({
     alignItems: "center",
     display: "flex",
     justifyContent: "center",
-    height: "25%",
+    height: "20%",
+    maxHeight: "20%",
+    maxWidth: "100%",
+    minHeight: "10%",
+    minWidth: "80%",
     width: "100%",
 })
 
-export const StylesButton = styled(Button)({
+export const EstilosBotao = styled(Button)({
     backgroundColor: "#00579D",
     color: "#fffffff",
+    height: "30%",
+    marginBottom: 80,
+    maxWidth: "100%",
+    minWidth: "40%",
+    padding: 12,
     textDecoration: "none",
-    width: "150px",
+    width: "auto",
 })
