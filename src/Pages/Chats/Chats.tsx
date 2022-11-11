@@ -50,11 +50,21 @@ const listaChats = [
       {
         idMensagem: 1,
         idPessoa: 1,
-        mensagem: "Mensagem"
+        mensagem: "njksfdnjksfdnjkdnjksfdnjksfdnjkfnsdndjkndjkfnsdjkfsdnjkfnsdjkfnsjkdjkfjkjdnksfnjksdfnjksdfnksdnkflsdnf"
       },
       {
         idMensagem: 2,
         idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 3,
+        mensagem: "njksfdnjksfdnjkdnjksfdnjksfdnjkfnsdndjkndjkfnsdjkfsdnjkfnsdjkfnsjkdjkfjkjdnksfnjksdfnjksdfnksdnkflsdnf"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 3,
         mensagem: "Mensagem"
       },
     ]
@@ -73,8 +83,486 @@ const listaChats = [
         idPessoa: 2,
         mensagem: "Mensagem"
       },
+      {
+        idMensagem: 3,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
     ]
-  }
+  },
+  {
+    id: 3,
+    tituloDemanda: "Demanda 03",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 4,
+    tituloDemanda: "Demanda 04",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 5,
+    tituloDemanda: "Demanda 05",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 6,
+    tituloDemanda: "Demanda 06",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 7,
+    tituloDemanda: "Demanda 07",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 8,
+    tituloDemanda: "Demanda 08",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 9,
+    tituloDemanda: "Demanda 09",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 10,
+    tituloDemanda: "Demanda 10",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 11,
+    tituloDemanda: "Demanda 11",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 12,
+    tituloDemanda: "Demanda 12",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 13,
+    tituloDemanda: "Demanda 13",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 14,
+    tituloDemanda: "Demanda 14",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 15,
+    tituloDemanda: "Demanda 15",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 16,
+    tituloDemanda: "Demanda 16",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 17,
+    tituloDemanda: "Demanda 17",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 18,
+    tituloDemanda: "Demanda 18",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 19,
+    tituloDemanda: "Demanda 19",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 1,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
+  {
+    id: 20,
+    tituloDemanda: "Demanda 20",
+    mensagens: [
+      {
+        idMensagem: 1,
+        idPessoa: 3,
+        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
+      },
+      {
+        idMensagem: 2,
+        idPessoa: 3,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 3,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      },
+      {
+        idMensagem: 4,
+        idPessoa: 2,
+        mensagem: "Mensagem"
+      }
+    ]
+  },
 ]
 
 const listaPessoas = [
@@ -85,31 +573,12 @@ const listaPessoas = [
   {
     id: 2,
     nome: "João"
+  },
+  {
+    id: 3,
+    nome: "Solicitante"
   }
 ]
-
-// const listaChats = [
-//   { id: "1", titulo: "Titulo 01", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-//   { id: "2", titulo: "Titulo 02", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-//   { id: "3", titulo: "Titulo 03", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-//   { id: "4", titulo: "Titulo 04", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-//   { id: "5", titulo: "Titulo 05", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-//   { id: "6", titulo: "Titulo 06", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-//   { id: "7", titulo: "Titulo 07", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-//   { id: "8", titulo: "Titulo 08", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-//   { id: "9", titulo: "Titulo 09", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-//   { id: "10", titulo: "Titulo 10", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-//   { id: "11", titulo: "Titulo 11", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-//   { id: "12", titulo: "Titulo 12", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-//   { id: "13", titulo: "Titulo 13", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-//   { id: "14", titulo: "Titulo 14", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-//   { id: "15", titulo: "Titulo 15", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-//   { id: "16", titulo: "Titulo 16", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-//   { id: "17", titulo: "Titulo 17", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-//   { id: "18", titulo: "Titulo 18", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-//   { id: "19", titulo: "Titulo 19", pessoa: "Diego", mensagem: "A demanda foi aprovada" },
-//   { id: "20", titulo: "Titulo 20", pessoa: "Solicitante", mensagem: "A demanda foi recusada" },
-// ]
 
 /**
  * Função que tem dois componentes jutamente a ela, sendo um para chats e outro para as mensagem de determinado chat
@@ -124,7 +593,7 @@ export default function Chats(props: { aberto: boolean }) {
     setListaMensagem(listaChats[0].mensagens);
   }, [])
 
-  function verChat(e: any) {    
+  function verChat(e: any) {
     setListaMensagem(listaChats[e.target.id - 1].mensagens);
   }
 

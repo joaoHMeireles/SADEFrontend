@@ -27,7 +27,9 @@ export const LadoEsquerdoGeralChats = styledBox({
     justifyContent: "flex-start",
     marginTop: 16,
     marginBottom: 16,
-    maxHeight: "80vh",
+    height: "80vh",
+    // maxHeight: "80vh",
+    // minHeight: "80vh",
     overflowX: "hidden",
     overflowY: "scroll", '&::-webkit-scrollbar': { backgroundColor: "transparent" },
     width: "25%",
@@ -39,6 +41,7 @@ export const LadoEsquerdoChat = styledBox({
     flexDirection: "column",
     justifyContent: "flex-start",
     maxHeight: "auto",
+    minHeight: "auto",
     width: "100%",
 })
 
