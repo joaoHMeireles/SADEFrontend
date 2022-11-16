@@ -6,9 +6,10 @@ import Navbar from "../Components/Navbar/Navbar";
 import Toolbar from "../Components/Toolbar/Toolbar";
 import Filter from "../Components/Filtro/Filtro";
 import Login from "./Login/Login";
-import Home from "./Inicio/Inicio";
-import ProcessComponentPage from "./TelaComponenteProcesso/TelaComponenteProcesso";
-import Notifications from "./Notificacoes/Notificacoes";
+import Inicio from "./Inicio/Inicio";
+import TelaProcesso from "./TelaProcesso/TelaProcesso";
+import TelaColecaoProcesso from "./TelaColecaoProcesso/TelaColecaoProcesso";
+import Notificacoes from "./Notificacoes/Notificacoes";
 import Chats from "./Chats/Chats";
 import { Box } from "@mui/material";
 import { MainBox } from "./App.styles";
@@ -40,19 +41,20 @@ export default function App() {
             <ThemeProvider theme={ContentTheme}>
               <Routes>
                 <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />} />
-                <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar} />} />
-                <Route path="/notifications" element={<Notifications />} />
+                <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} />} />
+                <Route path="/notifications" element={<Notificacoes />} />
                 <Route path="/chats" element={<Chats aberto={aberto} />}></Route>
-                <Route path="/home" element={<Home setFiltrar={setFiltrar} filtrar={filtrar} />} />
-                <Route path="/home/demand/:id" element={<ProcessComponentPage />} />
-                <Route path="/mydemands/demand/:id" element={<ProcessComponentPage />} />
-                <Route path="/proposal/demand/:id" element={<ProcessComponentPage />} />
-                <Route path="/notifications/demand/:id" element={<ProcessComponentPage />} />
-                <Route path="/home/proposal/:id" element={<ProcessComponentPage />} />
-                <Route path="/agenda/proposal/:id" element={<ProcessComponentPage />} />
-                <Route path="/ata/proposal/:id" element={<ProcessComponentPage />} />
-                {/* <Route path="/home/agenda/:id" element={<ProcessComponentPage />} />
-                <Route path="/home/ata/:id" element={<ProcessComponentPage />} /> */}
+                <Route path="/home/demand" element={<TelaProcesso />} />
+                <Route path="/notifications/demand" element={<TelaProcesso />} />
+                <Route path="/mydemands/demand" element={<TelaProcesso />} />
+                <Route path="/home/proposal/demand" element={<TelaProcesso />} />
+                <Route path="/home/agenda/proposal/demand" element={<TelaProcesso />} />
+                <Route path="/home/ata/proposal/demand" element={<TelaProcesso />} />
+                <Route path="/home/proposal" element={<TelaProcesso />} />
+                <Route path="/home/agenda/proposal" element={<TelaProcesso />} />
+                <Route path="/home/ata/proposal" element={<TelaProcesso />} />
+                <Route path="/home/agenda" element={<TelaColecaoProcesso />} />
+                <Route path="/home/ata" element={<TelaColecaoProcesso />} />
               </Routes>
             </ThemeProvider>
           </MainBox>

@@ -6,8 +6,9 @@ import {
     BoxColecaoComponente, BoxGridCorProcesso, BoxListaCorProcesso, GridComponenteProcesso, GridLinkTypograpfy,
     GridTypography, ListaComponenteProcesso, ListaTypography, MainPaper, UltimaListaTypography
 } from '../ComponenteProcesso.styles'
+import { MouseEventHandler } from 'react';
 
-export default function ColecaoComponenteProcesso(props: { processComponentCollectionAtributes: InterfaceColecaoComponenteProcesso, grid: boolean }) {
+export default function ComponenteColecaoProcesso(props: { processComponentCollectionAtributes: InterfaceColecaoComponenteProcesso, grid: boolean }) {
     const componente = props.processComponentCollectionAtributes
     const paginaAtual = localStorage.getItem("PAGINATUAL")
     const listaPropostas = props.processComponentCollectionAtributes.propostas
@@ -16,18 +17,23 @@ export default function ColecaoComponenteProcesso(props: { processComponentColle
     if (componente.tipo == TipoColecaoComponenteProcesso.ATA) {
         corComponente = "#28B9DA"
         tituloToolTip = "Ata"
-        nomeTipoLink = `/${paginaAtual}/ata/${componente.id}?id-ata=${componente.id}`
+        nomeTipoLink = `/${paginaAtual}/ata`
     } else {
         corComponente = "#2382BA"
         tituloToolTip = "Pauta"
-        nomeTipoLink = `/${paginaAtual}/agenda/${componente.id}?id-agenda=${componente.id}`
+        nomeTipoLink = `/${paginaAtual}/agenda`
     }
 
     const processElement = (props.grid ?
-        <GridComponent componente={componente} corComponente={corComponente} listaPropostas={listaPropostas} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} />
+        <GridComponent componente={componente} corComponente={corComponente} listaPropostas={listaPropostas} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} setProcesso={setProcesso}/>
         :
-        <ListComponent componente={componente} corComponente={corComponente} listaPropostas={listaPropostas} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} />
+        <ListComponent componente={componente} corComponente={corComponente} listaPropostas={listaPropostas} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} setProcesso={setProcesso}/>
     )
+
+    function setProcesso() {
+        const tipoComponente = componente.tipo.toUpperCase()
+        localStorage.setItem(`ID${tipoComponente}ESCOLHIDA`, componente.id + "")
+    }
 
     return (
         <MainPaper key={componente.id} >
@@ -65,7 +71,7 @@ function GridComponent(props: ComponentCollectionProps) {
                         - {props.componente.propostas[1].titulo}
                     </BoxColecaoComponente>
                     <GridLinkTypograpfy variant='body2'>
-                        <Link to={props.linkComponente} >Ver mais</Link>
+                        <Link to={props.linkComponente} onClick={props.setProcesso}>Ver mais</Link>
                     </GridLinkTypograpfy>
                 </GridTypography>
             </GridComponenteProcesso>
@@ -104,9 +110,8 @@ function ListComponent(props: ComponentCollectionProps) {
                 </ListaTypography>
                 {propostas}
                 <UltimaListaTypography variant='body2' sx={{maxWidth: "8.5vw"}}>
-                    <Link to={props.linkComponente} >Ver mais</Link>
+                    <Link to={props.linkComponente} onClick={props.setProcesso}>Ver mais</Link>
                 </UltimaListaTypography>
-                {/* fazer uma linha listando as propostas até chegar no limite dalinha */}
             </ListaComponenteProcesso>
         </>
     )
@@ -121,4 +126,5 @@ interface ComponentCollectionProps {
     listaPropostas: InterfaceComponenteProcesso[]
     tituloToolTip: string
     linkComponente: string
+    setProcesso:  MouseEventHandler<HTMLAnchorElement>
 }

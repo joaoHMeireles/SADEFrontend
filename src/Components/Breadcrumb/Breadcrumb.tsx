@@ -73,12 +73,12 @@ function pegarBreadcrumb(location: { pathname: string, search: string }) {
 
         if ((letra == "/" && !primeiro) || etapaUrl + 1 == tamanho) {
             if (getNome(palavra) != null) {
-                let rotaId = getId(palavra, location.search)
-                if (rotaId == "") {
+                // let rotaId = getId(palavra, location.search)
+                // if (rotaId == "") {
                     links.push({ key: key, name: getNome(palavra), path: "/" + palavra, search: "" })
-                } else {
-                    links.push({ key: key, name: getNome(palavra), path: "/" + palavra, search: "?id_" + palavra + "=" + rotaId })
-                }
+                // } else {
+                //     links.push({ key: key, name: getNome(palavra), path: "/" + palavra, search: "?id_" + palavra + "=" + rotaId })
+                // }
                 key++
             }
             palavra = ""

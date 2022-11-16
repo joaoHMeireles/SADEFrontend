@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso, sessaoTI } from '../../DefinitionFiles/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
@@ -17,7 +18,7 @@ import {
     BoxTabela, BoxTabelaCusto, BoxTitulosCentroCusto, BoxTrianguloBandeira, CircleIconPonto, GridContainer, 
     GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo, TableCellEstilzada, 
     TableContainerEstilizado, TableRowEstilizada, TypographyTexto, TypographyTitulo, TypographyTituloAtributo
-} from './TelaComponenteProcesso.styles';
+} from './TelaProcesso.styles';
 
 
 const listaProcessos = [
@@ -549,9 +550,10 @@ const listaProcessos = [
  * @returns 
  */
 export default function TelaComponenteProcesso(props: any) {
-    const processLocalStorage = localStorage.getItem("CHOOSEDPROCESS")
-    const processoEscolhido = JSON.parse(processLocalStorage != null ? processLocalStorage : "");
-    const informacaoProcesso = listaProcessos.find(p => p.id == processoEscolhido.id && processoEscolhido.tipo == p.tipo)
+    const location = useLocation().pathname
+    const idLocalStorage = localStorage.getItem(`ID${getComponentName(location)}ESCOLHIDA`)
+    const idProcesso = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
+    const informacaoProcesso = listaProcessos.find(p => p.id == idProcesso)
 
     return (
         <>
@@ -660,8 +662,6 @@ function Header(props: { informacaoProcesso: any }) {
             setTempoExcedido(true)
         }
     }, [])
-
-    console.log(listaBotoes);
 
     return (
         <>
@@ -1162,6 +1162,16 @@ function Footer(props: { link: string }) {
             </GridItemFooter>
         </Grid>
     )
+}
+
+function getComponentName(location: string){
+    const fragmentoTipo = location.slice(location.length - 6)
+
+    if(fragmentoTipo == "demand"){
+        return"DEMANDA"
+    } else {
+        return "PROPOSTA"
+    }  
 }
 
 /**

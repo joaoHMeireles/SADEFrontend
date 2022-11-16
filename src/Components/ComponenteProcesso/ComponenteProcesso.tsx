@@ -1,3 +1,4 @@
+import { MouseEventHandler } from 'react'
 import { Link } from 'react-router-dom'
 import { TipoComponenteProcesso } from '../../DefinitionFiles/enuns'
 import { InterfaceComponenteProcesso } from '../../DefinitionFiles/interfaces'
@@ -6,7 +7,7 @@ import {
     BoxColecaoComponente, BoxGridCorProcesso, BoxListaCorProcesso, GridComponenteProcesso, GridLinkTypograpfy,
     GridTypography, ListaComponenteProcesso, ListaTypography, MainPaper, UltimaListaTypography
 } from './ComponenteProcesso.styles'
-import { MouseEventHandler } from 'react'
+
 
 export default function ComponenteProcesso(props: { grid: boolean, processComponentAtributes: InterfaceComponenteProcesso }) {
     const componente = props.processComponentAtributes
@@ -16,11 +17,11 @@ export default function ComponenteProcesso(props: { grid: boolean, processCompon
     if (componente.tipo == TipoComponenteProcesso.Demanda) {
         corComponente = "#00579d"
         tituloToolTip = "Demanda"
-        nomeTipoLink = `/${paginaAtual}/demand/${componente.id}?id-demand=${componente.id}`
+        nomeTipoLink = `/${paginaAtual}/demand`
     } else {
         corComponente = "#6aacda"
         tituloToolTip = "Proposta"
-        nomeTipoLink = `/${paginaAtual}/proposal/${componente.id}?id-proposal=${componente.id}`
+        nomeTipoLink = `/${paginaAtual}/proposal`
     }
 
     const processElement = (props.grid ?
@@ -30,7 +31,8 @@ export default function ComponenteProcesso(props: { grid: boolean, processCompon
     )
 
     function setProcesso() {
-        localStorage.setItem(`CHOOSEDPROCESS`, JSON.stringify({ id: componente.id, tipo: componente.tipo }))
+        const tipoComponente = componente.tipo.toUpperCase()
+        localStorage.setItem(`ID${tipoComponente}ESCOLHIDA`, componente.id + "")
     }
 
     return (
