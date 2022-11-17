@@ -200,21 +200,23 @@ function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any }) {
                 Propostas:
             </Grid>
             <Propostas listaPropostas={informacaoColecaoProcesso.propostas} />
-            <Grid item xs={12} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Box sx={{display: "flex"}}>
-                    {informacaoColecaoProcesso.numeroAtaDG &&
-                        <>
-                            <TypographyTituloAtributo variant='body1'>
-                                Número da ATA da DG:
-                            </TypographyTituloAtributo>
-                            <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
-                                {informacaoColecaoProcesso.numeroAtaDG}
-                            </TypographyTexto>
-                        </>
-                    }
-                </Box>
-                <BotaoTerciario variant="outlined">Ver anexos  </BotaoTerciario>
-            </Grid>
+            {informacaoColecaoProcesso.tipo == "ATA" &&
+                <Grid item xs={12} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Box sx={{ display: "flex" }}>
+                        {informacaoColecaoProcesso.numeroAtaDG &&
+                            <>
+                                <TypographyTituloAtributo variant='body1'>
+                                    Número da ATA da DG:
+                                </TypographyTituloAtributo>
+                                <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+                                    {informacaoColecaoProcesso.numeroAtaDG}
+                                </TypographyTexto>
+                            </>
+                        }
+                    </Box>
+                    <BotaoTerciario variant="outlined">Ver anexos  </BotaoTerciario>
+                </Grid>
+            }
         </GridContainer>
     )
 }
@@ -331,7 +333,6 @@ function getColorType(tipo: string | undefined) {
         return (coresStatus as any)[tipo]
     }
 }
-
 
 function getColorStatus(status: string | undefined) {
     const coresStatus = {
