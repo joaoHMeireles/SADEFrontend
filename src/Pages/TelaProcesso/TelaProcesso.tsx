@@ -437,7 +437,7 @@ const listaProcessos = [
         titulo: "eu quero janta de 3 s",
         tamanho: TamanhoComponenteProcesso.Pequeno,
         solicitante: "um gênio",
-        status: StatusComponenteProcesso.Backlog,
+        status: StatusComponenteProcesso.ToDo,
         tipo: TipoComponenteProcesso.Proposta,
         score: 10000,
         departamento: "sgdaho",
@@ -579,7 +579,6 @@ export default function TelaComponenteProcesso(props: any) {
  */
 function Header(props: { informacaoProcesso: any }) {
     const [tempoExcedido, setTempoExcedido] = useState(false)
-    let listaBotoes = ["chat"]
     const processo = props.informacaoProcesso;
     const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
     const tipoProcesso = processo.tipo
@@ -590,6 +589,7 @@ function Header(props: { informacaoProcesso: any }) {
     const estaEmWorkflow = processo.workflowIniciado
     const aprovadoWorkflow = processo.aprovadoWorkflow
     const workflowDeadline = processo.prazoWorkflow
+    let listaBotoes = ["chat"]
 
     /**
      *  1º chat, reprovar, devolver, aprovar (Analista de TI, demanda)
@@ -693,7 +693,7 @@ function ButtonsHeader(props: { listaBotoes: string[] }) {
 
             if (botao.includes("!")) {
                 botoes.push(
-                    <BotaoIcone>
+                    <BotaoIcone key={i}>
                         <Badge badgeContent={<ErrorRoundedIcon fontSize='small' sx={{ color: "#FAD271" }} />}>
                             {iconeBotao}
                         </Badge>
@@ -703,7 +703,7 @@ function ButtonsHeader(props: { listaBotoes: string[] }) {
             }
 
             botoes.push(
-                <BotaoIcone>
+                <BotaoIcone key={i}>
                     {iconeBotao}
                 </BotaoIcone>
             )
@@ -712,21 +712,21 @@ function ButtonsHeader(props: { listaBotoes: string[] }) {
             switch (contagemBotoesAcoes) {
                 case 1:
                     botoes.push(
-                        <BotaoPrimarioHeader variant='contained' >
+                        <BotaoPrimarioHeader variant='contained' key={i}>
                             {nomeBotao}
                         </BotaoPrimarioHeader>
                     )
                     break
                 case 2:
                     botoes.push(
-                        <BotaoSecundarioHeader variant='outlined'>
+                        <BotaoSecundarioHeader variant='outlined' key={i}>
                             {nomeBotao}
                         </BotaoSecundarioHeader>
                     )
                     break
                 case 3:
                     botoes.push(
-                        <BotaoTerciarioHeader variant='outlined'>
+                        <BotaoTerciarioHeader variant='outlined' key={i}>
                             {nomeBotao}
                         </BotaoTerciarioHeader>
                     )
@@ -910,12 +910,12 @@ function InfoGeral(props: { processo: any }) {
  */
 function AtributeList(props: { valorAtributo: [] }) {
     let contadorPeriodoExecucao = 0
-    const valores = props.valorAtributo.map((valor) => {
+    const valores = props.valorAtributo.map((valor, index) => {
         if (typeof valor === typeof new Date()) {
             contadorPeriodoExecucao++
             const valorData: Date = valor
             return (
-                <ListItem>
+                <ListItem key={index}>
                     <ListItemIcon>
                         <CircleIconPonto />
                     </ListItemIcon>
@@ -926,7 +926,7 @@ function AtributeList(props: { valorAtributo: [] }) {
         }
 
         return (
-            <ListItem>
+            <ListItem key={index}>
                 <ListItemIcon>
                     <CircleIconPonto />
                 </ListItemIcon>
@@ -1106,6 +1106,7 @@ function Contextualizacao(props: { processo: any }) {
     }
     const link = props.processo.linkJira
     let contextos = []
+    let chaveComponentes = 0
 
     for (let atributo in atributos) {
         let valor = (atributos as any)[atributo];
@@ -1113,10 +1114,11 @@ function Contextualizacao(props: { processo: any }) {
         if (!valor) {
             continue
         }
+        chaveComponentes++
 
         if (atributo == "motivoDevolucao") {
             contextos.push(
-                <Grid item xs={12} sx={{ marginBottom: "20px" }}>
+                <Grid item xs={12} sx={{ marginBottom: "20px" }} key={chaveComponentes}>
                     <TypographyTexto variant='body1' >
                         <b>{getNomeAtributo(atributo)}</b> {valor} <b> - {props.processo.pessoaDevolucao}</b>
                     </TypographyTexto>
@@ -1126,7 +1128,7 @@ function Contextualizacao(props: { processo: any }) {
         }
 
         contextos.push(
-            <Grid item xs={12} sx={{ marginBottom: "20px" }}>
+            <Grid item xs={12} sx={{ marginBottom: "20px" }} key={chaveComponentes}>
                 <TypographyTexto variant='body1' >
                     <b>{getNomeAtributo(atributo)}</b> {valor}
                 </TypographyTexto>
@@ -1217,7 +1219,7 @@ function getColorStatus(status: string | undefined) {
         Assesment: "#595959",
         BusinessCase: "#FFD600",
         Canceled: "#FF1616",
-        ToDo: "00612e"
+        ToDo: "#00612e"
     }
 
     if (status != undefined) {

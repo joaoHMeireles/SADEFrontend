@@ -103,7 +103,7 @@ const listaColecaoProcesso = [
                 titulo: "eu quero janta de 3 horas",
                 tamanho: TamanhoComponenteProcesso.Pequeno,
                 solicitante: "um gênio",
-                status: StatusComponenteProcesso.Backlog,
+                status: StatusComponenteProcesso.ToDo,
                 tipo: TipoComponenteProcesso.Demanda,
                 score: 10000
             }
@@ -140,7 +140,10 @@ export default function TelaColecaoProcesso() {
  * @returns 
  */
 function Header(props: { informacaoColecaoProcesso: any }) {
-
+    const informacaoColecaoProcesso = props.informacaoColecaoProcesso
+    const tipoColecao = informacaoColecaoProcesso.tipo
+    const dataReuniao = informacaoColecaoProcesso.dataReuniao
+    let listaBotoes = ["historico"]
     /**
      * 1º historico (Pauta, preenchida || Pauta, ainda não passou da data da reunião dela)
      * 2º historico, informar parecer da comissão (Pauta, já passou a data da reunião)
@@ -290,7 +293,7 @@ function Propostas(props: { listaPropostas: [] }) {
                                         </TypographyTexto>
                                     </GridPequenosAtributos>
                                     <Grid item xs={12}>
-                                        <GridLinkTypograpfy variant='body2' sx={{ width: "auto" }}>
+                                        <GridLinkTypograpfy variant='body2' sx={{ width: "auto !important" }}>
                                             <Link to={linkProposta} onClick={() => { setProposta(proposta.id) }}>Ver mais</Link>
                                         </GridLinkTypograpfy>
                                     </Grid>
@@ -340,7 +343,7 @@ function getColorStatus(status: string | undefined) {
         Assesment: "#595959",
         BusinessCase: "#FFD600",
         Canceled: "#FF1616",
-        ToDo: "00612e"
+        ToDo: "#00612e"
     }
 
     if (status != undefined) {

@@ -2,12 +2,8 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logo from '../../Assets/wegLogo.png';
 import './Navbar.scss';
+import { Avatar, Box, IconButton, Toolbar, MenuItem } from '@mui/material';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
-import IconButton from '@mui/material/IconButton';
-import Toolbar from '@mui/material/Toolbar';
-import Box from '@mui/system/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Avatar from '@mui/material/Avatar';
 import { NavBar, BoxTextField, TextFieldLinguas } from './Navbar.styles';
 
 const listaLinguas = [
@@ -18,7 +14,7 @@ const listaLinguas = [
     "Francês"
 ]
 
-export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<React.SetStateAction<boolean>> ,tamanhoNavbar: string }) {
+export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
     const [lingua, setLingua] = useState("Português")
     const path = useLocation()
 
@@ -91,7 +87,7 @@ function stringAvatar(name: string) {
  * @param string 
  * @returns 
  */
- function stringToColor(string: string) {
+function stringToColor(string: string) {
     let hash = 0;
     let i;
 

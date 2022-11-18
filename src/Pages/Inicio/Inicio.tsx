@@ -156,7 +156,7 @@ const listaComponents: (InterfaceComponenteProcesso | InterfaceColecaoComponente
         titulo: "eu quero janta de 3 horas",
         tamanho: TamanhoComponenteProcesso.Pequeno,
         solicitante: "um gênio",
-        status: StatusComponenteProcesso.Backlog,
+        status: StatusComponenteProcesso.ToDo,
         tipo: TipoComponenteProcesso.Proposta,
         score: 10000
     }
