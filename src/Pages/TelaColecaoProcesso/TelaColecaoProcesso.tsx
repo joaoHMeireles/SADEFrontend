@@ -5,7 +5,7 @@ import Toolbar from "../../Components/Toolbar/Toolbar"
 import { Accordion, AccordionDetails, AccordionSummary, Box, Container, Grid, Typography } from "@mui/material"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { BotaoIcone, BoxBandeira, BoxContainerBandeira, BoxCorStatus, BoxHeader, BoxTrianguloBandeira, GridContainer, GridContainerHeader, GridPequenosAtributos, GridTitulo, TypographyTexto, TypographyTitulo, TypographyTituloAtributo } from "../TelaProcesso/TelaProcesso.styles"
-import { BoxContainer, BoxConteudo, BotaoTerciario } from "../App.styles"
+import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from "../App.styles"
 import { GridLinkTypograpfy } from "../../Components/ComponenteProcesso/ComponenteProcesso.styles";
 
 const listaColecaoProcesso = [
@@ -86,7 +86,7 @@ const listaColecaoProcesso = [
         tipo: TipoColecaoComponenteProcesso.ATA,
         ataPublicada: "ata8Publicada.pdf",
         ataNaoPublicada: "ata8NaoPublicada.pdf",
-        numeroAtaDG: 12435,
+        // numeroAtaDG: 12435,
         documentoAprovacao: "aprovation.pdf",
         propostas: [
             {
@@ -143,7 +143,17 @@ function Header(props: { informacaoColecaoProcesso: any }) {
     const informacaoColecaoProcesso = props.informacaoColecaoProcesso
     const tipoColecao = informacaoColecaoProcesso.tipo
     const dataReuniao = informacaoColecaoProcesso.dataReuniao
-    let listaBotoes = ["historico"]
+    let acao = ""
+
+    if (tipoColecao == "Pauta") {
+        if (dataReuniao < new Date()) {
+            acao = "Informar parecer"
+        }
+    } else {
+        if (!informacaoColecaoProcesso.numeroAtaDG) {
+            acao = "Finalizar processo"
+        }
+    }
     /**
      * 1º historico (Pauta, preenchida || Pauta, ainda não passou da data da reunião dela)
      * 2º historico, informar parecer da comissão (Pauta, já passou a data da reunião)
@@ -154,22 +164,17 @@ function Header(props: { informacaoColecaoProcesso: any }) {
         <>
             <BoxHeader>
                 <Breadcrumb />
-                <ButtonsHeader listaBotoes={[""]} />
+                {acao != "" &&
+                    <Box>
+                        <BotaoPrimario variant='contained'> {acao}</BotaoPrimario>
+                    </Box>
+                }
             </BoxHeader>
             <Toolbar />
         </>
     )
 }
 
-
-function ButtonsHeader(props: { listaBotoes: string[] }) {
-
-    return (
-        <Box>
-            {""}
-        </Box>
-    )
-}
 
 
 /**
