@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso } from '../../DefinitionFiles/enuns'
 import { InterfaceColecaoComponenteProcesso, InterfaceComponenteProcesso } from '../../DefinitionFiles/interfaces'
 import './Inicio.scss'
@@ -6,7 +6,7 @@ import Searchbar from '../../Components/Searchbar/Searchbar'
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb'
 import ComponenteProcesso from '../../Components/ComponenteProcesso/ComponenteProcesso'
 import ColecaoComponenteProcesso from '../../Components/ComponenteProcesso/ComponenteColecaoProcesso/ComponenteColecaoProcesso'
-import { Grid, Box } from '@mui/material'
+import { Grid, Box, useMediaQuery } from '@mui/material'
 import { BoxConteudo, BoxContainer } from '../App.styles'
 
 const listaComponents: (InterfaceComponenteProcesso | InterfaceColecaoComponenteProcesso)[] = [
@@ -170,7 +170,13 @@ const listaComponents: (InterfaceComponenteProcesso | InterfaceColecaoComponente
  */
 export default function Inicio(props: { filtrar: boolean, setFiltrar: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [grid, setGrid] = useState(true)
+    const matches = useMediaQuery('(max-width:1100px)');
     localStorage.setItem("PAGINATUAL", "home")
+
+    useEffect(() => {
+        console.log("Match: ",matches);
+        
+    })
 
     const componentesProcessos = listaComponents.map((e: InterfaceComponenteProcesso | InterfaceColecaoComponenteProcesso) => {
         let componente
@@ -181,7 +187,7 @@ export default function Inicio(props: { filtrar: boolean, setFiltrar: React.Disp
         }
 
         return (
-            <Grid key={e.id} item xs={(grid ? 4 : 12)}>
+            <Grid key={e.id} item xs={(grid ? (!matches? 4 : 6) : 12)}>
                 <BoxContainer >
                     {componente}
                 </BoxContainer>

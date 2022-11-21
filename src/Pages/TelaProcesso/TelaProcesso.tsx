@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, MouseEventHandler } from 'react';
 import { useLocation } from 'react-router-dom';
 import { TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso, sessaoTI } from '../../DefinitionFiles/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
@@ -13,10 +13,10 @@ import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import { BoxContainer, BoxConteudo, BotaoTerciario } from "../App.styles"
 import {
-    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBandeira, BoxBotoes, 
-    BoxCentroCusto, BoxContainerBandeira, BoxContainerCentroCusto, BoxContainerTabela, BoxCorStatus, BoxHeader, 
-    BoxTabela, BoxTabelaCusto, BoxTitulosCentroCusto, BoxTrianguloBandeira, CircleIconPonto, GridContainer, 
-    GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo, TableCellEstilzada, 
+    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBandeira, BoxBotoes,
+    BoxCentroCusto, BoxContainerBandeira, BoxContainerCentroCusto, BoxContainerTabela, BoxCorStatus, BoxHeader,
+    BoxTabela, BoxTabelaCusto, BoxTitulosCentroCusto, BoxTrianguloBandeira, CircleIconPonto, GridContainer,
+    GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo, TableCellEstilzada,
     TableContainerEstilizado, TableRowEstilizada, TypographyTexto, TypographyTitulo, TypographyTituloAtributo
 } from './TelaProcesso.styles';
 
@@ -25,7 +25,7 @@ const listaProcessos = [
     {
         id: 1,
         titulo: "primeiro titulo ae",
-        tamanho: TamanhoComponenteProcesso.Pequeno,
+        // tamanho: TamanhoComponenteProcesso.Pequeno,
         solicitante: "um fia da puta ae",
         status: StatusComponenteProcesso.Backlog,
         tipo: TipoComponenteProcesso.Demanda,
@@ -589,7 +589,60 @@ function Header(props: { informacaoProcesso: any }) {
     const estaEmWorkflow = processo.workflowIniciado
     const aprovadoWorkflow = processo.aprovadoWorkflow
     const workflowDeadline = processo.prazoWorkflow
-    let listaBotoes = ["chat"]
+    let listaBotoes: Botao[] = [{ nome: "chat", function: irDemanda }]
+
+    //funções dos botões
+    function irDemanda() {
+
+    }
+
+    function aprovarDemanda() {
+        if (tipoPessoa == "gerenteNegocio") {
+
+        } else {
+
+        }
+    }
+
+    function reprovarDemanda() {
+        if (tipoPessoa == "gerenteNegocio") {
+
+        } else {
+
+        }
+    }
+
+    function devolverDemanda() {
+
+    }
+
+    function verHistorico(){
+
+    }
+
+    function adicionarInformacoesDemanda(){
+
+    }
+
+    function criarNovaProposta(){
+
+    }
+
+    function iniciarNovoWorkflow(){
+
+    }
+
+    function verDemandaProposta(){
+
+    }
+
+    function criarNovaPauta(){
+
+    }
+
+    function avaliarWorkflow(){
+
+    }
 
     /**
      *  1º chat, reprovar, devolver, aprovar (Analista de TI, demanda)
@@ -605,55 +658,77 @@ function Header(props: { informacaoProcesso: any }) {
         11º chat, histórico, workflow (notificaçãozinha que ta atrasado), ver demanda, criar pauta (Gerente de TI, proposta)
      */
     if (tipoProcesso == "Demanda") {
+        const aprovar = { nome: "aprovar", function: aprovarDemanda }
+        const reprovar = { nome: "reprovar", function: reprovarDemanda }
+
         if (!tamanho) {
             if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                listaBotoes.push("reprovar", "devolver", "aprovar")
+                const devolver = { nome: "devolver", function: devolverDemanda }
+
+                listaBotoes.push(aprovar, reprovar, devolver)
             }
         } else {
-            listaBotoes.push("historico")
+            const historico = { nome: "historico", function: verHistorico }
+
+            listaBotoes.push(historico)
+
             if (tipoPessoa == "gerenteNegocio") {
                 if (!aprovadoGerente) {
-                    listaBotoes.push("reprovar", "aprovar")
+                    listaBotoes.push(aprovar, reprovar)
                 }
             } else if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
                 if (aprovadoGerente) {
                     if (!linkJira) {
-                        listaBotoes.push("adicionarInfo")
+                        const adicionarInfo = { nome: "adicionarInfo", function: adicionarInformacoesDemanda}
+
+                        listaBotoes.push(adicionarInfo)
                     } else {
+                        let criarProposta: Botao = {nome: " ",function: criarNovaProposta}
                         if (prazoElaboracao < new Date()) {
-                            listaBotoes.push("criarProposta!")
+                            criarProposta.nome = "criarProposta!" 
                         } else {
-                            listaBotoes.push("criarProposta")
+                            criarProposta.nome = "criarProposta"
                         }
+                        listaBotoes.push(criarProposta)
                     }
                 }
             }
         }
     } else {
-        listaBotoes.push("historico")
+        const historico = { nome: "historico", function: verHistorico }
+        const verDemanda = {nome: "verDemanda", function: verDemandaProposta}
+        const criarPauta = {nome: "criarPauta", function: criarNovaPauta}
+
+        listaBotoes.push(historico)
         if (!estaEmWorkflow) {
             if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                listaBotoes.push("iniciarworkflow", "verDemanda", "criarPauta")
+                const iniciarWorkflow = {nome: "iniciarworkflow", function: iniciarNovoWorkflow}
+
+                listaBotoes.push(iniciarWorkflow, verDemanda, criarPauta)
             } else if (tipoPessoa == "gerenteNegocio") {
-                listaBotoes.push("verDemanda")
+                listaBotoes.push(verDemanda)
             }
         } else {
             if (aprovadoWorkflow) {
-                listaBotoes.push("verDemanda")
+                listaBotoes.push(verDemanda)
                 if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                    listaBotoes.push("criarPauta")
+                    listaBotoes.push(criarPauta)
                 }
             } else {
                 if (workflowDeadline < new Date()) {
                     if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
-                        listaBotoes.push("workflow!")
+                        const workflow = {nome: "workflow!", function: avaliarWorkflow}
+
+                        listaBotoes.push(workflow)
                     }
                 } else {
                     if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
-                        listaBotoes.push("workflow")
+                        const workflow = {nome: "workflow", function: avaliarWorkflow}
+
+                        listaBotoes.push(workflow)
                     }
                 }
-                listaBotoes.push("verDemanda")
+                listaBotoes.push(verDemanda)
             }
         }
     }
@@ -680,12 +755,13 @@ function Header(props: { informacaoProcesso: any }) {
     )
 }
 
-function ButtonsHeader(props: { listaBotoes: string[] }) {
+function ButtonsHeader(props: { listaBotoes: Botao[] }) {
     let contagemBotoesAcoes = 0
     let botoes = []
 
     for (let i = props.listaBotoes.length - 1; i >= 0; i--) {
-        const botao = props.listaBotoes[i]
+        const componenteBotao = props.listaBotoes[i]
+        const botao = componenteBotao.nome
         const nomeBotao = getTituloBotao(botao)
 
         if (botao == "chat" || botao == "historico" || botao.includes("workflow")) {
@@ -693,7 +769,7 @@ function ButtonsHeader(props: { listaBotoes: string[] }) {
 
             if (botao.includes("!")) {
                 botoes.push(
-                    <BotaoIcone key={i}>
+                    <BotaoIcone key={i} onClick={componenteBotao.function}>
                         <Badge badgeContent={<ErrorRoundedIcon fontSize='small' sx={{ color: "#FAD271" }} />}>
                             {iconeBotao}
                         </Badge>
@@ -703,7 +779,7 @@ function ButtonsHeader(props: { listaBotoes: string[] }) {
             }
 
             botoes.push(
-                <BotaoIcone key={i}>
+                <BotaoIcone key={i} onClick={componenteBotao.function}>
                     {iconeBotao}
                 </BotaoIcone>
             )
@@ -712,21 +788,21 @@ function ButtonsHeader(props: { listaBotoes: string[] }) {
             switch (contagemBotoesAcoes) {
                 case 1:
                     botoes.push(
-                        <BotaoPrimarioHeader variant='contained' key={i}>
+                        <BotaoPrimarioHeader variant='contained' key={i} onClick={componenteBotao.function}>
                             {nomeBotao}
                         </BotaoPrimarioHeader>
                     )
                     break
                 case 2:
                     botoes.push(
-                        <BotaoSecundarioHeader variant='outlined' key={i}>
+                        <BotaoSecundarioHeader variant='outlined' key={i} onClick={componenteBotao.function}>
                             {nomeBotao}
                         </BotaoSecundarioHeader>
                     )
                     break
                 case 3:
                     botoes.push(
-                        <BotaoTerciarioHeader variant='outlined' key={i}>
+                        <BotaoTerciarioHeader variant='outlined' key={i} onClick={componenteBotao.function}>
                             {nomeBotao}
                         </BotaoTerciarioHeader>
                     )
@@ -1166,14 +1242,14 @@ function Footer(props: { link: string }) {
     )
 }
 
-function getComponentName(location: string){
+function getComponentName(location: string) {
     const fragmentoTipo = location.slice(location.length - 6)
 
-    if(fragmentoTipo == "demand"){
-        return"DEMANDA"
+    if (fragmentoTipo == "demand") {
+        return "DEMANDA"
     } else {
         return "PROPOSTA"
-    }  
+    }
 }
 
 /**
@@ -1263,4 +1339,9 @@ function getTituloBotao(botao: string) {
     }
 
     return (titulos as any)[nomeBotao]
+}
+
+interface Botao {
+    nome: string,
+    function: MouseEventHandler<HTMLButtonElement>
 }
