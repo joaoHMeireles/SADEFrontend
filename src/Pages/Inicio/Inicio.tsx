@@ -173,11 +173,6 @@ export default function Inicio(props: { filtrar: boolean, setFiltrar: React.Disp
     const matches = useMediaQuery('(max-width:1100px)');
     localStorage.setItem("PAGINATUAL", "home")
 
-    useEffect(() => {
-        console.log("Match: ",matches);
-        
-    })
-
     const componentesProcessos = listaComponents.map((e: InterfaceComponenteProcesso | InterfaceColecaoComponenteProcesso) => {
         let componente
         if (instanceOfProcessoComponent(e)) {

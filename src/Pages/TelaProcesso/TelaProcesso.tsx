@@ -579,6 +579,7 @@ export default function TelaComponenteProcesso(props: any) {
  */
 function Header(props: { informacaoProcesso: any }) {
     const [tempoExcedido, setTempoExcedido] = useState(false)
+    const { pathname } = useLocation()
     const processo = props.informacaoProcesso;
     const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
     const tipoProcesso = processo.tipo
@@ -589,11 +590,11 @@ function Header(props: { informacaoProcesso: any }) {
     const estaEmWorkflow = processo.workflowIniciado
     const aprovadoWorkflow = processo.aprovadoWorkflow
     const workflowDeadline = processo.prazoWorkflow
-    let listaBotoes: Botao[] = [{ nome: "chat", function: irDemanda }]
+    let listaBotoes: Botao[] = [{ nome: "chat", function: irChat }]
 
     //funções dos botões
-    function irDemanda() {
-
+    function irChat() {
+        location.href = "/chats";
     }
 
     function aprovarDemanda() {
@@ -616,31 +617,34 @@ function Header(props: { informacaoProcesso: any }) {
 
     }
 
-    function verHistorico(){
+    function verHistorico() {
+        location.href = pathname + "/history"
+    }
+
+    function adicionarInformacoesDemanda() {
 
     }
 
-    function adicionarInformacoesDemanda(){
+    function criarNovaProposta() {
 
     }
 
-    function criarNovaProposta(){
+    function iniciarNovoWorkflow() {
 
     }
 
-    function iniciarNovoWorkflow(){
+    function verDemandaProposta() {
+
+        //futuramente a proposta terá o mesmo id que a demanda a que se refere
+        localStorage.setItem("IDDEMANDAESCOLHIDA", (processo.id - 1) + "")
+        location.href = pathname + "/demand";
+    }
+
+    function criarNovaPauta() {
 
     }
 
-    function verDemandaProposta(){
-
-    }
-
-    function criarNovaPauta(){
-
-    }
-
-    function avaliarWorkflow(){
+    function avaliarWorkflow() {
 
     }
 
@@ -679,13 +683,13 @@ function Header(props: { informacaoProcesso: any }) {
             } else if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
                 if (aprovadoGerente) {
                     if (!linkJira) {
-                        const adicionarInfo = { nome: "adicionarInfo", function: adicionarInformacoesDemanda}
+                        const adicionarInfo = { nome: "adicionarInfo", function: adicionarInformacoesDemanda }
 
                         listaBotoes.push(adicionarInfo)
                     } else {
-                        let criarProposta: Botao = {nome: " ",function: criarNovaProposta}
+                        let criarProposta: Botao = { nome: " ", function: criarNovaProposta }
                         if (prazoElaboracao < new Date()) {
-                            criarProposta.nome = "criarProposta!" 
+                            criarProposta.nome = "criarProposta!"
                         } else {
                             criarProposta.nome = "criarProposta"
                         }
@@ -696,13 +700,13 @@ function Header(props: { informacaoProcesso: any }) {
         }
     } else {
         const historico = { nome: "historico", function: verHistorico }
-        const verDemanda = {nome: "verDemanda", function: verDemandaProposta}
-        const criarPauta = {nome: "criarPauta", function: criarNovaPauta}
+        const verDemanda = { nome: "verDemanda", function: verDemandaProposta }
+        const criarPauta = { nome: "criarPauta", function: criarNovaPauta }
 
         listaBotoes.push(historico)
         if (!estaEmWorkflow) {
             if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                const iniciarWorkflow = {nome: "iniciarworkflow", function: iniciarNovoWorkflow}
+                const iniciarWorkflow = { nome: "iniciarworkflow", function: iniciarNovoWorkflow }
 
                 listaBotoes.push(iniciarWorkflow, verDemanda, criarPauta)
             } else if (tipoPessoa == "gerenteNegocio") {
@@ -717,13 +721,13 @@ function Header(props: { informacaoProcesso: any }) {
             } else {
                 if (workflowDeadline < new Date()) {
                     if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
-                        const workflow = {nome: "workflow!", function: avaliarWorkflow}
+                        const workflow = { nome: "workflow!", function: avaliarWorkflow }
 
                         listaBotoes.push(workflow)
                     }
                 } else {
                     if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
-                        const workflow = {nome: "workflow", function: avaliarWorkflow}
+                        const workflow = { nome: "workflow", function: avaliarWorkflow }
 
                         listaBotoes.push(workflow)
                     }
