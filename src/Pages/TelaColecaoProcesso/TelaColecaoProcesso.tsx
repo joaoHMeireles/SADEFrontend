@@ -1,122 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
-import { StatusComponenteProcesso, TamanhoComponenteProcesso, TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../../DefinitionFiles/enuns"
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb"
 import Toolbar from "../../Components/Toolbar/Toolbar"
 import { Accordion, AccordionDetails, AccordionSummary, Box, Container, Grid, Typography } from "@mui/material"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { BotaoIcone, BoxBandeira, BoxContainerBandeira, BoxCorStatus, BoxHeader, BoxTrianguloBandeira, GridContainer, GridContainerHeader, GridPequenosAtributos, GridTitulo, TypographyTexto, TypographyTitulo, TypographyTituloAtributo } from "../TelaProcesso/TelaProcesso.styles"
+import { BoxBandeira, BoxContainerBandeira, BoxCorStatus, BoxHeader, BoxTrianguloBandeira, GridContainer, GridContainerHeader, 
+    GridPequenosAtributos, GridTitulo, TypographyTexto, TypographyTituloAtributo } from "../TelaProcesso/TelaProcesso.styles"
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from "../App.styles"
 import { GridLinkTypograpfy } from "../../Components/ComponenteProcesso/ComponenteProcesso.styles";
 
-const listaColecaoProcesso = [
-    {
-        id: 2,
-        dataReuniao: new Date(),
-        comissao: "Comissao do diretor geral fodao matematico ultimate",
-        tipo: TipoColecaoComponenteProcesso.Pauta,
-        propostas: [
-            {
-                id: 7,
-                titulo: "lerolerolerolero",
-                tamanho: TamanhoComponenteProcesso.Pequeno,
-                solicitante: "um fia da puta ae",
-                status: StatusComponenteProcesso.Assesment,
-                tipo: TipoComponenteProcesso.Demanda,
-                score: 12.5
-            },
-            {
-                id: 9,
-                titulo: "eu quero janta de 3 horas",
-                tamanho: TamanhoComponenteProcesso.Pequeno,
-                solicitante: "um gênio",
-                status: StatusComponenteProcesso.Backlog,
-                tipo: TipoComponenteProcesso.Demanda,
-                score: 10000
-            }
-        ]
-    },
-    {
-        id: 6,
-        dataReuniao: new Date(),
-        comissao: "comission fodelastica aaaa",
-        tipo: TipoColecaoComponenteProcesso.Pauta,
-        propostas: [
-            {
-                id: 5,
-                titulo: "me da droga",
-                tamanho: TamanhoComponenteProcesso.Medio,
-                solicitante: "um fia da puta ae 2",
-                status: StatusComponenteProcesso.BusinessCase,
-                tipo: TipoComponenteProcesso.Proposta,
-                score: 12.5
-            },
-            {
-                id: 3,
-                titulo: "titulozao pra ver como fica muito grande a responsividade da bagaça",
-                tamanho: TamanhoComponenteProcesso.Grande,
-                solicitante: "esse aqui é legal",
-                status: StatusComponenteProcesso.Assesment,
-                tipo: TipoComponenteProcesso.Demanda,
-                score: 12.5
-            },
-            {
-                id: 4,
-                titulo: "Demandinha de um cara legal",
-                tamanho: TamanhoComponenteProcesso.MuitoGrande,
-                solicitante: "Jefferson Rodrigues",
-                status: StatusComponenteProcesso.Canceled,
-                tipo: TipoComponenteProcesso.Proposta,
-                score: 12.5
-            },
-            {
-                id: 1,
-                titulo: "primeiro titulo ae",
-                tamanho: TamanhoComponenteProcesso.Pequeno,
-                solicitante: "um fia da puta ae",
-                status: StatusComponenteProcesso.Backlog,
-                tipo: TipoComponenteProcesso.Demanda,
-                score: 12.5
-            }
-        ]
-    },
-    {
-        id: 8,
-        dataReuniao: new Date(),
-        comissao: "Uma comissão doida lá",
-        tipo: TipoColecaoComponenteProcesso.ATA,
-        ataPublicada: "ata8Publicada.pdf",
-        ataNaoPublicada: "ata8NaoPublicada.pdf",
-        // numeroAtaDG: 12435,
-        documentoAprovacao: "aprovation.pdf",
-        propostas: [
-            {
-                id: 4,
-                titulo: "Demandinha de um cara legal",
-                tamanho: TamanhoComponenteProcesso.MuitoGrande,
-                solicitante: "Jefferson Rodrigues",
-                status: StatusComponenteProcesso.Canceled,
-                tipo: TipoComponenteProcesso.Proposta,
-                score: 12.5
-            },
-            {
-                id: 9,
-                titulo: "eu quero janta de 3 horas",
-                tamanho: TamanhoComponenteProcesso.Pequeno,
-                solicitante: "um gênio",
-                status: StatusComponenteProcesso.ToDo,
-                tipo: TipoComponenteProcesso.Demanda,
-                score: 10000
-            }
-        ]
-    }
-]
 
 export default function TelaColecaoProcesso() {
     const location = useLocation().pathname
-    const idLocalStorage = localStorage.getItem(`ID${getComponentName(location)}ESCOLHIDA`)
-    const idColecao = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
-    const informacaoColecaoProcesso = listaColecaoProcesso.find(p => p.id == idColecao)
-
+    const idLocalStorage = localStorage.getItem(`${getComponentName(location)}ESCOLHIDA`)
+    const informacaoColecaoProcesso = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
+    
     return (
         <>
             <Header informacaoColecaoProcesso={informacaoColecaoProcesso} />
@@ -154,19 +51,18 @@ function Header(props: { informacaoColecaoProcesso: any }) {
             acao = "Finalizar processo"
         }
     }
+
     /**
-     * 1º historico (Pauta, preenchida || Pauta, ainda não passou da data da reunião dela)
-     * 2º historico, informar parecer da comissão (Pauta, já passou a data da reunião)
-     * 3º historico, finalizar processo (Ata, ainda não passou plea dg)
-     * 4º historico
-     */
+     * 1º informar parecer da comissão (Pauta, já passou a data da reunião)
+     * 2º finalizar processo (Ata, ainda não passou plea dg) 
+     * */
     return (
         <>
             <BoxHeader>
                 <Breadcrumb />
                 {acao != "" &&
                     <Box>
-                        <BotaoPrimario variant='contained'> {acao}</BotaoPrimario>
+                        <BotaoPrimario variant="contained"> {acao}</BotaoPrimario>
                     </Box>
                 }
             </BoxHeader>
@@ -174,9 +70,6 @@ function Header(props: { informacaoColecaoProcesso: any }) {
         </>
     )
 }
-
-
-
 /**
  * Container principal para todas as informações de uma proposta/demanda
  * 
@@ -185,7 +78,7 @@ function Header(props: { informacaoColecaoProcesso: any }) {
  */
 function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any }) {
     const informacaoColecaoProcesso = props.informacaoColecaoProcesso
-    const dataFormatada = informacaoColecaoProcesso.dataReuniao.toLocaleDateString()
+    const dataFormatada = new Date(informacaoColecaoProcesso.dataReuniao).toLocaleDateString()
 
     return (
         <GridContainer container sx={{ padding: "9px 25px 25px 25px" }} spacing={2}>

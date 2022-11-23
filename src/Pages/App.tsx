@@ -43,23 +43,36 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />} />
                 <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} />} />
+
                 <Route path="/notifications" element={<Notificacoes />} />
                 <Route path="/chats" element={<Chats aberto={aberto} />}></Route>
+
+
                 <Route path="/home/demand" element={<TelaProcesso />} />
-                <Route path="/home/demand/history" element={<Historico />} />
-                <Route path="/notifications/demand" element={<TelaProcesso />} />
-                <Route path="/notifications/demand/history" element={<Historico />} />
                 <Route path="/mydemands/demand" element={<TelaProcesso />} />
-                <Route path="/mydemands/demand/history" element={<Historico />} />
+                <Route path="/notifications/demand" element={<TelaProcesso />} />
                 <Route path="/home/proposal/demand" element={<TelaProcesso />} />
-                <Route path="/home/proposal/demand/history" element={<Historico />} />
                 <Route path="/home/agenda/proposal/demand" element={<TelaProcesso />} />
-                <Route path="/home/agenda/proposal/demand/history" element={<Historico />} />
                 <Route path="/home/ata/proposal/demand" element={<TelaProcesso />} />
+
+
+                <Route path="/home/demand/history" element={<Historico />} />
+                <Route path="/mydemands/demand/history" element={<Historico />} />
+                <Route path="/notifications/demand/history" element={<Historico />} />
+                <Route path="/home/proposal/demand/history" element={<Historico />} />
+                <Route path="/home/agenda/proposal/demand/history" element={<Historico />} />
                 <Route path="/home/ata/proposal/demand/history" element={<Historico />} />
+
+                <Route path="/home/proposal/history" element={<Historico />} />
+                <Route path="/home/agenda/proposal/history" element={<Historico />} />
+                <Route path="/home/ata/proposal/history" element={<Historico />} />
+
+              
                 <Route path="/home/proposal" element={<TelaProcesso />} />
                 <Route path="/home/agenda/proposal" element={<TelaProcesso />} />
                 <Route path="/home/ata/proposal" element={<TelaProcesso />} />
+
+
                 <Route path="/home/agenda" element={<TelaColecaoProcesso />} />
                 <Route path="/home/ata" element={<TelaColecaoProcesso />} />
               </Routes>

@@ -1,5 +1,5 @@
 import { Box, Grid, IconButton, TableCell, tableCellClasses, TableContainer, TableRow, Typography } from '@mui/material'
-import { BotaoPrimario, BotaoSecundario, BotaoTerciario } from '../App.styles';
+import { BotaoPrimario, BotaoSecundario, BotaoTerciario, BoxConteudo } from '../App.styles';
 import { styled } from '@mui/material/styles';
 import CircleIcon from '@mui/icons-material/Circle';
 const styledBox = styled(Box)
@@ -229,4 +229,17 @@ export const GridItemFooter = styledGrid({
             color: "#00579d"
         }
     }
+})
+
+export const BoxConteudoModal = styled(BoxConteudo)({
+    display: "flex", 
+    flexDirection: "column", 
+    justifyContent: "center", 
+    margin: "30px 50px"
+})
+
+export const TypographyTituloModal = styled(TypographyTitulo)({
+    color: "#00579D", 
+    fontWeight: "500", 
+    marginBottom: "30px" 
 })

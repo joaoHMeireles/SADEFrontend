@@ -9,8 +9,8 @@ import {
 } from './ComponenteProcesso.styles'
 
 
-export default function ComponenteProcesso(props: { grid: boolean, processComponentAtributes: InterfaceComponenteProcesso }) {
-    const componente = props.processComponentAtributes
+export default function ComponenteProcesso(props: { grid: boolean, atributosProcesso: any }) {
+    const componente = props.atributosProcesso
     const paginaAtual = localStorage.getItem("PAGINATUAL")
     let corComponente, tituloToolTip, nomeTipoLink
 
@@ -32,7 +32,7 @@ export default function ComponenteProcesso(props: { grid: boolean, processCompon
 
     function setProcesso() {
         const tipoComponente = componente.tipo.toUpperCase()
-        localStorage.setItem(`ID${tipoComponente}ESCOLHIDA`, componente.id + "")
+        localStorage.setItem(`${tipoComponente}ESCOLHIDA`, JSON.stringify(componente))
     }
 
     return (
