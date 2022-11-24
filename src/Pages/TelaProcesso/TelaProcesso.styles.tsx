@@ -241,5 +241,19 @@ export const BoxConteudoModal = styled(BoxConteudo)({
 export const TypographyTituloModal = styled(TypographyTitulo)({
     color: "#00579D", 
     fontWeight: "500", 
-    marginBottom: "30px" 
+    marginBottom: "0px" 
+})
+
+export const BoxTituloModal = styledBox({
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: "30px",
+    width: "100%"
+})
+
+export const BoxBotoesModal = styledBox({
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "100%"
 })

@@ -44,7 +44,7 @@ function Login(props: {
    * Função que coloca o  tipo do usuário no localStorage
    */
   function colocaPessoa() {
-    localStorage.setItem("TIPOUSUARIO", "gerenteNegocio");
+    localStorage.setItem("TIPOUSUARIO", "analista");
   }
 
   /**

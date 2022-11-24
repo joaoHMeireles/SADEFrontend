@@ -141,8 +141,8 @@ function Bandeira(props: { cor: string }) {
 }
 
 function Propostas(props: { listaPropostas: [] }) {
-    function setProposta(id: number) {
-        localStorage.setItem("IDPROPOSTAESCOLHIDA", id + "")
+    function setProposta(proposta: any) {
+        localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta))
     }
 
     const propostas = props.listaPropostas.map((proposta: any) => {
@@ -192,7 +192,7 @@ function Propostas(props: { listaPropostas: [] }) {
                                     </GridPequenosAtributos>
                                     <Grid item xs={12}>
                                         <GridLinkTypograpfy variant='body2' sx={{ width: "auto !important" }}>
-                                            <Link to={linkProposta} onClick={() => { setProposta(proposta.id) }}>Ver mais</Link>
+                                            <Link to={linkProposta} onClick={() => { setProposta(proposta) }}>Ver mais</Link>
                                         </GridLinkTypograpfy>
                                     </Grid>
                                 </Grid>

@@ -2,15 +2,17 @@ import { useState, useEffect, MouseEventHandler } from 'react';
 import { useLocation } from 'react-router-dom';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
+import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
-    Alert,
-    Badge, Box, Button, Container, Dialog, Divider, Grid, List, ListItem, ListItemIcon, Snackbar, Table, TableBody, TableHead, TableRow, TextField, Typography
+    Alert, Badge, Box, Container, Dialog, Divider, Grid, IconButton, List, ListItem, ListItemIcon, Snackbar, Table, TableBody,
+    TableHead, TableRow, TextField, Typography
 } from '@mui/material';
 import ChatBubbleRounded from '@mui/icons-material/ChatBubbleRounded';
 import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
 import LanRoundedIcon from '@mui/icons-material/LanRounded';
 import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
+import CloseIcon from '@mui/icons-material/Close';
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles"
 import {
     BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBandeira, BoxBotoes,
@@ -18,7 +20,7 @@ import {
     BoxTabela, BoxTabelaCusto, BoxTitulosCentroCusto, BoxTrianguloBandeira, CircleIconPonto, GridContainer,
     GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo, TableCellEstilzada,
     TableContainerEstilizado, TableRowEstilizada, TypographyTexto, TypographyTitulo, TypographyTituloAtributo,
-    BoxConteudoModal, TypographyTituloModal
+    BoxConteudoModal, TypographyTituloModal, BoxTituloModal, BoxBotoesModal
 } from './TelaProcesso.styles';
 
 
@@ -114,12 +116,50 @@ function Header(props: {
     }
 
     function aprovarDemanda() {
+        const conteudoFeedbackFinalizacao = (
+            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                Aprovação concluída
+            </Alert>
+        )
 
-        if (tipoPessoa == "gerenteNegocio") {
-
-        } else {
-
+        function novoModal(conteudo: JSX.Element){
+            props.setConteudoModal(conteudo)
         }
+
+        const segundaParteAprovacao = (
+            <BoxConteudoModal>
+                <BoxTituloModal >
+                    <TypographyTituloModal variant='h5' >
+                        Processo de aprovação
+                    </TypographyTituloModal>
+                    <IconButton onClick={fecharModal}>
+                        <CloseIcon />
+                    </IconButton>
+                </BoxTituloModal>
+                
+                <BoxBotoesModal>
+                    <BotaoSecundario onClick={fecharModal} variant='outlined'>
+                        Cancelar
+                    </BotaoSecundario>
+                    <BotaoPrimario onClick={() => { abrirFeedback(conteudoFeedbackFinalizacao) }} variant="contained" sx={{ marginLeft: "20px" }}>
+                        Enviar
+                    </BotaoPrimario>
+                </BoxBotoesModal>
+            </BoxConteudoModal>
+        )
+
+
+        props.setConteudoModal(
+            <ConteudoModalConfirmacao
+                tituloModal='Quer aprovar essa demanda?'
+                abrirProximoComponente={novoModal}
+                conteudoProximoComponente={segundaParteAprovacao}
+                descricaoModal="Caso confirme, a demanda continuará para o processo de avaliação"
+                fecharModal={fecharModal}
+                opcaoPrimaria="Sim"
+                opcaoSecundaria='Não'
+            />
+        )
 
         abrirModal()
     }
@@ -127,32 +167,22 @@ function Header(props: {
     function reprovarDemanda() {
         const conteudoFeedback = (
             <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
-                Motivo da devolução enviado
+                Reprovação concluída
             </Alert>
         )
 
-        if (tipoPessoa == "gerenteNegocio") {
-            props.setConteudoModal(
-                <BoxConteudoModal>
-                    <TypographyTituloModal variant='h5' >
-                        Quer reprovar essa demanda?
-                    </TypographyTituloModal>
-                    <Typography variant='subtitle2' sx={{ marginBottom: "30px" }}>
-                        Caso confirme, a demanda continuará para o processo de avaliação
-                    </Typography>
-                    <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
-                        <BotaoSecundario onClick={fecharModal} variant='outlined'>
-                            Não
-                        </BotaoSecundario>
-                        <BotaoPrimario onClick={() => { abrirFeedback(conteudoFeedback) }} variant="contained">
-                            Sim
-                        </BotaoPrimario>
-                    </Box>
-                </BoxConteudoModal>
-            )
-        } else {
+        props.setConteudoModal(
+            <ConteudoModalConfirmacao
+                tituloModal='Quer reprovar essa demanda?'
+                abrirProximoComponente={abrirFeedback}
+                conteudoProximoComponente={conteudoFeedback}
+                descricaoModal="Caso confirme, a demanda não poderá mais ser avaliada novamente"
+                fecharModal={fecharModal}
+                opcaoPrimaria="Sim"
+                opcaoSecundaria='Não'
+            />
+        )
 
-        }
         abrirModal()
     }
 
@@ -165,9 +195,14 @@ function Header(props: {
 
         props.setConteudoModal(
             <BoxConteudoModal>
-                <TypographyTituloModal variant='h5' >
-                    Informe o motivo da devolução
-                </TypographyTituloModal>
+                <BoxTituloModal >
+                    <TypographyTituloModal variant='h5' >
+                        Informe o motivo da devolução
+                    </TypographyTituloModal>
+                    <IconButton onClick={fecharModal}>
+                        <CloseIcon />
+                    </IconButton>
+                </BoxTituloModal>
                 <TextField
                     placeholder='Informe o motivo'
                     multiline
@@ -175,14 +210,14 @@ function Header(props: {
                     maxRows={Infinity}
                     sx={{ marginBottom: "30px" }}
                 />
-                <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+                <BoxBotoesModal>
                     <BotaoSecundario onClick={fecharModal} variant='outlined'>
                         Cancelar
                     </BotaoSecundario>
-                    <BotaoPrimario onClick={() => { abrirFeedback(conteudoFeedback) }} variant="contained">
+                    <BotaoPrimario onClick={() => { abrirFeedback(conteudoFeedback) }} variant="contained" sx={{ marginLeft: "20px" }}>
                         Enviar
                     </BotaoPrimario>
-                </Box>
+                </BoxBotoesModal>
             </BoxConteudoModal>
         )
 
@@ -199,19 +234,39 @@ function Header(props: {
     }
 
     function criarNovaProposta() {
-
         location.href = "/createproposal"
     }
 
     function iniciarNovoWorkflow() {
+        const conteudoFeedback = (
+            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                Reprovação concluída
+            </Alert>
+        )
+
+        props.setConteudoModal(
+            <ConteudoModalConfirmacao
+                tituloModal='Quer reprovar essa demanda?'
+                abrirProximoComponente={abrirFeedback}
+                conteudoProximoComponente={conteudoFeedback}
+                descricaoModal="Caso confirme, a demanda não poderá mais ser avaliada novamente"
+                fecharModal={fecharModal}
+                opcaoPrimaria="Sim"
+                opcaoSecundaria='Não'
+            />
+        )
+
         abrirModal()
 
     }
 
     function verDemandaProposta() {
+        console.log("Aaaaaaaaaaa");
+
 
         //futuramente a proposta terá o mesmo id que a demanda a que se refere
-        localStorage.setItem("IDDEMANDAESCOLHIDA", (processo.id - 1) + "")
+        //futuramente vai precisar fazer um fetch pra ver qual as informações da demanda escolhida
+        // localStorage.setItem("DEMANDAESCOLHIDA", (processo.id - 1) + "")
         location.href = pathname + "/demand";
     }
 
