@@ -1,10 +1,10 @@
-import { useState, useEffect, MouseEventHandler } from 'react';
+import React, { useState, useEffect, MouseEventHandler, SetStateAction } from 'react';
 import { useLocation } from 'react-router-dom';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
 import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
-    Alert, Badge, Box, Container, Dialog, Divider, Grid, IconButton, List, ListItem, ListItemIcon, Snackbar, Table, TableBody,
+    Alert, Badge, Box, Container, Dialog, Divider, FormControl, Grid, IconButton, InputLabel, List, ListItem, ListItemIcon, MenuItem, Select, SelectChangeEvent, Snackbar, Table, TableBody,
     TableHead, TableRow, TextField, Typography
 } from '@mui/material';
 import ChatBubbleRounded from '@mui/icons-material/ChatBubbleRounded';
@@ -116,37 +116,11 @@ function Header(props: {
     }
 
     function aprovarDemanda() {
-        const conteudoFeedbackFinalizacao = (
-            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
-                Aprovação concluída
-            </Alert>
-        )
-
-        function novoModal(conteudo: JSX.Element){
+        function novoModal(conteudo: JSX.Element) {
             props.setConteudoModal(conteudo)
         }
 
-        const segundaParteAprovacao = (
-            <BoxConteudoModal>
-                <BoxTituloModal >
-                    <TypographyTituloModal variant='h5' >
-                        Processo de aprovação
-                    </TypographyTituloModal>
-                    <IconButton onClick={fecharModal}>
-                        <CloseIcon />
-                    </IconButton>
-                </BoxTituloModal>
-                
-                <BoxBotoesModal>
-                    <BotaoSecundario onClick={fecharModal} variant='outlined'>
-                        Cancelar
-                    </BotaoSecundario>
-                    <BotaoPrimario onClick={() => { abrirFeedback(conteudoFeedbackFinalizacao) }} variant="contained" sx={{ marginLeft: "20px" }}>
-                        Enviar
-                    </BotaoPrimario>
-                </BoxBotoesModal>
-            </BoxConteudoModal>
-        )
+        const segundaParteAprovacao = <ModalClassificacaoDemanda abrirFeedback={abrirFeedback} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />
 
 
         props.setConteudoModal(
@@ -367,6 +341,7 @@ function Header(props: {
             }
         }
     }
+
     useEffect(() => {
         if (prazoElaboracao < new Date() && prazoElaboracao && tipoProcesso == "Demanda") {
             setTempoExcedido(true)
@@ -387,6 +362,68 @@ function Header(props: {
                 </BoxAviso>
             }
         </>
+    )
+}
+
+function ModalClassificacaoDemanda(props: { fecharModal: MouseEventHandler<HTMLButtonElement>, abrirFeedback: Function, setFeedbackAberto: React.Dispatch<SetStateAction<boolean>> }) {
+    const [tamanhoDemanda, setTamanhoDemanda] = useState("Médio")
+    const conteudoFeedbackFinalizacao = (
+        <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+            Aprovação concluída
+        </Alert>
+    )
+
+    function selecionarTamanho(event: SelectChangeEvent) {
+        setTamanhoDemanda(event.target.value)
+    }
+
+
+    return (
+        <BoxConteudoModal>
+            <BoxTituloModal >
+                <TypographyTituloModal variant='h5' >
+                    Processo de aprovação
+                </TypographyTituloModal>
+                <IconButton onClick={props.fecharModal}>
+                    <CloseIcon />
+                </IconButton>
+            </BoxTituloModal>
+            <Box sx={{ display: "grid", justifyContent: "center", width: "100%" }}>
+                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start", width: "100%" }}>
+                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start", minWidth: "260px" }}>
+                        <TypographyTituloAtributo variant='body1'>
+                            Tamanho:
+                        </TypographyTituloAtributo>
+                        {/* Fazer isso ser um SelectBox (componente) */}
+                        <FormControl sx={{ maxWidth: "180px", marginLeft: "20px" }}>
+                            <InputLabel>Age</InputLabel>
+                            <Select
+                                value={tamanhoDemanda}
+                                label="Age"
+                                onChange={selecionarTamanho}
+                            >
+                                <MenuItem value={"Muito pequeno"}>Muito pequeno</MenuItem>
+                                <MenuItem value={"Pequeno"}>Pequeno</MenuItem>
+                                <MenuItem value={"Médio"}>Médio</MenuItem>
+                                <MenuItem value={"Grande"}>Grande</MenuItem>
+                                <MenuItem value={"Muito grande"}>Muito grande</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    <Box>
+                        qqqqafedf
+                    </Box>
+                </Box>
+            </Box>
+            <BoxBotoesModal>
+                <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
+                    Cancelar
+                </BotaoSecundario>
+                <BotaoPrimario onClick={() => { props.abrirFeedback(conteudoFeedbackFinalizacao) }} variant="contained" sx={{ marginLeft: "20px" }}>
+                    Enviar
+                </BotaoPrimario>
+            </BoxBotoesModal>
+        </BoxConteudoModal>
     )
 }
 
@@ -974,6 +1011,10 @@ function getTituloBotao(botao: string) {
     }
 
     return (titulos as any)[nomeBotao]
+}
+
+function getBotoes() {
+
 }
 
 interface Botao {
