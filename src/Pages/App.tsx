@@ -7,8 +7,9 @@ import Toolbar from "../Components/Toolbar/Toolbar";
 import Filter from "../Components/Filtro/Filtro";
 import Login from "./Login/Login";
 import Inicio from "./Inicio/Inicio";
-import TelaProcesso from "./TelaProcesso/TelaProcesso";
+import TelaCriacaoDemanda from "./TelaCriacaoDemanda/TelaCriacaoDemanda";
 import TelaColecaoProcesso from "./TelaColecaoProcesso/TelaColecaoProcesso";
+import TelaProcesso from "./TelaProcesso/TelaProcesso";
 import Notificacoes from "./Notificacoes/Notificacoes";
 import Chats from "./Chats/Chats";
 import { Box } from "@mui/material";
@@ -47,6 +48,7 @@ export default function App() {
                 <Route path="/home/demand" element={<TelaProcesso />} />
                 <Route path="/notifications/demand" element={<TelaProcesso />} />
                 <Route path="/mydemands/demand" element={<TelaProcesso />} />
+                <Route path="/createdemand" element={<TelaCriacaoDemanda />} />
                 <Route path="/home/proposal/demand" element={<TelaProcesso />} />
                 <Route path="/home/agenda/proposal/demand" element={<TelaProcesso />} />
                 <Route path="/home/ata/proposal/demand" element={<TelaProcesso />} />
