@@ -1,7 +1,14 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { ReactNode } from "react";
 
-export default function SelectBox(props: { label: string | undefined, valorInicial: any, mudarValor: ((event: SelectChangeEvent<any>, child: ReactNode) => void) | undefined, listaValores: any[], listaLabelValores: any[] }) {
+/**
+ * componente que renderiza um select box padrão. A propriedade lable é opcional. A propriedade listaLabelValores
+ * é o que será mostrado no input e a propriedade listaValores são os valores que cada item do selectbox vai receber
+ * 
+ * @param props 
+ * @returns 
+ */
+export default function SelectBox(props: { label?: string , valorInicial: any, mudarValor: ((event: SelectChangeEvent<any>, child: ReactNode) => void) | undefined, listaValores: any[], listaLabelValores: any[] }) {
 
     const itens = props.listaValores.map((valor: any, index: number) => {
         return(
@@ -14,7 +21,7 @@ export default function SelectBox(props: { label: string | undefined, valorInici
             <InputLabel>{props.label}</InputLabel>
             <Select
                 value={props.valorInicial}
-                label="Age"
+                label={props.label}
                 onChange={props.mudarValor}
             >
                 {itens}

@@ -257,3 +257,23 @@ export const BoxBotoesModal = styledBox({
     justifyContent: "flex-end",
     width: "100%"
 })
+
+export const BoxInfoModal = styledBox({
+    display: "grid", 
+    justifyContent: "center", 
+    width: "100%"
+})
+
+export const BoxAtributosInfoModal = styledBox({
+    alignItems: "center",
+    display: "flex", 
+    justifyContent: "flex-start", 
+    marginBottom: "30px", 
+    width: "100%"
+})
+
+export const BoxAtributoInfoModal = styledBox({
+    alignItems: "center",
+    display: "flex", 
+    justifyContent: "center"
+})

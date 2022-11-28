@@ -2,10 +2,11 @@ import React, { useState, useEffect, MouseEventHandler, SetStateAction } from 'r
 import { useLocation } from 'react-router-dom';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
+import SelectBox from '../../Components/SelectBox/SelectBox';
 import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
-    Alert, Badge, Box, Container, Dialog, Divider, FormControl, Grid, IconButton, InputLabel, List, ListItem, ListItemIcon, MenuItem, Select, SelectChangeEvent, Snackbar, Table, TableBody,
-    TableHead, TableRow, TextField, Typography
+    Alert, Badge, Box, Checkbox, Container, Dialog, Divider, FormControlLabel, FormGroup, Grid, IconButton, List, ListItem, ListItemIcon, SelectChangeEvent,
+    Snackbar, Table, TableBody, TableHead, TableRow, TextField, Typography
 } from '@mui/material';
 import ChatBubbleRounded from '@mui/icons-material/ChatBubbleRounded';
 import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
@@ -20,7 +21,8 @@ import {
     BoxTabela, BoxTabelaCusto, BoxTitulosCentroCusto, BoxTrianguloBandeira, CircleIconPonto, GridContainer,
     GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo, TableCellEstilzada,
     TableContainerEstilizado, TableRowEstilizada, TypographyTexto, TypographyTitulo, TypographyTituloAtributo,
-    BoxConteudoModal, TypographyTituloModal, BoxTituloModal, BoxBotoesModal
+    BoxConteudoModal, TypographyTituloModal, BoxTituloModal, BoxBotoesModal, BoxInfoModal, BoxAtributosInfoModal,
+    BoxAtributoInfoModal
 } from './TelaProcesso.styles';
 
 
@@ -47,7 +49,7 @@ export default function TelaComponenteProcesso(props: any) {
                 <BoxContainer>
                     <Container>
                         <ContainerProcesso informacaoProcesso={informacaoProcesso} />
-                        <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { minWidth: "30vw" } }}>
+                        <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { minWidth: "35vw" } }}>
                             {conteudoModal}
                         </Dialog>
                         <Snackbar
@@ -367,6 +369,17 @@ function Header(props: {
 
 function ModalClassificacaoDemanda(props: { fecharModal: MouseEventHandler<HTMLButtonElement>, abrirFeedback: Function, setFeedbackAberto: React.Dispatch<SetStateAction<boolean>> }) {
     const [tamanhoDemanda, setTamanhoDemanda] = useState("Médio")
+    const [BUSolicitante, setBUSolicitante] = useState("Motores")
+    const valoresInputTamanho = ["Muito pequeno", "Pequeno", "Médio", "Grande", "Muito grande"]
+    const valoresInputBU = ["Motores", "Digital", "Energia", "Corporativo", "Diretoria"]
+    const BUsbeneficiadas = valoresInputBU.map((bu) => {
+        return (
+            <Grid item xs={6}>
+                <FormControlLabel control={<Checkbox />} label={bu} />
+            </Grid>
+        )
+    })
+
     const conteudoFeedbackFinalizacao = (
         <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
             Aprovação concluída
@@ -375,6 +388,10 @@ function ModalClassificacaoDemanda(props: { fecharModal: MouseEventHandler<HTMLB
 
     function selecionarTamanho(event: SelectChangeEvent) {
         setTamanhoDemanda(event.target.value)
+    }
+
+    function selecionaBU(event: SelectChangeEvent) {
+        setBUSolicitante(event.target.value)
     }
 
 
@@ -388,33 +405,32 @@ function ModalClassificacaoDemanda(props: { fecharModal: MouseEventHandler<HTMLB
                     <CloseIcon />
                 </IconButton>
             </BoxTituloModal>
-            <Box sx={{ display: "grid", justifyContent: "center", width: "100%" }}>
-                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start", width: "100%" }}>
-                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start", minWidth: "260px" }}>
+            <BoxInfoModal>
+                <BoxAtributosInfoModal >
+                    <BoxAtributoInfoModal>
                         <TypographyTituloAtributo variant='body1'>
                             Tamanho:
                         </TypographyTituloAtributo>
-                        {/* Fazer isso ser um SelectBox (componente) */}
-                        <FormControl sx={{ maxWidth: "180px", marginLeft: "20px" }}>
-                            <InputLabel>Age</InputLabel>
-                            <Select
-                                value={tamanhoDemanda}
-                                label="Age"
-                                onChange={selecionarTamanho}
-                            >
-                                <MenuItem value={"Muito pequeno"}>Muito pequeno</MenuItem>
-                                <MenuItem value={"Pequeno"}>Pequeno</MenuItem>
-                                <MenuItem value={"Médio"}>Médio</MenuItem>
-                                <MenuItem value={"Grande"}>Grande</MenuItem>
-                                <MenuItem value={"Muito grande"}>Muito grande</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Box>
-                    <Box>
-                        qqqqafedf
-                    </Box>
-                </Box>
-            </Box>
+                        <SelectBox listaLabelValores={valoresInputTamanho} listaValores={valoresInputTamanho} mudarValor={selecionarTamanho} valorInicial={tamanhoDemanda} />
+                    </BoxAtributoInfoModal>
+                    <BoxAtributoInfoModal sx={{ marginLeft: "20px" }}>
+                        <TypographyTituloAtributo variant='body1'>
+                            BU Solicitante:
+                        </TypographyTituloAtributo>
+                        <SelectBox listaLabelValores={valoresInputBU} listaValores={valoresInputBU} mudarValor={selecionaBU} valorInicial={BUSolicitante} />
+                    </BoxAtributoInfoModal>
+                </BoxAtributosInfoModal>
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <TypographyTituloAtributo variant='body1'>
+                        BUs beneficiadas:
+                    </TypographyTituloAtributo>
+                    <Grid container>
+                        {/* <FormGroup> */}
+                            {BUsbeneficiadas}
+                        {/* </FormGroup> */}
+                    </Grid>
+                </Box >
+            </BoxInfoModal>
             <BoxBotoesModal>
                 <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
                     Cancelar
@@ -1011,10 +1027,6 @@ function getTituloBotao(botao: string) {
     }
 
     return (titulos as any)[nomeBotao]
-}
-
-function getBotoes() {
-
 }
 
 interface Botao {
