@@ -32,8 +32,8 @@ export default function TelaCriacaoDemanda() {
             <Breadcrumb />
             <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 3, flexDirection: "column" }}>
                 <Tabs value={valor} onChange={mudarValor}>
-                    {valor == 0 ? <Tab icon={<LensRoundedIcon sx={{ color: "#00579d" }} />}></Tab> : <Tab icon={<LensRoundedIcon />}></Tab>}
-                    {valor == 1 ? <Tab icon={<LensRoundedIcon sx={{ color: "#00579d" }} />}></Tab> : segundo ? <Tab icon={<LensRoundedIcon />}></Tab> : <Tab icon={<PanoramaFishEyeRoundedIcon />}></Tab>}
+                    {valor == 0 ? <Tab icon={<LensRoundedIcon sx={{ color: "#00579d" }} />}></Tab> : <Tab icon={<LensRoundedIcon sx={{ color: "#90caf9" }} />}></Tab>}
+                    {valor == 1 ? <Tab icon={<LensRoundedIcon sx={{ color: "#00579d" }} />}></Tab> : segundo ? <Tab icon={<LensRoundedIcon sx={{ color: "#90caf9" }} />}></Tab> : <Tab icon={<PanoramaFishEyeRoundedIcon />}></Tab>}
                     {valor == 2 ? <Tab icon={<LensRoundedIcon sx={{ color: "#00579d" }} />}></Tab> : <Tab icon={<PanoramaFishEyeRoundedIcon />}></Tab>}
                 </Tabs>
                 {valor == 0 &&
