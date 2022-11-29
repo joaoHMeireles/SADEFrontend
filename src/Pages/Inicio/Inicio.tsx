@@ -921,7 +921,7 @@ const listaComponents: {}[] = [
         ],
         prazoElaboracao: new Date(),
         codigoPPM: 67237,
-        linkJira: "https://jirazadaDoCara",
+        // linkJira: "https://jirazadaDoCara",
         beneficiosReais: [
             {
                 descricao: "description",

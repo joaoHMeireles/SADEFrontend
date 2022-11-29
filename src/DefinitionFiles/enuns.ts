@@ -36,5 +36,4 @@ export enum sessaoTI {
     SIM = "Sistemas de Manufatura",
     SIE = "Sistemas de Engenharia",
     SVE = "Sistemas de Vendas e E Commerce "
-
 }

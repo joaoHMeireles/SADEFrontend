@@ -8,7 +8,7 @@ import { ReactNode } from "react";
  * @param props 
  * @returns 
  */
-export default function SelectBox(props: { label?: string , valorInicial: any, mudarValor: ((event: SelectChangeEvent<any>, child: ReactNode) => void) | undefined, listaValores: any[], listaLabelValores: any[] }) {
+export default function SelectBox(props: { label?: string , valorInicial: any, mudarValor: ((event: SelectChangeEvent<any>, child: ReactNode) => void) | undefined, listaValores: any[], listaLabelValores: any[], maxWidth?: string }) {
 
     const itens = props.listaValores.map((valor: any, index: number) => {
         return(
@@ -17,7 +17,7 @@ export default function SelectBox(props: { label?: string , valorInicial: any, m
     })
 
     return (
-        <FormControl sx={{ maxWidth: "180px", marginLeft: "20px" }}>
+        <FormControl sx={{ maxWidth:(props.maxWidth ? props.maxWidth :"180px"), marginLeft: "20px" }}>
             <InputLabel>{props.label}</InputLabel>
             <Select
                 value={props.valorInicial}

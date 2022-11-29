@@ -1,5 +1,5 @@
 import { MouseEventHandler } from "react"
-import { Box, IconButton, Typography } from "@mui/material"
+import { IconButton, Typography } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close';
 import { BotaoPrimario, BotaoSecundario } from "../../Pages/App.styles"
 import { BoxConteudoModal, BoxTituloModal, TypographyTituloModal, BoxBotoesModal } from "../../Pages/TelaProcesso/TelaProcesso.styles"
@@ -7,8 +7,6 @@ import { BoxConteudoModal, BoxTituloModal, TypographyTituloModal, BoxBotoesModal
 export default function ConteudoModalConfirmacao(props: {
     tituloModal: string,
     descricaoModal: string,
-    opcaoSecundaria: string,
-    opcaoPrimaria: string,
     fecharModal: MouseEventHandler<HTMLButtonElement>,
     abrirProximoComponente: Function,
     conteudoProximoComponente: JSX.Element
@@ -33,10 +31,10 @@ export default function ConteudoModalConfirmacao(props: {
             </Typography>
             <BoxBotoesModal>
                 <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
-                    {props.opcaoSecundaria}
+                    Não
                 </BotaoSecundario>
                 <BotaoPrimario onClick={executarAcao} variant="contained" sx={{ marginLeft: "20px" }}>
-                    {props.opcaoPrimaria}
+                    Sim
                 </BotaoPrimario>
             </BoxBotoesModal>
         </BoxConteudoModal>

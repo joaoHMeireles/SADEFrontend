@@ -1,5 +1,6 @@
 import React, { useState, useEffect, MouseEventHandler, SetStateAction } from 'react';
 import { useLocation } from 'react-router-dom';
+import Dayjs from '@date-io/dayjs'
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
 import SelectBox from '../../Components/SelectBox/SelectBox';
@@ -14,6 +15,8 @@ import LanRoundedIcon from '@mui/icons-material/LanRounded';
 import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import CloseIcon from '@mui/icons-material/Close';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles"
 import {
     BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBandeira, BoxBotoes,
@@ -22,8 +25,10 @@ import {
     GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo, TableCellEstilzada,
     TableContainerEstilizado, TableRowEstilizada, TypographyTexto, TypographyTitulo, TypographyTituloAtributo,
     BoxConteudoModal, TypographyTituloModal, BoxTituloModal, BoxBotoesModal, BoxInfoModal, BoxAtributosInfoModal,
-    BoxAtributoInfoModal
+    BoxAtributoInfoModal, BoxBUsBeneficiadas, BoxSessaoTI, BoxAtributoInfoModal2, TypographyTituloAtributoModal,
+    TextFieldURL
 } from './TelaProcesso.styles';
+import { sessaoTI } from '../../DefinitionFiles/enuns';
 
 
 /**
@@ -132,8 +137,6 @@ function Header(props: {
                 conteudoProximoComponente={segundaParteAprovacao}
                 descricaoModal="Caso confirme, a demanda continuará para o processo de avaliação"
                 fecharModal={fecharModal}
-                opcaoPrimaria="Sim"
-                opcaoSecundaria='Não'
             />
         )
 
@@ -154,8 +157,6 @@ function Header(props: {
                 conteudoProximoComponente={conteudoFeedback}
                 descricaoModal="Caso confirme, a demanda não poderá mais ser avaliada novamente"
                 fecharModal={fecharModal}
-                opcaoPrimaria="Sim"
-                opcaoSecundaria='Não'
             />
         )
 
@@ -205,8 +206,9 @@ function Header(props: {
     }
 
     function adicionarInformacoesDemanda() {
-        abrirModal()
+        props.setConteudoModal(<ModalAdiconarInformações abrirFeedback={abrirFeedback} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
 
+        abrirModal()
     }
 
     function criarNovaProposta() {
@@ -216,19 +218,17 @@ function Header(props: {
     function iniciarNovoWorkflow() {
         const conteudoFeedback = (
             <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
-                Reprovação concluída
+                Workflow iniciado
             </Alert>
         )
 
         props.setConteudoModal(
             <ConteudoModalConfirmacao
-                tituloModal='Quer reprovar essa demanda?'
+                tituloModal='Quer iniciar esse worflow?'
                 abrirProximoComponente={abrirFeedback}
                 conteudoProximoComponente={conteudoFeedback}
-                descricaoModal="Caso confirme, a demanda não poderá mais ser avaliada novamente"
+                descricaoModal="Caso confirme, a proposta será enviada e avaliada pelos gerentes envolvidos a ela"
                 fecharModal={fecharModal}
-                opcaoPrimaria="Sim"
-                opcaoSecundaria='Não'
             />
         )
 
@@ -251,8 +251,63 @@ function Header(props: {
     }
 
     function avaliarWorkflow() {
-        abrirModal()
+        const conteudoFeedbackAprovado = (
+            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                Workflow aprovado
+            </Alert>
+        )
 
+        const conteudoFeedbackReprovado = (
+            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="info" sx={{ width: '100%' }}>
+                Workflow reprovado
+            </Alert>
+        )
+
+        const modalAprovar = (
+            <ConteudoModalConfirmacao
+                tituloModal='Quer aprovar esse workflow?'
+                abrirProximoComponente={abrirFeedback}
+                conteudoProximoComponente={conteudoFeedbackAprovado}
+                descricaoModal="Caso confirme, a proposta será adicionada a proxima pauta a ser tratada em uma comissão"
+                fecharModal={fecharModal}
+            />
+        )
+
+        const modalReprovar = (
+            <ConteudoModalConfirmacao
+                tituloModal='Quer reprovar esse workflow?'
+                abrirProximoComponente={abrirFeedback}
+                conteudoProximoComponente={conteudoFeedbackReprovado}
+                descricaoModal="Caso confirme, o workflow de aprovação dessa proposta irá ser interrompido"
+                fecharModal={fecharModal}
+            />
+        )
+
+        props.setConteudoModal(
+            <BoxConteudoModal>
+                <BoxTituloModal >
+                    <TypographyTituloModal variant='h5' >
+                        Processo de workflow de aprovação
+                    </TypographyTituloModal>
+                    <IconButton onClick={fecharModal}>
+                        <CloseIcon />
+                    </IconButton>
+                </BoxTituloModal>
+                <Typography variant='subtitle2' sx={{ marginBottom: "30px" }}>
+                    Escolha se essa proposta continuará o seu flow de aprovação ou se será interrompida
+                </Typography>
+                <BoxBotoesModal>
+                    <BotaoSecundario onClick={() => { props.setConteudoModal(modalReprovar) }} variant='outlined'>
+                        Reprovar
+                    </BotaoSecundario>
+                    <BotaoPrimario onClick={() => { props.setConteudoModal(modalAprovar) }} variant="contained" sx={{ marginLeft: "20px" }}>
+                        Aprovar
+                    </BotaoPrimario>
+                </BoxBotoesModal>
+            </BoxConteudoModal>
+        )
+
+        abrirModal()
     }
 
     /**
@@ -370,8 +425,24 @@ function Header(props: {
 function ModalClassificacaoDemanda(props: { fecharModal: MouseEventHandler<HTMLButtonElement>, abrirFeedback: Function, setFeedbackAberto: React.Dispatch<SetStateAction<boolean>> }) {
     const [tamanhoDemanda, setTamanhoDemanda] = useState("Médio")
     const [BUSolicitante, setBUSolicitante] = useState("Motores")
+    const [sessaoTIescolhida, setSessaoTI] = useState("AAS")
     const valoresInputTamanho = ["Muito pequeno", "Pequeno", "Médio", "Grande", "Muito grande"]
     const valoresInputBU = ["Motores", "Digital", "Energia", "Corporativo", "Diretoria"]
+    const keysSessaoTI = Object.keys(sessaoTI)
+    const valoresSessaoTI = Object.values(sessaoTI)
+
+    function selecionarTamanho(event: SelectChangeEvent) {
+        setTamanhoDemanda(event.target.value)
+    }
+
+    function selecionarBU(event: SelectChangeEvent) {
+        setBUSolicitante(event.target.value)
+    }
+
+    function selecionarSessaoTI(event: SelectChangeEvent) {
+        setSessaoTI(event.target.value)
+    }
+
     const BUsbeneficiadas = valoresInputBU.map((bu) => {
         return (
             <Grid item xs={6}>
@@ -385,15 +456,6 @@ function ModalClassificacaoDemanda(props: { fecharModal: MouseEventHandler<HTMLB
             Aprovação concluída
         </Alert>
     )
-
-    function selecionarTamanho(event: SelectChangeEvent) {
-        setTamanhoDemanda(event.target.value)
-    }
-
-    function selecionaBU(event: SelectChangeEvent) {
-        setBUSolicitante(event.target.value)
-    }
-
 
     return (
         <BoxConteudoModal>
@@ -413,29 +475,112 @@ function ModalClassificacaoDemanda(props: { fecharModal: MouseEventHandler<HTMLB
                         </TypographyTituloAtributo>
                         <SelectBox listaLabelValores={valoresInputTamanho} listaValores={valoresInputTamanho} mudarValor={selecionarTamanho} valorInicial={tamanhoDemanda} />
                     </BoxAtributoInfoModal>
-                    <BoxAtributoInfoModal sx={{ marginLeft: "20px" }}>
+                    <BoxAtributoInfoModal>
                         <TypographyTituloAtributo variant='body1'>
                             BU Solicitante:
                         </TypographyTituloAtributo>
-                        <SelectBox listaLabelValores={valoresInputBU} listaValores={valoresInputBU} mudarValor={selecionaBU} valorInicial={BUSolicitante} />
+                        <SelectBox listaLabelValores={valoresInputBU} listaValores={valoresInputBU} mudarValor={selecionarBU} valorInicial={BUSolicitante} />
                     </BoxAtributoInfoModal>
                 </BoxAtributosInfoModal>
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <BoxBUsBeneficiadas>
                     <TypographyTituloAtributo variant='body1'>
                         BUs beneficiadas:
                     </TypographyTituloAtributo>
-                    <Grid container>
-                        {/* <FormGroup> */}
+                    <FormGroup>
+                        <Grid container>
                             {BUsbeneficiadas}
-                        {/* </FormGroup> */}
-                    </Grid>
-                </Box >
+                        </Grid>
+                    </FormGroup>
+                </BoxBUsBeneficiadas >
+                <BoxSessaoTI>
+                    <TypographyTituloAtributo variant='body1'>
+                        Sessão TI responsável:
+                    </TypographyTituloAtributo>
+                    <SelectBox listaLabelValores={valoresSessaoTI} listaValores={keysSessaoTI} mudarValor={selecionarSessaoTI} valorInicial={sessaoTIescolhida} maxWidth="none" />
+                </BoxSessaoTI>
             </BoxInfoModal>
             <BoxBotoesModal>
                 <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
                     Cancelar
                 </BotaoSecundario>
                 <BotaoPrimario onClick={() => { props.abrirFeedback(conteudoFeedbackFinalizacao) }} variant="contained" sx={{ marginLeft: "20px" }}>
+                    Enviar
+                </BotaoPrimario>
+            </BoxBotoesModal>
+        </BoxConteudoModal>
+    )
+}
+
+function ModalAdiconarInformações(props: { fecharModal: MouseEventHandler<HTMLButtonElement>, abrirFeedback: Function, setFeedbackAberto: React.Dispatch<SetStateAction<boolean>> }) {
+    const [valorData, setValorData] = useState<Dayjs | null>(null)
+    const [erroObject, setErroObject] = useState({ error: false, helperText: "" })
+    const conteudoFeedback = (
+        <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+            Informações adicionadas
+        </Alert>
+    )
+
+    function finalizarAcao() {
+        const inputPrazoElaboracao = (document.getElementById("inputDataInformacoes") as HTMLInputElement)
+        const inputCodigPPM = (document.getElementById("inputCodigoPPM") as HTMLInputElement)
+        const inputLinkJira = (document.getElementById("inputLinkJira") as HTMLInputElement)
+
+        if (inputPrazoElaboracao == null) {
+            setErroObject({
+                error: true,
+                helperText: "Data não informada"
+            })
+        }
+
+
+        // props.abrirFeedback(conteudoFeedback)
+    }
+
+    return (
+        <BoxConteudoModal>
+            <BoxTituloModal >
+                <TypographyTituloModal variant='h5' >
+                    Informações
+                </TypographyTituloModal>
+                <IconButton onClick={props.fecharModal}>
+                    <CloseIcon />
+                </IconButton>
+            </BoxTituloModal>
+            <BoxInfoModal>
+                <BoxAtributosInfoModal >
+                    <BoxAtributoInfoModal2 sx={{ width: "50%" }}>
+                        <TypographyTituloAtributoModal variant='body1'>
+                            Prazo de elaboração:
+                        </TypographyTituloAtributoModal>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                value={valorData}
+                                onChange={(newValue) => {
+                                    setValorData(newValue);
+                                }}
+                                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} {...erroObject} />}
+                            />
+                        </LocalizationProvider>
+                    </BoxAtributoInfoModal2>
+                    <BoxAtributoInfoModal2>
+                        <TypographyTituloAtributoModal variant='body1'>
+                            Código PPM:
+                        </TypographyTituloAtributoModal>
+                        <TextField type='number' id='inputCodigoPPM' />
+                    </BoxAtributoInfoModal2>
+                </BoxAtributosInfoModal>
+                <Box sx={{ width: "100%" }}>
+                    <TypographyTituloAtributoModal variant='body1'>
+                        Link Jira:
+                    </TypographyTituloAtributoModal>
+                    <TextFieldURL placeholder='https://exemplo.com' type={'url'} id="inputLinkJira" />
+                </Box>
+            </BoxInfoModal>
+            <BoxBotoesModal>
+                <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
+                    Cancelar
+                </BotaoSecundario>
+                <BotaoPrimario onClick={finalizarAcao} variant="contained" sx={{ marginLeft: "20px" }}>
                     Enviar
                 </BotaoPrimario>
             </BoxBotoesModal>
