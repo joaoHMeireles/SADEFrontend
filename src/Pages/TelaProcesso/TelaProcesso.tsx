@@ -1,12 +1,13 @@
 import React, { useState, useEffect, MouseEventHandler, SetStateAction } from 'react';
 import { useLocation } from 'react-router-dom';
 import Dayjs from '@date-io/dayjs'
+import { sessaoTI, TipoComponenteProcesso } from '../../DefinitionFiles/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
 import SelectBox from '../../Components/SelectBox/SelectBox';
 import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
-    Alert, Badge, Box, Checkbox, Container, Dialog, Divider, FormControlLabel, FormGroup, Grid, IconButton, List, ListItem, ListItemIcon, SelectChangeEvent,
+    Alert, Badge, Box, Checkbox, Container, Dialog, Divider, FormControl, FormControlLabel, FormGroup, FormHelperText, Grid, IconButton, List, ListItem, ListItemIcon, SelectChangeEvent,
     Snackbar, Table, TableBody, TableHead, TableRow, TextField, Typography
 } from '@mui/material';
 import ChatBubbleRounded from '@mui/icons-material/ChatBubbleRounded';
@@ -28,7 +29,7 @@ import {
     BoxAtributoInfoModal, BoxBUsBeneficiadas, BoxSessaoTI, BoxAtributoInfoModal2, TypographyTituloAtributoModal,
     TextFieldURL
 } from './TelaProcesso.styles';
-import { sessaoTI } from '../../DefinitionFiles/enuns';
+
 
 
 /**
@@ -49,17 +50,17 @@ export default function TelaComponenteProcesso(props: any) {
 
     return (
         <>
-            <Header informacaoProcesso={informacaoProcesso} modalAberto={modalAberto} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} setFeedbackAberto={setFeedbackAberto} setConteudoFeedback={setConteudoFeedback} />
+            <Header informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} setFeedbackAberto={setFeedbackAberto} setConteudoFeedback={setConteudoFeedback} />
             <BoxConteudo >
                 <BoxContainer>
                     <Container>
-                        <ContainerProcesso informacaoProcesso={informacaoProcesso} />
+                        <ContainerProcesso informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
                         <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { minWidth: "35vw" } }}>
                             {conteudoModal}
                         </Dialog>
                         <Snackbar
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                            autoHideDuration={3000}
+                            autoHideDuration={30000}
                             open={feedbackAberto}
                             onClose={() => { setFeedbackAberto(false) }}
                         >
@@ -82,7 +83,6 @@ export default function TelaComponenteProcesso(props: any) {
  */
 function Header(props: {
     informacaoProcesso: any,
-    modalAberto: boolean,
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
     setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>,
     setFeedbackAberto: React.Dispatch<React.SetStateAction<boolean>>,
@@ -164,39 +164,8 @@ function Header(props: {
     }
 
     function devolverDemanda() {
-        const conteudoFeedback = (
-            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
-                Motivo da devolução enviado
-            </Alert>
-        )
 
-        props.setConteudoModal(
-            <BoxConteudoModal>
-                <BoxTituloModal >
-                    <TypographyTituloModal variant='h5' >
-                        Informe o motivo da devolução
-                    </TypographyTituloModal>
-                    <IconButton onClick={fecharModal}>
-                        <CloseIcon />
-                    </IconButton>
-                </BoxTituloModal>
-                <TextField
-                    placeholder='Informe o motivo'
-                    multiline
-                    rows={7}
-                    maxRows={Infinity}
-                    sx={{ marginBottom: "30px" }}
-                />
-                <BoxBotoesModal>
-                    <BotaoSecundario onClick={fecharModal} variant='outlined'>
-                        Cancelar
-                    </BotaoSecundario>
-                    <BotaoPrimario onClick={() => { abrirFeedback(conteudoFeedback) }} variant="contained" sx={{ marginLeft: "20px" }}>
-                        Enviar
-                    </BotaoPrimario>
-                </BoxBotoesModal>
-            </BoxConteudoModal>
-        )
+        props.setConteudoModal(<ModalMotivoDevolucao abrirFeedback={abrirFeedback} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
 
         abrirModal()
     }
@@ -422,7 +391,8 @@ function Header(props: {
     )
 }
 
-function ModalClassificacaoDemanda(props: { fecharModal: MouseEventHandler<HTMLButtonElement>, abrirFeedback: Function, setFeedbackAberto: React.Dispatch<SetStateAction<boolean>> }) {
+function ModalClassificacaoDemanda(props: Modal) {
+    const [BUsBeneficiadasErro, setBUsBeneficiadasErro] = useState({ html: { error: false }, helperText: "" })
     const [tamanhoDemanda, setTamanhoDemanda] = useState("Médio")
     const [BUSolicitante, setBUSolicitante] = useState("Motores")
     const [sessaoTIescolhida, setSessaoTI] = useState("AAS")
@@ -443,10 +413,23 @@ function ModalClassificacaoDemanda(props: { fecharModal: MouseEventHandler<HTMLB
         setSessaoTI(event.target.value)
     }
 
-    const BUsbeneficiadas = valoresInputBU.map((bu) => {
+    const BUsbeneficiadas = valoresInputBU.map((bu: string, index: number) => {
+
+        if (index + 1 == valoresInputBU.length) {
+            return (
+                <Grid key={index} item xs={6}>
+                    <FormControl {...BUsBeneficiadasErro.html} variant="standard">
+                        <FormControlLabel control={<Checkbox />} label={bu} className="buBeneficiada" />
+                        <FormHelperText>{BUsBeneficiadasErro.helperText}</FormHelperText>
+                    </FormControl>
+                </Grid>
+            )
+        }
+
+
         return (
-            <Grid item xs={6}>
-                <FormControlLabel control={<Checkbox />} label={bu} />
+            <Grid key={index} item xs={6}>
+                <FormControlLabel control={<Checkbox />} label={bu} className="buBeneficiada" />
             </Grid>
         )
     })
@@ -456,6 +439,21 @@ function ModalClassificacaoDemanda(props: { fecharModal: MouseEventHandler<HTMLB
             Aprovação concluída
         </Alert>
     )
+
+    function finalizarAcao() {
+        const BUsBeneficiadas = document.getElementsByClassName("buBeneficiada")
+
+        for (let buBeneficiada of BUsBeneficiadas) {
+            if ((buBeneficiada.children[0].children[0] as any).checked) {
+                props.abrirFeedback(conteudoFeedbackFinalizacao)
+            }
+        }
+
+        setBUsBeneficiadasErro({
+            html: { error: true },
+            helperText: "Nenhuma BU selecionada"
+        })
+    }
 
     return (
         <BoxConteudoModal>
@@ -503,7 +501,7 @@ function ModalClassificacaoDemanda(props: { fecharModal: MouseEventHandler<HTMLB
                 <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
                     Cancelar
                 </BotaoSecundario>
-                <BotaoPrimario onClick={() => { props.abrirFeedback(conteudoFeedbackFinalizacao) }} variant="contained" sx={{ marginLeft: "20px" }}>
+                <BotaoPrimario onClick={finalizarAcao} variant="contained" sx={{ marginLeft: "20px" }}>
                     Enviar
                 </BotaoPrimario>
             </BoxBotoesModal>
@@ -511,9 +509,68 @@ function ModalClassificacaoDemanda(props: { fecharModal: MouseEventHandler<HTMLB
     )
 }
 
-function ModalAdiconarInformações(props: { fecharModal: MouseEventHandler<HTMLButtonElement>, abrirFeedback: Function, setFeedbackAberto: React.Dispatch<SetStateAction<boolean>> }) {
+function ModalMotivoDevolucao(props: Modal) {
+    const [erroMotivoDevolucao, setErroMotivoDevolucao] = useState({ error: false, helperText: "" })
+    const conteudoFeedback = (
+        <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+            Motivo da devolução enviado
+        </Alert>
+    )
+
+    function finalizarAcao() {
+        const textarea = (document.getElementById("textareaMotivo") as HTMLInputElement).value
+
+        if (textarea == "") {
+            setErroMotivoDevolucao({
+                error: true,
+                helperText: "Motivo não informado"
+            })
+            return
+        } else {
+            setErroMotivoDevolucao({
+                error: false,
+                helperText: ""
+            })
+        }
+
+        props.abrirFeedback(conteudoFeedback)
+    }
+
+    return (
+        <BoxConteudoModal>
+            <BoxTituloModal >
+                <TypographyTituloModal variant='h5' >
+                    Informe o motivo da devolução
+                </TypographyTituloModal>
+                <IconButton onClick={props.fecharModal}>
+                    <CloseIcon />
+                </IconButton>
+            </BoxTituloModal>
+            <TextField
+                id='textareaMotivo'
+                placeholder='Informe o motivo'
+                multiline
+                rows={7}
+                sx={{ marginBottom: "30px" }}
+                {...erroMotivoDevolucao}
+            />
+            <BoxBotoesModal>
+                <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
+                    Cancelar
+                </BotaoSecundario>
+                <BotaoPrimario onClick={finalizarAcao} variant="contained" sx={{ marginLeft: "20px" }}>
+                    Enviar
+                </BotaoPrimario>
+            </BoxBotoesModal>
+        </BoxConteudoModal>
+    )
+}
+
+function ModalAdiconarInformações(props: Modal) {
     const [valorData, setValorData] = useState<Dayjs | null>(null)
-    const [erroObject, setErroObject] = useState({ error: false, helperText: "" })
+    const [erroObjectPrazo, setErroObjectPrazo] = useState({ error: false, helperText: "" })
+    const [erroObjectCodigoPPM, setErroObjectCodigoPPM] = useState({ error: false, helperText: "" })
+    const [erroObjectLink, setErroObjectLink] = useState({ error: false, helperText: "" })
     const conteudoFeedback = (
         <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
             Informações adicionadas
@@ -521,19 +578,94 @@ function ModalAdiconarInformações(props: { fecharModal: MouseEventHandler<HTML
     )
 
     function finalizarAcao() {
-        const inputPrazoElaboracao = (document.getElementById("inputDataInformacoes") as HTMLInputElement)
-        const inputCodigPPM = (document.getElementById("inputCodigoPPM") as HTMLInputElement)
-        const inputLinkJira = (document.getElementById("inputLinkJira") as HTMLInputElement)
+        const inputPrazoElaboracao = (document.getElementById("inputDataInformacoes") as HTMLInputElement).value
+        const inputCodigPPM = (document.getElementById("inputCodigoPPM") as HTMLInputElement).value
+        const inputLinkJira = (document.getElementById("inputLinkJira") as HTMLInputElement).value
 
-        if (inputPrazoElaboracao == null) {
-            setErroObject({
-                error: true,
-                helperText: "Data não informada"
+        if (inputPrazoElaboracao == "" || inputCodigPPM == "" || inputLinkJira == "") {
+            if (inputPrazoElaboracao == "") {
+                setErroObjectPrazo({
+                    error: true,
+                    helperText: "Data não informada"
+                })
+            } else {
+                setErroObjectPrazo({
+                    error: false,
+                    helperText: ""
+                })
+            }
+
+            if (inputCodigPPM == "") {
+                setErroObjectCodigoPPM({
+                    error: true,
+                    helperText: "Código não informado"
+                })
+            } else {
+                setErroObjectCodigoPPM({
+                    error: false,
+                    helperText: ""
+                })
+            }
+
+            if (inputLinkJira == "") {
+                setErroObjectLink({
+                    error: true,
+                    helperText: "Link não informado"
+                })
+            } else {
+                setErroObjectLink({
+                    error: false,
+                    helperText: ""
+                })
+            }
+
+            return
+        } else {
+            setErroObjectPrazo({
+                error: false,
+                helperText: ""
+            })
+
+            setErroObjectCodigoPPM({
+                error: false,
+                helperText: ""
+            })
+
+            setErroObjectLink({
+                error: false,
+                helperText: ""
             })
         }
 
+        if (!urlValida(inputLinkJira)) {
+            setErroObjectLink({
+                error: true,
+                helperText: "Texto informado não é um link"
+            })
 
-        // props.abrirFeedback(conteudoFeedback)
+            return
+        } else {
+            setErroObjectLink({
+                error: false,
+                helperText: ""
+            })
+        }
+
+        if (!inputLinkJira.includes("jira")) {
+            setErroObjectLink({
+                error: true,
+                helperText: "Link informado é inválido"
+            })
+
+            return
+        } else {
+            setErroObjectLink({
+                error: false,
+                helperText: ""
+            })
+        }
+
+        props.abrirFeedback(conteudoFeedback)
     }
 
     return (
@@ -558,7 +690,7 @@ function ModalAdiconarInformações(props: { fecharModal: MouseEventHandler<HTML
                                 onChange={(newValue) => {
                                     setValorData(newValue);
                                 }}
-                                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} {...erroObject} />}
+                                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} {...erroObjectPrazo} />}
                             />
                         </LocalizationProvider>
                     </BoxAtributoInfoModal2>
@@ -566,14 +698,14 @@ function ModalAdiconarInformações(props: { fecharModal: MouseEventHandler<HTML
                         <TypographyTituloAtributoModal variant='body1'>
                             Código PPM:
                         </TypographyTituloAtributoModal>
-                        <TextField type='number' id='inputCodigoPPM' />
+                        <TextField type='number' id='inputCodigoPPM' {...erroObjectCodigoPPM} />
                     </BoxAtributoInfoModal2>
                 </BoxAtributosInfoModal>
                 <Box sx={{ width: "100%" }}>
                     <TypographyTituloAtributoModal variant='body1'>
                         Link Jira:
                     </TypographyTituloAtributoModal>
-                    <TextFieldURL placeholder='https://exemplo.com' type={'url'} id="inputLinkJira" />
+                    <TextFieldURL placeholder='https://exemplo.com' type={'url'} id="inputLinkJira" {...erroObjectLink} />
                 </Box>
             </BoxInfoModal>
             <BoxBotoesModal>
@@ -658,7 +790,11 @@ function ButtonsHeader(props: { listaBotoes: Botao[] }) {
  * @param props 
  * @returns 
  */
-function ContainerProcesso(props: { informacaoProcesso: any }) {
+function ContainerProcesso(props: {
+    informacaoProcesso: any,
+    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
+    setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
+}) {
     const informacaoProcesso = props.informacaoProcesso
 
     return (
@@ -682,7 +818,7 @@ function ContainerProcesso(props: { informacaoProcesso: any }) {
                 <Divider />
                 <InfoComercial processo={informacaoProcesso} />
                 <Divider />
-                <Contextualizacao processo={informacaoProcesso} />
+                <Contextualizacao processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
             </GridInformacao>
         </GridContainer>
     )
@@ -1006,7 +1142,11 @@ function StyledBenefitTable(props: { valuesList: [], title: string }) {
     )
 }
 
-function Contextualizacao(props: { processo: any }) {
+function Contextualizacao(props: {
+    processo: any,
+    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
+    setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
+}) {
     const atributos = {
         objetivo: props.processo.objetivo,
         situacaoAtual: props.processo.situacaoAtual,
@@ -1051,12 +1191,53 @@ function Contextualizacao(props: { processo: any }) {
                 Contextualização
             </TypographyTitulo>
             {contextos}
-            <Footer link={link} />
+            <Footer link={link} tipo={props.processo.tipo} anexos={props.processo.anexos} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
         </Grid>
     )
 }
 
-function Footer(props: { link: string }) {
+function Footer(props: {
+    link: string,
+    tipo: TipoComponenteProcesso,
+    anexos: [],
+    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
+    setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
+}) {
+
+    function mostrarAnexos() {
+        const anexos = props.anexos.map((anexo: any, index: number) => {
+            const iconeAnexo = getIcone(anexo.nome)
+
+
+            return (
+                <>
+                    <Grid key={index} item xs={12}>
+                        {iconeAnexo}
+                        {anexo.nome}
+                    </Grid>
+                    <Divider />
+                </>
+            )
+        })
+
+        props.setConteudoModal(
+            <BoxConteudoModal>
+                <BoxTituloModal >
+                    <TypographyTituloModal variant='h5' >
+                        Anexos da {props.tipo.toLowerCase()}
+                    </TypographyTituloModal>
+                    <IconButton onClick={() => { props.setModalAberto(false) }}>
+                        <CloseIcon />
+                    </IconButton>
+                </BoxTituloModal>
+                <Grid container spacing={2}>
+                    {anexos}
+                </Grid>
+            </BoxConteudoModal>
+        )
+
+        props.setModalAberto(true)
+    }
 
     return (
         <Grid container>
@@ -1067,7 +1248,7 @@ function Footer(props: { link: string }) {
                     :
                     <div></div>
                 }
-                <BotaoTerciario variant='outlined' >
+                <BotaoTerciario variant='outlined' onClick={mostrarAnexos}>
                     Ver anexos
                 </BotaoTerciario>
             </GridItemFooter>
@@ -1172,6 +1353,32 @@ function getTituloBotao(botao: string) {
     }
 
     return (titulos as any)[nomeBotao]
+}
+
+function getIcone(nomeAnexo: string){
+    const iconesAnexos = {
+        //ver icones que podem aparecer como opção de tipos de arquivos
+    }
+
+    return (iconesAnexos as any)[nomeAnexo]
+}
+
+function urlValida(urlString: string) {
+    var inputElement = document.createElement('input');
+    inputElement.type = 'url';
+    inputElement.value = urlString;
+
+    if (!inputElement.checkValidity()) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+interface Modal {
+    fecharModal: MouseEventHandler<HTMLButtonElement>,
+    abrirFeedback: Function,
+    setFeedbackAberto: React.Dispatch<SetStateAction<boolean>>
 }
 
 interface Botao {

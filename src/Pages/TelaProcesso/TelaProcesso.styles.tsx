@@ -293,7 +293,7 @@ export const BoxSessaoTI = styledBox({
 
 export const BoxAtributoInfoModal2 = styled(BoxAtributoInfoModal)({
     display: "grid", 
-    width: "30%" 
+    width: "40%" 
 })
 
 export const TypographyTituloAtributoModal = styled(TypographyTituloAtributo)({
