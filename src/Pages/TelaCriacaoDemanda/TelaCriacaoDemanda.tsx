@@ -72,7 +72,7 @@ export default function TelaCriacaoDemanda() {
                             </Box>
                             <Box sx={{ width: "50%", display: "flex", justifyContent: "end", alignItems: "center" }}>
                                 <BotaoSecundario sx={{ width: "25%", minWidth: "auto", height: "3rem", marginRight: 3 }} variant="outlined" startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} onClick={() => { setValor(valor - 1) }} />}>Voltar</BotaoSecundario>
-                                <BotaoPrimario sx={{ width: "25%", minWidth: "auto", height: "3rem" }} variant='contained' endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />} onClick={() => { setValor(2) }}>Proximo</BotaoPrimario>
+                                <BotaoPrimario sx={{ width: "25%", minWidth: "auto", height: "3rem" }} variant='contained' endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />} >Enviar</BotaoPrimario>
                             </Box>
                         </Box>
                     </>
