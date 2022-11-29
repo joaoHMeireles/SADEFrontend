@@ -15,15 +15,16 @@ export default function InformacaoGeral() {
 
     return (
         <>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column", width: "100%", minHeight: "70vh", maxHeight: "80vh" }}>
-                <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", width: "100%", height: "25%" }}>
-                    <Typography>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column", width: "100%", height: "auto" }}>
+                {/* , minHeight: "70vh", maxHeight: "80vh" */}
+                <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", width: "100%", height: "25%", marginTop: 5 }}>
+                    <Typography sx={{ marginBottom: 2 }}>
                         Título:
                     </Typography>
                     <TextField />
                 </Box>
-                <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", width: "100%", height: "25%" }}>
-                    <Typography>
+                <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", width: "100%", height: "25%", marginTop: 5 }}>
+                    <Typography sx={{ marginBottom: 2 }}>
                         Problema a ser resolvido (situação atual):
                     </Typography>
                     <TextField
@@ -31,8 +32,8 @@ export default function InformacaoGeral() {
                         rows={7}
                         maxRows={Infinity} />
                 </Box>
-                <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", width: "100%", height: "25%" }}>
-                    <Typography>
+                <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", width: "100%", height: "25%", marginTop: 5 }}>
+                    <Typography sx={{ marginBottom: 2 }}>
                         Proposta / Solicitação de proposta:
                     </Typography>
                     <TextField
@@ -40,9 +41,9 @@ export default function InformacaoGeral() {
                         rows={7}
                         maxRows={Infinity} />
                 </Box>
-                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "25%" }}>
+                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "25%", marginTop: 5 }}>
                     <Box sx={{ display: "flex", justifyContent: "center", flexDirection: "column", width: "100%", height: "100%" }}>
-                        <Typography>
+                        <Typography sx={{ marginBottom: 2 }}>
                             Centros de custo:
                         </Typography>
                         <Autocomplete
