@@ -10,13 +10,12 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 
 export default function BeneficiosDemanda() {
-
-    let listaBeneficioReal = [
-        { beneficio: < BeneficioReal /> }
-    ]
-
+    const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState(1)
+    const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState(1)
+    const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState(1)
 
     return (
         <>
@@ -26,20 +25,74 @@ export default function BeneficiosDemanda() {
                         Benefício Real
                     </Typography>
                 </Box>
-                {listaBeneficioReal.map((item) => {
-                    console.log(item)
-                })}
+                <BeneficiosReais numeroBeneficios={numeroBeneficiosReais} />
                 < Box sx={{ marginTop: 3 }}>
-                    <AddRoundedIcon sx={{ fontSize: "2rem", cursor: "pointer" }} />
+                    {numeroBeneficiosReais > 1 ? <RemoveRoundedIcon sx={{ fontSize: "2rem", marginRight: 3, cursor: "pointer" }} onClick={() => { setNumeroBeneficiosReais(numeroBeneficiosReais - 1) }} /> : ""}
+                    <AddRoundedIcon sx={{ fontSize: "2rem", cursor: "pointer" }} onClick={() => { setNumeroBeneficiosReais(numeroBeneficiosReais + 1) }} />
                 </Box>
                 <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#00579D", marginTop: 3 }}>
                     <Typography sx={{ color: "#FFF", height: "2rem", display: "flex", justifyContent: "center", alignItems: "center", }}>
                         Benefício Potencial
                     </Typography>
                 </Box>
-                <BeneficioPotencial />
-                <BeneficioQualitativo />
+                <BeneficiosPotenciais numeroBeneficios={numeroBeneficiosPotenciais} />
+                < Box sx={{ marginTop: 3 }}>
+                    {numeroBeneficiosPotenciais > 1 ? <RemoveRoundedIcon sx={{ fontSize: "2rem", marginRight: 3, cursor: "pointer" }} onClick={() => { setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais - 1) }} /> : ""}
+                    <AddRoundedIcon sx={{ fontSize: "2rem", cursor: "pointer" }} onClick={() => { setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais + 1) }} />
+                </Box>
+                <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#00579D", marginTop: 3 }}>
+                    <Typography sx={{ color: "#FFF", height: "2rem", display: "flex", justifyContent: "center", alignItems: "center", }}>
+                        Benefício Qualitativo
+                    </Typography>
+                </Box>
+                <BeneficiosQualitativos numeroBeneficios={numeroBeneficiosQualitativos} />
+                < Box sx={{ marginTop: 3 }}>
+                    {numeroBeneficiosQualitativos > 1 ? <RemoveRoundedIcon sx={{ fontSize: "2rem", marginRight: 3, cursor: "pointer" }} onClick={() => { setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos - 1) }} /> : ""}
+                    <AddRoundedIcon sx={{ fontSize: "2rem", cursor: "pointer" }} onClick={() => { setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos + 1) }} />
+                </Box>
             </Box>
+        </>
+    )
+}
+
+function BeneficiosReais(props: { numeroBeneficios: number }) {
+    let beneficios: JSX.Element[] = [];
+
+    for (let i = 0; i < props.numeroBeneficios; i++) {
+        beneficios.push(<BeneficioReal />)
+    }
+
+    return (
+        <>
+            {beneficios}
+        </>
+    )
+}
+
+function BeneficiosPotenciais(props: { numeroBeneficios: number }) {
+    let beneficios: JSX.Element[] = [];
+
+    for (let i = 0; i < props.numeroBeneficios; i++) {
+        beneficios.push(<BeneficioPotencial />)
+    }
+
+    return (
+        <>
+            {beneficios}
+        </>
+    )
+}
+
+function BeneficiosQualitativos(props: { numeroBeneficios: number }) {
+    let beneficios: JSX.Element[] = [];
+
+    for (let i = 0; i < props.numeroBeneficios; i++) {
+        beneficios.push(<BeneficioQualitativo />)
+    }
+
+    return (
+        <>
+            {beneficios}
         </>
     )
 }
@@ -197,11 +250,6 @@ function BeneficioQualitativo() {
     return (
         <>
             <Box sx={{ width: "100%", height: "50%", display: "flex", justifyContent: "start", alignItems: "center", flexDirection: "column" }}>
-                <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#00579D", marginTop: 3 }}>
-                    <Typography sx={{ color: "#FFF", height: "2rem", display: "flex", justifyContent: "center", alignItems: "center", }}>
-                        Benefício Qualitativo
-                    </Typography>
-                </Box>
                 <Box sx={{ width: "100%", height: "50%", marginTop: 5 }}>
                     <Typography sx={{ color: "#595959" }}>Descrição: </Typography>
                     <TextField multiline
