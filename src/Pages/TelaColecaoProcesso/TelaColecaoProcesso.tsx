@@ -257,7 +257,8 @@ function Propostas(props: { listaPropostas: [], tipoColecao: string, avaliandoPr
 function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boolean, index: number, avaliandoProcesso: boolean, verificacaoInputs: boolean[] }) {
     const [expanded, setExpanded] = useState({ expanded: false })
     const [conteudoProposta, setConteudoProposta] = useState<JSX.Element>()
-
+    const [mensagemErroStatus, setMenssagemErroStatus] = useState("")
+    const verificacaoInputs = props.verificacaoInputs
     const proposta = props.proposta
     const forumEscolhido = (props.eUmaPauta ? "comissão" : "direção geral")
 
@@ -304,14 +305,14 @@ function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boole
                 <TypographyTituloDecisao variant='body1'>
                     Parecer da {forumEscolhido}
                 </TypographyTituloDecisao>
-                <FormControl >
+                <FormControl error>
                     <RadioGroup sx={{ flexDirection: "row" }}>
                         <FormControlLabel className={`radioButtonStatus${props.index}`} value="Canceled" control={<Radio sx={{ '&.Mui-checked': { color: '#FF1616' } }} />} label="Canceled" />
                         <FormControlLabel className={`radioButtonStatus${props.index}`} value="Business Case" control={<Radio sx={{ '&.Mui-checked': { color: "#FFD600" } }} />} label="Business Case" />
                         <FormControlLabel className={`radioButtonStatus${props.index}`} value="To do" control={<Radio sx={{ '&.Mui-checked': { color: "#00612E" } }} />} label="To do" />
                         <FormControlLabel className={`radioButtonStatus${props.index}`} value="Assesment" control={<Radio sx={{ '&.Mui-checked': { color: "#595959" } }} />} label="Assesment" />
                     </RadioGroup>
-                    {/* <FormHelperText id="component-error-text">{ formStatusPreenchido? "Nenhum status selecionado" : ""}</FormHelperText> */}
+                    <FormHelperText id="component-error-text">{mensagemErroStatus}</FormHelperText>
                 </FormControl>
             </Grid>
             {!props.eUmaPauta ?
@@ -360,10 +361,30 @@ function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boole
             </Grid>
         </>
     )
-
+    
     useEffect(() => {
-        console.log(props.verificacaoInputs);
-    }, [props.verificacaoInputs])
+        if (verificacaoInputs == null || verificacaoInputs.length == 0) {
+            console.log("retornou");
+
+            return
+        }
+
+        const primeiroIndexProposta = props.index * 10
+
+        console.log(verificacaoInputs[primeiroIndexProposta + 1]);
+
+
+        if (!verificacaoInputs[primeiroIndexProposta + 1]) {
+            console.log("passou aqui", props.index);
+            
+            setMenssagemErroStatus("Nenhum status selecionado")
+        } else {
+            console.log("passou aqui de novo", props.index);
+            setMenssagemErroStatus("")
+        }
+
+        // console.log(props.verificacaoInputs);
+    }, [verificacaoInputs])
 
     useEffect(() => {
         setConteudoProposta(conteudoPropostaInicio)
