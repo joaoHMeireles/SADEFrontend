@@ -1,7 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb"
 import Toolbar from "../../Components/Toolbar/Toolbar"
-import { AccordionDetails, AccordionSummary, Box, Container, FormControl, FormControlLabel, FormLabel, Grid, RadioGroup, Typography, Radio, TextField } from "@mui/material"
+import {
+    AccordionDetails, AccordionSummary, Box, Container, FormControl, FormControlLabel, Grid, RadioGroup,
+    Typography, Radio, TextField, FormHelperText
+} from "@mui/material"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
     BotaoPrimarioHeader,
@@ -11,29 +14,94 @@ import {
 } from "../TelaProcesso/TelaProcesso.styles"
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from "../App.styles"
 import { GridLinkTypograpfy } from "../../Components/ComponenteProcesso/ComponenteProcesso.styles";
-import { SetStateAction, useEffect, useState } from "react";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { AccordionProposta, GridContainerColecao, GridFooter, GridProposta, TypographyTextoColecao, TypographyTituloDecisao } from "./TelaColecaoProcesso.styles";
 import { StyledBenefitTable, TabelasCusto } from "../TelaProcesso/TelaProcesso";
 
-
 export default function TelaColecaoProcesso() {
     const [avaliandoProcesso, setAvaliandoProcesso] = useState(false)
+    const [verificacaoInputs, setVerificacaoInputs] = useState<boolean[]>([])
     const location = useLocation().pathname
     const idLocalStorage = localStorage.getItem(`${getComponentName(location)}ESCOLHIDA`)
     const informacaoColecaoProcesso = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
 
-    function aprovarProcesso() {
-        //fazer toda a bagaça de verificação e cadastro aqui
+    function fecharAvaliacao() {
         setAvaliandoProcesso(false)
+        setVerificacaoInputs([])
+    }
+
+    function aprovarProcesso() {
+        const novaVerificacaoInputs: boolean[] = []
+        for (let i = 0; i < informacaoColecaoProcesso.propostas.length; i++) {
+            const radioButtonsStatus = document.getElementsByClassName(`radioButtonStatus${i}`)
+            let statusPreenchido = checarRadioButtons(radioButtonsStatus)
+            const primeiroIndexProposta = i * 10
+
+            novaVerificacaoInputs[primeiroIndexProposta + 1] = (statusPreenchido ? true : false)
+
+            // console.log(radioButtonsStatus);
+
+            if (informacaoColecaoProcesso.tipo == "Pauta") {
+                const radioButtonsAta = document.getElementsByClassName(`radioButtonATA${i}`)
+                let tipoAtaPreenchida = checarRadioButtons(radioButtonsAta)
+
+                novaVerificacaoInputs[primeiroIndexProposta + 2] = (tipoAtaPreenchida ? true : false)
+
+                // console.log(radioButtonsAta);
+
+            } else {
+                const inputNumeroAta = (document.getElementById(`inputNumeroATA${i}`) as HTMLInputElement).value
+                const inputDocumentoAprovacao = (document.getElementById(`inputDocumento${i}`) as HTMLInputElement).value
+
+                novaVerificacaoInputs[primeiroIndexProposta + 3] = (inputNumeroAta != "" ? true : false)
+                novaVerificacaoInputs[primeiroIndexProposta + 4] = (inputDocumentoAprovacao != "" ? true : false)
+
+                // console.log(inputNumeroAta);
+                // console.log(inputDocumentoAprovacao);
+            }
+        }
+
+        setVerificacaoInputs(novaVerificacaoInputs)
+
+        // console.log(verificacaoInputs);
+
+        if (checarPreenchimento(novaVerificacaoInputs)) {
+            fecharAvaliacao()
+        }
+
+    }
+
+    function checarRadioButtons(listaBotoes: HTMLCollectionOf<Element>) {
+        for (let radioButton of listaBotoes) {
+            if ((radioButton.children[0].children[0] as HTMLInputElement).checked) {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    function checarPreenchimento(novaVerificacaoInputs: boolean[]) {
+        if (novaVerificacaoInputs.length == 0) {
+            return false
+        }
+
+        for (let verificado of novaVerificacaoInputs) {
+            if (!verificado && verificado != undefined) {
+                return false
+            }
+        }
+
+        return true
     }
 
     return (
         <>
-            <Header informacaoColecaoProcesso={informacaoColecaoProcesso} avaliandoProcesso={avaliandoProcesso} setAvaliandoProcesso={setAvaliandoProcesso} aprovarProcesso={aprovarProcesso} />
+            <Header informacaoColecaoProcesso={informacaoColecaoProcesso} avaliandoProcesso={avaliandoProcesso} setAvaliandoProcesso={setAvaliandoProcesso} aprovarProcesso={aprovarProcesso} fecharAvaliacao={fecharAvaliacao} />
             <BoxConteudo >
                 <BoxContainer>
                     <Container>
-                        <ContainerColecaoProcesso informacaoColecaoProcesso={informacaoColecaoProcesso} avaliandoProcesso={avaliandoProcesso} />
+                        <ContainerColecaoProcesso informacaoColecaoProcesso={informacaoColecaoProcesso} avaliandoProcesso={avaliandoProcesso} verificacaoInputs={verificacaoInputs} />
                     </Container>
                 </BoxContainer>
             </BoxConteudo>
@@ -49,7 +117,7 @@ export default function TelaColecaoProcesso() {
  * @param props 
  * @returns 
  */
-function Header(props: { informacaoColecaoProcesso: any, avaliandoProcesso: boolean, setAvaliandoProcesso: React.Dispatch<SetStateAction<boolean>>, aprovarProcesso: Function }) {
+function Header(props: { informacaoColecaoProcesso: any, avaliandoProcesso: boolean, setAvaliandoProcesso: React.Dispatch<SetStateAction<boolean>>, aprovarProcesso: Function, fecharAvaliacao: Function }) {
     const [acao, setAcao] = useState("")
     const informacaoColecaoProcesso = props.informacaoColecaoProcesso
     const tipoColecao = informacaoColecaoProcesso.tipo
@@ -88,7 +156,7 @@ function Header(props: { informacaoColecaoProcesso: any, avaliandoProcesso: bool
                             :
                             <BoxBotoes>
                                 <BotaoPrimarioHeader variant='contained' onClick={aprovarProcesso}> Aprovar</BotaoPrimarioHeader>
-                                <BotaoSecundarioHeader variant='outlined' onClick={() => { props.setAvaliandoProcesso(false) }}> Cancelar</BotaoSecundarioHeader>
+                                <BotaoSecundarioHeader variant='outlined' onClick={() => { props.fecharAvaliacao() }}> Cancelar</BotaoSecundarioHeader>
                             </BoxBotoes>
                         }
                     </>
@@ -104,7 +172,7 @@ function Header(props: { informacaoColecaoProcesso: any, avaliandoProcesso: bool
  * @param props 
  * @returns 
  */
-function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any, avaliandoProcesso: boolean }) {
+function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any, avaliandoProcesso: boolean, verificacaoInputs: boolean[] }) {
     const informacaoColecaoProcesso = props.informacaoColecaoProcesso
     const dataFormatada = new Date(informacaoColecaoProcesso.dataReuniao).toLocaleDateString()
 
@@ -128,7 +196,7 @@ function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any, avali
             <Grid item xs={12}>
                 Propostas:
             </Grid>
-            <Propostas listaPropostas={informacaoColecaoProcesso.propostas} tipoColecao={informacaoColecaoProcesso.tipo} avaliandoProcesso={props.avaliandoProcesso} />
+            <Propostas listaPropostas={informacaoColecaoProcesso.propostas} tipoColecao={informacaoColecaoProcesso.tipo} avaliandoProcesso={props.avaliandoProcesso} verificacaoInputs={props.verificacaoInputs} />
             {(informacaoColecaoProcesso.tipo == "ATA" && !props.avaliandoProcesso) &&
                 <GridFooter item xs={12}>
                     <Box display={"flex"}>
@@ -168,131 +236,14 @@ function Bandeira(props: { cor: string }) {
     )
 }
 
-function Propostas(props: { listaPropostas: [], tipoColecao: string, avaliandoProcesso: boolean }) {
+function Propostas(props: { listaPropostas: [], tipoColecao: string, avaliandoProcesso: boolean, verificacaoInputs: boolean[] }) {
     const eUmaPauta = (props.tipoColecao == "Pauta" ? true : false)
-    const forumEscolhido = (eUmaPauta ? "comissão" : "direção geral")
-
-    function setProposta(proposta: any) {
-        localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta))
-    }
+    const location = useLocation().pathname
+    const linkProposta = location + "/proposal"
 
     const propostas = props.listaPropostas.map((proposta: any, index: number) => {
-        console.log(proposta);
-
-        const location = useLocation().pathname
-        const linkProposta = location + "/proposal"
-        let acordionProps = { defaultExpanded: false }
-        if (index == 0) {
-            acordionProps.defaultExpanded = true
-        }
-        let conteudoProposta: JSX.Element
-
-        if (props.avaliandoProcesso) {
-            conteudoProposta = (
-                <>
-                    <Grid item xs={6.5}>
-                        <TypographyTituloDecisao variant='body1'>
-                            Parecer da {forumEscolhido}
-                        </TypographyTituloDecisao>
-                        <FormControl>
-                            <RadioGroup sx={{ flexDirection: "row" }}>
-                                <FormControlLabel value="Canceled" control={<Radio sx={{ '&.Mui-checked': { color: '#FF1616' } }} />} label="Canceled" />
-                                <FormControlLabel value="Business Case" control={<Radio sx={{ '&.Mui-checked': { color: "#FFD600" } }} />} label="Business Case" />
-                                <FormControlLabel value="To do" control={<Radio sx={{ '&.Mui-checked': { color: "#00612E" } }} />} label="To do" />
-                                <FormControlLabel value="Assesment" control={<Radio sx={{ '&.Mui-checked': { color: "#595959" } }} />} label="Assesment" />
-                            </RadioGroup>
-                        </FormControl>
-                    </Grid>
-                    {!eUmaPauta &&
-                        <>
-                            <Grid item xs={4}>
-                                <TypographyTituloDecisao variant='body1'>
-                                    Número da ATA da DG:
-                                </TypographyTituloDecisao>
-                                <TextField type='number' />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TypographyTituloDecisao variant='body1'>
-                                    Documento de aprovação:
-                                </TypographyTituloDecisao>
-                                <TextField
-                                    placeholder='vai ter o inputzao de arquivo'
-                                    multiline
-                                    sx={{ width: "100%" }}
-                                />
-                            </Grid>
-                        </>
-                    }
-                    <Grid item xs={12}>
-                        <TypographyTituloDecisao variant='body1'>
-                            Comentários
-                        </TypographyTituloDecisao>
-                        <TextField
-                            placeholder='Coloque aqui pontos interessantes que foram discutidos durante a reunião'
-                            multiline
-                            rows={5}
-                            sx={{ width: "100%" }}
-                        />
-                    </Grid>
-                    {eUmaPauta &&
-                        <Grid item xs={12}>
-                            <TypographyTituloDecisao variant='body1'>
-                                Forma de publicação
-                            </TypographyTituloDecisao>
-                            <FormControl>
-                                <RadioGroup sx={{ flexDirection: "row" }}>
-                                    <FormControlLabel value="Ata publicada" control={<Radio />} label="Ata publicada" />
-                                    <FormControlLabel value="Ata não publicada" control={<Radio />} label="Ata não publicada" />
-                                </RadioGroup>
-                            </FormControl>
-                        </Grid>
-                    }
-                </>
-            )
-        } else {
-            conteudoProposta = (
-                <>
-                    <GridPequenosAtributos item xs={6}>
-                        <TypographyTituloAtributo variant='body1'>
-                            Solicitante:
-                        </TypographyTituloAtributo>
-                        <TypographyTextoColecao variant='body1' >
-                            {proposta.solicitante}
-                        </TypographyTextoColecao>
-                    </GridPequenosAtributos>
-                    <GridPequenosAtributos item xs={6}>
-                        <TypographyTituloAtributo variant='body1'>
-                            Score:
-                        </TypographyTituloAtributo>
-                        <TypographyTextoColecao variant='body1' >
-                            {proposta.score}
-                        </TypographyTextoColecao>
-                    </GridPequenosAtributos>
-                    <Grid item xs={12}>
-                        <StyledBenefitTable title="Benefícios reais" atributos={proposta.beneficiosReais} />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <StyledBenefitTable title="Benefícios potenciais" atributos={proposta.beneficiosPotenciais} />
-                    </Grid>
-                    {proposta.tabelasCusto &&
-                        <Grid item xs={12}>
-                            <TabelasCusto tabelasCusto={proposta.tabelasCusto} />
-                        </Grid>
-                    }
-                    <Grid item xs={12}>
-                        <GridLinkTypograpfy variant='body2' width="auto !important">
-                            <Link to={linkProposta} onClick={() => { setProposta(proposta) }}>Ver mais</Link>
-                        </GridLinkTypograpfy>
-                    </Grid>
-                </>
-
-            )
-
-        }
-
-
         return (
-            <Proposta proposta={proposta} conteudoProposta={conteudoProposta} />
+            <Proposta key={index} proposta={proposta} linkProposta={linkProposta} eUmaPauta={eUmaPauta} index={index} avaliandoProcesso={props.avaliandoProcesso} verificacaoInputs={props.verificacaoInputs} />
         )
     })
 
@@ -303,8 +254,147 @@ function Propostas(props: { listaPropostas: [], tipoColecao: string, avaliandoPr
     )
 }
 
-function Proposta(props: { proposta: any, conteudoProposta: JSX.Element }) {
+function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boolean, index: number, avaliandoProcesso: boolean, verificacaoInputs: boolean[] }) {
+    const [expanded, setExpanded] = useState({ expanded: false })
+    const [conteudoProposta, setConteudoProposta] = useState<JSX.Element>()
+
     const proposta = props.proposta
+    const forumEscolhido = (props.eUmaPauta ? "comissão" : "direção geral")
+
+    const conteudoPropostaInicio = (
+        <>
+            <GridPequenosAtributos item xs={6}>
+                <TypographyTituloAtributo variant='body1'>
+                    Solicitante:
+                </TypographyTituloAtributo>
+                <TypographyTextoColecao variant='body1' >
+                    {proposta.solicitante}
+                </TypographyTextoColecao>
+            </GridPequenosAtributos>
+            <GridPequenosAtributos item xs={6}>
+                <TypographyTituloAtributo variant='body1'>
+                    Score:
+                </TypographyTituloAtributo>
+                <TypographyTextoColecao variant='body1' >
+                    {proposta.score}
+                </TypographyTextoColecao>
+            </GridPequenosAtributos>
+            <Grid item xs={12}>
+                <StyledBenefitTable title="Benefícios reais" atributos={proposta.beneficiosReais} />
+            </Grid>
+            <Grid item xs={12}>
+                <StyledBenefitTable title="Benefícios potenciais" atributos={proposta.beneficiosPotenciais} />
+            </Grid>
+            {proposta.tabelasCusto &&
+                <Grid item xs={12}>
+                    <TabelasCusto tabelasCusto={proposta.tabelasCusto} />
+                </Grid>
+            }
+            <Grid item xs={12}>
+                <GridLinkTypograpfy variant='body2' width="auto !important">
+                    <Link to={props.linkProposta} onClick={() => { setProposta(proposta) }}>Ver mais</Link>
+                </GridLinkTypograpfy>
+            </Grid>
+        </>
+    )
+
+    const conteudoPropostaAvaliacao = (
+        <>
+            <Grid item xs>
+                <TypographyTituloDecisao variant='body1'>
+                    Parecer da {forumEscolhido}
+                </TypographyTituloDecisao>
+                <FormControl >
+                    <RadioGroup sx={{ flexDirection: "row" }}>
+                        <FormControlLabel className={`radioButtonStatus${props.index}`} value="Canceled" control={<Radio sx={{ '&.Mui-checked': { color: '#FF1616' } }} />} label="Canceled" />
+                        <FormControlLabel className={`radioButtonStatus${props.index}`} value="Business Case" control={<Radio sx={{ '&.Mui-checked': { color: "#FFD600" } }} />} label="Business Case" />
+                        <FormControlLabel className={`radioButtonStatus${props.index}`} value="To do" control={<Radio sx={{ '&.Mui-checked': { color: "#00612E" } }} />} label="To do" />
+                        <FormControlLabel className={`radioButtonStatus${props.index}`} value="Assesment" control={<Radio sx={{ '&.Mui-checked': { color: "#595959" } }} />} label="Assesment" />
+                    </RadioGroup>
+                    {/* <FormHelperText id="component-error-text">{ formStatusPreenchido? "Nenhum status selecionado" : ""}</FormHelperText> */}
+                </FormControl>
+            </Grid>
+            {!props.eUmaPauta ?
+                <>
+                    <Grid item xs={4}>
+                        <TypographyTituloDecisao variant='body1'>
+                            Número da ATA da DG:
+                        </TypographyTituloDecisao>
+                        <TextField type='number' id={`inputNumeroATA${props.index}`} onChange={checarValor} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TypographyTituloDecisao variant='body1'>
+                            Documento de aprovação:
+                        </TypographyTituloDecisao>
+                        <TextField
+                            placeholder='vai ter o inputzao de arquivo'
+                            multiline
+                            sx={{ width: "100%" }}
+                            id={`inputDocumento${props.index}`}
+                        />
+                    </Grid>
+                </>
+                :
+                <Grid item xs={12}>
+                    <TypographyTituloDecisao variant='body1'>
+                        Forma de publicação
+                    </TypographyTituloDecisao>
+                    <FormControl>
+                        <RadioGroup sx={{ flexDirection: "row" }}>
+                            <FormControlLabel className={`radioButtonATA${props.index}`} value="Ata publicada" control={<Radio />} label="Ata publicada" />
+                            <FormControlLabel className={`radioButtonATA${props.index}`} value="Ata não publicada" control={<Radio />} label="Ata não publicada" />
+                        </RadioGroup>
+                    </FormControl>
+                </Grid>
+            }
+            <Grid item xs={12}>
+                <TypographyTituloDecisao variant='body1'>
+                    Comentários
+                </TypographyTituloDecisao>
+                <TextField
+                    placeholder='Coloque aqui pontos interessantes que foram discutidos durante a reunião'
+                    multiline
+                    rows={5}
+                    sx={{ width: "100%" }}
+                />
+            </Grid>
+        </>
+    )
+
+    useEffect(() => {
+        console.log(props.verificacaoInputs);
+    }, [props.verificacaoInputs])
+
+    useEffect(() => {
+        setConteudoProposta(conteudoPropostaInicio)
+    }, [])
+
+    useEffect(() => {
+        if (props.avaliandoProcesso) {
+            if (props.index == 0) {
+                setExpanded({ expanded: true })
+            }
+            setConteudoProposta(conteudoPropostaAvaliacao)
+        } else {
+            setExpanded({ expanded: false })
+            setConteudoProposta(conteudoPropostaInicio)
+        }
+    }, [props.avaliandoProcesso])
+
+    function checarValor(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const valor = Number.parseInt(e.target.value)
+        if (valor < 0) {
+            e.target.value = 0 + ""
+        }
+    }
+
+    function setProposta(proposta: any) {
+        localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta))
+    }
+
+    function mudarAcordeon() {
+        setExpanded({ expanded: !expanded.expanded })
+    }
 
     return (
         <Grid item xs={12} key={proposta.id} sx={{ backgroundColor: "transparent" }}>
@@ -313,8 +403,9 @@ function Proposta(props: { proposta: any, conteudoProposta: JSX.Element }) {
                     <BoxCorStatus sx={{ backgroundColor: getColorStatus(proposta.status) }} ></BoxCorStatus>
                 </Grid>
                 <Grid item xs={11.8} borderRadius="0 10px 10px 0" padding="15px">
-                    <AccordionProposta>
+                    <AccordionProposta {...expanded} >
                         <AccordionSummary
+                            onClick={mudarAcordeon}
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
@@ -323,7 +414,7 @@ function Proposta(props: { proposta: any, conteudoProposta: JSX.Element }) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <Grid container spacing={2}>
-                                {props.conteudoProposta}
+                                {conteudoProposta}
                             </Grid>
                         </AccordionDetails>
                     </AccordionProposta>

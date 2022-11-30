@@ -453,7 +453,7 @@ function ModalClassificacaoDemanda(props: Modal) {
         const BUsBeneficiadas = document.getElementsByClassName("buBeneficiada")
 
         for (let buBeneficiada of BUsBeneficiadas) {
-            if ((buBeneficiada.children[0].children[0] as any).checked) {
+            if ((buBeneficiada.children[0].children[0] as HTMLInputElement).checked) {
                 props.abrirFeedback(conteudoFeedbackFinalizacao)
             }
         }
