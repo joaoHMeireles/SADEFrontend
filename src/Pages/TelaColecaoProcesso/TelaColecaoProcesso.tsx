@@ -3,7 +3,7 @@ import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb"
 import Toolbar from "../../Components/Toolbar/Toolbar"
 import {
     AccordionDetails, AccordionSummary, Box, Container, FormControl, FormControlLabel, Grid, RadioGroup,
-    Typography, Radio, TextField, FormHelperText
+    Typography, Radio, TextField, FormHelperText, Snackbar, Alert
 } from "@mui/material"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
@@ -21,6 +21,8 @@ import { StyledBenefitTable, TabelasCusto } from "../TelaProcesso/TelaProcesso";
 export default function TelaColecaoProcesso() {
     const [avaliandoProcesso, setAvaliandoProcesso] = useState(false)
     const [verificacaoInputs, setVerificacaoInputs] = useState<boolean[]>([])
+    const [feedbackAberto, setFeedbackAberto] = useState(false)
+    const [conteudoFeedback, setConteudoFeedback] = useState(<div />)
     const location = useLocation().pathname
     const idLocalStorage = localStorage.getItem(`${getComponentName(location)}ESCOLHIDA`)
     const informacaoColecaoProcesso = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
@@ -30,43 +32,56 @@ export default function TelaColecaoProcesso() {
         setVerificacaoInputs([])
     }
 
+    function abrirFeedback(conteudo: JSX.Element) {
+        setConteudoFeedback(conteudo)
+        setFeedbackAberto(true)
+    }
+
     function aprovarProcesso() {
         const novaVerificacaoInputs: boolean[] = []
+        let feedback: JSX.Element
+
         for (let i = 0; i < informacaoColecaoProcesso.propostas.length; i++) {
             const radioButtonsStatus = document.getElementsByClassName(`radioButtonStatus${i}`)
-            let statusPreenchido = checarRadioButtons(radioButtonsStatus)
+            const statusPreenchido = checarRadioButtons(radioButtonsStatus)
             const primeiroIndexProposta = i * 10
 
             novaVerificacaoInputs[primeiroIndexProposta + 1] = (statusPreenchido ? true : false)
-
-            // console.log(radioButtonsStatus);
 
             if (informacaoColecaoProcesso.tipo == "Pauta") {
                 const radioButtonsAta = document.getElementsByClassName(`radioButtonATA${i}`)
                 let tipoAtaPreenchida = checarRadioButtons(radioButtonsAta)
 
                 novaVerificacaoInputs[primeiroIndexProposta + 2] = (tipoAtaPreenchida ? true : false)
-
-                // console.log(radioButtonsAta);
-
             } else {
                 const inputNumeroAta = (document.getElementById(`inputNumeroATA${i}`) as HTMLInputElement).value
                 const inputDocumentoAprovacao = (document.getElementById(`inputDocumento${i}`) as HTMLInputElement).value
 
                 novaVerificacaoInputs[primeiroIndexProposta + 3] = (inputNumeroAta != "" ? true : false)
                 novaVerificacaoInputs[primeiroIndexProposta + 4] = (inputDocumentoAprovacao != "" ? true : false)
-
-                // console.log(inputNumeroAta);
-                // console.log(inputDocumentoAprovacao);
             }
         }
 
         setVerificacaoInputs(novaVerificacaoInputs)
-
-        // console.log(verificacaoInputs);
-
+        
         if (checarPreenchimento(novaVerificacaoInputs)) {
             fecharAvaliacao()
+
+            feedback = (
+                <Alert onClose={() => { setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                    {informacaoColecaoProcesso.tipo} avaliada com sucesso
+                </Alert>
+            )
+
+            abrirFeedback(feedback)
+        } else {
+            feedback = (
+                <Alert onClose={() => { setFeedbackAberto(false) }} severity="error" sx={{ width: '100%' }}>
+                    Algum campo está em branco
+                </Alert>
+            )
+
+            abrirFeedback(feedback)
         }
 
     }
@@ -102,6 +117,14 @@ export default function TelaColecaoProcesso() {
                 <BoxContainer>
                     <Container>
                         <ContainerColecaoProcesso informacaoColecaoProcesso={informacaoColecaoProcesso} avaliandoProcesso={avaliandoProcesso} verificacaoInputs={verificacaoInputs} />
+                        <Snackbar
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                            autoHideDuration={3000}
+                            open={feedbackAberto}
+                            onClose={() => { setFeedbackAberto(false) }}
+                        >
+                            {conteudoFeedback}
+                        </Snackbar>
                     </Container>
                 </BoxContainer>
             </BoxConteudo>
@@ -256,8 +279,10 @@ function Propostas(props: { listaPropostas: [], tipoColecao: string, avaliandoPr
 
 function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boolean, index: number, avaliandoProcesso: boolean, verificacaoInputs: boolean[] }) {
     const [expanded, setExpanded] = useState({ expanded: false })
-    const [conteudoProposta, setConteudoProposta] = useState<JSX.Element>()
     const [mensagemErroStatus, setMenssagemErroStatus] = useState("")
+    const [mensagemErroATA, setMenssagemErroATA] = useState("")
+    const [objetoErroNumeroATA, setObjetoErroNumeroATA] = useState({ error: false, helperText: "" })
+    const [objetoErroDocumento, setObjetoErroDocumento] = useState({ error: false, helperText: "" })
     const verificacaoInputs = props.verificacaoInputs
     const proposta = props.proposta
     const forumEscolhido = (props.eUmaPauta ? "comissão" : "direção geral")
@@ -321,18 +346,13 @@ function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boole
                         <TypographyTituloDecisao variant='body1'>
                             Número da ATA da DG:
                         </TypographyTituloDecisao>
-                        <TextField type='number' id={`inputNumeroATA${props.index}`} onChange={checarValor} />
+                        <TextField type='number' id={`inputNumeroATA${props.index}`} onChange={checarValor} {...objetoErroNumeroATA} />
                     </Grid>
                     <Grid item xs={12}>
                         <TypographyTituloDecisao variant='body1'>
                             Documento de aprovação:
                         </TypographyTituloDecisao>
-                        <TextField
-                            placeholder='vai ter o inputzao de arquivo'
-                            multiline
-                            sx={{ width: "100%" }}
-                            id={`inputDocumento${props.index}`}
-                        />
+                        <TextField placeholder='vai ter o inputzao de arquivo' multiline sx={{ width: "100%" }} id={`inputDocumento${props.index}`} {...objetoErroDocumento} />
                     </Grid>
                 </>
                 :
@@ -340,11 +360,12 @@ function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boole
                     <TypographyTituloDecisao variant='body1'>
                         Forma de publicação
                     </TypographyTituloDecisao>
-                    <FormControl>
+                    <FormControl error>
                         <RadioGroup sx={{ flexDirection: "row" }}>
                             <FormControlLabel className={`radioButtonATA${props.index}`} value="Ata publicada" control={<Radio />} label="Ata publicada" />
                             <FormControlLabel className={`radioButtonATA${props.index}`} value="Ata não publicada" control={<Radio />} label="Ata não publicada" />
                         </RadioGroup>
+                        <FormHelperText id="component-error-text">{mensagemErroATA}</FormHelperText>
                     </FormControl>
                 </Grid>
             }
@@ -361,44 +382,51 @@ function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boole
             </Grid>
         </>
     )
-    
+
     useEffect(() => {
         if (verificacaoInputs == null || verificacaoInputs.length == 0) {
-            console.log("retornou");
-
             return
         }
 
         const primeiroIndexProposta = props.index * 10
 
-        console.log(verificacaoInputs[primeiroIndexProposta + 1]);
-
-
         if (!verificacaoInputs[primeiroIndexProposta + 1]) {
-            console.log("passou aqui", props.index);
-            
             setMenssagemErroStatus("Nenhum status selecionado")
+            setExpanded({ expanded: true })
         } else {
-            console.log("passou aqui de novo", props.index);
             setMenssagemErroStatus("")
         }
 
-        // console.log(props.verificacaoInputs);
+        if (props.eUmaPauta) {
+            if (!verificacaoInputs[primeiroIndexProposta + 2]) {
+                setMenssagemErroATA("Escolha uma das opções")
+                setExpanded({ expanded: true })
+            } else {
+                setMenssagemErroATA("")
+            }
+        } else {
+            if (!verificacaoInputs[primeiroIndexProposta + 3]) {
+                setObjetoErroNumeroATA({ error: true, helperText: "Informe o número da ATA da Direção Geral" })
+                setExpanded({ expanded: true })
+            } else {
+                setObjetoErroNumeroATA({ error: false, helperText: "" })
+            }
+
+            if (!verificacaoInputs[primeiroIndexProposta + 4]) {
+                setObjetoErroDocumento({ error: true, helperText: "Adicione o documento de aprovação" })
+                setExpanded({ expanded: true })
+            } else {
+                setObjetoErroDocumento({ error: false, helperText: "" })
+            }
+        }
+
     }, [verificacaoInputs])
 
     useEffect(() => {
-        setConteudoProposta(conteudoPropostaInicio)
-    }, [])
-
-    useEffect(() => {
-        if (props.avaliandoProcesso) {
-            if (props.index == 0) {
-                setExpanded({ expanded: true })
-            }
-            setConteudoProposta(conteudoPropostaAvaliacao)
+        if (props.avaliandoProcesso && props.index == 0) {
+            setExpanded({ expanded: true })
         } else {
             setExpanded({ expanded: false })
-            setConteudoProposta(conteudoPropostaInicio)
         }
     }, [props.avaliandoProcesso])
 
@@ -435,7 +463,11 @@ function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boole
                         </AccordionSummary>
                         <AccordionDetails>
                             <Grid container spacing={2}>
-                                {conteudoProposta}
+                                {!props.avaliandoProcesso ?
+                                    conteudoPropostaInicio
+                                    :
+                                    conteudoPropostaAvaliacao
+                                }
                             </Grid>
                         </AccordionDetails>
                     </AccordionProposta>

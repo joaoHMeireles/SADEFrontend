@@ -69,7 +69,7 @@ export default function TelaComponenteProcesso(props: any) {
                         </Dialog>
                         <Snackbar
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                            autoHideDuration={30000}
+                            autoHideDuration={3000}
                             open={feedbackAberto}
                             onClose={() => { setFeedbackAberto(false) }}
                         >
