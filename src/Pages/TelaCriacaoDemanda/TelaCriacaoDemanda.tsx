@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
-import AnexosDemanda from "../../Components/AnexosDemanda/AnexosDemanda";
+import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
 import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import Box from '@mui/material/Box';
@@ -38,6 +38,7 @@ export default function TelaCriacaoDemanda() {
                     {valor == 1 ? <Tab icon={<LensRoundedIcon sx={{ color: "#00579d" }} />}></Tab> : segundo ? <Tab icon={<LensRoundedIcon sx={{ color: "#90caf9" }} />}></Tab> : <Tab icon={<PanoramaFishEyeRoundedIcon />}></Tab>}
                     {valor == 2 ? <Tab icon={<LensRoundedIcon sx={{ color: "#00579d" }} />}></Tab> : <Tab icon={<PanoramaFishEyeRoundedIcon />}></Tab>}
                 </Tabs>
+
                 {valor == 0 &&
                     <>
                         <InformacaoGeral />
@@ -47,6 +48,7 @@ export default function TelaCriacaoDemanda() {
                         </Box>
                     </>
                 }
+
                 {
                     valor == 1 &&
                     <>
@@ -57,7 +59,10 @@ export default function TelaCriacaoDemanda() {
                             </Box>
                             <Box sx={{ width: "50%", display: "flex", justifyContent: "end", alignItems: "center" }}>
                                 <BotaoSecundario sx={{ width: "25%", minWidth: "auto", height: "3rem", marginRight: 3 }} variant="outlined" startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} onClick={() => { setValor(valor - 1) }} />}>Voltar</BotaoSecundario>
-                                <BotaoPrimario sx={{ width: "25%", minWidth: "auto", height: "3rem" }} variant='contained' endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />} onClick={() => { setValor(2) }}>Proximo</BotaoPrimario>
+                                <BotaoPrimario sx={{ width: "25%", minWidth: "auto", height: "3rem" }} variant='contained' endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />} onClick={() => {
+                                    setValor(2)
+                                    setSegundo(true)
+                                }}>Proximo</BotaoPrimario>
                             </Box>
                         </Box>
                     </>
@@ -65,7 +70,7 @@ export default function TelaCriacaoDemanda() {
 
                 {valor == 2 &&
                     <>
-                        <AnexosDemanda />
+                        <InputAnexos />
                         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", marginTop: 5 }}>
                             <Box sx={{ width: "50%", display: "flex", justifyContent: "start", alignItems: "center" }}>
                                 <BotaoTerciario sx={{ width: "25%", minWidth: "auto", height: "3rem" }} variant='outlined' onClick={() => { window.location.href = "/home" }}>Cancelar</BotaoTerciario>
@@ -77,6 +82,7 @@ export default function TelaCriacaoDemanda() {
                         </Box>
                     </>
                 }
+
             </Container>
         </BoxConteudo >
     )

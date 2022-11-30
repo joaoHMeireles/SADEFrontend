@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 
 import AttachFileRoundedIcon from '@mui/icons-material/AttachFileRounded';
 
-export default function AnexosDemanda() {
+export default function InputAnexos() {
     return (
         <>
             <Box sx={{ width: "100%", height: "10vh", display: "flex", justifyContent: "center", alignItems: "center", border: "2px solid #595959", borderRadius: "4px", marginTop: 3 }}>
@@ -14,7 +14,7 @@ export default function AnexosDemanda() {
                         <input hidden accept="image/*" multiple type="file" />
                         <AttachFileRoundedIcon />
                     </Button>
-                    <Typography sx={{ marginLeft: 3 }}>
+                    <Typography sx={{ marginLeft: 3, color: "#595959" }}>
                         Nenhum item selecionado
                     </Typography>
                 </Box>
