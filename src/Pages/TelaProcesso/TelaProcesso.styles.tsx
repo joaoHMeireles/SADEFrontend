@@ -1,7 +1,7 @@
 import { Box, Grid, IconButton, TableCell, tableCellClasses, TableContainer, TableRow, TextField ,Typography } from '@mui/material'
+import CircleIcon from '@mui/icons-material/Circle';
 import { BotaoPrimario, BotaoSecundario, BotaoTerciario, BoxConteudo } from '../App.styles';
 import { styled } from '@mui/material/styles';
-import CircleIcon from '@mui/icons-material/Circle';
 const styledBox = styled(Box)
 const styledGrid = styled(Grid)
 const styledTypography = styled(Typography)

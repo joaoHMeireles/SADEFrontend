@@ -1,26 +1,39 @@
 import { Link, useLocation } from "react-router-dom";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb"
 import Toolbar from "../../Components/Toolbar/Toolbar"
-import { Accordion, AccordionDetails, AccordionSummary, Box, Container, Grid, Typography } from "@mui/material"
+import { AccordionDetails, AccordionSummary, Box, Container, FormControl, FormControlLabel, FormLabel, Grid, RadioGroup, Typography, Radio, TextField } from "@mui/material"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { BoxBandeira, BoxContainerBandeira, BoxCorStatus, BoxHeader, BoxTrianguloBandeira, GridContainer, GridContainerHeader, 
-    GridPequenosAtributos, GridTitulo, TypographyTexto, TypographyTituloAtributo } from "../TelaProcesso/TelaProcesso.styles"
+import {
+    BotaoPrimarioHeader,
+    BotaoSecundarioHeader,
+    BoxBandeira, BoxBotoes, BoxContainerBandeira, BoxCorStatus, BoxHeader, BoxTrianguloBandeira, GridContainerHeader,
+    GridPequenosAtributos, GridTitulo, TypographyTituloAtributo
+} from "../TelaProcesso/TelaProcesso.styles"
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from "../App.styles"
 import { GridLinkTypograpfy } from "../../Components/ComponenteProcesso/ComponenteProcesso.styles";
+import { SetStateAction, useEffect, useState } from "react";
+import { AccordionProposta, GridContainerColecao, GridFooter, GridProposta, TypographyTextoColecao, TypographyTituloDecisao } from "./TelaColecaoProcesso.styles";
+import { StyledBenefitTable, TabelasCusto } from "../TelaProcesso/TelaProcesso";
 
 
 export default function TelaColecaoProcesso() {
+    const [avaliandoProcesso, setAvaliandoProcesso] = useState(false)
     const location = useLocation().pathname
     const idLocalStorage = localStorage.getItem(`${getComponentName(location)}ESCOLHIDA`)
     const informacaoColecaoProcesso = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
-    
+
+    function aprovarProcesso() {
+        //fazer toda a bagaça de verificação e cadastro aqui
+        setAvaliandoProcesso(false)
+    }
+
     return (
         <>
-            <Header informacaoColecaoProcesso={informacaoColecaoProcesso} />
+            <Header informacaoColecaoProcesso={informacaoColecaoProcesso} avaliandoProcesso={avaliandoProcesso} setAvaliandoProcesso={setAvaliandoProcesso} aprovarProcesso={aprovarProcesso} />
             <BoxConteudo >
                 <BoxContainer>
                     <Container>
-                        <ContainerColecaoProcesso informacaoColecaoProcesso={informacaoColecaoProcesso} />
+                        <ContainerColecaoProcesso informacaoColecaoProcesso={informacaoColecaoProcesso} avaliandoProcesso={avaliandoProcesso} />
                     </Container>
                 </BoxContainer>
             </BoxConteudo>
@@ -36,20 +49,28 @@ export default function TelaColecaoProcesso() {
  * @param props 
  * @returns 
  */
-function Header(props: { informacaoColecaoProcesso: any }) {
+function Header(props: { informacaoColecaoProcesso: any, avaliandoProcesso: boolean, setAvaliandoProcesso: React.Dispatch<SetStateAction<boolean>>, aprovarProcesso: Function }) {
+    const [acao, setAcao] = useState("")
     const informacaoColecaoProcesso = props.informacaoColecaoProcesso
     const tipoColecao = informacaoColecaoProcesso.tipo
     const dataReuniao = informacaoColecaoProcesso.dataReuniao
-    let acao = ""
 
-    if (tipoColecao == "Pauta") {
-        if (dataReuniao < new Date()) {
-            acao = "Informar parecer"
+    useEffect(() => {
+        if (tipoColecao == "Pauta") {
+            // if (dataReuniao <= new Date()) {
+            setAcao("Informar parecer")
+            // }
+        } else {
+            if (!informacaoColecaoProcesso.numeroAtaDG) {
+                setAcao("Finalizar processo")
+            }
         }
-    } else {
-        if (!informacaoColecaoProcesso.numeroAtaDG) {
-            acao = "Finalizar processo"
-        }
+    }, [])
+
+
+
+    function aprovarProcesso() {
+        props.aprovarProcesso()
     }
 
     /**
@@ -61,9 +82,16 @@ function Header(props: { informacaoColecaoProcesso: any }) {
             <BoxHeader>
                 <Breadcrumb />
                 {acao != "" &&
-                    <Box>
-                        <BotaoPrimario variant="contained"> {acao}</BotaoPrimario>
-                    </Box>
+                    <>
+                        {!props.avaliandoProcesso ?
+                            <BotaoPrimario variant="contained" onClick={() => { props.setAvaliandoProcesso(true) }}> {acao}</BotaoPrimario>
+                            :
+                            <BoxBotoes>
+                                <BotaoPrimarioHeader variant='contained' onClick={aprovarProcesso}> Aprovar</BotaoPrimarioHeader>
+                                <BotaoSecundarioHeader variant='outlined' onClick={() => { props.setAvaliandoProcesso(false) }}> Cancelar</BotaoSecundarioHeader>
+                            </BoxBotoes>
+                        }
+                    </>
                 }
             </BoxHeader>
             <Toolbar />
@@ -76,12 +104,12 @@ function Header(props: { informacaoColecaoProcesso: any }) {
  * @param props 
  * @returns 
  */
-function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any }) {
+function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any, avaliandoProcesso: boolean }) {
     const informacaoColecaoProcesso = props.informacaoColecaoProcesso
     const dataFormatada = new Date(informacaoColecaoProcesso.dataReuniao).toLocaleDateString()
 
     return (
-        <GridContainer container sx={{ padding: "9px 25px 25px 25px" }} spacing={2}>
+        <GridContainerColecao container spacing={2}>
             <Grid item xs={12}>
                 <GridContainerHeader container>
                     <GridTitulo item xs={10} >
@@ -100,25 +128,25 @@ function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any }) {
             <Grid item xs={12}>
                 Propostas:
             </Grid>
-            <Propostas listaPropostas={informacaoColecaoProcesso.propostas} />
-            {informacaoColecaoProcesso.tipo == "ATA" &&
-                <Grid item xs={12} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Box sx={{ display: "flex" }}>
+            <Propostas listaPropostas={informacaoColecaoProcesso.propostas} tipoColecao={informacaoColecaoProcesso.tipo} avaliandoProcesso={props.avaliandoProcesso} />
+            {(informacaoColecaoProcesso.tipo == "ATA" && !props.avaliandoProcesso) &&
+                <GridFooter item xs={12}>
+                    <Box display={"flex"}>
                         {informacaoColecaoProcesso.numeroAtaDG &&
                             <>
                                 <TypographyTituloAtributo variant='body1'>
                                     Número da ATA da DG:
                                 </TypographyTituloAtributo>
-                                <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+                                <TypographyTextoColecao variant='body1'>
                                     {informacaoColecaoProcesso.numeroAtaDG}
-                                </TypographyTexto>
+                                </TypographyTextoColecao>
                             </>
                         }
                     </Box>
                     <BotaoTerciario variant="outlined">Ver anexos  </BotaoTerciario>
-                </Grid>
+                </GridFooter>
             }
-        </GridContainer>
+        </GridContainerColecao>
     )
 }
 
@@ -140,68 +168,131 @@ function Bandeira(props: { cor: string }) {
     )
 }
 
-function Propostas(props: { listaPropostas: [] }) {
+function Propostas(props: { listaPropostas: [], tipoColecao: string, avaliandoProcesso: boolean }) {
+    const eUmaPauta = (props.tipoColecao == "Pauta" ? true : false)
+    const forumEscolhido = (eUmaPauta ? "comissão" : "direção geral")
+
     function setProposta(proposta: any) {
         localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta))
     }
 
-    const propostas = props.listaPropostas.map((proposta: any) => {
+    const propostas = props.listaPropostas.map((proposta: any, index: number) => {
+        console.log(proposta);
+
         const location = useLocation().pathname
         const linkProposta = location + "/proposal"
+        let acordionProps = { defaultExpanded: false }
+        if (index == 0) {
+            acordionProps.defaultExpanded = true
+        }
+        let conteudoProposta: JSX.Element
+
+        if (props.avaliandoProcesso) {
+            conteudoProposta = (
+                <>
+                    <Grid item xs={6.5}>
+                        <TypographyTituloDecisao variant='body1'>
+                            Parecer da {forumEscolhido}
+                        </TypographyTituloDecisao>
+                        <FormControl>
+                            <RadioGroup sx={{ flexDirection: "row" }}>
+                                <FormControlLabel value="Canceled" control={<Radio sx={{ '&.Mui-checked': { color: '#FF1616' } }} />} label="Canceled" />
+                                <FormControlLabel value="Business Case" control={<Radio sx={{ '&.Mui-checked': { color: "#FFD600" } }} />} label="Business Case" />
+                                <FormControlLabel value="To do" control={<Radio sx={{ '&.Mui-checked': { color: "#00612E" } }} />} label="To do" />
+                                <FormControlLabel value="Assesment" control={<Radio sx={{ '&.Mui-checked': { color: "#595959" } }} />} label="Assesment" />
+                            </RadioGroup>
+                        </FormControl>
+                    </Grid>
+                    {!eUmaPauta &&
+                        <>
+                            <Grid item xs={4}>
+                                <TypographyTituloDecisao variant='body1'>
+                                    Número da ATA da DG:
+                                </TypographyTituloDecisao>
+                                <TextField type='number' />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TypographyTituloDecisao variant='body1'>
+                                    Documento de aprovação:
+                                </TypographyTituloDecisao>
+                                <TextField
+                                    placeholder='vai ter o inputzao de arquivo'
+                                    multiline
+                                    sx={{ width: "100%" }}
+                                />
+                            </Grid>
+                        </>
+                    }
+                    <Grid item xs={12}>
+                        <TypographyTituloDecisao variant='body1'>
+                            Comentários
+                        </TypographyTituloDecisao>
+                        <TextField
+                            placeholder='Coloque aqui pontos interessantes que foram discutidos durante a reunião'
+                            multiline
+                            rows={5}
+                            sx={{ width: "100%" }}
+                        />
+                    </Grid>
+                    {eUmaPauta &&
+                        <Grid item xs={12}>
+                            <TypographyTituloDecisao variant='body1'>
+                                Forma de publicação
+                            </TypographyTituloDecisao>
+                            <FormControl>
+                                <RadioGroup sx={{ flexDirection: "row" }}>
+                                    <FormControlLabel value="Ata publicada" control={<Radio />} label="Ata publicada" />
+                                    <FormControlLabel value="Ata não publicada" control={<Radio />} label="Ata não publicada" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+                    }
+                </>
+            )
+        } else {
+            conteudoProposta = (
+                <>
+                    <GridPequenosAtributos item xs={6}>
+                        <TypographyTituloAtributo variant='body1'>
+                            Solicitante:
+                        </TypographyTituloAtributo>
+                        <TypographyTextoColecao variant='body1' >
+                            {proposta.solicitante}
+                        </TypographyTextoColecao>
+                    </GridPequenosAtributos>
+                    <GridPequenosAtributos item xs={6}>
+                        <TypographyTituloAtributo variant='body1'>
+                            Score:
+                        </TypographyTituloAtributo>
+                        <TypographyTextoColecao variant='body1' >
+                            {proposta.score}
+                        </TypographyTextoColecao>
+                    </GridPequenosAtributos>
+                    <Grid item xs={12}>
+                        <StyledBenefitTable title="Benefícios reais" atributos={proposta.beneficiosReais} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <StyledBenefitTable title="Benefícios potenciais" atributos={proposta.beneficiosPotenciais} />
+                    </Grid>
+                    {proposta.tabelasCusto &&
+                        <Grid item xs={12}>
+                            <TabelasCusto tabelasCusto={proposta.tabelasCusto} />
+                        </Grid>
+                    }
+                    <Grid item xs={12}>
+                        <GridLinkTypograpfy variant='body2' width="auto !important">
+                            <Link to={linkProposta} onClick={() => { setProposta(proposta) }}>Ver mais</Link>
+                        </GridLinkTypograpfy>
+                    </Grid>
+                </>
+
+            )
+
+        }
+
 
         return (
-            <Grid item xs={12} key={proposta.id} sx={{ backgroundColor: "transparent" }}>
-                <Grid container sx={{ boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)", borderRadius: "10px" }}>
-                    <Grid item xs={0.2}>
-                        <BoxCorStatus sx={{ backgroundColor: getColorStatus(proposta.status) }} ></BoxCorStatus>
-                    </Grid>
-                    <Grid item xs={11.8} sx={{ borderRadius: "0 10px 10px 0" }}>
-                        <Accordion sx={{ backgroundColor: "transparent", "& .MuiPaper-root": { borderRadius: "0 10px 10px 0", boxShadow: "none" }, boxShadow: "none" }}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                            >
-                                <Typography>{proposta.titulo}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Grid container>
-                                    <GridPequenosAtributos item xs={4}>
-                                        <TypographyTituloAtributo variant='body1'>
-                                            Solicitante:
-                                        </TypographyTituloAtributo>
-                                        <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
-                                            {proposta.solicitante}
-                                        </TypographyTexto>
-                                    </GridPequenosAtributos>
-                                    <GridPequenosAtributos item xs={4}>
-                                        <TypographyTituloAtributo variant='body1'>
-                                            Tamanho:
-                                        </TypographyTituloAtributo>
-                                        <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
-                                            {proposta.tamanho}
-                                        </TypographyTexto>
-                                    </GridPequenosAtributos>
-                                    <GridPequenosAtributos item xs={4}>
-                                        <TypographyTituloAtributo variant='body1'>
-                                            Score:
-                                        </TypographyTituloAtributo>
-                                        <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
-                                            {proposta.score}
-                                        </TypographyTexto>
-                                    </GridPequenosAtributos>
-                                    <Grid item xs={12}>
-                                        <GridLinkTypograpfy variant='body2' sx={{ width: "auto !important" }}>
-                                            <Link to={linkProposta} onClick={() => { setProposta(proposta) }}>Ver mais</Link>
-                                        </GridLinkTypograpfy>
-                                    </Grid>
-                                </Grid>
-                            </AccordionDetails>
-                        </Accordion>
-                    </Grid>
-                </Grid>
-            </Grid>
-
+            <Proposta proposta={proposta} conteudoProposta={conteudoProposta} />
         )
     })
 
@@ -209,6 +300,36 @@ function Propostas(props: { listaPropostas: [] }) {
         <>
             {propostas}
         </>
+    )
+}
+
+function Proposta(props: { proposta: any, conteudoProposta: JSX.Element }) {
+    const proposta = props.proposta
+
+    return (
+        <Grid item xs={12} key={proposta.id} sx={{ backgroundColor: "transparent" }}>
+            <GridProposta container >
+                <Grid item xs={0.2}>
+                    <BoxCorStatus sx={{ backgroundColor: getColorStatus(proposta.status) }} ></BoxCorStatus>
+                </Grid>
+                <Grid item xs={11.8} borderRadius="0 10px 10px 0" padding="15px">
+                    <AccordionProposta>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography variant="h5" sx={{ color: "#595959" }}>{proposta.titulo}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Grid container spacing={2}>
+                                {props.conteudoProposta}
+                            </Grid>
+                        </AccordionDetails>
+                    </AccordionProposta>
+                </Grid>
+            </GridProposta>
+        </Grid>
     )
 }
 

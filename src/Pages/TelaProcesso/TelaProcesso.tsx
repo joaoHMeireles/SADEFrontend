@@ -7,7 +7,7 @@ import Toolbar from '../../Components/Toolbar/Toolbar';
 import SelectBox from '../../Components/SelectBox/SelectBox';
 import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
-    Alert, Badge, Box, Checkbox, Container, Dialog, Divider, FormControl, FormControlLabel, FormGroup, FormHelperText, Grid, IconButton, List, ListItem, ListItemIcon, SelectChangeEvent,
+    Alert, Avatar, Badge, Box, Checkbox, Container, Dialog, Divider, FormControl, FormControlLabel, FormGroup, FormHelperText, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, SelectChangeEvent,
     Snackbar, Table, TableBody, TableHead, TableRow, TextField, Typography
 } from '@mui/material';
 import ChatBubbleRounded from '@mui/icons-material/ChatBubbleRounded';
@@ -16,6 +16,15 @@ import LanRoundedIcon from '@mui/icons-material/LanRounded';
 import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import CloseIcon from '@mui/icons-material/Close';
+import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
+import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
+import SlideshowRoundedIcon from '@mui/icons-material/SlideshowRounded';
+import FolderZipRoundedIcon from '@mui/icons-material/FolderZipRounded';
+import BackupTableRoundedIcon from '@mui/icons-material/BackupTableRounded';
+import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
+import CoPresentRoundedIcon from '@mui/icons-material/CoPresentRounded'
+import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';;
+import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles"
@@ -1001,114 +1010,25 @@ function InfoComercial(props: { processo: any }) {
         tabelasCusto: props.processo.tabelasCusto
     }
 
-    const beneficiosReais = atributos.beneficiosReais.map((beneficio: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
-        const valor = "R$" + beneficio.valor
-
-        return (
-            <TableRowEstilizada key={index}>
-                <TableCellEstilzada align='center' >{beneficio.descricao}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{beneficio.moeda}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{valor}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{beneficio.memoriaCalculo}</TableCellEstilzada>
-            </TableRowEstilizada>
-        )
-    })
-
-    const potencialBenefits = atributos.beneficiosPotenciais.map((beneficio: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
-        const valor = "R$" + beneficio.valor
-
-        return (
-            <TableRowEstilizada key={index}>
-                <TableCellEstilzada align='center' >{beneficio.descricao}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{beneficio.moeda}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{valor}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{beneficio.memoriaCalculo}</TableCellEstilzada>
-            </TableRowEstilizada>
-        )
-    })
-
-    let elentosTabelasCusto
+    let elementosTabelaCusto
 
     if (atributos.tabelasCusto) {
-        elentosTabelasCusto = atributos.tabelasCusto.map((tabela: any, index: number) => {
-            let tempoTotal = 0, valorTotal = 0
-
-            const linhasTabela = tabela.linhas.map((linha: { recurso: string, esforco: number, valor: number }, indexLinha: number) => {
-                const total = linha.valor * linha.esforco
-                tempoTotal += linha.esforco
-                valorTotal += total
-
-                return (
-                    <TableRowEstilizada key={indexLinha}>
-                        <TableCellEstilzada align='center'>{linha.recurso}</TableCellEstilzada>
-                        <TableCellEstilzada align='center'>{linha.esforco}{!tabela.isLicenca ? "h" : ""} </TableCellEstilzada>
-                        <TableCellEstilzada align='center'>R$ {linha.valor}</TableCellEstilzada>
-                        <TableCellEstilzada align='center'>R$ {total}</TableCellEstilzada>
-                    </TableRowEstilizada>
-                )
-            })
-
-            const centrosCusto = tabela.centrosCusto.map((centroDeCusto: any, indexcentroCusto: number) => {
-                const porcentagem = centroDeCusto.porcentagem * 100
-
-                return (
-                    <Typography key={indexcentroCusto} variant="body1" sx={{ color: "#595959" }}>
-                        {centroDeCusto.centroCusto} - {porcentagem}%
-                    </Typography>
-                )
-            })
-
-            return (
-                <BoxTabelaCusto key={index} >
-                    <BoxContainerTabela>
-                        <TableContainerEstilizado sx={{ width: "auto" }}>
-                            <TableHead >
-                                <TableRow >
-                                    <TableCellEstilzada align='center'>{tabela.titulo}</TableCellEstilzada>
-                                    <TableCellEstilzada align='center'>{!tabela.isLicenca ? "Esforço" : "Licenças"}</TableCellEstilzada>
-                                    <TableCellEstilzada align='center'>Valor </TableCellEstilzada>
-                                    <TableCellEstilzada align='center'>Total</TableCellEstilzada>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody >
-                                {linhasTabela}
-                                <TableRowEstilizada>
-                                    <TableCellEstilzada align='center'> <b>Total {tabela.titulo}</b></TableCellEstilzada>
-                                    <TableCellEstilzada align='center'> <b>{tempoTotal}{!tabela.isLicenca ? "h" : ""}</b></TableCellEstilzada>
-                                    <TableCellEstilzada align='center'> </TableCellEstilzada>
-                                    <TableCellEstilzada align='center'> <b>R$ {valorTotal}</b></TableCellEstilzada>
-                                </TableRowEstilizada>
-                            </TableBody>
-                        </TableContainerEstilizado>
-                    </BoxContainerTabela>
-                    <BoxContainerCentroCusto>
-                        <BoxTitulosCentroCusto>
-                            Centros de Custo
-                        </BoxTitulosCentroCusto>
-                        <BoxCentroCusto>
-                            {centrosCusto}
-                        </BoxCentroCusto>
-                    </BoxContainerCentroCusto>
-                </BoxTabelaCusto>
-            )
-        })
+        elementosTabelaCusto = <TabelasCusto tabelasCusto={atributos.tabelasCusto}/>
     }
-
-
 
     return (
         <Box sx={{ marginY: "20px" }}>
             <TypographyTitulo variant='h5'>
                 Informações Comerciais
             </TypographyTitulo>
-            <StyledBenefitTable title='Benefícios reais' valuesList={beneficiosReais} />
-            <StyledBenefitTable title='Benefícios potenciais' valuesList={potencialBenefits} />
+            <StyledBenefitTable title='Benefícios reais' atributos={atributos.beneficiosReais} />
+            <StyledBenefitTable title='Benefícios potenciais' atributos={atributos.beneficiosPotenciais} />
             {atributos.tabelasCusto &&
                 <BoxTabela>
                     <TypographyTitulo variant='subtitle1'>
                         Tabelas de custo
                     </TypographyTitulo>
-                    {elentosTabelasCusto}
+                    {elementosTabelaCusto}
                 </BoxTabela>
             }
         </Box >
@@ -1116,7 +1036,19 @@ function InfoComercial(props: { processo: any }) {
 
 }
 
-function StyledBenefitTable(props: { valuesList: [], title: string }) {
+export function StyledBenefitTable(props: { atributos: any[], title: string }) {
+
+    const beneficios = props.atributos.map((beneficio: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
+        const valor = "R$" + beneficio.valor
+
+        return (
+            <TableRowEstilizada key={index}>
+                <TableCellEstilzada align='center' >{beneficio.descricao}</TableCellEstilzada>
+                <TableCellEstilzada align='center'>{beneficio.moeda}</TableCellEstilzada>
+                <TableCellEstilzada align='center'>{valor}</TableCellEstilzada>
+            </TableRowEstilizada>
+        )
+    })
 
     return (
         <BoxTabela sx={{ marginBottom: "30px" }}>
@@ -1130,15 +1062,87 @@ function StyledBenefitTable(props: { valuesList: [], title: string }) {
                             <TableCellEstilzada align='center'>Descrição</TableCellEstilzada>
                             <TableCellEstilzada align='center'>Moeda</TableCellEstilzada>
                             <TableCellEstilzada align='center'>Valor</TableCellEstilzada>
-                            <TableCellEstilzada align='center'>Memória de cálculo</TableCellEstilzada>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {props.valuesList}
+                        {beneficios}
                     </TableBody>
                 </Table>
             </TableContainerEstilizado>
         </BoxTabela>
+    )
+}
+
+export function TabelasCusto(props: { tabelasCusto: any[] }) {
+    const elementosTabelaCusto = props.tabelasCusto.map((tabela: any, index: number) => {
+        let tempoTotal = 0, valorTotal = 0
+
+        const linhasTabela = tabela.linhas.map((linha: { recurso: string, esforco: number, valor: number }, indexLinha: number) => {
+            const total = linha.valor * linha.esforco
+            tempoTotal += linha.esforco
+            valorTotal += total
+
+            return (
+                <TableRowEstilizada key={indexLinha}>
+                    <TableCellEstilzada align='center'>{linha.recurso}</TableCellEstilzada>
+                    <TableCellEstilzada align='center'>{linha.esforco}{!tabela.isLicenca ? "h" : ""} </TableCellEstilzada>
+                    <TableCellEstilzada align='center'>R$ {linha.valor}</TableCellEstilzada>
+                    <TableCellEstilzada align='center'>R$ {total}</TableCellEstilzada>
+                </TableRowEstilizada>
+            )
+        })
+
+        const centrosCusto = tabela.centrosCusto.map((centroDeCusto: any, indexcentroCusto: number) => {
+            const porcentagem = centroDeCusto.porcentagem * 100
+
+            return (
+                <Typography key={indexcentroCusto} variant="body1" sx={{ color: "#595959" }}>
+                    {centroDeCusto.centroCusto} - {porcentagem}%
+                </Typography>
+            )
+        })
+
+        return (
+            <BoxTabelaCusto key={index} >
+                <BoxContainerTabela>
+                    <TableContainerEstilizado sx={{ width: "auto" }}>
+                        <TableHead >
+                            <TableRow >
+                                <TableCellEstilzada align='center'>{tabela.titulo}</TableCellEstilzada>
+                                <TableCellEstilzada align='center'>{!tabela.isLicenca ? "Esforço" : "Licenças"}</TableCellEstilzada>
+                                <TableCellEstilzada align='center'>Valor </TableCellEstilzada>
+                                <TableCellEstilzada align='center'>Total</TableCellEstilzada>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody >
+                            {linhasTabela}
+                            <TableRowEstilizada>
+                                <TableCellEstilzada align='center'> <b>Total {tabela.titulo}</b></TableCellEstilzada>
+                                <TableCellEstilzada align='center'> <b>{tempoTotal}{!tabela.isLicenca ? "h" : ""}</b></TableCellEstilzada>
+                                <TableCellEstilzada align='center'> </TableCellEstilzada>
+                                <TableCellEstilzada align='center'> <b>R$ {valorTotal}</b></TableCellEstilzada>
+                            </TableRowEstilizada>
+                        </TableBody>
+                    </TableContainerEstilizado>
+                </BoxContainerTabela>
+                <BoxContainerCentroCusto>
+                    <BoxTitulosCentroCusto>
+                        Centros de Custo
+                    </BoxTitulosCentroCusto>
+                    <BoxCentroCusto>
+                        {centrosCusto}
+                    </BoxCentroCusto>
+                </BoxContainerCentroCusto>
+            </BoxTabelaCusto>
+        )
+
+    })
+
+
+    return (
+        <>
+            {elementosTabelaCusto}
+        </>
     )
 }
 
@@ -1208,15 +1212,21 @@ function Footer(props: {
         const anexos = props.anexos.map((anexo: any, index: number) => {
             const iconeAnexo = getIcone(anexo.nome)
 
-
             return (
-                <>
-                    <Grid key={index} item xs={12}>
+                <ListItem key={index}
+                    secondaryAction={
+                        <IconButton edge="end" aria-label="delete" type='submit' onClick={() => { window.open('C:\\Users\\joao_hm_silva\\Pictures\\Saved Pictures\\fror.jpg') }}>
+                            <FileDownloadRoundedIcon />
+                        </IconButton>
+                    }>
+                    <ListItemIcon>
                         {iconeAnexo}
-                        {anexo.nome}
-                    </Grid>
-                    <Divider />
-                </>
+                    </ListItemIcon>
+                    <ListItemText
+                        primary={anexo.nome}
+                        secondary={"Anexado por Emanuel da Costa em 20/12/22 as 15:07"}
+                    />
+                </ListItem >
             )
         })
 
@@ -1230,9 +1240,9 @@ function Footer(props: {
                         <CloseIcon />
                     </IconButton>
                 </BoxTituloModal>
-                <Grid container spacing={2}>
+                <List>
                     {anexos}
-                </Grid>
+                </List>
             </BoxConteudoModal>
         )
 
@@ -1355,12 +1365,24 @@ function getTituloBotao(botao: string) {
     return (titulos as any)[nomeBotao]
 }
 
-function getIcone(nomeAnexo: string){
+function getIcone(nomeAnexo: string) {
     const iconesAnexos = {
-        //ver icones que podem aparecer como opção de tipos de arquivos
+        txt: <ArticleRoundedIcon />,
+        doc: <ArticleRoundedIcon />,
+        ocx: <ArticleRoundedIcon />,
+        xls: <BackupTableRoundedIcon />,
+        pdf: <PictureAsPdfRoundedIcon />,
+        ppt: <CoPresentRoundedIcon />,
+        png: <ImageRoundedIcon />,
+        jpg: <ImageRoundedIcon />,
+        peg: <ImageRoundedIcon />,
+        avi: <SlideshowRoundedIcon />,
+        zip: <FolderZipRoundedIcon />,
     }
+    const tipoAnexo = nomeAnexo.slice(nomeAnexo.length - 3)
+    const valor = (iconesAnexos as any)[tipoAnexo]
 
-    return (iconesAnexos as any)[nomeAnexo]
+    return (valor != null ? valor : <InsertDriveFileRoundedIcon />)
 }
 
 function urlValida(urlString: string) {
