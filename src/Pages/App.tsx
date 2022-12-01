@@ -14,7 +14,7 @@ import Chats from "./Chats/Chats";
 import { Box } from "@mui/material";
 import { MainBox } from "./App.styles";
 import { ThemeProvider } from "@emotion/react";
-import { MainTheme, ContentTheme } from "../Themes";
+import { MainTheme, ContentTheme } from "../themes";
 import Historico from "./Historico/Historico";
 
 export default function App() {
@@ -38,7 +38,7 @@ export default function App() {
       <ThemeProvider theme={MainTheme}>
         <Navbar aberto={aberto} setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />
         <Box sx={{ marginLeft: aberto ? `${tamanhoSideBar}px` : 0, display: "flex" }} >
-          <Sidebar aberto={aberto} tamanho={tamanhoSideBar} setAberto={setAberto} />
+          <Sidebar aberto={aberto} tamanho={tamanhoSideBar} setAberto={setAberto} setFiltro={setFiltrar}/>
           <MainBox component="main" sx={{ marginLeft: tamanhoSideBar }}>
             <Toolbar />
             <ThemeProvider theme={ContentTheme}>

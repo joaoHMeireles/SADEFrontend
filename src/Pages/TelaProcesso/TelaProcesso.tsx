@@ -1,15 +1,17 @@
 import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
+import { getNomeComponente, getCorStatus, getCorTipo, urlValida } from '../../utils';
 import Dayjs from '@date-io/dayjs'
 import { sessaoTI, TipoComponenteProcesso } from '../../DefinitionFiles/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
 import SelectBox from '../../Components/SelectBox/SelectBox';
+import TabelaBeneficios from '../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios';
+import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
 import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
-    Alert, Badge, Box, Checkbox, Container, Dialog, Divider, FormControl, FormControlLabel, FormGroup, FormHelperText, 
-    Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, SelectChangeEvent, Snackbar, Table, TableBody, 
-    TableHead, TableRow, TextField, Typography
+    Alert, Badge, Box, Checkbox, Container, Dialog, Divider, FormControl, FormControlLabel, FormGroup, FormHelperText,
+    Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, SelectChangeEvent, Snackbar, TextField, Typography
 } from '@mui/material';
 import ChatBubbleRounded from '@mui/icons-material/ChatBubbleRounded';
 import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
@@ -31,14 +33,13 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles"
 import {
     BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBandeira, BoxBotoes,
-    BoxCentroCusto, BoxContainerBandeira, BoxContainerCentroCusto, BoxContainerTabela, BoxCorStatus, BoxHeader,
-    BoxTabela, BoxTabelaCusto, BoxTitulosCentroCusto, BoxTrianguloBandeira, CircleIconPonto, GridContainer,
-    GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo, TableCellEstilzada,
-    TableContainerEstilizado, TableRowEstilizada, TypographyTexto, TypographyTitulo, TypographyTituloAtributo,
-    BoxConteudoModal, TypographyTituloModal, BoxTituloModal, BoxBotoesModal, BoxInfoModal, BoxAtributosInfoModal,
-    BoxAtributoInfoModal, BoxBUsBeneficiadas, BoxSessaoTI, BoxAtributoInfoModal2, TypographyTituloAtributoModal,
-    TextFieldURL
+    BoxContainerBandeira, BoxCorStatus, BoxHeader, BoxTabela, BoxTrianguloBandeira, CircleIconPonto, GridContainer,
+    GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo, TypographyTexto, 
+    TypographyTitulo, TypographyTituloAtributo, BoxConteudoModal, TypographyTituloModal, BoxTituloModal, 
+    BoxBotoesModal, BoxInfoModal, BoxAtributosInfoModal, BoxAtributoInfoModal, BoxBUsBeneficiadas, BoxSessaoTI, 
+    BoxAtributoInfoModal2, TypographyTituloAtributoModal, TextFieldURL
 } from './TelaProcesso.styles';
+
 
 
 
@@ -55,7 +56,7 @@ export default function TelaComponenteProcesso(props: any) {
     const [feedbackAberto, setFeedbackAberto] = useState(false)
     const [conteudoFeedback, setConteudoFeedback] = useState(<div />)
     const location = useLocation().pathname
-    const idLocalStorage = localStorage.getItem(`${getComponentName(location)}ESCOLHIDA`)
+    const idLocalStorage = localStorage.getItem(`${getNomeComponente(location)}ESCOLHIDA`)
     const informacaoProcesso = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
 
     return (
@@ -816,7 +817,7 @@ function ContainerProcesso(props: {
     return (
         <GridContainer container>
             <Grid item xs={0.2}>
-                <BoxCorStatus sx={{ backgroundColor: getColorStatus(informacaoProcesso?.status) }} ></BoxCorStatus>
+                <BoxCorStatus sx={{ backgroundColor: getCorStatus(informacaoProcesso?.status) }} ></BoxCorStatus>
             </Grid>
             <GridInformacao item xs={11.8}>
                 <GridContainerHeader container>
@@ -826,7 +827,7 @@ function ContainerProcesso(props: {
                         </Typography>
                     </GridTitulo>
                     <Grid item xs={2}>
-                        <Bandeira cor={getColorType(informacaoProcesso?.tipo)} />
+                        <Bandeira cor={getCorTipo(informacaoProcesso?.tipo)} />
                     </Grid>
                 </GridContainerHeader>
                 <Divider />
@@ -939,7 +940,7 @@ function InfoGeral(props: { processo: any }) {
     const beneficiosQualitativos = props.processo.beneficiosQualitativos.map((beneficio: string, index: number) => {
 
         return (
-            <ListItem sx={{textAlign: "justify"}}>
+            <ListItem sx={{ textAlign: "justify" }}>
                 <ListItemIcon>
                     <CircleIconPonto />
                 </ListItemIcon>
@@ -1042,8 +1043,8 @@ function InfoComercial(props: { processo: any }) {
             <TypographyTitulo variant='h5'>
                 Informações Comerciais
             </TypographyTitulo>
-            <StyledBenefitTable title='Benefícios reais' atributos={atributos.beneficiosReais} />
-            <StyledBenefitTable title='Benefícios potenciais' atributos={atributos.beneficiosPotenciais} />
+            <TabelaBeneficios title='Benefícios reais' atributos={atributos.beneficiosReais} />
+            <TabelaBeneficios title='Benefícios potenciais' atributos={atributos.beneficiosPotenciais} />
             {atributos.tabelasCusto &&
                 <BoxTabela>
                     <TypographyTitulo variant='subtitle1'>
@@ -1055,116 +1056,6 @@ function InfoComercial(props: { processo: any }) {
         </Box >
     )
 
-}
-
-export function StyledBenefitTable(props: { atributos: any[], title: string }) {
-
-    const beneficios = props.atributos.map((beneficio: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
-        const valor = "R$" + beneficio.valor
-
-        return (
-            <TableRowEstilizada key={index}>
-                <TableCellEstilzada align='center' >{beneficio.descricao}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{beneficio.moeda}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{valor}</TableCellEstilzada>
-            </TableRowEstilizada>
-        )
-    })
-
-    return (
-        <BoxTabela sx={{ marginBottom: "30px" }}>
-            <TypographyTitulo variant='subtitle1'>
-                {props.title}
-            </TypographyTitulo>
-            <TableContainerEstilizado sx={{ width: "40vw" }}>
-                <Table aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCellEstilzada align='center'>Descrição</TableCellEstilzada>
-                            <TableCellEstilzada align='center'>Moeda</TableCellEstilzada>
-                            <TableCellEstilzada align='center'>Valor</TableCellEstilzada>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {beneficios}
-                    </TableBody>
-                </Table>
-            </TableContainerEstilizado>
-        </BoxTabela>
-    )
-}
-
-export function TabelasCusto(props: { tabelasCusto: any[] }) {
-    const elementosTabelaCusto = props.tabelasCusto.map((tabela: any, index: number) => {
-        let tempoTotal = 0, valorTotal = 0
-
-        const linhasTabela = tabela.linhas.map((linha: { recurso: string, esforco: number, valor: number }, indexLinha: number) => {
-            const total = linha.valor * linha.esforco
-            tempoTotal += linha.esforco
-            valorTotal += total
-
-            return (
-                <TableRowEstilizada key={indexLinha}>
-                    <TableCellEstilzada align='center'>{linha.recurso}</TableCellEstilzada>
-                    <TableCellEstilzada align='center'>{linha.esforco}{!tabela.isLicenca ? "h" : ""} </TableCellEstilzada>
-                    <TableCellEstilzada align='center'>R$ {linha.valor}</TableCellEstilzada>
-                    <TableCellEstilzada align='center'>R$ {total}</TableCellEstilzada>
-                </TableRowEstilizada>
-            )
-        })
-
-        const centrosCusto = tabela.centrosCusto.map((centroDeCusto: any, indexcentroCusto: number) => {
-            const porcentagem = centroDeCusto.porcentagem * 100
-
-            return (
-                <Typography key={indexcentroCusto} variant="body1" sx={{ color: "#595959" }}>
-                    {centroDeCusto.centroCusto} - {porcentagem}%
-                </Typography>
-            )
-        })
-
-        return (
-            <BoxTabelaCusto key={index} >
-                <BoxContainerTabela>
-                    <TableContainerEstilizado sx={{ width: "auto" }}>
-                        <TableHead >
-                            <TableRow >
-                                <TableCellEstilzada align='center'>{tabela.titulo}</TableCellEstilzada>
-                                <TableCellEstilzada align='center'>{!tabela.isLicenca ? "Esforço" : "Licenças"}</TableCellEstilzada>
-                                <TableCellEstilzada align='center'>Valor </TableCellEstilzada>
-                                <TableCellEstilzada align='center'>Total</TableCellEstilzada>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody >
-                            {linhasTabela}
-                            <TableRowEstilizada>
-                                <TableCellEstilzada align='center'> <b>Total {tabela.titulo}</b></TableCellEstilzada>
-                                <TableCellEstilzada align='center'> <b>{tempoTotal}{!tabela.isLicenca ? "h" : ""}</b></TableCellEstilzada>
-                                <TableCellEstilzada align='center'> </TableCellEstilzada>
-                                <TableCellEstilzada align='center'> <b>R$ {valorTotal}</b></TableCellEstilzada>
-                            </TableRowEstilizada>
-                        </TableBody>
-                    </TableContainerEstilizado>
-                </BoxContainerTabela>
-                <BoxContainerCentroCusto>
-                    <BoxTitulosCentroCusto>
-                        Centros de Custo
-                    </BoxTitulosCentroCusto>
-                    <BoxCentroCusto>
-                        {centrosCusto}
-                    </BoxCentroCusto>
-                </BoxContainerCentroCusto>
-            </BoxTabelaCusto>
-        )
-
-    })
-
-
-    return (
-        <>
-            {elementosTabelaCusto}
-        </>
-    )
 }
 
 function Contextualizacao(props: {
@@ -1287,16 +1178,6 @@ function Footer(props: {
     )
 }
 
-function getComponentName(location: string) {
-    const fragmentoTipo = location.slice(location.length - 6)
-
-    if (fragmentoTipo == "demand") {
-        return "DEMANDA"
-    } else {
-        return "PROPOSTA"
-    }
-}
-
 /**
  * Função que retorna o Título formatado de acordo com o atributo de um processo 
  * que receber
@@ -1331,33 +1212,6 @@ function getNomeAtributo(nomeAtributo: any) {
 
     if (nomeAtributo != undefined) {
         return (nomesAtributos as any)[nomeAtributo]
-    }
-}
-
-function getColorStatus(status: string | undefined) {
-    const coresStatus = {
-        Backlog: "#DDDDDD",
-        Assesment: "#595959",
-        BusinessCase: "#FFD600",
-        Canceled: "#FF1616",
-        ToDo: "#00612e"
-    }
-
-    if (status != undefined) {
-        return (coresStatus as any)[status]
-    }
-}
-
-function getColorType(tipo: string | undefined) {
-    const coresStatus = {
-        Demanda: "#00579D",
-        Proposta: "#6AACDA",
-        Pauta: "#2382BA",
-        ATA: "#28B9DA"
-    }
-
-    if (tipo != undefined) {
-        return (coresStatus as any)[tipo]
     }
 }
 
@@ -1404,18 +1258,6 @@ function getIcone(nomeAnexo: string) {
     const valor = (iconesAnexos as any)[tipoAnexo]
 
     return (valor != null ? valor : <InsertDriveFileRoundedIcon />)
-}
-
-function urlValida(urlString: string) {
-    var inputElement = document.createElement('input');
-    inputElement.type = 'url';
-    inputElement.value = urlString;
-
-    if (!inputElement.checkValidity()) {
-        return false;
-    } else {
-        return true;
-    }
 }
 
 interface Modal {

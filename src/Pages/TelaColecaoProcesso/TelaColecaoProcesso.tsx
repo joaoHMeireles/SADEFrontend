@@ -1,6 +1,9 @@
+import { getNomeComponente, getCorStatus, getCorTipo } from '../../utils';
 import { Link, useLocation } from "react-router-dom";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb"
 import Toolbar from "../../Components/Toolbar/Toolbar"
+import TabelaBeneficios from '../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios';
+import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
 import {
     AccordionDetails, AccordionSummary, Box, Container, FormControl, FormControlLabel, Grid, RadioGroup,
     Typography, Radio, TextField, FormHelperText, Snackbar, Alert
@@ -16,7 +19,7 @@ import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from "../App
 import { GridLinkTypograpfy } from "../../Components/ComponenteProcesso/ComponenteProcesso.styles";
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { AccordionProposta, GridContainerColecao, GridFooter, GridProposta, TypographyTextoColecao, TypographyTituloDecisao } from "./TelaColecaoProcesso.styles";
-import { StyledBenefitTable, TabelasCusto } from "../TelaProcesso/TelaProcesso";
+
 
 export default function TelaColecaoProcesso() {
     const [avaliandoProcesso, setAvaliandoProcesso] = useState(false)
@@ -24,7 +27,7 @@ export default function TelaColecaoProcesso() {
     const [feedbackAberto, setFeedbackAberto] = useState(false)
     const [conteudoFeedback, setConteudoFeedback] = useState(<div />)
     const location = useLocation().pathname
-    const idLocalStorage = localStorage.getItem(`${getComponentName(location)}ESCOLHIDA`)
+    const idLocalStorage = localStorage.getItem(`${getNomeComponente(location)}ESCOLHIDA`)
     const informacaoColecaoProcesso = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
 
     function fecharAvaliacao() {
@@ -209,7 +212,7 @@ function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any, avali
                         </Typography>
                     </GridTitulo>
                     <Grid item xs={2}>
-                        <Bandeira cor={getColorType(informacaoColecaoProcesso.tipo)} />
+                        <Bandeira cor={getCorTipo(informacaoColecaoProcesso.tipo)} />
                     </Grid>
                 </GridContainerHeader>
             </Grid>
@@ -298,10 +301,10 @@ function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boole
                 </TypographyTextoColecao>
             </GridPequenosAtributos>
             <Grid item xs={12}>
-                <StyledBenefitTable title="Benefícios reais" atributos={proposta.beneficiosReais} />
+                <TabelaBeneficios title="Benefícios reais" atributos={proposta.beneficiosReais} />
             </Grid>
             <Grid item xs={12}>
-                <StyledBenefitTable title="Benefícios potenciais" atributos={proposta.beneficiosPotenciais} />
+                <TabelaBeneficios title="Benefícios potenciais" atributos={proposta.beneficiosPotenciais} />
             </Grid>
             {proposta.tabelasCusto &&
                 <Grid item xs={12}>
@@ -441,7 +444,7 @@ function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boole
         <Grid item xs={12} key={proposta.id} sx={{ backgroundColor: "transparent" }}>
             <GridProposta container >
                 <Grid item xs={0.2}>
-                    <BoxCorStatus sx={{ backgroundColor: getColorStatus(proposta.status) }} ></BoxCorStatus>
+                    <BoxCorStatus sx={{ backgroundColor: getCorStatus(proposta.status) }} ></BoxCorStatus>
                 </Grid>
                 <Grid item xs={11.8} borderRadius="0 10px 10px 0" padding="15px">
                     <AccordionProposta {...expanded} >
@@ -467,41 +470,4 @@ function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boole
             </GridProposta>
         </Grid>
     )
-}
-
-function getComponentName(location: string) {
-    const fragmentoTipo = location.slice(location.length - 3)
-
-    if (fragmentoTipo == "ata") {
-        return "ATA"
-    } else {
-        return "PAUTA"
-    }
-}
-
-function getColorType(tipo: string | undefined) {
-    const coresStatus = {
-        Demanda: "#00579D",
-        Proposta: "#6AACDA",
-        Pauta: "#2382BA",
-        ATA: "#28B9DA"
-    }
-
-    if (tipo != undefined) {
-        return (coresStatus as any)[tipo]
-    }
-}
-
-function getColorStatus(status: string | undefined) {
-    const coresStatus = {
-        Backlog: "#DDDDDD",
-        Assesment: "#595959",
-        BusinessCase: "#FFD600",
-        Canceled: "#FF1616",
-        ToDo: "#00612e"
-    }
-
-    if (status != undefined) {
-        return (coresStatus as any)[status]
-    }
 }
