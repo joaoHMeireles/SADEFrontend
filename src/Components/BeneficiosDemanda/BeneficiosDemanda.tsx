@@ -1,295 +1,378 @@
 import { useState } from "react";
 
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from "@mui/material/FormControlLabel"
-import MenuItem from '@mui/material/MenuItem';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
 
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 
 import {
-    BoxContainerGeral, BoxTitulos, TypographyTitulos, BoxIcones,
-    BoxContainerGeralBeneficio, BoxContainerDivisorio, BoxInputsAcima,
-    BoxValorMensal, TypographyLabels, BoxInputs, BoxInputsAbaixo,
-    BoxObrigacaoLegal, BoxDescricaoRequeistosControle, BoxFrequencia
+  BoxContainerGeral,
+  BoxTitulos,
+  TypographyTitulos,
+  BoxIcones,
+  BoxContainerGeralBeneficio,
+  BoxContainerDivisorio,
+  BoxInputsAcima,
+  BoxValorMensal,
+  TypographyLabels,
+  BoxInputs,
+  BoxInputsAbaixo,
+  BoxObrigacaoLegal,
+  BoxDescricaoRequeistosControle,
+  BoxFrequencia,
 } from "./BeneficiosDemanda.styles";
 
 export default function BeneficiosDemanda() {
-    const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState(1)
-    const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState(1)
-    const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState(1)
+  const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState(1);
+  const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] =
+    useState(1);
+  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] =
+    useState(1);
 
-    return (
-        <>
-            <BoxContainerGeral>
-                <BoxTitulos>
-                    <TypographyTitulos>
-                        Benefício Real
-                    </TypographyTitulos>
-                </BoxTitulos>
-                <BeneficiosReais numeroBeneficios={numeroBeneficiosReais} />
-                <BoxIcones>
-                    {numeroBeneficiosReais > 1 ? <RemoveRoundedIcon sx={{ fontSize: "2rem", marginRight: 3, cursor: "pointer" }} onClick={() => { setNumeroBeneficiosReais(numeroBeneficiosReais - 1) }} /> : ""}
-                    <AddRoundedIcon sx={{ fontSize: "2rem", cursor: "pointer" }} onClick={() => { setNumeroBeneficiosReais(numeroBeneficiosReais + 1) }} />
-                </BoxIcones>
-                <BoxTitulos>
-                    <TypographyTitulos>
-                        Benefício Potencial
-                    </TypographyTitulos>
-                </BoxTitulos>
-                <BeneficiosPotenciais numeroBeneficios={numeroBeneficiosPotenciais} />
-                <BoxIcones>
-                    {numeroBeneficiosPotenciais > 1 ? <RemoveRoundedIcon sx={{ fontSize: "2rem", marginRight: 3, cursor: "pointer" }} onClick={() => { setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais - 1) }} /> : ""}
-                    <AddRoundedIcon sx={{ fontSize: "2rem", cursor: "pointer" }} onClick={() => { setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais + 1) }} />
-                </BoxIcones>
-                <BoxTitulos>
-                    <TypographyTitulos >
-                        Benefício Qualitativo
-                    </TypographyTitulos>
-                </BoxTitulos>
-                <BeneficiosQualitativos numeroBeneficios={numeroBeneficiosQualitativos} />
-                <BoxIcones>
-                    {numeroBeneficiosQualitativos > 1 ? <RemoveRoundedIcon sx={{ fontSize: "2rem", marginRight: 3, cursor: "pointer" }} onClick={() => { setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos - 1) }} /> : ""}
-                    <AddRoundedIcon sx={{ fontSize: "2rem", cursor: "pointer" }} onClick={() => { setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos + 1) }} />
-                </BoxIcones>
-            </BoxContainerGeral>
-        </>
-    )
+  return (
+    <>
+      <BoxContainerGeral>
+        <BoxTitulos>
+          <TypographyTitulos>Benefício Real</TypographyTitulos>
+        </BoxTitulos>
+        <BeneficiosReais numeroBeneficios={numeroBeneficiosReais} />
+        <BoxIcones>
+          {numeroBeneficiosReais > 1 ? (
+            <RemoveRoundedIcon
+              sx={{
+                fontSize: "2rem",
+                marginRight: 3,
+                cursor: "pointer",
+                color: "#595959",
+              }}
+              onClick={() => {
+                setNumeroBeneficiosReais(numeroBeneficiosReais - 1);
+              }}
+            />
+          ) : (
+            ""
+          )}
+          <AddRoundedIcon
+            sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+            onClick={() => {
+              setNumeroBeneficiosReais(numeroBeneficiosReais + 1);
+            }}
+          />
+        </BoxIcones>
+        <BoxTitulos>
+          <TypographyTitulos>Benefício Potencial</TypographyTitulos>
+        </BoxTitulos>
+        <BeneficiosPotenciais numeroBeneficios={numeroBeneficiosPotenciais} />
+        <BoxIcones>
+          {numeroBeneficiosPotenciais > 1 ? (
+            <RemoveRoundedIcon
+              sx={{
+                fontSize: "2rem",
+                marginRight: 3,
+                cursor: "pointer",
+                color: "#595959",
+              }}
+              onClick={() => {
+                setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais - 1);
+              }}
+            />
+          ) : (
+            ""
+          )}
+          <AddRoundedIcon
+            sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+            onClick={() => {
+              setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais + 1);
+            }}
+          />
+        </BoxIcones>
+        <BoxTitulos>
+          <TypographyTitulos>Benefício Qualitativo</TypographyTitulos>
+        </BoxTitulos>
+        <BeneficiosQualitativos
+          numeroBeneficios={numeroBeneficiosQualitativos}
+        />
+        <BoxIcones>
+          {numeroBeneficiosQualitativos > 1 ? (
+            <RemoveRoundedIcon
+              sx={{
+                fontSize: "2rem",
+                marginRight: 3,
+                cursor: "pointer",
+                color: "#595959",
+              }}
+              onClick={() => {
+                setNumeroBeneficiosQualitativos(
+                  numeroBeneficiosQualitativos - 1
+                );
+              }}
+            />
+          ) : (
+            ""
+          )}
+          <AddRoundedIcon
+            sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+            onClick={() => {
+              setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos + 1);
+            }}
+          />
+        </BoxIcones>
+      </BoxContainerGeral>
+    </>
+  );
 }
 
 function BeneficiosReais(props: { numeroBeneficios: number }) {
-    let beneficios: JSX.Element[] = [];
+  let beneficios: JSX.Element[] = [];
 
-    for (let i = 0; i < props.numeroBeneficios; i++) {
-        beneficios.push(<BeneficioReal />)
-    }
+  for (let i = 0; i < props.numeroBeneficios; i++) {
+    beneficios.push(<BeneficioReal />);
+  }
 
-    return (
-        <>
-            {beneficios}
-        </>
-    )
+  return <>{beneficios}</>;
 }
 
 function BeneficiosPotenciais(props: { numeroBeneficios: number }) {
-    let beneficios: JSX.Element[] = [];
+  let beneficios: JSX.Element[] = [];
 
-    for (let i = 0; i < props.numeroBeneficios; i++) {
-        beneficios.push(<BeneficioPotencial />)
-    }
+  for (let i = 0; i < props.numeroBeneficios; i++) {
+    beneficios.push(<BeneficioPotencial />);
+  }
 
-    return (
-        <>
-            {beneficios}
-        </>
-    )
+  return <>{beneficios}</>;
 }
 
 function BeneficiosQualitativos(props: { numeroBeneficios: number }) {
-    let beneficios: JSX.Element[] = [];
+  let beneficios: JSX.Element[] = [];
 
-    for (let i = 0; i < props.numeroBeneficios; i++) {
-        beneficios.push(<BeneficioQualitativo />)
-    }
+  for (let i = 0; i < props.numeroBeneficios; i++) {
+    beneficios.push(<BeneficioQualitativo />);
+  }
 
-    return (
-        <>
-            {beneficios}
-        </>
-    )
+  return <>{beneficios}</>;
 }
 
 function BeneficioReal() {
+  const [moeda, setMoeda] = useState("BRL");
 
-    const [moeda, setMoeda] = useState("BRL");
+  const moedas = [
+    {
+      value: "USD",
+      label: "$",
+    },
+    {
+      value: "EUR",
+      label: "€",
+    },
+    {
+      value: "BTC",
+      label: "฿",
+    },
+    {
+      value: "JPY",
+      label: "¥",
+    },
+  ];
 
-    const moedas = [
-        {
-            value: 'USD',
-            label: '$',
-        },
-        {
-            value: 'EUR',
-            label: '€',
-        },
-        {
-            value: 'BTC',
-            label: '฿',
-        },
-        {
-            value: 'JPY',
-            label: '¥',
-        },
-    ];
-
-    return (
-        <>
-            <BoxContainerGeralBeneficio>
-                <BoxContainerDivisorio>
-                    <BoxInputsAcima>
-                        <BoxValorMensal>
-                            <TypographyLabels>Valor Mensal: </TypographyLabels>
-                        </BoxValorMensal>
-                        <BoxInputs>
-                            <TextField sx={{ width: "30%", marginRight: 5 }} />
-                            <TextField
-                                sx={{ width: "10%" }}
-                                id="outlined-select-currency"
-                                select
-                                label="Moeda"
-                                value={moeda}
-                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setMoeda(event.target.value)}
-                            >
-                                {moedas.map((option) => (
-                                    <MenuItem key={option.value} value={option.value}>
-                                        {option.value}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                        </BoxInputs>
-                    </BoxInputsAcima>
-                    <BoxInputsAbaixo>
-                        <TypographyLabels>Descrição: </TypographyLabels>
-                        <TextField multiline
-                            rows={7}
-                            maxRows={Infinity} sx={{ width: "100%" }}></TextField>
-                    </BoxInputsAbaixo>
-                </BoxContainerDivisorio>
-            </BoxContainerGeralBeneficio>
-        </>
-    )
+  return (
+    <>
+      <BoxContainerGeralBeneficio>
+        <BoxContainerDivisorio>
+          <BoxInputsAcima>
+            <BoxValorMensal>
+              <TypographyLabels>Valor Mensal: </TypographyLabels>
+            </BoxValorMensal>
+            <BoxInputs>
+              <TextField sx={{ width: "30%", marginRight: 5 }} />
+              <TextField
+                sx={{ width: "10%" }}
+                id="outlined-select-currency"
+                select
+                label="Moeda"
+                value={moeda}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setMoeda(event.target.value)
+                }
+              >
+                {moedas.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.value}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </BoxInputs>
+          </BoxInputsAcima>
+          <BoxInputsAbaixo>
+            <TypographyLabels>Descrição: </TypographyLabels>
+            <TextField
+              multiline
+              rows={7}
+              maxRows={Infinity}
+              sx={{ width: "100%" }}
+            ></TextField>
+          </BoxInputsAbaixo>
+        </BoxContainerDivisorio>
+      </BoxContainerGeralBeneficio>
+    </>
+  );
 }
 
 function BeneficioPotencial() {
+  const [moeda, setMoeda] = useState("BRL");
 
-    const [moeda, setMoeda] = useState("BRL");
+  const moedas = [
+    {
+      value: "USD",
+      label: "$",
+    },
+    {
+      value: "EUR",
+      label: "€",
+    },
+    {
+      value: "BTC",
+      label: "฿",
+    },
+    {
+      value: "JPY",
+      label: "¥",
+    },
+  ];
 
-    const moedas = [
-        {
-            value: 'USD',
-            label: '$',
-        },
-        {
-            value: 'EUR',
-            label: '€',
-        },
-        {
-            value: 'BTC',
-            label: '฿',
-        },
-        {
-            value: 'JPY',
-            label: '¥',
-        },
-    ];
-
-    return (
-        <>
-            <BoxContainerGeralBeneficio>
-                <BoxContainerDivisorio>
-                    <BoxInputsAcima>
-                        <BoxValorMensal>
-                            <TypographyLabels>Valor Mensal: </TypographyLabels>
-                        </BoxValorMensal>
-                        <BoxInputs sx={{ width: "100%", display: "flex", justifyContent: "start", alignItems: "center" }}>
-                            <TextField sx={{ width: "30%", marginRight: 5 }} />
-                            <TextField
-                                sx={{ width: "10%" }}
-                                id="outlined-select-currency"
-                                select
-                                label="Moeda"
-                                value={moeda}
-                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setMoeda(event.target.value)}
-                            >
-                                {moedas.map((option) => (
-                                    <MenuItem key={option.value} value={option.value}>
-                                        {option.value}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                        </BoxInputs>
-                    </BoxInputsAcima>
-                    <BoxInputsAbaixo>
-                        <TypographyLabels>Descrição: </TypographyLabels>
-                        <TextField multiline
-                            rows={7}
-                            maxRows={Infinity} sx={{ width: "100%" }}></TextField>
-                    </BoxInputsAbaixo>
-                </BoxContainerDivisorio>
-                <BoxObrigacaoLegal>
-                    <TypographyLabels>
-                        Obrigação legal
-                        <Checkbox />
-                    </TypographyLabels>
-                </BoxObrigacaoLegal>
-            </BoxContainerGeralBeneficio>
-        </>
-    )
+  return (
+    <>
+      <BoxContainerGeralBeneficio>
+        <BoxContainerDivisorio>
+          <BoxInputsAcima>
+            <BoxValorMensal>
+              <TypographyLabels>Valor Mensal: </TypographyLabels>
+            </BoxValorMensal>
+            <BoxInputs
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "start",
+                alignItems: "center",
+              }}
+            >
+              <TextField sx={{ width: "30%", marginRight: 5 }} />
+              <TextField
+                sx={{ width: "10%" }}
+                id="outlined-select-currency"
+                select
+                label="Moeda"
+                value={moeda}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setMoeda(event.target.value)
+                }
+              >
+                {moedas.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.value}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </BoxInputs>
+          </BoxInputsAcima>
+          <BoxInputsAbaixo>
+            <TypographyLabels>Descrição: </TypographyLabels>
+            <TextField
+              multiline
+              rows={7}
+              maxRows={Infinity}
+              sx={{ width: "100%" }}
+            ></TextField>
+          </BoxInputsAbaixo>
+        </BoxContainerDivisorio>
+        <BoxObrigacaoLegal>
+          <TypographyLabels>
+            Obrigação legal
+            <Checkbox />
+          </TypographyLabels>
+        </BoxObrigacaoLegal>
+      </BoxContainerGeralBeneficio>
+    </>
+  );
 }
 
 function BeneficioQualitativo() {
-    const [frequencia, setFrequencia] = useState("Frequência");
+  const [frequencia, setFrequencia] = useState("Frequência");
 
-    const frequencias = [
-        {
-            value: 'Frequência 01',
-            label: '$',
-        },
-        {
-            value: 'Frequência 02',
-            label: '€',
-        },
-        {
-            value: 'Frequência 03',
-            label: '฿',
-        },
-        {
-            value: 'Frequência 04',
-            label: '¥',
-        },
-    ];
+  const frequencias = [
+    {
+      value: "Frequência 01",
+      label: "$",
+    },
+    {
+      value: "Frequência 02",
+      label: "€",
+    },
+    {
+      value: "Frequência 03",
+      label: "฿",
+    },
+    {
+      value: "Frequência 04",
+      label: "¥",
+    },
+  ];
 
-    return (
-        <>
-            <BoxContainerGeralBeneficio>
-                <BoxDescricaoRequeistosControle>
-                    <TypographyLabels>Descrição: </TypographyLabels>
-                    <TextField multiline
-                        rows={7}
-                        maxRows={Infinity} sx={{ width: "100%" }}></TextField>
-                </BoxDescricaoRequeistosControle>
-                <BoxFrequencia>
-                    <TypographyLabels>
-                        Frequêcia de uso da solução:
-                    </TypographyLabels>
-                    <TextField sx={{ width: "30%", marginTop: 1 }}
-                        select
-                        value={frequencia}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setFrequencia(event.target.value)}
-                    >
-                        {frequencias.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.value}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </BoxFrequencia>
-                <BoxDescricaoRequeistosControle>
-                    <TypographyLabels>
-                        Requesito de controles internos:
-                    </TypographyLabels>
-                    <RadioGroup sx={{ width: "auto", display: "flex", flexDirection: "row" }}
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        name="radio-buttons-group"
-                    >
-                        <FormControlLabel sx={{ marginRight: 4, color: "#595959" }} value="Sim" control={<Radio />} label="Sim" />
-                        <FormControlLabel sx={{ color: "#595959" }} value="não" control={<Radio />} label="Não" />
-                    </RadioGroup>
-                </BoxDescricaoRequeistosControle>
-            </BoxContainerGeralBeneficio>
-        </>
-    )
+  return (
+    <>
+      <BoxContainerGeralBeneficio>
+        <BoxDescricaoRequeistosControle>
+          <TypographyLabels>Descrição: </TypographyLabels>
+          <TextField
+            multiline
+            rows={7}
+            maxRows={Infinity}
+            sx={{ width: "100%" }}
+          ></TextField>
+        </BoxDescricaoRequeistosControle>
+        <BoxFrequencia>
+          <TypographyLabels>Frequêcia de uso da solução:</TypographyLabels>
+          <TextField
+            sx={{ width: "30%", marginTop: 1 }}
+            select
+            value={frequencia}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setFrequencia(event.target.value)
+            }
+          >
+            {frequencias.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.value}
+              </MenuItem>
+            ))}
+          </TextField>
+        </BoxFrequencia>
+        <BoxDescricaoRequeistosControle>
+          <TypographyLabels>Requesito de controles internos:</TypographyLabels>
+          <RadioGroup
+            sx={{ width: "auto", display: "flex", flexDirection: "row" }}
+            aria-labelledby="demo-radio-buttons-group-label"
+            name="radio-buttons-group"
+          >
+            <FormControlLabel
+              sx={{ marginRight: 4, color: "#595959" }}
+              value="Sim"
+              control={<Radio />}
+              label="Sim"
+            />
+            <FormControlLabel
+              sx={{ color: "#595959" }}
+              value="não"
+              control={<Radio />}
+              label="Não"
+            />
+          </RadioGroup>
+        </BoxDescricaoRequeistosControle>
+      </BoxContainerGeralBeneficio>
+    </>
+  );
 }
