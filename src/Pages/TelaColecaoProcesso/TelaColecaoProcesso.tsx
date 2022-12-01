@@ -77,7 +77,7 @@ export default function TelaColecaoProcesso() {
         } else {
             feedback = (
                 <Alert onClose={() => { setFeedbackAberto(false) }} severity="error" sx={{ width: '100%' }}>
-                    Algum campo está em branco
+                    Algum campo obrigatório está em branco
                 </Alert>
             )
 
@@ -295,14 +295,6 @@ function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boole
                 </TypographyTituloAtributo>
                 <TypographyTextoColecao variant='body1' >
                     {proposta.solicitante}
-                </TypographyTextoColecao>
-            </GridPequenosAtributos>
-            <GridPequenosAtributos item xs={6}>
-                <TypographyTituloAtributo variant='body1'>
-                    Score:
-                </TypographyTituloAtributo>
-                <TypographyTextoColecao variant='body1' >
-                    {proposta.score}
                 </TypographyTextoColecao>
             </GridPequenosAtributos>
             <Grid item xs={12}>

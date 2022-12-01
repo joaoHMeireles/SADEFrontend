@@ -1,4 +1,4 @@
-import React, { useState, useEffect, MouseEventHandler, SetStateAction } from 'react';
+import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import Dayjs from '@date-io/dayjs'
 import { sessaoTI, TipoComponenteProcesso } from '../../DefinitionFiles/enuns';
@@ -7,8 +7,9 @@ import Toolbar from '../../Components/Toolbar/Toolbar';
 import SelectBox from '../../Components/SelectBox/SelectBox';
 import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
-    Alert, Avatar, Badge, Box, Checkbox, Container, Dialog, Divider, FormControl, FormControlLabel, FormGroup, FormHelperText, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, SelectChangeEvent,
-    Snackbar, Table, TableBody, TableHead, TableRow, TextField, Typography
+    Alert, Badge, Box, Checkbox, Container, Dialog, Divider, FormControl, FormControlLabel, FormGroup, FormHelperText, 
+    Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, SelectChangeEvent, Snackbar, Table, TableBody, 
+    TableHead, TableRow, TextField, Typography
 } from '@mui/material';
 import ChatBubbleRounded from '@mui/icons-material/ChatBubbleRounded';
 import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
@@ -215,7 +216,6 @@ function Header(props: {
     }
 
     function verDemandaProposta() {
-        console.log("Aaaaaaaaaaa");
 
 
         //futuramente a proposta terá o mesmo id que a demanda a que se refere
@@ -586,6 +586,13 @@ function ModalAdiconarInformações(props: Modal) {
         </Alert>
     )
 
+    function checarValor(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const valor = Number.parseInt(e.target.value)
+        if (valor < 0) {
+            e.target.value = 0 + ""
+        }
+    }
+
     function finalizarAcao() {
         const inputPrazoElaboracao = (document.getElementById("inputDataInformacoes") as HTMLInputElement).value
         const inputCodigPPM = (document.getElementById("inputCodigoPPM") as HTMLInputElement).value
@@ -707,7 +714,7 @@ function ModalAdiconarInformações(props: Modal) {
                         <TypographyTituloAtributoModal variant='body1'>
                             Código PPM:
                         </TypographyTituloAtributoModal>
-                        <TextField type='number' id='inputCodigoPPM' {...erroObjectCodigoPPM} />
+                        <TextField type='number' id='inputCodigoPPM' onChange={checarValor} {...erroObjectCodigoPPM} />
                     </BoxAtributoInfoModal2>
                 </BoxAtributosInfoModal>
                 <Box sx={{ width: "100%" }}>
@@ -929,6 +936,17 @@ function InfoGeral(props: { processo: any }) {
         )
     }
 
+    const beneficiosQualitativos = props.processo.beneficiosQualitativos.map((beneficio: string, index: number) => {
+
+        return (
+            <ListItem sx={{textAlign: "justify"}}>
+                <ListItemIcon>
+                    <CircleIconPonto />
+                </ListItemIcon>
+                {beneficio}
+            </ListItem>
+        )
+    })
 
 
     return (
@@ -948,8 +966,11 @@ function InfoGeral(props: { processo: any }) {
             </Grid >
             <Grid item>
                 <TypographyTexto variant='body1' >
-                    <b>{getNomeAtributo("beneficioQualitativo")}</b> {props.processo.beneficioQualitativo}
+                    <b>{getNomeAtributo("beneficiosQualitativos")}</b>
                 </TypographyTexto>
+                <List>
+                    {beneficiosQualitativos}
+                </List>
             </Grid>
         </Grid >
     )
@@ -1013,7 +1034,7 @@ function InfoComercial(props: { processo: any }) {
     let elementosTabelaCusto
 
     if (atributos.tabelasCusto) {
-        elementosTabelaCusto = <TabelasCusto tabelasCusto={atributos.tabelasCusto}/>
+        elementosTabelaCusto = <TabelasCusto tabelasCusto={atributos.tabelasCusto} />
     }
 
     return (
@@ -1297,7 +1318,7 @@ function getNomeAtributo(nomeAtributo: any) {
         prazoElaboracao: "Prazo de elaboração:",
         codigoPPM: "Código PPM:",
         centrosDeCusto: "Centros de custo:",
-        beneficioQualitativo: "Benefício qualitativo:",
+        beneficiosQualitativos: "Benefícios qualitativos:",
         BUsBeneficiadas: "BUs beneficiadas:",
         payback: "Payback:",
         periodoDeExecucao: "Período de execução:",

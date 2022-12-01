@@ -11,52 +11,52 @@ import { BoxConteudo, BoxContainer } from '../App.styles'
 const listaComponents: {}[] = [
     {
         id: 1,
-        titulo: "primeiro titulo ae",
-        // tamanho: TamanhoComponenteProcesso.Pequeno,
-        solicitante: "um fia da puta ae",
+        titulo: "Primeira Demanda",
+        tamanho: TamanhoComponenteProcesso.Pequeno,
+        solicitante: "Carlos Drumond de Andrade",
         status: StatusComponenteProcesso.Backlog,
         tipo: TipoComponenteProcesso.Demanda,
         score: 12.5,
-        departamento: "não sei nenhum departamento",
-        gerenteResponsavel: "tal fiote de cruz credo",
+        departamento: "Vendas",
+        gerenteResponsavel: "Miguel Gomez Lima",
         frequenciaUso: 200,
         aprovadoGerente: true,
-        beneficioQualitativo: "textin ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything dizendo como é bom",
+        beneficiosQualitativos: [
+            "Textin ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything dizendo como é bom randomised words which don't look even slightly believable. If you are going to u",
+            "Textin ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightlysure there isn't anything dizendo como é bom",
+        ],
         centrosDeCusto: [
             1234,
             5678
         ],
         beneficiosReais: [
             {
-                descricao: "description",
+                descricao: "É que é bem bom mesmo vai dar 10000000 reais de  retorno bem massa mano",
                 moeda: "BRL",
-                valor: 10000.00,
-                memoriaCalculo: "é que é bem bom mesmo vai dar 10000000 de retorno fodão bem massa mano"
+                valor: 10000.00
             },
             {
-                descricao: "descricaozona caraio gigantassa pqp muita coisa",
+                descricao: "Descricaozona gigantassa é que é bem bom mesmo vai dar 10000000 de retorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra pqp muita coisa",
                 moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "é que é bem bom mesmo vai dar 10000000 de retorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra"
+                valor: 1500.00
             },
         ],
         beneficiosPotenciais: [
             {
-                descricao: "bem datalhadadinha",
+                descricao: "Bem datalhadadinha é que é bem bom em massa mano ty have bem massa mano ty have suffered alteration in some form, by injected",
                 moeda: "USD",
-                valor: 780.00,
-                memoriaCalculo: "é que é bem bom em massa mano ty have suo fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra"
+                valor: 780.00
             }
         ],
         objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
         situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
         anexos: [
             {
-                nome: "jemidoASMR.mp4",
+                nome: "barulho que a máquina faz.mp4",
                 arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD"
             },
             {
-                nome: "thanosAgrachamento.png",
+                nome: "Foto máquina após o uso.png",
                 arquivo: "SADH0D048RB734BpdHef08b08b08V438FVBWOF"
             }
         ]
@@ -64,22 +64,24 @@ const listaComponents: {}[] = [
     {
         id: 2,
         dataReuniao: new Date(),
-        comissao: "Comissao do diretor geral fodao matematico ultimate",
+        comissao: "Comissão de Vendas e Desenvolvimento de Produtos",
         tipo: TipoColecaoComponenteProcesso.Pauta,
         propostas: [
             {
                 id: 7,
-                titulo: "lerolerolerolero",
+                titulo: "Gastos desnecessários no processo de preparação de mercadorias",
                 tamanho: TamanhoComponenteProcesso.Pequeno,
-                solicitante: "um fia da puta ae",
+                solicitante: "Leandro Polanski",
                 status: StatusComponenteProcesso.Assesment,
                 tipo: TipoComponenteProcesso.Demanda,
-                score: 12.5,
-                departamento: "o da diretoria fodão grandoes",
-                gerenteResponsavel: "marcello taz do cqc",
+                score: 31,
+                departamento: "Produção",
+                gerenteResponsavel: "Marcelo Rodrigues de Bortolli",
                 frequenciaUso: 160,
                 aprovadoGerente: true,
-                beneficioQualitativo: "vai dar isso isso isso e isso de beneficios ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word",
+                beneficiosQualitativos: [
+                    "vai dar isso isso isso e isso de beneficios ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word",
+                ],
                 centrosDeCusto: [
                     9425,
                     9678
@@ -87,65 +89,64 @@ const listaComponents: {}[] = [
                 secaoTIResponsavel: sessaoTI.SVE,
                 BUSolicitante: "Motores",
                 BUsBeneficiadas: [
-                    "Tintas",
-                    "Gidital"
+                    "Digital",
+                    "Motores"
                 ],
                 prazoElaboracao: new Date(),
                 codigoPPM: 67237,
                 linkJira: "https://jirazadaDoCara",
                 beneficiosReais: [
                     {
-                        descricao: "description",
+                        descricao: "have or  ra é que é bem bom mesmo vai dar 99199111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa",
                         moeda: "BRL",
-                        valor: 10000.00,
-                        memoriaCalculo: "have or  ra é que é bem bom mesmo vai dar 99199111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
+                        valor: 10000.00
                     },
                 ],
                 beneficiosPotenciais: [
                     {
-                        descricao: "bem datalhadadinha",
+                        descricao: "bem datalhadadinho esse benefício para aumentar o score da demanda",
                         moeda: "USD",
-                        valor: 780.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa"
+                        valor: 780.00
                     },
                     {
                         descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa ahave or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa",
                         moeda: "USD",
-                        valor: 1500.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
+                        valor: 1500.00
                     },
                 ],
                 objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
                 situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
                 anexos: [
                     {
-                        nome: "rendaPackDoPe.xml",
+                        nome: "configuracaoMaquina(2).xml",
                         arquivo: "AB8BBisvbVYEFDIESOABF78yfgG69SDfVFV"
                     }
                 ]
             },
             {
                 id: 9,
-                titulo: "eu quero janta de 3 s",
+                titulo: "Impecílios da equipe de limpeza no setor de usinagem",
                 tamanho: TamanhoComponenteProcesso.Pequeno,
-                solicitante: "um gênio",
+                solicitante: "Felícia Gonçalves",
                 status: StatusComponenteProcesso.ToDo,
                 tipo: TipoComponenteProcesso.Proposta,
-                score: 10000,
-                departamento: "sgdaho",
+                score: 100,
+                departamento: "Limpeza",
                 gerenteResponsavel: "Carlos Salles Morales",
                 frequenciaUso: 98,
                 aprovadoGerente: true,
-                beneficioQualitativo: "b e n e f i c i o There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarras",
+                beneficiosQualitativos: [
+                    "b e n e f i c i o There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarras",
+                ],
                 centrosDeCusto: [
                     9678,
                     9674,
                     1415
                 ],
                 secaoTIResponsavel: sessaoTI.SIM,
-                BUSolicitante: "Motores",
+                BUSolicitante: "Infraestrutura",
                 BUsBeneficiadas: [
-                    "Motores"
+                    "Infraestrutura"
                 ],
                 prazoElaboracao: new Date(),
                 codigoPPM: 3241,
@@ -155,16 +156,14 @@ const listaComponents: {}[] = [
                 aprovadoWorkflow: false,
                 beneficiosReais: [
                     {
-                        descricao: "description",
+                        descricao: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores",
                         moeda: "USD",
-                        valor: 100.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores"
+                        valor: 100.00
                     },
                     {
-                        descricao: "uma descrizaozninha",
+                        descricao: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores",
                         moeda: "BRL",
-                        valor: 19000.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores"
+                        valor: 19000.00
                     },
                 ],
                 periodoExecucao: [
@@ -172,27 +171,25 @@ const listaComponents: {}[] = [
                     new Date()
                 ],
                 responsaveis: [
-                    "Bruno",
-                    "MarronÈ"
+                    "Bruno Henrique Carvalho",
+                    "Thamires Meireles"
                 ],
                 beneficiosPotenciais: [
                     {
                         descricao: "descricao",
                         moeda: "USD",
-                        valor: 1500.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bemnda por favorzinho meus queridos su"
+                        valor: 1500.00
                     },
                     {
-                        descricao: "descricaodaCoisa",
+                        descricao: "descricao da coisa",
                         moeda: "BRL",
-                        valor: 10.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
+                        valor: 10.00
                     }
                 ],
                 payback: 945.37,
                 tabelasCusto: [
                     {
-                        titulo: "mais gastos",
+                        titulo: "Reforma do espaço",
                         isLicenca: false,
                         centrosCusto: [
                             {
@@ -210,12 +207,12 @@ const listaComponents: {}[] = [
                         ],
                         linhas: [
                             {
-                                recurso: "rapaz do café",
+                                recurso: "Operários",
                                 esforco: 350,
                                 valor: 15
                             },
                             {
-                                recurso: "mão de obra",
+                                recurso: "Materiais",
                                 esforco: 48,
                                 valor: 350
                             },
@@ -227,7 +224,7 @@ const listaComponents: {}[] = [
                 escopo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
                 anexos: [
                     {
-                        nome: "naoEUmVirus.docxx",
+                        nome: "declaracaoRosana.docs",
                         arquivo: "DSF9A8D7FGABOBFDIuibduiavbipashsad98tag"
                     }
                 ]
@@ -236,17 +233,20 @@ const listaComponents: {}[] = [
     },
     {
         id: 3,
-        titulo: "titulozao pra ver como fica muito grande a responsividade da bagaça",
+        titulo: "Titulozao pra ver como fica muito grande a responsividade do sistema todao com esses titulozao",
         tamanho: TamanhoComponenteProcesso.Grande,
-        solicitante: "esse aqui é legal",
+        solicitante: "Marcos Fernandez Braga",
         status: StatusComponenteProcesso.Assesment,
         tipo: TipoComponenteProcesso.Demanda,
-        score: 12.5,
-        departamento: "7825678256782437813",
-        gerenteResponsavel: "riomar silveira pinto nunes",
+        score: 54.7,
+        departamento: "Comércio",
+        gerenteResponsavel: "Maria Gonçalves de Souza",
         frequenciaUso: 329,
         aprovadoGerente: false,
-        beneficioQualitativo: "é bem bonzin bão memo bom ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything",
+        beneficiosQualitativos: [
+            "É bem bonzin bão memo bom ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything",
+            "Não in some form, by injected bem bonzin bão memo bom ailable, but é lteratio the majority have suffered a",
+        ],
         centrosDeCusto: [
             3864,
             9863
@@ -254,75 +254,72 @@ const listaComponents: {}[] = [
         secaoTIResponsavel: sessaoTI.SEG,
         BUSolicitante: "Primeira",
         BUsBeneficiadas: [
-            "essa aqui",
-            "essa também po"
+            "Motores",
+            "DIgital"
         ],
         beneficiosReais: [
             {
-                descricao: "description",
+                descricao: "Description é que é bem bom em massa mano ty have suffereetorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra",
                 moeda: "BRL",
-                valor: 10000.00,
-                memoriaCalculo: "é que é bem bom em massa mano ty have suffereetorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra"
+                valor: 10000.00
             },
             {
-                descricao: "descricaozona caraio gigantassa pqp muita coisa",
+                descricao: "Descri é que é bem bom em massa mano ty have  é bem bom mesmo vai dar 10000000 de retorno fodãected humour, caozona caraio gigantassa pqp muita coisa",
                 moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "é que é bem bom em massa mano ty have  é bem bom mesmo vai dar 10000000 de retorno fodãected humour, or  ra"
+                valor: 1500.00
             },
             {
-                descricao: "bem datalhadadinha",
+                descricao: "Manualmente ty have suffered alteratvai dar 10000000 de retorno fodão bem massa mano ty have suffered altnjected humour, or  ra",
                 moeda: "USD",
-                valor: 780.00,
-                memoriaCalculo: "é que é bem bom em massa mano ty have suffered alteratvai dar 10000000 de retorno fodão bem massa mano ty have suffered altnjected humour, or  ra"
+                valor: 780.00
             }
         ],
         beneficiosPotenciais: [
             {
-                descricao: "bem datalhadadinha",
+                descricao: "Sabendo mano ty have suffered alteration in some form, by injected humvai dar 10000000 de retorno fod",
                 moeda: "USD",
-                valor: 780.00,
-                memoriaCalculo: "sa mano ty have suffered alteration in some form, by injected humvai dar 10000000 de retorno fod"
+                valor: 780.00
             },
             {
-                descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
+                descricao: "Descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
                 moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "bom em massa mano ty have suffered alteration in some form, by injected humour bem massa mano ty have suffered alteration in some form, by injected humour, or"
+                valor: 1500.00
             },
         ],
         objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
         situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        pessoaDevolucao: "arnaldo pinto",
+        pessoaDevolucao: "Alexandre de Moraes",
         motivoDevolucao: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing h",
         anexos: [
             {
-                nome: "jemidoASMR.mp4",
+                nome: "barulho que a máquina faz(1).mp4",
                 arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD"
             },
             {
-                nome: "thanosAgrachamento.png",
+                nome: "Foto máquina após o uso(1).png",
                 arquivo: "SADH0D048RB734BpdHef08b08b08V438FVBWOF"
             },
             {
-                nome: "rendaPackDoPe.xml",
+                nome: "configuracaoMaquina.xml",
                 arquivo: "AB8BBisvbVYEFDIESOABF78yfgG69SDfVFV"
             }
         ]
     },
     {
         id: 4,
-        titulo: "Demandinha de um cara legal",
+        titulo: "Mudança no processo de produção de peças, melhora de segurança",
         tamanho: TamanhoComponenteProcesso.MuitoGrande,
         solicitante: "Jefferson Rodrigues",
         status: StatusComponenteProcesso.Canceled,
         tipo: TipoComponenteProcesso.Proposta,
-        score: 12.5,
-        departamento: "o da diretoria fodão grandoes",
-        gerenteResponsavel: "marcello taz do cqc",
+        score: 130.82,
+        departamento: "Maquinário",
+        gerenteResponsavel: "Marcelo Siqueira Peixoto",
         frequenciaUso: 160,
         aprovadoGerente: true,
-        beneficioQualitativo: "vai dar isso isso of Lorem Ipsum available, but the majoritailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anythingy have suffered alteration in some form, by injected humour, or  randomised word benefi isso e isso de beneficios",
+        beneficiosQualitativos: [
+            "Vai dar isso isso of Lorem Ipsum available, but the majoritailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anythingy have suffered alteration in some form, by injected humour, or  randomised word benefi isso e isso de beneficios",
+        ],
         centrosDeCusto: [
             9425,
             9678
@@ -331,7 +328,7 @@ const listaComponents: {}[] = [
         BUSolicitante: "Motores",
         BUsBeneficiadas: [
             "Tintas",
-            "Gidital"
+            "Digital"
         ],
         prazoElaboracao: new Date(),
         codigoPPM: 67237,
@@ -340,10 +337,9 @@ const listaComponents: {}[] = [
         aprovadoWorkflow: false,
         beneficiosReais: [
             {
-                descricao: "description",
+                descricao: "Sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some ",
                 moeda: "BRL",
-                valor: 10000.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some "
+                valor: 10000.00
             },
         ],
         periodoExecucao: [
@@ -351,27 +347,25 @@ const listaComponents: {}[] = [
             new Date()
         ],
         responsaveis: [
-            "Jorginho metálica",
-            "Arquimedes Segundo"
+            "Jorge Vercílio da Silva",
+            "Emanuelle Menezes"
         ],
         beneficiosPotenciais: [
             {
-                descricao: "bem datalhadadinha",
+                descricao: "Bem detalhadinha sa mano ty have or  ra é que é bem bom mesmo vmo vai dar 10000000 de retorno fodsuffered alteration in som",
                 moeda: "USD",
-                valor: 780.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vmo vai dar 10000000 de retorno fodsuffered alteration in som"
+                valor: 780.00
             },
             {
-                descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
+                descricao: "Descricaozona caraio gigantassa pqp muita coisa aaaano ty have or  ra é que é bem bom mesmo vmo vai dar 10000000 de retoaa",
                 moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some foda bem bom mesmo meudeus"
+                valor: 1500.00
             },
         ],
         payback: 4356.30,
         tabelasCusto: [
             {
-                titulo: "gastos tandam",
+                titulo: "Gastos infraestrutura",
                 isLicenca: false,
                 centrosCusto: [
                     {
@@ -385,12 +379,12 @@ const listaComponents: {}[] = [
                 ],
                 linhas: [
                     {
-                        recurso: "analista funcional",
+                        recurso: "Arquiteto de software",
                         esforco: 150,
                         valor: 35
                     },
                     {
-                        recurso: "mão de obra",
+                        recurso: "Técnicos qualificados",
                         esforco: 48,
                         valor: 35
                     },
@@ -402,24 +396,26 @@ const listaComponents: {}[] = [
         escopo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
         anexos: [
             {
-                nome: "rendaPackDoPe.xml",
+                nome: "configuracaoMaquina(1).xml",
                 arquivo: "AB8BBisvbVYEFDIESOABF78yfgG69SDfVFV"
             }
         ]
     },
     {
         id: 5,
-        titulo: "me da droga",
+        titulo: "Melhoras da cantina",
         tamanho: TamanhoComponenteProcesso.Medio,
-        solicitante: "um fia da puta ae caraiudo",
+        solicitante: "Cleide Nunes",
         status: StatusComponenteProcesso.BusinessCase,
         tipo: TipoComponenteProcesso.Proposta,
-        score: 12.5,
-        departamento: "o da diretoria fodão grandoes",
-        gerenteResponsavel: "romero britto",
+        score: 62,
+        departamento: "Diretoria",
+        gerenteResponsavel: "Romário Gabriel Fagundes",
         frequenciaUso: 540,
         aprovadoGerente: true,
-        beneficioQualitativo: "ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word beneficios",
+        beneficiosQualitativos: [
+            "Variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word beneficios",
+        ],
         centrosDeCusto: [
             9678
         ],
@@ -427,7 +423,7 @@ const listaComponents: {}[] = [
         BUSolicitante: "Motores",
         BUsBeneficiadas: [
             "Tintas",
-            "Solar"
+            "Vendas"
         ],
         prazoElaboracao: new Date(),
         codigoPPM: 78569,
@@ -437,16 +433,14 @@ const listaComponents: {}[] = [
         aprovadoWorkflow: true,
         beneficiosReais: [
             {
-                descricao: "description",
+                descricao: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered esteja errado refaz a conta ae",
                 moeda: "BRL",
-                valor: 10000.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered esteja errado refaz a conta ae"
+                valor: 10000.00
             },
             {
-                descricao: "uma descrizaozninha bonitinha",
+                descricao: "uma descrizaozninha bonitinha a mano ty have or  ra é que é bem bom mesmo vai dar 9999999 de retorno fodsuffere",
                 moeda: "BRL",
-                valor: 1900.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 9999999 de retorno fodsuffered alteration in some foda bem bom mesmo meudeus, 9 * 1111111"
+                valor: 1900.00
             },
         ],
         periodoExecucao: [
@@ -454,22 +448,21 @@ const listaComponents: {}[] = [
             new Date()
         ],
         responsaveis: [
-            "Arquimedes Segundo",
-            "Socratinho filipe",
-            "Diogenizada"
+            "Milena Krischanski",
+            "Gabriel Felipe Soares",
+            "Carolina Tavarez"
         ],
         beneficiosPotenciais: [
             {
-                descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
+                descricao: "descricaozona caraio gigantassa pqp muita coisa sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa",
                 moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
+                valor: 1500.00
             },
         ],
         payback: 783.30,
         tabelasCusto: [
             {
-                titulo: "gastos",
+                titulo: "Manutenções com a cantina",
                 isLicenca: false,
                 centrosCusto: [
                     {
@@ -483,19 +476,19 @@ const listaComponents: {}[] = [
                 ],
                 linhas: [
                     {
-                        recurso: "analista funcional",
+                        recurso: "Mecânico qualificado",
                         esforco: 150,
                         valor: 35
                     },
                     {
-                        recurso: "macaco anti-stress",
+                        recurso: "matéria prima",
                         esforco: 48,
                         valor: 39
                     },
                 ]
             },
             {
-                titulo: "mais gastos",
+                titulo: "Infraestrutura da cozinha",
                 isLicenca: true,
                 centrosCusto: [
                     {
@@ -513,15 +506,10 @@ const listaComponents: {}[] = [
                 ],
                 linhas: [
                     {
-                        recurso: "Oracle",
+                        recurso: "Equipamentos necessários",
                         esforco: 3,
                         valor: 479.99
-                    },
-                    {
-                        recurso: "Visual Studio premium",
-                        esforco: 2,
-                        valor: 156
-                    },
+                    }
                 ]
             }
         ],
@@ -530,7 +518,7 @@ const listaComponents: {}[] = [
         escopo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
         anexos: [
             {
-                nome: "naoEUmVirus.docxx",
+                nome: "declaracao da equipe da cozinha.docs",
                 arquivo: "DSF9A8D7FGABOBFDIuibduiavbipashsad98tag"
             }
         ]
@@ -538,22 +526,24 @@ const listaComponents: {}[] = [
     {
         id: 6,
         dataReuniao: new Date(),
-        comissao: "comission fodelastica aaaa",
+        comissao: "Comitê de TI",
         tipo: TipoColecaoComponenteProcesso.Pauta,
         propostas: [
             {
                 id: 5,
-                titulo: "me da droga",
+                titulo: "Melhoras da cantina",
                 tamanho: TamanhoComponenteProcesso.Medio,
-                solicitante: "um fia da puta ae caraiudo",
+                solicitante: "Cleide Nunes",
                 status: StatusComponenteProcesso.BusinessCase,
                 tipo: TipoComponenteProcesso.Proposta,
-                score: 12.5,
-                departamento: "o da diretoria fodão grandoes",
-                gerenteResponsavel: "romero britto",
+                score: 62,
+                departamento: "Diretoria",
+                gerenteResponsavel: "Romário Gabriel Fagundes",
                 frequenciaUso: 540,
                 aprovadoGerente: true,
-                beneficioQualitativo: "ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word beneficios",
+                beneficiosQualitativos: [
+                    "Variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word beneficios",
+                ],
                 centrosDeCusto: [
                     9678
                 ],
@@ -561,7 +551,7 @@ const listaComponents: {}[] = [
                 BUSolicitante: "Motores",
                 BUsBeneficiadas: [
                     "Tintas",
-                    "Solar"
+                    "Vendas"
                 ],
                 prazoElaboracao: new Date(),
                 codigoPPM: 78569,
@@ -571,16 +561,14 @@ const listaComponents: {}[] = [
                 aprovadoWorkflow: true,
                 beneficiosReais: [
                     {
-                        descricao: "description",
+                        descricao: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered esteja errado refaz a conta ae",
                         moeda: "BRL",
-                        valor: 10000.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered esteja errado refaz a conta ae"
+                        valor: 10000.00
                     },
                     {
-                        descricao: "uma descrizaozninha bonitinha",
+                        descricao: "uma descrizaozninha bonitinha a mano ty have or  ra é que é bem bom mesmo vai dar 9999999 de retorno fodsuffere",
                         moeda: "BRL",
-                        valor: 1900.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 9999999 de retorno fodsuffered alteration in some foda bem bom mesmo meudeus, 9 * 1111111"
+                        valor: 1900.00
                     },
                 ],
                 periodoExecucao: [
@@ -588,22 +576,21 @@ const listaComponents: {}[] = [
                     new Date()
                 ],
                 responsaveis: [
-                    "Arquimedes Segundo",
-                    "Socratinho filipe",
-                    "Diogenizada"
+                    "Milena Krischanski",
+                    "Gabriel Felipe Soares",
+                    "Carolina Tavarez"
                 ],
                 beneficiosPotenciais: [
                     {
-                        descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
+                        descricao: "descricaozona caraio gigantassa pqp muita coisa sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa",
                         moeda: "USD",
-                        valor: 1500.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
+                        valor: 1500.00
                     },
                 ],
                 payback: 783.30,
                 tabelasCusto: [
                     {
-                        titulo: "gastos",
+                        titulo: "Manutenções com a cantina",
                         isLicenca: false,
                         centrosCusto: [
                             {
@@ -617,19 +604,19 @@ const listaComponents: {}[] = [
                         ],
                         linhas: [
                             {
-                                recurso: "analista funcional",
+                                recurso: "Mecânico qualificado",
                                 esforco: 150,
                                 valor: 35
                             },
                             {
-                                recurso: "macaco anti-stress",
+                                recurso: "matéria prima",
                                 esforco: 48,
                                 valor: 39
                             },
                         ]
                     },
                     {
-                        titulo: "mais gastos",
+                        titulo: "Infraestrutura da cozinha",
                         isLicenca: true,
                         centrosCusto: [
                             {
@@ -647,15 +634,10 @@ const listaComponents: {}[] = [
                         ],
                         linhas: [
                             {
-                                recurso: "Oracle",
+                                recurso: "Equipamentos necessários",
                                 esforco: 3,
                                 valor: 479.99
-                            },
-                            {
-                                recurso: "Visual Studio premium",
-                                esforco: 2,
-                                valor: 156
-                            },
+                            }
                         ]
                     }
                 ],
@@ -664,24 +646,27 @@ const listaComponents: {}[] = [
                 escopo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
                 anexos: [
                     {
-                        nome: "naoEUmVirus.docxx",
+                        nome: "declaracao da equipe da cozinha.docs",
                         arquivo: "DSF9A8D7FGABOBFDIuibduiavbipashsad98tag"
                     }
                 ]
             },
             {
                 id: 3,
-                titulo: "titulozao pra ver como fica muito grande a responsividade da bagaça",
+                titulo: "Titulozao pra ver como fica muito grande a responsividade do sistema todao com esses titulozao",
                 tamanho: TamanhoComponenteProcesso.Grande,
-                solicitante: "esse aqui é legal",
+                solicitante: "Marcos Fernandez Braga",
                 status: StatusComponenteProcesso.Assesment,
                 tipo: TipoComponenteProcesso.Demanda,
-                score: 12.5,
-                departamento: "7825678256782437813",
-                gerenteResponsavel: "riomar silveira pinto nunes",
+                score: 54.7,
+                departamento: "Comércio",
+                gerenteResponsavel: "Maria Gonçalves de Souza",
                 frequenciaUso: 329,
                 aprovadoGerente: false,
-                beneficioQualitativo: "é bem bonzin bão memo bom ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything",
+                beneficiosQualitativos: [
+                    "É bem bonzin bão memo bom ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything",
+                    "Não in some form, by injected bem bonzin bão memo bom ailable, but é lteratio the majority have suffered a",
+                ],
                 centrosDeCusto: [
                     3864,
                     9863
@@ -689,75 +674,72 @@ const listaComponents: {}[] = [
                 secaoTIResponsavel: sessaoTI.SEG,
                 BUSolicitante: "Primeira",
                 BUsBeneficiadas: [
-                    "essa aqui",
-                    "essa também po"
+                    "Motores",
+                    "DIgital"
                 ],
                 beneficiosReais: [
                     {
-                        descricao: "description",
+                        descricao: "Description é que é bem bom em massa mano ty have suffereetorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra",
                         moeda: "BRL",
-                        valor: 10000.00,
-                        memoriaCalculo: "é que é bem bom em massa mano ty have suffereetorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra"
+                        valor: 10000.00
                     },
                     {
-                        descricao: "descricaozona caraio gigantassa pqp muita coisa",
+                        descricao: "Descri é que é bem bom em massa mano ty have  é bem bom mesmo vai dar 10000000 de retorno fodãected humour, caozona caraio gigantassa pqp muita coisa",
                         moeda: "USD",
-                        valor: 1500.00,
-                        memoriaCalculo: "é que é bem bom em massa mano ty have  é bem bom mesmo vai dar 10000000 de retorno fodãected humour, or  ra"
+                        valor: 1500.00
                     },
                     {
-                        descricao: "bem datalhadadinha",
+                        descricao: "Manualmente ty have suffered alteratvai dar 10000000 de retorno fodão bem massa mano ty have suffered altnjected humour, or  ra",
                         moeda: "USD",
-                        valor: 780.00,
-                        memoriaCalculo: "é que é bem bom em massa mano ty have suffered alteratvai dar 10000000 de retorno fodão bem massa mano ty have suffered altnjected humour, or  ra"
+                        valor: 780.00
                     }
                 ],
                 beneficiosPotenciais: [
                     {
-                        descricao: "bem datalhadadinha",
+                        descricao: "Sabendo mano ty have suffered alteration in some form, by injected humvai dar 10000000 de retorno fod",
                         moeda: "USD",
-                        valor: 780.00,
-                        memoriaCalculo: "sa mano ty have suffered alteration in some form, by injected humvai dar 10000000 de retorno fod"
+                        valor: 780.00
                     },
                     {
-                        descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
+                        descricao: "Descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
                         moeda: "USD",
-                        valor: 1500.00,
-                        memoriaCalculo: "bom em massa mano ty have suffered alteration in some form, by injected humour bem massa mano ty have suffered alteration in some form, by injected humour, or"
+                        valor: 1500.00
                     },
                 ],
                 objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
                 situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-                pessoaDevolucao: "arnaldo pinto",
+                pessoaDevolucao: "Alexandre de Moraes",
                 motivoDevolucao: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing h",
                 anexos: [
                     {
-                        nome: "jemidoASMR.mp4",
+                        nome: "barulho que a máquina faz(1).mp4",
                         arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD"
                     },
                     {
-                        nome: "thanosAgrachamento.png",
+                        nome: "Foto máquina após o uso(1).png",
                         arquivo: "SADH0D048RB734BpdHef08b08b08V438FVBWOF"
                     },
                     {
-                        nome: "rendaPackDoPe.xml",
+                        nome: "configuracaoMaquina.xml",
                         arquivo: "AB8BBisvbVYEFDIESOABF78yfgG69SDfVFV"
                     }
                 ]
             },
             {
                 id: 4,
-                titulo: "Demandinha de um cara legal",
+                titulo: "Mudança no processo de produção de peças, melhora de segurança",
                 tamanho: TamanhoComponenteProcesso.MuitoGrande,
                 solicitante: "Jefferson Rodrigues",
                 status: StatusComponenteProcesso.Canceled,
                 tipo: TipoComponenteProcesso.Proposta,
-                score: 12.5,
-                departamento: "o da diretoria fodão grandoes",
-                gerenteResponsavel: "marcello taz do cqc",
+                score: 130.82,
+                departamento: "Maquinário",
+                gerenteResponsavel: "Marcelo Siqueira Peixoto",
                 frequenciaUso: 160,
                 aprovadoGerente: true,
-                beneficioQualitativo: "vai dar isso isso of Lorem Ipsum available, but the majoritailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anythingy have suffered alteration in some form, by injected humour, or  randomised word benefi isso e isso de beneficios",
+                beneficiosQualitativos: [
+                    "Vai dar isso isso of Lorem Ipsum available, but the majoritailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anythingy have suffered alteration in some form, by injected humour, or  randomised word benefi isso e isso de beneficios",
+                ],
                 centrosDeCusto: [
                     9425,
                     9678
@@ -766,7 +748,7 @@ const listaComponents: {}[] = [
                 BUSolicitante: "Motores",
                 BUsBeneficiadas: [
                     "Tintas",
-                    "Gidital"
+                    "Digital"
                 ],
                 prazoElaboracao: new Date(),
                 codigoPPM: 67237,
@@ -775,10 +757,9 @@ const listaComponents: {}[] = [
                 aprovadoWorkflow: false,
                 beneficiosReais: [
                     {
-                        descricao: "description",
+                        descricao: "Sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some ",
                         moeda: "BRL",
-                        valor: 10000.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some "
+                        valor: 10000.00
                     },
                 ],
                 periodoExecucao: [
@@ -786,27 +767,25 @@ const listaComponents: {}[] = [
                     new Date()
                 ],
                 responsaveis: [
-                    "Jorginho metálica",
-                    "Arquimedes Segundo"
+                    "Jorge Vercílio da Silva",
+                    "Emanuelle Menezes"
                 ],
                 beneficiosPotenciais: [
                     {
-                        descricao: "bem datalhadadinha",
+                        descricao: "Bem detalhadinha sa mano ty have or  ra é que é bem bom mesmo vmo vai dar 10000000 de retorno fodsuffered alteration in som",
                         moeda: "USD",
-                        valor: 780.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vmo vai dar 10000000 de retorno fodsuffered alteration in som"
+                        valor: 780.00
                     },
                     {
-                        descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
+                        descricao: "Descricaozona caraio gigantassa pqp muita coisa aaaano ty have or  ra é que é bem bom mesmo vmo vai dar 10000000 de retoaa",
                         moeda: "USD",
-                        valor: 1500.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some foda bem bom mesmo meudeus"
+                        valor: 1500.00
                     },
                 ],
                 payback: 4356.30,
                 tabelasCusto: [
                     {
-                        titulo: "gastos tandam",
+                        titulo: "Gastos infraestrutura",
                         isLicenca: false,
                         centrosCusto: [
                             {
@@ -820,12 +799,12 @@ const listaComponents: {}[] = [
                         ],
                         linhas: [
                             {
-                                recurso: "analista funcional",
+                                recurso: "Arquiteto de software",
                                 esforco: 150,
                                 valor: 35
                             },
                             {
-                                recurso: "mão de obra",
+                                recurso: "Técnicos qualificados",
                                 esforco: 48,
                                 valor: 35
                             },
@@ -837,59 +816,59 @@ const listaComponents: {}[] = [
                 escopo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
                 anexos: [
                     {
-                        nome: "rendaPackDoPe.xml",
+                        nome: "configuracaoMaquina(1).xml",
                         arquivo: "AB8BBisvbVYEFDIESOABF78yfgG69SDfVFV"
                     }
                 ]
             },
             {
                 id: 1,
-                titulo: "primeiro titulo ae",
-                // tamanho: TamanhoComponenteProcesso.Pequeno,
-                solicitante: "um fia da puta ae",
+                titulo: "Primeira Demanda",
+                tamanho: TamanhoComponenteProcesso.Pequeno,
+                solicitante: "Carlos Drumond de Andrade",
                 status: StatusComponenteProcesso.Backlog,
                 tipo: TipoComponenteProcesso.Demanda,
                 score: 12.5,
-                departamento: "não sei nenhum departamento",
-                gerenteResponsavel: "tal fiote de cruz credo",
+                departamento: "Vendas",
+                gerenteResponsavel: "Miguel Gomez Lima",
                 frequenciaUso: 200,
                 aprovadoGerente: true,
-                beneficioQualitativo: "textin ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything dizendo como é bom",
+                beneficiosQualitativos: [
+                    "Textin ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything dizendo como é bom randomised words which don't look even slightly believable. If you are going to u",
+                    "Textin ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightlysure there isn't anything dizendo como é bom",
+                ],
                 centrosDeCusto: [
                     1234,
                     5678
                 ],
                 beneficiosReais: [
                     {
-                        descricao: "description",
+                        descricao: "É que é bem bom mesmo vai dar 10000000 reais de  retorno bem massa mano",
                         moeda: "BRL",
-                        valor: 10000.00,
-                        memoriaCalculo: "é que é bem bom mesmo vai dar 10000000 de retorno fodão bem massa mano"
+                        valor: 10000.00
                     },
                     {
-                        descricao: "descricaozona caraio gigantassa pqp muita coisa",
+                        descricao: "Descricaozona gigantassa é que é bem bom mesmo vai dar 10000000 de retorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra pqp muita coisa",
                         moeda: "USD",
-                        valor: 1500.00,
-                        memoriaCalculo: "é que é bem bom mesmo vai dar 10000000 de retorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra"
+                        valor: 1500.00
                     },
                 ],
                 beneficiosPotenciais: [
                     {
-                        descricao: "bem datalhadadinha",
+                        descricao: "Bem datalhadadinha é que é bem bom em massa mano ty have bem massa mano ty have suffered alteration in some form, by injected",
                         moeda: "USD",
-                        valor: 780.00,
-                        memoriaCalculo: "é que é bem bom em massa mano ty have suo fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra"
+                        valor: 780.00
                     }
                 ],
                 objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
                 situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
                 anexos: [
                     {
-                        nome: "jemidoASMR.mp4",
+                        nome: "barulho que a máquina faz.mp4",
                         arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD"
                     },
                     {
-                        nome: "thanosAgrachamento.png",
+                        nome: "Foto máquina após o uso.png",
                         arquivo: "SADH0D048RB734BpdHef08b08b08V438FVBWOF"
                     }
                 ]
@@ -898,17 +877,19 @@ const listaComponents: {}[] = [
     },
     {
         id: 7,
-        titulo: "lerolerolerolero",
+        titulo: "Gastos desnecessários no processo de preparação de mercadorias",
         tamanho: TamanhoComponenteProcesso.Pequeno,
-        solicitante: "um fia da puta ae",
+        solicitante: "Leandro Polanski",
         status: StatusComponenteProcesso.Assesment,
         tipo: TipoComponenteProcesso.Demanda,
-        score: 12.5,
-        departamento: "o da diretoria fodão grandoes",
-        gerenteResponsavel: "marcello taz do cqc",
+        score: 31,
+        departamento: "Produção",
+        gerenteResponsavel: "Marcelo Rodrigues de Bortolli",
         frequenciaUso: 160,
         aprovadoGerente: true,
-        beneficioQualitativo: "vai dar isso isso isso e isso de beneficios ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word",
+        beneficiosQualitativos: [
+            "vai dar isso isso isso e isso de beneficios ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word",
+        ],
         centrosDeCusto: [
             9425,
             9678
@@ -916,39 +897,36 @@ const listaComponents: {}[] = [
         secaoTIResponsavel: sessaoTI.SVE,
         BUSolicitante: "Motores",
         BUsBeneficiadas: [
-            "Tintas",
-            "Gidital"
+            "Digital",
+            "Motores"
         ],
         prazoElaboracao: new Date(),
         codigoPPM: 67237,
-        // linkJira: "https://jirazadaDoCara",
+        linkJira: "https://jirazadaDoCara",
         beneficiosReais: [
             {
-                descricao: "description",
+                descricao: "have or  ra é que é bem bom mesmo vai dar 99199111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa",
                 moeda: "BRL",
-                valor: 10000.00,
-                memoriaCalculo: "have or  ra é que é bem bom mesmo vai dar 99199111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
+                valor: 10000.00
             },
         ],
         beneficiosPotenciais: [
             {
-                descricao: "bem datalhadadinha",
+                descricao: "bem datalhadadinho esse benefício para aumentar o score da demanda",
                 moeda: "USD",
-                valor: 780.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa"
+                valor: 780.00
             },
             {
                 descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa ahave or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa",
                 moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
+                valor: 1500.00
             },
         ],
         objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
         situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
         anexos: [
             {
-                nome: "rendaPackDoPe.xml",
+                nome: "configuracaoMaquina(2).xml",
                 arquivo: "AB8BBisvbVYEFDIESOABF78yfgG69SDfVFV"
             }
         ]
@@ -956,26 +934,28 @@ const listaComponents: {}[] = [
     {
         id: 8,
         dataReuniao: new Date(),
-        comissao: "Uma comissão doida lá",
+        comissao: "Comissão Processos Gerenciamento de Projetos de fornecimento ",
         tipo: TipoColecaoComponenteProcesso.ATA,
-        ataPublicada: "ata8Publicada.pdf",
-        ataNaoPublicada: "ata8NaoPublicada.pdf",
-        // numeroAtaDG: 12435,
-        documentoAprovacao: "aprovation.pdf",
+        ataPublicada: "ataPublicada.pdf",
+        ataNaoPublicada: "ataNaoPublicada.pdf",
+        numeroAtaDG: 12435,
+        documentoAprovacao: "DocumentoDeAprovacao.pdf",
         propostas: [
             {
                 id: 4,
-                titulo: "Demandinha de um cara legal",
+                titulo: "Mudança no processo de produção de peças, melhora de segurança",
                 tamanho: TamanhoComponenteProcesso.MuitoGrande,
                 solicitante: "Jefferson Rodrigues",
                 status: StatusComponenteProcesso.Canceled,
                 tipo: TipoComponenteProcesso.Proposta,
-                score: 12.5,
-                departamento: "o da diretoria fodão grandoes",
-                gerenteResponsavel: "marcello taz do cqc",
+                score: 130.82,
+                departamento: "Maquinário",
+                gerenteResponsavel: "Marcelo Siqueira Peixoto",
                 frequenciaUso: 160,
                 aprovadoGerente: true,
-                beneficioQualitativo: "vai dar isso isso of Lorem Ipsum available, but the majoritailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anythingy have suffered alteration in some form, by injected humour, or  randomised word benefi isso e isso de beneficios",
+                beneficiosQualitativos: [
+                    "Vai dar isso isso of Lorem Ipsum available, but the majoritailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anythingy have suffered alteration in some form, by injected humour, or  randomised word benefi isso e isso de beneficios",
+                ],
                 centrosDeCusto: [
                     9425,
                     9678
@@ -984,7 +964,7 @@ const listaComponents: {}[] = [
                 BUSolicitante: "Motores",
                 BUsBeneficiadas: [
                     "Tintas",
-                    "Gidital"
+                    "Digital"
                 ],
                 prazoElaboracao: new Date(),
                 codigoPPM: 67237,
@@ -993,10 +973,9 @@ const listaComponents: {}[] = [
                 aprovadoWorkflow: false,
                 beneficiosReais: [
                     {
-                        descricao: "description",
+                        descricao: "Sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some ",
                         moeda: "BRL",
-                        valor: 10000.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some "
+                        valor: 10000.00
                     },
                 ],
                 periodoExecucao: [
@@ -1004,27 +983,25 @@ const listaComponents: {}[] = [
                     new Date()
                 ],
                 responsaveis: [
-                    "Jorginho metálica",
-                    "Arquimedes Segundo"
+                    "Jorge Vercílio da Silva",
+                    "Emanuelle Menezes"
                 ],
                 beneficiosPotenciais: [
                     {
-                        descricao: "bem datalhadadinha",
+                        descricao: "Bem detalhadinha sa mano ty have or  ra é que é bem bom mesmo vmo vai dar 10000000 de retorno fodsuffered alteration in som",
                         moeda: "USD",
-                        valor: 780.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vmo vai dar 10000000 de retorno fodsuffered alteration in som"
+                        valor: 780.00
                     },
                     {
-                        descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
+                        descricao: "Descricaozona caraio gigantassa pqp muita coisa aaaano ty have or  ra é que é bem bom mesmo vmo vai dar 10000000 de retoaa",
                         moeda: "USD",
-                        valor: 1500.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some foda bem bom mesmo meudeus"
+                        valor: 1500.00
                     },
                 ],
                 payback: 4356.30,
                 tabelasCusto: [
                     {
-                        titulo: "gastos tandam",
+                        titulo: "Gastos infraestrutura",
                         isLicenca: false,
                         centrosCusto: [
                             {
@@ -1038,12 +1015,12 @@ const listaComponents: {}[] = [
                         ],
                         linhas: [
                             {
-                                recurso: "analista funcional",
+                                recurso: "Arquiteto de software",
                                 esforco: 150,
                                 valor: 35
                             },
                             {
-                                recurso: "mão de obra",
+                                recurso: "Técnicos qualificados",
                                 esforco: 48,
                                 valor: 35
                             },
@@ -1055,33 +1032,35 @@ const listaComponents: {}[] = [
                 escopo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
                 anexos: [
                     {
-                        nome: "rendaPackDoPe.xml",
+                        nome: "configuracaoMaquina(1).xml",
                         arquivo: "AB8BBisvbVYEFDIESOABF78yfgG69SDfVFV"
                     }
                 ]
             },
             {
                 id: 9,
-                titulo: "eu quero janta de 3 s",
+                titulo: "Impecílios da equipe de limpeza no setor de usinagem",
                 tamanho: TamanhoComponenteProcesso.Pequeno,
-                solicitante: "um gênio",
+                solicitante: "Felícia Gonçalves",
                 status: StatusComponenteProcesso.ToDo,
                 tipo: TipoComponenteProcesso.Proposta,
-                score: 10000,
-                departamento: "sgdaho",
+                score: 100,
+                departamento: "Limpeza",
                 gerenteResponsavel: "Carlos Salles Morales",
                 frequenciaUso: 98,
                 aprovadoGerente: true,
-                beneficioQualitativo: "b e n e f i c i o There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarras",
+                beneficiosQualitativos: [
+                    "b e n e f i c i o There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarras",
+                ],
                 centrosDeCusto: [
                     9678,
                     9674,
                     1415
                 ],
                 secaoTIResponsavel: sessaoTI.SIM,
-                BUSolicitante: "Motores",
+                BUSolicitante: "Infraestrutura",
                 BUsBeneficiadas: [
-                    "Motores"
+                    "Infraestrutura"
                 ],
                 prazoElaboracao: new Date(),
                 codigoPPM: 3241,
@@ -1091,16 +1070,14 @@ const listaComponents: {}[] = [
                 aprovadoWorkflow: false,
                 beneficiosReais: [
                     {
-                        descricao: "description",
+                        descricao: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores",
                         moeda: "USD",
-                        valor: 100.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores"
+                        valor: 100.00
                     },
                     {
-                        descricao: "uma descrizaozninha",
+                        descricao: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores",
                         moeda: "BRL",
-                        valor: 19000.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores"
+                        valor: 19000.00
                     },
                 ],
                 periodoExecucao: [
@@ -1108,27 +1085,25 @@ const listaComponents: {}[] = [
                     new Date()
                 ],
                 responsaveis: [
-                    "Bruno",
-                    "MarronÈ"
+                    "Bruno Henrique Carvalho",
+                    "Thamires Meireles"
                 ],
                 beneficiosPotenciais: [
                     {
                         descricao: "descricao",
                         moeda: "USD",
-                        valor: 1500.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bemnda por favorzinho meus queridos su"
+                        valor: 1500.00
                     },
                     {
-                        descricao: "descricaodaCoisa",
+                        descricao: "descricao da coisa",
                         moeda: "BRL",
-                        valor: 10.00,
-                        memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
+                        valor: 10.00
                     }
                 ],
                 payback: 945.37,
                 tabelasCusto: [
                     {
-                        titulo: "mais gastos",
+                        titulo: "Reforma do espaço",
                         isLicenca: false,
                         centrosCusto: [
                             {
@@ -1146,12 +1121,12 @@ const listaComponents: {}[] = [
                         ],
                         linhas: [
                             {
-                                recurso: "rapaz do café",
+                                recurso: "Operários",
                                 esforco: 350,
                                 valor: 15
                             },
                             {
-                                recurso: "mão de obra",
+                                recurso: "Materiais",
                                 esforco: 48,
                                 valor: 350
                             },
@@ -1163,7 +1138,7 @@ const listaComponents: {}[] = [
                 escopo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
                 anexos: [
                     {
-                        nome: "naoEUmVirus.docxx",
+                        nome: "declaracaoRosana.docs",
                         arquivo: "DSF9A8D7FGABOBFDIuibduiavbipashsad98tag"
                     }
                 ]
@@ -1172,26 +1147,28 @@ const listaComponents: {}[] = [
     },
     {
         id: 9,
-        titulo: "eu quero janta de 3 s",
+        titulo: "Impecílios da equipe de limpeza no setor de usinagem",
         tamanho: TamanhoComponenteProcesso.Pequeno,
-        solicitante: "um gênio",
+        solicitante: "Felícia Gonçalves",
         status: StatusComponenteProcesso.ToDo,
         tipo: TipoComponenteProcesso.Proposta,
-        score: 10000,
-        departamento: "sgdaho",
+        score: 100,
+        departamento: "Limpeza",
         gerenteResponsavel: "Carlos Salles Morales",
         frequenciaUso: 98,
         aprovadoGerente: true,
-        beneficioQualitativo: "b e n e f i c i o There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarras",
+        beneficiosQualitativos: [
+            "b e n e f i c i o There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarras",
+        ],
         centrosDeCusto: [
             9678,
             9674,
             1415
         ],
         secaoTIResponsavel: sessaoTI.SIM,
-        BUSolicitante: "Motores",
+        BUSolicitante: "Infraestrutura",
         BUsBeneficiadas: [
-            "Motores"
+            "Infraestrutura"
         ],
         prazoElaboracao: new Date(),
         codigoPPM: 3241,
@@ -1201,16 +1178,14 @@ const listaComponents: {}[] = [
         aprovadoWorkflow: false,
         beneficiosReais: [
             {
-                descricao: "description",
+                descricao: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores",
                 moeda: "USD",
-                valor: 100.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores"
+                valor: 100.00
             },
             {
-                descricao: "uma descrizaozninha",
+                descricao: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores",
                 moeda: "BRL",
-                valor: 19000.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores"
+                valor: 19000.00
             },
         ],
         periodoExecucao: [
@@ -1218,27 +1193,25 @@ const listaComponents: {}[] = [
             new Date()
         ],
         responsaveis: [
-            "Bruno",
-            "MarronÈ"
+            "Bruno Henrique Carvalho",
+            "Thamires Meireles"
         ],
         beneficiosPotenciais: [
             {
                 descricao: "descricao",
                 moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bemnda por favorzinho meus queridos su"
+                valor: 1500.00
             },
             {
-                descricao: "descricaodaCoisa",
+                descricao: "descricao da coisa",
                 moeda: "BRL",
-                valor: 10.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
+                valor: 10.00
             }
         ],
         payback: 945.37,
         tabelasCusto: [
             {
-                titulo: "mais gastos",
+                titulo: "Reforma do espaço",
                 isLicenca: false,
                 centrosCusto: [
                     {
@@ -1256,12 +1229,12 @@ const listaComponents: {}[] = [
                 ],
                 linhas: [
                     {
-                        recurso: "rapaz do café",
+                        recurso: "Operários",
                         esforco: 350,
                         valor: 15
                     },
                     {
-                        recurso: "mão de obra",
+                        recurso: "Materiais",
                         esforco: 48,
                         valor: 350
                     },
@@ -1273,7 +1246,7 @@ const listaComponents: {}[] = [
         escopo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
         anexos: [
             {
-                nome: "naoEUmVirus.docxx",
+                nome: "declaracaoRosana.docs",
                 arquivo: "DSF9A8D7FGABOBFDIuibduiavbipashsad98tag"
             }
         ]
