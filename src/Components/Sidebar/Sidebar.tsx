@@ -175,10 +175,10 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
     }
 
     return (
-      <Grid container>
+      <Grid container key={rotaSecundaria.id}>
         <GridIndicadorItem item xs={0.3} sx={{ backgroundColor: (selecionado ? "#00579d" : "inherit") }} />
         <Grid item xs={11.7}>
-          <SidebarTypography key={rotaSecundaria.id}>
+          <SidebarTypography>
             <Link to={rotaSecundaria.rota} >
               <SidebarListItemButton sx={{ pl: 4 }} onClick={() => { props.setIndexSelecionado(indexItem) }} selected={selecionado} >
                 <ListItemText primary={rotaSecundaria.nome} />

@@ -45,7 +45,6 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<Login setAberto={setAberto} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />} />
                 <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} />} />
-
                 <Route path="/notifications" element={<Notificacoes />} />
                 <Route path="/chats" element={<Chats aberto={aberto} />}></Route>
 
@@ -69,7 +68,7 @@ export default function App() {
                 <Route path="/home/agenda/proposal/history" element={<Historico />} />
                 <Route path="/home/ata/proposal/history" element={<Historico />} />
 
-              
+            
                 <Route path="/home/proposal" element={<TelaProcesso />} />
                 <Route path="/home/agenda/proposal" element={<TelaProcesso />} />
                 <Route path="/home/ata/proposal" element={<TelaProcesso />} />

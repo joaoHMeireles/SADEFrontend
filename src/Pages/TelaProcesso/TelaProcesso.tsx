@@ -938,9 +938,8 @@ function InfoGeral(props: { processo: any }) {
     }
 
     const beneficiosQualitativos = props.processo.beneficiosQualitativos.map((beneficio: string, index: number) => {
-
         return (
-            <ListItem sx={{ textAlign: "justify" }}>
+            <ListItem key={index} sx={{ textAlign: "justify" }}>
                 <ListItemIcon>
                     <CircleIconPonto />
                 </ListItemIcon>
