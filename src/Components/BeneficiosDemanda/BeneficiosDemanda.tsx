@@ -1,16 +1,21 @@
 import { useState } from "react";
 
-import Box from "@mui/material/Box";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from "@mui/material/FormControlLabel"
 import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
+
+import {
+    BoxContainerGeral, BoxTitulos, TypographyTitulos, BoxIcones,
+    BoxContainerGeralBeneficio, BoxContainerDivisorio, BoxInputsAcima,
+    BoxValorMensal, TypographyLabels, BoxInputs, BoxInputsAbaixo,
+    BoxObrigacaoLegal, BoxDescricaoRequeistosControle, BoxFrequencia
+} from "./BeneficiosDemanda.styles";
 
 export default function BeneficiosDemanda() {
     const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState(1)
@@ -19,38 +24,38 @@ export default function BeneficiosDemanda() {
 
     return (
         <>
-            <Box sx={{ width: '100%', height: "auto", display: "flex", justifyContent: "space-around", alignItems: "center", flexDirection: "column" }}>
-                <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#00579D", marginTop: 3 }}>
-                    <Typography sx={{ color: "#FFF", height: "2rem", display: "flex", justifyContent: "center", alignItems: "center", }}>
+            <BoxContainerGeral>
+                <BoxTitulos>
+                    <TypographyTitulos>
                         Benefício Real
-                    </Typography>
-                </Box>
+                    </TypographyTitulos>
+                </BoxTitulos>
                 <BeneficiosReais numeroBeneficios={numeroBeneficiosReais} />
-                < Box sx={{ marginTop: 3 }}>
+                <BoxIcones>
                     {numeroBeneficiosReais > 1 ? <RemoveRoundedIcon sx={{ fontSize: "2rem", marginRight: 3, cursor: "pointer" }} onClick={() => { setNumeroBeneficiosReais(numeroBeneficiosReais - 1) }} /> : ""}
                     <AddRoundedIcon sx={{ fontSize: "2rem", cursor: "pointer" }} onClick={() => { setNumeroBeneficiosReais(numeroBeneficiosReais + 1) }} />
-                </Box>
-                <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#00579D", marginTop: 3 }}>
-                    <Typography sx={{ color: "#FFF", height: "2rem", display: "flex", justifyContent: "center", alignItems: "center", }}>
+                </BoxIcones>
+                <BoxTitulos>
+                    <TypographyTitulos>
                         Benefício Potencial
-                    </Typography>
-                </Box>
+                    </TypographyTitulos>
+                </BoxTitulos>
                 <BeneficiosPotenciais numeroBeneficios={numeroBeneficiosPotenciais} />
-                < Box sx={{ marginTop: 3 }}>
+                <BoxIcones>
                     {numeroBeneficiosPotenciais > 1 ? <RemoveRoundedIcon sx={{ fontSize: "2rem", marginRight: 3, cursor: "pointer" }} onClick={() => { setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais - 1) }} /> : ""}
                     <AddRoundedIcon sx={{ fontSize: "2rem", cursor: "pointer" }} onClick={() => { setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais + 1) }} />
-                </Box>
-                <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#00579D", marginTop: 3 }}>
-                    <Typography sx={{ color: "#FFF", height: "2rem", display: "flex", justifyContent: "center", alignItems: "center", }}>
+                </BoxIcones>
+                <BoxTitulos>
+                    <TypographyTitulos >
                         Benefício Qualitativo
-                    </Typography>
-                </Box>
+                    </TypographyTitulos>
+                </BoxTitulos>
                 <BeneficiosQualitativos numeroBeneficios={numeroBeneficiosQualitativos} />
-                < Box sx={{ marginTop: 3 }}>
+                <BoxIcones>
                     {numeroBeneficiosQualitativos > 1 ? <RemoveRoundedIcon sx={{ fontSize: "2rem", marginRight: 3, cursor: "pointer" }} onClick={() => { setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos - 1) }} /> : ""}
                     <AddRoundedIcon sx={{ fontSize: "2rem", cursor: "pointer" }} onClick={() => { setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos + 1) }} />
-                </Box>
-            </Box>
+                </BoxIcones>
+            </BoxContainerGeral>
         </>
     )
 }
@@ -122,13 +127,13 @@ function BeneficioReal() {
 
     return (
         <>
-            <Box sx={{ width: "100%", height: "50%", display: "flex", justifyContent: "start", alignItems: "center", flexDirection: "column" }}>
-                <Box sx={{ width: "100%", height: "80%", display: "flex", justifyContent: "space-around", alignItems: "center", flexDirection: "column", marginTop: 5 }}>
-                    <Box sx={{ width: "100%", display: "flex", justifyContent: "start", alignItems: "center", flexDirection: "column" }}>
-                        <Box sx={{ width: "100%", marginBottom: 1 }}>
-                            <Typography sx={{ color: "#595959" }}>Valor Mensal: </Typography>
-                        </Box>
-                        <Box sx={{ width: "100%", display: "flex", justifyContent: "start", alignItems: "center" }}>
+            <BoxContainerGeralBeneficio>
+                <BoxContainerDivisorio>
+                    <BoxInputsAcima>
+                        <BoxValorMensal>
+                            <TypographyLabels>Valor Mensal: </TypographyLabels>
+                        </BoxValorMensal>
+                        <BoxInputs>
                             <TextField sx={{ width: "30%", marginRight: 5 }} />
                             <TextField
                                 sx={{ width: "10%" }}
@@ -144,16 +149,16 @@ function BeneficioReal() {
                                     </MenuItem>
                                 ))}
                             </TextField>
-                        </Box>
-                    </Box>
-                    <Box sx={{ width: "100%", height: "50%", marginTop: 3 }}>
-                        <Typography sx={{ color: "#595959" }}>Descrição: </Typography>
+                        </BoxInputs>
+                    </BoxInputsAcima>
+                    <BoxInputsAbaixo>
+                        <TypographyLabels>Descrição: </TypographyLabels>
                         <TextField multiline
                             rows={7}
                             maxRows={Infinity} sx={{ width: "100%" }}></TextField>
-                    </Box>
-                </Box>
-            </Box>
+                    </BoxInputsAbaixo>
+                </BoxContainerDivisorio>
+            </BoxContainerGeralBeneficio>
         </>
     )
 }
@@ -183,13 +188,13 @@ function BeneficioPotencial() {
 
     return (
         <>
-            <Box sx={{ width: "100%", height: "50%", display: "flex", justifyContent: "start", alignItems: "center", flexDirection: "column" }}>
-                <Box sx={{ width: "100%", height: "80%", display: "flex", justifyContent: "space-around", alignItems: "center", flexDirection: "column", marginTop: 5 }}>
-                    <Box sx={{ width: "100%", display: "flex", justifyContent: "start", alignItems: "center", flexDirection: "column" }}>
-                        <Box sx={{ width: "100%", marginBottom: 1 }}>
-                            <Typography sx={{ color: "#595959" }}>Valor Mensal: </Typography>
-                        </Box>
-                        <Box sx={{ width: "100%", display: "flex", justifyContent: "start", alignItems: "center" }}>
+            <BoxContainerGeralBeneficio>
+                <BoxContainerDivisorio>
+                    <BoxInputsAcima>
+                        <BoxValorMensal>
+                            <TypographyLabels>Valor Mensal: </TypographyLabels>
+                        </BoxValorMensal>
+                        <BoxInputs sx={{ width: "100%", display: "flex", justifyContent: "start", alignItems: "center" }}>
                             <TextField sx={{ width: "30%", marginRight: 5 }} />
                             <TextField
                                 sx={{ width: "10%" }}
@@ -205,22 +210,22 @@ function BeneficioPotencial() {
                                     </MenuItem>
                                 ))}
                             </TextField>
-                        </Box>
-                    </Box>
-                    <Box sx={{ width: "100%", height: "50%", marginTop: 3 }}>
-                        <Typography sx={{ color: "#595959" }}>Descrição: </Typography>
+                        </BoxInputs>
+                    </BoxInputsAcima>
+                    <BoxInputsAbaixo>
+                        <TypographyLabels>Descrição: </TypographyLabels>
                         <TextField multiline
                             rows={7}
                             maxRows={Infinity} sx={{ width: "100%" }}></TextField>
-                    </Box>
-                </Box>
-                <Box sx={{ width: "100%", marginTop: 2 }}>
-                    <Typography sx={{ color: "#595959" }}>
+                    </BoxInputsAbaixo>
+                </BoxContainerDivisorio>
+                <BoxObrigacaoLegal>
+                    <TypographyLabels>
                         Obrigação legal
                         <Checkbox />
-                    </Typography>
-                </Box>
-            </Box>
+                    </TypographyLabels>
+                </BoxObrigacaoLegal>
+            </BoxContainerGeralBeneficio>
         </>
     )
 }
@@ -249,17 +254,17 @@ function BeneficioQualitativo() {
 
     return (
         <>
-            <Box sx={{ width: "100%", height: "50%", display: "flex", justifyContent: "start", alignItems: "center", flexDirection: "column" }}>
-                <Box sx={{ width: "100%", height: "50%", marginTop: 5 }}>
-                    <Typography sx={{ color: "#595959" }}>Descrição: </Typography>
+            <BoxContainerGeralBeneficio>
+                <BoxDescricaoRequeistosControle>
+                    <TypographyLabels>Descrição: </TypographyLabels>
                     <TextField multiline
                         rows={7}
                         maxRows={Infinity} sx={{ width: "100%" }}></TextField>
-                </Box>
-                <Box sx={{ width: "100%", height: "50%", flexDirection: "column", marginTop: 5 }}>
-                    <Typography sx={{ color: "#595959" }}>
+                </BoxDescricaoRequeistosControle>
+                <BoxFrequencia>
+                    <TypographyLabels>
                         Frequêcia de uso da solução:
-                    </Typography>
+                    </TypographyLabels>
                     <TextField sx={{ width: "30%", marginTop: 1 }}
                         select
                         value={frequencia}
@@ -271,11 +276,11 @@ function BeneficioQualitativo() {
                             </MenuItem>
                         ))}
                     </TextField>
-                </Box>
-                <Box sx={{ width: "100%", height: "50%", marginTop: 5 }}>
-                    <Typography sx={{ color: "#595959" }}>
+                </BoxFrequencia>
+                <BoxDescricaoRequeistosControle>
+                    <TypographyLabels>
                         Requesito de controles internos:
-                    </Typography>
+                    </TypographyLabels>
                     <RadioGroup sx={{ width: "auto", display: "flex", flexDirection: "row" }}
                         aria-labelledby="demo-radio-buttons-group-label"
                         name="radio-buttons-group"
@@ -283,8 +288,8 @@ function BeneficioQualitativo() {
                         <FormControlLabel sx={{ marginRight: 4, color: "#595959" }} value="Sim" control={<Radio />} label="Sim" />
                         <FormControlLabel sx={{ color: "#595959" }} value="não" control={<Radio />} label="Não" />
                     </RadioGroup>
-                </Box>
-            </Box>
+                </BoxDescricaoRequeistosControle>
+            </BoxContainerGeralBeneficio>
         </>
     )
 }
