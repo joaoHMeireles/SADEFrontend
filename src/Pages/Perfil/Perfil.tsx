@@ -1,12 +1,25 @@
 import "./Perfil.scss";
 
-import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
-import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from "../App.styles";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import fotoPerfil from "../../Assets/fotoPerfil.jpg"
+import { useState } from 'react';
+import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
+import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from '../App.styles';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import fotoPerfil from '../../Assets/fotoPerfil.jpg';
+import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
+import RemoveRedEyeRoundedIcon from '@mui/icons-material/RemoveRedEyeRounded';
 
 export default function Perfil() {
+    const [tipo, setTipo] = useState("password");
+
+    function mostrarSenha() {
+        if (tipo == "text") {
+            setTipo("password");
+        } else {
+            setTipo("text");
+        };
+    };
+
     return (
         <BoxConteudo>
             <Breadcrumb />
@@ -19,7 +32,7 @@ export default function Perfil() {
                         </div>
 
                         <div id="img">
-                            <img src={fotoPerfil} alt="Foto de perfil" />
+                            <img src={} alt="Foto de perfil" />
                         </div>
                     </div>
 
@@ -27,18 +40,28 @@ export default function Perfil() {
                         <div className="text">
                             <p>Usuário</p>
                         </div>
+
+                        <TextField sx={{ width: "40%" }} value="camilly_pessotti" />
                     </div>
 
                     <div className="row">
                         <div className="text">
                             <p>Email</p>
                         </div>
+
+                        <TextField sx={{ width: "40%" }} value="camilly_pessotti@weg.net" />
                     </div>
 
-                    <div className="row" id="last">
+                    <div className="row" id="lastRow">
                         <div className="text">
                             <p>Senha</p>
                         </div>
+
+                        <TextField type={tipo} sx={{ width: "40%" }} value="Abc@123" InputProps={{ endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#666", cursor: "pointer" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#666", cursor: "pointer" }} />) }} />
+                    </div>
+
+                    <div className="button">
+                        <Button variant="contained" disabled>Salvar alterações</Button>
                     </div>
                 </div>
             </div>

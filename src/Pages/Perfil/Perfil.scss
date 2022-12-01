@@ -1,6 +1,6 @@
 @import "../../variables.scss";
 
-#container{
+#container {
     align-items: center;
     color: $cinza-escuro;
     display: flex;
@@ -9,15 +9,15 @@
     width: 100%;
 
     #panel {
-        border: 2px solid $cinza-escuro;
+        border: 1px solid $cinza-escuro;
         border-radius: 1rem;
         height: auto;
-        padding: 2rem;
-        width: 50vw;
+        padding: 1rem;
+        width: 60vw;
 
         .row {
             align-items: flex-start;
-            border-bottom: 2px solid $cinza-escuro;
+            border-bottom: 1px solid $cinza-escuro;
             display: flex;
             flex-direction: column;
             height: auto;
@@ -31,7 +31,7 @@
                 p {
                     font-size: 18px;
                     font-weight: 500;
-                } 
+                }
             }
 
             #img {
@@ -50,8 +50,18 @@
             }
         }
 
-        #last {
+        #lastRow {
             border-bottom: none;
+        }
+
+        #button {
+            align-items: flex-end;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            justify-content: center;
+            padding: 1rem;
+            width: 100%;
         }
     }
 }
