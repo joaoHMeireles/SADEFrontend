@@ -1,0 +1,57 @@
+@import "../../variables.scss";
+
+#container{
+    align-items: center;
+    color: $cinza-escuro;
+    display: flex;
+    height: 84vh;
+    justify-content: center;
+    width: 100%;
+
+    #panel {
+        border: 2px solid $cinza-escuro;
+        border-radius: 1rem;
+        height: auto;
+        padding: 2rem;
+        width: 50vw;
+
+        .row {
+            align-items: flex-start;
+            border-bottom: 2px solid $cinza-escuro;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            justify-content: center;
+            padding: 1rem;
+            width: 100%;
+
+            .text {
+                margin-bottom: 1rem;
+
+                p {
+                    font-size: 18px;
+                    font-weight: 500;
+                } 
+            }
+
+            #img {
+                border-radius: 360px;
+                height: 150px;
+                width: 150px;
+                overflow: hidden;
+
+                img {
+                    align-items: center;
+                    display: flex;
+                    height: 100%;
+                    justify-content: center;
+                    width: 100%;
+                }
+            }
+        }
+
+        #last {
+            border-bottom: none;
+        }
+    }
+}
