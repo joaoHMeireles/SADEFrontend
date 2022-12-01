@@ -11,6 +11,7 @@ import TelaProcesso from "./TelaProcesso/TelaProcesso";
 import TelaColecaoProcesso from "./TelaColecaoProcesso/TelaColecaoProcesso";
 import Notificacoes from "./Notificacoes/Notificacoes";
 import Chats from "./Chats/Chats";
+import Perfil from "./Perfil/Perfil";
 import { Box } from "@mui/material";
 import { MainBox } from "./App.styles";
 import { ThemeProvider } from "@emotion/react";
@@ -55,6 +56,7 @@ export default function App() {
                 <Route path="/home/ata/proposal" element={<TelaProcesso />} />
                 <Route path="/home/agenda" element={<TelaColecaoProcesso />} />
                 <Route path="/home/ata" element={<TelaColecaoProcesso />} />
+                <Route path="/profile" element={<Perfil />} />
               </Routes>
             </ThemeProvider>
           </MainBox>

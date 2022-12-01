@@ -58,7 +58,9 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                                     </MenuItem>
                                 ))}
                             </TextFieldLinguas>
-                            <Avatar {...stringAvatar('ROMÁRIO')} />
+                            <Avatar {...stringAvatar('ROMÁRIO')} onClick={() => {
+                                window.location.href="/profile";
+                            }} />
                         </BoxTextField>
                     </Toolbar>
                 </NavBar>
