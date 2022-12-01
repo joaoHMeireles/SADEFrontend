@@ -5,7 +5,7 @@ import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from '../App.styles';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import fotoPerfil from '../../Assets/fotoPerfil.jpg';
+import fotoPerfil from '../../Assets/fotoPerfil.png';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import RemoveRedEyeRoundedIcon from '@mui/icons-material/RemoveRedEyeRounded';
 
@@ -32,7 +32,7 @@ export default function Perfil() {
                         </div>
 
                         <div id="img">
-                            <img src={} alt="Foto de perfil" />
+                            <img src={fotoPerfil} alt="Foto de perfil" />
                         </div>
                     </div>
 
@@ -60,7 +60,7 @@ export default function Perfil() {
                         <TextField type={tipo} sx={{ width: "40%" }} value="Abc@123" InputProps={{ endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#666", cursor: "pointer" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#666", cursor: "pointer" }} />) }} />
                     </div>
 
-                    <div className="button">
+                    <div id="button">
                         <Button variant="contained" disabled>Salvar alterações</Button>
                     </div>
                 </div>
