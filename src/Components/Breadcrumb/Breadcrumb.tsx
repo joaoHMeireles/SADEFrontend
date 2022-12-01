@@ -2,6 +2,7 @@ import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useLocation, Link } from "react-router-dom"
 import Typography from "@mui/material/Typography";
 import { ArrowIcon, BoxRota, BoxBreadcrumb, IconeRota } from "./Breadcrumb.styles";
+import { getNomeRota } from "../../utils";
 
 export default function Breadcrumb() {
     const location = useLocation();
@@ -72,10 +73,10 @@ function pegarBreadcrumb(location: { pathname: string, search: string }) {
         }
 
         if ((letra == "/" && !primeiro) || etapaUrl + 1 == tamanho) {
-            if (getNome(palavra) != null) {
+            if (getNomeRota(palavra) != null) {
                 // let rotaId = getId(palavra, location.search)
                 // if (rotaId == "") {
-                    links.push({ key: key, name: getNome(palavra), path: "/" + palavra, search: "" })
+                    links.push({ key: key, name: getNomeRota(palavra), path: "/" + palavra, search: "" })
                 // } else {
                 //     links.push({ key: key, name: getNome(palavra), path: "/" + palavra, search: "?id_" + palavra + "=" + rotaId })
                 // }
@@ -92,63 +93,4 @@ function pegarBreadcrumb(location: { pathname: string, search: string }) {
     }
 
     return links
-}
-
-/**
- * Recebe uma palavra para procurar no search e retorna o valor de id depois do 
- * símbolo de igual no search
- * 
- * @param palavra 
- * @param search 
- * @returns 
- */
-function getId(palavra: string, search: string) {
-    let index = search.indexOf(palavra)
-    let pegarId = false
-    let idPalavra = ""
-
-    for (let letra of search.slice(index)) {
-        if (letra == "=") {
-            pegarId = true
-            continue
-        }
-        if (pegarId) {
-            if (letra == "?") {
-                break;
-            }
-            idPalavra += letra
-        }
-    }
-
-    return idPalavra
-}
-
-/**
- * Recebe uma palavra de uma rota e retorna o título certo para o breadcrumb daquela página
- * 
- * @param palavra
- * @return
- */
-function getNome(palavra: string) {
-    const nomesRotas = {
-        home: "Início",
-        createdemand: "Criar Demanda",
-        createproposal: "Criar Proposta",
-        createagenda: "Criar Agenda",
-        demand: "Demanda",
-        proposal: "Proposta",
-        agenda: "Pauta",
-        ata: "ATA",
-        mydemands: "Minhas demandas",
-        notifications: "Notificações",
-        profile: "Perfil",
-        draft: "Rascunho",
-        mydrafts: "Meus rascunhos",
-        chats: "Chats",
-        chat: "Chat",
-        history: "Histórico",
-        alteration: "Alteração"
-    }
-
-    return (nomesRotas as any)[palavra]
 }

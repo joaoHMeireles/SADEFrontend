@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
-import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
-import Chat from "../../Components/Chat/Chat";
-import Toolbar from "../../Components/Toolbar/Toolbar";
-import Box from "@mui/system/Box";
+import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import Chat from "../../components/Chat/Chat";
+import Toolbar from "../../components/Toolbar/Toolbar";
 import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import {
-  BoxBarraPesquisa, ContainerChats, ContainerGeralChats, LadoEsquerdoChat,
-  LadoEsquerdoGeralChats, LadoDiretoChat, LadoDireitoGeralChats, BarraPesquisa
+  BoxBarraPesquisa, ContainerChats, ContainerGeralChats, LadoEsquerdoChat, LadoEsquerdoGeralChats, LadoDiretoChat,
+  LadoDireitoGeralChats, BarraPesquisa
 } from "./Chats.styles";
 import {
-  BoxGeralMensagensLadoDireito, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoDireito,
-  BoxMensagensLadoEsquerdo, BoxMensagemLadoDireito, BoxMensagemLadoEsquerdo,
-  TypographyPessoa, TypographyMensagem
+  BoxGeralMensagensLadoDireito, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoDireito, BoxMensagensLadoEsquerdo,
+  BoxMensagemLadoDireito, BoxMensagemLadoEsquerdo, TypographyPessoa, TypographyMensagem
 } from "./Chats.styles";
 
 

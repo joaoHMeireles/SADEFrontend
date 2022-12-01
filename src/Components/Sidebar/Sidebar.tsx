@@ -197,7 +197,7 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
   })
 
   useEffect(() => {
-    if(!componenteAberto){
+    if (!componenteAberto) {
       const gridCollapse = document.getElementById(`gridCollapse${props.item.id}`)
       gridCollapse?.style.setProperty("background-color", "inherit")
     }
@@ -224,7 +224,7 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
   return (
     <SidebarListItem key={props.item.id} disablePadding>
       <Grid container>
-        {!componenteAberto && <GridIndicadorItem id={`gridCollapse${props.item.id}`} item xs={0.3}/>}
+        {!componenteAberto && <GridIndicadorItem id={`gridCollapse${props.item.id}`} item xs={0.3} />}
         <Grid item xs={11.7}>
           <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center' }} onClick={verRotas}>
             <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >

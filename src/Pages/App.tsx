@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.scss";
-import Sidebar from "../Components/Sidebar/Sidebar";
-import Navbar from "../Components/Navbar/Navbar";
-import Toolbar from "../Components/Toolbar/Toolbar";
-import Filter from "../Components/Filtro/Filtro";
+import Sidebar from "../components/Sidebar/Sidebar";
+import Navbar from "../components/Navbar/Navbar";
+import Toolbar from "../components/Toolbar/Toolbar";
+import Filter from "../components/Filtro/Filtro";
 import Login from "./Login/Login";
 import Inicio from "./Inicio/Inicio";
 import TelaProcesso from "./TelaProcesso/TelaProcesso";

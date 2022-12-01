@@ -1,4 +1,4 @@
-import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso } from '../DefinitionFiles/enuns'
+import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso } from '../constants/enuns'
 
 export interface InterfaceComponenteProcesso {
     id: number,

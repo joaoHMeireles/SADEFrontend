@@ -1,23 +1,21 @@
-import { getNomeComponente, getCorStatus, getCorTipo } from '../../utils';
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb"
-import Toolbar from "../../Components/Toolbar/Toolbar"
-import TabelaBeneficios from '../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios';
-import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
+import { getNomeComponente, getCorStatus, getCorTipo } from '../../utils';
+import Breadcrumb from "../../components/Breadcrumb/Breadcrumb"
+import Toolbar from "../../components/Toolbar/Toolbar"
+import TabelaBeneficios from '../../components/Tabelas/TabelaBeneficios/TabelaBeneficios';
+import TabelasCusto from '../../components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
 import {
     AccordionDetails, AccordionSummary, Box, Container, FormControl, FormControlLabel, Grid, RadioGroup,
     Typography, Radio, TextField, FormHelperText, Snackbar, Alert
 } from "@mui/material"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
-    BotaoPrimarioHeader,
-    BotaoSecundarioHeader,
-    BoxBandeira, BoxBotoes, BoxContainerBandeira, BoxCorStatus, BoxHeader, BoxTrianguloBandeira, GridContainerHeader,
-    GridPequenosAtributos, GridTitulo, TypographyTituloAtributo
+    BotaoPrimarioHeader, BotaoSecundarioHeader, BoxBandeira, BoxBotoes, BoxContainerBandeira, BoxCorStatus, BoxHeader, 
+    BoxTrianguloBandeira, GridContainerHeader, GridPequenosAtributos, GridTitulo, TypographyTituloAtributo
 } from "../TelaProcesso/TelaProcesso.styles"
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from "../App.styles"
-import { GridLinkTypograpfy } from "../../Components/ComponenteProcesso/ComponenteProcesso.styles";
-import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
+import { GridLinkTypograpfy } from "../../components/ComponenteProcesso/ComponenteProcesso.styles"
 import { AccordionProposta, GridContainerColecao, GridFooter, GridProposta, TypographyTextoColecao, TypographyTituloDecisao } from "./TelaColecaoProcesso.styles";
 
 

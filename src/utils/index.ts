@@ -47,3 +47,33 @@ export function urlValida(urlString: string) {
         return true;
     }
 }
+
+/**
+ * Recebe uma palavra de uma rota e retorna o título certo para o breadcrumb daquela página
+ * 
+ * @param palavra
+ * @return
+ */
+ export function getNomeRota(palavra: string) {
+    const nomesRotas = {
+        home: "Início",
+        createdemand: "Criar Demanda",
+        createproposal: "Criar Proposta",
+        createagenda: "Criar Agenda",
+        demand: "Demanda",
+        proposal: "Proposta",
+        agenda: "Pauta",
+        ata: "ATA",
+        mydemands: "Minhas demandas",
+        notifications: "Notificações",
+        profile: "Perfil",
+        draft: "Rascunho",
+        mydrafts: "Meus rascunhos",
+        chats: "Chats",
+        chat: "Chat",
+        history: "Histórico",
+        alteration: "Alteração"
+    }
+
+    return (nomesRotas as any)[palavra]
+}

@@ -1,5 +1,4 @@
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-
 import {
   BoxChat, BoxContainerChat, BoxIconePessoa, ContainerGeralChat,
   TypographyPessoaMensagem, TypographyTitulo

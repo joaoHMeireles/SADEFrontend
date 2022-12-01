@@ -1,5 +1,5 @@
-import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
-import Notificacao from "../../Components/Notificacao/Notificacao";
+import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import Notificacao from "../../components/Notificacao/Notificacao";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { SvgIconTypeMap } from "@mui/material/SvgIcon";

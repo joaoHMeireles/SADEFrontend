@@ -2,13 +2,13 @@ import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEv
 import { useLocation } from 'react-router-dom';
 import { getNomeComponente, getCorStatus, getCorTipo, urlValida } from '../../utils';
 import Dayjs from '@date-io/dayjs'
-import { sessaoTI, TipoComponenteProcesso } from '../../DefinitionFiles/enuns';
-import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
-import Toolbar from '../../Components/Toolbar/Toolbar';
-import SelectBox from '../../Components/SelectBox/SelectBox';
-import TabelaBeneficios from '../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios';
-import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
-import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
+import { sessaoTI, TipoComponenteProcesso } from '../../constants/enuns';
+import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
+import Toolbar from '../../components/Toolbar/Toolbar';
+import SelectBox from '../../components/SelectBox/SelectBox';
+import TabelaBeneficios from '../../components/Tabelas/TabelaBeneficios/TabelaBeneficios';
+import TabelasCusto from '../../components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
+import ConteudoModalConfirmacao from '../../components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
     Alert, Badge, Box, Checkbox, Container, Dialog, Divider, FormControl, FormControlLabel, FormGroup, FormHelperText,
     Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, SelectChangeEvent, Snackbar, TextField, Typography

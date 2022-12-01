@@ -1,7 +1,4 @@
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
-import Typography from '@mui/material/Typography'
+import { Box, Grid, Paper, Typography } from '@mui/material'
 import styled from '@emotion/styled'
 const styledBox = styled(Box)
 const styledGrid = styled(Grid)
@@ -14,7 +11,7 @@ export const MainPaper = styled(Paper)({
     width: "90%"
 })
 
-export const BoxGridCorProcesso= styledBox({
+export const BoxGridCorProcesso = styledBox({
     borderRadius: "5px 0 0 5px",
     height: "100%",
     width: "50%"
@@ -38,8 +35,8 @@ export const GridTypography = styledTypograpfy({
 
 export const GridLinkTypograpfy = styledTypograpfy({
     alignItems: "center",
-    display: 'flex', 
-    justifyContent: "end", 
+    display: 'flex',
+    justifyContent: "end",
     width: "25%",
     '& a': {
         color: "#2382BA",
@@ -68,8 +65,8 @@ export const ListaTypography = styled(GridTypography)({
 })
 
 export const UltimaListaTypography = styled(ListaTypography)({
-    display: "flex", 
-    justifyContent: "end", 
+    display: "flex",
+    justifyContent: "end",
     paddingRight: "10px",
     '& a': {
         color: "#2382BA",
@@ -82,7 +79,7 @@ export const UltimaListaTypography = styled(ListaTypography)({
 })
 
 export const BoxColecaoComponente = styledBox({
-    margin: "none", 
+    margin: "none",
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",

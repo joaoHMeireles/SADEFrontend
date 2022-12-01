@@ -1,4 +1,4 @@
-import { Box, Grid, IconButton, TableCell, tableCellClasses, TableContainer, TableRow, TextField ,Typography } from '@mui/material'
+import { Box, Grid, IconButton, TextField, Typography } from '@mui/material'
 import CircleIcon from '@mui/icons-material/Circle';
 import { BotaoPrimario, BotaoSecundario, BotaoTerciario, BoxConteudo } from '../App.styles';
 import { styled } from '@mui/material/styles';
@@ -48,13 +48,13 @@ export const BoxAviso = styledBox({
     display: "flex",
     justifyContent: "space-evenly",
     right: "-155px",
-    position: "fixed",   
-    padding: "20px 10px",   
+    position: "fixed",
+    padding: "20px 10px",
     top: "180px",
-    width: "200px", 
-    '&:hover': { 
-        right: "-15px" ,
-        transition: 'ease-in-out', 
+    width: "200px",
+    '&:hover': {
+        right: "-15px",
+        transition: 'ease-in-out',
         transitionDuration: "0.3s"
     }
 })
@@ -148,7 +148,7 @@ export const BoxTabela = styledBox({
 
 export const GridItemFooter = styledGrid({
     alignItems: "center",
-    display: "flex", 
+    display: "flex",
     justifyContent: "space-between",
     '& a': {
         color: "#595959",
@@ -163,16 +163,16 @@ export const GridItemFooter = styledGrid({
 })
 
 export const BoxConteudoModal = styled(BoxConteudo)({
-    display: "flex", 
-    flexDirection: "column", 
-    justifyContent: "center", 
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
     margin: "30px 50px"
 })
 
 export const TypographyTituloModal = styled(TypographyTitulo)({
-    color: "#00579D", 
-    fontWeight: "500", 
-    marginBottom: "0px" 
+    color: "#00579D",
+    fontWeight: "500",
+    marginBottom: "0px"
 })
 
 export const BoxTituloModal = styledBox({
@@ -190,40 +190,40 @@ export const BoxBotoesModal = styledBox({
 })
 
 export const BoxInfoModal = styledBox({
-    display: "grid", 
-    justifyContent: "center", 
+    display: "grid",
+    justifyContent: "center",
     width: "100%"
 })
 
 export const BoxAtributosInfoModal = styledBox({
     alignItems: "center",
-    display: "flex", 
-    justifyContent: "space-between", 
-    marginBottom: "20px", 
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: "20px",
     width: "100%"
 })
 
 export const BoxAtributoInfoModal = styledBox({
     alignItems: "center",
-    display: "flex", 
+    display: "flex",
     justifyContent: "center"
 })
 
 export const BoxBUsBeneficiadas = styledBox({
-    display: "flex", 
-    flexDirection: "column", 
+    display: "flex",
+    flexDirection: "column",
     marginBottom: "20px"
 })
 
 export const BoxSessaoTI = styledBox({
     alignItems: "center",
-    display: "flex", 
-    marginBottom: "30px", 
+    display: "flex",
+    marginBottom: "30px",
 })
 
 export const BoxAtributoInfoModal2 = styled(BoxAtributoInfoModal)({
-    display: "grid", 
-    width: "40%" 
+    display: "grid",
+    width: "40%"
 })
 
 export const TypographyTituloAtributoModal = styled(TypographyTituloAtributo)({
@@ -232,5 +232,5 @@ export const TypographyTituloAtributoModal = styled(TypographyTituloAtributo)({
 
 export const TextFieldURL = styled(TextField)({
     marginBottom: "30px",
-    width: "100%" 
+    width: "100%"
 })

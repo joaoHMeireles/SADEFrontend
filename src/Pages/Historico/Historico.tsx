@@ -1,4 +1,4 @@
-import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
+import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import { BoxConteudo } from "../App.styles";
 
 export default function Historico(props: {}){

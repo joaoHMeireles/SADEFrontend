@@ -7,17 +7,13 @@ import { Grid } from '@mui/material';
 
 const styleItemSelecionado = {
     backgroundColor: "transparent !important",
-    color: '#00579d',
-    // borderLeft: "5px solid #00579d"
-    // '&:hover': {
-    //     backgroundColor: "#00579d "
-    // }
+    color: '#00579d'
 }
 
 export const SidebarListItem = styled(ListItem)({
     width: "220px",
     display: 'block',
-    "& .Mui-selected": {...styleItemSelecionado}
+    "& .Mui-selected": { ...styleItemSelecionado }
 })
 
 export const SidebarListItemButton = styled(ListItemButton)({
@@ -34,7 +30,7 @@ export const SidebarListItemIcon = styled(ListItemIcon)({
 
 export const SidebarTypography = styled(Typography)({
     color: "#595959",
-    "& .Mui-selected": {...styleItemSelecionado}
+    "& .Mui-selected": { ...styleItemSelecionado }
 })
 
 export const GridIndicadorItem = styled(Grid)({
