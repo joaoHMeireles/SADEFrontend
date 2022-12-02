@@ -1,7 +1,8 @@
 
 import { Accordion, Grid } from '@mui/material';
-import { GridContainer, TypographyTexto, TypographyTituloAtributo } from '../TelaProcesso/TelaProcesso.styles';
+import { TypographyTexto, TypographyTituloAtributo } from '../TelaProcesso/TelaProcesso.styles';
 import { styled } from '@mui/material/styles';
+import { GridContainer } from '../../Components/ContainerProcesso/ContainerProcesso.styles';
 const styledGrid = styled(Grid)
 
 export const GridContainerColecao = styled(GridContainer)({

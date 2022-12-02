@@ -3,20 +3,22 @@ import { Link, useLocation } from "react-router-dom";
 import { getNomeComponente, getCorStatus, getCorTipo } from '../../utils';
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb"
 import Toolbar from "../../components/Toolbar/Toolbar"
-import TabelaBeneficios from '../../components/Tabelas/TabelaBeneficios/TabelaBeneficios';
-import TabelasCusto from '../../components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
+import TabelaBeneficios from '../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios';
+import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
 import {
     AccordionDetails, AccordionSummary, Box, Container, FormControl, FormControlLabel, Grid, RadioGroup,
     Typography, Radio, TextField, FormHelperText, Snackbar, Alert
 } from "@mui/material"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
-    BotaoPrimarioHeader, BotaoSecundarioHeader, BoxBandeira, BoxBotoes, BoxContainerBandeira, BoxCorStatus, BoxHeader, 
-    BoxTrianguloBandeira, GridContainerHeader, GridPequenosAtributos, GridTitulo, TypographyTituloAtributo
+    BotaoPrimarioHeader, BotaoSecundarioHeader, BoxBotoes, BoxHeader, GridPequenosAtributos, 
+    TypographyTituloAtributo
 } from "../TelaProcesso/TelaProcesso.styles"
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from "../App.styles"
 import { GridLinkTypograpfy } from "../../components/ComponenteProcesso/ComponenteProcesso.styles"
 import { AccordionProposta, GridContainerColecao, GridFooter, GridProposta, TypographyTextoColecao, TypographyTituloDecisao } from "./TelaColecaoProcesso.styles";
+import { BoxCorStatus, GridContainerHeader, GridTitulo } from "../../Components/ContainerProcesso/ContainerProcesso.styles";
+import Bandeira from "../../Components/Bandeira/Bandeira";
 
 
 export default function TelaColecaoProcesso() {
@@ -239,24 +241,6 @@ function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any, avali
                 </GridFooter>
             }
         </GridContainerColecao>
-    )
-}
-
-
-/**
- * Componente da bandeira que altera a cor de acordo com o valor que recebe e que
- * se localiza no canto superior direito container principal
- * 
- * @param props 
- * @returns 
- */
-function Bandeira(props: { cor: string }) {
-    return (
-        <BoxContainerBandeira >
-            <BoxBandeira sx={{ backgroundColor: props.cor }}>
-                <BoxTrianguloBandeira />
-            </BoxBandeira>
-        </BoxContainerBandeira>
     )
 }
 

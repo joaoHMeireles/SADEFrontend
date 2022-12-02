@@ -1,7 +1,10 @@
+import { Container, Toolbar } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
+import ContainerProcesso from "../../Components/ContainerProcesso/ContainerProcesso";
 import { Persona, StatusTarefaHistorico, TarefaExecucao } from "../../constants/enuns";
-import { BoxConteudo } from "../App.styles";
+import { BoxContainer, BoxConteudo } from "../App.styles";
+import { BoxHeader } from "../TelaProcesso/TelaProcesso.styles";
 
 const historicosDemandas: Historico[] = [
     //demanda 1
@@ -212,15 +215,41 @@ const historicosDemandas: Historico[] = [
 
 export default function Historico(props: {}) {
     const location = useLocation()
+    const inicioDaPalavra = location.pathname.length - 14
+    const finalDaPalavra = inicioDaPalavra + 6
+    const eUmaDemanda = location.pathname.slice(inicioDaPalavra, finalDaPalavra) == "demand"
+    const informacaoProcessoCru = localStorage.getItem((eUmaDemanda ? "DEMANDAESCOLHIDA" : "PROPOSTAESCOLHIDA"))
+    const informacaoProcesso = JSON.parse((informacaoProcessoCru != null ? informacaoProcessoCru : ""))
+    const historicos = historicosDemandas.filter(historico => historico.idDemanda == informacaoProcesso.id)
 
-    console.log(location);
-    
+    console.log(historicos);
 
+    //fazer header se alinhar da mesma formna que a outra página
     return (
-        <BoxConteudo>
+        <>
+            <Header />
+            <BoxConteudo >
+                <BoxContainer>
+                    <Container >
+                        <ContainerProcesso informacaoProcesso={informacaoProcesso}>
+
+                        </ContainerProcesso>
+                    </Container>
+                </BoxContainer>
+            </BoxConteudo>
+        </>
+    )
+}
+
+function Header(){
+
+    return(
+        <>
+        <BoxHeader>
             <Breadcrumb />
-            
-        </BoxConteudo>
+        </BoxHeader>
+        <Toolbar />
+    </>
     )
 }
 

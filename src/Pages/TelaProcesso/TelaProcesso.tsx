@@ -3,12 +3,12 @@ import { useLocation } from 'react-router-dom';
 import { getNomeComponente, getCorStatus, getCorTipo, urlValida } from '../../utils';
 import Dayjs from '@date-io/dayjs'
 import { sessaoTI, TipoComponenteProcesso } from '../../constants/enuns';
-import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
+import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../components/Toolbar/Toolbar';
-import SelectBox from '../../components/SelectBox/SelectBox';
-import TabelaBeneficios from '../../components/Tabelas/TabelaBeneficios/TabelaBeneficios';
-import TabelasCusto from '../../components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
-import ConteudoModalConfirmacao from '../../components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
+import SelectBox from '../../Components/SelectBox/SelectBox';
+import TabelaBeneficios from '../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios';
+import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
+import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
     Alert, Badge, Box, Checkbox, Container, Dialog, Divider, FormControl, FormControlLabel, FormGroup, FormHelperText,
     Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, SelectChangeEvent, Snackbar, TextField, Typography
@@ -32,16 +32,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles"
 import {
-    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBandeira, BoxBotoes,
-    BoxContainerBandeira, BoxCorStatus, BoxHeader, BoxTabela, BoxTrianguloBandeira, CircleIconPonto, GridContainer,
-    GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo, TypographyTexto, 
-    TypographyTitulo, TypographyTituloAtributo, BoxConteudoModal, TypographyTituloModal, BoxTituloModal, 
-    BoxBotoesModal, BoxInfoModal, BoxAtributosInfoModal, BoxAtributoInfoModal, BoxBUsBeneficiadas, BoxSessaoTI, 
+    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso,  BoxBotoes, BoxHeader, BoxTabela, CircleIconPonto,
+    GridItemFooter, GridPequenosAtributos, TypographyTexto,
+    TypographyTitulo, TypographyTituloAtributo, BoxConteudoModal, TypographyTituloModal, BoxTituloModal,
+    BoxBotoesModal, BoxInfoModal, BoxAtributosInfoModal, BoxAtributoInfoModal, BoxBUsBeneficiadas, BoxSessaoTI,
     BoxAtributoInfoModal2, TypographyTituloAtributoModal, TextFieldURL
 } from './TelaProcesso.styles';
-
-
-
+import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
 
 /**
  * Componente principal das páginas de proposta de demanda sendo dinâmico conforme
@@ -64,8 +61,8 @@ export default function TelaComponenteProcesso(props: any) {
             <Header informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} setFeedbackAberto={setFeedbackAberto} setConteudoFeedback={setConteudoFeedback} />
             <BoxConteudo >
                 <BoxContainer>
-                    <Container>
-                        <ContainerProcesso informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
+                    <Container >
+                        <ContainerProcessoPrincipal informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
                         <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { minWidth: "35vw" } }}>
                             {conteudoModal}
                         </Dialog>
@@ -92,7 +89,7 @@ export default function TelaComponenteProcesso(props: any) {
  * @param props 
  * @returns 
  */
-function Header(props: {
+export function Header(props: {
     informacaoProcesso: any,
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
     setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>,
@@ -807,7 +804,7 @@ function ButtonsHeader(props: { listaBotoes: Botao[] }) {
  * @param props 
  * @returns 
  */
-function ContainerProcesso(props: {
+function ContainerProcessoPrincipal(props: {
     informacaoProcesso: any,
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
     setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
@@ -815,48 +812,16 @@ function ContainerProcesso(props: {
     const informacaoProcesso = props.informacaoProcesso
 
     return (
-        <GridContainer container>
-            <Grid item xs={0.2}>
-                <BoxCorStatus sx={{ backgroundColor: getCorStatus(informacaoProcesso?.status) }} ></BoxCorStatus>
-            </Grid>
-            <GridInformacao item xs={11.8}>
-                <GridContainerHeader container>
-                    <GridTitulo item xs={10} >
-                        <Typography variant='h4'>
-                            {informacaoProcesso?.titulo}
-                        </Typography>
-                    </GridTitulo>
-                    <Grid item xs={2}>
-                        <Bandeira cor={getCorTipo(informacaoProcesso?.tipo)} />
-                    </Grid>
-                </GridContainerHeader>
-                <Divider />
-                <InfoGeral processo={informacaoProcesso} />
-                <Divider />
-                <InfoComercial processo={informacaoProcesso} />
-                <Divider />
-                <Contextualizacao processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
-            </GridInformacao>
-        </GridContainer>
+        <ContainerProcesso informacaoProcesso={informacaoProcesso}>
+            <InfoGeral processo={informacaoProcesso} />
+            <Divider />
+            <InfoComercial processo={informacaoProcesso} />
+            <Divider />
+            <Contextualizacao processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
+        </ContainerProcesso >
     )
 }
 
-/**
- * Componente da bandeira que altera a cor de acordo com o valor que recebe e que
- * se localiza no canto superior direito container principal
- * 
- * @param props 
- * @returns 
- */
-function Bandeira(props: { cor: string }) {
-    return (
-        <BoxContainerBandeira >
-            <BoxBandeira sx={{ backgroundColor: props.cor }}>
-                <BoxTrianguloBandeira />
-            </BoxBandeira>
-        </BoxContainerBandeira>
-    )
-}
 
 /**
  * Componente dinâmico das informações gerais de um processo
