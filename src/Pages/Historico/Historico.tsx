@@ -241,15 +241,15 @@ export default function Historico(props: {}) {
     )
 }
 
-function Header(){
+function Header() {
 
-    return(
+    return (
         <>
-        <BoxHeader>
-            <Breadcrumb />
-        </BoxHeader>
-        <Toolbar />
-    </>
+            <BoxHeader sx={{paddingTop: "22px"}}>
+                <Breadcrumb />
+            </BoxHeader>
+            <Toolbar />
+        </>
     )
 }
 
