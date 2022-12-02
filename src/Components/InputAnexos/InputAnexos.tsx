@@ -1,16 +1,23 @@
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
+import Dropzone from "../Dropzone/DropZone";
+
 import AttachFileRoundedIcon from "@mui/icons-material/AttachFileRounded";
 
 import { BoxContainerGeral, BoxContainerConteudo } from "./InputAnexos.styles";
+import { useState } from "react";
 
 export default function InputAnexos() {
+  const [file, setFile] = useState("");
+
   return (
     <>
       <BoxContainerGeral>
+        <Dropzone setFile={setFile} />
+        {file?.name}
         <BoxContainerConteudo>
-          <Button
+          {/* <Button
             variant="outlined"
             component="label"
             sx={{
@@ -26,10 +33,10 @@ export default function InputAnexos() {
             Escolher arquivo
             <input hidden accept="image/*" multiple type="file" />
             <AttachFileRoundedIcon />
-          </Button>
-          <Typography sx={{ marginLeft: 3, color: "#595959" }}>
+          </Button> */}
+          {/* <Typography sx={{ marginLeft: 3, color: "#595959" }}>
             Nenhum item selecionado
-          </Typography>
+          </Typography> */}
         </BoxContainerConteudo>
       </BoxContainerGeral>
     </>
