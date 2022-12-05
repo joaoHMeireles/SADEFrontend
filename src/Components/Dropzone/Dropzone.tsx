@@ -1,29 +1,25 @@
-import { Dispatch, FunctionComponent, useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-const DropZone: FunctionComponent<{ setFile: Dispatch<any> }> = ({
-  setFile,
-}) => {
+export default function Dropzone() {
+  const [files, setFile] = useState([]);
+
   const onDrop = useCallback((acceptedFiles: any) => {
-    console.log(acceptedFiles);
-    setFile(acceptedFiles[0]);
+    const file: [] = acceptedFiles.map((acceptedFiles: any) => ({
+      acceptedFiles,
+    }));
+    setFile((curr) => [...curr, ...file]);
   }, []);
 
-  const { getRootProps, getInputProps, isDragAccept } = useDropzone({
-    onDrop,
-    multiple: true,
-  });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
-    <div>
+    <>
       <div {...getRootProps()}>
         <input {...getInputProps()} />
-        <div>
-          <p>Drag and drop files here</p>
-        </div>
+        <p>Drag and drop files here</p>
       </div>
-    </div>
+      {JSON.stringify(files[0])}
+    </>
   );
-};
-
-export default DropZone;
+}

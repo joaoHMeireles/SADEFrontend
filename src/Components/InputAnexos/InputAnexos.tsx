@@ -1,22 +1,18 @@
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-import Dropzone from "../Dropzone/DropZone";
-
 import AttachFileRoundedIcon from "@mui/icons-material/AttachFileRounded";
 
 import { BoxContainerGeral, BoxContainerConteudo } from "./InputAnexos.styles";
 import { useState } from "react";
+import Dropzone from "../Dropzone/Dropzone";
 
 export default function InputAnexos() {
-  const [file, setFile] = useState("");
-
   return (
     <>
       <BoxContainerGeral>
-        <Dropzone setFile={setFile} />
-        {file?.name}
         <BoxContainerConteudo>
+          <Dropzone />
           {/* <Button
             variant="outlined"
             component="label"
