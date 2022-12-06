@@ -7,18 +7,21 @@ export const BoxContainerGeral = styledBox({
   alignItems: "center",
   border: "2px solid #595959",
   borderRadius: "4px",
+  borderStyle: "dashed",
   display: "flex",
   justifyContent: "center",
-  height: "10vh",
+  height: "auto",
   marginTop: 24,
+  minHeight: "10vh",
   width: "100%",
 });
 
 export const BoxContainerConteudo = styledBox({
   alignItems: "center",
   display: "flex",
-  justifyContent: "start",
+  flexDirection: "column",
+  justifyContent: "center",
   height: "100%",
-  marginLeft: 24,
+  textAlign: "center",
   width: "100%",
 });
