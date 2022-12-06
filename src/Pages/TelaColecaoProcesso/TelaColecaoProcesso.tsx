@@ -1,8 +1,8 @@
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getNomeComponente, getCorStatus, getCorTipo } from '../../utils';
-import Breadcrumb from "../../components/Breadcrumb/Breadcrumb"
-import Toolbar from "../../components/Toolbar/Toolbar"
+import { getNomeComponente, getCorStatus, getCorTipo } from '../../Utils';
+import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb"
+import Toolbar from "../../Components/Toolbar/Toolbar"
 import TabelaBeneficios from '../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios';
 import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
 import {
@@ -15,7 +15,7 @@ import {
     TypographyTituloAtributo
 } from "../TelaProcesso/TelaProcesso.styles"
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from "../App.styles"
-import { GridLinkTypograpfy } from "../../components/ComponenteProcesso/ComponenteProcesso.styles"
+import { GridLinkTypograpfy } from "../../Components/ComponenteProcesso/ComponenteProcesso.styles"
 import { AccordionProposta, GridContainerColecao, GridFooter, GridProposta, TypographyTextoColecao, TypographyTituloDecisao } from "./TelaColecaoProcesso.styles";
 import { BoxCorStatus, GridContainerHeader, GridTitulo } from "../../Components/ContainerProcesso/ContainerProcesso.styles";
 import Bandeira from "../../Components/Bandeira/Bandeira";

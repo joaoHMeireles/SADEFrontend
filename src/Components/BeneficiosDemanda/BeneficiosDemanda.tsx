@@ -1,30 +1,15 @@
 import { useState } from "react";
-
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
-
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
-
-import {
-  BoxContainerGeral,
-  BoxTitulos,
-  TypographyTitulos,
-  BoxIcones,
-  BoxContainerGeralBeneficio,
-  BoxContainerDivisorio,
-  BoxInputsAcima,
-  BoxValorMensal,
-  TypographyLabels,
-  BoxInputs,
-  BoxInputsAbaixo,
-  BoxObrigacaoLegal,
-  BoxDescricaoRequeistosControle,
-  BoxFrequencia,
+import { BoxContainerGeral, BoxTitulos, TypographyTitulos, BoxIcones, BoxContainerGeralBeneficio, BoxContainerDivisorio, 
+  BoxInputsAcima, BoxValorMensal, TypographyLabels, BoxInputs, BoxInputsAbaixo, BoxObrigacaoLegal, 
+  BoxDescricaoRequeistosControle, BoxFrequencia
 } from "./BeneficiosDemanda.styles";
 
 export default function BeneficiosDemanda() {

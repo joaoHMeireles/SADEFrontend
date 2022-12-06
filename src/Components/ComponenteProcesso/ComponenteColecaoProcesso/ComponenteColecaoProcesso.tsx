@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { TipoColecaoComponenteProcesso } from '../../../constants/enuns'
-import { InterfaceComponenteProcesso, InterfaceColecaoComponenteProcesso } from "../../../constants/interfaces";
+import { TipoColecaoComponenteProcesso } from '../../../Constants/enuns'
+import { InterfaceComponenteProcesso, InterfaceColecaoComponenteProcesso } from "../../../Constants/interfaces";
 import { Grid, Tooltip } from '@mui/material'
 import {
     BoxColecaoComponente, BoxGridCorProcesso, BoxListaCorProcesso, GridComponenteProcesso, GridLinkTypograpfy,

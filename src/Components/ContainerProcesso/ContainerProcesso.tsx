@@ -1,6 +1,6 @@
 import { Divider, Grid, Typography } from "@mui/material";
 import { BoxConteudo } from "../../Pages/App.styles";
-import { getCorStatus, getCorTipo } from "../../utils";
+import { getCorStatus, getCorTipo } from "../../Utils";
 import Bandeira from "../Bandeira/Bandeira";
 import { BoxCorStatus, GridContainer, GridContainerHeader, GridInformacao, GridTitulo } from "./ContainerProcesso.styles";
 

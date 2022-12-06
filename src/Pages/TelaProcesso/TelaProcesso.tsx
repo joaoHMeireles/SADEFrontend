@@ -1,10 +1,10 @@
 import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getNomeComponente, getCorStatus, getCorTipo, urlValida } from '../../utils';
+import { getNomeComponente, getCorStatus, getCorTipo, urlValida } from '../../Utils';
 import Dayjs from '@date-io/dayjs'
-import { sessaoTI, TipoComponenteProcesso } from '../../constants/enuns';
+import { sessaoTI, TipoComponenteProcesso } from '../../Constants/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
-import Toolbar from '../../components/Toolbar/Toolbar';
+import Toolbar from '../../Components/Toolbar/Toolbar';
 import SelectBox from '../../Components/SelectBox/SelectBox';
 import TabelaBeneficios from '../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios';
 import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';

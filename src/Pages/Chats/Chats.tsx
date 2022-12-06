@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import Chat from "../../components/Chat/Chat";
-import Toolbar from "../../components/Toolbar/Toolbar";
+import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
+import Chat from "../../Components/Chat/Chat";
+import Toolbar from "../../Components/Toolbar/Toolbar";
 import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import {

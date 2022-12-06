@@ -7,21 +7,10 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import PanoramaFishEyeRoundedIcon from "@mui/icons-material/PanoramaFishEyeRounded";
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
-import {
-  BotaoPrimario,
-  BotaoTerciario,
-  BoxConteudo,
-  BotaoSecundario,
-} from "../App.styles";
+import { BotaoPrimario, BotaoTerciario, BoxConteudo, BotaoSecundario } from "../App.styles";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-
-import {
-  ContainerGeral,
-  BoxContainerBotoes,
-  BoxBotaoTerciario,
-  BoxBotoesPriSec,
-} from "./TelaCriacaoDemanda.styles";
+import { ContainerGeral, BoxContainerBotoes, BoxBotaoTerciario, BoxBotoesPriSec } from "./TelaCriacaoDemanda.styles";
 
 export default function TelaCriacaoDemanda() {
   const [segundo, setSegundo] = useState(false);

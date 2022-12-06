@@ -2,7 +2,7 @@ import { Container, Toolbar } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import ContainerProcesso from "../../Components/ContainerProcesso/ContainerProcesso";
-import { Persona, StatusTarefaHistorico, TarefaExecucao } from "../../constants/enuns";
+import { Persona, StatusTarefaHistorico, TarefaExecucao } from "../../Constants/enuns";
 import { BoxContainer, BoxConteudo } from "../App.styles";
 import { BoxHeader } from "../TelaProcesso/TelaProcesso.styles";
 
@@ -232,7 +232,7 @@ export default function Historico(props: {}) {
                 <BoxContainer>
                     <Container >
                         <ContainerProcesso informacaoProcesso={informacaoProcesso}>
-
+                            
                         </ContainerProcesso>
                     </Container>
                 </BoxContainer>

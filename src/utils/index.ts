@@ -1,3 +1,9 @@
+/**
+ * Conforme o final da url escolhida, informa a que tipo de processo a tela atual se refere
+ * 
+ * @param location 
+ * @returns 
+ */
 export function getNomeComponente(location: string) {
     const fragmentoTipo = location.slice(location.length - 3)
 
@@ -9,6 +15,12 @@ export function getNomeComponente(location: string) {
     }
 }
 
+/**
+ * Retorna a cor do sistema para um determinado tipo de processo
+ * 
+ * @param tipo 
+ * @returns 
+ */
 export function getCorTipo(tipo: string | undefined) {
     const coresStatus = {
         Demanda: "#00579D",
@@ -22,6 +34,12 @@ export function getCorTipo(tipo: string | undefined) {
     }
 }
 
+/**
+ * Retorna a cor do sistema para um determinado status
+ * 
+ * @param status 
+ * @returns 
+ */
 export function getCorStatus(status: string | undefined) {
     const coresStatus = {
         Backlog: "#DDDDDD",
@@ -36,6 +54,12 @@ export function getCorStatus(status: string | undefined) {
     }
 }
 
+/**
+ * Valida se a string informada é uma url válida
+ * 
+ * @param urlString 
+ * @returns 
+ */
 export function urlValida(urlString: string) {
     var inputElement = document.createElement('input');
     inputElement.type = 'url';

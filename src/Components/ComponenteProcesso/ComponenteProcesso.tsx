@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react'
 import { Link } from 'react-router-dom'
-import { TipoComponenteProcesso } from '../../constants/enuns'
-import { InterfaceComponenteProcesso } from '../../constants/interfaces'
+import { TipoComponenteProcesso } from '../../Constants/enuns'
+import { InterfaceComponenteProcesso } from '../../Constants/interfaces'
 import { Grid, Tooltip } from '@mui/material'
 import {
     BoxColecaoComponente, BoxGridCorProcesso, BoxListaCorProcesso, GridComponenteProcesso, GridLinkTypograpfy,

@@ -4,7 +4,7 @@ import logo from '../../assets/wegLogo.png';
 import './Navbar.scss';
 import { Avatar, Box, IconButton, Toolbar, MenuItem } from '@mui/material';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
-import { NavBar, BoxTextField, TextFieldLinguas } from './Navbar.styles';
+import { NavBar, BoxTextField, TextFieldLinguas } from "./Navbar.styles";
 
 const listaLinguas = [
     "Português",
