@@ -1,21 +1,23 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.scss";
-import Sidebar from "../components/Sidebar/Sidebar";
-import Navbar from "../components/Navbar/Navbar";
-import Toolbar from "../components/Toolbar/Toolbar";
-import Filter from "../components/Filtro/Filtro";
+import Sidebar from "../Components/Sidebar/Sidebar";
+import Navbar from "../Components/Navbar/Navbar";
+import Toolbar from "../Components/Toolbar/Toolbar";
+import Filter from "../Components/Filtro/Filtro";
 import Login from "./Login/Login";
 import Inicio from "./Inicio/Inicio";
-import TelaProcesso from "./TelaProcesso/TelaProcesso";
+import TelaCriacaoDemanda from "./TelaCriacaoDemanda/TelaCriacaoDemanda";
 import TelaColecaoProcesso from "./TelaColecaoProcesso/TelaColecaoProcesso";
+import TelaProcesso from "./TelaProcesso/TelaProcesso";
 import Notificacoes from "./Notificacoes/Notificacoes";
 import Chats from "./Chats/Chats";
 import { Box } from "@mui/material";
 import { MainBox } from "./App.styles";
 import { ThemeProvider } from "@emotion/react";
-import { MainTheme, ContentTheme } from "../themes";
+import { MainTheme, ContentTheme } from "../Themes";
 import Historico from "./Historico/Historico";
+
 
 export default function App() {
   const [aberto, setAberto] = useState(false)
@@ -48,10 +50,10 @@ export default function App() {
                 <Route path="/notifications" element={<Notificacoes />} />
                 <Route path="/chats" element={<Chats aberto={aberto} />}></Route>
 
-
                 <Route path="/home/demand" element={<TelaProcesso />} />
                 <Route path="/mydemands/demand" element={<TelaProcesso />} />
                 <Route path="/notifications/demand" element={<TelaProcesso />} />
+                <Route path="/createdemand" element={<TelaCriacaoDemanda />} />
                 <Route path="/home/proposal/demand" element={<TelaProcesso />} />
                 <Route path="/home/agenda/proposal/demand" element={<TelaProcesso />} />
                 <Route path="/home/ata/proposal/demand" element={<TelaProcesso />} />
