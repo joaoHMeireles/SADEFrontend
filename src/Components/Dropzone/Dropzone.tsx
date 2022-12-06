@@ -1,18 +1,12 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 
-import { getIconeArquivo } from "../../utils/index";
-
-import {
-  BoxContainerUploadImagens,
-  TypographyUploadFiles,
-  BoxTypographyFiles,
-} from "./Dropzone.styles";
+import { BoxContainerUploadImagens, BoxTypography } from "./Dropzone.styles";
+import Arquivo from "../Arquivo/Arquivo";
 
 export default function Dropzone() {
   const [files, setFile] = useState([]);
@@ -31,34 +25,22 @@ export default function Dropzone() {
   return (
     <>
       <BoxContainerUploadImagens {...getRootProps()}>
-        <input {...getInputProps()} />
-        <Typography variant="h6" sx={{ color: "#595959" }}>
-          Escolher arquivo
-        </Typography>
-        <FileUploadRoundedIcon sx={{ color: "#595959" }} />
+        <BoxTypography>
+          <input {...getInputProps()} />
+          <Typography variant="h6" sx={{ color: "#595959" }}>
+            Escolher arquivo
+          </Typography>
+          <FileUploadRoundedIcon sx={{ color: "#595959" }} />
+        </BoxTypography>
+        {files.map((e) => {
+          return (
+            <Arquivo
+              icone={e["acceptedFiles"]["type"]}
+              nome={e["acceptedFiles"]["name"]}
+            />
+          );
+        })}
       </BoxContainerUploadImagens>
-      {files.map((e) => {
-        let lista = [];
-        for (let i = 0; i < files.length; i++) {
-          const tipo: string = files[i]["acceptedFiles"]["type"];
-          lista.push(tipo);
-        }
-
-        console.log(lista);
-
-        return (
-          <BoxTypographyFiles key={e["acceptedFiles"]["name"]}>
-            {lista.map((e) => {
-              console.log(e);
-              const Icone = getIconeArquivo(e);
-              return <Icone />;
-            })}
-            <TypographyUploadFiles variant="body2">
-              {e["acceptedFiles"]["name"]}
-            </TypographyUploadFiles>
-          </BoxTypographyFiles>
-        );
-      })}
     </>
   );
 }

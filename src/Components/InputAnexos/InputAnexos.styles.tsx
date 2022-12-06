@@ -22,6 +22,7 @@ export const BoxContainerConteudo = styledBox({
   flexDirection: "column",
   justifyContent: "center",
   height: "100%",
+  padding: 12,
   textAlign: "center",
   width: "100%",
 });
