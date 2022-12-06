@@ -1,10 +1,12 @@
-import { Container, Toolbar } from "@mui/material";
+import { Box, Container, Toolbar, Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import { Persona, StatusTarefaHistorico, TarefaExecucao } from "../../Constants/enuns";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import ContainerProcesso from "../../Components/ContainerProcesso/ContainerProcesso";
-import { Persona, StatusTarefaHistorico, TarefaExecucao } from "../../Constants/enuns";
+import { DataGrid, GridRowsProp, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import { BoxContainer, BoxConteudo } from "../App.styles";
 import { BoxHeader } from "../TelaProcesso/TelaProcesso.styles";
+import { useState } from "react";
 
 const historicosDemandas: Historico[] = [
     //demanda 1
@@ -213,10 +215,28 @@ const historicosDemandas: Historico[] = [
     }
 ]
 
+const columns: GridColDef[] = [
+    { field: 'tarefa', headerName: 'Tarefa requisitada', width: 160 },
+    { field: 'usuario', headerName: 'Usuário responsável', width: 160 },
+    { field: 'dataRecebimento', headerName: 'Data recebida', width: 115 },
+    { field: 'horarioRecebimento', headerName: 'Horário recebido', width: 130 },
+    { field: 'prazoExecucao', headerName: 'Prazo', width: 100 },
+    { field: 'status', headerName: 'Status atual', width: 130 },
+    { field: 'tarefaExecutada', headerName: 'Tarefa executada', width: 150 },
+    { field: 'conclusaoTarefa', headerName: 'Data conclusão', width: 120 },
+    { field: 'pdfHistorico', headerName: 'PDF', width: 90 },
+];
+
+const columnMotivoDevolucao: GridColDef = { field: 'motivoDevolucao', headerName: 'Motivo devolução', width: 140 }
+
 export default function Historico(props: {}) {
+    const [pageSize, setPageSize] = useState(5);
+    const [tamanhoTabela, setTamanhoTabela] = useState("65vw")
     const location = useLocation()
+
     const inicioDaPalavra = location.pathname.length - 14
     const finalDaPalavra = inicioDaPalavra + 6
+
     const eUmaDemanda = location.pathname.slice(inicioDaPalavra, finalDaPalavra) == "demand"
     const informacaoProcessoCru = localStorage.getItem((eUmaDemanda ? "DEMANDAESCOLHIDA" : "PROPOSTAESCOLHIDA"))
     const informacaoProcesso = JSON.parse((informacaoProcessoCru != null ? informacaoProcessoCru : ""))
@@ -224,17 +244,54 @@ export default function Historico(props: {}) {
 
     console.log(historicos);
 
-    //fazer header se alinhar da mesma formna que a outra página
+    const historicosFormatados = historicos.map((historico: Historico, index: number) => {
+        let prazoExecucao: any = historico.prazoExecucao?.toLocaleDateString()
+
+        if (index != historicos.length) {
+            if (historico.prazoExecucao == null) {
+                prazoExecucao = "-----------"
+            }
+        }
+
+        if (historico.motivoDevolucao != null && tamanhoTabela == "65vw") {
+            setTamanhoTabela("70vw")
+            columns.push(columnMotivoDevolucao)
+        }
+
+        return {
+            id: index,
+            tarefa: historico.tarefa,
+            status: historico.status,
+            dataRecebimento: historico.dataRecebimento?.toLocaleDateString(),
+            horarioRecebimento: historico.dataRecebimento?.toLocaleTimeString(),
+            prazoExecucao: prazoExecucao,
+            conclusaoTarefa: historico.conclusaoTarefa?.toLocaleDateString(),
+            pdfHistorico: historico.pdfHistorico,
+            motivoDevolucao: historico.motivoDevolucao,
+            tarefaExecutada: historico.tarefaExecutada,
+            usuario: historico.usuario?.nome
+        }
+    })
+
     return (
         <>
             <Header />
             <BoxConteudo >
                 <BoxContainer>
-                    <Container >
-                        <ContainerProcesso informacaoProcesso={informacaoProcesso}>
-                            
-                        </ContainerProcesso>
-                    </Container>
+                    <ContainerProcesso informacaoProcesso={informacaoProcesso} width={tamanhoTabela}>
+                        <Box sx={{ height: "55vh", width: '100%' }}>
+                            {/* components={{ Toolbar: GridToolbar }} */}
+                            <DataGrid
+                                rows={historicosFormatados}
+                                columns={columns}
+                                pageSize={pageSize}
+                                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                                rowsPerPageOptions={[5, 10, 20]}
+                                pagination
+                                disableSelectionOnClick
+                            />
+                        </Box>
+                    </ContainerProcesso>
                 </BoxContainer>
             </BoxConteudo>
         </>
@@ -245,7 +302,7 @@ function Header() {
 
     return (
         <>
-            <BoxHeader sx={{paddingTop: "22px"}}>
+            <BoxHeader sx={{ paddingTop: "22px" }}>
                 <Breadcrumb />
             </BoxHeader>
             <Toolbar />

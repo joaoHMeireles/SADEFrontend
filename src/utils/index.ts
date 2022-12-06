@@ -1,3 +1,13 @@
+
+import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
+import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
+import SlideshowRoundedIcon from '@mui/icons-material/SlideshowRounded';
+import FolderZipRoundedIcon from '@mui/icons-material/FolderZipRounded';
+import BackupTableRoundedIcon from '@mui/icons-material/BackupTableRounded';
+import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
+import CoPresentRoundedIcon from '@mui/icons-material/CoPresentRounded'
+import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';
+
 /**
  * Conforme o final da url escolhida, informa a que tipo de processo a tela atual se refere
  * 
@@ -7,7 +17,7 @@
 export function getNomeComponente(location: string) {
     const fragmentoTipo = location.slice(location.length - 3)
 
-    switch(fragmentoTipo){
+    switch (fragmentoTipo) {
         case "ata": return "ATA"
         case "nda": return "PAUTA"
         case "sal": return "PROPOSTA"
@@ -78,7 +88,7 @@ export function urlValida(urlString: string) {
  * @param palavra
  * @return
  */
- export function getNomeRota(palavra: string) {
+export function getNomeRota(palavra: string) {
     const nomesRotas = {
         home: "Início",
         createdemand: "Criar Demanda",
@@ -100,4 +110,24 @@ export function urlValida(urlString: string) {
     }
 
     return (nomesRotas as any)[palavra]
+}
+
+export function getIconeArquivo(nomeAnexo: string) {
+    const iconesAnexos = {
+        txt: ArticleRoundedIcon  ,
+        doc: ArticleRoundedIcon ,
+        ocx: ArticleRoundedIcon ,
+        xls: BackupTableRoundedIcon ,
+        pdf: PictureAsPdfRoundedIcon ,
+        ppt: CoPresentRoundedIcon ,
+        png: ImageRoundedIcon ,
+        jpg: ImageRoundedIcon ,
+        peg: ImageRoundedIcon ,
+        avi: SlideshowRoundedIcon ,
+        zip: FolderZipRoundedIcon ,
+    }
+    const tipoAnexo = nomeAnexo.slice(nomeAnexo.length - 3)
+    const valor = (iconesAnexos as any)[tipoAnexo]
+
+    return (valor != null ? valor : InsertDriveFileRoundedIcon )
 }

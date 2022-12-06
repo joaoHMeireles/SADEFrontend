@@ -10,7 +10,7 @@ export const GridContainer = styledGrid({
     flexWrap: "wrap",
     height: "auto",
     marginTop: "2.5vh",
-    width: "96.5%",
+    width: "100%",
     color: "#595959"
 })
 

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getNomeComponente, getCorStatus, getCorTipo, urlValida } from '../../Utils';
+import { getNomeComponente, urlValida, getIconeArquivo } from '../../Utils';
 import Dayjs from '@date-io/dayjs'
 import { sessaoTI, TipoComponenteProcesso } from '../../Constants/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
-import SelectBox from '../../Components/SelectBox/SelectBox';
-import TabelaBeneficios from '../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios';
+import SelectBox from '../../Components/SelectBox/SelectBox'
+import TabelaBeneficios from "../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios";
 import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
 import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
@@ -19,14 +19,6 @@ import LanRoundedIcon from '@mui/icons-material/LanRounded';
 import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import CloseIcon from '@mui/icons-material/Close';
-import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
-import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
-import SlideshowRoundedIcon from '@mui/icons-material/SlideshowRounded';
-import FolderZipRoundedIcon from '@mui/icons-material/FolderZipRounded';
-import BackupTableRoundedIcon from '@mui/icons-material/BackupTableRounded';
-import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
-import CoPresentRoundedIcon from '@mui/icons-material/CoPresentRounded'
-import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';;
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
@@ -812,7 +804,7 @@ function ContainerProcessoPrincipal(props: {
     const informacaoProcesso = props.informacaoProcesso
 
     return (
-        <ContainerProcesso informacaoProcesso={informacaoProcesso}>
+        <ContainerProcesso informacaoProcesso={informacaoProcesso} width="100%">
             <InfoGeral processo={informacaoProcesso} />
             <Divider />
             <InfoComercial processo={informacaoProcesso} />
@@ -1086,7 +1078,7 @@ function Footer(props: {
 
     function mostrarAnexos() {
         const anexos = props.anexos.map((anexo: any, index: number) => {
-            const iconeAnexo = getIcone(anexo.nome)
+            const IconeAnexo = getIconeArquivo(anexo.nome)
 
             return (
                 <ListItem key={index}
@@ -1096,7 +1088,7 @@ function Footer(props: {
                         </IconButton>
                     }>
                     <ListItemIcon>
-                        {iconeAnexo}
+                        <IconeAnexo />
                     </ListItemIcon>
                     <ListItemText
                         primary={anexo.nome}
@@ -1202,26 +1194,6 @@ function getTituloBotao(botao: string) {
     }
 
     return (titulos as any)[nomeBotao]
-}
-
-function getIcone(nomeAnexo: string) {
-    const iconesAnexos = {
-        txt: <ArticleRoundedIcon />,
-        doc: <ArticleRoundedIcon />,
-        ocx: <ArticleRoundedIcon />,
-        xls: <BackupTableRoundedIcon />,
-        pdf: <PictureAsPdfRoundedIcon />,
-        ppt: <CoPresentRoundedIcon />,
-        png: <ImageRoundedIcon />,
-        jpg: <ImageRoundedIcon />,
-        peg: <ImageRoundedIcon />,
-        avi: <SlideshowRoundedIcon />,
-        zip: <FolderZipRoundedIcon />,
-    }
-    const tipoAnexo = nomeAnexo.slice(nomeAnexo.length - 3)
-    const valor = (iconesAnexos as any)[tipoAnexo]
-
-    return (valor != null ? valor : <InsertDriveFileRoundedIcon />)
 }
 
 interface Modal {
