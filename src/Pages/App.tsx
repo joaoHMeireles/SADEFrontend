@@ -17,6 +17,7 @@ import { MainBox } from "./App.styles";
 import { ThemeProvider } from "@emotion/react";
 import { MainTheme, ContentTheme } from "../Themes";
 import Historico from "./Historico/Historico";
+import CriacaoProposta from "./CriacaoProposta/CriacaoProposta";
 
 
 export default function App() {
@@ -54,6 +55,7 @@ export default function App() {
                 <Route path="/mydemands/demand" element={<TelaProcesso />} />
                 <Route path="/notifications/demand" element={<TelaProcesso />} />
                 <Route path="/createdemand" element={<TelaCriacaoDemanda />} />
+                <Route path="/createproposal" element={<CriacaoProposta />} />
                 <Route path="/home/proposal/demand" element={<TelaProcesso />} />
                 <Route path="/home/agenda/proposal/demand" element={<TelaProcesso />} />
                 <Route path="/home/ata/proposal/demand" element={<TelaProcesso />} />
