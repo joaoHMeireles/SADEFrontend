@@ -7,9 +7,21 @@ import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
-import { BoxContainerGeral, BoxTitulos, TypographyTitulos, BoxIcones, BoxContainerGeralBeneficio, BoxContainerDivisorio, 
-  BoxInputsAcima, BoxValorMensal, TypographyLabels, BoxInputs, BoxInputsAbaixo, BoxObrigacaoLegal, 
-  BoxDescricaoRequeistosControle, BoxFrequencia
+import {
+  BoxContainerGeral,
+  BoxTitulos,
+  TypographyTitulos,
+  BoxIcones,
+  BoxContainerGeralBeneficio,
+  BoxContainerDivisorio,
+  BoxInputsAcima,
+  BoxValorMensal,
+  TypographyLabels,
+  BoxInputs,
+  BoxInputsAbaixo,
+  BoxObrigacaoLegal,
+  BoxDescricaoRequeistosControle,
+  BoxFrequencia,
 } from "./BeneficiosDemanda.styles";
 
 export default function BeneficiosDemanda() {
@@ -173,9 +185,15 @@ function BeneficioReal() {
               <TypographyLabels>Valor Mensal: </TypographyLabels>
             </BoxValorMensal>
             <BoxInputs>
-              <TextField sx={{ width: "30%", marginRight: 5 }} />
               <TextField
-                sx={{ width: "10%" }}
+                sx={{
+                  width: "30%",
+                  marginRight: 5,
+                  boxShadow: "5px 5px 10px 0 #00000050",
+                }}
+              />
+              <TextField
+                sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
                 id="outlined-select-currency"
                 select
                 label="Moeda"
@@ -198,7 +216,7 @@ function BeneficioReal() {
               multiline
               rows={7}
               maxRows={Infinity}
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
             ></TextField>
           </BoxInputsAbaixo>
         </BoxContainerDivisorio>
@@ -245,9 +263,15 @@ function BeneficioPotencial() {
                 alignItems: "center",
               }}
             >
-              <TextField sx={{ width: "30%", marginRight: 5 }} />
               <TextField
-                sx={{ width: "10%" }}
+                sx={{
+                  width: "30%",
+                  marginRight: 5,
+                  boxShadow: "5px 5px 10px 0 #00000050",
+                }}
+              />
+              <TextField
+                sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
                 id="outlined-select-currency"
                 select
                 label="Moeda"
@@ -270,7 +294,7 @@ function BeneficioPotencial() {
               multiline
               rows={7}
               maxRows={Infinity}
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
             ></TextField>
           </BoxInputsAbaixo>
         </BoxContainerDivisorio>
@@ -316,13 +340,13 @@ function BeneficioQualitativo() {
             multiline
             rows={7}
             maxRows={Infinity}
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050",  }}
           ></TextField>
         </BoxDescricaoRequeistosControle>
         <BoxFrequencia>
           <TypographyLabels>Frequêcia de uso da solução:</TypographyLabels>
           <TextField
-            sx={{ width: "30%", marginTop: 1 }}
+            sx={{ width: "30%", marginTop: 1, boxShadow: "5px 5px 10px 0 #00000050",  }}
             select
             value={frequencia}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>

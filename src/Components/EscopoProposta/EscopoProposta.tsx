@@ -1,11 +1,19 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+
+import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
+
+import InputAnexos from "../InputAnexos/InputAnexos";
+
+import TabelaCustoCriacao from "../Tabelas/TabelaCustoCriacao/TabelaCustoCriacao";
 
 import {
   BoxContainerGeral,
   BoxPadrao,
   BoxPaybackExecucao,
+  BoxResponsavel,
+  BoxPaybackExe,
+  BoxResponsaveis,
+  TypographyStyled,
 } from "./EscopoProposta.styles";
 
 export default function EscopoProposta() {
@@ -13,39 +21,50 @@ export default function EscopoProposta() {
     <>
       <BoxContainerGeral>
         <BoxPadrao>
-          <Typography>Escopo</Typography>
+          <TypographyStyled>Escopo</TypographyStyled>
           <TextField
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
             multiline
             rows={7}
             maxRows={Infinity}
           />
         </BoxPadrao>
         <BoxPadrao>
-          <Typography>Tabelas de Custo</Typography>
-          {/* Outro componente provavelmente */}
+          <TypographyStyled>Tabelas de Custo</TypographyStyled>
+          <TabelaCustoCriacao />
         </BoxPadrao>
         <BoxPaybackExecucao>
-          <Box>
-            <Typography>Payback</Typography>
-            <TextField sx={{}}></TextField>
-          </Box>
-          <Box>
-            <Typography>Período de execução</Typography>
-            <TextField></TextField>
-          </Box>
+          <BoxPaybackExe>
+            <TypographyStyled>Payback</TypographyStyled>
+            <TextField
+              sx={{ width: "95%", boxShadow: "5px 5px 10px 0 #00000050" }}
+            ></TextField>
+          </BoxPaybackExe>
+          <BoxPaybackExe>
+            <TypographyStyled>Período de execução</TypographyStyled>
+            <TextField
+              sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
+              InputProps={{ endAdornment: <CalendarMonthRoundedIcon /> }}
+            ></TextField>
+          </BoxPaybackExe>
         </BoxPaybackExecucao>
-        <Box>
-          <Box>
-            <Typography>Nome do responsável</Typography>
-            <TextField></TextField>
-          </Box>
-          <Box>
-            <Typography>Área do responsável</Typography>
-            <TextField></TextField>
-          </Box>
-        </Box>
-        {/* Outro componente de arquivos */}
+        <BoxResponsavel>
+          <BoxResponsaveis>
+            <TypographyStyled>Nome do responsável</TypographyStyled>
+            <TextField
+              sx={{ width: "95%", boxShadow: "5px 5px 10px 0 #00000050" }}
+            ></TextField>
+          </BoxResponsaveis>
+          <BoxResponsaveis>
+            <TypographyStyled>Área do responsável</TypographyStyled>
+            <TextField
+              sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
+            ></TextField>
+          </BoxResponsaveis>
+        </BoxResponsavel>
+        <BoxPadrao>
+          <InputAnexos />
+        </BoxPadrao>
       </BoxContainerGeral>
     </>
   );

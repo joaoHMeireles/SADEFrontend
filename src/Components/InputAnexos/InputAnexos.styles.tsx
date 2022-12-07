@@ -26,3 +26,7 @@ export const BoxContainerConteudo = styledBox({
   textAlign: "center",
   width: "100%",
 });
+
+export const BoxTypographyAnexos = styledBox({
+  width: "100%",
+});

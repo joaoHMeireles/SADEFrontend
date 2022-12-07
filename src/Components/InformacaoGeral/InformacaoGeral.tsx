@@ -22,24 +22,35 @@ export default function InformacaoGeral() {
       <BoxContainerGeralInformacaoGeral>
         <BoxContainerLabels>
           <TypographyLabels>Título:</TypographyLabels>
-          <TextField />
+          <TextField sx={{ boxShadow: "5px 5px 10px 0 #00000050" }} />
         </BoxContainerLabels>
         <BoxContainerLabels>
           <TypographyLabels>
             Problema a ser resolvido (situação atual):
           </TypographyLabels>
-          <TextField multiline rows={7} maxRows={Infinity} />
+          <TextField
+            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+            multiline
+            rows={7}
+            maxRows={Infinity}
+          />
         </BoxContainerLabels>
         <BoxContainerLabels>
           <TypographyLabels>
             Proposta / Solicitação de proposta:
           </TypographyLabels>
-          <TextField multiline rows={7} maxRows={Infinity} />
+          <TextField
+            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+            multiline
+            rows={7}
+            maxRows={Infinity}
+          />
         </BoxContainerLabels>
         <BoxContainerLabels>
           <BoxContainerCentroCusto>
             <TypographyLabels>Centros de custo:</TypographyLabels>
             <Autocomplete
+              sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
               multiple
               disablePortal
               options={listaTeste}
