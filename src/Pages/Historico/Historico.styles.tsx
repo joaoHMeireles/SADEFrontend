@@ -1,0 +1,87 @@
+import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton, gridClasses } from "@mui/x-data-grid";
+import { alpha, styled } from '@mui/material/styles';
+
+export const DataGridEstilizado = styled(DataGrid)(({ theme }) => ({
+    boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
+    "& .titulo-tabela": {
+        color: "#595959"
+    },
+
+    "& .atrasado": {
+        color: "red"
+    },
+
+    "& .MuiDataGrid-footerContainer": {
+        borderTop: "none",
+        "& .MuiTablePagination-selectLabel, .MuiInputBase-root .MuiSelect-select, .MuiTablePagination-displayedRows, .MuiTablePagination-actions button": {
+            color: "#595959",
+            "&:hover": {
+                color: "#00579d"
+            }
+        }
+    },
+
+    "& .MuiDataGrid-main ": {
+        "& .MuiDataGrid-virtualScroller": {
+            "&::-webkit-scrollbar ": {
+                width: "10px",
+                height: "10px",
+                backgroundColor: "white"
+            },
+
+            "::-webkit-scrollbar-thumb": {
+                background: "#bababa",
+                borderRadius: "15px",
+            },
+        }
+    },
+
+    [`& .${gridClasses.row}.even`]: {
+        backgroundColor: theme.palette.grey[200],
+        '&:hover, &.Mui-hovered': {
+            backgroundColor: alpha(theme.palette.primary.main, 0.2),
+            '@media (hover: none)': {
+                backgroundColor: 'transparent',
+            },
+        },
+        '&.Mui-selected': {
+            backgroundColor: alpha(
+                theme.palette.primary.main,
+                0.2 + theme.palette.action.selectedOpacity,
+            ),
+            '&:hover, &.Mui-hovered': {
+                backgroundColor: alpha(
+                    theme.palette.primary.main,
+                    0.2 +
+                    theme.palette.action.selectedOpacity +
+                    theme.palette.action.hoverOpacity,
+                ),
+                '@media (hover: none)': {
+                    backgroundColor: alpha(
+                        theme.palette.primary.main,
+                        0.2 + theme.palette.action.selectedOpacity,
+                    ),
+                },
+            },
+        },
+    },
+}));
+
+export const GridToolbarContainerEstilizado = styled(GridToolbarContainer)({
+    "& button": {
+        color: "#00579d"
+    }
+})
+
+export const GridToolbarFilterButtonEstilizado = styled(GridToolbarFilterButton)({
+
+})
+
+export const GridToolbarColumnsButtonEstilizado = styled(GridToolbarColumnsButton)({
+    marginLeft: "30px"
+})
+
+export const GridToolbarExportEstilizado = styled(GridToolbarExport)({
+    marginLeft: "30px",
+
+})

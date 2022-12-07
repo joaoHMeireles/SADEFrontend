@@ -7,6 +7,8 @@ import BackupTableRoundedIcon from '@mui/icons-material/BackupTableRounded';
 import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
 import CoPresentRoundedIcon from '@mui/icons-material/CoPresentRounded'
 import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 /**
  * Conforme o final da url escolhida, informa a que tipo de processo a tela atual se refere
@@ -114,20 +116,31 @@ export function getNomeRota(palavra: string) {
 
 export function getIconeArquivo(nomeAnexo: string) {
     const iconesAnexos = {
-        txt: ArticleRoundedIcon  ,
-        doc: ArticleRoundedIcon ,
-        ocx: ArticleRoundedIcon ,
-        xls: BackupTableRoundedIcon ,
-        pdf: PictureAsPdfRoundedIcon ,
-        ppt: CoPresentRoundedIcon ,
-        png: ImageRoundedIcon ,
-        jpg: ImageRoundedIcon ,
-        peg: ImageRoundedIcon ,
-        avi: SlideshowRoundedIcon ,
-        zip: FolderZipRoundedIcon ,
+        txt: ArticleRoundedIcon,
+        doc: ArticleRoundedIcon,
+        ocx: ArticleRoundedIcon,
+        xls: BackupTableRoundedIcon,
+        pdf: PictureAsPdfRoundedIcon,
+        ppt: CoPresentRoundedIcon,
+        png: ImageRoundedIcon,
+        jpg: ImageRoundedIcon,
+        peg: ImageRoundedIcon,
+        avi: SlideshowRoundedIcon,
+        zip: FolderZipRoundedIcon,
     }
     const tipoAnexo = nomeAnexo.slice(nomeAnexo.length - 3)
     const valor = (iconesAnexos as any)[tipoAnexo]
 
-    return (valor != null ? valor : InsertDriveFileRoundedIcon )
+    return (valor != null ? valor : InsertDriveFileRoundedIcon)
 }
+
+/**
+ * Função para realizar algo quando a página for trocada
+ * 
+ * @param action 
+ */
+export function useLocationChange(action: any) {
+    const newLocation = useLocation()
+    useEffect(() => { action(newLocation) }, [newLocation])
+}
+

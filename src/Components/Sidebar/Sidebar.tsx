@@ -12,6 +12,7 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import { GridIndicadorItem, SidebarListItem, SidebarListItemButton, SidebarListItemIcon, SidebarTypography } from "./Sidebar.styles";
+import { useLocationChange } from "../../utils";
 
 //listas de ícones e opções do menu
 const lista = [
@@ -88,7 +89,6 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
   const location = useLocation()
   const itensMenu = lista.map((rota, index) => {
 
-
     if (rota.children) {
       return <DropMenuItem key={index} index={index} item={rota} aberto={props.aberto} setAberto={props.setAberto} setFiltro={props.setFiltro} indexSelecionado={indexSelcionado} setIndexSelecionado={setIndexSelecionado} />
     } else {
@@ -98,6 +98,26 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
 
   useEffect(() => {
     drawerWidth = props.tamanho
+  })
+
+  //fazer mudar quando atualizar a página tbm
+  useLocationChange(() => {
+    const opcoesSidebar = {
+      home: 1
+    }
+
+    // console.log(location.pathname);
+    
+    const chaveLocalizacao = location.pathname.slice(1, 5)
+
+    // console.log(chaveLocalizacao);
+
+    const valorLocalizacao = (opcoesSidebar as any)[chaveLocalizacao]
+
+    // console.log(valorLocalizacao);
+    
+
+    // setIndexSelecionado(valorLocalizacao)
   })
 
   return (

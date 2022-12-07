@@ -24,7 +24,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles"
 import {
-    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso,  BoxBotoes, BoxHeader, BoxTabela, CircleIconPonto,
+    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBotoes, BoxHeader, BoxTabela, CircleIconPonto,
     GridItemFooter, GridPequenosAtributos, TypographyTexto,
     TypographyTitulo, TypographyTituloAtributo, BoxConteudoModal, TypographyTituloModal, BoxTituloModal,
     BoxBotoesModal, BoxInfoModal, BoxAtributosInfoModal, BoxAtributoInfoModal, BoxBUsBeneficiadas, BoxSessaoTI,
@@ -804,7 +804,8 @@ function ContainerProcessoPrincipal(props: {
     const informacaoProcesso = props.informacaoProcesso
 
     return (
-        <ContainerProcesso informacaoProcesso={informacaoProcesso} width="100%">
+        <ContainerProcesso informacaoProcesso={informacaoProcesso}>
+            <Divider />
             <InfoGeral processo={informacaoProcesso} />
             <Divider />
             <InfoComercial processo={informacaoProcesso} />
