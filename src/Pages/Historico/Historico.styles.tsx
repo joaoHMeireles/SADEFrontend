@@ -38,30 +38,20 @@ export const DataGridEstilizado = styled(DataGrid)(({ theme }) => ({
 
     [`& .${gridClasses.row}.even`]: {
         backgroundColor: theme.palette.grey[200],
+
         '&:hover, &.Mui-hovered': {
-            backgroundColor: alpha(theme.palette.primary.main, 0.2),
-            '@media (hover: none)': {
-                backgroundColor: 'transparent',
-            },
+            backgroundColor: alpha(theme.palette.primary.main, 0.2)
         },
+
         '&.Mui-selected': {
-            backgroundColor: alpha(
-                theme.palette.primary.main,
-                0.2 + theme.palette.action.selectedOpacity,
-            ),
+            backgroundColor: alpha(theme.palette.primary.main, 0.2 + theme.palette.action.selectedOpacity),
             '&:hover, &.Mui-hovered': {
                 backgroundColor: alpha(
                     theme.palette.primary.main,
                     0.2 +
                     theme.palette.action.selectedOpacity +
                     theme.palette.action.hoverOpacity,
-                ),
-                '@media (hover: none)': {
-                    backgroundColor: alpha(
-                        theme.palette.primary.main,
-                        0.2 + theme.palette.action.selectedOpacity,
-                    ),
-                },
+                )
             },
         },
     },

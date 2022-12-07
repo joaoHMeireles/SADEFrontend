@@ -144,3 +144,4 @@ export function useLocationChange(action: any) {
     useEffect(() => { action(newLocation) }, [newLocation])
 }
 
+//criar função pra pegar as cores dos status dos históricos

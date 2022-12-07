@@ -299,6 +299,7 @@ export default function Historico(props: {}) {
                 <BoxContainer>
                     <Container>
                         <ContainerProcesso informacaoProcesso={informacaoProcesso}>
+                            {/* fazer mudar o tamanho se ele mudar a quantidade que é pra mostrar por página */}
                             <Box sx={{ height: "44.4vh", width: '100%' }}>
                                 <DataGridEstilizado
                                     rows={historicosFormatados}
