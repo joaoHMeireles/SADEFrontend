@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Persona, StatusTarefaHistorico, TarefaExecucao } from "../../Constants/enuns";
+import { Persona, StatusTarefaHistorico, TarefaExecucao } from "../../constants/enuns";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import ContainerProcesso from "../../Components/ContainerProcesso/ContainerProcesso";
-import { Box, Container, Dialog, IconButton, Toolbar, Typography } from "@mui/material";
+import { Box, Container, GlobalStyles, IconButton, Modal, Toolbar } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import { DataGrid, GridColDef, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarExport, GridToolbarFilterButton, GridCellParams } from '@mui/x-data-grid';
+import { GridColDef, GridCellParams, ptBR } from '@mui/x-data-grid';
 import { BoxContainer, BoxConteudo } from "../App.styles";
 import { BoxHeader } from "../TelaProcesso/TelaProcesso.styles";
 import {
@@ -218,11 +218,100 @@ const historicosDemandas: Historico[] = [
             tipoPessoa: Persona.AnalistaTI
         },
         idDemanda: 4
-    }
+    },
+
+    //testes
+    {
+        id: 15,
+        tarefa: TarefaExecucao.AVALIARDEMANDA,
+        status: StatusTarefaHistorico.CONCLUIDO,
+        dataRecebimento: new Date("June 13, 2022 09:42:00"),
+        dataConclusao: new Date("June 13, 2022 10:11:00"),
+        pdfHistorico: "dsftv87V9gbsufbidsuvbFIV789vV97V9vuidvsf",
+        tarefaExecutada: TarefaExecucao.APROVAR,
+        usuario: {
+            nome: "Kaique Macedos",
+            tipoPessoa: Persona.AnalistaTI
+        },
+        idDemanda: 4
+    },
+    {
+        id: 16,
+        tarefa: TarefaExecucao.CLASSIFICAR,
+        status: StatusTarefaHistorico.CONCLUIDO,
+        dataRecebimento: new Date("June 13, 2022 10:11:01"),
+        prazoExecucao: new Date("June 18, 2022 10:11:01"),
+        dataConclusao: new Date("June 13, 2022 10:25:00"),
+        pdfHistorico: "safasuidofhsdfb8GofdhfbOYUDFSUIFB",
+        tarefaExecutada: TarefaExecucao.CLASSIFICAR,
+        usuario: {
+            nome: "Kaique Macedos",
+            tipoPessoa: Persona.AnalistaTI
+        },
+        idDemanda: 4
+    },
+    {
+        id: 17,
+        tarefa: TarefaExecucao.AVALIARDEMANDA,
+        status: StatusTarefaHistorico.CONCLUIDO,
+        dataRecebimento: new Date("June 13, 2022 10:25:01"),
+        prazoExecucao: new Date("June 18, 2022 10:25:00"),
+        dataConclusao: new Date("June 13, 2022 16:06:00"),
+        pdfHistorico: "fdbayuiV9mpsomOADOHREobd07FESFCMçidnfuoibS",
+        tarefaExecutada: TarefaExecucao.APROVAR,
+        usuario: {
+            nome: "Marcelo Siqueira Peixoto",
+            tipoPessoa: Persona.GerenteNegocio
+        },
+        idDemanda: 4
+    },
+    {
+        id: 18,
+        tarefa: TarefaExecucao.ADICIONARINFORMACOES,
+        status: StatusTarefaHistorico.CONCLUIDO,
+        dataRecebimento: new Date("June 13, 2022 16:06:01"),
+        prazoExecucao: new Date("June 13, 2022 16:06:01"),
+        dataConclusao: new Date("June 14, 2022 07:52:00"),
+        pdfHistorico: "sacoifgdaifa9sfvqIv976V9WVQCYIDAVCUsvdcyuv",
+        tarefaExecutada: TarefaExecucao.ADICIONARINFORMACOES,
+        usuario: {
+            nome: "Kaique Macedos",
+            tipoPessoa: Persona.AnalistaTI
+        },
+        idDemanda: 4
+    },
+    {
+        id: 19,
+        tarefa: TarefaExecucao.CRIARPROPOSTA,
+        status: StatusTarefaHistorico.CONCLUIDO,
+        dataRecebimento: new Date("June 14, 2022 07:52:01"),
+        prazoExecucao: new Date("June 28, 2022 07:52:01"),
+        dataConclusao: new Date("June 23, 2022 09:29:00"),
+        pdfHistorico: "OIM98CIDSAMNCpocmsdppomnDINdapNCSDMPSDCD",
+        tarefaExecutada: TarefaExecucao.CRIARPROPOSTA,
+        usuario: {
+            nome: "Kaique Macedos",
+            tipoPessoa: Persona.AnalistaTI
+        },
+        idDemanda: 4
+    },
+    {
+        id: 20,
+        tarefa: TarefaExecucao.ADICIONARPAUTA,
+        status: StatusTarefaHistorico.CONCLUIDO,
+        dataRecebimento: new Date("June 23, 2022 09:29:01"),
+        dataConclusao: new Date("June 28, 2022 11:20:00"),
+        tarefaExecutada: TarefaExecucao.ADICIONARPAUTA,
+        usuario: {
+            nome: "Kaique Macedos",
+            tipoPessoa: Persona.AnalistaTI
+        },
+        idDemanda: 4
+    },
 ]
 
 const colunas: GridColDef[] = [
-    { field: 'tarefa', headerClassName: "titulo-tabela", headerName: 'Tarefa requisitada', width: 160 },
+    { field: 'tarefa', headerClassName: "titulo-tabela", headerName: 'Tarefa requisitada', width: 180 },
     { field: 'nomeUsuario', headerClassName: "titulo-tabela", headerName: 'Usuário responsável', width: 160 },
     { field: 'dataRecebimento', headerClassName: "titulo-tabela", headerName: 'Data recebida', width: 115 },
     { field: 'horarioRecebimento', headerClassName: "titulo-tabela", headerName: 'Horário recebido', width: 130 },
@@ -232,16 +321,18 @@ const colunas: GridColDef[] = [
     { field: 'tarefaExecutada', headerClassName: "titulo-tabela", headerName: 'Tarefa executada', width: 180 },
     { field: 'dataConclusao', headerClassName: "titulo-tabela", headerName: 'Data conclusão', width: 120 },
     { field: 'horarioConclusao', headerClassName: "titulo-tabela", headerName: 'Horário conclusão', width: 140 },
-    { field: 'pdfLabel', headerClassName: "titulo-tabela", headerName: 'PDF', width: 90 },
+    { field: 'pdfLabel', headerClassName: "titulo-tabela", headerName: 'PDF', width: 90, disableColumnMenu: true },
     { field: 'motivoDevolucao', headerClassName: "titulo-tabela", headerName: 'Motivo devolução', width: 140 }
 ];
 
 export default function Historico(props: {}) {
-    const [pageSize, setPageSize] = useState(5);
+    const [tamanhoPagina, setTamanhoPagina] = useState(5);
+    const [datagridHeight, setDatagridheight] = useState("44.5vh")
     const [modalAberto, setModalAberto] = useState(false)
     const [mostrarPDF, setMostrarPDF] = useState(false)
     const [arquivoPDF, setArquivoPDF] = useState()
     const [motivoDevolucao, setMotivoDevolucao] = useState("")
+
     const location = useLocation()
     const inicioDaPalavra = location.pathname.length - 14
     const finalDaPalavra = inicioDaPalavra + 6
@@ -282,6 +373,11 @@ export default function Historico(props: {}) {
             cargoUsuario: historico.usuario?.tipoPessoa
         }
     })
+    const tamanhoLista = historicosFormatados.length
+
+    useEffect(() => {
+        mudarTamanhoDatagrid(5)
+    }, [])
 
     function fecharModal() {
         setModalAberto(false)
@@ -292,63 +388,155 @@ export default function Historico(props: {}) {
         setMostrarPDF(false)
     }
 
+    function pegarClassesCelulas(cell: GridCellParams<number>) {
+        const nomeColuna = cell.field
+
+        if (nomeColuna === 'dataConclusao' || nomeColuna === "horarioConclusao") {
+            const infoHistorico = cell.row
+
+            if (infoHistorico.prazoExecucaoTotal < infoHistorico.dataConclusaoTotal) {
+                return "atrasado"
+            }
+        } else if (nomeColuna === "status") {
+            const cores = {
+                "Em Aguardo": "em-aguardo",
+                "Em Andamento": "em-andamento",
+                "Concluído": "concluido",
+                "Atrasado": "atrasado"
+            }
+
+            return (cores as any)[cell.row.status]
+        }
+
+        return "celula-grid";
+    }
+
+    function acaoCelula(cell: GridCellParams<number>) {
+        if (cell.field == "pdfLabel") {
+            setModalAberto(true)
+            setArquivoPDF(cell.row.pdfHistorico);
+            setMostrarPDF(true)
+        } else if (cell.field == "motivoDevolucao") {
+            setModalAberto(true)
+            setMotivoDevolucao(cell.row.motivoDevolucao)
+        }
+    }
+
+    function mudarTamanhoDatagrid(novotamanhoPagina: number) {
+        setTamanhoPagina(novotamanhoPagina)
+
+        if (novotamanhoPagina == 5) {
+            mudarAlturaTabela(5, "44.5vh")
+        } else if (novotamanhoPagina == 10) {
+            mudarAlturaTabela(10, "72.5vh")
+        } else if (novotamanhoPagina == 20) {
+            mudarAlturaTabela(20, "128.5vh")
+        }
+    }
+
+    function mudarAlturaTabela(maximo: number, tamanhoMaximo: string) {
+        if (tamanhoLista < maximo) {
+            const tamanhoTabela = tamanhoLista * 5.6 + 16.5
+            setDatagridheight(`${tamanhoTabela}vh`)
+        } else {
+            setDatagridheight(tamanhoMaximo)
+        }
+    }
+
+    function handlePageChange(page: number) {
+        const maximoPagina = (1 + page) * tamanhoPagina
+
+        if (maximoPagina > tamanhoLista) {
+            const tamanhoTabela = (tamanhoLista - (maximoPagina - tamanhoPagina)) * 5.6 + 16.5
+
+            setDatagridheight(`${tamanhoTabela}vh`)
+        } else {
+            mudarTamanhoDatagrid(tamanhoPagina)
+        }
+    }
+
     return (
         <>
+            <GlobalStyles
+                styles={{
+                    ".MuiDataGrid-panel .MuiPaper-root": {
+                        borderRadius: "10px",
+                        maxWidth: "none",
+                        width: "30vw",
+
+                        "& .MuiDataGrid-panelContent": {
+                            maxWidth: "none",
+                        },
+
+                        "& .MuiDataGrid-filterForm": {
+                            backgroundColor: 'white',
+                            borderRadius: "10px",
+
+                            "& .MuiDataGrid-filterFormColumnInput": {
+                                width: "31.25%",
+
+                                "& .MuiInputBase-root": {
+                                    boxSizing: "border-box",
+
+                                    "& .MuiNativeSelect-select ": {
+
+                                        
+                                        "& option": {
+                                            border: "none",
+                                            color: "#595959",
+                                            fontSize: "16px",
+                                            padding: "3px",
+                                            
+                                            "&:hover": {
+                                                backgroundColor: "#00579d",
+                                                color: "white"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+
+                            "& .MuiDataGrid-filterFormOperatorInput": {
+                                left: "20px",
+                                width: "28.57%"
+                            },
+
+                            "& .MuiDataGrid-filterFormValueInput": {
+                                left: "35px",
+                                width: "26.78%"
+                            }
+                        },
+                    },
+                }} />
             <Header />
             <BoxConteudo >
                 <BoxContainer>
                     <Container>
                         <ContainerProcesso informacaoProcesso={informacaoProcesso}>
-                            {/* fazer mudar o tamanho se ele mudar a quantidade que é pra mostrar por página */}
-                            <Box sx={{ height: "44.4vh", width: '100%' }}>
+                            <Box sx={{ height: datagridHeight, width: '100%' }}>
                                 <DataGridEstilizado
                                     rows={historicosFormatados}
                                     columns={colunas}
 
                                     components={{ Toolbar: CustomGridToolbar }}
+                                    getCellClassName={pegarClassesCelulas}
                                     getRowClassName={(cell) =>
                                         cell.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
                                     }
+                                    onCellClick={acaoCelula}
 
-                                    getCellClassName={(cell: GridCellParams<number>) => {
-                                        const nomeColuna = cell.field
-                                        if (nomeColuna === 'dataConclusao' || nomeColuna === "horarioConclusao") {
-                                            const infoHistorico = cell.row
-
-                                            if (infoHistorico.prazoExecucaoTotal < infoHistorico.dataConclusaoTotal)
-
-                                                return 'atrasado'
-                                        } else if (nomeColuna === "status"){
-                                            // return getCorStatusHistorico()
-                                        }
-
-                                            // console.log(cell.value);
-
-
-                                        return '';
-                                    }}
-
-                                    onCellClick={(cell) => {
-                                        if (cell.field == "pdfLabel") {
-                                            setModalAberto(true)
-                                            setArquivoPDF(cell.row.pdfHistorico);
-                                            setMostrarPDF(true)
-                                        } else if (cell.field == "motivoDevolucao") {
-                                            setModalAberto(true)
-                                            setMotivoDevolucao(cell.row.motivoDevolucao)
-                                        }
-                                    }}
-
-                                    pageSize={pageSize}
-                                    onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                                    pageSize={tamanhoPagina}
+                                    onPageChange={handlePageChange}
+                                    onPageSizeChange={mudarTamanhoDatagrid}
                                     rowsPerPageOptions={[5, 10, 20]}
                                     pagination
 
                                     disableSelectionOnClick
+                                    localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
                                 />
                             </Box>
                         </ContainerProcesso>
-                        <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { height: "80vh", width: "80vw" } }}>
+                        <Modal open={modalAberto} >
                             {mostrarPDF ?
                                 <Box>
                                     <embed src={arquivoPDF} type="application/pdf" width="100%" height="100%" />
@@ -364,8 +552,7 @@ export default function Historico(props: {}) {
                                     </IconButton>
                                 </Box>
                             }
-
-                        </Dialog>
+                        </Modal>
                     </Container>
                 </BoxContainer>
             </BoxConteudo>
@@ -388,7 +575,7 @@ function Header() {
 function CustomGridToolbar() {
 
     return (
-        <GridToolbarContainerEstilizado>
+        <GridToolbarContainerEstilizado >
             <GridToolbarFilterButtonEstilizado nonce={undefined} onResize={undefined} onResizeCapture={undefined} />
             <GridToolbarColumnsButtonEstilizado nonce={undefined} onResize={undefined} onResizeCapture={undefined} />
             <GridToolbarExportEstilizado />

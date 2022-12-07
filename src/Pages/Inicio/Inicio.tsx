@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso, sessaoTI } from '../../Constants/enuns'
+import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso, sessaoTI } from '../../constants/enuns'
 import './Inicio.scss'
 import Searchbar from '../../Components/Searchbar/Searchbar'
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb'
@@ -1286,7 +1286,7 @@ export default function Inicio(props: { filtrar: boolean, setFiltrar: React.Disp
             <Breadcrumb />
             <Searchbar setFiltrar={props.setFiltrar} filtrar={props.filtrar} grid={grid} setGrid={setGrid} />
             <BoxContainer>
-                <Box sx={{ width: "90%" }}>
+                <Box width={"90%"}>
                     <Grid container spacing={2}>
                         {componentesProcessos}
                     </Grid>

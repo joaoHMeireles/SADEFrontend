@@ -63,8 +63,8 @@ export enum TarefaExecucao {
 }
 
 export enum StatusTarefaHistorico {
-    EMAGUARDO = "Em Aguardo", //#595959
-    EMANDAMENTO = "Em Andamento", //#00579d
-    CONCLUIDO = "Concluído", //verde do ToDo
-    ATRASADO = "Atrasado" //vermelho do canceled
+    EMAGUARDO = "Em Aguardo",
+    EMANDAMENTO = "Em Andamento", 
+    CONCLUIDO = "Concluído", 
+    ATRASADO = "Atrasado" 
 }

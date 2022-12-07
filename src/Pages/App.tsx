@@ -13,8 +13,8 @@ import TelaProcesso from "./TelaProcesso/TelaProcesso";
 import Notificacoes from "./Notificacoes/Notificacoes";
 import Chats from "./Chats/Chats";
 import { Box } from "@mui/material";
-import { MainBox } from "./App.styles";
 import { ThemeProvider } from "@emotion/react";
+import { MainBox } from "./App.styles";
 import { MainTheme, ContentTheme } from "../Themes";
 import Historico from "./Historico/Historico";
 

@@ -1,4 +1,7 @@
 
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { StatusTarefaHistorico } from '../constants/enuns';
 import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 import SlideshowRoundedIcon from '@mui/icons-material/SlideshowRounded';
@@ -7,8 +10,7 @@ import BackupTableRoundedIcon from '@mui/icons-material/BackupTableRounded';
 import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
 import CoPresentRoundedIcon from '@mui/icons-material/CoPresentRounded'
 import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';
-import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+
 
 /**
  * Conforme o final da url escolhida, informa a que tipo de processo a tela atual se refere
@@ -145,3 +147,14 @@ export function useLocationChange(action: any) {
 }
 
 //criar função pra pegar as cores dos status dos históricos
+
+export function getCorStatusHistorico(status: StatusTarefaHistorico) {
+    const cores = {
+        "Em Aguardo": "#595959",
+        "Em Andamento": "#00579d",
+        "Concluído": "#00612E",
+        "Atrasado": "#FF1616"
+    }
+
+    return (cores as any)[status]
+}
