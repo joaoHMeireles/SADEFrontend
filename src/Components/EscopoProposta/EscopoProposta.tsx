@@ -28,7 +28,7 @@ export default function EscopoProposta() {
         <BoxPaybackExecucao>
           <Box>
             <Typography>Payback</Typography>
-            <TextField></TextField>
+            <TextField sx={{}}></TextField>
           </Box>
           <Box>
             <Typography>Período de execução</Typography>
