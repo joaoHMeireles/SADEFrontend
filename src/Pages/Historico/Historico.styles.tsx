@@ -4,8 +4,13 @@ import { Dialog } from "@mui/material";
 
 export const DataGridEstilizado = styled(DataGrid)(({ theme }) => ({
     boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
-    "& .titulo-tabela": {
-        color: "#595959"
+    "& .titulo-tabela .MuiDataGrid-columnHeaderTitleContainer": {
+        color: "#595959",
+        justifyContent: "flex-start",
+
+        "& .MuiDataGrid-columnHeaderTitleContainerContent": {
+            marginLeft: "5px"
+        }
     },
 
     "& .atrasado": {
@@ -24,8 +29,18 @@ export const DataGridEstilizado = styled(DataGrid)(({ theme }) => ({
         color: "#00612E"
     },
 
-    '& .celula-grid:hover': {
-        color: '#00579d',
+    '& .celula-grid': {
+        justifyContent: "center",
+
+        "& span": {
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap"
+        },
+
+        "&:hover": {
+            color: '#00579d'
+        }
     },
 
     "& .MuiDataGrid-footerContainer": {
@@ -94,7 +109,7 @@ export const GridToolbarExportEstilizado = styled(GridToolbarExport)({
 })
 
 export const Modal = styled(Dialog)({
-    '& .MuiPaper-root': { 
-        height: "80vh", width: "80vw" 
+    '& .MuiPaper-root': {
+        height: "80vh", width: "80vw"
     }
 })

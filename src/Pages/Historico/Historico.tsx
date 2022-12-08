@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Persona, StatusTarefaHistorico, TarefaExecucao } from "../../constants/enuns";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import ContainerProcesso from "../../Components/ContainerProcesso/ContainerProcesso";
-import { Box, Container, GlobalStyles, IconButton, Modal, Toolbar } from "@mui/material";
+import { Box, Container, GlobalStyles, IconButton, Modal, Toolbar, Tooltip } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { GridColDef, GridCellParams, ptBR } from '@mui/x-data-grid';
 import { BoxContainer, BoxConteudo } from "../App.styles";
@@ -311,18 +311,120 @@ const historicosDemandas: Historico[] = [
 ]
 
 const colunas: GridColDef[] = [
-    { field: 'tarefa', headerClassName: "titulo-tabela", headerName: 'Tarefa requisitada', width: 180 },
-    { field: 'nomeUsuario', headerClassName: "titulo-tabela", headerName: 'Usuário responsável', width: 160 },
-    { field: 'dataRecebimento', headerClassName: "titulo-tabela", headerName: 'Data recebida', width: 115 },
-    { field: 'horarioRecebimento', headerClassName: "titulo-tabela", headerName: 'Horário recebido', width: 130 },
-    { field: 'dataPrazoExecucao', headerClassName: "titulo-tabela", headerName: 'Data prazo', width: 110 },
-    { field: 'horarioPrazoExecucao', headerClassName: "titulo-tabela", headerName: 'Horário prazo', width: 110 },
-    { field: 'status', headerClassName: "titulo-tabela", headerName: 'Status atual', width: 130 },
-    { field: 'tarefaExecutada', headerClassName: "titulo-tabela", headerName: 'Tarefa executada', width: 180 },
-    { field: 'dataConclusao', headerClassName: "titulo-tabela", headerName: 'Data conclusão', width: 120 },
-    { field: 'horarioConclusao', headerClassName: "titulo-tabela", headerName: 'Horário conclusão', width: 140 },
-    { field: 'pdfLabel', headerClassName: "titulo-tabela", headerName: 'PDF', width: 90, disableColumnMenu: true },
-    { field: 'motivoDevolucao', headerClassName: "titulo-tabela", headerName: 'Motivo devolução', width: 140 }
+    {
+        field: 'tarefa',
+        headerClassName: "titulo-tabela",
+        headerName: 'Tarefa requisitada',
+        width: 145,
+        renderCell: (params: any) => {
+            console.log(params);
+                
+            return (
+                <Tooltip title={params.row.tarefa} >
+                    <span className="table-cell-trucate">{params.row.tarefa}</span>
+                </Tooltip>
+            )
+        },
+    },
+    {
+        field: 'nomeUsuario',
+        headerClassName: "titulo-tabela",
+        headerName: 'Usuário responsável',
+        width: 165,
+        renderCell: (params: any) => {
+            return (
+                <Tooltip title={params.row.nomeUsuario + ": " + params.row.cargoUsuario} >
+                    <span className="table-cell-trucate">{params.row.nomeUsuario}</span>
+                </Tooltip>
+            )
+        }
+    },
+    {
+        field: 'dataRecebimento',
+        headerClassName: "titulo-tabela",
+        headerName: 'Data recebida',
+        width: 120
+    },
+    {
+        field: 'horarioRecebimento',
+        headerClassName: "titulo-tabela",
+        headerName: 'Horário recebido',
+        width: 140
+    },
+    {
+        field: 'dataPrazoExecucao',
+        headerClassName: "titulo-tabela",
+        headerName: 'Data prazo',
+        width: 100
+    },
+    {
+        field: 'horarioPrazoExecucao',
+        headerClassName: "titulo-tabela",
+        headerName: 'Horário prazo',
+        width: 120
+    },
+    {
+        field: 'status',
+        headerClassName: "titulo-tabela",
+        headerName: 'Status atual',
+        width: 110,
+        renderCell: (params: any) => {
+            console.log(params);
+                
+            return (
+                <Tooltip title={params.row.status} >
+                    <span className="table-cell-trucate">{params.row.status}</span>
+                </Tooltip>
+            )
+        },
+    },
+    {
+        field: 'tarefaExecutada',
+        headerClassName: "titulo-tabela",
+        headerName: 'Tarefa executada',
+        width: 145,
+        renderCell: (params: any) => {
+            console.log(params);
+                
+            return (
+                <Tooltip title={params.row.tarefaExecutada} >
+                    <span className="table-cell-trucate">{params.row.tarefaExecutada}</span>
+                </Tooltip>
+            )
+        },
+    },
+    {
+        field: 'dataConclusao',
+        headerClassName: "titulo-tabela",
+        headerName: 'Data conclusão',
+        width: 130
+    },
+    {
+        field: 'horarioConclusao',
+        headerClassName: "titulo-tabela",
+        headerName: 'Horário conclusão',
+        width: 150
+    },
+    {
+        field: 'pdfHistorico',
+        headerClassName: "titulo-tabela",
+        headerName: 'PDF',
+        width: 60, 
+        disableColumnMenu: true,
+        renderCell: (params: any) => {
+            return (
+                <Tooltip title="Ver pdf" >
+                    <span className="table-cell-trucate">...</span>
+                </Tooltip>
+            )
+        }
+    },
+    {
+        field: 'motivoDevolucao',
+        headerClassName: "titulo-tabela",
+        headerName: 'Motivo devolução',
+        width: 140
+    }
 ];
 
 export default function Historico(props: {}) {
@@ -365,7 +467,6 @@ export default function Historico(props: {}) {
             dataConclusaoTotal: historico.dataConclusao,
             dataConclusao: historico.dataConclusao?.toLocaleDateString(),
             horarioConclusao: historico.dataConclusao?.toLocaleTimeString(),
-            pdfLabel: "Ver pdf",
             pdfHistorico: historico.pdfHistorico,
             motivoDevolucao: historico.motivoDevolucao,
             tarefaExecutada: historico.tarefaExecutada,
@@ -412,11 +513,11 @@ export default function Historico(props: {}) {
     }
 
     function acaoCelula(cell: GridCellParams<number>) {
-        if (cell.field == "pdfLabel") {
+        if (cell.field == "pdfHistorico" && cell.row.pdfHistorico != "" && cell.row.pdfHistorico != undefined) {
             setModalAberto(true)
             setArquivoPDF(cell.row.pdfHistorico);
             setMostrarPDF(true)
-        } else if (cell.field == "motivoDevolucao") {
+        } else if (cell.field == "motivoDevolucao" && cell.row.motivoDevolucao != "" && cell.row.motivoDevolucao != undefined) {
             setModalAberto(true)
             setMotivoDevolucao(cell.row.motivoDevolucao)
         }
@@ -462,7 +563,6 @@ export default function Historico(props: {}) {
                     ".MuiDataGrid-panel .MuiPaper-root": {
                         borderRadius: "10px",
                         maxWidth: "none",
-                        width: "30vw",
 
                         "& .MuiDataGrid-panelContent": {
                             maxWidth: "none",
@@ -477,16 +577,18 @@ export default function Historico(props: {}) {
 
                                 "& .MuiInputBase-root": {
                                     boxSizing: "border-box",
+                                    color: "#595959",
 
                                     "& .MuiNativeSelect-select ": {
 
-                                        
+
                                         "& option": {
+                                            backgroundColor: "white",
                                             border: "none",
                                             color: "#595959",
                                             fontSize: "16px",
                                             padding: "3px",
-                                            
+
                                             "&:hover": {
                                                 backgroundColor: "#00579d",
                                                 color: "white"
@@ -498,15 +600,83 @@ export default function Historico(props: {}) {
 
                             "& .MuiDataGrid-filterFormOperatorInput": {
                                 left: "20px",
-                                width: "28.57%"
+                                width: "28.57%",
+
+                                "& .MuiInputBase-root": {
+                                    boxSizing: "border-box",
+                                    color: "#595959",
+
+                                    "& .MuiNativeSelect-select ": {
+
+
+                                        "& option": {
+                                            backgroundColor: "white",
+                                            border: "none",
+                                            color: "#595959",
+                                            fontSize: "16px",
+                                            padding: "3px",
+
+                                            "&:hover": {
+                                                backgroundColor: "#00579d",
+                                                color: "white"
+                                            }
+                                        }
+                                    }
+                                }
                             },
 
                             "& .MuiDataGrid-filterFormValueInput": {
                                 left: "35px",
-                                width: "26.78%"
+                                width: "26.78%",
+
+                                "& .MuiInputBase-root": {
+                                    boxSizing: "border-box",
+                                    color: "#595959"
+                                }
                             }
                         },
+
+                        "& .MuiDataGrid-panelWrapper": {
+                            backgroundColor: "white",
+
+                            "& .MuiDataGrid-panelHeader": {
+
+                                "& .MuiInputLabel-standard": {
+                                    color: "#595959"
+                                },
+
+                                "& .MuiInputLabel-shrink": {
+                                    color: "#00579d"
+                                }
+                            },
+
+                            "& .MuiDataGrid-panelContent": {
+
+                                "& .MuiTypography-root": {
+                                    color: "#595959"
+                                },
+
+                                "& .MuiButtonBase-root": {
+                                    color: "#00579d"
+                                }
+                            },
+
+                            "& .MuiDataGrid-panelFooter button": {
+                                color: "#00579d"
+                            },
+                        },
                     },
+
+                    "& .MuiDataGrid-menu .MuiPaper-root": {
+
+                        "& .MuiList-root": {
+                            backgroundColor: "white",
+
+                            "& li": {
+                                color: "#595959"
+                            }
+                        }
+                    }
                 }} />
             <Header />
             <BoxConteudo >
@@ -524,6 +694,7 @@ export default function Historico(props: {}) {
                                         cell.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
                                     }
                                     onCellClick={acaoCelula}
+
 
                                     pageSize={tamanhoPagina}
                                     onPageChange={handlePageChange}
