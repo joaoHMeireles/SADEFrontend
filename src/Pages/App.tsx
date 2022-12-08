@@ -18,6 +18,7 @@ import { ThemeProvider } from "@emotion/react";
 import { MainTheme, ContentTheme } from "../Themes";
 import Historico from "./Historico/Historico";
 import CriacaoProposta from "./CriacaoProposta/CriacaoProposta";
+import Rascunho from "./Rascunho/Rascunho";
 
 
 export default function App() {
@@ -59,6 +60,8 @@ export default function App() {
                 <Route path="/home/proposal/demand" element={<TelaProcesso />} />
                 <Route path="/home/agenda/proposal/demand" element={<TelaProcesso />} />
                 <Route path="/home/ata/proposal/demand" element={<TelaProcesso />} />
+
+                <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar}/>}></Route>
 
 
                 <Route path="/home/demand/history" element={<Historico />} />

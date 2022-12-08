@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react'
 import { Link } from 'react-router-dom'
-import { TipoComponenteProcesso } from '../../Constants/enuns'
-import { InterfaceComponenteProcesso } from '../../Constants/interfaces'
+import { TipoComponenteProcesso } from '../../constants/enuns'
+import { InterfaceComponenteProcesso } from '../../constants/interfaces'
 import { Grid, Tooltip } from '@mui/material'
 import {
     BoxColecaoComponente, BoxGridCorProcesso, BoxListaCorProcesso, GridComponenteProcesso, GridLinkTypograpfy,
@@ -9,7 +9,7 @@ import {
 } from './ComponenteProcesso.styles'
 
 
-export default function ComponenteProcesso(props: { grid: boolean, atributosProcesso: any }) {
+export default function ComponenteProcesso(props: { grid: boolean, atributosProcesso: any, rascunho: boolean }) {
     const componente = props.atributosProcesso
     const paginaAtual = localStorage.getItem("PAGINATUAL")
     let corComponente, tituloToolTip, nomeTipoLink
@@ -25,12 +25,16 @@ export default function ComponenteProcesso(props: { grid: boolean, atributosProc
     }
 
     const processElement = (props.grid ?
-        <GridComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} setProcesso={setProcesso} />
+        <GridComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} setProcesso={setProcesso} rascunho={props.rascunho}/>
         :
-        <ListComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} setProcesso={setProcesso} />
+        <ListComponent componente={componente} corComponente={corComponente} tituloToolTip={tituloToolTip} linkComponente={nomeTipoLink} setProcesso={setProcesso} rascunho={props.rascunho}/>
     )
 
     function setProcesso() {
+        if(props.rascunho){
+            localStorage.setItem("RASCUNHOESCOLHIDO", JSON.stringify(componente))
+            return
+        }
         const tipoComponente = componente.tipo.toUpperCase()
         localStorage.setItem(`${tipoComponente}ESCOLHIDA`, JSON.stringify(componente))
     }
@@ -72,7 +76,12 @@ function GridComponent(props: ComponentProps) {
                         <span>Tamanho:</span> {props.componente.tamanho}
                     </BoxColecaoComponente>
                     <GridLinkTypograpfy variant='body2'>
-                        <Link to={props.linkComponente} onClick={props.setProcesso}>Ver mais</Link>
+                        {
+                            !props.rascunho ? 
+                            <Link to={props.linkComponente} onClick={props.setProcesso}>Ver mais</Link>
+                            :
+                            <Link to={"/continuedemand"} onClick={props.setProcesso}>Continuar criação</Link>
+                        }
                     </GridLinkTypograpfy>
                 </GridTypography>
             </GridComponenteProcesso>
@@ -103,7 +112,11 @@ function ListComponent(props: ComponentProps) {
                     <span>Status:</span> {getNome(props.componente.status)}
                 </ListaTypography>
                 <UltimaListaTypography variant='body2' sx={{ maxWidth: "10vw" }}>
+                    {!props.rascunho ?
                     <Link to={props.linkComponente} onClick={props.setProcesso}>Ver mais</Link>
+                    :
+                    <Link to={"/continuedemand"} onClick={props.setProcesso}>Continuar criação</Link>
+                    }
                 </UltimaListaTypography>
             </ListaComponenteProcesso>
         </>
@@ -137,4 +150,5 @@ interface ComponentProps {
     tituloToolTip: string
     linkComponente: string
     setProcesso: MouseEventHandler<HTMLAnchorElement>
+    rascunho: boolean
 }
