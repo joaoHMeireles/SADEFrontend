@@ -103,10 +103,12 @@ export function getNomeRota(palavra: string) {
         profile: "Perfil",
         draft: "Rascunho",
         mydrafts: "Meus rascunhos",
+        continuedemand: "Criar Demanda",
         chats: "Chats",
         chat: "Chat",
         history: "Histórico",
-        alteration: "Alteração"
+        alteration: "Alteração",
+
     }
 
     return (nomesRotas as any)[palavra]

@@ -35,8 +35,6 @@ export default function App() {
     }
   });
 
-  
-
   return (
     <BrowserRouter>
       <ThemeProvider theme={MainTheme}>
@@ -55,13 +53,14 @@ export default function App() {
                 <Route path="/home/demand" element={<TelaProcesso />} />
                 <Route path="/mydemands/demand" element={<TelaProcesso />} />
                 <Route path="/notifications/demand" element={<TelaProcesso />} />
-                <Route path="/createdemand" element={<TelaCriacaoDemanda />} />
+                <Route path="/createdemand" element={<TelaCriacaoDemanda rascunho={false}/>} />
                 <Route path="/createproposal" element={<CriacaoProposta />} />
                 <Route path="/home/proposal/demand" element={<TelaProcesso />} />
                 <Route path="/home/agenda/proposal/demand" element={<TelaProcesso />} />
                 <Route path="/home/ata/proposal/demand" element={<TelaProcesso />} />
 
                 <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar}/>}></Route>
+                <Route path="/continuedemand" element={<TelaCriacaoDemanda rascunho={true}/>}></Route>
 
 
                 <Route path="/home/demand/history" element={<Historico />} />

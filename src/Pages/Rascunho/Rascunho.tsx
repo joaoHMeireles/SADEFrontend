@@ -7,7 +7,6 @@ import {
   sessaoTI,
   StatusComponenteProcesso,
   TamanhoComponenteProcesso,
-  TipoColecaoComponenteProcesso,
   TipoComponenteProcesso,
 } from "../../constants/enuns";
 
@@ -525,7 +524,11 @@ export default function Rascunho(props: {
           grid={grid}
           setGrid={setGrid}
         />
-        <CardsProcesso listaComponents={listaComponents} grid={grid} rascunho={true}/>
+        <CardsProcesso
+          listaComponents={listaComponents}
+          grid={grid}
+          rascunho={true}
+        />
       </BoxConteudo>
     </>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
@@ -22,9 +22,32 @@ import {
   BoxBotoesPriSec,
 } from "./TelaCriacaoDemanda.styles";
 
-export default function TelaCriacaoDemanda() {
+export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
+
+  useEffect(() => {
+    if (props.rascunho) {
+      const info = JSON.parse(
+        localStorage.getItem("RASCUNHOESCOLHIDO") as string
+      );
+
+      for (let atributo in info) {
+        if ((info as any)[atributo]) {
+          const inputTitulo = document.getElementById(
+            getIdByAtributo(atributo)
+          ) as HTMLInputElement;
+          // inputTitulo.value = info.titulo;
+        }
+      }
+    }
+  }, []);
+
+  function getIdByAtributo(atributo: string) {
+    console.log(atributo);
+
+    return "bla";
+  }
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     console.log(newValue);

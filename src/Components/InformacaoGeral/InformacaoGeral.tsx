@@ -22,13 +22,17 @@ export default function InformacaoGeral() {
       <BoxContainerGeralInformacaoGeral>
         <BoxContainerLabels>
           <TypographyLabels>Título:</TypographyLabels>
-          <TextField sx={{ boxShadow: "5px 5px 10px 0 #00000050" }} />
+          <TextField
+            id="titulo"
+            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+          />
         </BoxContainerLabels>
         <BoxContainerLabels>
           <TypographyLabels>
             Problema a ser resolvido (situação atual):
           </TypographyLabels>
           <TextField
+            id="situacaoAtual"
             sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
             multiline
             rows={7}
@@ -40,6 +44,7 @@ export default function InformacaoGeral() {
             Proposta / Solicitação de proposta:
           </TypographyLabels>
           <TextField
+            id="objetivo"
             sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
             multiline
             rows={7}
@@ -50,6 +55,7 @@ export default function InformacaoGeral() {
           <BoxContainerCentroCusto>
             <TypographyLabels>Centros de custo:</TypographyLabels>
             <Autocomplete
+              id="centroDeCusto"
               sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
               multiple
               disablePortal

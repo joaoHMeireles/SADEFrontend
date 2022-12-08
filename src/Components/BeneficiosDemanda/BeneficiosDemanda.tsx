@@ -186,6 +186,7 @@ function BeneficioReal() {
             </BoxValorMensal>
             <BoxInputs>
               <TextField
+                id="valorMensalReal"
                 sx={{
                   width: "30%",
                   marginRight: 5,
@@ -193,8 +194,8 @@ function BeneficioReal() {
                 }}
               />
               <TextField
+                id="moedaReal"
                 sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
-                id="outlined-select-currency"
                 select
                 label="Moeda"
                 value={moeda}
@@ -213,6 +214,7 @@ function BeneficioReal() {
           <BoxInputsAbaixo>
             <TypographyLabels>Descrição: </TypographyLabels>
             <TextField
+              id="descricacaoReal"
               multiline
               rows={7}
               maxRows={Infinity}
@@ -264,6 +266,7 @@ function BeneficioPotencial() {
               }}
             >
               <TextField
+                id="valorMensalPotencial"
                 sx={{
                   width: "30%",
                   marginRight: 5,
@@ -271,8 +274,8 @@ function BeneficioPotencial() {
                 }}
               />
               <TextField
+                id="moedaPotencial"
                 sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
-                id="outlined-select-currency"
                 select
                 label="Moeda"
                 value={moeda}
@@ -291,6 +294,7 @@ function BeneficioPotencial() {
           <BoxInputsAbaixo>
             <TypographyLabels>Descrição: </TypographyLabels>
             <TextField
+              id="descricaoPotencial"
               multiline
               rows={7}
               maxRows={Infinity}
@@ -337,16 +341,22 @@ function BeneficioQualitativo() {
         <BoxDescricaoRequeistosControle>
           <TypographyLabels>Descrição: </TypographyLabels>
           <TextField
+            id="descricaoQualitativo"
             multiline
             rows={7}
             maxRows={Infinity}
-            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050",  }}
+            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
           ></TextField>
         </BoxDescricaoRequeistosControle>
         <BoxFrequencia>
           <TypographyLabels>Frequêcia de uso da solução:</TypographyLabels>
           <TextField
-            sx={{ width: "30%", marginTop: 1, boxShadow: "5px 5px 10px 0 #00000050",  }}
+            id="frequenciaUsoQualitativo"
+            sx={{
+              width: "30%",
+              marginTop: 1,
+              boxShadow: "5px 5px 10px 0 #00000050",
+            }}
             select
             value={frequencia}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -368,12 +378,14 @@ function BeneficioQualitativo() {
             name="radio-buttons-group"
           >
             <FormControlLabel
+              id="sim"
               sx={{ marginRight: 4, color: "#595959" }}
               value="Sim"
               control={<Radio />}
               label="Sim"
             />
             <FormControlLabel
+              id="nao"
               sx={{ color: "#595959" }}
               value="não"
               control={<Radio />}
