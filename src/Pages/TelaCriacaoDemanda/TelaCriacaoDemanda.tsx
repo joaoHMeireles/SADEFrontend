@@ -44,6 +44,7 @@ export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
   }, []);
 
   function getIdByAtributo(atributo: string) {
+    
     console.log(atributo);
 
     return "bla";
