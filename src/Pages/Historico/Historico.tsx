@@ -5,6 +5,7 @@ import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import ContainerProcesso from "../../Components/ContainerProcesso/ContainerProcesso";
 import { Box, Container, GlobalStyles, IconButton, Modal, Toolbar, Tooltip } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
 import { GridColDef, GridCellParams, ptBR } from '@mui/x-data-grid';
 import { BoxContainer, BoxConteudo } from "../App.styles";
 import { BoxHeader } from "../TelaProcesso/TelaProcesso.styles";
@@ -318,7 +319,7 @@ const colunas: GridColDef[] = [
         width: 145,
         renderCell: (params: any) => {
             console.log(params);
-                
+
             return (
                 <Tooltip title={params.row.tarefa} >
                     <span className="table-cell-trucate">{params.row.tarefa}</span>
@@ -370,7 +371,7 @@ const colunas: GridColDef[] = [
         width: 110,
         renderCell: (params: any) => {
             console.log(params);
-                
+
             return (
                 <Tooltip title={params.row.status} >
                     <span className="table-cell-trucate">{params.row.status}</span>
@@ -385,7 +386,7 @@ const colunas: GridColDef[] = [
         width: 145,
         renderCell: (params: any) => {
             console.log(params);
-                
+
             return (
                 <Tooltip title={params.row.tarefaExecutada} >
                     <span className="table-cell-trucate">{params.row.tarefaExecutada}</span>
@@ -409,12 +410,12 @@ const colunas: GridColDef[] = [
         field: 'pdfHistorico',
         headerClassName: "titulo-tabela",
         headerName: 'PDF',
-        width: 60, 
+        width: 60,
         disableColumnMenu: true,
         renderCell: (params: any) => {
             return (
                 <Tooltip title="Ver pdf" >
-                    <span className="table-cell-trucate">...</span>
+                    <PictureAsPdfRoundedIcon sx={{ color: "#595959" }} />
                 </Tooltip>
             )
         }
@@ -695,12 +696,12 @@ export default function Historico(props: {}) {
                                     }
                                     onCellClick={acaoCelula}
 
-
                                     pageSize={tamanhoPagina}
                                     onPageChange={handlePageChange}
                                     onPageSizeChange={mudarTamanhoDatagrid}
                                     rowsPerPageOptions={[5, 10, 20]}
                                     pagination
+                                    hideFooterSelectedRowCount
 
                                     disableSelectionOnClick
                                     localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
