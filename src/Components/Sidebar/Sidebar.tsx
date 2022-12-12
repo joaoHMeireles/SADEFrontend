@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import './Sidebar.scss'
-import { Drawer, Toolbar, Box, Icon, List, ListItemText, Collapse } from "@mui/material";
+import { Drawer, Toolbar, Box, Icon, List, ListItemText, Collapse, Grid } from "@mui/material";
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
@@ -11,7 +11,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
-import { SidebarListItem, SidebarListItemButton, SidebarListItemIcon, SidebarTypography} from './Sidebar.styles';
+import { GridIndicadorItem, SidebarListItem, SidebarListItemButton, SidebarListItemIcon, SidebarTypography } from "./Sidebar.styles";
 
 //listas de ícones e opções do menu
 const lista = [
@@ -83,13 +83,16 @@ let drawerWidth = "240";
  * @param props 
  * @returns 
  */
-export default function MiniDrawer(props: { aberto: boolean, tamanho: string, setAberto: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function MiniDrawer(props: { aberto: boolean, tamanho: string, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<SetStateAction<boolean>> }) {
+  const [indexSelcionado, setIndexSelecionado] = useState(0);
   const location = useLocation()
   const itensMenu = lista.map((rota, index) => {
+
+
     if (rota.children) {
-      return <DropMenuItem key={index} item={rota} aberto={props.aberto} setAberto={props.setAberto} />
+      return <DropMenuItem key={index} index={index} item={rota} aberto={props.aberto} setAberto={props.setAberto} setFiltro={props.setFiltro} indexSelecionado={indexSelcionado} setIndexSelecionado={setIndexSelecionado} />
     } else {
-      return <MenuItem key={index} item={rota} aberto={props.aberto} />
+      return <MenuItem key={index} index={index} item={rota} aberto={props.aberto} indexSelecionado={indexSelcionado} setIndexSelecionado={setIndexSelecionado} />
     }
   })
 
@@ -126,28 +129,64 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
   );
 }
 
+
+/**
+ * Item padrão do menu principal
+ * 
+ * @param props 
+ * @returns 
+ */
+function MenuItem(props: { index: number, item: { id: number, nome: string, rota: string, icone: JSX.Element }, aberto: boolean, indexSelecionado: number, setIndexSelecionado: React.Dispatch<SetStateAction<number>> }) {
+  const selecionado = props.indexSelecionado == props.index
+
+  return (
+    <Link to={props.item.rota}>
+      <SidebarListItem key={props.item.id} disablePadding >
+        <Grid container>
+          <Grid item xs={0.3} sx={{ backgroundColor: (selecionado ? "#00579d" : "inherit"), borderRadius: "0 5px 5px 0" }} />
+          <Grid item xs={11.7}>
+            <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center', "& .MuiSvgIcon-root": { color: (selecionado ? "#00579d" : "inherit") } }} onClick={() => { props.setIndexSelecionado(props.index) }} selected={selecionado}>
+              <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
+                {props.item.icone}
+              </SidebarListItemIcon>
+              <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
+            </SidebarListItemButton>
+          </Grid>
+        </Grid>
+      </SidebarListItem>
+    </Link>
+  )
+}
+
 /**
  * Item do menu principal com links em dropdown
  * 
  * @param props 
  * @returns 
  */
-function DropMenuItem(props: {
-  item: {
-    id: number, nome: string, icone: JSX.Element,
-    children: { id: number, nome: string, rota: string, }[]
-  }, aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>
-}) {
+function DropMenuItem(props: { index: number, item: { id: number, nome: string, icone: JSX.Element, children: { id: number, nome: string, rota: string, }[] }, aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<SetStateAction<boolean>>, indexSelecionado: number, setIndexSelecionado: React.Dispatch<SetStateAction<number>> }) {
   const [componenteAberto, setComponenteAberto] = useState(false);
-  const rotasSecundarias = props.item.children.map((rotaSecundaria) => {
+  let itensSelecionados = false
+  const rotasSecundarias = props.item.children.map((rotaSecundaria, index) => {
+    const indexItem = props.index * 10 + index
+    const selecionado = props.indexSelecionado == indexItem
+    if (selecionado) {
+      itensSelecionados = true
+    }
+
     return (
-      <SidebarTypography key={rotaSecundaria.id}>
-        <Link to={rotaSecundaria.rota} >
-          <SidebarListItemButton sx={{ pl: 4 }}>
-            <ListItemText primary={rotaSecundaria.nome} />
-          </SidebarListItemButton>
-        </Link>
-      </SidebarTypography>
+      <Grid container key={rotaSecundaria.id}>
+        <GridIndicadorItem item xs={0.3} sx={{ backgroundColor: (selecionado ? "#00579d" : "inherit") }} />
+        <Grid item xs={11.7}>
+          <SidebarTypography>
+            <Link to={rotaSecundaria.rota} >
+              <SidebarListItemButton sx={{ pl: 4 }} onClick={() => { props.setIndexSelecionado(indexItem) }} selected={selecionado} >
+                <ListItemText primary={rotaSecundaria.nome} />
+              </SidebarListItemButton>
+            </Link>
+          </SidebarTypography>
+        </Grid>
+      </Grid>
     )
   })
 
@@ -157,8 +196,26 @@ function DropMenuItem(props: {
     }
   })
 
+  useEffect(() => {
+    if (!componenteAberto) {
+      const gridCollapse = document.getElementById(`gridCollapse${props.item.id}`)
+      gridCollapse?.style.setProperty("background-color", "inherit")
+    }
+  }, [props.indexSelecionado])
+
+  useEffect(() => {
+    const gridCollapse = document.getElementById(`gridCollapse${props.item.id}`)
+    if (!componenteAberto && itensSelecionados) {
+      console.log("fechou");
+      gridCollapse?.style.setProperty("background-color", "#00579d")
+    } else {
+      gridCollapse?.style.setProperty("background-color", "inherit")
+    }
+  }, [componenteAberto])
+
   function verRotas() {
     if (!props.aberto) {
+      props.setFiltro(false)
       props.setAberto(true)
     }
     setComponenteAberto(!componenteAberto)
@@ -166,48 +223,32 @@ function DropMenuItem(props: {
 
   return (
     <SidebarListItem key={props.item.id} disablePadding>
-      <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center' }} onClick={verRotas}>
-        <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
-          {props.item.icone}
-        </SidebarListItemIcon>
-        <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
-        {props.aberto &&
-          <>
-            {!componenteAberto ?
-              <ExpandMoreRoundedIcon color="action" />
-              :
-              <ExpandLessRoundedIcon color="action" />
+      <Grid container>
+        {!componenteAberto && <GridIndicadorItem id={`gridCollapse${props.item.id}`} item xs={0.3} />}
+        <Grid item xs={11.7}>
+          <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center' }} onClick={verRotas}>
+            <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
+              {props.item.icone}
+            </SidebarListItemIcon>
+            <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
+            {props.aberto &&
+              <>
+                {!componenteAberto ?
+                  <ExpandMoreRoundedIcon color="action" />
+                  :
+                  <ExpandLessRoundedIcon color="action" />
+                }
+              </>
             }
-          </>
-        }
-      </SidebarListItemButton>
-      <Collapse in={componenteAberto} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {rotasSecundarias}
-        </List>
-      </Collapse>
+          </SidebarListItemButton>
+          <Collapse in={componenteAberto} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              {rotasSecundarias}
+            </List>
+          </Collapse>
+        </Grid>
+      </Grid>
     </SidebarListItem>
-  )
-}
-
-/**
- * Item padrão do menu principal
- * 
- * @param props 
- * @returns 
- */
-function MenuItem(props: { item: { id: number, nome: string, rota: string, icone: JSX.Element }, aberto: boolean }) {
-  return (
-    <Link to={props.item.rota}>
-      <SidebarListItem key={props.item.id} disablePadding sx={{ display: 'block' }}>
-        <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center' }}>
-          <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
-            {props.item.icone}
-          </SidebarListItemIcon>
-          <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
-        </SidebarListItemButton>
-      </SidebarListItem>
-    </Link>
   )
 }
 

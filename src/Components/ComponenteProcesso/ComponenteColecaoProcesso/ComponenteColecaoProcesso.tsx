@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { TipoColecaoComponenteProcesso } from '../../../DefinitionFiles/enuns'
-import { InterfaceComponenteProcesso, InterfaceColecaoComponenteProcesso } from "../../../DefinitionFiles/interfaces";
+import { TipoColecaoComponenteProcesso } from '../../../Constants/enuns'
+import { InterfaceComponenteProcesso, InterfaceColecaoComponenteProcesso } from "../../../Constants/interfaces";
 import { Grid, Tooltip } from '@mui/material'
 import {
     BoxColecaoComponente, BoxGridCorProcesso, BoxListaCorProcesso, GridComponenteProcesso, GridLinkTypograpfy,
@@ -8,10 +8,10 @@ import {
 } from '../ComponenteProcesso.styles'
 import { MouseEventHandler } from 'react';
 
-export default function ComponenteColecaoProcesso(props: { processComponentCollectionAtributes: InterfaceColecaoComponenteProcesso, grid: boolean }) {
-    const componente = props.processComponentCollectionAtributes
+export default function ComponenteColecaoProcesso(props: { atributosColecaoProcesso: any, grid: boolean }) {
+    const componente = props.atributosColecaoProcesso
     const paginaAtual = localStorage.getItem("PAGINATUAL")
-    const listaPropostas = props.processComponentCollectionAtributes.propostas
+    const listaPropostas = props.atributosColecaoProcesso.propostas
     let corComponente, tituloToolTip, nomeTipoLink
 
     if (componente.tipo == TipoColecaoComponenteProcesso.ATA) {
@@ -32,7 +32,7 @@ export default function ComponenteColecaoProcesso(props: { processComponentColle
 
     function setProcesso() {
         const tipoComponente = componente.tipo.toUpperCase()
-        localStorage.setItem(`ID${tipoComponente}ESCOLHIDA`, componente.id + "")
+        localStorage.setItem(`${tipoComponente}ESCOLHIDA`, JSON.stringify(componente))
     }
 
     return (

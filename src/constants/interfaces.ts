@@ -1,4 +1,4 @@
-import { ColecaoComponenteProcesso, ComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso } from '../DefinitionFiles/enuns'
+import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso } from './enuns'
 
 export interface InterfaceComponenteProcesso {
     id: number,
@@ -7,12 +7,12 @@ export interface InterfaceComponenteProcesso {
     solicitante: string,
     status: StatusComponenteProcesso,
     tamanho: TamanhoComponenteProcesso,
-    tipo: ComponenteProcesso,
+    tipo: TipoComponenteProcesso,
 }
 
 export interface InterfaceColecaoComponenteProcesso {
     id: number,
-    tipo: ColecaoComponenteProcesso,
+    tipo: TipoColecaoComponenteProcesso,
     dataReuniao: Date,
     comissao: string,
     propostas: InterfaceComponenteProcesso[]

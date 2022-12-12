@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../Assets/wegLogo.png";
+import logo from "../../assets/wegLogo.png";
 import "./Login.scss";
 import Box from "@mui/material/Box";
 
@@ -11,9 +11,8 @@ import RemoveRedEyeRoundedIcon from "@mui/icons-material/RemoveRedEyeRounded";
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 
 import {
-  BoxEsqueceuSenha, BoxLogoWEG, ContainerBackgroundLogin, ContainerBotaoLogin,
-  ContainerGeralLogin, ContainerInputsLogin, ContainerLogin, ContainerTituloTexto,
-  InputEmail, InputSenha, TextoEsqueceuSenha, TypographyTexto, TypographyTitulo,
+  BoxEsqueceuSenha, BoxLogoWEG, ContainerBackgroundLogin, ContainerBotaoLogin, ContainerGeralLogin, ContainerInputsLogin, 
+  ContainerLogin, ContainerTituloTexto, InputEmail, InputSenha, TextoEsqueceuSenha, TypographyTexto, TypographyTitulo,
   EstilosBotao
 } from "./Login.styles";
 
@@ -44,7 +43,7 @@ function Login(props: {
    * Função que coloca o  tipo do usuário no localStorage
    */
   function colocaPessoa() {
-    localStorage.setItem("TIPOUSUARIO", "analista");
+    localStorage.setItem("TIPOUSUARIO", "gerenteTI");
   }
 
   /**

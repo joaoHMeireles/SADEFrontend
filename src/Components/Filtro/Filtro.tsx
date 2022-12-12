@@ -151,8 +151,8 @@ export default function Filtro(props: {
         >
           <Toolbar variant="dense" sx={{ marginBottom: "10px" }} />
           <Item itens={tiposDeComponentes} titulo="Tipo" tipo={1} />
-          <Item itens={[]} titulo="Código PPM" tipo={3} />
-          <Item itens={[]} titulo="Número" tipo={3} />
+          <Item titulo="Código PPM" tipo={3} />
+          <Item titulo="Número" tipo={3} />
           <Item itens={foruns} titulo="Fórum" tipo={2} />
           <Item itens={departamentos} titulo="Departamento" tipo={2} />
           <Item itens={tamanhos} titulo="Tamanho" tipo={2} />
@@ -172,20 +172,24 @@ export default function Filtro(props: {
  * @returns 
  */
 function Item(props: {
-  itens: { id: number; nome: string }[];
+  itens?: { id: number; nome: string }[];
   titulo: string;
   tipo: number;
 }) {
   const [aberto, setAberto] = useState(false);
 
-  let opcao: JSX.Element;
-  if (props.tipo == 1) {
-    opcao = <OpcoesRadio itens={props.itens} />;
-  } else if (props.tipo == 2) {
-    opcao = <OpcoesCheck itens={props.itens} />;
-  } else {
+  let opcao: JSX.Element = <div />;
+
+  if (!props.itens) {
     opcao = <OpcaoInput />;
+  } else {
+    if (props.tipo == 1) {
+      opcao = <OpcoesRadio itens={props.itens} />;
+    } else if (props.tipo == 2) {
+      opcao = <OpcoesCheck itens={props.itens} />;
+    }
   }
+
 
   function mudarAberto() {
     setAberto(!aberto);

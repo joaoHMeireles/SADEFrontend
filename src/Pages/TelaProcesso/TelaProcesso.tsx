@@ -1,546 +1,36 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
-import { TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso, sessaoTI } from '../../DefinitionFiles/enuns';
+import { getNomeComponente, urlValida, getIconeArquivo } from '../../Utils';
+import Dayjs from '@date-io/dayjs'
+import { sessaoTI, TipoComponenteProcesso } from '../../Constants/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
+import SelectBox from '../../Components/SelectBox/SelectBox'
+import TabelaBeneficios from "../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios";
+import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
+import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
-    Badge, Box, Container, Divider, Grid, List, ListItem, ListItemIcon, Table, TableBody, TableHead, TableRow, Typography
+    Alert, Badge, Box, Checkbox, Container, Dialog, Divider, FormControl, FormControlLabel, FormGroup, FormHelperText,
+    Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, SelectChangeEvent, Snackbar, TextField, Typography
 } from '@mui/material';
 import ChatBubbleRounded from '@mui/icons-material/ChatBubbleRounded';
 import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
 import LanRoundedIcon from '@mui/icons-material/LanRounded';
 import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
-import { BoxContainer, BoxConteudo, BotaoTerciario } from "../App.styles"
+import CloseIcon from '@mui/icons-material/Close';
+import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles"
 import {
-    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBandeira, BoxBotoes, 
-    BoxCentroCusto, BoxContainerBandeira, BoxContainerCentroCusto, BoxContainerTabela, BoxCorStatus, BoxHeader, 
-    BoxTabela, BoxTabelaCusto, BoxTitulosCentroCusto, BoxTrianguloBandeira, CircleIconPonto, GridContainer, 
-    GridContainerHeader, GridInformacao, GridItemFooter, GridPequenosAtributos, GridTitulo, TableCellEstilzada, 
-    TableContainerEstilizado, TableRowEstilizada, TypographyTexto, TypographyTitulo, TypographyTituloAtributo
+    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso,  BoxBotoes, BoxHeader, BoxTabela, CircleIconPonto,
+    GridItemFooter, GridPequenosAtributos, TypographyTexto,
+    TypographyTitulo, TypographyTituloAtributo, BoxConteudoModal, TypographyTituloModal, BoxTituloModal,
+    BoxBotoesModal, BoxInfoModal, BoxAtributosInfoModal, BoxAtributoInfoModal, BoxBUsBeneficiadas, BoxSessaoTI,
+    BoxAtributoInfoModal2, TypographyTituloAtributoModal, TextFieldURL
 } from './TelaProcesso.styles';
-
-
-const listaProcessos = [
-    {
-        id: 1,
-        titulo: "primeiro titulo ae",
-        tamanho: TamanhoComponenteProcesso.Pequeno,
-        solicitante: "um fia da puta ae",
-        status: StatusComponenteProcesso.Backlog,
-        tipo: TipoComponenteProcesso.Demanda,
-        score: 12.5,
-        departamento: "não sei nenhum departamento",
-        gerenteResponsavel: "tal fiote de cruz credo",
-        frequenciaUso: 200,
-        aprovadoGerente: true,
-        beneficioQualitativo: "textin ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything dizendo como é bom",
-        centrosDeCusto: [
-            1234,
-            5678
-        ],
-        beneficiosReais: [
-            {
-                descricao: "description",
-                moeda: "BRL",
-                valor: 10000.00,
-                memoriaCalculo: "é que é bem bom mesmo vai dar 10000000 de retorno fodão bem massa mano"
-            },
-            {
-                descricao: "descricaozona caraio gigantassa pqp muita coisa",
-                moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "é que é bem bom mesmo vai dar 10000000 de retorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra"
-            },
-        ],
-        beneficiosPotenciais: [
-            {
-                descricao: "bem datalhadadinha",
-                moeda: "USD",
-                valor: 780.00,
-                memoriaCalculo: "é que é bem bom em massa mano ty have suo fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra"
-            }
-        ],
-        objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        anexos: [
-            {
-                nome: "anexoZada",
-                arquivo: "jemidoASMR.mp4"
-            },
-            {
-                nome: "foto minha peladao",
-                arquivo: "thanosAgrachamento.png"
-            }
-        ]
-    },
-    {
-        id: 3,
-        titulo: "titulozao pra ver como fica muito grande a responsividade da bagaça",
-        tamanho: TamanhoComponenteProcesso.Grande,
-        solicitante: "esse aqui é legal",
-        status: StatusComponenteProcesso.Assesment,
-        tipo: TipoComponenteProcesso.Demanda,
-        score: 12.5,
-        departamento: "7825678256782437813",
-        gerenteResponsavel: "riomar silveira pinto nunes",
-        frequenciaUso: 329,
-        aprovadoGerente: false,
-        beneficioQualitativo: "é bem bonzin bão memo bom ailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything",
-        centrosDeCusto: [
-            3864,
-            9863
-        ],
-        secaoTIResponsavel: sessaoTI.SEG,
-        BUSolicitante: "Primeira",
-        BUsBeneficiadas: [
-            "essa aqui",
-            "essa também po"
-        ],
-        beneficiosReais: [
-            {
-                descricao: "description",
-                moeda: "BRL",
-                valor: 10000.00,
-                memoriaCalculo: "é que é bem bom em massa mano ty have suffereetorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra"
-            },
-            {
-                descricao: "descricaozona caraio gigantassa pqp muita coisa",
-                moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "é que é bem bom em massa mano ty have  é bem bom mesmo vai dar 10000000 de retorno fodãected humour, or  ra"
-            },
-            {
-                descricao: "bem datalhadadinha",
-                moeda: "USD",
-                valor: 780.00,
-                memoriaCalculo: "é que é bem bom em massa mano ty have suffered alteratvai dar 10000000 de retorno fodão bem massa mano ty have suffered altnjected humour, or  ra"
-            }
-        ],
-        beneficiosPotenciais: [
-            {
-                descricao: "bem datalhadadinha",
-                moeda: "USD",
-                valor: 780.00,
-                memoriaCalculo: "sa mano ty have suffered alteration in some form, by injected humvai dar 10000000 de retorno fod"
-            },
-            {
-                descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
-                moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "bom em massa mano ty have suffered alteration in some form, by injected humour bem massa mano ty have suffered alteration in some form, by injected humour, or"
-            },
-        ],
-        objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        pessoaDevolucao: "arnaldo pinto",
-        motivoDevolucao: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing h",
-        anexos: [
-            {
-                nome: "anexoZada",
-                arquivo: "jemidoASMR.mp4"
-            },
-            {
-                nome: "foto minha peladao",
-                arquivo: "thanosAgrachamento.png"
-            },
-            {
-                nome: "excel da tua mãe",
-                arquivo: "rendaPackDoPe.xml"
-            }
-        ]
-    },
-    {
-        id: 4,
-        titulo: "Demandinha de um cara legal",
-        tamanho: TamanhoComponenteProcesso.MuitoGrande,
-        solicitante: "Jefferson Rodrigues",
-        status: StatusComponenteProcesso.Canceled,
-        tipo: TipoComponenteProcesso.Proposta,
-        score: 12.5,
-        departamento: "o da diretoria fodão grandoes",
-        gerenteResponsavel: "marcello taz do cqc",
-        frequenciaUso: 160,
-        aprovadoGerente: true,
-        beneficioQualitativo: "vai dar isso isso of Lorem Ipsum available, but the majoritailable, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anythingy have suffered alteration in some form, by injected humour, or  randomised word benefi isso e isso de beneficios",
-        centrosDeCusto: [
-            9425,
-            9678
-        ],
-        secaoTIResponsavel: sessaoTI.SVE,
-        BUSolicitante: "Motores",
-        BUsBeneficiadas: [
-            "Tintas",
-            "Gidital"
-        ],
-        prazoElaboracao: new Date(),
-        codigoPPM: 67237,
-        linkJira: "https://jirazadaDoCara",
-        workflowIniciado: false,
-        aprovadoWorkflow: false,
-        beneficiosReais: [
-            {
-                descricao: "description",
-                moeda: "BRL",
-                valor: 10000.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some "
-            },
-        ],
-        periodoExecucao: [
-            new Date(),
-            new Date()
-        ],
-        responsaveis: [
-            "Jorginho metálica",
-            "Arquimedes Segundo"
-        ],
-        beneficiosPotenciais: [
-            {
-                descricao: "bem datalhadadinha",
-                moeda: "USD",
-                valor: 780.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vmo vai dar 10000000 de retorno fodsuffered alteration in som"
-            },
-            {
-                descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
-                moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered alteration in some foda bem bom mesmo meudeus"
-            },
-        ],
-        payback: 4356.30,
-        tabelasCusto: [
-            {
-                titulo: "gastos tandam",
-                isLicenca: false,
-                centrosCusto: [
-                    {
-                        centroCusto: 6135,
-                        porcentagem: 0.5
-                    },
-                    {
-                        centroCusto: 2668,
-                        porcentagem: 0.5
-                    },
-                ],
-                linhas: [
-                    {
-                        recurso: "analista funcional",
-                        esforco: 150,
-                        valor: 35
-                    },
-                    {
-                        recurso: "mão de obra",
-                        esforco: 48,
-                        valor: 35
-                    },
-                ]
-            }
-        ],
-        objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        escopo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        anexos: [
-            {
-                nome: "excel da tua mãe",
-                arquivo: "rendaPackDoPe.xml"
-            }
-        ]
-    },
-    {
-        id: 5,
-        titulo: "me da droga",
-        tamanho: TamanhoComponenteProcesso.Medio,
-        solicitante: "um fia da puta ae caraiudo",
-        status: StatusComponenteProcesso.BusinessCase,
-        tipo: TipoComponenteProcesso.Proposta,
-        score: 12.5,
-        departamento: "o da diretoria fodão grandoes",
-        gerenteResponsavel: "romero britto",
-        frequenciaUso: 540,
-        aprovadoGerente: true,
-        beneficioQualitativo: "ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word beneficios",
-        centrosDeCusto: [
-            9678
-        ],
-        secaoTIResponsavel: sessaoTI.SVE,
-        BUSolicitante: "Motores",
-        BUsBeneficiadas: [
-            "Tintas",
-            "Solar"
-        ],
-        prazoElaboracao: new Date(),
-        codigoPPM: 78569,
-        linkJira: "https://jirazadaDoCara/fsdfsaf",
-        workflowIniciado: true,
-        prazoWorkflow: new Date(),
-        aprovadoWorkflow: true,
-        beneficiosReais: [
-            {
-                descricao: "description",
-                moeda: "BRL",
-                valor: 10000.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 10000000 de retorno fodsuffered esteja errado refaz a conta ae"
-            },
-            {
-                descricao: "uma descrizaozninha bonitinha",
-                moeda: "BRL",
-                valor: 1900.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 9999999 de retorno fodsuffered alteration in some foda bem bom mesmo meudeus, 9 * 1111111"
-            },
-        ],
-        periodoExecucao: [
-            new Date(),
-            new Date()
-        ],
-        responsaveis: [
-            "Arquimedes Segundo",
-            "Socratinho filipe",
-            "Diogenizada"
-        ],
-        beneficiosPotenciais: [
-            {
-                descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa aaaaaaa aaaaaa aaa aaaaa aaaaaaaa",
-                moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
-            },
-        ],
-        payback: 783.30,
-        tabelasCusto: [
-            {
-                titulo: "gastos",
-                isLicenca: false,
-                centrosCusto: [
-                    {
-                        centroCusto: 6135,
-                        porcentagem: 0.5
-                    },
-                    {
-                        centroCusto: 2668,
-                        porcentagem: 0.5
-                    },
-                ],
-                linhas: [
-                    {
-                        recurso: "analista funcional",
-                        esforco: 150,
-                        valor: 35
-                    },
-                    {
-                        recurso: "macaco anti-stress",
-                        esforco: 48,
-                        valor: 39
-                    },
-                ]
-            },
-            {
-                titulo: "mais gastos",
-                isLicenca: true,
-                centrosCusto: [
-                    {
-                        centroCusto: 6789,
-                        porcentagem: 0.3
-                    },
-                    {
-                        centroCusto: 2668,
-                        porcentagem: 0.6
-                    },
-                    {
-                        centroCusto: 9942,
-                        porcentagem: 0.1
-                    }
-                ],
-                linhas: [
-                    {
-                        recurso: "Oracle",
-                        esforco: 3,
-                        valor: 479.99
-                    },
-                    {
-                        recurso: "Visual Studio premium",
-                        esforco: 2,
-                        valor: 156
-                    },
-                ]
-            }
-        ],
-        objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        escopo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        anexos: [
-            {
-                nome: "sisssssstema",
-                arquivo: "naoEUmVirus.docxx"
-            }
-        ]
-    },
-    {
-        id: 7,
-        titulo: "lerolerolerolero",
-        tamanho: TamanhoComponenteProcesso.Pequeno,
-        solicitante: "um fia da puta ae",
-        status: StatusComponenteProcesso.Assesment,
-        tipo: TipoComponenteProcesso.Demanda,
-        score: 12.5,
-        departamento: "o da diretoria fodão grandoes",
-        gerenteResponsavel: "marcello taz do cqc",
-        frequenciaUso: 160,
-        aprovadoGerente: true,
-        beneficioQualitativo: "vai dar isso isso isso e isso de beneficios ariations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised word",
-        centrosDeCusto: [
-            9425,
-            9678
-        ],
-        secaoTIResponsavel: sessaoTI.SVE,
-        BUSolicitante: "Motores",
-        BUsBeneficiadas: [
-            "Tintas",
-            "Gidital"
-        ],
-        prazoElaboracao: new Date(),
-        codigoPPM: 67237,
-        linkJira: "https://jirazadaDoCara",
-        beneficiosReais: [
-            {
-                descricao: "description",
-                moeda: "BRL",
-                valor: 10000.00,
-                memoriaCalculo: "have or  ra é que é bem bom mesmo vai dar 99199111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
-            },
-        ],
-        beneficiosPotenciais: [
-            {
-                descricao: "bem datalhadadinha",
-                moeda: "USD",
-                valor: 780.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa"
-            },
-            {
-                descricao: "descricaozona caraio gigantassa pqp muita coisa aaaaaaaa aaa ahave or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa",
-                moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
-            },
-        ],
-        objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        anexos: [
-            {
-                nome: "excel da tua mãe",
-                arquivo: "rendaPackDoPe.xml"
-            }
-        ]
-    },
-    {
-        id: 9,
-        titulo: "eu quero janta de 3 s",
-        tamanho: TamanhoComponenteProcesso.Pequeno,
-        solicitante: "um gênio",
-        status: StatusComponenteProcesso.ToDo,
-        tipo: TipoComponenteProcesso.Proposta,
-        score: 10000,
-        departamento: "sgdaho",
-        gerenteResponsavel: "Carlos Salles Morales",
-        frequenciaUso: 98,
-        aprovadoGerente: true,
-        beneficioQualitativo: "b e n e f i c i o There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarras",
-        centrosDeCusto: [
-            9678,
-            9674,
-            1415
-        ],
-        secaoTIResponsavel: sessaoTI.SIM,
-        BUSolicitante: "Motores",
-        BUsBeneficiadas: [
-            "Motores"
-        ],
-        prazoElaboracao: new Date(),
-        codigoPPM: 3241,
-        linkJira: "https://jirassssssssCity",
-        workflowIniciado: true,
-        prazoWorkflow: new Date(),
-        aprovadoWorkflow: false,
-        beneficiosReais: [
-            {
-                descricao: "description",
-                moeda: "USD",
-                valor: 100.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores"
-            },
-            {
-                descricao: "uma descrizaozninha",
-                moeda: "BRL",
-                valor: 19000.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmaaa meudeus do céu aceita essa demanda por favorzinho meus queridos superiores"
-            },
-        ],
-        periodoExecucao: [
-            new Date(),
-            new Date()
-        ],
-        responsaveis: [
-            "Bruno",
-            "MarronÈ"
-        ],
-        beneficiosPotenciais: [
-            {
-                descricao: "descricao",
-                moeda: "USD",
-                valor: 1500.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bemnda por favorzinho meus queridos su"
-            },
-            {
-                descricao: "descricaodaCoisa",
-                moeda: "BRL",
-                valor: 10.00,
-                memoriaCalculo: "sa mano ty have or  ra é que é bem bom mesmo vai dar 99111 gigantassa pqp muita coisa aaaaaaaa aaa aaaaa"
-            }
-        ],
-        payback: 945.37,
-        tabelasCusto: [
-            {
-                titulo: "mais gastos",
-                isLicenca: false,
-                centrosCusto: [
-                    {
-                        centroCusto: 7643,
-                        porcentagem: 0.7
-                    },
-                    {
-                        centroCusto: 5671,
-                        porcentagem: 0.2
-                    },
-                    {
-                        centroCusto: 1567,
-                        porcentagem: 0.1
-                    }
-                ],
-                linhas: [
-                    {
-                        recurso: "rapaz do café",
-                        esforco: 350,
-                        valor: 15
-                    },
-                    {
-                        recurso: "mão de obra",
-                        esforco: 48,
-                        valor: 350
-                    },
-                ]
-            }
-        ],
-        objetivo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        situacaoAtual: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        escopo: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-        anexos: [
-            {
-                nome: "sisssssstema",
-                arquivo: "naoEUmVirus.docxx"
-            }
-        ]
-    }
-]
+import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
 
 /**
  * Componente principal das páginas de proposta de demanda sendo dinâmico conforme
@@ -550,18 +40,32 @@ const listaProcessos = [
  * @returns 
  */
 export default function TelaComponenteProcesso(props: any) {
+    const [modalAberto, setModalAberto] = useState(false)
+    const [conteudoModal, setConteudoModal] = useState(<div />)
+    const [feedbackAberto, setFeedbackAberto] = useState(false)
+    const [conteudoFeedback, setConteudoFeedback] = useState(<div />)
     const location = useLocation().pathname
-    const idLocalStorage = localStorage.getItem(`ID${getComponentName(location)}ESCOLHIDA`)
-    const idProcesso = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
-    const informacaoProcesso = listaProcessos.find(p => p.id == idProcesso)
+    const idLocalStorage = localStorage.getItem(`${getNomeComponente(location)}ESCOLHIDA`)
+    const informacaoProcesso = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
 
     return (
         <>
-            <Header informacaoProcesso={informacaoProcesso} />
+            <Header informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} setFeedbackAberto={setFeedbackAberto} setConteudoFeedback={setConteudoFeedback} />
             <BoxConteudo >
                 <BoxContainer>
-                    <Container>
-                        <ContainerProcesso informacaoProcesso={informacaoProcesso} />
+                    <Container >
+                        <ContainerProcessoPrincipal informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
+                        <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { minWidth: "35vw" } }}>
+                            {conteudoModal}
+                        </Dialog>
+                        <Snackbar
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                            autoHideDuration={3000}
+                            open={feedbackAberto}
+                            onClose={() => { setFeedbackAberto(false) }}
+                        >
+                            {conteudoFeedback}
+                        </Snackbar>
                     </Container>
                 </BoxContainer>
             </BoxConteudo>
@@ -577,8 +81,15 @@ export default function TelaComponenteProcesso(props: any) {
  * @param props 
  * @returns 
  */
-function Header(props: { informacaoProcesso: any }) {
+export function Header(props: {
+    informacaoProcesso: any,
+    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
+    setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>,
+    setFeedbackAberto: React.Dispatch<React.SetStateAction<boolean>>,
+    setConteudoFeedback: React.Dispatch<React.SetStateAction<JSX.Element>>
+}) {
     const [tempoExcedido, setTempoExcedido] = useState(false)
+    const { pathname } = useLocation()
     const processo = props.informacaoProcesso;
     const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
     const tipoProcesso = processo.tipo
@@ -589,7 +100,183 @@ function Header(props: { informacaoProcesso: any }) {
     const estaEmWorkflow = processo.workflowIniciado
     const aprovadoWorkflow = processo.aprovadoWorkflow
     const workflowDeadline = processo.prazoWorkflow
-    let listaBotoes = ["chat"]
+    let listaBotoes: Botao[] = [{ nome: "chat", function: irChat }]
+
+    function abrirModal() {
+        props.setModalAberto(true)
+    }
+
+    function fecharModal() {
+        props.setModalAberto(false)
+    }
+
+    function abrirFeedback(conteudoFeedback: JSX.Element) {
+        props.setConteudoFeedback(conteudoFeedback)
+        props.setFeedbackAberto(true)
+        fecharModal()
+    }
+
+    //funções dos botões
+    function irChat() {
+        localStorage.setItem("IDCHATESCOLHIDO", processo.id + "")
+        location.href = "/chats";
+    }
+
+    function aprovarDemanda() {
+        function novoModal(conteudo: JSX.Element) {
+            props.setConteudoModal(conteudo)
+        }
+
+        const segundaParteAprovacao = <ModalClassificacaoDemanda abrirFeedback={abrirFeedback} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />
+
+
+        props.setConteudoModal(
+            <ConteudoModalConfirmacao
+                tituloModal='Quer aprovar essa demanda?'
+                abrirProximoComponente={novoModal}
+                conteudoProximoComponente={segundaParteAprovacao}
+                descricaoModal="Caso confirme, a demanda continuará para o processo de avaliação"
+                fecharModal={fecharModal}
+            />
+        )
+
+        abrirModal()
+    }
+
+    function reprovarDemanda() {
+        const conteudoFeedback = (
+            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                Reprovação concluída
+            </Alert>
+        )
+
+        props.setConteudoModal(
+            <ConteudoModalConfirmacao
+                tituloModal='Quer reprovar essa demanda?'
+                abrirProximoComponente={abrirFeedback}
+                conteudoProximoComponente={conteudoFeedback}
+                descricaoModal="Caso confirme, a demanda não poderá mais ser avaliada novamente"
+                fecharModal={fecharModal}
+            />
+        )
+
+        abrirModal()
+    }
+
+    function devolverDemanda() {
+
+        props.setConteudoModal(<ModalMotivoDevolucao abrirFeedback={abrirFeedback} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
+
+        abrirModal()
+    }
+
+    function verHistorico() {
+        location.href = pathname + "/history"
+    }
+
+    function adicionarInformacoesDemanda() {
+        props.setConteudoModal(<ModalAdiconarInformações abrirFeedback={abrirFeedback} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
+
+        abrirModal()
+    }
+
+    function criarNovaProposta() {
+        location.href = "/createproposal"
+    }
+
+    function iniciarNovoWorkflow() {
+        const conteudoFeedback = (
+            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                Workflow iniciado
+            </Alert>
+        )
+
+        props.setConteudoModal(
+            <ConteudoModalConfirmacao
+                tituloModal='Quer iniciar esse worflow?'
+                abrirProximoComponente={abrirFeedback}
+                conteudoProximoComponente={conteudoFeedback}
+                descricaoModal="Caso confirme, a proposta será enviada e avaliada pelos gerentes envolvidos a ela"
+                fecharModal={fecharModal}
+            />
+        )
+
+        abrirModal()
+
+    }
+
+    function verDemandaProposta() {
+
+
+        //futuramente a proposta terá o mesmo id que a demanda a que se refere
+        //futuramente vai precisar fazer um fetch pra ver qual as informações da demanda escolhida
+        // localStorage.setItem("DEMANDAESCOLHIDA", (processo.id - 1) + "")
+        location.href = pathname + "/demand";
+    }
+
+    function criarNovaPauta() {
+        location.href = "/createagenda"
+    }
+
+    function avaliarWorkflow() {
+        const conteudoFeedbackAprovado = (
+            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                Workflow aprovado
+            </Alert>
+        )
+
+        const conteudoFeedbackReprovado = (
+            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="info" sx={{ width: '100%' }}>
+                Workflow reprovado
+            </Alert>
+        )
+
+        const modalAprovar = (
+            <ConteudoModalConfirmacao
+                tituloModal='Quer aprovar esse workflow?'
+                abrirProximoComponente={abrirFeedback}
+                conteudoProximoComponente={conteudoFeedbackAprovado}
+                descricaoModal="Caso confirme, a proposta será adicionada a proxima pauta a ser tratada em uma comissão"
+                fecharModal={fecharModal}
+            />
+        )
+
+        const modalReprovar = (
+            <ConteudoModalConfirmacao
+                tituloModal='Quer reprovar esse workflow?'
+                abrirProximoComponente={abrirFeedback}
+                conteudoProximoComponente={conteudoFeedbackReprovado}
+                descricaoModal="Caso confirme, o workflow de aprovação dessa proposta irá ser interrompido"
+                fecharModal={fecharModal}
+            />
+        )
+
+        props.setConteudoModal(
+            <BoxConteudoModal>
+                <BoxTituloModal >
+                    <TypographyTituloModal variant='h5' >
+                        Processo de workflow de aprovação
+                    </TypographyTituloModal>
+                    <IconButton onClick={fecharModal}>
+                        <CloseIcon />
+                    </IconButton>
+                </BoxTituloModal>
+                <Typography variant='subtitle2' sx={{ marginBottom: "30px" }}>
+                    Escolha se essa proposta continuará o seu flow de aprovação ou se será interrompida
+                </Typography>
+                <BoxBotoesModal>
+                    <BotaoSecundario onClick={() => { props.setConteudoModal(modalReprovar) }} variant='outlined'>
+                        Reprovar
+                    </BotaoSecundario>
+                    <BotaoPrimario onClick={() => { props.setConteudoModal(modalAprovar) }} variant="contained" sx={{ marginLeft: "20px" }}>
+                        Aprovar
+                    </BotaoPrimario>
+                </BoxBotoesModal>
+            </BoxConteudoModal>
+        )
+
+        abrirModal()
+    }
 
     /**
      *  1º chat, reprovar, devolver, aprovar (Analista de TI, demanda)
@@ -605,58 +292,81 @@ function Header(props: { informacaoProcesso: any }) {
         11º chat, histórico, workflow (notificaçãozinha que ta atrasado), ver demanda, criar pauta (Gerente de TI, proposta)
      */
     if (tipoProcesso == "Demanda") {
+        const aprovar = { nome: "aprovar", function: aprovarDemanda }
+        const reprovar = { nome: "reprovar", function: reprovarDemanda }
+
         if (!tamanho) {
             if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                listaBotoes.push("reprovar", "devolver", "aprovar")
+                const devolver = { nome: "devolver", function: devolverDemanda }
+
+                listaBotoes.push(reprovar, devolver, aprovar)
             }
         } else {
-            listaBotoes.push("historico")
+            const historico = { nome: "historico", function: verHistorico }
+
+            listaBotoes.push(historico)
+
             if (tipoPessoa == "gerenteNegocio") {
                 if (!aprovadoGerente) {
-                    listaBotoes.push("reprovar", "aprovar")
+                    listaBotoes.push(reprovar, aprovar)
                 }
             } else if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
                 if (aprovadoGerente) {
                     if (!linkJira) {
-                        listaBotoes.push("adicionarInfo")
+                        const adicionarInfo = { nome: "adicionarInfo", function: adicionarInformacoesDemanda }
+
+                        listaBotoes.push(adicionarInfo)
                     } else {
+                        let criarProposta: Botao = { nome: " ", function: criarNovaProposta }
                         if (prazoElaboracao < new Date()) {
-                            listaBotoes.push("criarProposta!")
+                            criarProposta.nome = "criarProposta!"
                         } else {
-                            listaBotoes.push("criarProposta")
+                            criarProposta.nome = "criarProposta"
                         }
+                        listaBotoes.push(criarProposta)
                     }
                 }
             }
         }
     } else {
-        listaBotoes.push("historico")
+        const historico = { nome: "historico", function: verHistorico }
+        const verDemanda = { nome: "verDemanda", function: verDemandaProposta }
+        const criarPauta = { nome: "criarPauta", function: criarNovaPauta }
+
+        listaBotoes.push(historico)
         if (!estaEmWorkflow) {
             if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                listaBotoes.push("iniciarworkflow", "verDemanda", "criarPauta")
+                const iniciarWorkflow = { nome: "iniciarworkflow", function: iniciarNovoWorkflow }
+
+                listaBotoes.push(iniciarWorkflow, verDemanda, criarPauta)
             } else if (tipoPessoa == "gerenteNegocio") {
-                listaBotoes.push("verDemanda")
+                listaBotoes.push(verDemanda)
             }
         } else {
             if (aprovadoWorkflow) {
-                listaBotoes.push("verDemanda")
+                listaBotoes.push(verDemanda)
                 if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                    listaBotoes.push("criarPauta")
+                    listaBotoes.push(criarPauta)
                 }
             } else {
                 if (workflowDeadline < new Date()) {
                     if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
-                        listaBotoes.push("workflow!")
+                        const workflow = { nome: "workflow!", function: avaliarWorkflow }
+
+                        listaBotoes.push(workflow)
                     }
                 } else {
                     if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
-                        listaBotoes.push("workflow")
+                        const workflow = { nome: "workflow", function: avaliarWorkflow }
+
+                        listaBotoes.push(workflow)
                     }
                 }
-                listaBotoes.push("verDemanda")
+                listaBotoes.push(verDemanda)
             }
         }
     }
+
     useEffect(() => {
         if (prazoElaboracao < new Date() && prazoElaboracao && tipoProcesso == "Demanda") {
             setTempoExcedido(true)
@@ -680,12 +390,349 @@ function Header(props: { informacaoProcesso: any }) {
     )
 }
 
-function ButtonsHeader(props: { listaBotoes: string[] }) {
+function ModalClassificacaoDemanda(props: Modal) {
+    const [BUsBeneficiadasErro, setBUsBeneficiadasErro] = useState({ html: { error: false }, helperText: "" })
+    const [tamanhoDemanda, setTamanhoDemanda] = useState("Médio")
+    const [BUSolicitante, setBUSolicitante] = useState("Motores")
+    const [sessaoTIescolhida, setSessaoTI] = useState("AAS")
+    const valoresInputTamanho = ["Muito pequeno", "Pequeno", "Médio", "Grande", "Muito grande"]
+    const valoresInputBU = ["Motores", "Digital", "Energia", "Corporativo", "Diretoria"]
+    const keysSessaoTI = Object.keys(sessaoTI)
+    const valoresSessaoTI = Object.values(sessaoTI)
+
+    function selecionarTamanho(event: SelectChangeEvent) {
+        setTamanhoDemanda(event.target.value)
+    }
+
+    function selecionarBU(event: SelectChangeEvent) {
+        setBUSolicitante(event.target.value)
+    }
+
+    function selecionarSessaoTI(event: SelectChangeEvent) {
+        setSessaoTI(event.target.value)
+    }
+
+    const BUsbeneficiadas = valoresInputBU.map((bu: string, index: number) => {
+
+        if (index + 1 == valoresInputBU.length) {
+            return (
+                <Grid key={index} item xs={6}>
+                    <FormControl {...BUsBeneficiadasErro.html} variant="standard">
+                        <FormControlLabel control={<Checkbox />} label={bu} className="buBeneficiada" />
+                        <FormHelperText>{BUsBeneficiadasErro.helperText}</FormHelperText>
+                    </FormControl>
+                </Grid>
+            )
+        }
+
+
+        return (
+            <Grid key={index} item xs={6}>
+                <FormControlLabel control={<Checkbox />} label={bu} className="buBeneficiada" />
+            </Grid>
+        )
+    })
+
+    const conteudoFeedbackFinalizacao = (
+        <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+            Aprovação concluída
+        </Alert>
+    )
+
+    function finalizarAcao() {
+        const BUsBeneficiadas = document.getElementsByClassName("buBeneficiada")
+
+        for (let buBeneficiada of BUsBeneficiadas) {
+            if ((buBeneficiada.children[0].children[0] as HTMLInputElement).checked) {
+                props.abrirFeedback(conteudoFeedbackFinalizacao)
+            }
+        }
+
+        setBUsBeneficiadasErro({
+            html: { error: true },
+            helperText: "Nenhuma BU selecionada"
+        })
+    }
+
+    return (
+        <BoxConteudoModal>
+            <BoxTituloModal >
+                <TypographyTituloModal variant='h5' >
+                    Processo de aprovação
+                </TypographyTituloModal>
+                <IconButton onClick={props.fecharModal}>
+                    <CloseIcon />
+                </IconButton>
+            </BoxTituloModal>
+            <BoxInfoModal>
+                <BoxAtributosInfoModal >
+                    <BoxAtributoInfoModal>
+                        <TypographyTituloAtributo variant='body1'>
+                            Tamanho:
+                        </TypographyTituloAtributo>
+                        <SelectBox listaLabelValores={valoresInputTamanho} listaValores={valoresInputTamanho} mudarValor={selecionarTamanho} valorInicial={tamanhoDemanda} />
+                    </BoxAtributoInfoModal>
+                    <BoxAtributoInfoModal>
+                        <TypographyTituloAtributo variant='body1'>
+                            BU Solicitante:
+                        </TypographyTituloAtributo>
+                        <SelectBox listaLabelValores={valoresInputBU} listaValores={valoresInputBU} mudarValor={selecionarBU} valorInicial={BUSolicitante} />
+                    </BoxAtributoInfoModal>
+                </BoxAtributosInfoModal>
+                <BoxBUsBeneficiadas>
+                    <TypographyTituloAtributo variant='body1'>
+                        BUs beneficiadas:
+                    </TypographyTituloAtributo>
+                    <FormGroup>
+                        <Grid container>
+                            {BUsbeneficiadas}
+                        </Grid>
+                    </FormGroup>
+                </BoxBUsBeneficiadas >
+                <BoxSessaoTI>
+                    <TypographyTituloAtributo variant='body1'>
+                        Sessão TI responsável:
+                    </TypographyTituloAtributo>
+                    <SelectBox listaLabelValores={valoresSessaoTI} listaValores={keysSessaoTI} mudarValor={selecionarSessaoTI} valorInicial={sessaoTIescolhida} maxWidth="none" />
+                </BoxSessaoTI>
+            </BoxInfoModal>
+            <BoxBotoesModal>
+                <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
+                    Cancelar
+                </BotaoSecundario>
+                <BotaoPrimario onClick={finalizarAcao} variant="contained" sx={{ marginLeft: "20px" }}>
+                    Enviar
+                </BotaoPrimario>
+            </BoxBotoesModal>
+        </BoxConteudoModal>
+    )
+}
+
+function ModalMotivoDevolucao(props: Modal) {
+    const [erroMotivoDevolucao, setErroMotivoDevolucao] = useState({ error: false, helperText: "" })
+    const conteudoFeedback = (
+        <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+            Motivo da devolução enviado
+        </Alert>
+    )
+
+    function finalizarAcao() {
+        const textarea = (document.getElementById("textareaMotivo") as HTMLInputElement).value
+
+        if (textarea == "") {
+            setErroMotivoDevolucao({
+                error: true,
+                helperText: "Motivo não informado"
+            })
+            return
+        } else {
+            setErroMotivoDevolucao({
+                error: false,
+                helperText: ""
+            })
+        }
+
+        props.abrirFeedback(conteudoFeedback)
+    }
+
+    return (
+        <BoxConteudoModal>
+            <BoxTituloModal >
+                <TypographyTituloModal variant='h5' >
+                    Informe o motivo da devolução
+                </TypographyTituloModal>
+                <IconButton onClick={props.fecharModal}>
+                    <CloseIcon />
+                </IconButton>
+            </BoxTituloModal>
+            <TextField
+                id='textareaMotivo'
+                placeholder='Informe o motivo'
+                multiline
+                rows={7}
+                sx={{ marginBottom: "30px" }}
+                {...erroMotivoDevolucao}
+            />
+            <BoxBotoesModal>
+                <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
+                    Cancelar
+                </BotaoSecundario>
+                <BotaoPrimario onClick={finalizarAcao} variant="contained" sx={{ marginLeft: "20px" }}>
+                    Enviar
+                </BotaoPrimario>
+            </BoxBotoesModal>
+        </BoxConteudoModal>
+    )
+}
+
+function ModalAdiconarInformações(props: Modal) {
+    const [valorData, setValorData] = useState<Dayjs | null>(null)
+    const [erroObjectPrazo, setErroObjectPrazo] = useState({ error: false, helperText: "" })
+    const [erroObjectCodigoPPM, setErroObjectCodigoPPM] = useState({ error: false, helperText: "" })
+    const [erroObjectLink, setErroObjectLink] = useState({ error: false, helperText: "" })
+    const conteudoFeedback = (
+        <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+            Informações adicionadas
+        </Alert>
+    )
+
+    function checarValor(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const valor = Number.parseInt(e.target.value)
+        if (valor < 0) {
+            e.target.value = 0 + ""
+        }
+    }
+
+    function finalizarAcao() {
+        const inputPrazoElaboracao = (document.getElementById("inputDataInformacoes") as HTMLInputElement).value
+        const inputCodigPPM = (document.getElementById("inputCodigoPPM") as HTMLInputElement).value
+        const inputLinkJira = (document.getElementById("inputLinkJira") as HTMLInputElement).value
+
+        if (inputPrazoElaboracao == "" || inputCodigPPM == "" || inputLinkJira == "") {
+            if (inputPrazoElaboracao == "") {
+                setErroObjectPrazo({
+                    error: true,
+                    helperText: "Data não informada"
+                })
+            } else {
+                setErroObjectPrazo({
+                    error: false,
+                    helperText: ""
+                })
+            }
+
+            if (inputCodigPPM == "") {
+                setErroObjectCodigoPPM({
+                    error: true,
+                    helperText: "Código não informado"
+                })
+            } else {
+                setErroObjectCodigoPPM({
+                    error: false,
+                    helperText: ""
+                })
+            }
+
+            if (inputLinkJira == "") {
+                setErroObjectLink({
+                    error: true,
+                    helperText: "Link não informado"
+                })
+            } else {
+                setErroObjectLink({
+                    error: false,
+                    helperText: ""
+                })
+            }
+
+            return
+        } else {
+            setErroObjectPrazo({
+                error: false,
+                helperText: ""
+            })
+
+            setErroObjectCodigoPPM({
+                error: false,
+                helperText: ""
+            })
+
+            setErroObjectLink({
+                error: false,
+                helperText: ""
+            })
+        }
+
+        if (!urlValida(inputLinkJira)) {
+            setErroObjectLink({
+                error: true,
+                helperText: "Texto informado não é um link"
+            })
+
+            return
+        } else {
+            setErroObjectLink({
+                error: false,
+                helperText: ""
+            })
+        }
+
+        if (!inputLinkJira.includes("jira")) {
+            setErroObjectLink({
+                error: true,
+                helperText: "Link informado é inválido"
+            })
+
+            return
+        } else {
+            setErroObjectLink({
+                error: false,
+                helperText: ""
+            })
+        }
+
+        props.abrirFeedback(conteudoFeedback)
+    }
+
+    return (
+        <BoxConteudoModal>
+            <BoxTituloModal >
+                <TypographyTituloModal variant='h5' >
+                    Informações
+                </TypographyTituloModal>
+                <IconButton onClick={props.fecharModal}>
+                    <CloseIcon />
+                </IconButton>
+            </BoxTituloModal>
+            <BoxInfoModal>
+                <BoxAtributosInfoModal >
+                    <BoxAtributoInfoModal2 sx={{ width: "50%" }}>
+                        <TypographyTituloAtributoModal variant='body1'>
+                            Prazo de elaboração:
+                        </TypographyTituloAtributoModal>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                value={valorData}
+                                onChange={(newValue) => {
+                                    setValorData(newValue);
+                                }}
+                                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} {...erroObjectPrazo} />}
+                            />
+                        </LocalizationProvider>
+                    </BoxAtributoInfoModal2>
+                    <BoxAtributoInfoModal2>
+                        <TypographyTituloAtributoModal variant='body1'>
+                            Código PPM:
+                        </TypographyTituloAtributoModal>
+                        <TextField type='number' id='inputCodigoPPM' onChange={checarValor} {...erroObjectCodigoPPM} />
+                    </BoxAtributoInfoModal2>
+                </BoxAtributosInfoModal>
+                <Box sx={{ width: "100%" }}>
+                    <TypographyTituloAtributoModal variant='body1'>
+                        Link Jira:
+                    </TypographyTituloAtributoModal>
+                    <TextFieldURL placeholder='https://exemplo.com' type={'url'} id="inputLinkJira" {...erroObjectLink} />
+                </Box>
+            </BoxInfoModal>
+            <BoxBotoesModal>
+                <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
+                    Cancelar
+                </BotaoSecundario>
+                <BotaoPrimario onClick={finalizarAcao} variant="contained" sx={{ marginLeft: "20px" }}>
+                    Enviar
+                </BotaoPrimario>
+            </BoxBotoesModal>
+        </BoxConteudoModal>
+    )
+}
+
+function ButtonsHeader(props: { listaBotoes: Botao[] }) {
     let contagemBotoesAcoes = 0
     let botoes = []
 
     for (let i = props.listaBotoes.length - 1; i >= 0; i--) {
-        const botao = props.listaBotoes[i]
+        const componenteBotao = props.listaBotoes[i]
+        const botao = componenteBotao.nome
         const nomeBotao = getTituloBotao(botao)
 
         if (botao == "chat" || botao == "historico" || botao.includes("workflow")) {
@@ -693,7 +740,7 @@ function ButtonsHeader(props: { listaBotoes: string[] }) {
 
             if (botao.includes("!")) {
                 botoes.push(
-                    <BotaoIcone key={i}>
+                    <BotaoIcone key={i} onClick={componenteBotao.function}>
                         <Badge badgeContent={<ErrorRoundedIcon fontSize='small' sx={{ color: "#FAD271" }} />}>
                             {iconeBotao}
                         </Badge>
@@ -703,7 +750,7 @@ function ButtonsHeader(props: { listaBotoes: string[] }) {
             }
 
             botoes.push(
-                <BotaoIcone key={i}>
+                <BotaoIcone key={i} onClick={componenteBotao.function}>
                     {iconeBotao}
                 </BotaoIcone>
             )
@@ -712,21 +759,21 @@ function ButtonsHeader(props: { listaBotoes: string[] }) {
             switch (contagemBotoesAcoes) {
                 case 1:
                     botoes.push(
-                        <BotaoPrimarioHeader variant='contained' key={i}>
+                        <BotaoPrimarioHeader variant='contained' key={i} onClick={componenteBotao.function}>
                             {nomeBotao}
                         </BotaoPrimarioHeader>
                     )
                     break
                 case 2:
                     botoes.push(
-                        <BotaoSecundarioHeader variant='outlined' key={i}>
+                        <BotaoSecundarioHeader variant='outlined' key={i} onClick={componenteBotao.function}>
                             {nomeBotao}
                         </BotaoSecundarioHeader>
                     )
                     break
                 case 3:
                     botoes.push(
-                        <BotaoTerciarioHeader variant='outlined' key={i}>
+                        <BotaoTerciarioHeader variant='outlined' key={i} onClick={componenteBotao.function}>
                             {nomeBotao}
                         </BotaoTerciarioHeader>
                     )
@@ -749,52 +796,24 @@ function ButtonsHeader(props: { listaBotoes: string[] }) {
  * @param props 
  * @returns 
  */
-function ContainerProcesso(props: { informacaoProcesso: any }) {
+function ContainerProcessoPrincipal(props: {
+    informacaoProcesso: any,
+    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
+    setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
+}) {
     const informacaoProcesso = props.informacaoProcesso
 
     return (
-        <GridContainer container>
-            <Grid item xs={0.2}>
-                <BoxCorStatus sx={{ backgroundColor: getColorStatus(informacaoProcesso?.status) }} ></BoxCorStatus>
-            </Grid>
-            <GridInformacao item xs={11.8}>
-                <GridContainerHeader container>
-                    <GridTitulo item xs={10} >
-                        <Typography variant='h4'>
-                            {informacaoProcesso?.titulo}
-                        </Typography>
-                    </GridTitulo>
-                    <Grid item xs={2}>
-                        <Bandeira cor={getColorType(informacaoProcesso?.tipo)} />
-                    </Grid>
-                </GridContainerHeader>
-                <Divider />
-                <InfoGeral processo={informacaoProcesso} />
-                <Divider />
-                <InfoComercial processo={informacaoProcesso} />
-                <Divider />
-                <Contextualizacao processo={informacaoProcesso} />
-            </GridInformacao>
-        </GridContainer>
+        <ContainerProcesso informacaoProcesso={informacaoProcesso} width="100%">
+            <InfoGeral processo={informacaoProcesso} />
+            <Divider />
+            <InfoComercial processo={informacaoProcesso} />
+            <Divider />
+            <Contextualizacao processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
+        </ContainerProcesso >
     )
 }
 
-/**
- * Componente da bandeira que altera a cor de acordo com o valor que recebe e que
- * se localiza no canto superior direito container principal
- * 
- * @param props 
- * @returns 
- */
-function Bandeira(props: { cor: string }) {
-    return (
-        <BoxContainerBandeira >
-            <BoxBandeira sx={{ backgroundColor: props.cor }}>
-                <BoxTrianguloBandeira />
-            </BoxBandeira>
-        </BoxContainerBandeira>
-    )
-}
 
 /**
  * Componente dinâmico das informações gerais de um processo
@@ -875,6 +894,16 @@ function InfoGeral(props: { processo: any }) {
         )
     }
 
+    const beneficiosQualitativos = props.processo.beneficiosQualitativos.map((beneficio: string, index: number) => {
+        return (
+            <ListItem key={index} sx={{ textAlign: "justify" }}>
+                <ListItemIcon>
+                    <CircleIconPonto />
+                </ListItemIcon>
+                {beneficio}
+            </ListItem>
+        )
+    })
 
 
     return (
@@ -894,8 +923,11 @@ function InfoGeral(props: { processo: any }) {
             </Grid >
             <Grid item>
                 <TypographyTexto variant='body1' >
-                    <b>{getNomeAtributo("beneficioQualitativo")}</b> {props.processo.beneficioQualitativo}
+                    <b>{getNomeAtributo("beneficiosQualitativos")}</b>
                 </TypographyTexto>
+                <List>
+                    {beneficiosQualitativos}
+                </List>
             </Grid>
         </Grid >
     )
@@ -956,114 +988,25 @@ function InfoComercial(props: { processo: any }) {
         tabelasCusto: props.processo.tabelasCusto
     }
 
-    const beneficiosReais = atributos.beneficiosReais.map((beneficio: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
-        const valor = "R$" + beneficio.valor
-
-        return (
-            <TableRowEstilizada key={index}>
-                <TableCellEstilzada align='center' >{beneficio.descricao}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{beneficio.moeda}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{valor}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{beneficio.memoriaCalculo}</TableCellEstilzada>
-            </TableRowEstilizada>
-        )
-    })
-
-    const potencialBenefits = atributos.beneficiosPotenciais.map((beneficio: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
-        const valor = "R$" + beneficio.valor
-
-        return (
-            <TableRowEstilizada key={index}>
-                <TableCellEstilzada align='center' >{beneficio.descricao}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{beneficio.moeda}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{valor}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{beneficio.memoriaCalculo}</TableCellEstilzada>
-            </TableRowEstilizada>
-        )
-    })
-
-    let elentosTabelasCusto
+    let elementosTabelaCusto
 
     if (atributos.tabelasCusto) {
-        elentosTabelasCusto = atributos.tabelasCusto.map((tabela: any, index: number) => {
-            let tempoTotal = 0, valorTotal = 0
-
-            const linhasTabela = tabela.linhas.map((linha: { recurso: string, esforco: number, valor: number }, indexLinha: number) => {
-                const total = linha.valor * linha.esforco
-                tempoTotal += linha.esforco
-                valorTotal += total
-
-                return (
-                    <TableRowEstilizada key={indexLinha}>
-                        <TableCellEstilzada align='center'>{linha.recurso}</TableCellEstilzada>
-                        <TableCellEstilzada align='center'>{linha.esforco}{!tabela.isLicenca ? "h" : ""} </TableCellEstilzada>
-                        <TableCellEstilzada align='center'>R$ {linha.valor}</TableCellEstilzada>
-                        <TableCellEstilzada align='center'>R$ {total}</TableCellEstilzada>
-                    </TableRowEstilizada>
-                )
-            })
-
-            const centrosCusto = tabela.centrosCusto.map((centroDeCusto: any, indexcentroCusto: number) => {
-                const porcentagem = centroDeCusto.porcentagem * 100
-
-                return (
-                    <Typography key={indexcentroCusto} variant="body1" sx={{ color: "#595959" }}>
-                        {centroDeCusto.centroCusto} - {porcentagem}%
-                    </Typography>
-                )
-            })
-
-            return (
-                <BoxTabelaCusto key={index} >
-                    <BoxContainerTabela>
-                        <TableContainerEstilizado sx={{ width: "auto" }}>
-                            <TableHead >
-                                <TableRow >
-                                    <TableCellEstilzada align='center'>{tabela.titulo}</TableCellEstilzada>
-                                    <TableCellEstilzada align='center'>{!tabela.isLicenca ? "Esforço" : "Licenças"}</TableCellEstilzada>
-                                    <TableCellEstilzada align='center'>Valor </TableCellEstilzada>
-                                    <TableCellEstilzada align='center'>Total</TableCellEstilzada>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody >
-                                {linhasTabela}
-                                <TableRowEstilizada>
-                                    <TableCellEstilzada align='center'> <b>Total {tabela.titulo}</b></TableCellEstilzada>
-                                    <TableCellEstilzada align='center'> <b>{tempoTotal}{!tabela.isLicenca ? "h" : ""}</b></TableCellEstilzada>
-                                    <TableCellEstilzada align='center'> </TableCellEstilzada>
-                                    <TableCellEstilzada align='center'> <b>R$ {valorTotal}</b></TableCellEstilzada>
-                                </TableRowEstilizada>
-                            </TableBody>
-                        </TableContainerEstilizado>
-                    </BoxContainerTabela>
-                    <BoxContainerCentroCusto>
-                        <BoxTitulosCentroCusto>
-                            Centros de Custo
-                        </BoxTitulosCentroCusto>
-                        <BoxCentroCusto>
-                            {centrosCusto}
-                        </BoxCentroCusto>
-                    </BoxContainerCentroCusto>
-                </BoxTabelaCusto>
-            )
-        })
+        elementosTabelaCusto = <TabelasCusto tabelasCusto={atributos.tabelasCusto} />
     }
-
-
 
     return (
         <Box sx={{ marginY: "20px" }}>
             <TypographyTitulo variant='h5'>
                 Informações Comerciais
             </TypographyTitulo>
-            <StyledBenefitTable title='Benefícios reais' valuesList={beneficiosReais} />
-            <StyledBenefitTable title='Benefícios potenciais' valuesList={potencialBenefits} />
+            <TabelaBeneficios title='Benefícios reais' atributos={atributos.beneficiosReais} />
+            <TabelaBeneficios title='Benefícios potenciais' atributos={atributos.beneficiosPotenciais} />
             {atributos.tabelasCusto &&
                 <BoxTabela>
                     <TypographyTitulo variant='subtitle1'>
                         Tabelas de custo
                     </TypographyTitulo>
-                    {elentosTabelasCusto}
+                    {elementosTabelaCusto}
                 </BoxTabela>
             }
         </Box >
@@ -1071,33 +1014,11 @@ function InfoComercial(props: { processo: any }) {
 
 }
 
-function StyledBenefitTable(props: { valuesList: [], title: string }) {
-
-    return (
-        <BoxTabela sx={{ marginBottom: "30px" }}>
-            <TypographyTitulo variant='subtitle1'>
-                {props.title}
-            </TypographyTitulo>
-            <TableContainerEstilizado sx={{ width: "40vw" }}>
-                <Table aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCellEstilzada align='center'>Descrição</TableCellEstilzada>
-                            <TableCellEstilzada align='center'>Moeda</TableCellEstilzada>
-                            <TableCellEstilzada align='center'>Valor</TableCellEstilzada>
-                            <TableCellEstilzada align='center'>Memória de cálculo</TableCellEstilzada>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {props.valuesList}
-                    </TableBody>
-                </Table>
-            </TableContainerEstilizado>
-        </BoxTabela>
-    )
-}
-
-function Contextualizacao(props: { processo: any }) {
+function Contextualizacao(props: {
+    processo: any,
+    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
+    setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
+}) {
     const atributos = {
         objetivo: props.processo.objetivo,
         situacaoAtual: props.processo.situacaoAtual,
@@ -1142,12 +1063,59 @@ function Contextualizacao(props: { processo: any }) {
                 Contextualização
             </TypographyTitulo>
             {contextos}
-            <Footer link={link} />
+            <Footer link={link} tipo={props.processo.tipo} anexos={props.processo.anexos} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
         </Grid>
     )
 }
 
-function Footer(props: { link: string }) {
+function Footer(props: {
+    link: string,
+    tipo: TipoComponenteProcesso,
+    anexos: [],
+    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
+    setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
+}) {
+
+    function mostrarAnexos() {
+        const anexos = props.anexos.map((anexo: any, index: number) => {
+            const IconeAnexo = getIconeArquivo(anexo.nome)
+
+            return (
+                <ListItem key={index}
+                    secondaryAction={
+                        <IconButton edge="end" aria-label="delete" type='submit' onClick={() => { window.open('C:\\Users\\joao_hm_silva\\Pictures\\Saved Pictures\\fror.jpg') }}>
+                            <FileDownloadRoundedIcon />
+                        </IconButton>
+                    }>
+                    <ListItemIcon>
+                        <IconeAnexo />
+                    </ListItemIcon>
+                    <ListItemText
+                        primary={anexo.nome}
+                        secondary={"Anexado por Emanuel da Costa em 20/12/22 as 15:07"}
+                    />
+                </ListItem >
+            )
+        })
+
+        props.setConteudoModal(
+            <BoxConteudoModal>
+                <BoxTituloModal >
+                    <TypographyTituloModal variant='h5' >
+                        Anexos da {props.tipo.toLowerCase()}
+                    </TypographyTituloModal>
+                    <IconButton onClick={() => { props.setModalAberto(false) }}>
+                        <CloseIcon />
+                    </IconButton>
+                </BoxTituloModal>
+                <List>
+                    {anexos}
+                </List>
+            </BoxConteudoModal>
+        )
+
+        props.setModalAberto(true)
+    }
 
     return (
         <Grid container>
@@ -1158,22 +1126,12 @@ function Footer(props: { link: string }) {
                     :
                     <div></div>
                 }
-                <BotaoTerciario variant='outlined' >
+                <BotaoTerciario variant='outlined' onClick={mostrarAnexos}>
                     Ver anexos
                 </BotaoTerciario>
             </GridItemFooter>
         </Grid>
     )
-}
-
-function getComponentName(location: string){
-    const fragmentoTipo = location.slice(location.length - 6)
-
-    if(fragmentoTipo == "demand"){
-        return"DEMANDA"
-    } else {
-        return "PROPOSTA"
-    }  
 }
 
 /**
@@ -1197,7 +1155,7 @@ function getNomeAtributo(nomeAtributo: any) {
         prazoElaboracao: "Prazo de elaboração:",
         codigoPPM: "Código PPM:",
         centrosDeCusto: "Centros de custo:",
-        beneficioQualitativo: "Benefício qualitativo:",
+        beneficiosQualitativos: "Benefícios qualitativos:",
         BUsBeneficiadas: "BUs beneficiadas:",
         payback: "Payback:",
         periodoDeExecucao: "Período de execução:",
@@ -1210,33 +1168,6 @@ function getNomeAtributo(nomeAtributo: any) {
 
     if (nomeAtributo != undefined) {
         return (nomesAtributos as any)[nomeAtributo]
-    }
-}
-
-function getColorStatus(status: string | undefined) {
-    const coresStatus = {
-        Backlog: "#DDDDDD",
-        Assesment: "#595959",
-        BusinessCase: "#FFD600",
-        Canceled: "#FF1616",
-        ToDo: "#00612e"
-    }
-
-    if (status != undefined) {
-        return (coresStatus as any)[status]
-    }
-}
-
-function getColorType(tipo: string | undefined) {
-    const coresStatus = {
-        Demanda: "#00579D",
-        Proposta: "#6AACDA",
-        Pauta: "#2382BA",
-        ATA: "#28B9DA"
-    }
-
-    if (tipo != undefined) {
-        return (coresStatus as any)[tipo]
     }
 }
 
@@ -1263,4 +1194,15 @@ function getTituloBotao(botao: string) {
     }
 
     return (titulos as any)[nomeBotao]
+}
+
+interface Modal {
+    fecharModal: MouseEventHandler<HTMLButtonElement>,
+    abrirFeedback: Function,
+    setFeedbackAberto: React.Dispatch<SetStateAction<boolean>>
+}
+
+interface Botao {
+    nome: string,
+    function: MouseEventHandler<HTMLButtonElement>
 }

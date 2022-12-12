@@ -1,129 +1,133 @@
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { StatusComponenteProcesso, TamanhoComponenteProcesso, TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../../DefinitionFiles/enuns"
+import { getNomeComponente, getCorStatus, getCorTipo } from '../../Utils';
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb"
 import Toolbar from "../../Components/Toolbar/Toolbar"
-import { Accordion, AccordionDetails, AccordionSummary, Box, Container, Grid, Typography } from "@mui/material"
+import TabelaBeneficios from '../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios';
+import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
+import {
+    AccordionDetails, AccordionSummary, Box, Container, FormControl, FormControlLabel, Grid, RadioGroup,
+    Typography, Radio, TextField, FormHelperText, Snackbar, Alert
+} from "@mui/material"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { BotaoIcone, BoxBandeira, BoxContainerBandeira, BoxCorStatus, BoxHeader, BoxTrianguloBandeira, GridContainer, GridContainerHeader, GridPequenosAtributos, GridTitulo, TypographyTexto, TypographyTitulo, TypographyTituloAtributo } from "../TelaProcesso/TelaProcesso.styles"
+import {
+    BotaoPrimarioHeader, BotaoSecundarioHeader, BoxBotoes, BoxHeader, GridPequenosAtributos, 
+    TypographyTituloAtributo
+} from "../TelaProcesso/TelaProcesso.styles"
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from "../App.styles"
-import { GridLinkTypograpfy } from "../../Components/ComponenteProcesso/ComponenteProcesso.styles";
+import { GridLinkTypograpfy } from "../../Components/ComponenteProcesso/ComponenteProcesso.styles"
+import { AccordionProposta, GridContainerColecao, GridFooter, GridProposta, TypographyTextoColecao, TypographyTituloDecisao } from "./TelaColecaoProcesso.styles";
+import { BoxCorStatus, GridContainerHeader, GridTitulo } from "../../Components/ContainerProcesso/ContainerProcesso.styles";
+import Bandeira from "../../Components/Bandeira/Bandeira";
 
-const listaColecaoProcesso = [
-    {
-        id: 2,
-        dataReuniao: new Date(),
-        comissao: "Comissao do diretor geral fodao matematico ultimate",
-        tipo: TipoColecaoComponenteProcesso.Pauta,
-        propostas: [
-            {
-                id: 7,
-                titulo: "lerolerolerolero",
-                tamanho: TamanhoComponenteProcesso.Pequeno,
-                solicitante: "um fia da puta ae",
-                status: StatusComponenteProcesso.Assesment,
-                tipo: TipoComponenteProcesso.Demanda,
-                score: 12.5
-            },
-            {
-                id: 9,
-                titulo: "eu quero janta de 3 horas",
-                tamanho: TamanhoComponenteProcesso.Pequeno,
-                solicitante: "um gênio",
-                status: StatusComponenteProcesso.Backlog,
-                tipo: TipoComponenteProcesso.Demanda,
-                score: 10000
-            }
-        ]
-    },
-    {
-        id: 6,
-        dataReuniao: new Date(),
-        comissao: "comission fodelastica aaaa",
-        tipo: TipoColecaoComponenteProcesso.Pauta,
-        propostas: [
-            {
-                id: 5,
-                titulo: "me da droga",
-                tamanho: TamanhoComponenteProcesso.Medio,
-                solicitante: "um fia da puta ae 2",
-                status: StatusComponenteProcesso.BusinessCase,
-                tipo: TipoComponenteProcesso.Proposta,
-                score: 12.5
-            },
-            {
-                id: 3,
-                titulo: "titulozao pra ver como fica muito grande a responsividade da bagaça",
-                tamanho: TamanhoComponenteProcesso.Grande,
-                solicitante: "esse aqui é legal",
-                status: StatusComponenteProcesso.Assesment,
-                tipo: TipoComponenteProcesso.Demanda,
-                score: 12.5
-            },
-            {
-                id: 4,
-                titulo: "Demandinha de um cara legal",
-                tamanho: TamanhoComponenteProcesso.MuitoGrande,
-                solicitante: "Jefferson Rodrigues",
-                status: StatusComponenteProcesso.Canceled,
-                tipo: TipoComponenteProcesso.Proposta,
-                score: 12.5
-            },
-            {
-                id: 1,
-                titulo: "primeiro titulo ae",
-                tamanho: TamanhoComponenteProcesso.Pequeno,
-                solicitante: "um fia da puta ae",
-                status: StatusComponenteProcesso.Backlog,
-                tipo: TipoComponenteProcesso.Demanda,
-                score: 12.5
-            }
-        ]
-    },
-    {
-        id: 8,
-        dataReuniao: new Date(),
-        comissao: "Uma comissão doida lá",
-        tipo: TipoColecaoComponenteProcesso.ATA,
-        ataPublicada: "ata8Publicada.pdf",
-        ataNaoPublicada: "ata8NaoPublicada.pdf",
-        // numeroAtaDG: 12435,
-        documentoAprovacao: "aprovation.pdf",
-        propostas: [
-            {
-                id: 4,
-                titulo: "Demandinha de um cara legal",
-                tamanho: TamanhoComponenteProcesso.MuitoGrande,
-                solicitante: "Jefferson Rodrigues",
-                status: StatusComponenteProcesso.Canceled,
-                tipo: TipoComponenteProcesso.Proposta,
-                score: 12.5
-            },
-            {
-                id: 9,
-                titulo: "eu quero janta de 3 horas",
-                tamanho: TamanhoComponenteProcesso.Pequeno,
-                solicitante: "um gênio",
-                status: StatusComponenteProcesso.ToDo,
-                tipo: TipoComponenteProcesso.Demanda,
-                score: 10000
-            }
-        ]
-    }
-]
 
 export default function TelaColecaoProcesso() {
+    const [avaliandoProcesso, setAvaliandoProcesso] = useState(false)
+    const [verificacaoInputs, setVerificacaoInputs] = useState<boolean[]>([])
+    const [feedbackAberto, setFeedbackAberto] = useState(false)
+    const [conteudoFeedback, setConteudoFeedback] = useState(<div />)
     const location = useLocation().pathname
-    const idLocalStorage = localStorage.getItem(`ID${getComponentName(location)}ESCOLHIDA`)
-    const idColecao = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
-    const informacaoColecaoProcesso = listaColecaoProcesso.find(p => p.id == idColecao)
+    const idLocalStorage = localStorage.getItem(`${getNomeComponente(location)}ESCOLHIDA`)
+    const informacaoColecaoProcesso = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
+
+    function fecharAvaliacao() {
+        setAvaliandoProcesso(false)
+        setVerificacaoInputs([])
+    }
+
+    function abrirFeedback(conteudo: JSX.Element) {
+        setConteudoFeedback(conteudo)
+        setFeedbackAberto(true)
+    }
+
+    function aprovarProcesso() {
+        const novaVerificacaoInputs: boolean[] = []
+        let feedback: JSX.Element
+
+        for (let i = 0; i < informacaoColecaoProcesso.propostas.length; i++) {
+            const radioButtonsStatus = document.getElementsByClassName(`radioButtonStatus${i}`)
+            const statusPreenchido = checarRadioButtons(radioButtonsStatus)
+            const primeiroIndexProposta = i * 10
+
+            novaVerificacaoInputs[primeiroIndexProposta + 1] = (statusPreenchido ? true : false)
+
+            if (informacaoColecaoProcesso.tipo == "Pauta") {
+                const radioButtonsAta = document.getElementsByClassName(`radioButtonATA${i}`)
+                let tipoAtaPreenchida = checarRadioButtons(radioButtonsAta)
+
+                novaVerificacaoInputs[primeiroIndexProposta + 2] = (tipoAtaPreenchida ? true : false)
+            } else {
+                const inputNumeroAta = (document.getElementById(`inputNumeroATA${i}`) as HTMLInputElement).value
+                const inputDocumentoAprovacao = (document.getElementById(`inputDocumento${i}`) as HTMLInputElement).value
+
+                novaVerificacaoInputs[primeiroIndexProposta + 3] = (inputNumeroAta != "" ? true : false)
+                novaVerificacaoInputs[primeiroIndexProposta + 4] = (inputDocumentoAprovacao != "" ? true : false)
+            }
+        }
+
+        setVerificacaoInputs(novaVerificacaoInputs)
+        
+        if (checarPreenchimento(novaVerificacaoInputs)) {
+            fecharAvaliacao()
+
+            feedback = (
+                <Alert onClose={() => { setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                    {informacaoColecaoProcesso.tipo} avaliada com sucesso
+                </Alert>
+            )
+
+            abrirFeedback(feedback)
+        } else {
+            feedback = (
+                <Alert onClose={() => { setFeedbackAberto(false) }} severity="error" sx={{ width: '100%' }}>
+                    Algum campo obrigatório está em branco
+                </Alert>
+            )
+
+            abrirFeedback(feedback)
+        }
+
+    }
+
+    function checarRadioButtons(listaBotoes: HTMLCollectionOf<Element>) {
+        for (let radioButton of listaBotoes) {
+            if ((radioButton.children[0].children[0] as HTMLInputElement).checked) {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    function checarPreenchimento(novaVerificacaoInputs: boolean[]) {
+        if (novaVerificacaoInputs.length == 0) {
+            return false
+        }
+
+        for (let verificado of novaVerificacaoInputs) {
+            if (!verificado && verificado != undefined) {
+                return false
+            }
+        }
+
+        return true
+    }
 
     return (
         <>
-            <Header informacaoColecaoProcesso={informacaoColecaoProcesso} />
+            <Header informacaoColecaoProcesso={informacaoColecaoProcesso} avaliandoProcesso={avaliandoProcesso} setAvaliandoProcesso={setAvaliandoProcesso} aprovarProcesso={aprovarProcesso} fecharAvaliacao={fecharAvaliacao} />
             <BoxConteudo >
                 <BoxContainer>
                     <Container>
-                        <ContainerColecaoProcesso informacaoColecaoProcesso={informacaoColecaoProcesso} />
+                        <ContainerColecaoProcesso informacaoColecaoProcesso={informacaoColecaoProcesso} avaliandoProcesso={avaliandoProcesso} verificacaoInputs={verificacaoInputs} />
+                        <Snackbar
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                            autoHideDuration={3000}
+                            open={feedbackAberto}
+                            onClose={() => { setFeedbackAberto(false) }}
+                        >
+                            {conteudoFeedback}
+                        </Snackbar>
                     </Container>
                 </BoxContainer>
             </BoxConteudo>
@@ -139,56 +143,67 @@ export default function TelaColecaoProcesso() {
  * @param props 
  * @returns 
  */
-function Header(props: { informacaoColecaoProcesso: any }) {
+function Header(props: { informacaoColecaoProcesso: any, avaliandoProcesso: boolean, setAvaliandoProcesso: React.Dispatch<SetStateAction<boolean>>, aprovarProcesso: Function, fecharAvaliacao: Function }) {
+    const [acao, setAcao] = useState("")
     const informacaoColecaoProcesso = props.informacaoColecaoProcesso
     const tipoColecao = informacaoColecaoProcesso.tipo
     const dataReuniao = informacaoColecaoProcesso.dataReuniao
-    let acao = ""
 
-    if (tipoColecao == "Pauta") {
-        if (dataReuniao < new Date()) {
-            acao = "Informar parecer"
+    useEffect(() => {
+        if (tipoColecao == "Pauta") {
+            // if (dataReuniao <= new Date()) {
+            setAcao("Informar parecer")
+            // }
+        } else {
+            if (!informacaoColecaoProcesso.numeroAtaDG) {
+                setAcao("Finalizar processo")
+            }
         }
-    } else {
-        if (!informacaoColecaoProcesso.numeroAtaDG) {
-            acao = "Finalizar processo"
-        }
+    }, [])
+
+
+
+    function aprovarProcesso() {
+        props.aprovarProcesso()
     }
+
     /**
-     * 1º historico (Pauta, preenchida || Pauta, ainda não passou da data da reunião dela)
-     * 2º historico, informar parecer da comissão (Pauta, já passou a data da reunião)
-     * 3º historico, finalizar processo (Ata, ainda não passou plea dg)
-     * 4º historico
-     */
+     * 1º informar parecer da comissão (Pauta, já passou a data da reunião)
+     * 2º finalizar processo (Ata, ainda não passou plea dg) 
+     * */
     return (
         <>
             <BoxHeader>
                 <Breadcrumb />
                 {acao != "" &&
-                    <Box>
-                        <BotaoPrimario variant='contained'> {acao}</BotaoPrimario>
-                    </Box>
+                    <>
+                        {!props.avaliandoProcesso ?
+                            <BotaoPrimario variant="contained" onClick={() => { props.setAvaliandoProcesso(true) }}> {acao}</BotaoPrimario>
+                            :
+                            <BoxBotoes>
+                                <BotaoPrimarioHeader variant='contained' onClick={aprovarProcesso}> Aprovar</BotaoPrimarioHeader>
+                                <BotaoSecundarioHeader variant='outlined' onClick={() => { props.fecharAvaliacao() }}> Cancelar</BotaoSecundarioHeader>
+                            </BoxBotoes>
+                        }
+                    </>
                 }
             </BoxHeader>
             <Toolbar />
         </>
     )
 }
-
-
-
 /**
  * Container principal para todas as informações de uma proposta/demanda
  * 
  * @param props 
  * @returns 
  */
-function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any }) {
+function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any, avaliandoProcesso: boolean, verificacaoInputs: boolean[] }) {
     const informacaoColecaoProcesso = props.informacaoColecaoProcesso
-    const dataFormatada = informacaoColecaoProcesso.dataReuniao.toLocaleDateString()
+    const dataFormatada = new Date(informacaoColecaoProcesso.dataReuniao).toLocaleDateString()
 
     return (
-        <GridContainer container sx={{ padding: "9px 25px 25px 25px" }} spacing={2}>
+        <GridContainerColecao container spacing={2}>
             <Grid item xs={12}>
                 <GridContainerHeader container>
                     <GridTitulo item xs={10} >
@@ -197,7 +212,7 @@ function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any }) {
                         </Typography>
                     </GridTitulo>
                     <Grid item xs={2}>
-                        <Bandeira cor={getColorType(informacaoColecaoProcesso.tipo)} />
+                        <Bandeira cor={getCorTipo(informacaoColecaoProcesso.tipo)} />
                     </Grid>
                 </GridContainerHeader>
             </Grid>
@@ -207,108 +222,36 @@ function ContainerColecaoProcesso(props: { informacaoColecaoProcesso: any }) {
             <Grid item xs={12}>
                 Propostas:
             </Grid>
-            <Propostas listaPropostas={informacaoColecaoProcesso.propostas} />
-            {informacaoColecaoProcesso.tipo == "ATA" &&
-                <Grid item xs={12} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Box sx={{ display: "flex" }}>
+            <Propostas listaPropostas={informacaoColecaoProcesso.propostas} tipoColecao={informacaoColecaoProcesso.tipo} avaliandoProcesso={props.avaliandoProcesso} verificacaoInputs={props.verificacaoInputs} />
+            {(informacaoColecaoProcesso.tipo == "ATA" && !props.avaliandoProcesso) &&
+                <GridFooter item xs={12}>
+                    <Box display={"flex"}>
                         {informacaoColecaoProcesso.numeroAtaDG &&
                             <>
                                 <TypographyTituloAtributo variant='body1'>
                                     Número da ATA da DG:
                                 </TypographyTituloAtributo>
-                                <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+                                <TypographyTextoColecao variant='body1'>
                                     {informacaoColecaoProcesso.numeroAtaDG}
-                                </TypographyTexto>
+                                </TypographyTextoColecao>
                             </>
                         }
                     </Box>
                     <BotaoTerciario variant="outlined">Ver anexos  </BotaoTerciario>
-                </Grid>
+                </GridFooter>
             }
-        </GridContainer>
+        </GridContainerColecao>
     )
 }
 
+function Propostas(props: { listaPropostas: [], tipoColecao: string, avaliandoProcesso: boolean, verificacaoInputs: boolean[] }) {
+    const eUmaPauta = (props.tipoColecao == "Pauta" ? true : false)
+    const location = useLocation().pathname
+    const linkProposta = location + "/proposal"
 
-/**
- * Componente da bandeira que altera a cor de acordo com o valor que recebe e que
- * se localiza no canto superior direito container principal
- * 
- * @param props 
- * @returns 
- */
-function Bandeira(props: { cor: string }) {
-    return (
-        <BoxContainerBandeira >
-            <BoxBandeira sx={{ backgroundColor: props.cor }}>
-                <BoxTrianguloBandeira />
-            </BoxBandeira>
-        </BoxContainerBandeira>
-    )
-}
-
-function Propostas(props: { listaPropostas: [] }) {
-    function setProposta(id: number) {
-        localStorage.setItem("IDPROPOSTAESCOLHIDA", id + "")
-    }
-
-    const propostas = props.listaPropostas.map((proposta: any) => {
-        const location = useLocation().pathname
-        const linkProposta = location + "/proposal"
-
+    const propostas = props.listaPropostas.map((proposta: any, index: number) => {
         return (
-            <Grid item xs={12} key={proposta.id} sx={{ backgroundColor: "transparent" }}>
-                <Grid container sx={{ boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)", borderRadius: "10px" }}>
-                    <Grid item xs={0.2}>
-                        <BoxCorStatus sx={{ backgroundColor: getColorStatus(proposta.status) }} ></BoxCorStatus>
-                    </Grid>
-                    <Grid item xs={11.8} sx={{ borderRadius: "0 10px 10px 0" }}>
-                        <Accordion sx={{ backgroundColor: "transparent", "& .MuiPaper-root": { borderRadius: "0 10px 10px 0", boxShadow: "none" }, boxShadow: "none" }}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                            >
-                                <Typography>{proposta.titulo}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Grid container>
-                                    <GridPequenosAtributos item xs={4}>
-                                        <TypographyTituloAtributo variant='body1'>
-                                            Solicitante:
-                                        </TypographyTituloAtributo>
-                                        <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
-                                            {proposta.solicitante}
-                                        </TypographyTexto>
-                                    </GridPequenosAtributos>
-                                    <GridPequenosAtributos item xs={4}>
-                                        <TypographyTituloAtributo variant='body1'>
-                                            Tamanho:
-                                        </TypographyTituloAtributo>
-                                        <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
-                                            {proposta.tamanho}
-                                        </TypographyTexto>
-                                    </GridPequenosAtributos>
-                                    <GridPequenosAtributos item xs={4}>
-                                        <TypographyTituloAtributo variant='body1'>
-                                            Score:
-                                        </TypographyTituloAtributo>
-                                        <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
-                                            {proposta.score}
-                                        </TypographyTexto>
-                                    </GridPequenosAtributos>
-                                    <Grid item xs={12}>
-                                        <GridLinkTypograpfy variant='body2' sx={{ width: "auto !important" }}>
-                                            <Link to={linkProposta} onClick={() => { setProposta(proposta.id) }}>Ver mais</Link>
-                                        </GridLinkTypograpfy>
-                                    </Grid>
-                                </Grid>
-                            </AccordionDetails>
-                        </Accordion>
-                    </Grid>
-                </Grid>
-            </Grid>
-
+            <Proposta key={index} proposta={proposta} linkProposta={linkProposta} eUmaPauta={eUmaPauta} index={index} avaliandoProcesso={props.avaliandoProcesso} verificacaoInputs={props.verificacaoInputs} />
         )
     })
 
@@ -319,39 +262,194 @@ function Propostas(props: { listaPropostas: [] }) {
     )
 }
 
-function getComponentName(location: string) {
-    const fragmentoTipo = location.slice(location.length - 3)
+function Proposta(props: { proposta: any, linkProposta: string, eUmaPauta: boolean, index: number, avaliandoProcesso: boolean, verificacaoInputs: boolean[] }) {
+    const [expanded, setExpanded] = useState({ expanded: false })
+    const [mensagemErroStatus, setMenssagemErroStatus] = useState("")
+    const [mensagemErroATA, setMenssagemErroATA] = useState("")
+    const [objetoErroNumeroATA, setObjetoErroNumeroATA] = useState({ error: false, helperText: "" })
+    const [objetoErroDocumento, setObjetoErroDocumento] = useState({ error: false, helperText: "" })
+    const verificacaoInputs = props.verificacaoInputs
+    const proposta = props.proposta
+    const forumEscolhido = (props.eUmaPauta ? "comissão" : "direção geral")
 
-    if (fragmentoTipo == "ata") {
-        return "ATA"
-    } else {
-        return "PAUTA"
-    }
-}
+    const conteudoPropostaInicio = (
+        <>
+            <GridPequenosAtributos item xs={6}>
+                <TypographyTituloAtributo variant='body1'>
+                    Solicitante:
+                </TypographyTituloAtributo>
+                <TypographyTextoColecao variant='body1' >
+                    {proposta.solicitante}
+                </TypographyTextoColecao>
+            </GridPequenosAtributos>
+            <Grid item xs={12}>
+                <TabelaBeneficios title="Benefícios reais" atributos={proposta.beneficiosReais} />
+            </Grid>
+            <Grid item xs={12}>
+                <TabelaBeneficios title="Benefícios potenciais" atributos={proposta.beneficiosPotenciais} />
+            </Grid>
+            {proposta.tabelasCusto &&
+                <Grid item xs={12}>
+                    <TabelasCusto tabelasCusto={proposta.tabelasCusto} />
+                </Grid>
+            }
+            <Grid item xs={12}>
+                <GridLinkTypograpfy variant='body2' width="auto !important">
+                    <Link to={props.linkProposta} onClick={() => { setProposta(proposta) }}>Ver mais</Link>
+                </GridLinkTypograpfy>
+            </Grid>
+        </>
+    )
 
-function getColorType(tipo: string | undefined) {
-    const coresStatus = {
-        Demanda: "#00579D",
-        Proposta: "#6AACDA",
-        Pauta: "#2382BA",
-        ATA: "#28B9DA"
+    const conteudoPropostaAvaliacao = (
+        <>
+            <Grid item xs>
+                <TypographyTituloDecisao variant='body1'>
+                    Parecer da {forumEscolhido}
+                </TypographyTituloDecisao>
+                <FormControl error>
+                    <RadioGroup sx={{ flexDirection: "row" }}>
+                        <FormControlLabel className={`radioButtonStatus${props.index}`} value="Canceled" control={<Radio sx={{ '&.Mui-checked': { color: '#FF1616' } }} />} label="Canceled" />
+                        <FormControlLabel className={`radioButtonStatus${props.index}`} value="Business Case" control={<Radio sx={{ '&.Mui-checked': { color: "#FFD600" } }} />} label="Business Case" />
+                        <FormControlLabel className={`radioButtonStatus${props.index}`} value="To do" control={<Radio sx={{ '&.Mui-checked': { color: "#00612E" } }} />} label="To do" />
+                        <FormControlLabel className={`radioButtonStatus${props.index}`} value="Assesment" control={<Radio sx={{ '&.Mui-checked': { color: "#595959" } }} />} label="Assesment" />
+                    </RadioGroup>
+                    <FormHelperText id="component-error-text">{mensagemErroStatus}</FormHelperText>
+                </FormControl>
+            </Grid>
+            {!props.eUmaPauta ?
+                <>
+                    <Grid item xs={4}>
+                        <TypographyTituloDecisao variant='body1'>
+                            Número da ATA da DG:
+                        </TypographyTituloDecisao>
+                        <TextField type='number' id={`inputNumeroATA${props.index}`} onChange={checarValor} {...objetoErroNumeroATA} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TypographyTituloDecisao variant='body1'>
+                            Documento de aprovação:
+                        </TypographyTituloDecisao>
+                        <TextField placeholder='vai ter o inputzao de arquivo' multiline sx={{ width: "100%" }} id={`inputDocumento${props.index}`} {...objetoErroDocumento} />
+                    </Grid>
+                </>
+                :
+                <Grid item xs={12}>
+                    <TypographyTituloDecisao variant='body1'>
+                        Forma de publicação
+                    </TypographyTituloDecisao>
+                    <FormControl error>
+                        <RadioGroup sx={{ flexDirection: "row" }}>
+                            <FormControlLabel className={`radioButtonATA${props.index}`} value="Ata publicada" control={<Radio />} label="Ata publicada" />
+                            <FormControlLabel className={`radioButtonATA${props.index}`} value="Ata não publicada" control={<Radio />} label="Ata não publicada" />
+                        </RadioGroup>
+                        <FormHelperText id="component-error-text">{mensagemErroATA}</FormHelperText>
+                    </FormControl>
+                </Grid>
+            }
+            <Grid item xs={12}>
+                <TypographyTituloDecisao variant='body1'>
+                    Comentários
+                </TypographyTituloDecisao>
+                <TextField
+                    placeholder='Coloque aqui pontos interessantes que foram discutidos durante a reunião'
+                    multiline
+                    rows={5}
+                    sx={{ width: "100%" }}
+                />
+            </Grid>
+        </>
+    )
+
+    useEffect(() => {
+        if (verificacaoInputs == null || verificacaoInputs.length == 0) {
+            return
+        }
+
+        const primeiroIndexProposta = props.index * 10
+
+        if (!verificacaoInputs[primeiroIndexProposta + 1]) {
+            setMenssagemErroStatus("Nenhum status selecionado")
+            setExpanded({ expanded: true })
+        } else {
+            setMenssagemErroStatus("")
+        }
+
+        if (props.eUmaPauta) {
+            if (!verificacaoInputs[primeiroIndexProposta + 2]) {
+                setMenssagemErroATA("Escolha uma das opções")
+                setExpanded({ expanded: true })
+            } else {
+                setMenssagemErroATA("")
+            }
+        } else {
+            if (!verificacaoInputs[primeiroIndexProposta + 3]) {
+                setObjetoErroNumeroATA({ error: true, helperText: "Informe o número da ATA da Direção Geral" })
+                setExpanded({ expanded: true })
+            } else {
+                setObjetoErroNumeroATA({ error: false, helperText: "" })
+            }
+
+            if (!verificacaoInputs[primeiroIndexProposta + 4]) {
+                setObjetoErroDocumento({ error: true, helperText: "Adicione o documento de aprovação" })
+                setExpanded({ expanded: true })
+            } else {
+                setObjetoErroDocumento({ error: false, helperText: "" })
+            }
+        }
+
+    }, [verificacaoInputs])
+
+    useEffect(() => {
+        if (props.avaliandoProcesso && props.index == 0) {
+            setExpanded({ expanded: true })
+        } else {
+            setExpanded({ expanded: false })
+        }
+    }, [props.avaliandoProcesso])
+
+    function checarValor(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const valor = Number.parseInt(e.target.value)
+        if (valor < 0) {
+            e.target.value = 0 + ""
+        }
     }
 
-    if (tipo != undefined) {
-        return (coresStatus as any)[tipo]
-    }
-}
-
-function getColorStatus(status: string | undefined) {
-    const coresStatus = {
-        Backlog: "#DDDDDD",
-        Assesment: "#595959",
-        BusinessCase: "#FFD600",
-        Canceled: "#FF1616",
-        ToDo: "#00612e"
+    function setProposta(proposta: any) {
+        localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta))
     }
 
-    if (status != undefined) {
-        return (coresStatus as any)[status]
+    function mudarAcordeon() {
+        setExpanded({ expanded: !expanded.expanded })
     }
+
+    return (
+        <Grid item xs={12} key={proposta.id} sx={{ backgroundColor: "transparent" }}>
+            <GridProposta container >
+                <Grid item xs={0.2}>
+                    <BoxCorStatus sx={{ backgroundColor: getCorStatus(proposta.status) }} ></BoxCorStatus>
+                </Grid>
+                <Grid item xs={11.8} borderRadius="0 10px 10px 0" padding="15px">
+                    <AccordionProposta {...expanded} >
+                        <AccordionSummary
+                            onClick={mudarAcordeon}
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography variant="h5" sx={{ color: "#595959" }}>{proposta.titulo}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Grid container spacing={2}>
+                                {!props.avaliandoProcesso ?
+                                    conteudoPropostaInicio
+                                    :
+                                    conteudoPropostaAvaliacao
+                                }
+                            </Grid>
+                        </AccordionDetails>
+                    </AccordionProposta>
+                </Grid>
+            </GridProposta>
+        </Grid>
+    )
 }
