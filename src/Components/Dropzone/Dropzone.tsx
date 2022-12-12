@@ -26,7 +26,7 @@ export default function Dropzone() {
     <>
       <BoxContainerUploadImagens {...getRootProps()}>
         <BoxTypography>
-          <input {...getInputProps()} />
+          <input id="anexos" {...getInputProps()} />
           <Typography variant="h6" sx={{ color: "#595959" }}>
             Escolher arquivo
           </Typography>

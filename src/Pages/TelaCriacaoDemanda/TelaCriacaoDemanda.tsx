@@ -44,10 +44,21 @@ export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
   }, []);
 
   function getIdByAtributo(atributo: string) {
-    
     console.log(atributo);
 
-    return "bla";
+    const idsInputsAtributo = {
+      titulo: "titulo",
+      frequenciaUso: "frequenciaUso",
+      beneficiosQualitativos: "descricaoQualitativo",
+      centrosDeCusto: "centroDeCusto",
+      beneficiosReais: "",
+      beneficiosPotenciais: "",
+      objetivo: "objetivo",
+      situacaoAtual: "situacaoAtual",
+      anexos: "anexos",
+    };
+
+    return (idsInputsAtributo as any)[atributo];
   }
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
