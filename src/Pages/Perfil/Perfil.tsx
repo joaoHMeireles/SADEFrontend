@@ -1,70 +1,76 @@
-import "./Perfil.scss";
+import * as React from 'react';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
-import { useState } from 'react';
-import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
-import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario } from '../App.styles';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import fotoPerfil from '../../Assets/fotoPerfil.png';
-import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
-import RemoveRedEyeRoundedIcon from '@mui/icons-material/RemoveRedEyeRounded';
+import InformacoesGerais from './InformacoesGerais/InformacoesGerais';
+import DemandasContribuidas from './DemandasContribuidas/DemandasContribuidas';
+import MeuDesempenho from './MeuDesempenho/MeuDesempenho';
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 export default function Perfil() {
-    const [tipo, setTipo] = useState("password");
+  const [value, setValue] = React.useState(0);
 
-    function mostrarSenha() {
-        if (tipo == "text") {
-            setTipo("password");
-        } else {
-            setTipo("text");
-        };
-    };
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
 
-    return (
-        <BoxConteudo>
-            <Breadcrumb />
+  return (
+    <Box sx={{ width: '100%', marginTop: '1rem' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+          <Tab label="Informações gerais" {...a11yProps(0)} />
 
-            <div id="container">
-                <div id="panel">
-                    <div className="row">
-                        <div className="text">
-                            <p>Foto de perfil</p>
-                        </div>
+          <Tab label="Demandas contribuídas" {...a11yProps(1)} />
 
-                        <div id="img">
-                            <img src={fotoPerfil} alt="Foto de perfil" />
-                        </div>
-                    </div>
+          <Tab label="Meu desempenho" {...a11yProps(2)} />
+        </Tabs>
+      </Box>
 
-                    <div className="row">
-                        <div className="text">
-                            <p>Usuário</p>
-                        </div>
+      <TabPanel value={value} index={0}>
+        <InformacoesGerais />
+      </TabPanel>
 
-                        <TextField sx={{ width: "40%" }} value="camilly_pessotti" />
-                    </div>
+      <TabPanel value={value} index={1}>
+        <DemandasContribuidas />
+      </TabPanel>
 
-                    <div className="row">
-                        <div className="text">
-                            <p>Email</p>
-                        </div>
-
-                        <TextField sx={{ width: "40%" }} value="camilly_pessotti@weg.net" />
-                    </div>
-
-                    <div className="row" id="lastRow">
-                        <div className="text">
-                            <p>Senha</p>
-                        </div>
-
-                        <TextField type={tipo} sx={{ width: "40%" }} value="Abc@123" InputProps={{ endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#666", cursor: "pointer" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#666", cursor: "pointer" }} />) }} />
-                    </div>
-
-                    <div id="button">
-                        <Button variant="contained" disabled>Salvar alterações</Button>
-                    </div>
-                </div>
-            </div>
-        </BoxConteudo >
-    )
+      <TabPanel value={value} index={2}>
+        <MeuDesempenho />
+      </TabPanel>
+    </Box>
+  );
 }
