@@ -1,8 +1,8 @@
 import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getNomeComponente, urlValida, getIconeArquivo } from '../../Utils';
+import { getNomeComponente, urlValida, getIconeArquivo } from '../../utils';
 import Dayjs from '@date-io/dayjs'
-import { sessaoTI, TipoComponenteProcesso } from '../../Constants/enuns';
+import { sessaoTI, TipoComponenteProcesso } from '../../constants/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
 import SelectBox from '../../Components/SelectBox/SelectBox'
@@ -24,7 +24,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles"
 import {
-    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso,  BoxBotoes, BoxHeader, BoxTabela, CircleIconPonto,
+    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBotoes, BoxHeader, BoxTabela, CircleIconPonto,
     GridItemFooter, GridPequenosAtributos, TypographyTexto,
     TypographyTitulo, TypographyTituloAtributo, BoxConteudoModal, TypographyTituloModal, BoxTituloModal,
     BoxBotoesModal, BoxInfoModal, BoxAtributosInfoModal, BoxAtributoInfoModal, BoxBUsBeneficiadas, BoxSessaoTI,
@@ -39,7 +39,7 @@ import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProce
  * @param props 
  * @returns 
  */
-export default function TelaComponenteProcesso(props: any) {
+export default function TelaComponenteProcesso(props: {sidebarAberta: boolean}) {
     const [modalAberto, setModalAberto] = useState(false)
     const [conteudoModal, setConteudoModal] = useState(<div />)
     const [feedbackAberto, setFeedbackAberto] = useState(false)
@@ -50,7 +50,7 @@ export default function TelaComponenteProcesso(props: any) {
 
     return (
         <>
-            <Header informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} setFeedbackAberto={setFeedbackAberto} setConteudoFeedback={setConteudoFeedback} />
+            <Header informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} setFeedbackAberto={setFeedbackAberto} setConteudoFeedback={setConteudoFeedback} sidebarAberta={props.sidebarAberta}/>
             <BoxConteudo >
                 <BoxContainer>
                     <Container >
@@ -86,7 +86,8 @@ export function Header(props: {
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
     setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>,
     setFeedbackAberto: React.Dispatch<React.SetStateAction<boolean>>,
-    setConteudoFeedback: React.Dispatch<React.SetStateAction<JSX.Element>>
+    setConteudoFeedback: React.Dispatch<React.SetStateAction<JSX.Element>>,
+    sidebarAberta: boolean
 }) {
     const [tempoExcedido, setTempoExcedido] = useState(false)
     const { pathname } = useLocation()
@@ -375,7 +376,7 @@ export function Header(props: {
 
     return (
         <>
-            <BoxHeader>
+            <BoxHeader sx={{width: (props.sidebarAberta ? "88.35%" : "96.5%")}}>
                 <Breadcrumb />
                 <ButtonsHeader listaBotoes={listaBotoes} />
             </BoxHeader>
@@ -804,7 +805,8 @@ function ContainerProcessoPrincipal(props: {
     const informacaoProcesso = props.informacaoProcesso
 
     return (
-        <ContainerProcesso informacaoProcesso={informacaoProcesso} width="100%">
+        <ContainerProcesso informacaoProcesso={informacaoProcesso}>
+            <Divider />
             <InfoGeral processo={informacaoProcesso} />
             <Divider />
             <InfoComercial processo={informacaoProcesso} />

@@ -49,3 +49,23 @@ export const ContentTheme = createTheme({
     }
   }
 })
+
+export const PopperMenuTheme = createTheme({
+  components: {
+    MuiPopper: {
+      defaultProps: {
+        sx: {
+          backgroundColor: "red",
+          "& .MuiDataGrid-filterForm": {
+            backgroundColor: "red"
+          }
+        }
+      }
+    }
+  },
+  typography: {
+    button: {
+      textTransform: 'none'
+    }
+  }
+})

@@ -5,12 +5,12 @@ import Bandeira from "../Bandeira/Bandeira";
 import { BoxCorStatus, GridContainer, GridContainerHeader, GridInformacao, GridTitulo } from "./ContainerProcesso.styles";
 
 
-export default function ContainerProcesso(props: { informacaoProcesso: any, children: any, width: string}) {
+export default function ContainerProcesso(props: { informacaoProcesso: any, children: any}) {
     const informacaoProcesso = props.informacaoProcesso
 
     return (
         <BoxConteudo>
-            <GridContainer container sx={{width: props.width}}>
+            <GridContainer container>
                 <Grid item xs={0.2}>
                     <BoxCorStatus sx={{ backgroundColor: getCorStatus(informacaoProcesso?.status) }} ></BoxCorStatus>
                 </Grid>
@@ -26,7 +26,6 @@ export default function ContainerProcesso(props: { informacaoProcesso: any, chil
                                 <Bandeira cor={getCorTipo(informacaoProcesso?.tipo)} />
                             </Grid>
                         </GridContainerHeader>
-                        <Divider />
                         {props.children}
                     </>
                 </GridInformacao>

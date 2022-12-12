@@ -1,4 +1,7 @@
 
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { StatusTarefaHistorico } from '../constants/enuns';
 import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 import SlideshowRoundedIcon from '@mui/icons-material/SlideshowRounded';
@@ -7,6 +10,7 @@ import BackupTableRoundedIcon from '@mui/icons-material/BackupTableRounded';
 import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
 import CoPresentRoundedIcon from '@mui/icons-material/CoPresentRounded'
 import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';
+
 
 /**
  * Conforme o final da url escolhida, informa a que tipo de processo a tela atual se refere
@@ -116,20 +120,43 @@ export function getNomeRota(palavra: string) {
 
 export function getIconeArquivo(nomeAnexo: string) {
     const iconesAnexos = {
-        txt: ArticleRoundedIcon  ,
-        doc: ArticleRoundedIcon ,
-        ocx: ArticleRoundedIcon ,
-        xls: BackupTableRoundedIcon ,
-        pdf: PictureAsPdfRoundedIcon ,
-        ppt: CoPresentRoundedIcon ,
-        png: ImageRoundedIcon ,
-        jpg: ImageRoundedIcon ,
-        peg: ImageRoundedIcon ,
-        avi: SlideshowRoundedIcon ,
-        zip: FolderZipRoundedIcon ,
+        txt: ArticleRoundedIcon,
+        doc: ArticleRoundedIcon,
+        ocx: ArticleRoundedIcon,
+        xls: BackupTableRoundedIcon,
+        pdf: PictureAsPdfRoundedIcon,
+        ppt: CoPresentRoundedIcon,
+        png: ImageRoundedIcon,
+        jpg: ImageRoundedIcon,
+        peg: ImageRoundedIcon,
+        avi: SlideshowRoundedIcon,
+        zip: FolderZipRoundedIcon,
     }
     const tipoAnexo = nomeAnexo.slice(nomeAnexo.length - 3)
     const valor = (iconesAnexos as any)[tipoAnexo]
 
-    return (valor != null ? valor : InsertDriveFileRoundedIcon )
+    return (valor != null ? valor : InsertDriveFileRoundedIcon)
+}
+
+/**
+ * Função para realizar algo quando a página for trocada
+ * 
+ * @param action 
+ */
+export function useLocationChange(action: any) {
+    const newLocation = useLocation()
+    useEffect(() => { action(newLocation) }, [newLocation])
+}
+
+//criar função pra pegar as cores dos status dos históricos
+
+export function getCorStatusHistorico(status: StatusTarefaHistorico) {
+    const cores = {
+        "Em Aguardo": "#595959",
+        "Em Andamento": "#00579d",
+        "Concluído": "#00612E",
+        "Atrasado": "#FF1616"
+    }
+
+    return (cores as any)[status]
 }

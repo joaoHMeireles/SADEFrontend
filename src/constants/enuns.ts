@@ -64,7 +64,7 @@ export enum TarefaExecucao {
 
 export enum StatusTarefaHistorico {
     EMAGUARDO = "Em Aguardo",
-    EMANDAMENTO = "Em Andamento",
-    CONCLUIDO = "Concluído",
-    ATRASADO = "Atrasado"
+    EMANDAMENTO = "Em Andamento", 
+    CONCLUIDO = "Concluído", 
+    ATRASADO = "Atrasado" 
 }
