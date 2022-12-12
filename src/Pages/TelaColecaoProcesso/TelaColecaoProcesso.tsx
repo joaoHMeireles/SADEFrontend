@@ -1,6 +1,6 @@
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getNomeComponente, getCorStatus, getCorTipo } from '../../utils';
+import { getNomeComponente, getCorStatus, getCorTipo } from "../../utils"
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb"
 import Toolbar from "../../Components/Toolbar/Toolbar"
 import TabelaBeneficios from '../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios';
