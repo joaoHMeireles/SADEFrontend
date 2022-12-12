@@ -28,16 +28,16 @@ const listaComponents: {}[] = [
             5678
         ],
         beneficiosReais: [
-            {
-                descricao: "É que é bem bom mesmo vai dar 10000000 reais de  retorno bem massa mano",
-                moeda: "BRL",
-                valor: 10000.00
-            },
-            {
-                descricao: "Descricaozona gigantassa é que é bem bom mesmo vai dar 10000000 de retorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra pqp muita coisa",
-                moeda: "USD",
-                valor: 1500.00
-            },
+            // {
+            //     descricao: "É que é bem bom mesmo vai dar 10000000 reais de  retorno bem massa mano",
+            //     moeda: "BRL",
+            //     valor: 10000.00
+            // },
+            // {
+            //     descricao: "Descricaozona gigantassa é que é bem bom mesmo vai dar 10000000 de retorno fodão bem massa mano ty have suffered alteration in some form, by injected humour, or  ra pqp muita coisa",
+            //     moeda: "USD",
+            //     valor: 1500.00
+            // },
         ],
         beneficiosPotenciais: [
             {

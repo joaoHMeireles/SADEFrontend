@@ -34,28 +34,39 @@ export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
 
       for (let atributo in info) {
         if ((info as any)[atributo]) {
-          const inputTitulo = document.getElementById(
+          const id = document.getElementById(
             getIdByAtributo(atributo)
           ) as HTMLInputElement;
-          // inputTitulo.value = info.titulo;
+          if (id) {
+            if (id.id == "titulo") {
+              id.value = info.titulo;
+            }
+
+            if (id.id == "objetivo") {
+              id.value = info.objetivo;
+            }
+
+            if (id.id == "situacaoAtual") {
+              id.value = info.situacaoAtual;
+            }
+
+            for (let i = 0; i < info.centrosDeCusto.length; i++) {
+              if (id.id == "centroDeCusto") {
+                id.value = info.centrosDeCusto[i];
+              }
+            }
+          }
         }
       }
     }
   }, []);
 
   function getIdByAtributo(atributo: string) {
-    console.log(atributo);
-
     const idsInputsAtributo = {
       titulo: "titulo",
-      frequenciaUso: "frequenciaUso",
-      beneficiosQualitativos: "descricaoQualitativo",
       centrosDeCusto: "centroDeCusto",
-      beneficiosReais: "",
-      beneficiosPotenciais: "",
       objetivo: "objetivo",
       situacaoAtual: "situacaoAtual",
-      anexos: "anexos",
     };
 
     return (idsInputsAtributo as any)[atributo];
@@ -113,7 +124,9 @@ export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
                 variant="contained"
                 endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
                 onClick={() => {
-                  setValor(1);
+                  const input = document.getElementById("centroDeCusto") as HTMLInputElement
+                  console.log(input.value);
+                  
                 }}
               >
                 Proximo
