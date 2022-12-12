@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
@@ -7,14 +7,59 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import PanoramaFishEyeRoundedIcon from "@mui/icons-material/PanoramaFishEyeRounded";
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
-import { BotaoPrimario, BotaoTerciario, BoxConteudo, BotaoSecundario } from "../App.styles";
+import {
+  BotaoPrimario,
+  BotaoTerciario,
+  BoxConteudo,
+  BotaoSecundario,
+} from "../App.styles";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import { ContainerGeral, BoxContainerBotoes, BoxBotaoTerciario, BoxBotoesPriSec } from "./TelaCriacaoDemanda.styles";
+import {
+  ContainerGeral,
+  BoxContainerBotoes,
+  BoxBotaoTerciario,
+  BoxBotoesPriSec,
+} from "./TelaCriacaoDemanda.styles";
 
-export default function TelaCriacaoDemanda() {
+export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
+
+  useEffect(() => {
+    if (props.rascunho) {
+      const info = JSON.parse(
+        localStorage.getItem("RASCUNHOESCOLHIDO") as string
+      );
+
+      for (let atributo in info) {
+        if ((info as any)[atributo]) {
+          const inputTitulo = document.getElementById(
+            getIdByAtributo(atributo)
+          ) as HTMLInputElement;
+          // inputTitulo.value = info.titulo;
+        }
+      }
+    }
+  }, []);
+
+  function getIdByAtributo(atributo: string) {
+    console.log(atributo);
+
+    const idsInputsAtributo = {
+      titulo: "titulo",
+      frequenciaUso: "frequenciaUso",
+      beneficiosQualitativos: "descricaoQualitativo",
+      centrosDeCusto: "centroDeCusto",
+      beneficiosReais: "",
+      beneficiosPotenciais: "",
+      objetivo: "objetivo",
+      situacaoAtual: "situacaoAtual",
+      anexos: "anexos",
+    };
+
+    return (idsInputsAtributo as any)[atributo];
+  }
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     console.log(newValue);
@@ -158,7 +203,7 @@ export default function TelaCriacaoDemanda() {
                     <ArrowBackIosRoundedIcon
                       sx={{ width: "15px" }}
                       onClick={() => {
-                        setValor(valor - 1);
+                        setValor(1);
                       }}
                     />
                   }

@@ -7,16 +7,26 @@ import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
-import { BoxContainerGeral, BoxTitulos, TypographyTitulos, BoxIcones, BoxContainerGeralBeneficio, BoxContainerDivisorio, 
-  BoxInputsAcima, BoxValorMensal, TypographyLabels, BoxInputs, BoxInputsAbaixo, BoxObrigacaoLegal, 
-  BoxDescricaoRequeistosControle, BoxFrequencia
+import {
+  BoxContainerGeral,
+  BoxTitulos,
+  TypographyTitulos,
+  BoxIcones,
+  BoxContainerGeralBeneficio,
+  BoxContainerDivisorio,
+  BoxInputsAcima,
+  BoxValorMensal,
+  TypographyLabels,
+  BoxInputs,
+  BoxInputsAbaixo,
+  BoxObrigacaoLegal,
+  BoxDescricaoRequeistosControle,
+  BoxFrequencia,
 } from "./BeneficiosDemanda.styles";
 
 export default function BeneficiosDemanda() {
   const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState(1);
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] =
-    useState(1);
-  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] =
     useState(1);
 
   return (
@@ -79,34 +89,7 @@ export default function BeneficiosDemanda() {
         <BoxTitulos>
           <TypographyTitulos>Benefício Qualitativo</TypographyTitulos>
         </BoxTitulos>
-        <BeneficiosQualitativos
-          numeroBeneficios={numeroBeneficiosQualitativos}
-        />
-        <BoxIcones>
-          {numeroBeneficiosQualitativos > 1 ? (
-            <RemoveRoundedIcon
-              sx={{
-                fontSize: "2rem",
-                marginRight: 3,
-                cursor: "pointer",
-                color: "#595959",
-              }}
-              onClick={() => {
-                setNumeroBeneficiosQualitativos(
-                  numeroBeneficiosQualitativos - 1
-                );
-              }}
-            />
-          ) : (
-            ""
-          )}
-          <AddRoundedIcon
-            sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
-            onClick={() => {
-              setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos + 1);
-            }}
-          />
-        </BoxIcones>
+        <BeneficiosQualitativos />
       </BoxContainerGeral>
     </>
   );
@@ -132,14 +115,85 @@ function BeneficiosPotenciais(props: { numeroBeneficios: number }) {
   return <>{beneficios}</>;
 }
 
-function BeneficiosQualitativos(props: { numeroBeneficios: number }) {
+function BeneficiosQualitativos() {
+  const [frequencia, setFrequencia] = useState("Frequência");
+  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] =
+    useState(1);
+
+  const frequencias = [
+    {
+      value: "Frequência 01",
+      label: "$",
+    },
+    {
+      value: "Frequência 02",
+      label: "€",
+    },
+    {
+      value: "Frequência 03",
+      label: "฿",
+    },
+    {
+      value: "Frequência 04",
+      label: "¥",
+    },
+  ];
   let beneficios: JSX.Element[] = [];
 
-  for (let i = 0; i < props.numeroBeneficios; i++) {
+  for (let i = 0; i < numeroBeneficiosQualitativos; i++) {
     beneficios.push(<BeneficioQualitativo />);
   }
 
-  return <>{beneficios}</>;
+  return (
+    <>
+      {beneficios}
+      <BoxIcones>
+        {numeroBeneficiosQualitativos > 1 ? (
+          <RemoveRoundedIcon
+            sx={{
+              fontSize: "2rem",
+              marginRight: 3,
+              cursor: "pointer",
+              color: "#595959",
+            }}
+            onClick={() => {
+              setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos - 1);
+            }}
+          />
+        ) : (
+          ""
+        )}
+        <AddRoundedIcon
+          sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+          onClick={() => {
+            setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos + 1);
+          }}
+        />
+      </BoxIcones>
+      <BoxFrequencia>
+        <TypographyLabels>Frequêcia de uso da solução:</TypographyLabels>
+        <TextField
+          id="frequenciaUso"
+          sx={{
+            width: "30%",
+            marginTop: 1,
+            boxShadow: "5px 5px 10px 0 #00000050",
+          }}
+          select
+          value={frequencia}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setFrequencia(event.target.value)
+          }
+        >
+          {frequencias.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.value}
+            </MenuItem>
+          ))}
+        </TextField>
+      </BoxFrequencia>
+    </>
+  );
 }
 
 function BeneficioReal() {
@@ -173,10 +227,17 @@ function BeneficioReal() {
               <TypographyLabels>Valor Mensal: </TypographyLabels>
             </BoxValorMensal>
             <BoxInputs>
-              <TextField sx={{ width: "30%", marginRight: 5 }} />
               <TextField
-                sx={{ width: "10%" }}
-                id="outlined-select-currency"
+                id="valorMensalReal"
+                sx={{
+                  width: "30%",
+                  marginRight: 5,
+                  boxShadow: "5px 5px 10px 0 #00000050",
+                }}
+              />
+              <TextField
+                id="moedaReal"
+                sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
                 select
                 label="Moeda"
                 value={moeda}
@@ -195,10 +256,11 @@ function BeneficioReal() {
           <BoxInputsAbaixo>
             <TypographyLabels>Descrição: </TypographyLabels>
             <TextField
+              id="descricacaoReal"
               multiline
               rows={7}
               maxRows={Infinity}
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
             ></TextField>
           </BoxInputsAbaixo>
         </BoxContainerDivisorio>
@@ -245,10 +307,17 @@ function BeneficioPotencial() {
                 alignItems: "center",
               }}
             >
-              <TextField sx={{ width: "30%", marginRight: 5 }} />
               <TextField
-                sx={{ width: "10%" }}
-                id="outlined-select-currency"
+                id="valorMensalPotencial"
+                sx={{
+                  width: "30%",
+                  marginRight: 5,
+                  boxShadow: "5px 5px 10px 0 #00000050",
+                }}
+              />
+              <TextField
+                id="moedaPotencial"
+                sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
                 select
                 label="Moeda"
                 value={moeda}
@@ -267,10 +336,11 @@ function BeneficioPotencial() {
           <BoxInputsAbaixo>
             <TypographyLabels>Descrição: </TypographyLabels>
             <TextField
+              id="descricaoPotencial"
               multiline
               rows={7}
               maxRows={Infinity}
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
             ></TextField>
           </BoxInputsAbaixo>
         </BoxContainerDivisorio>
@@ -286,76 +356,18 @@ function BeneficioPotencial() {
 }
 
 function BeneficioQualitativo() {
-  const [frequencia, setFrequencia] = useState("Frequência");
-
-  const frequencias = [
-    {
-      value: "Frequência 01",
-      label: "$",
-    },
-    {
-      value: "Frequência 02",
-      label: "€",
-    },
-    {
-      value: "Frequência 03",
-      label: "฿",
-    },
-    {
-      value: "Frequência 04",
-      label: "¥",
-    },
-  ];
-
   return (
     <>
       <BoxContainerGeralBeneficio>
         <BoxDescricaoRequeistosControle>
           <TypographyLabels>Descrição: </TypographyLabels>
           <TextField
+            id="descricaoQualitativo"
             multiline
             rows={7}
             maxRows={Infinity}
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
           ></TextField>
-        </BoxDescricaoRequeistosControle>
-        <BoxFrequencia>
-          <TypographyLabels>Frequêcia de uso da solução:</TypographyLabels>
-          <TextField
-            sx={{ width: "30%", marginTop: 1 }}
-            select
-            value={frequencia}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setFrequencia(event.target.value)
-            }
-          >
-            {frequencias.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.value}
-              </MenuItem>
-            ))}
-          </TextField>
-        </BoxFrequencia>
-        <BoxDescricaoRequeistosControle>
-          <TypographyLabels>Requesito de controles internos:</TypographyLabels>
-          <RadioGroup
-            sx={{ width: "auto", display: "flex", flexDirection: "row" }}
-            aria-labelledby="demo-radio-buttons-group-label"
-            name="radio-buttons-group"
-          >
-            <FormControlLabel
-              sx={{ marginRight: 4, color: "#595959" }}
-              value="Sim"
-              control={<Radio />}
-              label="Sim"
-            />
-            <FormControlLabel
-              sx={{ color: "#595959" }}
-              value="não"
-              control={<Radio />}
-              label="Não"
-            />
-          </RadioGroup>
         </BoxDescricaoRequeistosControle>
       </BoxContainerGeralBeneficio>
     </>

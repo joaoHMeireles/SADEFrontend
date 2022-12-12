@@ -2,7 +2,7 @@ import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useLocation, Link } from "react-router-dom"
 import Typography from "@mui/material/Typography";
 import { ArrowIcon, BoxRota, BoxBreadcrumb, IconeRota } from "./Breadcrumb.styles";
-import { getNomeRota } from "../../Utils";
+import { getNomeRota } from "../../utils";
 
 export default function Breadcrumb() {
     const location = useLocation();

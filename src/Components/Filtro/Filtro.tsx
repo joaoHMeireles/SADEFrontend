@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useLocationChange } from "../../utils";
 import {
   Box, Checkbox, Collapse, Divider, FormControl, FormControlLabel, FormGroup, IconButton, InputAdornment, Radio,
   RadioGroup, TextField, Toolbar
@@ -270,15 +271,7 @@ function OpcaoInput() {
   )
 }
 
-/**
- * Função para realizar algo quando a página for trocada
- * 
- * @param action 
- */
-function useLocationChange(action: any) {
-  const newLocation = useLocation()
-  useEffect(() => { action(newLocation) }, [newLocation])
-}
+
 
 /**
  * Interface dos atributos dos componentes Options

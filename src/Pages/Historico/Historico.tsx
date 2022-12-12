@@ -1,12 +1,18 @@
-import { Box, Container, Toolbar, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Persona, StatusTarefaHistorico, TarefaExecucao } from "../../Constants/enuns";
+import { Persona, StatusTarefaHistorico, TarefaExecucao } from "../../constants/enuns";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import ContainerProcesso from "../../Components/ContainerProcesso/ContainerProcesso";
-import { DataGrid, GridRowsProp, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import { Box, Container, GlobalStyles, IconButton, Modal, Toolbar, Tooltip } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
+import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
+import { GridColDef, GridCellParams, ptBR } from '@mui/x-data-grid';
 import { BoxContainer, BoxConteudo } from "../App.styles";
 import { BoxHeader } from "../TelaProcesso/TelaProcesso.styles";
-import { useState } from "react";
+import {
+    DataGridEstilizado, GridToolbarContainerEstilizado, GridToolbarColumnsButtonEstilizado,
+    GridToolbarExportEstilizado, GridToolbarFilterButtonEstilizado
+} from "./Historico.styles";
 
 const historicosDemandas: Historico[] = [
     //demanda 1
@@ -15,7 +21,7 @@ const historicosDemandas: Historico[] = [
         tarefa: TarefaExecucao.AVALIARDEMANDA,
         status: StatusTarefaHistorico.CONCLUIDO,
         dataRecebimento: new Date("June 13, 2022 08:13:00"),
-        conclusaoTarefa: new Date("June 13, 2022 08:37:00"),
+        dataConclusao: new Date("June 13, 2022 08:37:00"),
         pdfHistorico: "sacoifgdaifa9sfvqIv976V9WVQCYIDAVCUsvdcyuv",
         motivoDevolucao: "Meio fraquinha",
         tarefaExecutada: TarefaExecucao.DEVOLVER,
@@ -44,7 +50,7 @@ const historicosDemandas: Historico[] = [
         tarefa: TarefaExecucao.AVALIARDEMANDA,
         status: StatusTarefaHistorico.CONCLUIDO,
         dataRecebimento: new Date("June 13, 2022 08:21:00"),
-        conclusaoTarefa: new Date("June 13, 2022 08:32:00"),
+        dataConclusao: new Date("June 13, 2022 08:32:00"),
         pdfHistorico: "dsftv87V9gbsufbidsuvbFIV789vV97V9vuidvsf",
         tarefaExecutada: TarefaExecucao.APROVAR,
         usuario: {
@@ -59,7 +65,7 @@ const historicosDemandas: Historico[] = [
         status: StatusTarefaHistorico.CONCLUIDO,
         dataRecebimento: new Date("June 13, 2022 08:32:01"),
         prazoExecucao: new Date("June 18, 2022 08:32:01"),
-        conclusaoTarefa: new Date("June 13, 2022 09:03:00"),
+        dataConclusao: new Date("June 13, 2022 09:03:00"),
         pdfHistorico: "safasuidofhsdfb8GofdhfbOYUDFSUIFB",
         tarefaExecutada: TarefaExecucao.CLASSIFICAR,
         usuario: {
@@ -74,7 +80,7 @@ const historicosDemandas: Historico[] = [
         status: StatusTarefaHistorico.CONCLUIDO,
         dataRecebimento: new Date("June 13, 2022 09:03:01"),
         prazoExecucao: new Date("June 18, 2022 09:03:01"),
-        conclusaoTarefa: new Date("June 13, 2022 14:12:00"),
+        dataConclusao: new Date("June 13, 2022 14:12:00"),
         pdfHistorico: "fdbayuiV9mpsomOADOHREobd07FESFCMçidnfuoibS",
         tarefaExecutada: TarefaExecucao.APROVAR,
         usuario: {
@@ -89,7 +95,7 @@ const historicosDemandas: Historico[] = [
         status: StatusTarefaHistorico.CONCLUIDO,
         dataRecebimento: new Date("June 13, 2022 14:12:01"),
         prazoExecucao: new Date("June 18, 2022 14:12:01"),
-        conclusaoTarefa: new Date("June 13, 2022 14:58:00"),
+        dataConclusao: new Date("June 13, 2022 14:58:00"),
         pdfHistorico: "sacoifgdaifa9sfvqIv976V9WVQCYIDAVCUsvdcyuv",
         tarefaExecutada: TarefaExecucao.ADICIONARINFORMACOES,
         usuario: {
@@ -117,7 +123,7 @@ const historicosDemandas: Historico[] = [
         tarefa: TarefaExecucao.AVALIARDEMANDA,
         status: StatusTarefaHistorico.CONCLUIDO,
         dataRecebimento: new Date("June 13, 2022 09:42:00"),
-        conclusaoTarefa: new Date("June 13, 2022 10:11:00"),
+        dataConclusao: new Date("June 13, 2022 10:11:00"),
         pdfHistorico: "dsftv87V9gbsufbidsuvbFIV789vV97V9vuidvsf",
         tarefaExecutada: TarefaExecucao.APROVAR,
         usuario: {
@@ -132,7 +138,7 @@ const historicosDemandas: Historico[] = [
         status: StatusTarefaHistorico.CONCLUIDO,
         dataRecebimento: new Date("June 13, 2022 10:11:01"),
         prazoExecucao: new Date("June 18, 2022 10:11:01"),
-        conclusaoTarefa: new Date("June 13, 2022 10:25:00"),
+        dataConclusao: new Date("June 13, 2022 10:25:00"),
         pdfHistorico: "safasuidofhsdfb8GofdhfbOYUDFSUIFB",
         tarefaExecutada: TarefaExecucao.CLASSIFICAR,
         usuario: {
@@ -147,7 +153,7 @@ const historicosDemandas: Historico[] = [
         status: StatusTarefaHistorico.CONCLUIDO,
         dataRecebimento: new Date("June 13, 2022 10:25:01"),
         prazoExecucao: new Date("June 18, 2022 10:25:00"),
-        conclusaoTarefa: new Date("June 13, 2022 16:06:00"),
+        dataConclusao: new Date("June 13, 2022 16:06:00"),
         pdfHistorico: "fdbayuiV9mpsomOADOHREobd07FESFCMçidnfuoibS",
         tarefaExecutada: TarefaExecucao.APROVAR,
         usuario: {
@@ -162,7 +168,7 @@ const historicosDemandas: Historico[] = [
         status: StatusTarefaHistorico.CONCLUIDO,
         dataRecebimento: new Date("June 13, 2022 16:06:01"),
         prazoExecucao: new Date("June 13, 2022 16:06:01"),
-        conclusaoTarefa: new Date("June 14, 2022 07:52:00"),
+        dataConclusao: new Date("June 14, 2022 07:52:00"),
         pdfHistorico: "sacoifgdaifa9sfvqIv976V9WVQCYIDAVCUsvdcyuv",
         tarefaExecutada: TarefaExecucao.ADICIONARINFORMACOES,
         usuario: {
@@ -177,7 +183,7 @@ const historicosDemandas: Historico[] = [
         status: StatusTarefaHistorico.CONCLUIDO,
         dataRecebimento: new Date("June 14, 2022 07:52:01"),
         prazoExecucao: new Date("June 28, 2022 07:52:01"),
-        conclusaoTarefa: new Date("June 23, 2022 09:29:00"),
+        dataConclusao: new Date("June 23, 2022 09:29:00"),
         pdfHistorico: "OIM98CIDSAMNCpocmsdppomnDINdapNCSDMPSDCD",
         tarefaExecutada: TarefaExecucao.CRIARPROPOSTA,
         usuario: {
@@ -191,7 +197,7 @@ const historicosDemandas: Historico[] = [
         tarefa: TarefaExecucao.ADICIONARPAUTA,
         status: StatusTarefaHistorico.CONCLUIDO,
         dataRecebimento: new Date("June 23, 2022 09:29:01"),
-        conclusaoTarefa: new Date("June 28, 2022 11:20:00"),
+        dataConclusao: new Date("June 28, 2022 11:20:00"),
         tarefaExecutada: TarefaExecucao.ADICIONARPAUTA,
         usuario: {
             nome: "Kaique Macedos",
@@ -204,7 +210,8 @@ const historicosDemandas: Historico[] = [
         tarefa: TarefaExecucao.INFORMARPARECERFORUM,
         status: StatusTarefaHistorico.CONCLUIDO,
         dataRecebimento: new Date("June 28, 2022 11:20:01"),
-        conclusaoTarefa: new Date("July 04, 2022 08:09:00"),
+        prazoExecucao: new Date("July 03, 2022 11:20:01 "),
+        dataConclusao: new Date("July 04, 2022 08:09:00"),
         tarefaExecutada: TarefaExecucao.INFORMARPARECERFORUM,
         pdfHistorico: "BUIVvcyiv9ygVC6c4CYBUOI08bVTvnbyuivyvob",
         usuario: {
@@ -212,50 +219,241 @@ const historicosDemandas: Historico[] = [
             tipoPessoa: Persona.AnalistaTI
         },
         idDemanda: 4
-    }
+    },
+
+    //testes
+    {
+        id: 15,
+        tarefa: TarefaExecucao.AVALIARDEMANDA,
+        status: StatusTarefaHistorico.CONCLUIDO,
+        dataRecebimento: new Date("June 13, 2022 09:42:00"),
+        dataConclusao: new Date("June 13, 2022 10:11:00"),
+        pdfHistorico: "dsftv87V9gbsufbidsuvbFIV789vV97V9vuidvsf",
+        tarefaExecutada: TarefaExecucao.APROVAR,
+        usuario: {
+            nome: "Kaique Macedos",
+            tipoPessoa: Persona.AnalistaTI
+        },
+        idDemanda: 4
+    },
+    {
+        id: 16,
+        tarefa: TarefaExecucao.CLASSIFICAR,
+        status: StatusTarefaHistorico.CONCLUIDO,
+        dataRecebimento: new Date("June 13, 2022 10:11:01"),
+        prazoExecucao: new Date("June 18, 2022 10:11:01"),
+        dataConclusao: new Date("June 13, 2022 10:25:00"),
+        pdfHistorico: "safasuidofhsdfb8GofdhfbOYUDFSUIFB",
+        tarefaExecutada: TarefaExecucao.CLASSIFICAR,
+        usuario: {
+            nome: "Kaique Macedos",
+            tipoPessoa: Persona.AnalistaTI
+        },
+        idDemanda: 4
+    },
+    {
+        id: 17,
+        tarefa: TarefaExecucao.AVALIARDEMANDA,
+        status: StatusTarefaHistorico.CONCLUIDO,
+        dataRecebimento: new Date("June 13, 2022 10:25:01"),
+        prazoExecucao: new Date("June 18, 2022 10:25:00"),
+        dataConclusao: new Date("June 13, 2022 16:06:00"),
+        pdfHistorico: "fdbayuiV9mpsomOADOHREobd07FESFCMçidnfuoibS",
+        tarefaExecutada: TarefaExecucao.APROVAR,
+        usuario: {
+            nome: "Marcelo Siqueira Peixoto",
+            tipoPessoa: Persona.GerenteNegocio
+        },
+        idDemanda: 4
+    },
+    {
+        id: 18,
+        tarefa: TarefaExecucao.ADICIONARINFORMACOES,
+        status: StatusTarefaHistorico.CONCLUIDO,
+        dataRecebimento: new Date("June 13, 2022 16:06:01"),
+        prazoExecucao: new Date("June 13, 2022 16:06:01"),
+        dataConclusao: new Date("June 14, 2022 07:52:00"),
+        pdfHistorico: "sacoifgdaifa9sfvqIv976V9WVQCYIDAVCUsvdcyuv",
+        tarefaExecutada: TarefaExecucao.ADICIONARINFORMACOES,
+        usuario: {
+            nome: "Kaique Macedos",
+            tipoPessoa: Persona.AnalistaTI
+        },
+        idDemanda: 4
+    },
+    {
+        id: 19,
+        tarefa: TarefaExecucao.CRIARPROPOSTA,
+        status: StatusTarefaHistorico.CONCLUIDO,
+        dataRecebimento: new Date("June 14, 2022 07:52:01"),
+        prazoExecucao: new Date("June 28, 2022 07:52:01"),
+        dataConclusao: new Date("June 23, 2022 09:29:00"),
+        pdfHistorico: "OIM98CIDSAMNCpocmsdppomnDINdapNCSDMPSDCD",
+        tarefaExecutada: TarefaExecucao.CRIARPROPOSTA,
+        usuario: {
+            nome: "Kaique Macedos",
+            tipoPessoa: Persona.AnalistaTI
+        },
+        idDemanda: 4
+    },
+    {
+        id: 20,
+        tarefa: TarefaExecucao.ADICIONARPAUTA,
+        status: StatusTarefaHistorico.CONCLUIDO,
+        dataRecebimento: new Date("June 23, 2022 09:29:01"),
+        dataConclusao: new Date("June 28, 2022 11:20:00"),
+        tarefaExecutada: TarefaExecucao.ADICIONARPAUTA,
+        usuario: {
+            nome: "Kaique Macedos",
+            tipoPessoa: Persona.AnalistaTI
+        },
+        idDemanda: 4
+    },
 ]
 
-const columns: GridColDef[] = [
-    { field: 'tarefa', headerName: 'Tarefa requisitada', width: 160 },
-    { field: 'usuario', headerName: 'Usuário responsável', width: 160 },
-    { field: 'dataRecebimento', headerName: 'Data recebida', width: 115 },
-    { field: 'horarioRecebimento', headerName: 'Horário recebido', width: 130 },
-    { field: 'prazoExecucao', headerName: 'Prazo', width: 100 },
-    { field: 'status', headerName: 'Status atual', width: 130 },
-    { field: 'tarefaExecutada', headerName: 'Tarefa executada', width: 150 },
-    { field: 'conclusaoTarefa', headerName: 'Data conclusão', width: 120 },
-    { field: 'pdfHistorico', headerName: 'PDF', width: 90 },
+const colunas: GridColDef[] = [
+    {
+        field: 'tarefa',
+        headerClassName: "titulo-tabela",
+        headerName: 'Tarefa requisitada',
+        width: 145,
+        renderCell: (params: any) => {
+            console.log(params);
+
+            return (
+                <Tooltip title={params.row.tarefa} >
+                    <span className="table-cell-trucate">{params.row.tarefa}</span>
+                </Tooltip>
+            )
+        },
+    },
+    {
+        field: 'nomeUsuario',
+        headerClassName: "titulo-tabela",
+        headerName: 'Usuário responsável',
+        width: 165,
+        renderCell: (params: any) => {
+            return (
+                <Tooltip title={params.row.nomeUsuario + ": " + params.row.cargoUsuario} >
+                    <span className="table-cell-trucate">{params.row.nomeUsuario}</span>
+                </Tooltip>
+            )
+        }
+    },
+    {
+        field: 'dataRecebimento',
+        headerClassName: "titulo-tabela",
+        headerName: 'Data recebida',
+        width: 120
+    },
+    {
+        field: 'horarioRecebimento',
+        headerClassName: "titulo-tabela",
+        headerName: 'Horário recebido',
+        width: 140
+    },
+    {
+        field: 'dataPrazoExecucao',
+        headerClassName: "titulo-tabela",
+        headerName: 'Data prazo',
+        width: 100
+    },
+    {
+        field: 'horarioPrazoExecucao',
+        headerClassName: "titulo-tabela",
+        headerName: 'Horário prazo',
+        width: 120
+    },
+    {
+        field: 'status',
+        headerClassName: "titulo-tabela",
+        headerName: 'Status atual',
+        width: 110,
+        renderCell: (params: any) => {
+            console.log(params);
+
+            return (
+                <Tooltip title={params.row.status} >
+                    <span className="table-cell-trucate">{params.row.status}</span>
+                </Tooltip>
+            )
+        },
+    },
+    {
+        field: 'tarefaExecutada',
+        headerClassName: "titulo-tabela",
+        headerName: 'Tarefa executada',
+        width: 145,
+        renderCell: (params: any) => {
+            console.log(params);
+
+            return (
+                <Tooltip title={params.row.tarefaExecutada} >
+                    <span className="table-cell-trucate">{params.row.tarefaExecutada}</span>
+                </Tooltip>
+            )
+        },
+    },
+    {
+        field: 'dataConclusao',
+        headerClassName: "titulo-tabela",
+        headerName: 'Data conclusão',
+        width: 130
+    },
+    {
+        field: 'horarioConclusao',
+        headerClassName: "titulo-tabela",
+        headerName: 'Horário conclusão',
+        width: 150
+    },
+    {
+        field: 'pdfHistorico',
+        headerClassName: "titulo-tabela",
+        headerName: 'PDF',
+        width: 60,
+        disableColumnMenu: true,
+        renderCell: (params: any) => {
+            return (
+                <Tooltip title="Ver pdf" >
+                    <PictureAsPdfRoundedIcon sx={{ color: "#595959" }} />
+                </Tooltip>
+            )
+        }
+    },
+    {
+        field: 'motivoDevolucao',
+        headerClassName: "titulo-tabela",
+        headerName: 'Motivo devolução',
+        width: 140
+    }
 ];
 
-const columnMotivoDevolucao: GridColDef = { field: 'motivoDevolucao', headerName: 'Motivo devolução', width: 140 }
-
 export default function Historico(props: {}) {
-    const [pageSize, setPageSize] = useState(5);
-    const [tamanhoTabela, setTamanhoTabela] = useState("65vw")
-    const location = useLocation()
+    const [tamanhoPagina, setTamanhoPagina] = useState(5);
+    const [datagridHeight, setDatagridheight] = useState("44.5vh")
+    const [modalAberto, setModalAberto] = useState(false)
+    const [mostrarPDF, setMostrarPDF] = useState(false)
+    const [arquivoPDF, setArquivoPDF] = useState()
+    const [motivoDevolucao, setMotivoDevolucao] = useState("")
 
+    const location = useLocation()
     const inicioDaPalavra = location.pathname.length - 14
     const finalDaPalavra = inicioDaPalavra + 6
-
     const eUmaDemanda = location.pathname.slice(inicioDaPalavra, finalDaPalavra) == "demand"
+
     const informacaoProcessoCru = localStorage.getItem((eUmaDemanda ? "DEMANDAESCOLHIDA" : "PROPOSTAESCOLHIDA"))
     const informacaoProcesso = JSON.parse((informacaoProcessoCru != null ? informacaoProcessoCru : ""))
+
     const historicos = historicosDemandas.filter(historico => historico.idDemanda == informacaoProcesso.id)
-
-    console.log(historicos);
-
     const historicosFormatados = historicos.map((historico: Historico, index: number) => {
-        let prazoExecucao: any = historico.prazoExecucao?.toLocaleDateString()
+        let dataPrazoExecucao: any = historico.prazoExecucao?.toLocaleDateString()
+        let horarioPrazoExecucao: any = historico.prazoExecucao?.toLocaleTimeString()
 
         if (index != historicos.length) {
-            if (historico.prazoExecucao == null) {
-                prazoExecucao = "-----------"
+            if (historico.prazoExecucao == null || historico.prazoExecucao == undefined) {
+                dataPrazoExecucao = "-----------"
+                horarioPrazoExecucao = "-----------"
             }
-        }
-
-        if (historico.motivoDevolucao != null && tamanhoTabela == "65vw") {
-            setTamanhoTabela("70vw")
-            columns.push(columnMotivoDevolucao)
         }
 
         return {
@@ -264,34 +462,270 @@ export default function Historico(props: {}) {
             status: historico.status,
             dataRecebimento: historico.dataRecebimento?.toLocaleDateString(),
             horarioRecebimento: historico.dataRecebimento?.toLocaleTimeString(),
-            prazoExecucao: prazoExecucao,
-            conclusaoTarefa: historico.conclusaoTarefa?.toLocaleDateString(),
+            prazoExecucaoTotal: historico.prazoExecucao,
+            dataPrazoExecucao: dataPrazoExecucao,
+            horarioPrazoExecucao: horarioPrazoExecucao,
+            dataConclusaoTotal: historico.dataConclusao,
+            dataConclusao: historico.dataConclusao?.toLocaleDateString(),
+            horarioConclusao: historico.dataConclusao?.toLocaleTimeString(),
             pdfHistorico: historico.pdfHistorico,
             motivoDevolucao: historico.motivoDevolucao,
             tarefaExecutada: historico.tarefaExecutada,
-            usuario: historico.usuario?.nome
+            nomeUsuario: historico.usuario?.nome,
+            cargoUsuario: historico.usuario?.tipoPessoa
         }
     })
+    const tamanhoLista = historicosFormatados.length
+
+    useEffect(() => {
+        mudarTamanhoDatagrid(5)
+    }, [])
+
+    function fecharModal() {
+        setModalAberto(false)
+        fecharPDF()
+    }
+
+    function fecharPDF() {
+        setMostrarPDF(false)
+    }
+
+    function pegarClassesCelulas(cell: GridCellParams<number>) {
+        const nomeColuna = cell.field
+
+        if (nomeColuna === 'dataConclusao' || nomeColuna === "horarioConclusao") {
+            const infoHistorico = cell.row
+
+            if (infoHistorico.prazoExecucaoTotal < infoHistorico.dataConclusaoTotal) {
+                return "atrasado"
+            }
+        } else if (nomeColuna === "status") {
+            const cores = {
+                "Em Aguardo": "em-aguardo",
+                "Em Andamento": "em-andamento",
+                "Concluído": "concluido",
+                "Atrasado": "atrasado"
+            }
+
+            return (cores as any)[cell.row.status]
+        }
+
+        return "celula-grid";
+    }
+
+    function acaoCelula(cell: GridCellParams<number>) {
+        if (cell.field == "pdfHistorico" && cell.row.pdfHistorico != "" && cell.row.pdfHistorico != undefined) {
+            setModalAberto(true)
+            setArquivoPDF(cell.row.pdfHistorico);
+            setMostrarPDF(true)
+        } else if (cell.field == "motivoDevolucao" && cell.row.motivoDevolucao != "" && cell.row.motivoDevolucao != undefined) {
+            setModalAberto(true)
+            setMotivoDevolucao(cell.row.motivoDevolucao)
+        }
+    }
+
+    function mudarTamanhoDatagrid(novotamanhoPagina: number) {
+        setTamanhoPagina(novotamanhoPagina)
+
+        if (novotamanhoPagina == 5) {
+            mudarAlturaTabela(5, "44.5vh")
+        } else if (novotamanhoPagina == 10) {
+            mudarAlturaTabela(10, "72.5vh")
+        } else if (novotamanhoPagina == 20) {
+            mudarAlturaTabela(20, "128.5vh")
+        }
+    }
+
+    function mudarAlturaTabela(maximo: number, tamanhoMaximo: string) {
+        if (tamanhoLista < maximo) {
+            const tamanhoTabela = tamanhoLista * 5.6 + 16.5
+            setDatagridheight(`${tamanhoTabela}vh`)
+        } else {
+            setDatagridheight(tamanhoMaximo)
+        }
+    }
+
+    function handlePageChange(page: number) {
+        const maximoPagina = (1 + page) * tamanhoPagina
+
+        if (maximoPagina > tamanhoLista) {
+            const tamanhoTabela = (tamanhoLista - (maximoPagina - tamanhoPagina)) * 5.6 + 16.5
+
+            setDatagridheight(`${tamanhoTabela}vh`)
+        } else {
+            mudarTamanhoDatagrid(tamanhoPagina)
+        }
+    }
 
     return (
         <>
+            <GlobalStyles
+                styles={{
+                    ".MuiDataGrid-panel .MuiPaper-root": {
+                        borderRadius: "10px",
+                        maxWidth: "none",
+
+                        "& .MuiDataGrid-panelContent": {
+                            maxWidth: "none",
+                        },
+
+                        "& .MuiDataGrid-filterForm": {
+                            backgroundColor: 'white',
+                            borderRadius: "10px",
+
+                            "& .MuiDataGrid-filterFormColumnInput": {
+                                width: "31.25%",
+
+                                "& .MuiInputBase-root": {
+                                    boxSizing: "border-box",
+                                    color: "#595959",
+
+                                    "& .MuiNativeSelect-select ": {
+
+
+                                        "& option": {
+                                            backgroundColor: "white",
+                                            border: "none",
+                                            color: "#595959",
+                                            fontSize: "16px",
+                                            padding: "3px",
+
+                                            "&:hover": {
+                                                backgroundColor: "#00579d",
+                                                color: "white"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+
+                            "& .MuiDataGrid-filterFormOperatorInput": {
+                                left: "20px",
+                                width: "28.57%",
+
+                                "& .MuiInputBase-root": {
+                                    boxSizing: "border-box",
+                                    color: "#595959",
+
+                                    "& .MuiNativeSelect-select ": {
+
+
+                                        "& option": {
+                                            backgroundColor: "white",
+                                            border: "none",
+                                            color: "#595959",
+                                            fontSize: "16px",
+                                            padding: "3px",
+
+                                            "&:hover": {
+                                                backgroundColor: "#00579d",
+                                                color: "white"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+
+                            "& .MuiDataGrid-filterFormValueInput": {
+                                left: "35px",
+                                width: "26.78%",
+
+                                "& .MuiInputBase-root": {
+                                    boxSizing: "border-box",
+                                    color: "#595959"
+                                }
+                            }
+                        },
+
+                        "& .MuiDataGrid-panelWrapper": {
+                            backgroundColor: "white",
+
+                            "& .MuiDataGrid-panelHeader": {
+
+                                "& .MuiInputLabel-standard": {
+                                    color: "#595959"
+                                },
+
+                                "& .MuiInputLabel-shrink": {
+                                    color: "#00579d"
+                                }
+                            },
+
+                            "& .MuiDataGrid-panelContent": {
+
+                                "& .MuiTypography-root": {
+                                    color: "#595959"
+                                },
+
+                                "& .MuiButtonBase-root": {
+                                    color: "#00579d"
+                                }
+                            },
+
+                            "& .MuiDataGrid-panelFooter button": {
+                                color: "#00579d"
+                            },
+                        },
+                    },
+
+                    "& .MuiDataGrid-menu .MuiPaper-root": {
+
+                        "& .MuiList-root": {
+                            backgroundColor: "white",
+
+                            "& li": {
+                                color: "#595959"
+                            }
+                        }
+                    }
+                }} />
             <Header />
             <BoxConteudo >
                 <BoxContainer>
-                    <ContainerProcesso informacaoProcesso={informacaoProcesso} width={tamanhoTabela}>
-                        <Box sx={{ height: "55vh", width: '100%' }}>
-                            {/* components={{ Toolbar: GridToolbar }} */}
-                            <DataGrid
-                                rows={historicosFormatados}
-                                columns={columns}
-                                pageSize={pageSize}
-                                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                                rowsPerPageOptions={[5, 10, 20]}
-                                pagination
-                                disableSelectionOnClick
-                            />
-                        </Box>
-                    </ContainerProcesso>
+                    <Container>
+                        <ContainerProcesso informacaoProcesso={informacaoProcesso}>
+                            <Box sx={{ height: datagridHeight, width: '100%' }}>
+                                <DataGridEstilizado
+                                    rows={historicosFormatados}
+                                    columns={colunas}
+
+                                    components={{ Toolbar: CustomGridToolbar }}
+                                    getCellClassName={pegarClassesCelulas}
+                                    getRowClassName={(cell) =>
+                                        cell.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+                                    }
+                                    onCellClick={acaoCelula}
+
+                                    pageSize={tamanhoPagina}
+                                    onPageChange={handlePageChange}
+                                    onPageSizeChange={mudarTamanhoDatagrid}
+                                    rowsPerPageOptions={[5, 10, 20]}
+                                    pagination
+                                    hideFooterSelectedRowCount
+
+                                    disableSelectionOnClick
+                                    localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
+                                />
+                            </Box>
+                        </ContainerProcesso>
+                        <Modal open={modalAberto} >
+                            {mostrarPDF ?
+                                <Box>
+                                    <embed src={arquivoPDF} type="application/pdf" width="100%" height="100%" />
+                                    <IconButton onClick={fecharModal}>
+                                        <CloseIcon />
+                                    </IconButton>
+                                </Box>
+                                :
+                                <Box>
+                                    {motivoDevolucao}
+                                    <IconButton onClick={fecharModal}>
+                                        <CloseIcon />
+                                    </IconButton>
+                                </Box>
+                            }
+                        </Modal>
+                    </Container>
                 </BoxContainer>
             </BoxConteudo>
         </>
@@ -310,13 +744,24 @@ function Header() {
     )
 }
 
+function CustomGridToolbar() {
+
+    return (
+        <GridToolbarContainerEstilizado >
+            <GridToolbarFilterButtonEstilizado nonce={undefined} onResize={undefined} onResizeCapture={undefined} />
+            <GridToolbarColumnsButtonEstilizado nonce={undefined} onResize={undefined} onResizeCapture={undefined} />
+            <GridToolbarExportEstilizado />
+        </GridToolbarContainerEstilizado>
+    )
+}
+
 interface Historico {
     id: number,
     tarefa: TarefaExecucao,
     status: StatusTarefaHistorico,
     dataRecebimento?: Date,
     prazoExecucao?: Date,
-    conclusaoTarefa?: Date,
+    dataConclusao?: Date,
     pdfHistorico?: string,
     motivoDevolucao?: string,
     tarefaExecutada?: TarefaExecucao,

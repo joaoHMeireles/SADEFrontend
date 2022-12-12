@@ -1,12 +1,10 @@
 import { useState } from 'react'
-import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso, sessaoTI } from '../../Constants/enuns'
+import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso, sessaoTI } from '../../constants/enuns'
 import './Inicio.scss'
 import Searchbar from '../../Components/Searchbar/Searchbar'
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb'
-import ComponenteProcesso from '../../Components/ComponenteProcesso/ComponenteProcesso'
-import ColecaoComponenteProcesso from '../../Components/ComponenteProcesso/ComponenteColecaoProcesso/ComponenteColecaoProcesso'
-import { Grid, Box, useMediaQuery } from '@mui/material'
-import { BoxConteudo, BoxContainer } from '../App.styles'
+import { BoxConteudo} from '../App.styles'
+import CardsProcesso from '../../Components/CardsProcesso/CardsProcesso'
 
 const listaComponents: {}[] = [
     {
@@ -1261,37 +1259,14 @@ const listaComponents: {}[] = [
  */
 export default function Inicio(props: { filtrar: boolean, setFiltrar: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [grid, setGrid] = useState(true)
-    const matches = useMediaQuery('(max-width:1100px)');
     localStorage.setItem("PAGINATUAL", "home")
-
-    const componentesProcessos = listaComponents.map((processo: any) => {
-        let componente
-        if (!processo.propostas) {
-            componente = <ComponenteProcesso atributosProcesso={processo} grid={grid} />
-        } else {
-            componente = <ColecaoComponenteProcesso atributosColecaoProcesso={processo} grid={grid} />
-        }
-
-        return (
-            <Grid key={processo.id} item xs={(grid ? (!matches ? 4 : 6) : 12)}>
-                <BoxContainer >
-                    {componente}
-                </BoxContainer>
-            </Grid>
-        )
-    })
 
     return (
         <BoxConteudo >
             <Breadcrumb />
             <Searchbar setFiltrar={props.setFiltrar} filtrar={props.filtrar} grid={grid} setGrid={setGrid} />
-            <BoxContainer>
-                <Box sx={{ width: "90%" }}>
-                    <Grid container spacing={2}>
-                        {componentesProcessos}
-                    </Grid>
-                </Box>
-            </BoxContainer>
+            <CardsProcesso listaComponents={listaComponents} grid={grid} rascunho={false}/>
+
         </BoxConteudo>
     )
 }

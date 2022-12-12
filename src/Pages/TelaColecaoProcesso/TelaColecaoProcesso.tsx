@@ -1,6 +1,6 @@
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getNomeComponente, getCorStatus, getCorTipo } from '../../Utils';
+import { getNomeComponente, getCorStatus, getCorTipo } from '../../utils';
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb"
 import Toolbar from "../../Components/Toolbar/Toolbar"
 import TabelaBeneficios from '../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios';
@@ -21,7 +21,7 @@ import { BoxCorStatus, GridContainerHeader, GridTitulo } from "../../Components/
 import Bandeira from "../../Components/Bandeira/Bandeira";
 
 
-export default function TelaColecaoProcesso() {
+export default function TelaColecaoProcesso(props: {sidebarAberta: boolean}) {
     const [avaliandoProcesso, setAvaliandoProcesso] = useState(false)
     const [verificacaoInputs, setVerificacaoInputs] = useState<boolean[]>([])
     const [feedbackAberto, setFeedbackAberto] = useState(false)
@@ -115,7 +115,7 @@ export default function TelaColecaoProcesso() {
 
     return (
         <>
-            <Header informacaoColecaoProcesso={informacaoColecaoProcesso} avaliandoProcesso={avaliandoProcesso} setAvaliandoProcesso={setAvaliandoProcesso} aprovarProcesso={aprovarProcesso} fecharAvaliacao={fecharAvaliacao} />
+            <Header informacaoColecaoProcesso={informacaoColecaoProcesso} avaliandoProcesso={avaliandoProcesso} setAvaliandoProcesso={setAvaliandoProcesso} aprovarProcesso={aprovarProcesso} fecharAvaliacao={fecharAvaliacao} sidebarAberta={props.sidebarAberta}/>
             <BoxConteudo >
                 <BoxContainer>
                     <Container>
@@ -143,7 +143,7 @@ export default function TelaColecaoProcesso() {
  * @param props 
  * @returns 
  */
-function Header(props: { informacaoColecaoProcesso: any, avaliandoProcesso: boolean, setAvaliandoProcesso: React.Dispatch<SetStateAction<boolean>>, aprovarProcesso: Function, fecharAvaliacao: Function }) {
+function Header(props: { informacaoColecaoProcesso: any, avaliandoProcesso: boolean, setAvaliandoProcesso: React.Dispatch<SetStateAction<boolean>>, aprovarProcesso: Function, fecharAvaliacao: Function, sidebarAberta: boolean }) {
     const [acao, setAcao] = useState("")
     const informacaoColecaoProcesso = props.informacaoColecaoProcesso
     const tipoColecao = informacaoColecaoProcesso.tipo
@@ -173,7 +173,7 @@ function Header(props: { informacaoColecaoProcesso: any, avaliandoProcesso: bool
      * */
     return (
         <>
-            <BoxHeader>
+            <BoxHeader sx={{width: (props.sidebarAberta ? "88.35%" : "96.5%")}}>
                 <Breadcrumb />
                 {acao != "" &&
                     <>
