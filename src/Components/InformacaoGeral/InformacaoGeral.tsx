@@ -1,5 +1,10 @@
+import { useState } from "react";
+
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 import {
   BoxContainerGeralInformacaoGeral,
@@ -7,15 +12,32 @@ import {
   TypographyLabels,
   BoxContainerCentroCusto,
 } from "./InformacaoGeral.styles";
+import Checkbox from "@mui/material/Checkbox";
 
 export default function InformacaoGeral() {
-  const listaTeste = [
-    { label: "teste 1" },
+  const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
+
+  const lista = [
+    { label: "1234" },
     { label: "teste 2" },
     { label: "teste 3" },
-    { label: "teste 4" },
+    { label: "5678" },
     { label: "teste 5" },
   ];
+
+  // for (let atributo in info) {
+  //   if ((info as any)[atributo]) {
+  //     if (atributo == "centrosDeCusto") {
+  //       for (let i = 0; i < info[atributo].length; i++) {
+  //         for (let j = 0; j < lista.length; j++) {
+  //           if (lista[j].label == info[atributo][i]) {
+  //             centroCusto.push(lista[j].label);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   return (
     <>
@@ -55,11 +77,25 @@ export default function InformacaoGeral() {
           <BoxContainerCentroCusto>
             <TypographyLabels>Centros de custo:</TypographyLabels>
             <Autocomplete
-              id="centroDeCusto"
+              id="centrosDeCusto"
               sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
               multiple
-              disablePortal
-              options={listaTeste}
+              disableCloseOnSelect
+              renderOption={(props, centroCusto, { selected }) => {
+                return (
+                  <li {...props}>
+                    <Checkbox
+                      id="checkBox"
+                      icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                      checkedIcon={<CheckBoxIcon fontSize="small" />}
+                      style={{ marginRight: 8 }}
+                      checked={selected}
+                    />
+                    {centroCusto.label}
+                  </li>
+                );
+              }}
+              options={lista}
               renderInput={(params) => <TextField {...params} />}
             />
           </BoxContainerCentroCusto>

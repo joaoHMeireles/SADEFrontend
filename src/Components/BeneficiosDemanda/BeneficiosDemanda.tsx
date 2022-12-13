@@ -31,26 +31,7 @@ export default function BeneficiosDemanda() {
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] =
     useState(1);
 
-  const [frequencia, setFrequencia] = useState("Frequência");
-
-  const frequencias = [
-    {
-      value: "Frequência 01",
-      label: "$",
-    },
-    {
-      value: "Frequência 02",
-      label: "€",
-    },
-    {
-      value: "Frequência 03",
-      label: "฿",
-    },
-    {
-      value: "Frequência 04",
-      label: "¥",
-    },
-  ];
+  const [frequencia, setFrequencia] = useState("");
 
   useEffect(() => {
     const info = JSON.parse(
@@ -59,7 +40,13 @@ export default function BeneficiosDemanda() {
 
     for (let atributo in info) {
       if ((info as any)[atributo]) {
+        if (atributo == "frequenciaUso") {
+          setFrequencia(info[atributo]);
+        }
+
         if (atributo == "beneficiosQualitativos") {
+          setNumeroBeneficiosQualitativos(info[atributo].length);
+
           for (let i = 0; i < info[atributo].length; i++) {
             const beneficioQualitativo = document.getElementById(
               atributo + i
@@ -71,6 +58,8 @@ export default function BeneficiosDemanda() {
         }
 
         if (atributo == "beneficiosPotenciais") {
+          setNumeroBeneficiosPotenciais(info[atributo].length);
+
           for (let i = 0; i < info[atributo].length; i++) {
             const descricao = document.getElementById(
               "descricaoPotencial" + i
@@ -97,7 +86,8 @@ export default function BeneficiosDemanda() {
         }
 
         if (atributo == "beneficiosReais") {
-          console.log(info[atributo]);
+          setNumeroBeneficiosReais(info[atributo].length);
+
           for (let i = 0; i < info[atributo].length; i++) {
             const descricao = document.getElementById(
               "descricaoReal" + i
@@ -221,24 +211,16 @@ export default function BeneficiosDemanda() {
         <BoxFrequencia>
           <TypographyLabels>Frequêcia de uso da solução:</TypographyLabels>
           <TextField
-            id="frequenciaUso"
+            value={frequencia}
             sx={{
               width: "30%",
               marginTop: 1,
               boxShadow: "5px 5px 10px 0 #00000050",
             }}
-            select
-            value={frequencia}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setFrequencia(event.target.value)
             }
-          >
-            {frequencias.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.value}
-              </MenuItem>
-            ))}
-          </TextField>
+          />
         </BoxFrequencia>
       </BoxContainerGeral>
     </>
