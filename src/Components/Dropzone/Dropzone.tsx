@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 
 import Typography from "@mui/material/Typography";
@@ -8,8 +8,22 @@ import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import { BoxContainerUploadImagens, BoxTypography } from "./Dropzone.styles";
 import Arquivo from "../Arquivo/Arquivo";
 
-export default function Dropzone() {
+export default function Dropzone(props: { rascunho: boolean }) {
   const [files, setFile] = useState([]);
+
+  useEffect(() => {
+    if (props.rascunho) {
+      const info = JSON.parse(
+        localStorage.getItem("RASCUNHOESCOLHIDO") as string
+      );
+
+      for (let atributo in info) {
+        if ((info as any)[atributo]) {
+          console.log(info["anexos"]);
+        }
+      }
+    }
+  }, []);
 
   const onDrop = useCallback((acceptedFiles: any) => {
     const file: [] = acceptedFiles.map((acceptedFiles: any) => ({

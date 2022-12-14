@@ -20,9 +20,9 @@ import {
   BoxContainerBotoes,
   BoxBotaoTerciario,
   BoxBotoesPriSec,
-} from "./TelaCriacaoDemanda.styles";
+} from "./CriacaoDemanda.styles";
 
-export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
+export default function CriacaoDemanda(props: { rascunho: boolean }) {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
 
@@ -34,16 +34,6 @@ export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
 
       for (let atributo in info) {
         if ((info as any)[atributo]) {
-          if (atributo == "centrosDeCusto") {
-            // setCentroCusto(info[atributo]);
-            // const inputCentroCusto = document.getElementById("centrosDeCusto");
-            // const filhosInput: any =
-            //   inputCentroCusto?.parentElement?.parentElement?.parentElement;
-            // filhosInput.value = info[atributo];
-            // console.log(filhosInput);
-            // console.log(inputCentroCusto?.parentElement?.parentElement?.parentElement);
-          }
-
           const inputAtributo = document.getElementById(
             getIdByAtributo(atributo)
           ) as HTMLInputElement;
@@ -63,7 +53,7 @@ export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
         }
       }
     }
-  }, []);
+  }, [valor]);
 
   function getIdByAtributo(atributo: string) {
     const idsInputsAtributo = {
@@ -139,7 +129,7 @@ export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
 
         {valor == 1 && (
           <>
-            <BeneficiosDemanda />
+            <BeneficiosDemanda rascunho={props.rascunho} />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
@@ -154,6 +144,9 @@ export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
               </BoxBotaoTerciario>
               <BoxBotoesPriSec>
                 <BotaoSecundario
+                  onClick={() => {
+                    setValor(valor - 1);
+                  }}
                   sx={{
                     width: "25%",
                     minWidth: "auto",
@@ -161,14 +154,7 @@ export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
                     marginRight: 3,
                   }}
                   variant="outlined"
-                  startIcon={
-                    <ArrowBackIosRoundedIcon
-                      sx={{ width: "15px" }}
-                      onClick={() => {
-                        setValor(valor - 1);
-                      }}
-                    />
-                  }
+                  startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}
                 >
                   Voltar
                 </BotaoSecundario>
@@ -192,7 +178,7 @@ export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
 
         {valor == 2 && (
           <>
-            <InputAnexos />
+            <InputAnexos rascunho={props.rascunho} />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
@@ -207,6 +193,9 @@ export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
               </BoxBotaoTerciario>
               <BoxBotoesPriSec>
                 <BotaoSecundario
+                  onClick={() => {
+                    setValor(1);
+                  }}
                   sx={{
                     width: "25%",
                     minWidth: "auto",
@@ -214,14 +203,7 @@ export default function TelaCriacaoDemanda(props: { rascunho: boolean }) {
                     marginRight: 3,
                   }}
                   variant="outlined"
-                  startIcon={
-                    <ArrowBackIosRoundedIcon
-                      sx={{ width: "15px" }}
-                      onClick={() => {
-                        setValor(1);
-                      }}
-                    />
-                  }
+                  startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}
                 >
                   Voltar
                 </BotaoSecundario>

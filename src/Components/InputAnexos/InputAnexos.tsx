@@ -8,15 +8,15 @@ import Typography from "@mui/material/Typography";
 
 import Dropzone from "../Dropzone/Dropzone";
 
-export default function InputAnexos() {
+export default function InputAnexos(props: { rascunho: boolean }) {
   return (
     <>
       <BoxTypographyAnexos>
-        <Typography sx={{ color: "#595959" }}>Anexos</Typography>
+        <Typography sx={{ color: "#595959", marginTop: 2 }}>Anexos</Typography>
       </BoxTypographyAnexos>
       <BoxContainerGeral sx={{ "&:hover": { borderColor: "#00579D" } }}>
         <BoxContainerConteudo>
-          <Dropzone />
+          <Dropzone rascunho={props.rascunho} />
         </BoxContainerConteudo>
       </BoxContainerGeral>
     </>

@@ -7,7 +7,7 @@ import Toolbar from "../Components/Toolbar/Toolbar";
 import Filter from "../Components/Filtro/Filtro";
 import Login from "./Login/Login";
 import Inicio from "./Inicio/Inicio";
-import TelaCriacaoDemanda from "./TelaCriacaoDemanda/TelaCriacaoDemanda";
+import CriacaoDemanda from "./CriacaoDemanda/CriacaoDemanda";
 import TelaColecaoProcesso from "./TelaColecaoProcesso/TelaColecaoProcesso";
 import TelaProcesso from "./TelaProcesso/TelaProcesso";
 import Notificacoes from "./Notificacoes/Notificacoes";
@@ -49,7 +49,8 @@ export default function App() {
                 <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} />} />
                 <Route path="/notifications" element={<Notificacoes />} />
                 <Route path="/chats" element={<Chats aberto={sidebarAberta} />}></Route>
-                <Route path="/createdemand" element={<TelaCriacaoDemanda rascunho={false}/>} />
+                <Route path="/createdemand" element={<CriacaoDemanda rascunho={false}/>} />
+                <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar}/>} />
 
                 <Route path="/home/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
                 <Route path="/mydemands/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
@@ -59,7 +60,7 @@ export default function App() {
                 <Route path="/home/ata/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
 
                 <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar}/>}></Route>
-                <Route path="/continuedemand" element={<TelaCriacaoDemanda rascunho={true}/>}></Route>
+                <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true}/>}></Route>
 
 
                 <Route path="/home/demand/history" element={<Historico />} />

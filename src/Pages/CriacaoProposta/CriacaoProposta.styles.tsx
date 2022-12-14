@@ -11,5 +11,7 @@ export const ContainerGeral = styled(Container)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
+  height: "auto",
+  minHeight: "60vh",
   marginTop: 24,
 });

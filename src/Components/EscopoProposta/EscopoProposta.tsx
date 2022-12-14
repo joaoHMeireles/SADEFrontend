@@ -63,7 +63,7 @@ export default function EscopoProposta() {
           </BoxResponsaveis>
         </BoxResponsavel>
         <BoxPadrao>
-          <InputAnexos />
+          <InputAnexos rascunho={false} />
         </BoxPadrao>
       </BoxContainerGeral>
     </>

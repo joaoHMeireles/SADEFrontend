@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -25,19 +25,18 @@ export default function InformacaoGeral() {
     { label: "teste 5" },
   ];
 
-  // for (let atributo in info) {
-  //   if ((info as any)[atributo]) {
-  //     if (atributo == "centrosDeCusto") {
-  //       for (let i = 0; i < info[atributo].length; i++) {
-  //         for (let j = 0; j < lista.length; j++) {
-  //           if (lista[j].label == info[atributo][i]) {
-  //             centroCusto.push(lista[j].label);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+  useEffect(() => {
+    const selectCentroCusto = document.getElementById("centroCusto");
+
+    for (let atributo in info) {
+      if ((info as any)[atributo]) {
+        if (atributo == "centrosDeCusto") {
+        }
+      }
+    }
+
+    selectCentroCusto;
+  }, []);
 
   return (
     <>
