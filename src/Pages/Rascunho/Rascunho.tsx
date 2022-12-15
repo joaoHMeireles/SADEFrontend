@@ -528,6 +528,7 @@ export default function Rascunho(props: {
           listaComponents={listaComponents}
           grid={grid}
           rascunho={true}
+          proposta={false}
         />
       </BoxConteudo>
     </>

@@ -50,7 +50,7 @@ export default function App() {
                 <Route path="/notifications" element={<Notificacoes />} />
                 <Route path="/chats" element={<Chats aberto={sidebarAberta} />}></Route>
                 <Route path="/createdemand" element={<CriacaoDemanda rascunho={false}/>} />
-                <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar}/>} />
+                <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar} proposta={true}/>} />
 
                 <Route path="/home/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
                 <Route path="/mydemands/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />

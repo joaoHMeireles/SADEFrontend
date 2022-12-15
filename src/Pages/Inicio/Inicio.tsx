@@ -1265,7 +1265,7 @@ export default function Inicio(props: { filtrar: boolean, setFiltrar: React.Disp
         <BoxConteudo >
             <Breadcrumb />
             <Searchbar setFiltrar={props.setFiltrar} filtrar={props.filtrar} grid={grid} setGrid={setGrid} />
-            <CardsProcesso listaComponents={listaComponents} grid={grid} rascunho={false}/>
+            <CardsProcesso listaComponents={listaComponents} grid={grid} rascunho={false} proposta={false}/>
         </BoxConteudo>
     )
 }

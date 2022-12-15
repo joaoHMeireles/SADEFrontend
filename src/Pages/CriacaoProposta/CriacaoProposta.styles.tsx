@@ -12,6 +12,11 @@ export const ContainerGeral = styled(Container)({
   flexDirection: "column",
   justifyContent: "space-between",
   height: "auto",
-  minHeight: "60vh",
   marginTop: 24,
+});
+
+export const ContainerBoxTabs = styledBox({
+  alignItems: "center",
+  display: "flex",
+  justifyContent: "center",
 });
