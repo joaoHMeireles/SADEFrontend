@@ -1,13 +1,14 @@
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { TipoComponenteProcesso } from "../../constants/enuns";
 import { InterfaceComponenteProcesso } from "../../constants/interfaces";
-import { FormControlLabel, Grid, RadioGroup, Tooltip } from "@mui/material";
+import { Box, Grid, Tooltip } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import {
   BoxColecaoComponente,
   BoxGridCorProcesso,
   BoxListaCorProcesso,
+  GridBoxTituloRadio,
   GridComponenteProcesso,
   GridLinkTypograpfy,
   GridTypography,
@@ -16,6 +17,7 @@ import {
   MainPaper,
   UltimaListaTypography,
 } from "./ComponenteProcesso.styles";
+import { GlobalStyles } from "@mui/styled-engine";
 
 export default function ComponenteProcesso(props: {
   grid: boolean;
@@ -23,7 +25,7 @@ export default function ComponenteProcesso(props: {
   rascunho: boolean;
   proposta: boolean;
   propostaSelecionada: number;
-  setPropostaSelecionada: React.Dispatch<React.SetStateAction<number>>
+  setPropostaSelecionada: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const componente = props.atributosProcesso;
   const paginaAtual = localStorage.getItem("PAGINATUAL");
@@ -50,6 +52,7 @@ export default function ComponenteProcesso(props: {
       proposta={props.proposta}
       selecionado={props.propostaSelecionada == componente.id}
       setSelecionado={props.setPropostaSelecionada}
+      propostaSelecionada={props.propostaSelecionada}
     />
   ) : (
     <ListComponent
@@ -62,8 +65,18 @@ export default function ComponenteProcesso(props: {
       proposta={props.proposta}
       selecionado={props.propostaSelecionada == componente.id}
       setSelecionado={props.setPropostaSelecionada}
+      propostaSelecionada={props.propostaSelecionada}
     />
   );
+
+  useEffect(() => {
+    const card = document.getElementById(`${componente.id}`);
+    if (props.propostaSelecionada == componente.id) {
+      card?.classList.add("selecionado");
+    } else {
+      card?.classList.remove("selecionado");
+    }
+  }, [props.propostaSelecionada]);
 
   function setProcesso() {
     if (props.rascunho) {
@@ -78,9 +91,18 @@ export default function ComponenteProcesso(props: {
   }
 
   return (
-    <MainPaper key={componente.id}>
-      <Grid container>{processElement}</Grid>
-    </MainPaper>
+    <>
+      <GlobalStyles
+        styles={{
+          ".selecionado": {
+            backgroundColor: "rgba(0, 87, 157, 0.25) !important",
+          },
+        }}
+      />
+      <MainPaper key={componente.id} id={componente.id}>
+        <Grid container>{processElement}</Grid>
+      </MainPaper>
+    </>
   );
 }
 
@@ -137,19 +159,21 @@ function GridComponent(props: ComponentProps) {
             </Grid>
           </Tooltip>
           <GridComponenteProcesso item xs={11}>
-            <GridTypography variant="h6">
-              {props.componente.titulo}
-            </GridTypography>
-            <Radio
-              checked={props.selecionado}
-              onClick={() => {
-                props.setSelecionado(props.componente.id);
-                localStorage.setItem(
-                  `DEMANDASELECIONADA`,
-                  JSON.stringify(props.componente)
-                );
-              }}
-            />
+            <GridBoxTituloRadio>
+              <GridTypography variant="h6">
+                {props.componente.titulo}
+              </GridTypography>
+              <Radio
+                checked={props.selecionado}
+                onClick={() => {
+                  props.setSelecionado(props.componente.id);
+                  localStorage.setItem(
+                    `DEMANDASELECIONADA`,
+                    JSON.stringify(props.componente)
+                  );
+                }}
+              />
+            </GridBoxTituloRadio>
             <GridTypography variant="subtitle1">
               <span>Solicitante:</span> {props.componente.solicitante}
             </GridTypography>
@@ -185,36 +209,90 @@ function GridComponent(props: ComponentProps) {
 function ListComponent(props: ComponentProps) {
   return (
     <>
-      <Tooltip title={props.tituloToolTip} placement="left">
-        <Grid item xs={0.3}>
-          <BoxListaCorProcesso sx={{ backgroundColor: props.corComponente }} />
-        </Grid>
-      </Tooltip>
-      <ListaComponenteProcesso item xs={11.7}>
-        <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
-          {props.componente.id} - {props.componente.titulo}
-        </ListaTypography>
-        <ListaTypography variant="subtitle2">
-          <span>Solicitante:</span> {props.componente.solicitante}
-        </ListaTypography>
-        <ListaTypography variant="subtitle2" sx={{ maxWidth: "7.5vw" }}>
-          <span>Score:</span> {props.componente.score}
-        </ListaTypography>
-        <ListaTypography variant="subtitle2">
-          <span>Status:</span> {getNome(props.componente.status)}
-        </ListaTypography>
-        <UltimaListaTypography variant="body2" sx={{ maxWidth: "10vw" }}>
-          {!props.rascunho ? (
-            <Link to={props.linkComponente} onClick={props.setProcesso}>
-              Ver mais
-            </Link>
-          ) : (
-            <Link to={"/continuedemand"} onClick={props.setProcesso}>
-              Continuar criação
-            </Link>
-          )}
-        </UltimaListaTypography>
-      </ListaComponenteProcesso>
+      {!props.proposta ? (
+        <>
+          <Tooltip title={props.tituloToolTip} placement="left">
+            <Grid item xs={0.3}>
+              <BoxListaCorProcesso
+                sx={{ backgroundColor: props.corComponente }}
+              />
+            </Grid>
+          </Tooltip>
+          <ListaComponenteProcesso item xs={11.7}>
+            <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
+              {props.componente.id} - {props.componente.titulo}
+            </ListaTypography>
+            <ListaTypography variant="subtitle2">
+              <span>Solicitante:</span> {props.componente.solicitante}
+            </ListaTypography>
+            <ListaTypography variant="subtitle2" sx={{ maxWidth: "7.5vw" }}>
+              <span>Score:</span> {props.componente.score}
+            </ListaTypography>
+            <ListaTypography variant="subtitle2">
+              <span>Status:</span> {getNome(props.componente.status)}
+            </ListaTypography>
+            <UltimaListaTypography variant="body2" sx={{ maxWidth: "10vw" }}>
+              {!props.rascunho ? (
+                <Link to={props.linkComponente} onClick={props.setProcesso}>
+                  Ver mais
+                </Link>
+              ) : (
+                <Link to={"/continuedemand"} onClick={props.setProcesso}>
+                  Continuar criação
+                </Link>
+              )}
+            </UltimaListaTypography>
+          </ListaComponenteProcesso>
+        </>
+      ) : (
+        <>
+          <Tooltip title={props.tituloToolTip} placement="left">
+            <Grid item xs={0.3}>
+              <BoxListaCorProcesso
+                sx={{ backgroundColor: props.corComponente }}
+              />
+            </Grid>
+          </Tooltip>
+          <ListaComponenteProcesso item xs={11.7}>
+            <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
+              {props.componente.id} - {props.componente.titulo}
+            </ListaTypography>
+            <ListaTypography variant="subtitle2">
+              <span>Solicitante:</span> {props.componente.solicitante}
+            </ListaTypography>
+            <ListaTypography variant="subtitle2" sx={{ maxWidth: "7.5vw" }}>
+              <span>Score:</span> {props.componente.score}
+            </ListaTypography>
+            <ListaTypography variant="subtitle2">
+              <span>Status:</span> {getNome(props.componente.status)}
+            </ListaTypography>
+            <ListaTypography variant="subtitle2">
+              {!props.rascunho ? (
+                <Link to={props.linkComponente} onClick={props.setProcesso}>
+                  Ver mais
+                </Link>
+              ) : (
+                <Link to={"/continuedemand"} onClick={props.setProcesso}>
+                  Continuar criação
+                </Link>
+              )}
+            </ListaTypography>
+            <UltimaListaTypography variant="body2" sx={{ maxWidth: "3vw" }}>
+              <Radio
+                id={`${props.componente.id}`}
+                checked={props.selecionado}
+                onClick={() => {
+                  props.setSelecionado(props.componente.id);
+                  localStorage.setItem(
+                    `DEMANDASELECIONADA`,
+                    JSON.stringify(props.componente)
+                  );
+                }}
+              />
+            </UltimaListaTypography>
+          </ListaComponenteProcesso>
+        </>
+      )}
     </>
   );
 }
@@ -250,4 +328,5 @@ interface ComponentProps {
   proposta: boolean;
   selecionado: boolean;
   setSelecionado: React.Dispatch<React.SetStateAction<number>>;
+  propostaSelecionada: number;
 }

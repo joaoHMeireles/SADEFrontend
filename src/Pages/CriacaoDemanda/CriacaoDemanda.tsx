@@ -22,7 +22,10 @@ import {
   BoxBotoesPriSec,
 } from "./CriacaoDemanda.styles";
 
-export default function CriacaoDemanda(props: { rascunho: boolean }) {
+export default function CriacaoDemanda(props: {
+  rascunho: boolean;
+  proposta: boolean;
+}) {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
 
@@ -102,7 +105,7 @@ export default function CriacaoDemanda(props: { rascunho: boolean }) {
 
         {valor == 0 && (
           <>
-            <InformacaoGeral />
+            <InformacaoGeral proposta={props.proposta} />
             <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
@@ -129,7 +132,7 @@ export default function CriacaoDemanda(props: { rascunho: boolean }) {
 
         {valor == 1 && (
           <>
-            <BeneficiosDemanda rascunho={props.rascunho} />
+            <BeneficiosDemanda rascunho={props.rascunho} proposta={false}/>
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
@@ -178,7 +181,7 @@ export default function CriacaoDemanda(props: { rascunho: boolean }) {
 
         {valor == 2 && (
           <>
-            <InputAnexos rascunho={props.rascunho} />
+            <InputAnexos rascunho={props.rascunho} proposta={false}/>
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario

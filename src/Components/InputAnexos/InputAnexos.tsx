@@ -8,7 +8,10 @@ import Typography from "@mui/material/Typography";
 
 import Dropzone from "../Dropzone/Dropzone";
 
-export default function InputAnexos(props: { rascunho: boolean }) {
+export default function InputAnexos(props: {
+  rascunho: boolean;
+  proposta: boolean;
+}) {
   return (
     <>
       <BoxTypographyAnexos>
@@ -16,7 +19,7 @@ export default function InputAnexos(props: { rascunho: boolean }) {
       </BoxTypographyAnexos>
       <BoxContainerGeral sx={{ "&:hover": { borderColor: "#00579D" } }}>
         <BoxContainerConteudo>
-          <Dropzone rascunho={props.rascunho} />
+          <Dropzone rascunho={props.rascunho} proposta={props.proposta} />
         </BoxContainerConteudo>
       </BoxContainerGeral>
     </>

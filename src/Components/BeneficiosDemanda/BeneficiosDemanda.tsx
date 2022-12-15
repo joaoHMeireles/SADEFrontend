@@ -24,93 +24,100 @@ import {
   BoxFrequencia,
 } from "./BeneficiosDemanda.styles";
 
-export default function BeneficiosDemanda(props: { rascunho: boolean }) {
+export default function BeneficiosDemanda(props: {
+  rascunho: boolean;
+  proposta: boolean;
+}) {
   const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState(1);
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] =
     useState(1);
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] =
     useState(1);
-
   const [frequencia, setFrequencia] = useState("");
 
   useEffect(() => {
-    if (props.rascunho) {
-      const info = JSON.parse(
+    let info
+    if(props.rascunho){
+      info = JSON.parse(
         localStorage.getItem("RASCUNHOESCOLHIDO") as string
       );
+    } else if(props.proposta){
+      info = JSON.parse(
+        localStorage.getItem("DEMANDASELECIONADA") as string
+      );
+    }
 
-      for (let atributo in info) {
-        if ((info as any)[atributo]) {
-          if (atributo == "frequenciaUso") {
-            setFrequencia(info[atributo]);
-          }
+    for (let atributo in info) {
+      if ((info as any)[atributo]) {
+        if (atributo == "frequenciaUso") {
+          setFrequencia(info[atributo]);
+        }
 
-          if (atributo == "beneficiosQualitativos") {
-            setNumeroBeneficiosQualitativos(info[atributo].length);
+        if (atributo == "beneficiosQualitativos") {
+          setNumeroBeneficiosQualitativos(info[atributo].length);
 
-            for (let i = 0; i < info[atributo].length; i++) {
-              const beneficioQualitativo = document.getElementById(
-                atributo + i
-              ) as HTMLInputElement;
-              if (beneficioQualitativo) {
-                beneficioQualitativo.value = info[atributo][i];
-              }
+          for (let i = 0; i < info[atributo].length; i++) {
+            const beneficioQualitativo = document.getElementById(
+              atributo + i
+            ) as HTMLInputElement;
+            if (beneficioQualitativo) {
+              beneficioQualitativo.value = info[atributo][i];
             }
           }
+        }
 
-          if (atributo == "beneficiosPotenciais") {
-            setNumeroBeneficiosPotenciais(info[atributo].length);
+        if (atributo == "beneficiosPotenciais") {
+          setNumeroBeneficiosPotenciais(info[atributo].length);
 
-            for (let i = 0; i < info[atributo].length; i++) {
-              const descricao = document.getElementById(
-                "descricaoPotencial" + i
-              ) as HTMLInputElement;
-              const valorMensal = document.getElementById(
-                "valorMensalPotencial" + i
-              ) as HTMLInputElement;
-              const moeda = document.getElementById(
-                "moedaPotencial" + i
-              ) as HTMLInputElement;
+          for (let i = 0; i < info[atributo].length; i++) {
+            const descricao = document.getElementById(
+              "descricaoPotencial" + i
+            ) as HTMLInputElement;
+            const valorMensal = document.getElementById(
+              "valorMensalPotencial" + i
+            ) as HTMLInputElement;
+            const moeda = document.getElementById(
+              "moedaPotencial" + i
+            ) as HTMLInputElement;
 
-              if (descricao) {
-                descricao.value = info[atributo][i].descricao;
-              }
+            if (descricao) {
+              descricao.value = info[atributo][i].descricao;
+            }
 
-              if (valorMensal) {
-                valorMensal.value = info[atributo][i].valor;
-              }
+            if (valorMensal) {
+              valorMensal.value = info[atributo][i].valor;
+            }
 
-              if (moeda) {
-                moeda.value = info[atributo][i].moeda;
-              }
+            if (moeda) {
+              moeda.value = info[atributo][i].moeda;
             }
           }
+        }
 
-          if (atributo == "beneficiosReais") {
-            setNumeroBeneficiosReais(info[atributo].length);
+        if (atributo == "beneficiosReais") {
+          setNumeroBeneficiosReais(info[atributo].length);
 
-            for (let i = 0; i < info[atributo].length; i++) {
-              const descricao = document.getElementById(
-                "descricaoReal" + i
-              ) as HTMLInputElement;
-              const valorMensal = document.getElementById(
-                "valorMensalReal" + i
-              ) as HTMLInputElement;
-              const moeda = document.getElementById(
-                "moedaReal" + i
-              ) as HTMLInputElement;
+          for (let i = 0; i < info[atributo].length; i++) {
+            const descricao = document.getElementById(
+              "descricaoReal" + i
+            ) as HTMLInputElement;
+            const valorMensal = document.getElementById(
+              "valorMensalReal" + i
+            ) as HTMLInputElement;
+            const moeda = document.getElementById(
+              "moedaReal" + i
+            ) as HTMLInputElement;
 
-              if (descricao) {
-                descricao.value = info[atributo][i].descricao;
-              }
+            if (descricao) {
+              descricao.value = info[atributo][i].descricao;
+            }
 
-              if (valorMensal) {
-                valorMensal.value = info[atributo][i].valor;
-              }
+            if (valorMensal) {
+              valorMensal.value = info[atributo][i].valor;
+            }
 
-              if (moeda) {
-                moeda.value = info[atributo][i].moeda;
-              }
+            if (moeda) {
+              moeda.value = info[atributo][i].moeda;
             }
           }
         }

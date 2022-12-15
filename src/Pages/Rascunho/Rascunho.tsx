@@ -513,6 +513,7 @@ export default function Rascunho(props: {
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [grid, setGrid] = useState(true);
+  const [propostaSelecionada, setPropostaSelecionada] = useState(0);
 
   return (
     <>
@@ -529,6 +530,8 @@ export default function Rascunho(props: {
           grid={grid}
           rascunho={true}
           proposta={false}
+          propostaSelecionada={0}
+          setPropostaSelecionada={setPropostaSelecionada}
         />
       </BoxConteudo>
     </>

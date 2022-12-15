@@ -474,9 +474,9 @@ export default function CriacaoProposta(props: {
       <ContainerGeral>
         {valor == 1 && (
           <>
-            <InformacaoGeral />
-            <BeneficiosDemanda rascunho={false} />
-            <InputAnexos rascunho={false} />
+            <InformacaoGeral proposta={props.proposta} />
+            <BeneficiosDemanda rascunho={false} proposta={props.proposta} />
+            <InputAnexos rascunho={false} proposta={props.proposta} />
             <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}

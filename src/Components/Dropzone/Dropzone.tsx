@@ -8,7 +8,10 @@ import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import { BoxContainerUploadImagens, BoxTypography } from "./Dropzone.styles";
 import Arquivo from "../Arquivo/Arquivo";
 
-export default function Dropzone(props: { rascunho: boolean }) {
+export default function Dropzone(props: {
+  rascunho: boolean;
+  proposta: boolean;
+}) {
   const [files, setFile] = useState([]);
 
   useEffect(() => {
@@ -22,6 +25,10 @@ export default function Dropzone(props: { rascunho: boolean }) {
           console.log(info["anexos"]);
         }
       }
+    } else if (props.proposta) {
+      const info = JSON.parse(
+        localStorage.getItem("DEMANDASELECIONADA") as string
+      );
     }
   }, []);
 
