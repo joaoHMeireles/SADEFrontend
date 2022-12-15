@@ -28,48 +28,48 @@ export default function BeneficiosDemanda(props: {
   rascunho: boolean;
   proposta: boolean;
 }) {
-  const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState(1);
-  const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] =
-    useState(1);
-  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] =
-    useState(1);
+  const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(0);
+  const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(0);
+  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(0);
   const [frequencia, setFrequencia] = useState("");
+  const [informacaoProcesso, setInformacaoProcesso] = useState<any>()
 
   useEffect(() => {
-    let info
-    if(props.rascunho){
-      info = JSON.parse(
-        localStorage.getItem("RASCUNHOESCOLHIDO") as string
-      );
-    } else if(props.proposta){
-      info = JSON.parse(
-        localStorage.getItem("DEMANDASELECIONADA") as string
-      );
+    if(props.rascunho || props.proposta){
+      let info
+      if(props.rascunho){
+        info = JSON.parse( localStorage.getItem("RASCUNHOESCOLHIDO") as string)
+      } else if(props.proposta){
+        info = JSON.parse( localStorage.getItem("DEMANDASELECIONADA") as string)
+      }
+      setInformacaoProcesso(info);
+      setNumeroBeneficiosQualitativos(info.beneficiosQualitativos.length);
+      setNumeroBeneficiosReais(info.beneficiosReais.length);
+      setNumeroBeneficiosPotenciais(info.beneficiosPotenciais.length);
     }
+    
+  }, [])
 
-    for (let atributo in info) {
-      if ((info as any)[atributo]) {
+  useEffect(() => {
+    for (let atributo in informacaoProcesso) {
+      if ((informacaoProcesso as any)[atributo]) {
         if (atributo == "frequenciaUso") {
-          setFrequencia(info[atributo]);
+          setFrequencia(informacaoProcesso[atributo]);
         }
 
         if (atributo == "beneficiosQualitativos") {
-          setNumeroBeneficiosQualitativos(info[atributo].length);
-
-          for (let i = 0; i < info[atributo].length; i++) {
+          for (let i = 0; i < informacaoProcesso[atributo].length; i++) {
             const beneficioQualitativo = document.getElementById(
               atributo + i
             ) as HTMLInputElement;
             if (beneficioQualitativo) {
-              beneficioQualitativo.value = info[atributo][i];
+              beneficioQualitativo.value = informacaoProcesso[atributo][i];
             }
           }
         }
 
         if (atributo == "beneficiosPotenciais") {
-          setNumeroBeneficiosPotenciais(info[atributo].length);
-
-          for (let i = 0; i < info[atributo].length; i++) {
+          for (let i = 0; i < informacaoProcesso[atributo].length; i++) {
             const descricao = document.getElementById(
               "descricaoPotencial" + i
             ) as HTMLInputElement;
@@ -81,23 +81,21 @@ export default function BeneficiosDemanda(props: {
             ) as HTMLInputElement;
 
             if (descricao) {
-              descricao.value = info[atributo][i].descricao;
+              descricao.value = informacaoProcesso[atributo][i].descricao;
             }
 
             if (valorMensal) {
-              valorMensal.value = info[atributo][i].valor;
+              valorMensal.value = informacaoProcesso[atributo][i].valor;
             }
 
             if (moeda) {
-              moeda.value = info[atributo][i].moeda;
+              moeda.value = informacaoProcesso[atributo][i].moeda;
             }
           }
         }
 
         if (atributo == "beneficiosReais") {
-          setNumeroBeneficiosReais(info[atributo].length);
-
-          for (let i = 0; i < info[atributo].length; i++) {
+          for (let i = 0; i < informacaoProcesso[atributo].length; i++) {
             const descricao = document.getElementById(
               "descricaoReal" + i
             ) as HTMLInputElement;
@@ -109,15 +107,15 @@ export default function BeneficiosDemanda(props: {
             ) as HTMLInputElement;
 
             if (descricao) {
-              descricao.value = info[atributo][i].descricao;
+              descricao.value = informacaoProcesso[atributo][i].descricao;
             }
 
             if (valorMensal) {
-              valorMensal.value = info[atributo][i].valor;
+              valorMensal.value = informacaoProcesso[atributo][i].valor;
             }
 
             if (moeda) {
-              moeda.value = info[atributo][i].moeda;
+              moeda.value = informacaoProcesso[atributo][i].moeda;
             }
           }
         }
