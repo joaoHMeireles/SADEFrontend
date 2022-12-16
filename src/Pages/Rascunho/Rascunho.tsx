@@ -54,16 +54,22 @@ const listaComponents: {}[] = [
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
     situacaoAtual:
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-    anexos: [
-      {
-        nome: "barulho que a máquina faz.mp4",
-        arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
-      },
-      {
-        nome: "Foto máquina após o uso.png",
-        arquivo: "SADH0D048RB734BpdHef08b08b08V438FVBWOF",
-      },
-    ],
+      anexos: [
+        {
+          id: 1,
+          nome: "barulho que a máquina faz.mp4",
+          tipo: "image/jpeg",
+          arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
+          usuario: 1,
+        },
+        {
+          id: 2,
+          nome: "barulho que a máquina faz.mp4",
+          tipo: "image/png",
+          arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
+          usuario: 1,
+        },
+      ],
   },
   {
     id: 3,
@@ -127,20 +133,22 @@ const listaComponents: {}[] = [
     pessoaDevolucao: "Alexandre de Moraes",
     motivoDevolucao:
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing h",
-    anexos: [
-      {
-        nome: "barulho que a máquina faz(1).mp4",
-        arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
-      },
-      {
-        nome: "Foto máquina após o uso(1).png",
-        arquivo: "SADH0D048RB734BpdHef08b08b08V438FVBWOF",
-      },
-      {
-        nome: "configuracaoMaquina.xml",
-        arquivo: "AB8BBisvbVYEFDIESOABF78yfgG69SDfVFV",
-      },
-    ],
+      anexos: [
+        {
+          id: 1,
+          nome: "barulho que a máquina faz.mp4",
+          tipo: "image/jpeg",
+          arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
+          usuario: 1,
+        },
+        {
+          id: 2,
+          nome: "barulho que a máquina faz.mp4",
+          tipo: "image/png",
+          arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
+          usuario: 1,
+        },
+      ],
   },
   {
     id: 4,
@@ -225,12 +233,22 @@ const listaComponents: {}[] = [
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
     escopo:
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-    anexos: [
-      {
-        nome: "configuracaoMaquina(1).xml",
-        arquivo: "AB8BBisvbVYEFDIESOABF78yfgG69SDfVFV",
-      },
-    ],
+      anexos: [
+        {
+          id: 1,
+          nome: "barulho que a máquina faz.mp4",
+          tipo: "image/jpeg",
+          arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
+          usuario: 1,
+        },
+        {
+          id: 2,
+          nome: "barulho que a máquina faz.mp4",
+          tipo: "image/png",
+          arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
+          usuario: 1,
+        },
+      ],
   },
   {
     id: 5,
@@ -345,12 +363,22 @@ const listaComponents: {}[] = [
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
     escopo:
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-    anexos: [
-      {
-        nome: "declaracao da equipe da cozinha.docs",
-        arquivo: "DSF9A8D7FGABOBFDIuibduiavbipashsad98tag",
-      },
-    ],
+      anexos: [
+        {
+          id: 1,
+          nome: "barulho que a máquina faz.mp4",
+          tipo: "image/jpeg",
+          arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
+          usuario: 1,
+        },
+        {
+          id: 2,
+          nome: "barulho que a máquina faz.mp4",
+          tipo: "image/png",
+          arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
+          usuario: 1,
+        },
+      ],
   },
   {
     id: 7,
@@ -400,12 +428,22 @@ const listaComponents: {}[] = [
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
     situacaoAtual:
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-    anexos: [
-      {
-        nome: "configuracaoMaquina(2).xml",
-        arquivo: "AB8BBisvbVYEFDIESOABF78yfgG69SDfVFV",
-      },
-    ],
+      anexos: [
+        {
+          id: 1,
+          nome: "barulho que a máquina faz.mp4",
+          tipo: "image/jpeg",
+          arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
+          usuario: 1,
+        },
+        {
+          id: 2,
+          nome: "barulho que a máquina faz.mp4",
+          tipo: "image/png",
+          arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
+          usuario: 1,
+        },
+      ],
   },
   {
     id: 9,
@@ -499,12 +537,22 @@ const listaComponents: {}[] = [
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
     escopo:
       "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or  randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything  embarrassing hidden in the middle of text. ",
-    anexos: [
-      {
-        nome: "declaracaoRosana.docs",
-        arquivo: "DSF9A8D7FGABOBFDIuibduiavbipashsad98tag",
-      },
-    ],
+      anexos: [
+        {
+          id: 1,
+          nome: "barulho que a máquina faz.mp4",
+          tipo: "image/jpeg",
+          arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
+          usuario: 1,
+        },
+        {
+          id: 2,
+          nome: "barulho que a máquina faz.mp4",
+          tipo: "image/png",
+          arquivo: "blasmsafuewoqwbfoy4308fubcq08b84obsdcJLBD",
+          usuario: 1,
+        },
+      ],
   },
 ];
 

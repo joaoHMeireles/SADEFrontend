@@ -28,9 +28,9 @@ export default function BeneficiosDemanda(props: {
   rascunho: boolean;
   proposta: boolean;
 }) {
-  const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(0);
-  const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(0);
-  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(0);
+  const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
+  const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
+  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
   const [frequencia, setFrequencia] = useState("");
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>()
 
