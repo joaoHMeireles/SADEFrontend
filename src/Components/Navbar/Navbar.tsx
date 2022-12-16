@@ -8,10 +8,10 @@ import { NavBar, BoxTextField, TextFieldLinguas } from "./Navbar.styles";
 
 const listaLinguas = [
     "Português",
-    "Inglês(EUA)",
-    "Espanhol",
-    "Inglês(RU)",
-    "Francês"
+    "English(USA)",
+    "Espanõl",
+    "Englsh(UK)",
+    "Français"
 ]
 
 export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
@@ -58,7 +58,9 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                                     </MenuItem>
                                 ))}
                             </TextFieldLinguas>
-                            <Avatar {...stringAvatar('ROMÁRIO')} />
+                            <Avatar {...stringAvatar('camilly_pessotti')} onClick={() => {
+                                window.location.href = "/profile";
+                            }} />
                         </BoxTextField>
                     </Toolbar>
                 </NavBar>
