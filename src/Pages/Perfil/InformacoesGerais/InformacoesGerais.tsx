@@ -31,7 +31,7 @@ export default function InformacoesGerais() {
         </h4>
 
         <p>
-          Romário Hornburg
+          Benson Rodrigues
         </p>
 
         <h4>
@@ -39,7 +39,7 @@ export default function InformacoesGerais() {
         </h4>
 
         <p>
-          romario_hornburg@weg.net
+          benson_rodrigues@weg.net
         </p>
       </Box>
 
@@ -51,7 +51,7 @@ export default function InformacoesGerais() {
         </h4>
 
         <p>
-          Nome do departamento
+          RH
         </p>
 
         <h4>
@@ -59,7 +59,7 @@ export default function InformacoesGerais() {
         </h4>
 
         <p>
-          Nome do setor
+          Treinamento
         </p>
       </Box>
     </Box>
