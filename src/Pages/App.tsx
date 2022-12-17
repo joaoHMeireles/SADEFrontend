@@ -20,6 +20,7 @@ import { MainTheme, ContentTheme } from "../Themes";
 import Historico from "./Historico/Historico";
 import CriacaoProposta from "./CriacaoProposta/CriacaoProposta";
 import Rascunho from "./Rascunho/Rascunho";
+import CriacaoPauta from "./CriacaoPauta/CriacaoPauta";
 
 
 export default function App() {
@@ -52,6 +53,7 @@ export default function App() {
                 <Route path="/chats" element={<Chats aberto={sidebarAberta} />}></Route>
                 <Route path="/createdemand" element={<CriacaoDemanda rascunho={false} proposta={false}/>} />
                 <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar} proposta={true}/>} />
+                <Route path="/createproposal" element={<CriacaoPauta setFiltrar={setFiltrar} filtrar={filtrar} />} />
 
                 <Route path="/home/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
                 <Route path="/mydemands/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />

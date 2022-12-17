@@ -29,13 +29,15 @@ export default function Dropzone(props: {
       info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string);
     }
 
-    const novosArquivos = [];
+    if (info) {
+      const novosArquivos = [];
 
-    for (let i = 0; i < info["anexos"].length; i++) {
-      novosArquivos.push(info["anexos"][i]);
+      for (let i = 0; i < info["anexos"].length; i++) {
+        novosArquivos.push(info["anexos"][i]);
+      }
+
+      setAquivos(novosArquivos);
     }
-
-    setAquivos(novosArquivos);
   }, []);
 
   const onDrop = useCallback((acceptedFiles: any) => {

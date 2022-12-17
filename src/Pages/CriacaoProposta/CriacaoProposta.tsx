@@ -13,8 +13,8 @@ import PanoramaFishEyeRoundedIcon from "@mui/icons-material/PanoramaFishEyeRound
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 
-import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
+import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 
 import { ContainerGeral, ContainerBoxTabs } from "./CriacaoProposta.styles";
