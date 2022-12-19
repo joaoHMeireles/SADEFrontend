@@ -10,7 +10,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 export default function InformacoesGerais() {
   return (
-    <Box sx={{ alignItems: "center", color: "#595959", display: "flex", flexDirection: "column", justifyContent: "center", width: "100%" }}>
+    <Box sx={{ alignItems: "center", color: "#595959", display: "flex", flexDirection: "column", height: "100%", justifyContent: "center", width: "100%" }}>
       <Box sx={{ alignItems: "flex-start", borderBottom: "2px solid #ddd", display: "flex", flexDirection: "column", justifyContent: "flex-start", height: "auto", padding: "2rem 0", width: "90%" }}>
         <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", height: "auto", width: "100%" }}>
           <h2>Dados pessoais</h2>
