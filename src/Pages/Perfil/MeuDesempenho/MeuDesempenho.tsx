@@ -6,20 +6,23 @@ import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const data = {
+const data1 = {
   labels: ["Concluídas", "Em andamento", "Aprovadas", "Reprovadas"],
   datasets: [{
     label: "Demandas",
     data: [1, 3, 2, 1],
-    backgroundColor: ["#00579D", "#5B93BF", "#95B9D5", "#FFF"]
+    backgroundColor: ["#00579D", "#5B93BF", "#95B9D5", "#FFF"],
+    borderColor: ["#eee"],
+    borderWidth: 1
   }]
 }
 
-const options: _DeepPartialObject<PluginChartOptions<"doughnut">> = {
+const options1: _DeepPartialObject<PluginChartOptions<"doughnut">> = {
   plugins: {
     legend: {
-      position: 'left',
+      position: "left",
       labels: {
+        padding: 16,
         usePointStyle: true,
         pointStyle: "circle"
       }
@@ -29,9 +32,11 @@ const options: _DeepPartialObject<PluginChartOptions<"doughnut">> = {
 
 export default function MeuDesempenho() {
   return (
-    <Container>
-      <Box sx={{ height: "300px", width: "300px" }}>
-        <Doughnut data={data} options={options} />
+    <Container sx={{ alignItems: "center", display: "flex", justifyContent: "space-between" }}>
+      <Box sx={{ backgroundColor: "#EEE", height: "auto", padding: "0 1rem 0 0", width: "auto" }}>
+        <Box sx={{ height: "auto", width: "20vw" }}>
+          <Doughnut data={data1} options={options1} />
+        </Box>
       </Box>
     </Container>
   );
