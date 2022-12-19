@@ -6,10 +6,13 @@ import ComponenteColecaoProcesso from "../ComponenteProcesso/ComponenteColecaoPr
 export default function CardsProcesso(props: {
   listaComponents: any[];
   grid: boolean;
-  rascunho: boolean;
-  proposta: boolean;
-  propostaSelecionada: number;
-  setPropostaSelecionada: React.Dispatch<React.SetStateAction<number>>
+  rascunho?: boolean;
+  proposta?: boolean;
+  pauta?: boolean;
+  propostas?: any[];
+  setPropostas?: React.Dispatch<React.SetStateAction<Array<Object>>>;
+  propostaSelecionada?: number;
+  setPropostaSelecionada?: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const matches = useMediaQuery("(max-width:1100px)");
 
@@ -22,6 +25,9 @@ export default function CardsProcesso(props: {
           grid={props.grid}
           rascunho={props.rascunho}
           proposta={props.proposta}
+          pauta={props.pauta}
+          propostas={props.propostas}
+          setPropostas={props.setPropostas}
           propostaSelecionada={props.propostaSelecionada}
           setPropostaSelecionada={props.setPropostaSelecionada}
         />

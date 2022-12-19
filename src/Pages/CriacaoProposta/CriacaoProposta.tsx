@@ -37,7 +37,6 @@ import {
 export default function CriacaoProposta(props: {
   filtrar: boolean;
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
-  proposta: boolean;
 }) {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
@@ -497,8 +496,7 @@ export default function CriacaoProposta(props: {
           <CardsProcesso
             listaComponents={listaComponents}
             grid={grid}
-            rascunho={false}
-            proposta={props.proposta}
+            proposta={true}
             propostaSelecionada={propostaSelecionada}
             setPropostaSelecionada={setPropostaSelecionada}
           />
@@ -522,9 +520,9 @@ export default function CriacaoProposta(props: {
       <ContainerGeral>
         {valor == 1 && (
           <>
-            <InformacaoGeral proposta={props.proposta} />
-            <BeneficiosDemanda rascunho={false} proposta={props.proposta} />
-            <InputAnexos rascunho={false} proposta={props.proposta} />
+            <InformacaoGeral proposta={true} />
+            <BeneficiosDemanda rascunho={false} proposta={true} />
+            <InputAnexos rascunho={false} proposta={true} />
             <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
@@ -551,7 +549,7 @@ export default function CriacaoProposta(props: {
         )}
         {valor == 2 && (
           <>
-            <EscopoProposta proposta={props.proposta}/>
+            <EscopoProposta proposta={true} />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
