@@ -45,7 +45,7 @@ export default function MeuDesempenho() {
   return (
     <Container sx={{ alignItems: "center", display: "flex", justifyContent: "space-between" }}>
       <Box sx={{ backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", height: "auto", padding: "1rem", width: "auto" }}>
-        <Box sx={{ height: "auto", width: "10vw" }}>
+        <Box sx={{ height: "auto", width: "20vw" }}>
           <Doughnut data={data1} options={options1} plugins={[textCenter]} />
         </Box>
       </Box>
