@@ -106,7 +106,7 @@ export default function CriacaoDemanda(props: {
         {valor == 0 && (
           <>
             <InformacaoGeral proposta={false} />
-            <BoxContainerBotoes>
+                          <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
                 variant="outlined"

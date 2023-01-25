@@ -401,16 +401,17 @@ function ListComponent(props: ComponentProps) {
                 )}
               </ListaTypography>
               <UltimaListaTypography variant="body2" sx={{ maxWidth: "3vw" }}>
-                <Radio
-                  id={`${props.componente.id}`}
-                  checked={props.selecionado}
-                  onClick={() => {
-                    if (props.setSelecionado) {
-                      props.setSelecionado(props.componente.id);
-                      localStorage.setItem(
-                        `PROPOSTASELECIONADA`,
-                        JSON.stringify(props.componente)
-                      );
+                <Checkbox
+                  onClick={(e: any) => {
+                    const card = document.getElementById(
+                      `${props.componente.id}`
+                    );
+                    card?.classList.toggle("selecionado");
+
+                    if (e.target.checked) {
+                      if (props.propostas) {
+                        props.propostas.push(props.componente);
+                      }
                     }
                   }}
                 />
