@@ -6,7 +6,7 @@ export const dataLine1 = {
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
-        tension: 0.5
+        tension: 0.3
     }]
 };
 
@@ -40,7 +40,7 @@ export const dataLine2 = {
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
-        tension: 0.5
+        tension: 0.3
     }]
 };
 
@@ -69,12 +69,12 @@ export const optionsLine2 = {
 export const dataLine3 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
-        tension: 0.5
+        tension: 0.3
     }]
 };
 
@@ -108,7 +108,7 @@ export const dataLine4 = {
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
-        tension: 0.5
+        tension: 0.3
     }]
 };
 
