@@ -22,7 +22,7 @@ export default function InformacoesGerais() {
           </Box>
         </Box>
 
-        <Box sx={{ alignItems: "center", borderRadius: "360px", display: "flex", height: "8vw", justifyContent: "center", overflow: "hidden", marginTop: "1rem", width: "8vw" }}>
+        <Box sx={{ alignItems: "center", borderRadius: "360px", display: "flex", height: "10vw", justifyContent: "center", overflow: "hidden", marginTop: "1rem", width: "10vw" }}>
           <img id="fotoPerfil" src={fotoPerfil} alt="Foto de perfil" />
         </Box>
 
