@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
@@ -43,10 +43,64 @@ export default function CriacaoPauta(props: {
   const [valor, setValor] = useState(0);
   const [grid, setGrid] = useState(true);
   const [propostas, setPropostas] = useState(Array<Object>);
+  const [propostasElement, setPropostasElement] = useState<any>()
+  // const [excluir, setExcluir] = useState(false);
 
-  const propostaSelecionada = JSON.parse(
+
+  let propostaSelecionada = JSON.parse(
     localStorage.getItem("PROPOSTASELECIONADA") as string
   );
+
+  // useEffect(() => {}, [propostas]);
+
+  useEffect(() => {
+    for (let i = 0; i < propostas.length; i++) {
+      if (propostas[i].id == propostaSelecionada[i].id) {
+        const e = document.getElementById(propostaSelecionada[i].id);
+        e?.classList.add("selecionado");
+      }
+    }
+  });
+
+  useEffect(() => {
+    if(propostas == null){
+      return
+    }
+    const elemento = propostas.map((proposta: any) => {
+      return (
+        <>
+          <BoxGeral>
+            <BoxProposta>
+              <CardProposta cor="#6AACDA">
+                <BoxConteudoProposta>
+                  {proposta.titulo}
+                  <BoxIconeLink>
+                    <DeleteIcon
+                      sx={{
+                        "&:hover": {
+                          cursor: "pointer",
+                        },
+                      }}
+                      className={`${proposta.id}`}
+                      onClick={() => {
+                        console.log("chamou");
+                        propostas.splice(proposta.id - 1, 1);
+                        setPropostas(propostas);
+                      }}
+                    />
+                    <TypographyVermais variant="body2">
+                      Ver mais
+                    </TypographyVermais>
+                  </BoxIconeLink>
+                </BoxConteudoProposta>
+              </CardProposta>
+            </BoxProposta>
+          </BoxGeral>
+        </>
+      );
+    });
+    setPropostasElement(elemento)
+  }, [ propostas])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     console.log(newValue);
@@ -417,27 +471,7 @@ export default function CriacaoPauta(props: {
       )}
       {valor == 1 && (
         <>
-          {propostaSelecionada.map((proposta: any) => {
-            return (
-              <>
-                <BoxGeral>
-                  <BoxProposta>
-                    <CardProposta cor="#6AACDA">
-                      <BoxConteudoProposta>
-                        {proposta.titulo}
-                        <BoxIconeLink>
-                          <DeleteIcon />
-                          <TypographyVermais variant="body2">
-                            Ver mais
-                          </TypographyVermais>
-                        </BoxIconeLink>
-                      </BoxConteudoProposta>
-                    </CardProposta>
-                  </BoxProposta>
-                </BoxGeral>
-              </>
-            );
-          })}
+          {propostasElement}
           <BoxContainerBotoes>
             <BoxBotoesPriSec>
               <BotaoSecundario

@@ -402,6 +402,7 @@ function ListComponent(props: ComponentProps) {
               </ListaTypography>
               <UltimaListaTypography variant="body2" sx={{ maxWidth: "3vw" }}>
                 <Checkbox
+                  id="checkbox"
                   onClick={(e: any) => {
                     const card = document.getElementById(
                       `${props.componente.id}`
