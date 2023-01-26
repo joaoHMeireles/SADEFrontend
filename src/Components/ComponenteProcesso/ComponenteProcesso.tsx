@@ -33,7 +33,9 @@ export default function ComponenteProcesso(props: {
 }) {
   const componente = props.atributosProcesso;
   const paginaAtual = localStorage.getItem("PAGINATUAL");
-  let corComponente, tituloToolTip, nomeTipoLink;
+  let corComponente,
+    tituloToolTip,
+    nomeTipoLink = "";
 
   if (componente.tipo == TipoComponenteProcesso.Demanda) {
     corComponente = "#00579d";
@@ -60,6 +62,7 @@ export default function ComponenteProcesso(props: {
       selecionado={props.propostaSelecionada == componente.id}
       setSelecionado={props.setPropostaSelecionada}
       propostaSelecionada={props.propostaSelecionada}
+      verProcesso={verProcesso}
     />
   ) : (
     <ListComponent
@@ -76,8 +79,13 @@ export default function ComponenteProcesso(props: {
       selecionado={props.propostaSelecionada == componente.id}
       setSelecionado={props.setPropostaSelecionada}
       propostaSelecionada={props.propostaSelecionada}
+      verProcesso={verProcesso}
     />
   );
+
+  function verProcesso() {
+    location.href = nomeTipoLink;
+  }
 
   useEffect(() => {
     const card = document.getElementById(`${componente.id}`);
@@ -130,7 +138,7 @@ function GridComponent(props: ComponentProps) {
               />
             </Grid>
           </Tooltip>
-          <GridComponenteProcesso item xs={11}>
+          <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
             <GridTypography variant="h6">
               {props.componente.titulo}
             </GridTypography>
@@ -290,7 +298,7 @@ function ListComponent(props: ComponentProps) {
               />
             </Grid>
           </Tooltip>
-          <ListaComponenteProcesso item xs={11.7}>
+          <ListaComponenteProcesso item xs={11.7} onClick={props.verProcesso}>
             <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
               {props.componente.id} - {props.componente.titulo}
             </ListaTypography>
@@ -460,4 +468,5 @@ interface ComponentProps {
   selecionado?: boolean;
   setSelecionado?: React.Dispatch<React.SetStateAction<number>>;
   propostaSelecionada?: number;
+  verProcesso: MouseEventHandler<HTMLDivElement>;
 }

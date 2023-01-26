@@ -43,15 +43,12 @@ export default function CriacaoPauta(props: {
   const [valor, setValor] = useState(0);
   const [grid, setGrid] = useState(true);
   const [propostas, setPropostas] = useState(Array<Object>);
-  const [propostasElement, setPropostasElement] = useState<any>()
-  // const [excluir, setExcluir] = useState(false);
-
+  // const [propostasElement, setPropostasElement] = useState<any>();
+  const [propostasEscolhidas, setPropostasEscolhidas] = useState(Array<Object>);
 
   let propostaSelecionada = JSON.parse(
     localStorage.getItem("PROPOSTASELECIONADA") as string
   );
-
-  // useEffect(() => {}, [propostas]);
 
   useEffect(() => {
     for (let i = 0; i < propostas.length; i++) {
@@ -63,44 +60,52 @@ export default function CriacaoPauta(props: {
   });
 
   useEffect(() => {
-    if(propostas == null){
-      return
-    }
-    const elemento = propostas.map((proposta: any) => {
-      return (
-        <>
-          <BoxGeral>
-            <BoxProposta>
-              <CardProposta cor="#6AACDA">
-                <BoxConteudoProposta>
-                  {proposta.titulo}
-                  <BoxIconeLink>
-                    <DeleteIcon
-                      sx={{
-                        "&:hover": {
-                          cursor: "pointer",
-                        },
-                      }}
-                      className={`${proposta.id}`}
-                      onClick={() => {
-                        console.log("chamou");
-                        propostas.splice(proposta.id - 1, 1);
-                        setPropostas(propostas);
-                      }}
-                    />
-                    <TypographyVermais variant="body2">
-                      Ver mais
-                    </TypographyVermais>
-                  </BoxIconeLink>
-                </BoxConteudoProposta>
-              </CardProposta>
-            </BoxProposta>
-          </BoxGeral>
-        </>
-      );
-    });
-    setPropostasElement(elemento)
-  }, [ propostas])
+    console.log(propostas);
+  }, [propostas]);
+
+  // useEffect(() => {
+  //   console.log("Entrou");
+
+  //   if (propostasEscolhidas == null) {
+  //     return;
+  //   }
+  //   const elemento = propostasEscolhidas.map((proposta: any) => {
+  //     return (
+  //       <>
+  //         <BoxGeral>
+  //           <BoxProposta>
+  //             <CardProposta cor="#6AACDA">
+  //               <BoxConteudoProposta>
+  //                 {proposta.titulo}
+  //                 <BoxIconeLink>
+  //                   <DeleteIcon
+  //                     sx={{
+  //                       "&:hover": {
+  //                         cursor: "pointer",
+  //                       },
+  //                     }}
+  //                     className={`${proposta.id}`}
+  //                     onClick={() => {
+  //                       console.log("chamou");
+  //                       propostas.splice(proposta.id - 1, 1);
+  //                       setPropostas(propostas);
+  //                       setPropostasEscolhidas(propostas);
+  //                     }}
+  //                   />
+  //                   <TypographyVermais variant="body2">
+  //                     Ver mais
+  //                   </TypographyVermais>
+  //                 </BoxIconeLink>
+  //               </BoxConteudoProposta>
+  //             </CardProposta>
+  //           </BoxProposta>
+  //         </BoxGeral>
+  //       </>
+  //     );
+  //   });
+  //   setPropostasElement(elemento);
+  //   setPropostasEscolhidas(propostas);
+  // }, [propostas]);
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     console.log(newValue);
@@ -463,6 +468,7 @@ export default function CriacaoPauta(props: {
                 "PROPOSTASELECIONADA",
                 JSON.stringify(propostas)
               );
+              setPropostasEscolhidas(propostas);
             }}
           >
             Proximo
@@ -471,7 +477,43 @@ export default function CriacaoPauta(props: {
       )}
       {valor == 1 && (
         <>
-          {propostasElement}
+          {propostasEscolhidas.map((proposta: any, index) => {
+            return (
+              <>
+                <BoxGeral key={index}>
+                  <BoxProposta>
+                    <CardProposta cor="#6AACDA">
+                      <BoxConteudoProposta>
+                        {proposta.titulo}
+                        <BoxIconeLink>
+                          <DeleteIcon
+                            sx={{
+                              "&:hover": {
+                                cursor: "pointer",
+                              },
+                            }}
+                            className={`${proposta.id}`}
+                            onClick={() => {
+                              // console.log(
+                              //   propostas.slice(index + 1, propostas.length)
+                              // );
+                              // setPropostas(
+                              //   propostas.splice(index + 1, propostas.length)
+                              // );
+                              // setPropostasEscolhidas(propostas);
+                            }}
+                          />
+                          <TypographyVermais variant="body2">
+                            Ver mais
+                          </TypographyVermais>
+                        </BoxIconeLink>
+                      </BoxConteudoProposta>
+                    </CardProposta>
+                  </BoxProposta>
+                </BoxGeral>
+              </>
+            );
+          })}
           <BoxContainerBotoes>
             <BoxBotoesPriSec>
               <BotaoSecundario
