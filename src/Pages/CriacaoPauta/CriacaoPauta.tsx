@@ -58,10 +58,8 @@ export default function CriacaoPauta(props: {
       }
     }
   });
-
-  useEffect(() => {
-    console.log(propostas);
-  }, [propostas]);
+  //   console.log(propostas);
+  // }, [propostas]);
 
   // useEffect(() => {
   //   console.log("Entrou");
@@ -494,13 +492,8 @@ export default function CriacaoPauta(props: {
                             }}
                             className={`${proposta.id}`}
                             onClick={() => {
-                              // console.log(
-                              //   propostas.slice(index + 1, propostas.length)
-                              // );
-                              // setPropostas(
-                              //   propostas.splice(index + 1, propostas.length)
-                              // );
-                              // setPropostasEscolhidas(propostas);
+                              setPropostas(propostas.splice(index, 1))
+                              setPropostasEscolhidas(propostas);
                             }}
                           />
                           <TypographyVermais variant="body2">
