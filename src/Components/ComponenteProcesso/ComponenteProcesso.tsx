@@ -247,8 +247,12 @@ function GridComponent(props: ComponentProps) {
 
                     if (e.target.checked) {
                       if (props.propostas) {
+                        const componentePaginaPauta = props.componente
+                        componentePaginaPauta.link = props.linkComponente
                         props.propostas.push(props.componente);
                       }
+                    } else {
+                      props.propostas?.pop();
                     }
                   }}
                 />
@@ -419,6 +423,8 @@ function ListComponent(props: ComponentProps) {
 
                     if (e.target.checked) {
                       if (props.propostas) {
+                        const componentePaginaPauta = props.componente
+                        componentePaginaPauta.link = props.linkComponente
                         props.propostas.push(props.componente);
                       }
                     }

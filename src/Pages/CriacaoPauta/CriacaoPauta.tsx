@@ -35,6 +35,7 @@ import {
   TamanhoComponenteProcesso,
   TipoComponenteProcesso,
 } from "../../constants/enuns";
+import { Link } from "react-router-dom";
 
 export default function CriacaoPauta(props: {
   filtrar: boolean;
@@ -43,7 +44,6 @@ export default function CriacaoPauta(props: {
   const [valor, setValor] = useState(0);
   const [grid, setGrid] = useState(true);
   const [propostas, setPropostas] = useState(Array<Object>);
-  // const [propostasElement, setPropostasElement] = useState<any>();
   const [propostasEscolhidas, setPropostasEscolhidas] = useState(Array<Object>);
 
   let propostaSelecionada = JSON.parse(
@@ -492,12 +492,14 @@ export default function CriacaoPauta(props: {
                             }}
                             className={`${proposta.id}`}
                             onClick={() => {
-                              setPropostas(propostas.splice(index, 1))
+                              propostas.splice(index, 1)
                               setPropostasEscolhidas(propostas);
                             }}
                           />
                           <TypographyVermais variant="body2">
-                            Ver mais
+                            <Link to={proposta.link}>
+                              Ver mais
+                            </Link>
                           </TypographyVermais>
                         </BoxIconeLink>
                       </BoxConteudoProposta>

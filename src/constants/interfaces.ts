@@ -8,6 +8,7 @@ export interface InterfaceComponenteProcesso {
     status: StatusComponenteProcesso,
     tamanho: TamanhoComponenteProcesso,
     tipo: TipoComponenteProcesso,
+    link?: String
 }
 
 export interface InterfaceColecaoComponenteProcesso {
