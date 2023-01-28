@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
@@ -26,6 +27,7 @@ import {
   BoxGeral,
   BoxIconeLink,
   BoxProposta,
+  BoxTituloProposta,
   TypographyVermais,
 } from "./CriacaoPauta.styles";
 
@@ -35,7 +37,6 @@ import {
   TamanhoComponenteProcesso,
   TipoComponenteProcesso,
 } from "../../constants/enuns";
-import { Link } from "react-router-dom";
 
 export default function CriacaoPauta(props: {
   filtrar: boolean;
@@ -482,7 +483,9 @@ export default function CriacaoPauta(props: {
                   <BoxProposta>
                     <CardProposta cor="#6AACDA">
                       <BoxConteudoProposta>
-                        {proposta.titulo}
+                        <BoxTituloProposta>
+                          {proposta.titulo}
+                        </BoxTituloProposta>
                         <BoxIconeLink>
                           <DeleteIcon
                             sx={{

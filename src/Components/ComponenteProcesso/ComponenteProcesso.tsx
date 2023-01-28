@@ -252,7 +252,12 @@ function GridComponent(props: ComponentProps) {
                         props.propostas.push(props.componente);
                       }
                     } else {
-                      props.propostas?.pop();
+                      console.log(props.componente.id);
+                      console.log(props.propostas?.slice(props.componente.id - 1));
+                      // console.log(props?.propostas?.slice(props.componente.id - 1, 1));
+                      // console.log(teste);
+
+                      // props.propostas?.pop();
                     }
                   }}
                 />

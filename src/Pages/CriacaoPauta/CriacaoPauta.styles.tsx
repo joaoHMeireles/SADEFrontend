@@ -10,7 +10,7 @@ export const BoxGeral = styledBox({
   display: "flex",
   justifyContent: "center",
   marginBottom: 24,
-  width: "100%",
+  width: "auto",
 });
 
 export const BoxProposta = styledBox({
@@ -24,13 +24,21 @@ export const BoxConteudoProposta = styledBox({
   alignItems: "center",
   display: "flex",
   justifyContent: "space-between",
+  width: "100%"
 });
+
+export const BoxTituloProposta = styledBox({
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap"
+})
 
 export const BoxIconeLink = styledBox({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
+  width: "auto"
 });
 
 export const TypographyVermais = styledTypography({
