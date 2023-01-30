@@ -98,6 +98,31 @@ export default function ComponenteProcesso(props: {
     }
   }, [props.propostaSelecionada]);
 
+  useEffect(() => {
+    const card = document.getElementById(`${componente.id}`);
+
+    console.log(card);
+    
+
+    if (card != undefined) {
+      for (let classe of card?.classList) {
+        if (classe == "selecionado") {
+          const checkbox = document.getElementById(
+            "checkbox"
+          ) as HTMLInputElement;
+          if (checkbox) {
+            console.log(checkbox);
+            
+            checkbox.checked = true;
+          }
+
+          console.log(checkbox);
+          
+        }
+      }
+    }
+  }, [props.propostas]);
+
   function setProcesso() {
     if (props.rascunho) {
       localStorage.setItem("RASCUNHOESCOLHIDO", JSON.stringify(componente));
@@ -239,6 +264,7 @@ function GridComponent(props: ComponentProps) {
                   {props.componente.titulo}
                 </GridTypography>
                 <Checkbox
+                id="checkbox"
                   onClick={(e: any) => {
                     const card = document.getElementById(
                       `${props.componente.id}`
@@ -247,19 +273,17 @@ function GridComponent(props: ComponentProps) {
 
                     if (e.target.checked) {
                       if (props.propostas) {
-                        const componentePaginaPauta = props.componente
-                        componentePaginaPauta.link = props.linkComponente
+                        const componentePaginaPauta = props.componente;
+                        componentePaginaPauta.link = props.linkComponente;
                         props.propostas.push(props.componente);
                       }
                     } else {
-                      console.log(props.componente.id);
-                      props.setPropostas(propostas => {
+                      props.setPropostas((propostas) => {
                         console.log(propostas);
-                        return propostas.filter(proposta => {
-                          console.log(proposta.id);
-                          proposta.id !== props.componente.id
-                        })
-                      })
+                        return propostas.filter((proposta) => {
+                          proposta.id !== props.componente.id;
+                        });
+                      });
                     }
                   }}
                 />
@@ -430,8 +454,8 @@ function ListComponent(props: ComponentProps) {
 
                     if (e.target.checked) {
                       if (props.propostas) {
-                        const componentePaginaPauta = props.componente
-                        componentePaginaPauta.link = props.linkComponente
+                        const componentePaginaPauta = props.componente;
+                        componentePaginaPauta.link = props.linkComponente;
                         props.propostas.push(props.componente);
                       }
                     }
