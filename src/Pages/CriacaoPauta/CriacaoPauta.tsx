@@ -111,6 +111,12 @@ export default function CriacaoPauta(props: {
     setValor(newValue);
   }
 
+  function removerProposta(id: number) {
+    setPropostas(propostas => {
+      return propostas.filter(proposta => proposta.id !== id)
+    })
+  }
+
   const listaComponents: {}[] = [
     {
       id: 1,
@@ -476,10 +482,10 @@ export default function CriacaoPauta(props: {
       )}
       {valor == 1 && (
         <>
-          {propostasEscolhidas.map((proposta: any, index) => {
+          {propostas.map((proposta: any, index) => {
             return (
               <>
-                <BoxGeral key={index}>
+                <BoxGeral key={proposta.id}>
                   <BoxProposta>
                     <CardProposta cor="#6AACDA">
                       <BoxConteudoProposta>
@@ -494,10 +500,7 @@ export default function CriacaoPauta(props: {
                               },
                             }}
                             className={`${proposta.id}`}
-                            onClick={() => {
-                              propostas.splice(index, 1)
-                              setPropostasEscolhidas(propostas);
-                            }}
+                            onClick={() => removerProposta(proposta.id)}
                           />
                           <TypographyVermais variant="body2">
                             <Link to={proposta.link}>

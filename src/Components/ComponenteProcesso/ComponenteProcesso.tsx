@@ -253,11 +253,13 @@ function GridComponent(props: ComponentProps) {
                       }
                     } else {
                       console.log(props.componente.id);
-                      console.log(props.propostas?.slice(props.componente.id - 1));
-                      // console.log(props?.propostas?.slice(props.componente.id - 1, 1));
-                      // console.log(teste);
-
-                      // props.propostas?.pop();
+                      props.setPropostas(propostas => {
+                        console.log(propostas);
+                        return propostas.filter(proposta => {
+                          console.log(proposta.id);
+                          proposta.id !== props.componente.id
+                        })
+                      })
                     }
                   }}
                 />
