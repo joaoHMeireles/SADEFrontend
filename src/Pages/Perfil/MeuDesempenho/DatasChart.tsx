@@ -161,7 +161,7 @@ export const pluginsDoughnut = {
     }
 };
 
-const dataHorizontalBar = {
+export const dataHorizontalBar = {
     datasets: [{
         label: "Entregas",
         data: [2, 4, 1],
@@ -169,7 +169,7 @@ const dataHorizontalBar = {
     }]
 };
 
-export const configHorizontalBar = {
+export const optionsHorizontalBar = {
     type: 'bar',
     dataHorizontalBar,
     options: {

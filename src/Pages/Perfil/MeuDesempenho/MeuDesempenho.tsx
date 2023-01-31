@@ -1,5 +1,5 @@
 import './MeuDesempenho.scss';
-import { dataLine1, optionsLine1, dataLine2, optionsLine2, dataLine3, optionsLine3, dataLine4, optionsLine4, dataDoughnut, pluginsDoughnut, configHorizontalBar } from "./DatasChart";
+import { dataLine1, optionsLine1, dataLine2, optionsLine2, dataLine3, optionsLine3, dataLine4, optionsLine4, dataDoughnut, pluginsDoughnut, dataHorizontalBar, optionsHorizontalBar } from "./DatasChart";
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -73,9 +73,9 @@ export default function MeuDesempenho() {
           </Box>
         </Box>
 
-        {/* <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "auto" }}>
-          <Bar config={configHorizontalBar} />
-        </Box> */}
+        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "auto" }}>
+          <Bar data={dataHorizontalBar} options={optionsHorizontalBar} />
+        </Box>
       </Box>
     </Container >
   );
