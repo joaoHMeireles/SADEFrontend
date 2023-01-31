@@ -45,66 +45,17 @@ export default function CriacaoPauta(props: {
   const [valor, setValor] = useState(0);
   const [grid, setGrid] = useState(true);
   const [propostas, setPropostas] = useState(Array<Object>);
-  const [propostasEscolhidas, setPropostasEscolhidas] = useState(Array<Object>);
-
-  let propostaSelecionada = JSON.parse(
-    localStorage.getItem("PROPOSTASELECIONADA") as string
-  );
 
   useEffect(() => {
     for (let i = 0; i < propostas.length; i++) {
-      if (propostas[i].id == propostaSelecionada[i].id) {
-        const e = document.getElementById(propostaSelecionada[i].id);
-        e?.classList.add("selecionado");
-      }
+      const e = document.getElementById(propostas[i].id);
+      e?.classList.add("selecionado");
     }
   });
-  //   console.log(propostas);
-  // }, [propostas]);
 
-  // useEffect(() => {
-  //   console.log("Entrou");
-
-  //   if (propostasEscolhidas == null) {
-  //     return;
-  //   }
-  //   const elemento = propostasEscolhidas.map((proposta: any) => {
-  //     return (
-  //       <>
-  //         <BoxGeral>
-  //           <BoxProposta>
-  //             <CardProposta cor="#6AACDA">
-  //               <BoxConteudoProposta>
-  //                 {proposta.titulo}
-  //                 <BoxIconeLink>
-  //                   <DeleteIcon
-  //                     sx={{
-  //                       "&:hover": {
-  //                         cursor: "pointer",
-  //                       },
-  //                     }}
-  //                     className={`${proposta.id}`}
-  //                     onClick={() => {
-  //                       console.log("chamou");
-  //                       propostas.splice(proposta.id - 1, 1);
-  //                       setPropostas(propostas);
-  //                       setPropostasEscolhidas(propostas);
-  //                     }}
-  //                   />
-  //                   <TypographyVermais variant="body2">
-  //                     Ver mais
-  //                   </TypographyVermais>
-  //                 </BoxIconeLink>
-  //               </BoxConteudoProposta>
-  //             </CardProposta>
-  //           </BoxProposta>
-  //         </BoxGeral>
-  //       </>
-  //     );
-  //   });
-  //   setPropostasElement(elemento);
-  //   setPropostasEscolhidas(propostas);
-  // }, [propostas]);
+  useEffect(() => {
+    console.log(propostas);
+  }, [valor]);
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     console.log(newValue);
@@ -112,9 +63,9 @@ export default function CriacaoPauta(props: {
   }
 
   function removerProposta(id: number) {
-    setPropostas(propostas => {
-      return propostas.filter(proposta => proposta.id !== id)
-    })
+    setPropostas((propostas) => {
+      return propostas.filter((proposta) => proposta.id !== id);
+    });
   }
 
   const listaComponents: {}[] = [
@@ -473,7 +424,6 @@ export default function CriacaoPauta(props: {
                 "PROPOSTASELECIONADA",
                 JSON.stringify(propostas)
               );
-              setPropostasEscolhidas(propostas);
             }}
           >
             Proximo
@@ -489,9 +439,7 @@ export default function CriacaoPauta(props: {
                   <BoxProposta>
                     <CardProposta cor="#6AACDA">
                       <BoxConteudoProposta>
-                        <BoxTituloProposta>
-                          {proposta.titulo}
-                        </BoxTituloProposta>
+                        <BoxTituloProposta>{proposta.titulo}</BoxTituloProposta>
                         <BoxIconeLink>
                           <DeleteIcon
                             sx={{
@@ -503,9 +451,7 @@ export default function CriacaoPauta(props: {
                             onClick={() => removerProposta(proposta.id)}
                           />
                           <TypographyVermais variant="body2">
-                            <Link to={proposta.link}>
-                              Ver mais
-                            </Link>
+                            <Link to={proposta.link}>Ver mais</Link>
                           </TypographyVermais>
                         </BoxIconeLink>
                       </BoxConteudoProposta>

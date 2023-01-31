@@ -37,6 +37,8 @@ export default function ComponenteProcesso(props: {
     tituloToolTip,
     nomeTipoLink = "";
 
+  const [isChecked, setIsChecked] = useState(false);
+
   if (componente.tipo == TipoComponenteProcesso.Demanda) {
     corComponente = "#00579d";
     tituloToolTip = "Demanda";
@@ -63,6 +65,8 @@ export default function ComponenteProcesso(props: {
       setSelecionado={props.setPropostaSelecionada}
       propostaSelecionada={props.propostaSelecionada}
       verProcesso={verProcesso}
+      isChecked={isChecked}
+      setIsChecked={setIsChecked}
     />
   ) : (
     <ListComponent
@@ -100,10 +104,6 @@ export default function ComponenteProcesso(props: {
 
   useEffect(() => {
     const card = document.getElementById(`${componente.id}`);
-
-    console.log(card);
-    
-
     if (card != undefined) {
       for (let classe of card?.classList) {
         if (classe == "selecionado") {
@@ -111,13 +111,8 @@ export default function ComponenteProcesso(props: {
             "checkbox"
           ) as HTMLInputElement;
           if (checkbox) {
-            console.log(checkbox);
-            
-            checkbox.checked = true;
+            setIsChecked(true);
           }
-
-          console.log(checkbox);
-          
         }
       }
     }
@@ -264,7 +259,11 @@ function GridComponent(props: ComponentProps) {
                   {props.componente.titulo}
                 </GridTypography>
                 <Checkbox
-                id="checkbox"
+                  id="checkbox"
+                  checked={props.isChecked}
+                  onChange={(e) => {
+                    props.setIsChecked(e.target.checked);
+                  }}
                   onClick={(e: any) => {
                     const card = document.getElementById(
                       `${props.componente.id}`
@@ -272,17 +271,15 @@ function GridComponent(props: ComponentProps) {
                     card?.classList.toggle("selecionado");
 
                     if (e.target.checked) {
-                      if (props.propostas) {
-                        const componentePaginaPauta = props.componente;
-                        componentePaginaPauta.link = props.linkComponente;
-                        props.propostas.push(props.componente);
-                      }
+                      const componentePaginaPauta = props.componente;
+                      componentePaginaPauta.link = props.linkComponente;
+
+                      props.propostas?.push(props.componente);
                     } else {
                       props.setPropostas((propostas) => {
-                        console.log(propostas);
-                        return propostas.filter((proposta) => {
-                          proposta.id !== props.componente.id;
-                        });
+                        return propostas.filter(
+                          (proposta) => proposta.id !== props.componente.id
+                        );
                       });
                     }
                   }}
@@ -506,4 +503,6 @@ interface ComponentProps {
   setSelecionado?: React.Dispatch<React.SetStateAction<number>>;
   propostaSelecionada?: number;
   verProcesso: MouseEventHandler<HTMLDivElement>;
+  isChecked?: boolean;
+  setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
 }
