@@ -1,14 +1,15 @@
 import './MeuDesempenho.scss';
-import { dataLine1, optionsLine1, dataLine2, optionsLine2, dataLine3, optionsLine3, dataLine4, optionsLine4, dataDoughnut, pluginsDoughnut } from "./DatasChart";
+import { dataLine1, optionsLine1, dataLine2, optionsLine2, dataLine3, optionsLine3, dataLine4, optionsLine4, dataDoughnut, pluginsDoughnut, configHorizontalBar } from "./DatasChart";
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, PluginChartOptions, LineElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, PluginChartOptions, LineElement, CategoryScale, LinearScale, PointElement, BarElement, Title } from 'chart.js';
 import { _DeepPartialObject } from 'chart.js/dist/types/utils';
-import { ChartProps, Doughnut } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
-ChartJS.register(ArcElement, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement);
+ChartJS.register(ArcElement, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement, BarElement, Title);
 
 export default function MeuDesempenho() {
   return (
@@ -39,35 +40,41 @@ export default function MeuDesempenho() {
         </Box>
       </Box>
 
-      <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "auto" }}>
-        <Box sx={{ marginRight: "2rem" }}>
-          <Box sx={{ alignItems: "center", display: "flex" }}>
-            <Box sx={{ backgroundColor: "#00579D", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
+      <Box sx={{ alignItems: "center", display: "flex", height: "auto", justifyContent: "space-between", width: "100%" }}>
+        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "auto" }}>
+          <Box sx={{ marginRight: "2rem" }}>
+            <Box sx={{ alignItems: "center", display: "flex" }}>
+              <Box sx={{ backgroundColor: "#00579D", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
 
-            <p>Concluídas</p>
+              <p>Concluídas</p>
+            </Box>
+
+            <Box sx={{ alignItems: "center", display: "flex" }}>
+              <Box sx={{ backgroundColor: "#5B93BF", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
+
+              <p>Em andamento</p>
+            </Box>
+
+            <Box sx={{ alignItems: "center", display: "flex" }}>
+              <Box sx={{ backgroundColor: "#95B9D5", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
+
+              <p>Aprovadas</p>
+            </Box>
+
+            <Box sx={{ alignItems: "center", display: "flex" }}>
+              <Box sx={{ backgroundColor: "#FFF", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
+
+              <p>Reprovadas</p>
+            </Box>
           </Box>
 
-          <Box sx={{ alignItems: "center", display: "flex" }}>
-            <Box sx={{ backgroundColor: "#5B93BF", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
-
-            <p>Em andamento</p>
-          </Box>
-
-          <Box sx={{ alignItems: "center", display: "flex" }}>
-            <Box sx={{ backgroundColor: "#95B9D5", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
-
-            <p>Aprovadas</p>
-          </Box>
-
-          <Box sx={{ alignItems: "center", display: "flex" }}>
-            <Box sx={{ backgroundColor: "#FFF", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
-
-            <p>Reprovadas</p>
+          <Box sx={{ alignItems: "center", diplay: "flex", height: "10vw", justifyContent: "center", width: "10vw" }}>
+            <Doughnut data={dataDoughnut} plugins={[pluginsDoughnut]} />
           </Box>
         </Box>
 
-        <Box sx={{ alignItems: "center", diplay: "flex", height: "10vw", justifyContent: "center", width: "10vw" }}>
-          <Doughnut data={dataDoughnut} plugins={[pluginsDoughnut]} />
+        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "auto" }}>
+          <Bar config={configHorizontalBar} />
         </Box>
       </Box>
     </Container >

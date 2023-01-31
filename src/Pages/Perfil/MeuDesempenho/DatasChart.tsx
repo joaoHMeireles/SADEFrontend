@@ -1,7 +1,7 @@
 export const dataLine1 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [1, 9, 2, 8, 3, 5, 8, 6, 5, 6],
+        data: [1, 2, 10, 9, 3, 4, 8, 7, 5, 6],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
@@ -35,7 +35,7 @@ export const optionsLine1 = {
 export const dataLine2 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [6, 5, 6, 8, 5, 3, 8, 2, 9, 1],
+        data: [6, 5, 7, 8, 4, 3, 9, 10, 2, 1],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
@@ -69,7 +69,7 @@ export const optionsLine2 = {
 export const dataLine3 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
@@ -103,7 +103,7 @@ export const optionsLine3 = {
 export const dataLine4 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [1, 2, 9, 8, 3, 4, 7, 6, 5, 6],
+        data: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
@@ -162,5 +162,25 @@ export const pluginsDoughnut = {
         ctx.fillText("Total", chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y - 10);
         ctx.font = "16px Helvetica";
         ctx.fillText(`${total}`, chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + 10);
+    }
+};
+
+const dataHorizontalBar = {
+    datasets: [{
+        label: "Entregas",
+        data: [2, 4, 1],
+        backgroundColor: ["#00579D", "#5B93BF", "#95B9D5"]
+    }]
+};
+
+export const configHorizontalBar = {
+    type: 'bar',
+    dataHorizontalBar,
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
     }
 };
