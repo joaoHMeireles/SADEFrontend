@@ -13,8 +13,8 @@ ChartJS.register(ArcElement, Tooltip, Legend, LineElement, CategoryScale, Linear
 
 export default function MeuDesempenho() {
   return (
-    <Container sx={{ alignItems: "center", display: "flex", flexDirection: "column", height: "100%", justifyContent: "center", width: "100%" }}>
-      <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "2rem" }}>
+    <Container sx={{ alignItems: "center", display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-around", width: "100%" }}>
+      <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", height: "auto", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
           <Box sx={{ height: "auto", width: "15vw" }}>
             <Line data={dataLine1} options={optionsLine1}></Line>
@@ -73,9 +73,9 @@ export default function MeuDesempenho() {
           </Box>
         </Box>
 
-        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "auto" }}>
+        {/* <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "auto" }}>
           <Bar config={configHorizontalBar} />
-        </Box>
+        </Box> */}
       </Box>
     </Container >
   );
