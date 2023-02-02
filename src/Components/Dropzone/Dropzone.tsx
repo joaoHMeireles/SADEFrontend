@@ -10,12 +10,11 @@ import { BoxContainerUploadImagens, BoxTypography } from "./Dropzone.styles";
 import Arquivo from "../Arquivo/Arquivo";
 import Box from "@mui/material/Box";
 
-export default function Dropzone() {
-  const [files, setFile] = useState<File[]>([]);
 type Anexos = {
   nome: string;
   tipo: string;
 };
+
 
 export default function Dropzone(props: {
   rascunho: boolean;
@@ -52,7 +51,7 @@ export default function Dropzone(props: {
       return
     }
 
-    files.push(file[0]["acceptedFiles"])
+    // files.push(file[0]["acceptedFiles"])
 
     setFile(files);
   }, []);
@@ -112,7 +111,3 @@ export default function Dropzone(props: {
     </>
   );
 }
-
-// arquivos.map((arquivo) => {
-//   return <Arquivo icone={arquivo} nome={arquivo} />;
-// })
