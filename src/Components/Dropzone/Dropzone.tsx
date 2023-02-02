@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 
@@ -8,9 +8,38 @@ import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 
 import { BoxContainerUploadImagens, BoxTypography } from "./Dropzone.styles";
 import Arquivo from "../Arquivo/Arquivo";
+import Box from "@mui/material/Box";
 
 export default function Dropzone() {
   const [files, setFile] = useState<File[]>([]);
+type Anexos = {
+  nome: string;
+  tipo: string;
+};
+
+export default function Dropzone(props: {
+  rascunho: boolean;
+  proposta: boolean;
+}) {
+  const [files, setFile] = useState([]);
+  const [arquivos, setAquivos] = useState<Array<Anexos>>([]);
+
+  useEffect(() => {
+    let info;
+    if (props.rascunho) {
+      info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
+    } else if (props.proposta) {
+      info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string);
+    }
+
+    const novosArquivos = [];
+
+    for (let i = 0; i < info["anexos"].length; i++) {
+      novosArquivos.push(info["anexos"][i]);
+    }
+
+    setAquivos(novosArquivos);
+  }, []);
 
   const onDrop = useCallback((acceptedFiles: any) => {
     const file: [] = acceptedFiles.map((acceptedFiles: any) => ({
@@ -58,6 +87,15 @@ export default function Dropzone() {
           </Typography>
           <FileUploadRoundedIcon sx={{ color: "#595959" }} />
         </BoxTypography>
+        {props.rascunho &&
+          arquivos.map((e: Anexos) => {
+            return <Arquivo icone={e.tipo} nome={e.nome} />;
+          })}
+
+        {props.proposta &&
+          arquivos.map((e: Anexos) => {
+            return <Arquivo icone={e.tipo} nome={e.nome} />;
+          })}
         {files.map((e, index) => {
           return (
             <Arquivo
@@ -72,3 +110,7 @@ export default function Dropzone() {
     </>
   );
 }
+
+// arquivos.map((arquivo) => {
+//   return <Arquivo icone={arquivo} nome={arquivo} />;
+// })

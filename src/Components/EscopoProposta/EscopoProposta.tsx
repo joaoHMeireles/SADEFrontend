@@ -16,7 +16,7 @@ import {
   TypographyStyled,
 } from "./EscopoProposta.styles";
 
-export default function EscopoProposta() {
+export default function EscopoProposta(props: { proposta: boolean }) {
   return (
     <>
       <BoxContainerGeral>
@@ -63,7 +63,7 @@ export default function EscopoProposta() {
           </BoxResponsaveis>
         </BoxResponsavel>
         <BoxPadrao>
-          <InputAnexos />
+          <InputAnexos rascunho={false} proposta={props.proposta} />
         </BoxPadrao>
       </BoxContainerGeral>
     </>

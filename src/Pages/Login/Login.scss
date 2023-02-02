@@ -1,16 +1,14 @@
 #login {
-  position: relative;
-  top: 0px;
-  height: 100vh;
   background-image: url("../../Assets/telaLoginWEG.png");
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
 }
 
 .imagemLogo {
-  width: 130px;
   height: 100px;
+  width: 130px;
 }
 
 .textoBotao {

@@ -3,14 +3,28 @@ import { BoxContainer, BoxConteudo } from "../../Pages/App.styles";
 import ComponenteProcesso from "../ComponenteProcesso/ComponenteProcesso";
 import ComponenteColecaoProcesso from "../ComponenteProcesso/ComponenteColecaoProcesso/ComponenteColecaoProcesso";
 
-export default function CardsProcesso(props: { listaComponents: any[], grid: boolean, rascunho: boolean }) {
+export default function CardsProcesso(props: {
+  listaComponents: any[];
+  grid: boolean;
+  rascunho: boolean;
+  proposta: boolean;
+  propostaSelecionada: number;
+  setPropostaSelecionada: React.Dispatch<React.SetStateAction<number>>
+}) {
   const matches = useMediaQuery("(max-width:1100px)");
 
   const componentesProcessos = props.listaComponents.map((processo: any) => {
     let componente;
     if (!processo.propostas) {
       componente = (
-        <ComponenteProcesso atributosProcesso={processo} grid={props.grid} rascunho={props.rascunho}/>
+        <ComponenteProcesso
+          atributosProcesso={processo}
+          grid={props.grid}
+          rascunho={props.rascunho}
+          proposta={props.proposta}
+          propostaSelecionada={props.propostaSelecionada}
+          setPropostaSelecionada={props.setPropostaSelecionada}
+        />
       );
     } else {
       componente = (
