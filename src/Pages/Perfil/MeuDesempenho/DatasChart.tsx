@@ -1,5 +1,5 @@
-// import * as faker from '@faker-js/faker';
-import faker from "faker";
+import * as faker from '@faker-js/faker';
+// import faker from "faker";
 
 export const dataLine1 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
