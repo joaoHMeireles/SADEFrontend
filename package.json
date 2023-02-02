@@ -16,9 +16,13 @@
     "@mui/material": "^5.10.17",
     "@mui/x-data-grid": "^5.17.14",
     "@mui/x-date-pickers": "^5.0.9",
+    "axios": "^1.2.1",
+    "chart.js": "^4.0.0",
     "dayjs": "^1.11.6",
+    "faker": "^5.5.3",
     "node-sass": "^7.0.3",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-router-dom": "^6.3.0",
@@ -26,6 +30,7 @@
     "sass": "^1.54.9"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",

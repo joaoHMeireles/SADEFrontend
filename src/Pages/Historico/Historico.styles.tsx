@@ -42,6 +42,10 @@ export const DataGridEstilizado = styled(DataGrid)(({ theme }) => ({
             color: '#00579d'
         }
     },
+    
+    "& .ultima .MuiDataGrid-columnSeparator": {
+        display: "none"
+    },
 
     "& .MuiDataGrid-footerContainer": {
         borderTop: "none",
