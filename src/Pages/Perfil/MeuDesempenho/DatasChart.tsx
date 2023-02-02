@@ -1,4 +1,4 @@
-import * as faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 // import faker from "faker";
 
 export const dataLine1 = {
@@ -197,6 +197,7 @@ export const dataHorizontalBar = {
         {
             label: 'Adiantadas',
             data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+
             backgroundColor: '#00579D',
         }
     ],
