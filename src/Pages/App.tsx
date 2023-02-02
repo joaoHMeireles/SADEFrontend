@@ -21,6 +21,7 @@ import Historico from "./Historico/Historico";
 import CriacaoProposta from "./CriacaoProposta/CriacaoProposta";
 import Rascunho from "./Rascunho/Rascunho";
 import CriacaoPauta from "./CriacaoPauta/CriacaoPauta";
+import VisualizarCriacaoPDF from "./VisualizarCriacaoPDF/VisualizarCriacaoPDF";
 
 
 export default function App() {
@@ -86,6 +87,8 @@ export default function App() {
 
                 <Route path="/home/agenda" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta}/>} />
                 <Route path="/home/ata" element={<TelaColecaoProcesso  sidebarAberta={sidebarAberta}/>} />
+
+                <Route path="/visualizarCriacaoPDF" element={<VisualizarCriacaoPDF/>}/>
               </Routes>
             </ThemeProvider>
           </MainBox>
