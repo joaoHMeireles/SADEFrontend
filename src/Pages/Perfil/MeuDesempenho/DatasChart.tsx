@@ -1,5 +1,5 @@
-// import * as faker from '@faker-js/faker';
-import faker from "faker";
+import * as faker from '@faker-js/faker';
+// import faker from "faker";
 
 export const dataLine1 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
@@ -9,7 +9,6 @@ export const dataLine1 = {
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
-        tension: 0.5
     }]
 };
 
@@ -43,7 +42,6 @@ export const dataLine2 = {
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
-        tension: 0.5
     }]
 };
 
@@ -77,7 +75,6 @@ export const dataLine3 = {
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
-        tension: 0.5
     }]
 };
 
@@ -111,7 +108,6 @@ export const dataLine4 = {
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
-        tension: 0.5
     }]
 };
 
