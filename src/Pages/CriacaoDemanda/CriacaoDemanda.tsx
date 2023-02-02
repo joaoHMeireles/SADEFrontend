@@ -24,10 +24,10 @@ import {
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
-  proposta: boolean;
 }) {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
+
 
   useEffect(() => {
     if (props.rascunho) {
@@ -105,8 +105,8 @@ export default function CriacaoDemanda(props: {
 
         {valor == 0 && (
           <>
-            <InformacaoGeral proposta={props.proposta} />
-            <BoxContainerBotoes>
+            <InformacaoGeral proposta={false} />
+                          <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
                 variant="outlined"

@@ -33,5 +33,5 @@ export const BoxBotoesPriSec = styledBox({
   alignItems: "center",
   display: "flex",
   justifyContent: "end",
-  width: "50%",
+  width: "90%",
 });

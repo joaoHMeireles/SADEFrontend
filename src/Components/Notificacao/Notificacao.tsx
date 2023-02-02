@@ -3,50 +3,59 @@ import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import {
-  BoxNotificacao, NotificacaoBoxIcone, NotificacaoLadoEsquerdo,
-  NotificacaoLadoDireito, TypographyMensagem, TypographyTitulo
+  BoxNotificacao,
+  NotificacaoBoxIcone,
+  NotificacaoLadoEsquerdo,
+  NotificacaoLadoDireito,
+  TypographyMensagem,
+  TypographyTitulo,
 } from "./Notificacao.styles";
 
-
 /**
- * 
- * @param props 
+ *
+ * @param props
  * @returns Retorna um componente de notificação
  */
 
 export default function Notificacao(props: {
+  id: number;
   Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
-  }
+  };
   titulo: string;
   mensagem: string;
+  lista: any[];
+  setLista: React.Dispatch<React.SetStateAction<Array<Object>>>;
 }) {
+  function removerNotificacao(id: number) {
+    props.setLista((notificacao) => {
+      return notificacao.filter((notificacao) => notificacao.id !== id);
+    });
+  }
+
   return (
     <>
       <BoxNotificacao>
-        <NotificacaoLadoEsquerdo >
-          <NotificacaoBoxIcone >
+        <NotificacaoLadoEsquerdo>
+          <NotificacaoBoxIcone>
             <props.Icone sx={{ color: "#595959" }}></props.Icone>
           </NotificacaoBoxIcone>
           <Box>
             <Box>
-              <TypographyTitulo
-                variant="h6"
-              >
-                {props.titulo}
-              </TypographyTitulo>
+              <TypographyTitulo variant="h6">{props.titulo}</TypographyTitulo>
             </Box>
             <Box>
-              <TypographyMensagem
-                variant="caption"
-              >
+              <TypographyMensagem variant="caption">
                 {props.mensagem}
               </TypographyMensagem>
             </Box>
           </Box>
         </NotificacaoLadoEsquerdo>
         <NotificacaoLadoDireito>
-          <DeleteRoundedIcon sx={{ color: "#595959" }} />
+          <DeleteRoundedIcon
+            sx={{ color: "#595959", cursor: "pointer" }}
+            onClick={() => removerNotificacao(props.id)}
+          />
         </NotificacaoLadoDireito>
       </BoxNotificacao>
     </>

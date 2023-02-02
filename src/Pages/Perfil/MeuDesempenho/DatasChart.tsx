@@ -1,12 +1,15 @@
+// import * as faker from '@faker-js/faker';
+import faker from "faker";
+
 export const dataLine1 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [1, 9, 2, 8, 3, 5, 8, 6, 5, 6],
+        data: [1, 3, 2, 10, 8, 9, 4, 6, 5, 7],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
-        tension: 0.3
+        tension: 0.5
     }]
 };
 
@@ -35,12 +38,12 @@ export const optionsLine1 = {
 export const dataLine2 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [6, 5, 6, 8, 5, 3, 8, 2, 9, 1],
+        data: [7, 5, 6, 4, 9, 8, 10, 2, 3, 1],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
-        tension: 0.3
+        tension: 0.5
     }]
 };
 
@@ -74,7 +77,7 @@ export const dataLine3 = {
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
-        tension: 0.3
+        tension: 0.5
     }]
 };
 
@@ -103,12 +106,12 @@ export const optionsLine3 = {
 export const dataLine4 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [1, 2, 9, 8, 3, 4, 7, 6, 5, 6],
+        data: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
-        tension: 0.3
+        tension: 0.5
     }]
 };
 
@@ -163,4 +166,42 @@ export const pluginsDoughnut = {
         ctx.font = "16px Helvetica";
         ctx.fillText(`${total}`, chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y + 10);
     }
+};
+
+export const optionsHorizontalBar = {
+    indexAxis: 'y' as const,
+    elements: {
+        bar: {
+            borderWidth: 2,
+        },
+    },
+    responsive: true,
+    plugins: {
+        legend: {
+            position: 'right' as const,
+        }
+    },
+};
+
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+export const dataHorizontalBar = {
+    labels,
+    datasets: [
+        {
+            label: 'Atrasadas',
+            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+            backgroundColor: '#95B9D5',
+        },
+        {
+            label: 'No prazo',
+            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+            backgroundColor: '#5B93BF',
+        },
+        {
+            label: 'Adiantadas',
+            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+            backgroundColor: '#00579D',
+        }
+    ],
 };

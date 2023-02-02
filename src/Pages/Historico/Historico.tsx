@@ -316,7 +316,7 @@ const colunas: GridColDef[] = [
         field: 'tarefa',
         headerClassName: "titulo-tabela",
         headerName: 'Tarefa requisitada',
-        width: 145,
+        width: 155,
         renderCell: (params: any) => {
             console.log(params);
 
@@ -347,22 +347,10 @@ const colunas: GridColDef[] = [
         width: 120
     },
     {
-        field: 'horarioRecebimento',
-        headerClassName: "titulo-tabela",
-        headerName: 'Horário recebido',
-        width: 140
-    },
-    {
         field: 'dataPrazoExecucao',
         headerClassName: "titulo-tabela",
         headerName: 'Data prazo',
         width: 100
-    },
-    {
-        field: 'horarioPrazoExecucao',
-        headerClassName: "titulo-tabela",
-        headerName: 'Horário prazo',
-        width: 120
     },
     {
         field: 'status',
@@ -383,7 +371,7 @@ const colunas: GridColDef[] = [
         field: 'tarefaExecutada',
         headerClassName: "titulo-tabela",
         headerName: 'Tarefa executada',
-        width: 145,
+        width: 155,
         renderCell: (params: any) => {
             console.log(params);
 
@@ -401,40 +389,26 @@ const colunas: GridColDef[] = [
         width: 130
     },
     {
-        field: 'horarioConclusao',
-        headerClassName: "titulo-tabela",
-        headerName: 'Horário conclusão',
-        width: 150
-    },
-    {
         field: 'pdfHistorico',
-        headerClassName: "titulo-tabela",
+        headerClassName: "titulo-tabela ultima",
         headerName: 'PDF',
         width: 60,
         disableColumnMenu: true,
         renderCell: (params: any) => {
             return (
                 <Tooltip title="Ver pdf" >
-                    <PictureAsPdfRoundedIcon sx={{ color: "#595959" }} />
+                    <PictureAsPdfRoundedIcon sx={{ color: "#595959", "&:hover": { color: "#00579d" } }} />
                 </Tooltip>
             )
         }
-    },
-    {
-        field: 'motivoDevolucao',
-        headerClassName: "titulo-tabela",
-        headerName: 'Motivo devolução',
-        width: 140
     }
 ];
 
 export default function Historico(props: {}) {
     const [tamanhoPagina, setTamanhoPagina] = useState(5);
     const [datagridHeight, setDatagridheight] = useState("44.5vh")
-    const [modalAberto, setModalAberto] = useState(false)
     const [mostrarPDF, setMostrarPDF] = useState(false)
     const [arquivoPDF, setArquivoPDF] = useState()
-    const [motivoDevolucao, setMotivoDevolucao] = useState("")
 
     const location = useLocation()
     const inicioDaPalavra = location.pathname.length - 14
@@ -447,12 +421,10 @@ export default function Historico(props: {}) {
     const historicos = historicosDemandas.filter(historico => historico.idDemanda == informacaoProcesso.id)
     const historicosFormatados = historicos.map((historico: Historico, index: number) => {
         let dataPrazoExecucao: any = historico.prazoExecucao?.toLocaleDateString()
-        let horarioPrazoExecucao: any = historico.prazoExecucao?.toLocaleTimeString()
 
         if (index != historicos.length) {
             if (historico.prazoExecucao == null || historico.prazoExecucao == undefined) {
                 dataPrazoExecucao = "-----------"
-                horarioPrazoExecucao = "-----------"
             }
         }
 
@@ -461,15 +433,11 @@ export default function Historico(props: {}) {
             tarefa: historico.tarefa,
             status: historico.status,
             dataRecebimento: historico.dataRecebimento?.toLocaleDateString(),
-            horarioRecebimento: historico.dataRecebimento?.toLocaleTimeString(),
             prazoExecucaoTotal: historico.prazoExecucao,
             dataPrazoExecucao: dataPrazoExecucao,
-            horarioPrazoExecucao: horarioPrazoExecucao,
             dataConclusaoTotal: historico.dataConclusao,
             dataConclusao: historico.dataConclusao?.toLocaleDateString(),
-            horarioConclusao: historico.dataConclusao?.toLocaleTimeString(),
             pdfHistorico: historico.pdfHistorico,
-            motivoDevolucao: historico.motivoDevolucao,
             tarefaExecutada: historico.tarefaExecutada,
             nomeUsuario: historico.usuario?.nome,
             cargoUsuario: historico.usuario?.tipoPessoa
@@ -480,11 +448,6 @@ export default function Historico(props: {}) {
     useEffect(() => {
         mudarTamanhoDatagrid(5)
     }, [])
-
-    function fecharModal() {
-        setModalAberto(false)
-        fecharPDF()
-    }
 
     function fecharPDF() {
         setMostrarPDF(false)
@@ -514,13 +477,9 @@ export default function Historico(props: {}) {
     }
 
     function acaoCelula(cell: GridCellParams<number>) {
-        if (cell.field == "pdfHistorico" && cell.row.pdfHistorico != "" && cell.row.pdfHistorico != undefined) {
-            setModalAberto(true)
+        if (cell.field == "pdfHistorico") {
             setArquivoPDF(cell.row.pdfHistorico);
             setMostrarPDF(true)
-        } else if (cell.field == "motivoDevolucao" && cell.row.motivoDevolucao != "" && cell.row.motivoDevolucao != undefined) {
-            setModalAberto(true)
-            setMotivoDevolucao(cell.row.motivoDevolucao)
         }
     }
 
@@ -708,22 +667,13 @@ export default function Historico(props: {}) {
                                 />
                             </Box>
                         </ContainerProcesso>
-                        <Modal open={modalAberto} >
-                            {mostrarPDF ?
-                                <Box>
-                                    <embed src={arquivoPDF} type="application/pdf" width="100%" height="100%" />
-                                    <IconButton onClick={fecharModal}>
-                                        <CloseIcon />
-                                    </IconButton>
-                                </Box>
-                                :
-                                <Box>
-                                    {motivoDevolucao}
-                                    <IconButton onClick={fecharModal}>
-                                        <CloseIcon />
-                                    </IconButton>
-                                </Box>
-                            }
+                        <Modal open={mostrarPDF} >
+                            <Box>
+                                <embed src={arquivoPDF} type="application/pdf" width="100%" height="100%" />
+                                <IconButton onClick={fecharPDF}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </Box>
                         </Modal>
                     </Container>
                 </BoxContainer>

@@ -1344,6 +1344,7 @@ export default function Inicio(props: {
         grid={grid}
         rascunho={false}
         proposta={false}
+        pauta={false}
         propostaSelecionada={0}
         setPropostaSelecionada={setPropostaSelecionada}
       />

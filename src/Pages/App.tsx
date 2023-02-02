@@ -20,6 +20,7 @@ import { MainTheme, ContentTheme } from "../Themes";
 import Historico from "./Historico/Historico";
 import CriacaoProposta from "./CriacaoProposta/CriacaoProposta";
 import Rascunho from "./Rascunho/Rascunho";
+import CriacaoPauta from "./CriacaoPauta/CriacaoPauta";
 
 
 export default function App() {
@@ -50,8 +51,9 @@ export default function App() {
                 <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} />} />
                 <Route path="/notifications" element={<Notificacoes />} />
                 <Route path="/chats" element={<Chats aberto={sidebarAberta} />}></Route>
-                <Route path="/createdemand" element={<CriacaoDemanda rascunho={false} proposta={false}/>} />
-                <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar} proposta={true}/>} />
+                <Route path="/createdemand" element={<CriacaoDemanda rascunho={false}/>} />
+                <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar}/>} />
+                <Route path="/createagenda" element={<CriacaoPauta setFiltrar={setFiltrar} filtrar={filtrar} />} />
 
                 <Route path="/home/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
                 <Route path="/mydemands/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
@@ -61,7 +63,7 @@ export default function App() {
                 <Route path="/home/ata/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
 
                 <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar}/>}></Route>
-                <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true} proposta={false}/>}></Route>
+                <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true}/>}></Route>
 
 
                 <Route path="/home/demand/history" element={<Historico />} />

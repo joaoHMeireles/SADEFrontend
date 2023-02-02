@@ -19,6 +19,7 @@ export const BoxGridCorProcesso = styledBox({
 
 export const GridComponenteProcesso = styledGrid({
   color: "#595959",
+  cursor: "pointer",
   display: "grid",
   height: "21vh",
   padding: "5px",
@@ -64,6 +65,7 @@ export const BoxListaCorProcesso = styledBox({
 export const ListaComponenteProcesso = styledGrid({
   alignItems: "center",
   color: "#595959",
+  cursor: "pointer",
   display: "flex",
   padding: "5px",
 });
