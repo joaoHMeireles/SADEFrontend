@@ -8,8 +8,9 @@ const styledTypography = styled(Typography);
 export const BoxGeral = styledBox({
   alignItems: "center",
   display: "flex",
+  flexDirection: "column",
   justifyContent: "center",
-  marginBottom: 24,
+  marginTop: 30,
   width: "auto",
 });
 
@@ -24,24 +25,43 @@ export const BoxConteudoProposta = styledBox({
   alignItems: "center",
   display: "flex",
   justifyContent: "space-between",
-  width: "100%"
+  width: "100%",
 });
 
 export const BoxTituloProposta = styledBox({
   overflow: "hidden",
   textOverflow: "ellipsis",
-  whiteSpace: "nowrap"
-})
+  whiteSpace: "nowrap",
+});
 
 export const BoxIconeLink = styledBox({
   alignItems: "center",
   display: "flex",
-  flexDirection: "column",
+  flexDirection: "row-reverse",
   justifyContent: "space-between",
-  width: "auto"
+  width: "6.5%",
 });
 
 export const TypographyVermais = styledTypography({
   color: "#00579D",
-  paddingTop: 8,
+});
+
+export const BoxInputsDataComissao = styledBox({
+  // position: "fixed",
+  // top: "80%",
+  // left: "71%",
+  // width: "100%",
+  alignItems: "center",
+  display: "flex",
+  justifyContent: "flex-end",
+  marginTop: 40,
+  height: "100%",
+  width: "90%",
+});
+
+export const BoxBotoes = styledBox({
+  position: "fixed",
+  top: "90%",
+  left: "68%",
+  width: "100%",
 });

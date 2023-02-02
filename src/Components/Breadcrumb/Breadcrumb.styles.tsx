@@ -7,7 +7,9 @@ const styledBox = styled(Box)
 export const BoxRota = styledBox({
     display: "flex", 
     alignItems: "center", 
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: 16,
+    marginLeft: 16
 })
 
 export const BoxBreadcrumb = styledBox({

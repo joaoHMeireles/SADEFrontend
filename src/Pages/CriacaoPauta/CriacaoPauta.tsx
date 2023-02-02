@@ -8,6 +8,9 @@ import Searchbar from "../../Components/Searchbar/Searchbar";
 
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
+import { MenuItem, Select, TextField } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
@@ -23,9 +26,11 @@ import {
 } from "../CriacaoDemanda/CriacaoDemanda.styles";
 
 import {
+  BoxBotoes,
   BoxConteudoProposta,
   BoxGeral,
   BoxIconeLink,
+  BoxInputsDataComissao,
   BoxProposta,
   BoxTituloProposta,
   TypographyVermais,
@@ -45,6 +50,16 @@ export default function CriacaoPauta(props: {
   const [valor, setValor] = useState(0);
   const [grid, setGrid] = useState(true);
   const [propostas, setPropostas] = useState(Array<Object>);
+
+  const comissao = [
+    "Comissão 1",
+    "Comissão 2",
+    "Comissão 3",
+    "Comissão 4",
+    "Comissão 5",
+  ];
+
+  const [comissoes, setComissoes] = useState(Array<String>);
 
   useEffect(() => {
     for (let i = 0; i < propostas.length; i++) {
@@ -413,8 +428,8 @@ export default function CriacaoPauta(props: {
             sx={{
               height: "3rem",
               position: "fixed",
-              left: "90%",
-              top: "70%",
+              left: "88%",
+              top: "90%",
             }}
             variant="contained"
             endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
@@ -432,6 +447,32 @@ export default function CriacaoPauta(props: {
       )}
       {valor == 1 && (
         <>
+          <BoxInputsDataComissao>
+            <FormControl sx={{ width: "10%" }}>
+              <InputLabel>Comissão</InputLabel>
+              <Select
+                sx={{ width: "100%" }}
+                value={comissoes}
+                onChange={(e) => {
+                  setComissoes(e.target.value);
+                }}
+                label="Comissão"
+              >
+                {comissao.map((comissao) => {
+                  return <MenuItem value={comissao}>{comissao}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+            <TextField
+              sx={{ marginLeft: 3 }}
+              type="date"
+              label="Data reunião"
+              defaultValue="0000-00-00"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            ></TextField>
+          </BoxInputsDataComissao>
           {propostas.map((proposta: any, index) => {
             return (
               <>
@@ -461,30 +502,28 @@ export default function CriacaoPauta(props: {
               </>
             );
           })}
-          <BoxContainerBotoes>
-            <BoxBotoesPriSec>
-              <BotaoSecundario
-                onClick={() => setValor(0)}
-                sx={{
-                  width: "10%",
-                  minWidth: "auto",
-                  height: "3rem",
-                  marginRight: 3,
-                }}
-                variant="outlined"
-                startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}
-              >
-                Voltar
-              </BotaoSecundario>
-              <BotaoPrimario
-                sx={{ width: "10%", minWidth: "auto", height: "3rem" }}
-                variant="contained"
-                endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
-              >
-                Enviar
-              </BotaoPrimario>
-            </BoxBotoesPriSec>
-          </BoxContainerBotoes>
+          <BoxBotoes>
+            <BotaoSecundario
+              onClick={() => setValor(0)}
+              sx={{
+                width: "10%",
+                minWidth: "auto",
+                height: "3rem",
+                marginRight: 3,
+              }}
+              variant="outlined"
+              startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}
+            >
+              Voltar
+            </BotaoSecundario>
+            <BotaoPrimario
+              sx={{ width: "10%", minWidth: "auto", height: "3rem" }}
+              variant="contained"
+              endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
+            >
+              Enviar
+            </BotaoPrimario>
+          </BoxBotoes>
         </>
       )}
     </BoxConteudo>

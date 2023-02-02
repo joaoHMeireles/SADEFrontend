@@ -504,8 +504,8 @@ export default function CriacaoProposta(props: {
             sx={{
               height: "3rem",
               position: "fixed",
-              left: "90%",
-              top: "70%",
+              left: "88%",
+              top: "90%",
             }}
             variant="contained"
             endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
