@@ -13,8 +13,8 @@ ChartJS.register(ArcElement, Tooltip, Legend, LineElement, CategoryScale, Linear
 
 export default function MeuDesempenho() {
   return (
-    <Container sx={{ alignItems: "center", display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-around", width: "100%" }}>
-      <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between" }}>
+    <Container sx={{ alignItems: "center", display: "flex", flexDirection: "column", height: "75vh", justifyContent: "space-around", width: "100%" }}>
+      <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-around" }}>
         <Box sx={{ backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", height: "auto", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
           <Box sx={{ height: "auto", width: "15vw" }}>
             <Line data={dataLine1} options={optionsLine1}></Line>
@@ -40,7 +40,7 @@ export default function MeuDesempenho() {
         </Box>
       </Box>
 
-      <Box sx={{ alignItems: "center", display: "flex", height: "auto", justifyContent: "space-between", width: "100%" }}>
+      <Box sx={{ alignItems: "center", display: "flex", height: "auto", justifyContent: "space-around", width: "100%" }}>
         <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "auto" }}>
           <Box sx={{ marginRight: "2rem" }}>
             <Box sx={{ alignItems: "center", display: "flex" }}>
@@ -68,13 +68,21 @@ export default function MeuDesempenho() {
             </Box>
           </Box>
 
-          <Box sx={{ alignItems: "center", diplay: "flex", height: "10vw", justifyContent: "center", width: "10vw" }}>
+          <Box sx={{ alignItems: "center", diplay: "flex", height: "10vw", justifyContent: "flex-end", width: "10vw" }}>
             <Doughnut data={dataDoughnut} plugins={[pluginsDoughnut]} />
           </Box>
         </Box>
 
-        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "50vw" }}>
-          <Bar data={dataHorizontalBar} options={optionsHorizontalBar} />
+        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "auto" }}>
+          <Box>
+            <p>Atrasadas</p>
+            <p>No prazo</p>
+            <p>Adiantadas</p>
+          </Box>
+
+          <Box sx={{ alignItems: "center", diplay: "flex", height: "auto", justifyContent: "flex-end", width: "20vw" }}>
+            <Bar data={dataHorizontalBar} options={optionsHorizontalBar} />
+          </Box>
         </Box>
       </Box>
     </Container >

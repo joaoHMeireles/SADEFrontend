@@ -1,14 +1,14 @@
-import { faker } from '@faker-js/faker';
-// import faker from "faker";
+import { drawPoint } from "chart.js/dist/types/helpers/helpers.canvas";
 
 export const dataLine1 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [1, 3, 2, 10, 8, 9, 4, 6, 5, 7],
+        data: [(10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed()],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
+        tension: 0.2
     }]
 };
 
@@ -37,11 +37,12 @@ export const optionsLine1 = {
 export const dataLine2 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [7, 5, 6, 4, 9, 8, 10, 2, 3, 1],
+        data: [(10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed()],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
+        tension: 0.2
     }]
 };
 
@@ -70,11 +71,12 @@ export const optionsLine2 = {
 export const dataLine3 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        data: [(10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed()],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
+        tension: 0.2
     }]
 };
 
@@ -103,11 +105,12 @@ export const optionsLine3 = {
 export const dataLine4 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+        data: [(10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed()],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
+        tension: 0.2
     }]
 };
 
@@ -135,17 +138,16 @@ export const optionsLine4 = {
 
 export const dataDoughnut = {
     datasets: [{
-        label: "Demandas",
-        data: [1, 3, 2, 1],
+        data: [(10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed()],
         backgroundColor: ["#00579D", "#5B93BF", "#95B9D5", "#FFF"],
         borderWidth: 0
     }]
 };
 
-let total = 0;
+let total: number = 0;
 
 for (let numero of dataDoughnut.datasets[0].data) {
-    total += numero;
+    total += Number.parseInt(numero);
 };
 
 export const pluginsDoughnut = {
@@ -168,36 +170,48 @@ export const optionsHorizontalBar = {
     indexAxis: 'y' as const,
     elements: {
         bar: {
-            borderWidth: 2,
+            borderWidth: 1,
         },
     },
     responsive: true,
     plugins: {
-        legend: {
-            position: 'right' as const,
-        }
+        legend: false
     },
+    scales: {
+        x: {
+            grid: {
+                display: false,
+                drawBorder: false
+            }
+        },
+
+        y: {
+            grid: {
+                display: false,
+                drawPoint: true
+            }
+        }
+    }
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = [""];
 
 export const dataHorizontalBar = {
     labels,
     datasets: [
         {
-            label: 'Atrasadas',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+            // label: 'Atrasadas',
+            data: labels.map(() => (10 * Math.random()).toFixed()),
             backgroundColor: '#95B9D5',
         },
         {
-            label: 'No prazo',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+            // label: 'No prazo',
+            data: labels.map(() => (10 * Math.random()).toFixed()),
             backgroundColor: '#5B93BF',
         },
         {
-            label: 'Adiantadas',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-
+            // label: 'Concluídas',
+            data: labels.map(() => (10 * Math.random()).toFixed()),
             backgroundColor: '#00579D',
         }
     ],
