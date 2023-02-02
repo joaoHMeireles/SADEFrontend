@@ -60,13 +60,12 @@ const listaNotificacoes: {
   },
 ];
 
-const [lista, setLista] = useState(listaNotificacoes);
-
 /**
  *
  * @returns Retorna uma lista de componentes de notificações, sendo que cada componente tem seus dados puxados de um lista estatica
  */
 export default function Notificacoes() {
+  const [lista, setLista] = useState(listaNotificacoes);
   localStorage.setItem("PAGINATUAL", "notification");
 
   return (
@@ -74,7 +73,7 @@ export default function Notificacoes() {
       <Breadcrumb />
       <Container>
         <Box>
-          {listaNotificacoes.map((notificacao, index) => (
+          {lista.map((notificacao, index) => (
             <Notificacao
               key={index}
               id={notificacao.id}

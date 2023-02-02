@@ -27,6 +27,12 @@ export default function Notificacao(props: {
   lista: any[];
   setLista: React.Dispatch<React.SetStateAction<Array<Object>>>;
 }) {
+  function removerNotificacao(id: number) {
+    props.setLista((notificacao) => {
+      return notificacao.filter((notificacao) => notificacao.id !== id);
+    });
+  }
+
   return (
     <>
       <BoxNotificacao>
@@ -47,14 +53,8 @@ export default function Notificacao(props: {
         </NotificacaoLadoEsquerdo>
         <NotificacaoLadoDireito>
           <DeleteRoundedIcon
-            sx={{ color: "#595959" }}
-            onClick={() => {
-              props.setLista((notificacao) => {
-                return notificacao.filter(
-                  (notificacao) => notificacao.id !== props.id
-                );
-              });
-            }}
+            sx={{ color: "#595959", cursor: "pointer" }}
+            onClick={() => removerNotificacao(props.id)}
           />
         </NotificacaoLadoDireito>
       </BoxNotificacao>
