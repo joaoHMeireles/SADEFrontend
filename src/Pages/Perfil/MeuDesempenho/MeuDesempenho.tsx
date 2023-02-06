@@ -15,33 +15,49 @@ export default function MeuDesempenho() {
   return (
     <Container sx={{ alignItems: "center", display: "flex", flexDirection: "column", height: "75vh", justifyContent: "space-around", width: "100%" }}>
       <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-around" }}>
-        <Box sx={{ backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", height: "auto", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
-          <Box sx={{ height: "auto", width: "15vw" }}>
+        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", display: "flex", flexDirection: "column", height: "auto", justifyContent: "center", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
+          <p style={{ fontSize: "20px", fontWeight: "700" }}>{(10 * Math.random()).toFixed()}</p>
+
+          <p>No último mês</p>
+
+          <Box sx={{ height: "auto", paddingTop: "1rem", width: "10vw" }}>
             <Line data={dataLine1} options={optionsLine1}></Line>
           </Box>
         </Box>
 
-        <Box sx={{ backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", height: "auto", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
-          <Box sx={{ height: "auto", width: "15vw" }}>
+        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", display: "flex", flexDirection: "column", height: "auto", justifyContent: "center", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
+          <p style={{ fontSize: "20px", fontWeight: "700" }}>{(10 * Math.random()).toFixed()}</p>
+
+          <p>No último mês</p>
+
+          <Box sx={{ height: "auto", paddingTop: "1rem", width: "10vw" }}>
             <Line data={dataLine2} options={optionsLine2}></Line>
           </Box>
         </Box>
 
-        <Box sx={{ backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", height: "auto", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
-          <Box sx={{ height: "auto", width: "15vw" }}>
+        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", display: "flex", flexDirection: "column", height: "auto", justifyContent: "center", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
+          <p style={{ fontSize: "20px", fontWeight: "700" }}>{(10 * Math.random()).toFixed()}</p>
+
+          <p>No último mês</p>
+
+          <Box sx={{ height: "auto", paddingTop: "1rem", width: "10vw" }}>
             <Line data={dataLine3} options={optionsLine3}></Line>
           </Box>
         </Box>
 
-        <Box sx={{ backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", height: "auto", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
-          <Box sx={{ height: "auto", width: "15vw" }}>
+        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", display: "flex", flexDirection: "column", height: "auto", justifyContent: "center", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
+          <p style={{ fontSize: "20px", fontWeight: "700" }}>{(10 * Math.random()).toFixed()}</p>
+
+          <p>No último mês</p>
+
+          <Box sx={{ height: "auto", paddingTop: "1rem", width: "10vw" }}>
             <Line data={dataLine4} options={optionsLine4}></Line>
           </Box>
         </Box>
       </Box>
 
-      <Box sx={{ alignItems: "center", display: "flex", height: "auto", justifyContent: "space-around", width: "100%" }}>
-        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "auto" }}>
+      <Box sx={{ alignItems: "center", display: "flex", height: "auto", justifyContent: "center", width: "100%" }}>
+        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", margin: "2rem", padding: "1rem", width: "auto" }}>
           <Box sx={{ marginRight: "2rem" }}>
             <Box sx={{ alignItems: "center", display: "flex" }}>
               <Box sx={{ backgroundColor: "#00579D", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
@@ -73,8 +89,8 @@ export default function MeuDesempenho() {
           </Box>
         </Box>
 
-        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "auto" }}>
-          <Box>
+        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "20vh", justifyContent: "space-between", margin: "2rem", padding: "1rem", width: "auto" }}>
+          <Box sx={{ alignItems: "center", display: "flex", flexDirection: "column", height: "80%", justifyContent: "space-between", paddingRight: "1rem", width: "auto" }}>
             <p>Atrasadas</p>
             <p>No prazo</p>
             <p>Adiantadas</p>

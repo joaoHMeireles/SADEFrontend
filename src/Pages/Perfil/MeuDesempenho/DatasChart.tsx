@@ -1,5 +1,3 @@
-import { drawPoint } from "chart.js/dist/types/helpers/helpers.canvas";
-
 export const dataLine1 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
@@ -14,19 +12,21 @@ export const dataLine1 = {
 
 export const optionsLine1 = {
     plugins: {
-        legend: false
+        legend: {
+            display: false
+        }
     },
 
     scales: {
         x: {
+            display: false,
             grid: {
                 display: false
             }
         },
 
         y: {
-            min: 0,
-            max: 10,
+            display: false,
             grid: {
                 display: false
             }
@@ -48,19 +48,21 @@ export const dataLine2 = {
 
 export const optionsLine2 = {
     plugins: {
-        legend: false
+        legend: {
+            display: false
+        }
     },
 
     scales: {
         x: {
+            display: false,
             grid: {
                 display: false
             }
         },
 
         y: {
-            min: 0,
-            max: 10,
+            display: false,
             grid: {
                 display: false
             }
@@ -82,19 +84,21 @@ export const dataLine3 = {
 
 export const optionsLine3 = {
     plugins: {
-        legend: false
+        legend: {
+            display: false
+        }
     },
 
     scales: {
         x: {
+            display: false,
             grid: {
                 display: false
             }
         },
 
         y: {
-            min: 0,
-            max: 10,
+            display: false,
             grid: {
                 display: false
             }
@@ -116,19 +120,21 @@ export const dataLine4 = {
 
 export const optionsLine4 = {
     plugins: {
-        legend: false
+        legend: {
+            display: false
+        }
     },
 
     scales: {
         x: {
+            display: false,
             grid: {
                 display: false
             }
         },
 
         y: {
-            min: 0,
-            max: 10,
+            display: false,
             grid: {
                 display: false
             }
@@ -166,11 +172,40 @@ export const pluginsDoughnut = {
     }
 };
 
+const labels = [""];
+
+export const dataHorizontalBar = {
+    labels,
+    datasets: [
+        {
+            label: "Atrasadas",
+            // barThickness: 50,
+            barPercentage: 0.5,
+            data: labels.map(() => (10 * Math.random()).toFixed()),
+            backgroundColor: '#95B9D5',
+        },
+        {
+            label: "No prazo",
+            // barThickness: 50,
+            barPercentage: 0.5,
+            data: labels.map(() => (10 * Math.random()).toFixed()),
+            backgroundColor: '#5B93BF',
+        },
+        {
+            label: "Adiantadas",
+            // barThickness: 50,
+            barPercentage: 0.5,
+            data: labels.map(() => (10 * Math.random()).toFixed()),
+            backgroundColor: '#00579D',
+        }
+    ]
+};
+
 export const optionsHorizontalBar = {
     indexAxis: 'y' as const,
     elements: {
         bar: {
-            borderWidth: 1,
+            borderWidth: 0
         },
     },
     responsive: true,
@@ -179,40 +214,17 @@ export const optionsHorizontalBar = {
     },
     scales: {
         x: {
+            display: false,
             grid: {
                 display: false,
-                drawBorder: false
             }
         },
 
         y: {
+            display: false,
             grid: {
                 display: false,
-                drawPoint: true
             }
         }
     }
-};
-
-const labels = [""];
-
-export const dataHorizontalBar = {
-    labels,
-    datasets: [
-        {
-            // label: 'Atrasadas',
-            data: labels.map(() => (10 * Math.random()).toFixed()),
-            backgroundColor: '#95B9D5',
-        },
-        {
-            // label: 'No prazo',
-            data: labels.map(() => (10 * Math.random()).toFixed()),
-            backgroundColor: '#5B93BF',
-        },
-        {
-            // label: 'Concluídas',
-            data: labels.map(() => (10 * Math.random()).toFixed()),
-            backgroundColor: '#00579D',
-        }
-    ],
 };
