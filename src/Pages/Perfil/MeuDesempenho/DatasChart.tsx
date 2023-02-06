@@ -144,8 +144,8 @@ export const optionsLine4 = {
 
 export const dataDoughnut = {
     datasets: [{
-        data: [(10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed()],
-        backgroundColor: ["#00579D", "#5B93BF", "#95B9D5", "#FFF"],
+        data: [1, 2, 4, 1],
+        backgroundColor: ["#FFF", "#95B9D5", "#5B93BF", "#00579D"],
         borderWidth: 0
     }]
 };
@@ -181,21 +181,21 @@ export const dataHorizontalBar = {
             label: "Atrasadas",
             // barThickness: 50,
             barPercentage: 0.5,
-            data: labels.map(() => (10 * Math.random()).toFixed()),
+            data: labels.map(() => 1),
             backgroundColor: '#95B9D5',
         },
         {
             label: "No prazo",
             // barThickness: 50,
             barPercentage: 0.5,
-            data: labels.map(() => (10 * Math.random()).toFixed()),
+            data: labels.map(() => 4),
             backgroundColor: '#5B93BF',
         },
         {
             label: "Adiantadas",
             // barThickness: 50,
             barPercentage: 0.5,
-            data: labels.map(() => (10 * Math.random()).toFixed()),
+            data: labels.map(() => 3),
             backgroundColor: '#00579D',
         }
     ]
@@ -205,7 +205,8 @@ export const optionsHorizontalBar = {
     indexAxis: 'y' as const,
     elements: {
         bar: {
-            borderWidth: 0
+            borderWidth: 0,
+            borderRadius: 20
         },
     },
     responsive: true,
