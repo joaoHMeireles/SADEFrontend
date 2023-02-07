@@ -178,21 +178,18 @@ export const dataHorizontalBar = {
     labels,
     datasets: [
         {
-            label: "Atrasadas",
             // barThickness: 50,
             barPercentage: 0.5,
             data: labels.map(() => 1),
             backgroundColor: '#95B9D5',
         },
         {
-            label: "No prazo",
             // barThickness: 50,
             barPercentage: 0.5,
             data: labels.map(() => 4),
             backgroundColor: '#5B93BF',
         },
         {
-            label: "Adiantadas",
             // barThickness: 50,
             barPercentage: 0.5,
             data: labels.map(() => 3),
