@@ -1,7 +1,7 @@
 export const dataLine1 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [(10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed()],
+        data: [4, 9, 2, 3, 6, 6, 1, 8, 4, 4],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
@@ -37,7 +37,7 @@ export const optionsLine1 = {
 export const dataLine2 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [(10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed()],
+        data: [8, 1, 9, 1, 9, 3, 10, 2, 5, 3],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
@@ -73,7 +73,7 @@ export const optionsLine2 = {
 export const dataLine3 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [(10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed()],
+        data: [9, 4, 7, 1, 10, 3, 8, 8, 9, 2],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
@@ -109,7 +109,7 @@ export const optionsLine3 = {
 export const dataLine4 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [(10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed(), (10 * Math.random()).toFixed()],
+        data: [9, 5, 4, 2, 5, 9, 5, 8, 5, 1],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
