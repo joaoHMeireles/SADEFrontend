@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import TableCell from "@mui/material/TableCell";
 import styled from "@emotion/styled";
 
 const styledBox = styled(Box);
@@ -41,4 +42,16 @@ export const TypographyTitulos = styledTypography({
 
 export const TypographyTextos = styledTypography({
     width: "50%", fontSize: "10px"
+})
+
+export const TableCellStyled = styled(TableCell)({
+    fontSize: "10px"
+})
+
+export const TypographyParticipantes = styledTypography({
+    width: "50%", fontSize: "12px", textDecoration: "underline", fontWeight: "bold"
+})
+
+export const TypographyParecerComissao = styledTypography({
+    width: "50%", fontSize: "12px", textDecoration: "underline", fontWeight: "bold"
 })

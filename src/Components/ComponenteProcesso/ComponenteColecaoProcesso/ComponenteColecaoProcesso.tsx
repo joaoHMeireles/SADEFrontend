@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { TipoColecaoComponenteProcesso } from "../../../Constants/enuns";
+import { TipoColecaoComponenteProcesso } from "../../../constants/enuns";
 import {
   InterfaceComponenteProcesso,
   InterfaceColecaoComponenteProcesso,
-} from "../../../Constants/interfaces";
+} from "../../../constants/interfaces";
 import { Grid, Tooltip } from "@mui/material";
 import {
   BoxColecaoComponente,

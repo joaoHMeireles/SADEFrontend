@@ -1,17 +1,18 @@
 import { BoxConteudo } from "../../Pages/App.styles";
-
 import { PDFExport } from "@progress/kendo-react-pdf";
-import { Text, View, Page, Document } from "@react-pdf/renderer";
-
 import "./EsqueletoPDF.scss";
 import { useRef } from "react";
 import Box from "@mui/material/Box";
 
-import { BoxData, BoxPrincipal, BoxTitulo, BoxItens, BoxTityuloItens, BoxObjetivo, TypographyData, TypographyTitulos, TypographyTextos } from "./EsqueletoPDF.styles";
+import {
+  BoxData, BoxPrincipal, BoxTitulo,
+  BoxItens, BoxTityuloItens, BoxObjetivo,
+  TypographyData, TypographyTitulos, TypographyTextos,
+  TableCellStyled, TypographyParticipantes
+} from "./EsqueletoPDF.styles";
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -19,50 +20,108 @@ import Paper from '@mui/material/Paper';
 import Typography from "@mui/material/Typography";
 
 interface ATA {
+  tituloATA: string,
   numeroAno: number,
   numeroDG: number,
   data: Date,
-  itensProposta: [
-    {
-      titulo: string,
-      objetivo: string,
-      escopo: string,
-      abrangencia: string,
-      resultadosQualitativos: string,
-      resultadosGanhos: string,
-      custosTotais: {
-        totalDespesas: number,
-        temLicenca: boolean,
-        tabelas: [
-          {
-            titulo: string,
-            centrosCusto: [
-              nomeCentroCusto: string,
-              porcentagemDespesa: number
-            ],
-            linhastabela: [
-              {
-                tituloDespesa: string,
-                quantidade: number,
-                valorQuantidade: number
-              }
-            ]
-          }
-        ]
-      },
-      periodoExecucaoInicio: Date,
-      periodoExecucaoFim: Date,
-      payback: number,
-      responsavel: string,
-      parecerComissao: string,
-      participantes: [
-        ""
-      ]
-    }
+  inicioReuniao: Date,
+  terminoReuniao: Date,
+  itensProposta: [ItensATA],
+  participantes: [
+    ""
   ]
 }
 
-export default function EsqueletoPDF(props: ATA) {
+interface ItensATA {
+  titulo: string,
+  objetivo: string,
+  escopo: [""],
+  naoFazParteEscopo: string,
+  abrangencia: string,
+  resultadosQualitativos: [""],
+  resultadosPotenciais: [""],
+  custosTotais: {
+    totalDespesas: number,
+    tabelas: [
+      {
+        titulo: string,
+        temLicenca: boolean,
+        centrosCusto: [
+          nomeCentroCusto: string,
+          porcentagemDespesa: number
+        ],
+        linhastabela: [
+          {
+            tituloDespesa: string,
+            quantidade: number,
+            valorQuantidade: number
+          }
+        ]
+      }
+    ]
+  },
+  periodoExecucaoInicio: Date,
+  periodoExecucaoFim: Date,
+  payback: number,
+  responsavel: string,
+  parecerComissao: string,
+}
+
+const ata = [
+  {
+    tituloATA: "Titulo ATA",
+    numeroAno: 2022,
+    numeroDG: 101010,
+    data: new Date(),
+    inicioReuniao: new Date(),
+    terminoReuniao: new Date(),
+    itensProposta: [
+      {
+        titulo: "Titulo 01",
+        objetivo: "Objetivo 01",
+        escopo: ["Escopo 01", "Escopo 02", "Escopo 03"],
+        naoFazParteEscopo: "Nao faz parte escopo",
+        abrangencia: "Abrangencia 01",
+        resultadosQualitativos: ["Resultados Qualitativos 01", "Resultados Qualitativos 02"],
+        resultadosPotenciais: ["Resultados Potenciais 01", "Resultados Potenciais 02"],
+        custosTotais: {
+          totalDespesas: 50000,
+          tabelas: [
+            {
+              titulo: "Titulo Tabela",
+              temLicenca: false,
+              centrosCusto: [
+                {
+                  nomeCentroCusto: "Centro Custo 01",
+                  porcentagemDespesa: 20
+                }
+              ],
+              linhastabela: [
+                {
+                  tituloDespesa: "Titulo Despesa",
+                  quantidade: 5,
+                  valorQuantidade: 10
+                }
+              ]
+            }
+          ]
+        },
+        periodoExecucaoInicio: new Date(),
+        periodoExecucaoFim: new Date(),
+        payback: 4,
+        responsavel: "Responsavel 01",
+        parecerComissao: "Parecer comissao",
+      }
+    ],
+    participantes: [
+      "Participante 01",
+      "Participante 02",
+      "Participante 03"
+    ]
+  },
+]
+
+export default function EsqueletoPDF() {
   const pdfCompoente = useRef<PDFExport>(null)
 
   const exportPDFWithComponent = () => {
@@ -71,125 +130,123 @@ export default function EsqueletoPDF(props: ATA) {
     }
   };
 
-  const ATA = () => {
+  const ATA = (props: { ata: ATA }) => {
     return (
       <BoxPrincipal>
         <BoxTitulo>
-          <TypographyTitulos variant="h6">ATA REUNIÃO COMISSÃO PROCESSOS DE VENDAS E DESENVOLVIMENTO DE PRODUTO </TypographyTitulos>
+          <TypographyTitulos variant="h6">{props.ata.tituloATA}</TypographyTitulos>
         </BoxTitulo>
         <BoxData>
           <TypographyData variant="body2">
-            ATA Nº
-            10/2021
+            ATA {props.ata.numeroDG}/{props.ata.numeroAno}
           </TypographyData>
           <TypographyData variant="body2">
-            Data:
-            09/05/21
+            Data: {props.ata.data.toLocaleDateString()}
           </TypographyData>
           <TypographyData variant="body2">
-            Início:
-            10:00
+            Início: {props.ata.inicioReuniao.toLocaleTimeString()}
           </TypographyData>
           <TypographyData variant="body2">
-            Término:
-            12:00
+            Término: {props.ata.terminoReuniao.toLocaleTimeString()}
           </TypographyData>
         </BoxData>
-        <ItensATA />
+        <ItensATA ata={props.ata} />
+        <ParticipantesReuniao ata={props.ata} />
       </BoxPrincipal>
     )
   }
 
-  const ItensATA = () => {
+  const ItensATA = (props: { ata: ATA }) => {
     return (
       <BoxItens>
-        <BoxTityuloItens>
-          <TypographyTitulos>1. REPLANEJAMENTO DATA DE ENTREGA DE OVS EM MASSA _1000025759 </TypographyTitulos>
-        </BoxTityuloItens>
-        <BoxObjetivo>
-          <TypographyTextos>Objetivo: Melhorar e automatizar as ferramentas existentes para reprogramação de prazos de entregas, buscando agilidade no processamento, gestão da carteira de pedidos em linha com a capacidade fabril e consequentemente retornos rápidos aos clientes.</TypographyTextos>
-        </BoxObjetivo>
-        <BoxObjetivo>
-          <TypographyTextos>Escopo projeto: </TypographyTextos>
-          <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
-            <li>Adequação do relatório de composição de preços;</li>
-            <li>Antecipar ordens de vendas que estão no futuro com “cotas consumidas”;</li>
-            <li> Alteração de postergação de 1 OV para N/OV’s e vice-versa;</li>
-          </ul>
-        </BoxObjetivo>
-        <BoxObjetivo>
-          <TypographyTextos>Não faz parte do Escopo do Projeto:  Não deverá ser contemplado nesta alteração as OV’s que estão no Período Firme. Para esse caso continuará o processo de alteração pelo fluxo da PCR.</TypographyTextos>
-        </BoxObjetivo>
-        <BoxObjetivo>
-          <TypographyTextos>Abrangência do Projeto:  Para a Unidade de Negócios WMO que utiliza a ferramenta PCR</TypographyTextos>
-        </BoxObjetivo>
-        <BoxObjetivo>
-          <TypographyTextos>Benefícios potencias: R$ 30.000,00 mensais considerando: </TypographyTextos>
-          <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
-            <li>R$ 10.000,00 com redução do tempo do PCP para replanejamento manual das OVs planejadas.</li>
-            <li>R$ 20.000,00 com redução de esforço na gestão das OVs, solicitação de alteração ao PCP e resposta ao cliente.</li>
-          </ul>
-        </BoxObjetivo>
-        <BoxObjetivo>
-          <TypographyTextos> <b> Custos totais do projeto: R$50.000,00</b> </TypographyTextos>
-          <TypographyTextos>Total despesas recursos externos (Desembolso): R$30.000,00</TypographyTextos>
-          <TypographyTextos>Total despesa recursos internos: R$20.000,00</TypographyTextos>
-        </BoxObjetivo>
-        <CentrosCusto />
-        <BoxObjetivo>
-          <TypographyTextos>Período de execução: Mar/2021 à Ago/21</TypographyTextos>
-        </BoxObjetivo>
-        <BoxObjetivo>
-          <TypographyTextos>Payback: 1,7 meses</TypographyTextos>
-        </BoxObjetivo>
-        <BoxObjetivo>
-          <TypographyTextos>Responsável Negócio: Fulano da Silva – Seção Administração de Ordens</TypographyTextos>
-        </BoxObjetivo>
-        <BoxObjetivo>
-          <TypographyTextos>PARECER COMISSÃO: APROVADO.</TypographyTextos>
-        </BoxObjetivo>
+        {props.ata.itensProposta.map((proposta: ItensATA, index: number) => {
+          return (
+            <>
+              <BoxTityuloItens>
+                <TypographyTitulos> {index + 1}. {proposta.titulo}</TypographyTitulos>
+              </BoxTityuloItens>
+              <BoxObjetivo>
+                <TypographyTextos>Objetivo: {proposta.objetivo} </TypographyTextos>
+              </BoxObjetivo>
+              <BoxObjetivo>
+                <TypographyTextos>Escopo projeto: </TypographyTextos>
+                <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
+                  {proposta.escopo.map((escopo: string, index: number) => {
+                    return (
+                      <li key={index} className="itensEscopoProjeto">{escopo}</li>
+                    )
+                  })}
+                </ul>
+              </BoxObjetivo>
+              <BoxObjetivo>
+                <TypographyTextos>Não faz parte do Escopo do Projeto:{proposta.naoFazParteEscopo}</TypographyTextos>
+              </BoxObjetivo>
+              <BoxObjetivo>
+                <TypographyTextos>Abrangência do Projeto:{proposta.abrangencia}</TypographyTextos>
+              </BoxObjetivo>
+              <BoxObjetivo>
+                <TypographyTextos>Resultados Esperados (Qualitativos):  </TypographyTextos>
+                <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
+                  {proposta.resultadosQualitativos.map((resultadosQualitativos: string, index: number) => {
+                    return (<li key={index}>{resultadosQualitativos}</li>)
+                  })}
+                </ul>
+              </BoxObjetivo>
+              <BoxObjetivo>
+                <TypographyTextos>Benefícios potencias: </TypographyTextos>
+                <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
+                  {proposta.resultadosPotenciais.map((resultadosPotenciais: string, index: number) => {
+                    return (<li key={index}>{resultadosPotenciais}</li>)
+                  })}
+                </ul>
+              </BoxObjetivo>
+              <BoxObjetivo>
+                <TypographyTextos> <b> Custos totais do projeto: R${proposta.custosTotais.totalDespesas}</b> </TypographyTextos>
+                <TypographyTextos>Total despesas recursos externos (Desembolso): R${proposta.custosTotais.totalDespesas}</TypographyTextos>
+              </BoxObjetivo>
+              <CentrosCusto proposta={proposta} />
+              <BoxObjetivo>
+                <TypographyTextos>Período de execução: {proposta.periodoExecucaoInicio.toLocaleDateString()} à {proposta.periodoExecucaoFim.toLocaleDateString()}</TypographyTextos>
+              </BoxObjetivo>
+              <BoxObjetivo>
+                <TypographyTextos>Payback: {proposta.payback} meses</TypographyTextos>
+              </BoxObjetivo>
+              <BoxObjetivo>
+                <TypographyTextos>Responsável Negócio: {proposta.responsavel}</TypographyTextos>
+              </BoxObjetivo>
+              <BoxObjetivo>
+                <TypographyParticipantes>PARECER COMISSÃO: {proposta.parecerComissao}</TypographyParticipantes>
+              </BoxObjetivo>
+            </>
+          )
+        })}
       </BoxItens>
     )
   }
 
-  const CentrosCusto = () => {
+  const CentrosCusto = (props: { proposta: ItensATA }) => {
+
     return (
       <Box sx={{ width: "100%" }}>
-        <TableContainer sx={{ width: "60%" }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Despesas (Desembolso)</TableCell>
-                <TableCell>Esforço</TableCell>
-                <TableCell>Valor total</TableCell>
-                <TableCell>CC Pagante</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell>Analista Funcional SAP SD </TableCell>
-                <TableCell>100h</TableCell>
-                <TableCell>R$ 10.000,00</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Desenvolvimento Externo Abap </TableCell>
-                <TableCell>100h</TableCell>
-                <TableCell>R$ 10.000,00</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Desenvolvimento Externo Java  </TableCell>
-                <TableCell>100h</TableCell>
-                <TableCell>R$ 10.000,00</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>TOTAL Despesas </TableCell>
-                <TableCell>300h</TableCell>
-                <TableCell>R$ 30.000,00</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
+        {props.proposta.custosTotais.tabelas.map((tabela: any) => {
+          return (
+            <div>aaaa</div>
+          )
+        })}
       </Box>
+    )
+  }
+
+  const ParticipantesReuniao = (props: { ata: ATA }) => {
+    return (
+      <BoxObjetivo>
+        <>
+          <TypographyParticipantes>Participantes</TypographyParticipantes>
+          {props.ata.participantes.map((parti: string, index: number) => {
+            return <TypographyTextos key={index}>{parti}</TypographyTextos>
+          })}
+        </>
+      </BoxObjetivo >
     )
   }
 
@@ -211,8 +268,46 @@ export default function EsqueletoPDF(props: ATA) {
         </button>
       </div>
       <PDFExport pageTemplate={PageTemplate} margin="2cm" ref={pdfCompoente}>
-        <ATA />
+        {ata.map((ata: any, index: number) => {
+          return <ATA key={index} ata={ata} />
+        })}
       </PDFExport>
     </BoxConteudo >
   );
 }
+
+
+{/* <TableContainer component={Paper} sx={{ width: "50%" }}>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCellStyled>Despesas (Desembolso)</TableCellStyled>
+                          <TableCellStyled>Esforço</TableCellStyled>
+                          <TableCellStyled>Valor total</TableCellStyled>
+                          <TableCellStyled>CC Pagante</TableCellStyled>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCellStyled>Analista Funcional SAP SD </TableCellStyled>
+                          <TableCellStyled>100h</TableCellStyled>
+                          <TableCellStyled>R$ 10.000,00</TableCellStyled>
+                        </TableRow>
+                        <TableRow>
+                          <TableCellStyled>Desenvolvimento Externo Abap </TableCellStyled>
+                          <TableCellStyled>100h</TableCellStyled>
+                          <TableCellStyled>R$ 10.000,00</TableCellStyled>
+                        </TableRow>
+                        <TableRow>
+                          <TableCellStyled>Desenvolvimento Externo Java  </TableCellStyled>
+                          <TableCellStyled>100h</TableCellStyled>
+                          <TableCellStyled>R$ 10.000,00</TableCellStyled>
+                        </TableRow>
+                        <TableRow>
+                          <TableCellStyled>TOTAL Despesas </TableCellStyled>
+                          <TableCellStyled>300h</TableCellStyled>
+                          <TableCellStyled>R$ 30.000,00</TableCellStyled>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer> */}
