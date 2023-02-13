@@ -45,7 +45,7 @@ export const TypographyTextos = styledTypography({
 })
 
 export const TableCellStyled = styled(TableCell)({
-    fontSize: "10px"
+    fontSize: "10px",
 })
 
 export const TypographyParticipantes = styledTypography({
