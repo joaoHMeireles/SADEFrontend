@@ -1,6 +1,6 @@
-import { BoxConteudo } from "../../Pages/App.styles";
+import { BoxConteudo } from "../../../Pages/App.styles";
 import { PDFExport } from "@progress/kendo-react-pdf";
-import "./EsqueletoPDF.scss";
+import "./EsqueletoPDFATA.scss";
 import { useRef } from "react";
 import Box from "@mui/material/Box";
 
@@ -9,7 +9,7 @@ import {
   BoxItens, BoxTituloItens, BoxObjetivo,
   TypographyData, TypographyTitulos, TypographyTextos,
   TableCellStyled, TypographyParticipantes, TypographyTituloATA
-} from "./EsqueletoPDF.styles";
+} from "./EsqueletoPDFATA.styles";
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -89,7 +89,7 @@ const ata: ATA = {
         tabelas: [
           {
             titulo: "Titulo Tabela 01",
-            temLicenca: false,
+            temLicenca: true,
             centrosCusto: [
               {
                 nomeCentroCusto: "Centro Custo 01",
@@ -251,7 +251,7 @@ const ata: ATA = {
         tabelas: [
           {
             titulo: "Titulo Tabela 01",
-            temLicenca: false,
+            temLicenca: true,
             centrosCusto: [
               {
                 nomeCentroCusto: "Centro Custo 01",
@@ -328,7 +328,7 @@ const ata: ATA = {
 }
 
 
-export default function EsqueletoPDF() {
+export default function EsqueletoPDFATA() {
   const pdfCompoente = useRef<PDFExport>(null)
 
   const exportPDFWithComponent = () => {
@@ -422,6 +422,8 @@ export default function EsqueletoPDF() {
     return (
       <Box sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
         {props.proposta.custosTotais.tabelas.map((tabela: ItensTabela) => {
+          console.log(tabela.temLicenca);
+
           let totalEsfoco = 0;
           let valorTotal = 0;
           return (
@@ -481,6 +483,67 @@ export default function EsqueletoPDF() {
                   </Table>
                 </TableContainer>
               </Box>
+              {tabela.temLicenca ?
+                <>
+                  <Box sx={{ display: "flex", justifyContent: "flex", alignItems: "center" }}>
+                    <TableContainer component={Paper} sx={{ width: "50%", marginTop: 5 }}>
+                      <Table>
+                        <TableHead>
+                          <TableRow>
+                            <TableCellStyled align="center">Insvetimentos/recorrentes</TableCellStyled>
+                            <TableCellStyled align="center">Licencas</TableCellStyled>
+                            <TableCellStyled align="center">Valor total</TableCellStyled>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {tabela.linhastabela.map((linhaTabela: LinhaTabela) => {
+                            totalEsfoco += linhaTabela.quantidade;
+                            valorTotal += (linhaTabela.quantidade * linhaTabela.valorQuantidade);
+                            return (
+                              <>
+                                <TableRow>
+                                  <TableCellStyled align="center">{linhaTabela.tituloDespesa}</TableCellStyled>
+                                  <TableCellStyled align="center">{linhaTabela.quantidade}</TableCellStyled>
+                                  <TableCellStyled align="center">R$ {linhaTabela.quantidade * linhaTabela.valorQuantidade}</TableCellStyled>
+                                </TableRow>
+                              </>
+                            )
+                          })}
+                          <TableRow>
+                            <TableCellStyled align="center">Total despesas: </TableCellStyled>
+                            <TableCellStyled align="center">{totalEsfoco}h</TableCellStyled>
+                            <TableCellStyled align="center">R$ {valorTotal}</TableCellStyled>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                    <TableContainer>
+                      <Table component={Paper} sx={{ width: "25%", marginLeft: 2, }}>
+                        <TableHead>
+                          <TableCellStyled align="center">CC Pagante</TableCellStyled>
+                        </TableHead>
+                        <TableBody>
+                          <TableRow>
+                            {tabela.centrosCusto.map((cc) => {
+                              return (
+                                <>
+                                  <TableRow sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                    <TableCellStyled align="center">
+                                      {cc.porcentagemDespesa}%
+                                    </TableCellStyled>
+                                  </TableRow>
+                                </>
+                              )
+                            })}
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Box>
+                </>
+
+                : ""
+              }
             </>
           )
         })}

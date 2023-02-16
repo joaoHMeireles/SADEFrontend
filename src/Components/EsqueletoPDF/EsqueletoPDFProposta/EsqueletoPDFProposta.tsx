@@ -1,0 +1,605 @@
+import { BoxConteudo } from "../../../Pages/App.styles";
+import { PDFExport } from "@progress/kendo-react-pdf";
+import "./EsqueletoPDFProposta.scss";
+import { useRef } from "react";
+import Box from "@mui/material/Box";
+
+import {
+    BoxData, BoxPrincipal, BoxTitulo,
+    BoxItens, BoxTituloItens, BoxObjetivo,
+    TypographyData, TypographyTitulos, TypographyTextos,
+    TableCellStyled, TypographyParticipantes, TypographyTituloATA
+} from "./EsqueletoPDFProposta.styles";
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Typography from "@mui/material/Typography";
+import TableCell from "@mui/material/TableCell";
+
+interface ATA {
+    tituloATA: string,
+    numeroAno: number,
+    numeroDG: number,
+    data: Date,
+    inicioReuniao: Date,
+    terminoReuniao: Date,
+    itensProposta: ItensATA[],
+    participantes: string[]
+}
+
+interface ItensATA {
+    titulo: string,
+    objetivo: string,
+    escopo: string[],
+    naoFazParteEscopo: string,
+    abrangencia: string,
+    resultadosQualitativos: string[],
+    resultadosPotenciais: string[],
+    custosTotais: {
+        totalDespesas: number,
+        tabelas: ItensTabela[]
+    },
+    periodoExecucaoInicio: Date,
+    periodoExecucaoFim: Date,
+    payback: number,
+    responsavel: string,
+    parecerComissao: string,
+}
+
+interface ItensTabela {
+    centrosCusto:
+    {
+        nomeCentroCusto: string,
+        porcentagemDespesa: number
+    }[]
+    ,
+    linhastabela: LinhaTabela[],
+    temLicenca: boolean,
+    titulo: string
+}
+
+interface LinhaTabela {
+    quantidade: number,
+    tituloDespesa: string,
+    valorQuantidade: number
+}
+
+const ata: ATA = {
+    tituloATA: "Titulo ATA",
+    numeroAno: 2022,
+    numeroDG: 101010,
+    data: new Date(),
+    inicioReuniao: new Date(),
+    terminoReuniao: new Date(),
+    itensProposta: [
+        {
+            titulo: "Titulo 01",
+            objetivo: "Objetivo 01",
+            escopo: ["Escopo 01", "Escopo 02", "Escopo 03"],
+            naoFazParteEscopo: "Nao faz parte escopo",
+            abrangencia: "Abrangencia 01",
+            resultadosQualitativos: ["Resultados Qualitativos 01", "Resultados Qualitativos 02"],
+            resultadosPotenciais: ["Resultados Potenciais 01", "Resultados Potenciais 02"],
+            custosTotais: {
+                totalDespesas: 50000,
+                tabelas: [
+                    {
+                        titulo: "Titulo Tabela 01",
+                        temLicenca: true,
+                        centrosCusto: [
+                            {
+                                nomeCentroCusto: "Centro Custo 01",
+                                porcentagemDespesa: 20
+                            },
+                            {
+                                nomeCentroCusto: "Centro Custo 02",
+                                porcentagemDespesa: 100
+                            },
+                        ],
+                        linhastabela: [
+                            {
+                                tituloDespesa: "Titulo Despesa 01",
+                                quantidade: 10,
+                                valorQuantidade: 100
+                            },
+                            {
+                                tituloDespesa: "Titulo Despesa 02",
+                                quantidade: 20,
+                                valorQuantidade: 200
+                            },
+                            {
+                                tituloDespesa: "Titulo Despesa 03",
+                                quantidade: 30,
+                                valorQuantidade: 300
+                            },
+                        ]
+                    },
+                    {
+                        titulo: "Titulo Tabela 02",
+                        temLicenca: false,
+                        centrosCusto: [
+                            {
+                                nomeCentroCusto: "Centro Custo 01",
+                                porcentagemDespesa: 20
+                            },
+                            {
+                                nomeCentroCusto: "Centro Custo 02",
+                                porcentagemDespesa: 100
+                            },
+                        ],
+                        linhastabela: [
+                            {
+                                tituloDespesa: "Titulo Despesa 01",
+                                quantidade: 10,
+                                valorQuantidade: 100
+                            },
+                            {
+                                tituloDespesa: "Titulo Despesa 02",
+                                quantidade: 20,
+                                valorQuantidade: 200
+                            },
+                            {
+                                tituloDespesa: "Titulo Despesa 03",
+                                quantidade: 30,
+                                valorQuantidade: 300
+                            },
+                        ]
+                    }
+                ]
+            },
+            periodoExecucaoInicio: new Date(),
+            periodoExecucaoFim: new Date(),
+            payback: 4,
+            responsavel: "Responsavel 01",
+            parecerComissao: "Parecer comissao",
+        },
+        {
+            titulo: "Titulo 01",
+            objetivo: "Objetivo 01",
+            escopo: ["Escopo 01", "Escopo 02", "Escopo 03"],
+            naoFazParteEscopo: "Nao faz parte escopo",
+            abrangencia: "Abrangencia 01",
+            resultadosQualitativos: ["Resultados Qualitativos 01", "Resultados Qualitativos 02"],
+            resultadosPotenciais: ["Resultados Potenciais 01", "Resultados Potenciais 02"],
+            custosTotais: {
+                totalDespesas: 50000,
+                tabelas: [
+                    {
+                        titulo: "Titulo Tabela 01",
+                        temLicenca: false,
+                        centrosCusto: [
+                            {
+                                nomeCentroCusto: "Centro Custo 01",
+                                porcentagemDespesa: 20
+                            },
+                            {
+                                nomeCentroCusto: "Centro Custo 02",
+                                porcentagemDespesa: 100
+                            },
+                        ],
+                        linhastabela: [
+                            {
+                                tituloDespesa: "Titulo Despesa 01",
+                                quantidade: 10,
+                                valorQuantidade: 100
+                            },
+                            {
+                                tituloDespesa: "Titulo Despesa 02",
+                                quantidade: 20,
+                                valorQuantidade: 200
+                            },
+                            {
+                                tituloDespesa: "Titulo Despesa 03",
+                                quantidade: 30,
+                                valorQuantidade: 300
+                            },
+                        ]
+                    },
+                    {
+                        titulo: "Titulo Tabela 02",
+                        temLicenca: false,
+                        centrosCusto: [
+                            {
+                                nomeCentroCusto: "Centro Custo 01",
+                                porcentagemDespesa: 20
+                            },
+                            {
+                                nomeCentroCusto: "Centro Custo 02",
+                                porcentagemDespesa: 100
+                            },
+                        ],
+                        linhastabela: [
+                            {
+                                tituloDespesa: "Titulo Despesa 01",
+                                quantidade: 10,
+                                valorQuantidade: 100
+                            },
+                            {
+                                tituloDespesa: "Titulo Despesa 02",
+                                quantidade: 20,
+                                valorQuantidade: 200
+                            },
+                            {
+                                tituloDespesa: "Titulo Despesa 03",
+                                quantidade: 30,
+                                valorQuantidade: 300
+                            },
+                        ]
+                    }
+                ]
+            },
+            periodoExecucaoInicio: new Date(),
+            periodoExecucaoFim: new Date(),
+            payback: 4,
+            responsavel: "Responsavel 01",
+            parecerComissao: "Parecer comissao",
+        },
+        {
+            titulo: "Titulo 01",
+            objetivo: "Objetivo 01",
+            escopo: ["Escopo 01", "Escopo 02", "Escopo 03"],
+            naoFazParteEscopo: "Nao faz parte escopo",
+            abrangencia: "Abrangencia 01",
+            resultadosQualitativos: ["Resultados Qualitativos 01", "Resultados Qualitativos 02"],
+            resultadosPotenciais: ["Resultados Potenciais 01", "Resultados Potenciais 02"],
+            custosTotais: {
+                totalDespesas: 50000,
+                tabelas: [
+                    {
+                        titulo: "Titulo Tabela 01",
+                        temLicenca: true,
+                        centrosCusto: [
+                            {
+                                nomeCentroCusto: "Centro Custo 01",
+                                porcentagemDespesa: 20
+                            },
+                            {
+                                nomeCentroCusto: "Centro Custo 02",
+                                porcentagemDespesa: 100
+                            },
+                        ],
+                        linhastabela: [
+                            {
+                                tituloDespesa: "Titulo Despesa 01",
+                                quantidade: 10,
+                                valorQuantidade: 100
+                            },
+                            {
+                                tituloDespesa: "Titulo Despesa 02",
+                                quantidade: 20,
+                                valorQuantidade: 200
+                            },
+                            {
+                                tituloDespesa: "Titulo Despesa 03",
+                                quantidade: 30,
+                                valorQuantidade: 300
+                            },
+                        ]
+                    },
+                    {
+                        titulo: "Titulo Tabela 02",
+                        temLicenca: false,
+                        centrosCusto: [
+                            {
+                                nomeCentroCusto: "Centro Custo 01",
+                                porcentagemDespesa: 20
+                            },
+                            {
+                                nomeCentroCusto: "Centro Custo 02",
+                                porcentagemDespesa: 100
+                            },
+                        ],
+                        linhastabela: [
+                            {
+                                tituloDespesa: "Titulo Despesa 01",
+                                quantidade: 10,
+                                valorQuantidade: 100
+                            },
+                            {
+                                tituloDespesa: "Titulo Despesa 02",
+                                quantidade: 20,
+                                valorQuantidade: 200
+                            },
+                            {
+                                tituloDespesa: "Titulo Despesa 03",
+                                quantidade: 30,
+                                valorQuantidade: 300
+                            },
+                        ]
+                    }
+                ]
+            },
+            periodoExecucaoInicio: new Date(),
+            periodoExecucaoFim: new Date(),
+            payback: 4,
+            responsavel: "Responsavel 01",
+            parecerComissao: "Parecer comissao",
+        },
+    ],
+    participantes: [
+        "Participante 01",
+        "Participante 02",
+        "Participante 03"
+    ]
+}
+
+
+export default function EsqueletoPDFProposta() {
+    const pdfCompoente = useRef<PDFExport>(null)
+
+    const exportPDFWithComponent = () => {
+        if (pdfCompoente.current) {
+            pdfCompoente.current.save();
+        }
+    };
+
+    const ATA = (props: { ata: ATA }) => {
+        return (
+            <BoxPrincipal>
+                <ItensATA ata={props.ata} />
+            </BoxPrincipal>
+        )
+    }
+
+    const ItensATA = (props: { ata: ATA }) => {
+        return (
+            <BoxItens>
+                {props.ata.itensProposta.map((proposta: ItensATA, index: number) => {
+                    return (
+                        <>
+                            {index > 0 ?
+                                <BoxTituloItens className="break">
+                                    <TypographyTitulos> {index + 1}. {proposta.titulo}</TypographyTitulos>
+                                </BoxTituloItens>
+                                :
+                                <BoxTituloItens>
+                                    <TypographyTitulos> {index + 1}. {proposta.titulo}</TypographyTitulos>
+                                </BoxTituloItens>}
+                            <BoxObjetivo>
+                                <TypographyTextos>Objetivo: {proposta.objetivo} </TypographyTextos>
+                            </BoxObjetivo>
+                            <BoxObjetivo>
+                                <TypographyTextos>Escopo projeto: </TypographyTextos>
+                                <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
+                                    {proposta.escopo.map((escopo: string, index: number) => {
+                                        return (
+                                            <li key={index} className="itensEscopoProjeto">{escopo}</li>
+                                        )
+                                    })}
+                                </ul>
+                            </BoxObjetivo>
+                            <BoxObjetivo>
+                                <TypographyTextos>Nao faz parte do Escopo do Projeto:{proposta.naoFazParteEscopo}</TypographyTextos>
+                            </BoxObjetivo>
+                            <BoxObjetivo>
+                                <TypographyTextos>Abrangencia do Projeto:{proposta.abrangencia}</TypographyTextos>
+                            </BoxObjetivo>
+                            <BoxObjetivo>
+                                <TypographyTextos>Resultados Esperados (Qualitativos):  </TypographyTextos>
+                                <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
+                                    {proposta.resultadosQualitativos.map((resultadosQualitativos: string, index: number) => {
+                                        return (<li key={index}>{resultadosQualitativos}</li>)
+                                    })}
+                                </ul>
+                            </BoxObjetivo>
+                            <BoxObjetivo>
+                                <TypographyTextos>Beneficios potencias: </TypographyTextos>
+                                <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
+                                    {proposta.resultadosPotenciais.map((resultadosPotenciais: string, index: number) => {
+                                        return (<li key={index}>{resultadosPotenciais}</li>)
+                                    })}
+                                </ul>
+                            </BoxObjetivo>
+                            <BoxObjetivo>
+                                <TypographyTextos> <b> Custos totais do projeto: R${proposta.custosTotais.totalDespesas}</b> </TypographyTextos>
+                                <TypographyTextos>Total despesas recursos externos (Desembolso): R${proposta.custosTotais.totalDespesas}</TypographyTextos>
+                            </BoxObjetivo>
+                            <CentrosCusto proposta={proposta} />
+                            <BoxObjetivo>
+                                <TypographyTextos>Periodo de execucao: {proposta.periodoExecucaoInicio.toLocaleDateString()} a {proposta.periodoExecucaoFim.toLocaleDateString()}</TypographyTextos>
+                            </BoxObjetivo>
+                            <BoxObjetivo>
+                                <TypographyTextos>Payback: {proposta.payback} meses</TypographyTextos>
+                            </BoxObjetivo>
+                            <BoxObjetivo>
+                                <TypographyTextos>Responsavel Negocio: {proposta.responsavel}</TypographyTextos>
+                            </BoxObjetivo>
+                            <BoxObjetivo>
+                                <TypographyParticipantes>PARECER COMISSAO: {proposta.parecerComissao}</TypographyParticipantes>
+                            </BoxObjetivo>
+                        </>
+                    )
+                })}
+            </BoxItens>
+        )
+    }
+
+    const CentrosCusto = (props: { proposta: ItensATA }) => {
+        return (
+            <Box sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
+                {props.proposta.custosTotais.tabelas.map((tabela: ItensTabela) => {
+                    console.log(tabela.temLicenca);
+
+                    let totalEsfoco = 0;
+                    let valorTotal = 0;
+                    return (
+                        <>
+                            <Box sx={{ display: "flex", justifyContent: "flex", alignItems: "center" }}>
+                                <TableContainer component={Paper} sx={{ width: "50%", marginTop: 5 }}>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCellStyled align="center">Despesas (Desembolso)</TableCellStyled>
+                                                <TableCellStyled align="center">Esforco</TableCellStyled>
+                                                <TableCellStyled align="center">Valor total</TableCellStyled>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {tabela.linhastabela.map((linhaTabela: LinhaTabela) => {
+                                                totalEsfoco += linhaTabela.quantidade;
+                                                valorTotal += (linhaTabela.quantidade * linhaTabela.valorQuantidade);
+                                                return (
+                                                    <>
+                                                        <TableRow>
+                                                            <TableCellStyled align="center">{linhaTabela.tituloDespesa}</TableCellStyled>
+                                                            <TableCellStyled align="center">{linhaTabela.quantidade}</TableCellStyled>
+                                                            <TableCellStyled align="center">R$ {linhaTabela.quantidade * linhaTabela.valorQuantidade}</TableCellStyled>
+                                                        </TableRow>
+                                                    </>
+                                                )
+                                            })}
+                                            <TableRow>
+                                                <TableCellStyled align="center">Total despesas: </TableCellStyled>
+                                                <TableCellStyled align="center">{totalEsfoco}h</TableCellStyled>
+                                                <TableCellStyled align="center">R$ {valorTotal}</TableCellStyled>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                                <TableContainer>
+                                    <Table component={Paper} sx={{ width: "25%", marginLeft: 2, }}>
+                                        <TableHead>
+                                            <TableCellStyled align="center">CC Pagante</TableCellStyled>
+                                        </TableHead>
+                                        <TableBody>
+                                            <TableRow>
+                                                {tabela.centrosCusto.map((cc) => {
+                                                    return (
+                                                        <>
+                                                            <TableRow sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                                <TableCellStyled align="center">
+                                                                    {cc.porcentagemDespesa}%
+                                                                </TableCellStyled>
+                                                            </TableRow>
+                                                        </>
+                                                    )
+                                                })}
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Box>
+                            {tabela.temLicenca ?
+                                <>
+                                    <Box sx={{ display: "flex", justifyContent: "flex", alignItems: "center" }}>
+                                        <TableContainer component={Paper} sx={{ width: "50%", marginTop: 5 }}>
+                                            <Table>
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCellStyled align="center">Insvetimentos/recorrentes</TableCellStyled>
+                                                        <TableCellStyled align="center">Licencas</TableCellStyled>
+                                                        <TableCellStyled align="center">Valor total</TableCellStyled>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {tabela.linhastabela.map((linhaTabela: LinhaTabela) => {
+                                                        totalEsfoco += linhaTabela.quantidade;
+                                                        valorTotal += (linhaTabela.quantidade * linhaTabela.valorQuantidade);
+                                                        return (
+                                                            <>
+                                                                <TableRow>
+                                                                    <TableCellStyled align="center">{linhaTabela.tituloDespesa}</TableCellStyled>
+                                                                    <TableCellStyled align="center">{linhaTabela.quantidade}</TableCellStyled>
+                                                                    <TableCellStyled align="center">R$ {linhaTabela.quantidade * linhaTabela.valorQuantidade}</TableCellStyled>
+                                                                </TableRow>
+                                                            </>
+                                                        )
+                                                    })}
+                                                    <TableRow>
+                                                        <TableCellStyled align="center">Total despesas: </TableCellStyled>
+                                                        <TableCellStyled align="center">{totalEsfoco}h</TableCellStyled>
+                                                        <TableCellStyled align="center">R$ {valorTotal}</TableCellStyled>
+                                                    </TableRow>
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                        <TableContainer>
+                                            <Table component={Paper} sx={{ width: "25%", marginLeft: 2, }}>
+                                                <TableHead>
+                                                    <TableCellStyled align="center">CC Pagante</TableCellStyled>
+                                                </TableHead>
+                                                <TableBody>
+                                                    <TableRow>
+                                                        {tabela.centrosCusto.map((cc) => {
+                                                            return (
+                                                                <>
+                                                                    <TableRow sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                                        <TableCellStyled align="center">
+                                                                            {cc.porcentagemDespesa}%
+                                                                        </TableCellStyled>
+                                                                    </TableRow>
+                                                                </>
+                                                            )
+                                                        })}
+                                                    </TableRow>
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </Box>
+                                </>
+
+                                : ""
+                            }
+                        </>
+                    )
+                })}
+            </Box>
+        )
+    }
+
+    const ParticipantesReuniao = (props: { ata: ATA }) => {
+        return (
+            <BoxObjetivo>
+                <>
+                    <TypographyParticipantes>Participantes</TypographyParticipantes>
+                    {props.ata.participantes.map((parti: string, index: number) => {
+                        return <TypographyTextos key={index}>{parti}</TypographyTextos>
+                    })}
+                </>
+            </BoxObjetivo >
+        )
+    }
+
+    const PageTemplate = () => {
+        return (
+            <></>
+        );
+    }
+
+    return (
+        <BoxConteudo>
+            <div className="example-config">
+                <button
+                    onClick={exportPDFWithComponent}
+                >
+                    Export to PDF with component
+                </button>
+            </div>
+            <PDFExport forcePageBreak=".break" paperSize="A4" pageTemplate={PageTemplate} margin="2cm" ref={pdfCompoente}>
+                <BoxTitulo>
+                    <TypographyTituloATA variant="h6">{ata.tituloATA}</TypographyTituloATA>
+                </BoxTitulo>
+                <BoxData>
+                    <TypographyData variant="body2">
+                        ATA {ata.numeroDG}/{ata.numeroAno}
+                    </TypographyData>
+                    <TypographyData variant="body2">
+                        Data: {ata.data.toLocaleDateString()}
+                    </TypographyData>
+                    <TypographyData variant="body2">
+                        Inicio: {ata.inicioReuniao.toLocaleTimeString()}
+                    </TypographyData>
+                    <TypographyData variant="body2">
+                        Termino: {ata.terminoReuniao.toLocaleTimeString()}
+                    </TypographyData>
+                </BoxData>
+                <ATA ata={ata} />
+                <ParticipantesReuniao ata={ata} />
+            </PDFExport>
+        </BoxConteudo >
+    );
+}
