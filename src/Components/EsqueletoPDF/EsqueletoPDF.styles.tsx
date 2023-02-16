@@ -28,7 +28,7 @@ export const BoxItens = styledBox({
     width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"
 })
 
-export const BoxTityuloItens = styledBox({
+export const BoxTituloItens = styledBox({
     width: "100%", display: "flex", justifyContent: "flex-start", alignItems: "center",
 })
 
@@ -36,8 +36,12 @@ export const BoxObjetivo = styledBox({
     width: "100%", marginTop: 16
 })
 
+export const TypographyTituloATA = styledTypography({
+    color: "#0070c0", fontSize: "12px", width: "100%", display: "flex", justifyContent: "center", alignItems: "center"
+})
+
 export const TypographyTitulos = styledTypography({
-    color: "#0070c0", fontSize: "12px", width: "100%"
+    color: "#0070c0", fontSize: "12px", width: "100%",
 })
 
 export const TypographyTextos = styledTypography({
