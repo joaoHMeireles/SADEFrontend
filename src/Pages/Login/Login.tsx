@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/wegLogo.png";
 import "./Login.scss";
+import api from "../../api/api";
 import Box from "@mui/material/Box";
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -11,7 +12,7 @@ import RemoveRedEyeRoundedIcon from "@mui/icons-material/RemoveRedEyeRounded";
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 
 import {
-  BoxEsqueceuSenha, BoxLogoWEG, ContainerBackgroundLogin, ContainerBotaoLogin, ContainerGeralLogin, ContainerInputsLogin, 
+  BoxEsqueceuSenha, BoxLogoWEG, ContainerBackgroundLogin, ContainerBotaoLogin, ContainerGeralLogin, ContainerInputsLogin,
   ContainerLogin, ContainerTituloTexto, InputEmail, InputSenha, TextoEsqueceuSenha, TypographyTexto, TypographyTitulo,
   EstilosBotao
 } from "./Login.styles";
@@ -31,6 +32,23 @@ function Login(props: {
   localStorage.setItem("PESSOA", "Solicitante")
   localStorage.setItem("PAGINATUAL", "login")
 
+  interface User {
+    cargo: string,
+    chatsUsuario: [],
+    departamento: string,
+    email: string,
+    idUsuario: number,
+    nomeUsuario: string,
+    notificacoesUsuario: [],
+    numeroCadastro: number,
+    senha: string,
+    setor: string
+  }
+
+  const [usuarios, setUsuarios] = useState<User[]>([])
+  const [user, setUser] = useState()
+  const [password, setPassword] = useState()
+
   /**
    * Função para setar o filtro e o menu como fechados
    */
@@ -39,11 +57,27 @@ function Login(props: {
     props.setFiltro(false);
   });
 
+  useEffect(() => {
+    api.get("/sod/usuario").then((response) => {
+      setUsuarios(response.data);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }, [])
+
   /**
-   * Função que coloca o  tipo do usuário no localStorage
+   * Função que coloca o tipo do usuário no localStorage
    */
   function colocaPessoa() {
     localStorage.setItem("TIPOUSUARIO", "gerenteTI");
+    console.log(usuarios);
+    for (let i = 0; i < usuarios.length; i++) {
+      if (user == usuarios[i].nomeUsuario) {
+        if (password == usuarios[i].senha) {
+          alert("Logado")
+        }
+      }
+    }
   }
 
   /**
@@ -77,12 +111,14 @@ function Login(props: {
               <ContainerInputsLogin>
                 <InputEmail
                   placeholder="Usuário"
+                  onChange={(e: any) => { setUser(e.target.value) }}
                   InputProps={{
                     startAdornment: <AccountCircle sx={{ color: "#595959", paddingRight: 1 }} />,
                   }}
                 />
                 <InputSenha type={tipo} id="inputSenha"
                   placeholder="Senha"
+                  onChange={(e: any) => { setPassword(e.target.value) }}
                   InputProps={{
                     startAdornment: <LockRoundedIcon sx={{ color: "#595959", paddingRight: 1 }} />,
                     endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} />)
@@ -99,9 +135,11 @@ function Login(props: {
                   variant="contained"
                   startIcon={<InputRoundedIcon />}
                 >
-                  <Link className="textoBotao" onClick={colocaPessoa} to="/home">
+                  {/* <Link className="textoBotao" onClick={colocaPessoa} to="/home"> */}
+                  <Box onClick={colocaPessoa}>
                     Entrar
-                  </Link>
+                  </Box>
+                  {/* </Link> */}
                 </EstilosBotao>
               </ContainerBotaoLogin>
             </ContainerBackgroundLogin>
