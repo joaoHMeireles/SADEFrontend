@@ -1,6 +1,6 @@
 import { Box, Button, styled } from "@mui/material";
-const styledBox = styled(Box)
-const styledButton = styled(Button)
+const styledBox = styled(Box);
+const styledButton = styled(Button);
 
 export const BoxContainer = styledBox({
     width: "100%", 

@@ -1,32 +1,32 @@
-import { faker } from '@faker-js/faker';
-// import faker from "faker";
-
 export const dataLine1 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [1, 3, 2, 10, 8, 9, 4, 6, 5, 7],
+        data: [4, 9, 2, 3, 6, 6, 1, 8, 4, 4],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
+        tension: 0.2
     }]
 };
 
 export const optionsLine1 = {
     plugins: {
-        legend: false
+        legend: {
+            display: false
+        }
     },
 
     scales: {
         x: {
+            display: false,
             grid: {
                 display: false
             }
         },
 
         y: {
-            min: 0,
-            max: 10,
+            display: false,
             grid: {
                 display: false
             }
@@ -37,29 +37,32 @@ export const optionsLine1 = {
 export const dataLine2 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [7, 5, 6, 4, 9, 8, 10, 2, 3, 1],
+        data: [8, 1, 9, 1, 9, 3, 10, 2, 5, 3],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
+        tension: 0.2
     }]
 };
 
 export const optionsLine2 = {
     plugins: {
-        legend: false
+        legend: {
+            display: false
+        }
     },
 
     scales: {
         x: {
+            display: false,
             grid: {
                 display: false
             }
         },
 
         y: {
-            min: 0,
-            max: 10,
+            display: false,
             grid: {
                 display: false
             }
@@ -70,29 +73,32 @@ export const optionsLine2 = {
 export const dataLine3 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        data: [9, 4, 7, 1, 10, 3, 8, 8, 9, 2],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
+        tension: 0.2
     }]
 };
 
 export const optionsLine3 = {
     plugins: {
-        legend: false
+        legend: {
+            display: false
+        }
     },
 
     scales: {
         x: {
+            display: false,
             grid: {
                 display: false
             }
         },
 
         y: {
-            min: 0,
-            max: 10,
+            display: false,
             grid: {
                 display: false
             }
@@ -103,29 +109,32 @@ export const optionsLine3 = {
 export const dataLine4 = {
     labels: ["", "", "", "", "", "", "", "", "", ""],
     datasets: [{
-        data: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+        data: [9, 5, 4, 2, 5, 9, 5, 8, 5, 1],
         backgroundColor: "transparent",
         borderColor: "#595959",
         pointBorderColor: "transparent",
         pointBorderWidth: 4,
+        tension: 0.2
     }]
 };
 
 export const optionsLine4 = {
     plugins: {
-        legend: false
+        legend: {
+            display: false
+        }
     },
 
     scales: {
         x: {
+            display: false,
             grid: {
                 display: false
             }
         },
 
         y: {
-            min: 0,
-            max: 10,
+            display: false,
             grid: {
                 display: false
             }
@@ -135,17 +144,16 @@ export const optionsLine4 = {
 
 export const dataDoughnut = {
     datasets: [{
-        label: "Demandas",
-        data: [1, 3, 2, 1],
-        backgroundColor: ["#00579D", "#5B93BF", "#95B9D5", "#FFF"],
+        data: [1, 2, 4, 1],
+        backgroundColor: ["#FFF", "#95B9D5", "#5B93BF", "#00579D"],
         borderWidth: 0
     }]
 };
 
-let total = 0;
+let total: number = 0;
 
 for (let numero of dataDoughnut.datasets[0].data) {
-    total += numero;
+    total += Number.parseInt(numero);
 };
 
 export const pluginsDoughnut = {
@@ -164,41 +172,57 @@ export const pluginsDoughnut = {
     }
 };
 
-export const optionsHorizontalBar = {
-    indexAxis: 'y' as const,
-    elements: {
-        bar: {
-            borderWidth: 2,
-        },
-    },
-    responsive: true,
-    plugins: {
-        legend: {
-            position: 'right' as const,
-        }
-    },
-};
-
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = [""];
 
 export const dataHorizontalBar = {
     labels,
     datasets: [
         {
-            label: 'Atrasadas',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+            // barThickness: 50,
+            barPercentage: 0.5,
+            data: labels.map(() => 1),
             backgroundColor: '#95B9D5',
         },
         {
-            label: 'No prazo',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+            // barThickness: 50,
+            barPercentage: 0.5,
+            data: labels.map(() => 4),
             backgroundColor: '#5B93BF',
         },
         {
-            label: 'Adiantadas',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-
+            // barThickness: 50,
+            barPercentage: 0.5,
+            data: labels.map(() => 3),
             backgroundColor: '#00579D',
         }
-    ],
+    ]
+};
+
+export const optionsHorizontalBar = {
+    indexAxis: 'y' as const,
+    elements: {
+        bar: {
+            borderWidth: 0,
+            borderRadius: 20
+        },
+    },
+    responsive: true,
+    plugins: {
+        legend: false
+    },
+    scales: {
+        x: {
+            display: false,
+            grid: {
+                display: false,
+            }
+        },
+
+        y: {
+            display: false,
+            grid: {
+                display: false,
+            }
+        }
+    }
 };
