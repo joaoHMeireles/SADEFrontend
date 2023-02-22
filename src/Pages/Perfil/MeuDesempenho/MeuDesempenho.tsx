@@ -1,9 +1,8 @@
 import './MeuDesempenho.scss';
 import { dataLine1, optionsLine1, dataLine2, optionsLine2, dataLine3, optionsLine3, dataLine4, optionsLine4, dataDoughnut, pluginsDoughnut, dataHorizontalBar, optionsHorizontalBar } from "./DatasChart";
+import { LineChart, BoxLine, ContainerLines, DoughnutChart, ColorStatus, StatusDoughnut, BoxStatusDoughnut, BoxDoughnut, BarChart, BoxStatusBar, BoxBar, ContainerCharts, Page } from './MeuDesempenho.styles';
 
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, PluginChartOptions, LineElement, CategoryScale, LinearScale, PointElement, BarElement, Title } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement, BarElement, Title } from 'chart.js';
 import { _DeepPartialObject } from 'chart.js/dist/types/utils';
 import { Doughnut } from 'react-chartjs-2';
 import { Line } from 'react-chartjs-2';
@@ -13,70 +12,94 @@ ChartJS.register(ArcElement, Tooltip, Legend, LineElement, CategoryScale, Linear
 
 export default function MeuDesempenho() {
   return (
-    <Container sx={{ alignItems: "center", display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-around", width: "100%" }}>
-      <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between" }}>
-        <Box sx={{ backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", height: "auto", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
-          <Box sx={{ height: "auto", width: "15vw" }}>
+    <Page>
+      <ContainerLines>
+        <BoxLine>
+          <p style={{ fontSize: "20px", fontWeight: "700" }}>3</p>
+
+          <p>No último mês</p>
+
+          <LineChart>
             <Line data={dataLine1} options={optionsLine1}></Line>
-          </Box>
-        </Box>
+          </LineChart>
+        </BoxLine>
 
-        <Box sx={{ backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", height: "auto", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
-          <Box sx={{ height: "auto", width: "15vw" }}>
+        <BoxLine>
+          <p style={{ fontSize: "20px", fontWeight: "700" }}>9</p>
+
+          <p>No último mês</p>
+
+          <LineChart>
             <Line data={dataLine2} options={optionsLine2}></Line>
-          </Box>
-        </Box>
+          </LineChart>
+        </BoxLine>
 
-        <Box sx={{ backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", height: "auto", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
-          <Box sx={{ height: "auto", width: "15vw" }}>
+        <BoxLine>
+          <p style={{ fontSize: "20px", fontWeight: "700" }}>3</p>
+
+          <p>No último mês</p>
+
+          <LineChart>
             <Line data={dataLine3} options={optionsLine3}></Line>
-          </Box>
-        </Box>
+          </LineChart>
+        </BoxLine>
 
-        <Box sx={{ backgroundColor: "#EEE", boxShadow: "5px 5px 10px 0 #00000050", borderRadius: "1rem", height: "auto", margin: "1rem 2rem", padding: "2rem 1rem", width: "auto" }}>
-          <Box sx={{ height: "auto", width: "15vw" }}>
+        <BoxLine>
+          <p style={{ fontSize: "20px", fontWeight: "700" }}>6</p>
+
+          <p>No último mês</p>
+
+          <LineChart>
             <Line data={dataLine4} options={optionsLine4}></Line>
-          </Box>
-        </Box>
-      </Box>
+          </LineChart>
+        </BoxLine>
+      </ContainerLines>
 
-      <Box sx={{ alignItems: "center", display: "flex", height: "auto", justifyContent: "space-between", width: "100%" }}>
-        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "auto" }}>
-          <Box sx={{ marginRight: "2rem" }}>
-            <Box sx={{ alignItems: "center", display: "flex" }}>
-              <Box sx={{ backgroundColor: "#00579D", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
+      <ContainerCharts>
+        <BoxDoughnut>
+          <BoxStatusDoughnut>
+            <StatusDoughnut>
+              <ColorStatus sx={{ backgroundColor: "#00579D" }} />
 
               <p>Concluídas</p>
-            </Box>
+            </StatusDoughnut>
 
-            <Box sx={{ alignItems: "center", display: "flex" }}>
-              <Box sx={{ backgroundColor: "#5B93BF", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
+            <StatusDoughnut>
+              <ColorStatus sx={{ backgroundColor: "#5B93BF" }} />
 
               <p>Em andamento</p>
-            </Box>
+            </StatusDoughnut>
 
-            <Box sx={{ alignItems: "center", display: "flex" }}>
-              <Box sx={{ backgroundColor: "#95B9D5", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
+            <StatusDoughnut>
+              <ColorStatus sx={{ backgroundColor: "#95B9D5" }} />
 
               <p>Aprovadas</p>
-            </Box>
+            </StatusDoughnut>
 
-            <Box sx={{ alignItems: "center", display: "flex" }}>
-              <Box sx={{ backgroundColor: "#FFF", borderRadius: "100%", boxShadow: "5px 5px 10px 0 #00000050", height: "30px", margin: "0.5rem 1rem 0.5rem 0", width: "30px" }}></Box>
+            <StatusDoughnut>
+              <ColorStatus sx={{ backgroundColor: "#FFF" }} />
 
               <p>Reprovadas</p>
-            </Box>
-          </Box>
+            </StatusDoughnut>
+          </BoxStatusDoughnut>
 
-          <Box sx={{ alignItems: "center", diplay: "flex", height: "10vw", justifyContent: "center", width: "10vw" }}>
+          <DoughnutChart>
             <Doughnut data={dataDoughnut} plugins={[pluginsDoughnut]} />
-          </Box>
-        </Box>
+          </DoughnutChart>
+        </BoxDoughnut>
 
-        <Box sx={{ alignItems: "center", backgroundColor: "#EEE", borderRadius: "1rem", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", height: "auto", justifyContent: "space-between", padding: "1rem", width: "50vw" }}>
-          <Bar data={dataHorizontalBar} options={optionsHorizontalBar} />
-        </Box>
-      </Box>
-    </Container >
+        <BoxBar>
+          <BoxStatusBar>
+            <p>Atrasadas</p>
+            <p>No prazo</p>
+            <p>Adiantadas</p>
+          </BoxStatusBar>
+
+          <BarChart>
+            <Bar data={dataHorizontalBar} options={optionsHorizontalBar} />
+          </BarChart>
+        </BoxBar>
+      </ContainerCharts>
+    </Page >
   );
 };
