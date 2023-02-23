@@ -15,9 +15,9 @@ export default function MeuDesempenho() {
     <Page>
       <ContainerLines>
         <BoxLine>
-          <p style={{ fontSize: "20px", fontWeight: "700" }}>3</p>
+          <p style={{ fontSize: "20px", fontWeight: "700" }} className='p'>3</p>
 
-          <p>No último mês</p>
+          <p className='p'>No último mês</p>
 
           <LineChart>
             <Line data={dataLine1} options={optionsLine1}></Line>
@@ -25,9 +25,9 @@ export default function MeuDesempenho() {
         </BoxLine>
 
         <BoxLine>
-          <p style={{ fontSize: "20px", fontWeight: "700" }}>9</p>
+          <p style={{ fontSize: "20px", fontWeight: "700" }} className='p'>9</p>
 
-          <p>No último mês</p>
+          <p className='p'>No último mês</p>
 
           <LineChart>
             <Line data={dataLine2} options={optionsLine2}></Line>
@@ -35,9 +35,9 @@ export default function MeuDesempenho() {
         </BoxLine>
 
         <BoxLine>
-          <p style={{ fontSize: "20px", fontWeight: "700" }}>3</p>
+          <p style={{ fontSize: "20px", fontWeight: "700" }} className='p'>3</p>
 
-          <p>No último mês</p>
+          <p className='p'>No último mês</p>
 
           <LineChart>
             <Line data={dataLine3} options={optionsLine3}></Line>
@@ -45,9 +45,9 @@ export default function MeuDesempenho() {
         </BoxLine>
 
         <BoxLine>
-          <p style={{ fontSize: "20px", fontWeight: "700" }}>6</p>
+          <p style={{ fontSize: "20px", fontWeight: "700" }} className='p'>6</p>
 
-          <p>No último mês</p>
+          <p className='p'>No último mês</p>
 
           <LineChart>
             <Line data={dataLine4} options={optionsLine4}></Line>
@@ -61,25 +61,25 @@ export default function MeuDesempenho() {
             <StatusDoughnut>
               <ColorStatus sx={{ backgroundColor: "#00579D" }} />
 
-              <p>Concluídas</p>
+              <p className='p'>Concluídas</p>
             </StatusDoughnut>
 
             <StatusDoughnut>
               <ColorStatus sx={{ backgroundColor: "#5B93BF" }} />
 
-              <p>Em andamento</p>
+              <p className='p'>Em andamento</p>
             </StatusDoughnut>
 
             <StatusDoughnut>
               <ColorStatus sx={{ backgroundColor: "#95B9D5" }} />
 
-              <p>Aprovadas</p>
+              <p className='p'>Aprovadas</p>
             </StatusDoughnut>
 
             <StatusDoughnut>
               <ColorStatus sx={{ backgroundColor: "#FFF" }} />
 
-              <p>Reprovadas</p>
+              <p className='p'>Reprovadas</p>
             </StatusDoughnut>
           </BoxStatusDoughnut>
 
@@ -90,9 +90,9 @@ export default function MeuDesempenho() {
 
         <BoxBar>
           <BoxStatusBar>
-            <p>Atrasadas</p>
-            <p>No prazo</p>
-            <p>Adiantadas</p>
+            <p className='p'>Atrasadas</p>
+            <p className='p'>No prazo</p>
+            <p className='p'>Adiantadas</p>
           </BoxStatusBar>
 
           <BarChart>
