@@ -135,11 +135,11 @@ function Login(props: {
                   variant="contained"
                   startIcon={<InputRoundedIcon />}
                 >
-                  {/* <Link className="textoBotao" onClick={colocaPessoa} to="/home"> */}
+                  <Link className="textoBotao" onClick={colocaPessoa} to="/home">
                   <Box onClick={colocaPessoa}>
                     Entrar
                   </Box>
-                  {/* </Link> */}
+                  </Link>
                 </EstilosBotao>
               </ContainerBotaoLogin>
             </ContainerBackgroundLogin>
