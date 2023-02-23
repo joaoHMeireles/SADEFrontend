@@ -71,12 +71,19 @@ function Login(props: {
   function colocaPessoa() {
     localStorage.setItem("TIPOUSUARIO", "gerenteTI");
     console.log(usuarios);
+
+    let logado = false;
+
     for (let i = 0; i < usuarios.length; i++) {
       if (user == usuarios[i].nomeUsuario) {
         if (password == usuarios[i].senha) {
-          alert("Logado")
+          logado = true;
         }
       }
+    }
+
+    if(logado){
+      
     }
   }
 
