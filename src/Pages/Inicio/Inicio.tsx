@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TipoColecaoComponenteProcesso,
   TipoComponenteProcesso,
@@ -7,12 +7,13 @@ import {
   sessaoTI,
 } from "../../constants/enuns";
 import "./Inicio.scss";
+import api from "../../api/api";
 import Searchbar from "../../Components/Searchbar/Searchbar";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import { BoxConteudo } from "../App.styles";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
 
-const listaComponents: {}[] = [
+const listaComponentes: {}[] = [
   {
     id: 1,
     titulo: "Primeira Demanda",
@@ -1327,6 +1328,21 @@ export default function Inicio(props: {
 }) {
   const [grid, setGrid] = useState(true);
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
+  const [listaComponents, setListaComponents] = useState<any[]>([])
+
+  useEffect(() => {
+    api.get("/sod/demanda").then((response) => {
+      let listaDemandas: any[] = []
+      for(let demanda of response.data){
+        demanda.tipo = TipoComponenteProcesso.Demanda
+        listaDemandas.push(demanda)
+      }
+      setListaComponents(listaDemandas);
+      
+    }).catch((err) => {
+      console.log(err);
+    })
+  }, [])
 
   localStorage.setItem("PAGINATUAL", "home");
 

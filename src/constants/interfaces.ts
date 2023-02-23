@@ -2,11 +2,12 @@ import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponente
 
 export interface InterfaceComponenteProcesso {
     id: number,
-    titulo: string,
+    tituloDemanda: string,
     score: number,
-    solicitante: string,
-    status: StatusComponenteProcesso,
+    usuario: any,
+    statusDemanda: StatusComponenteProcesso,
     tamanho: TamanhoComponenteProcesso,
+    frequenciaUso: string,
     tipo: TipoComponenteProcesso,
     link?: String
 }

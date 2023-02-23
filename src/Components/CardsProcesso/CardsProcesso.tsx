@@ -1,5 +1,5 @@
 import { Box, Grid, useMediaQuery } from "@mui/material";
-import { BoxContainer, BoxConteudo } from "../../Pages/App.styles";
+import { BoxContainer } from "../../Pages/App.styles";
 import ComponenteProcesso from "../ComponenteProcesso/ComponenteProcesso";
 import ComponenteColecaoProcesso from "../ComponenteProcesso/ComponenteColecaoProcesso/ComponenteColecaoProcesso";
 
@@ -42,7 +42,7 @@ export default function CardsProcesso(props: {
     }
 
     return (
-      <Grid key={processo.id} item xs={props.grid ? (!matches ? 4 : 6) : 12}>
+      <Grid key={processo.idDemanda} item xs={props.grid ? (!matches ? 4 : 6) : 12}>
         <BoxContainer>{componente}</BoxContainer>
       </Grid>
     );

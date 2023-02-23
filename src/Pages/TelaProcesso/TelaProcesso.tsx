@@ -1,6 +1,6 @@
 import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getNomeComponente, urlValida, getIconeArquivo } from '../../utils';
+import { getNomeComponente, urlValida, getIconeArquivo, getBeneficiosPorTipo } from '../../utils';
 import Dayjs from '@date-io/dayjs'
 import { sessaoTI, TipoComponenteProcesso } from '../../constants/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
@@ -39,7 +39,7 @@ import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProce
  * @param props 
  * @returns 
  */
-export default function TelaComponenteProcesso(props: {sidebarAberta: boolean}) {
+export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }) {
     const [modalAberto, setModalAberto] = useState(false)
     const [conteudoModal, setConteudoModal] = useState(<div />)
     const [feedbackAberto, setFeedbackAberto] = useState(false)
@@ -50,7 +50,7 @@ export default function TelaComponenteProcesso(props: {sidebarAberta: boolean}) 
 
     return (
         <>
-            <Header informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} setFeedbackAberto={setFeedbackAberto} setConteudoFeedback={setConteudoFeedback} sidebarAberta={props.sidebarAberta}/>
+            <Header informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} setFeedbackAberto={setFeedbackAberto} setConteudoFeedback={setConteudoFeedback} sidebarAberta={props.sidebarAberta} />
             <BoxConteudo >
                 <BoxContainer>
                     <Container >
@@ -376,7 +376,7 @@ export function Header(props: {
 
     return (
         <>
-            <BoxHeader sx={{width: (props.sidebarAberta ? "88.35%" : "96.5%")}}>
+            <BoxHeader sx={{ width: (props.sidebarAberta ? "88.35%" : "96.5%") }}>
                 <Breadcrumb />
                 <ButtonsHeader listaBotoes={listaBotoes} />
             </BoxHeader>
@@ -824,26 +824,29 @@ function ContainerProcessoPrincipal(props: {
  * @returns 
  */
 function InfoGeral(props: { processo: any }) {
+    const processo = props.processo
+
     const atributosPequenos = {
-        numero: props.processo.id,
-        status: props.processo.status,
-        solicitante: props.processo.solicitante,
-        departamento: props.processo.departamento,
-        gerenteResponsavel: props.processo.gerenteResponsavel,
-        frequenciaDeUso: props.processo.frequenciaUso,
-        tamanho: props.processo.tamanho,
-        sessaoTIResponsavel: props.processo.secaoTIResponsavel,
-        BUSolicitante: props.processo.BUSolicitante,
-        payback: props.processo.payback,
-        prazoElaboracao: props.processo.prazoElaboracao,
-        codigoPPM: props.processo.codigoPPM
+        numero: (processo.idDemanda ? processo.idDemanda : processo.idProposta),
+        status: processo.statusDemanda,
+        solicitante: processo.usuario.nomeUsuario,
+        departamento: processo.usuario.departamento,
+        //num sei oq é iso
+        // gerenteResponsavel: processo.gerenteResponsavel,
+        frequenciaDeUso: processo.frequenciaUso,
+        tamanho: processo.tamanho,
+        sessaoTIResponsavel: processo.secaoTIResponsavel,
+        BUSolicitante: processo.busolicitante ? processo.busolicitante.nomeBU : null,
+        payback: processo.payback,
+        prazoElaboracao: new Date(processo.prazoElaboracao),
+        codigoPPM: processo.codigoPPM
     }
 
     const atributosGrandes = {
-        centrosDeCusto: props.processo.centrosDeCusto,
-        BUsBeneficiadas: props.processo.BUsBeneficiadas,
-        periodoDeExecucao: props.processo.periodoExecucao,
-        responsaveis: props.processo.responsaveis
+        centrosDeCusto: processo.centroCustoDemanda,
+        BUsBeneficiadas: processo.busBeneficiadas,
+        periodoDeExecucao: processo.periodoExecucao,
+        responsaveis: processo.responsaveis
     }
 
     const gridAtributosPequenos = []
@@ -886,6 +889,12 @@ function InfoGeral(props: { processo: any }) {
             continue
         }
 
+        // let datasPeriodoExecucao = []
+
+        // for(let periodo of processo.periodoExecucao){
+        //     datasPeriodoExecucao.push(new Date(periodo))
+        // }
+
         gridAtributosGrandes.push(
             <Grid key={chaveComponente} item xs={6} >
                 <TypographyTituloAtributo variant='body1'>
@@ -896,13 +905,15 @@ function InfoGeral(props: { processo: any }) {
         )
     }
 
-    const beneficiosQualitativos = props.processo.beneficiosQualitativos.map((beneficio: string, index: number) => {
+    const beneficiosQualitativos = getBeneficiosPorTipo(processo.beneficiosDemanda, "QUALITATIVO")
+
+    const componenteBeneficiosQualitativos = beneficiosQualitativos.map((beneficio: any, index: number) => {
         return (
             <ListItem key={index} sx={{ textAlign: "justify" }}>
                 <ListItemIcon>
                     <CircleIconPonto />
                 </ListItemIcon>
-                {beneficio}
+                {beneficio.descricao}
             </ListItem>
         )
     })
@@ -923,14 +934,16 @@ function InfoGeral(props: { processo: any }) {
                     {gridAtributosGrandes}
                 </Grid>
             </Grid >
-            <Grid item>
-                <TypographyTexto variant='body1' >
-                    <b>{getNomeAtributo("beneficiosQualitativos")}</b>
-                </TypographyTexto>
-                <List>
-                    {beneficiosQualitativos}
-                </List>
-            </Grid>
+            {componenteBeneficiosQualitativos.length != 0 &&
+                <Grid item>
+                    <TypographyTexto variant='body1' >
+                        <b>{getNomeAtributo("beneficiosQualitativos")}</b>
+                    </TypographyTexto>
+                    <List>
+                        {componenteBeneficiosQualitativos}
+                    </List>
+                </Grid>
+            }
         </Grid >
     )
 }
@@ -944,27 +957,30 @@ function InfoGeral(props: { processo: any }) {
  */
 function AtributeList(props: { valorAtributo: [] }) {
     let contadorPeriodoExecucao = 0
-    const valores = props.valorAtributo.map((valor, index) => {
-        if (typeof valor === typeof new Date()) {
-            contadorPeriodoExecucao++
-            const valorData: Date = valor
-            return (
-                <ListItem key={index}>
-                    <ListItemIcon>
-                        <CircleIconPonto />
-                    </ListItemIcon>
-                    {contadorPeriodoExecucao == 1 ? "Início: " : "Fim: "}
-                    {valorData.toLocaleDateString()}
-                </ListItem>
-            )
-        }
+    const valores = props.valorAtributo.map((valor: any, index) => {
+        //ver condição para data
+        // if (typeof valor === typeof new Date()) {
+        //     contadorPeriodoExecucao++
+        //     const valorData: Date = valor
+        //     return (
+        //         <ListItem key={index}>
+        //             <ListItemIcon>
+        //                 <CircleIconPonto />
+        //             </ListItemIcon>
+        //             {contadorPeriodoExecucao == 1 ? "Início: " : "Fim: "}
+        //             {valorData.toLocaleDateString()}
+        //         </ListItem>
+        //     )
+        // }
+
+        const nomeMostrar = valor.nomeCentroCusto ? valor.nomeCentroCusto : valor.nomeBU
 
         return (
             <ListItem key={index}>
                 <ListItemIcon>
                     <CircleIconPonto />
                 </ListItemIcon>
-                {valor}
+                {nomeMostrar}
             </ListItem>
         )
     })
@@ -985,10 +1001,15 @@ function AtributeList(props: { valorAtributo: [] }) {
  */
 function InfoComercial(props: { processo: any }) {
     const atributos = {
-        beneficiosReais: props.processo.beneficiosReais,
-        beneficiosPotenciais: props.processo.beneficiosPotenciais,
+        beneficiosReais: getBeneficiosPorTipo(props.processo.beneficiosDemanda, "REAL"),
+        beneficiosPotenciais: getBeneficiosPorTipo(props.processo.beneficiosDemanda, "POTENCIAL"),
         tabelasCusto: props.processo.tabelasCusto
     }
+
+    if (atributos.beneficiosReais.length == 0 && atributos.beneficiosPotenciais.length == 0 && atributos.tabelasCusto == null) {
+        return <></>
+    }
+
 
     let elementosTabelaCusto
 
@@ -1001,8 +1022,12 @@ function InfoComercial(props: { processo: any }) {
             <TypographyTitulo variant='h5'>
                 Informações Comerciais
             </TypographyTitulo>
-            <TabelaBeneficios title='Benefícios reais' atributos={atributos.beneficiosReais} />
-            <TabelaBeneficios title='Benefícios potenciais' atributos={atributos.beneficiosPotenciais} />
+            {atributos.beneficiosReais.length != 0 &&
+                <TabelaBeneficios title='Benefícios reais' atributos={atributos.beneficiosReais} />
+            }
+            {atributos.beneficiosPotenciais.length != 0 &&
+                <TabelaBeneficios title='Benefícios potenciais' atributos={atributos.beneficiosPotenciais} />
+            }
             {atributos.tabelasCusto &&
                 <BoxTabela>
                     <TypographyTitulo variant='subtitle1'>
@@ -1065,7 +1090,7 @@ function Contextualizacao(props: {
                 Contextualização
             </TypographyTitulo>
             {contextos}
-            <Footer link={link} tipo={props.processo.tipo} anexos={props.processo.anexos} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
+            <Footer link={link} tipo={props.processo.tipo} anexos={props.processo.arquivosDemanda} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
         </Grid>
     )
 }
@@ -1077,6 +1102,15 @@ function Footer(props: {
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
     setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
 }) {
+    function baixarArquivo(anexo: any) {
+        const url = window.URL.createObjectURL(new Blob([anexo.arquivo]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', anexo.nome);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 
     function mostrarAnexos() {
         const anexos = props.anexos.map((anexo: any, index: number) => {
@@ -1085,7 +1119,7 @@ function Footer(props: {
             return (
                 <ListItem key={index}
                     secondaryAction={
-                        <IconButton edge="end" aria-label="delete" type='submit' onClick={() => { window.open('C:\\Users\\joao_hm_silva\\Pictures\\Saved Pictures\\fror.jpg') }}>
+                        <IconButton edge="end" aria-label="delete" type='button' onClick={() => { baixarArquivo(anexo) }} >
                             <FileDownloadRoundedIcon />
                         </IconButton>
                     }>
@@ -1094,7 +1128,7 @@ function Footer(props: {
                     </ListItemIcon>
                     <ListItemText
                         primary={anexo.nome}
-                        secondary={"Anexado por Emanuel da Costa em 20/12/22 as 15:07"}
+                        secondary={`Anexado por ${anexo.insersor.nomeUsuario}`}
                     />
                 </ListItem >
             )

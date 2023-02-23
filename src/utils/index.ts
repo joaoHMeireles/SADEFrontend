@@ -160,3 +160,7 @@ export function getCorStatusHistorico(status: StatusTarefaHistorico) {
 
     return (cores as any)[status]
 }
+
+export function getBeneficiosPorTipo(listaBeneficios: any[], tipoBeneficio: string){
+    return listaBeneficios.filter((beneficio: any) => beneficio.tipoBeneficio == tipoBeneficio)
+}

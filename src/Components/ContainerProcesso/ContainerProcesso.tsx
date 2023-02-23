@@ -19,7 +19,7 @@ export default function ContainerProcesso(props: { informacaoProcesso: any, chil
                         <GridContainerHeader container>
                             <GridTitulo item xs={10} >
                                 <Typography variant='h4'>
-                                    {informacaoProcesso?.titulo}
+                                    {informacaoProcesso?.tituloDemanda}
                                 </Typography>
                             </GridTitulo>
                             <Grid item xs={2}>
