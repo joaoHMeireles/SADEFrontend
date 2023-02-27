@@ -80,6 +80,7 @@ function Login(props: {
       if (user == usuarios[i].nomeUsuario) {
         if (password == usuarios[i].senha) {
           setLogado(true);
+          localStorage.setItem("IDUSUARIO", JSON.stringify(usuarios[i].idUsuario));
         }
       }
     }
