@@ -804,6 +804,9 @@ function ContainerProcessoPrincipal(props: {
 }) {
     const informacaoProcesso = props.informacaoProcesso
 
+    console.log(informacaoProcesso);
+    
+
     return (
         <ContainerProcesso informacaoProcesso={informacaoProcesso}>
             <Divider />
@@ -1003,7 +1006,7 @@ function InfoComercial(props: { processo: any }) {
     const atributos = {
         beneficiosReais: getBeneficiosPorTipo(props.processo.beneficiosDemanda, "REAL"),
         beneficiosPotenciais: getBeneficiosPorTipo(props.processo.beneficiosDemanda, "POTENCIAL"),
-        tabelasCusto: props.processo.tabelasCusto
+        tabelasCusto: props.processo.tabelasCustoProposta
     }
 
     if (atributos.beneficiosReais.length == 0 && atributos.beneficiosPotenciais.length == 0 && atributos.tabelasCusto == null) {

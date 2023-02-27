@@ -91,21 +91,21 @@ function GridComponent(props: ComponentCollectionProps) {
       </Tooltip>
       <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
         <GridTypography variant="h6">
-          {props.componente.comissao}
+          {props.componente.tituloReuniao}
         </GridTypography>
         <GridTypography variant="subtitle1">
           <span> Data: </span>{" "}
-          {" " + props.componente.dataReuniao.toLocaleDateString()}
+          {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
         </GridTypography>
         <GridTypography variant="subtitle1">
           <span> Propostas: </span>
         </GridTypography>
         <GridTypography variant="body1">
-          - {props.componente.propostas[0].titulo}
+          - {props.componente.propostas[0].proposta.demanda.tituloDemanda}
         </GridTypography>
         <GridTypography variant="body1" sx={{ display: "flex" }}>
           <BoxColecaoComponente>
-            - {props.componente.propostas[1].titulo}
+            - {props.componente.propostas[1].proposta.demanda.tituloDemanda}
           </BoxColecaoComponente>
           <GridLinkTypograpfy variant="body2">
             <Link to={props.linkComponente} onClick={props.setProcesso}>
@@ -125,7 +125,7 @@ function ListComponent(props: ComponentCollectionProps) {
     }
     return (
       <ListaTypography variant="subtitle2" sx={{ maxWidth: "8vw" }}>
-        {"- " + e.titulo}
+        {"- " + e.tituloDemanda}
       </ListaTypography>
     );
   });
@@ -139,7 +139,7 @@ function ListComponent(props: ComponentCollectionProps) {
       </Tooltip>
       <ListaComponenteProcesso item xs={11.7} onClick={props.verProcesso}>
         <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
-          {props.componente.id} - {props.componente.comissao}
+          {props.componente.id} - {props.componente.tituloReuniao}
         </ListaTypography>
         <ListaTypography variant="subtitle2" sx={{ minWidth: "14.3vw" }}>
           <span> Data: </span>{" "}

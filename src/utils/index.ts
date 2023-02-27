@@ -56,11 +56,11 @@ export function getCorTipo(tipo: string | undefined) {
  */
 export function getCorStatus(status: string | undefined) {
     const coresStatus = {
-        Backlog: "#DDDDDD",
-        Assesment: "#595959",
-        BusinessCase: "#FFD600",
-        Canceled: "#FF1616",
-        ToDo: "#00612e"
+        BACKLOG: "#DDDDDD",
+        ASSESTMENT: "#595959",
+        BUSINESSCASE: "#FFD600",
+        CANCELED: "#FF1616",
+        TODO: "#00612e"
     }
 
     if (status != undefined) {

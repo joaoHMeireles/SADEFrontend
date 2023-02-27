@@ -6,27 +6,27 @@ export default function TabelasCusto(props: { tabelasCusto: any[] }) {
     const elementosTabelaCusto = props.tabelasCusto.map((tabela: any, index: number) => {
         let tempoTotal = 0, valorTotal = 0
 
-        const linhasTabela = tabela.linhas.map((linha: { recurso: string, esforco: number, valor: number }, indexLinha: number) => {
-            const total = linha.valor * linha.esforco
-            tempoTotal += linha.esforco
+        const linhasTabela = tabela.linhasTabela.map((linha: { idLinhaTabela: number, nomeRecurso: string, quantidade: number, valorQuantidade: number }, indexLinha: number) => {
+            const total = linha.valorQuantidade * linha.quantidade
+            tempoTotal += linha.quantidade
             valorTotal += total
 
             return (
                 <TableRowEstilizada key={indexLinha}>
-                    <TableCellEstilzada align='center'>{linha.recurso}</TableCellEstilzada>
-                    <TableCellEstilzada align='center'>{linha.esforco}{!tabela.isLicenca ? "h" : ""} </TableCellEstilzada>
-                    <TableCellEstilzada align='center'>R$ {linha.valor}</TableCellEstilzada>
+                    <TableCellEstilzada align='center'>{linha.nomeRecurso}</TableCellEstilzada>
+                    <TableCellEstilzada align='center'>{linha.quantidade}{!tabela.isLicenca ? "h" : ""} </TableCellEstilzada>
+                    <TableCellEstilzada align='center'>R$ {linha.valorQuantidade}</TableCellEstilzada>
                     <TableCellEstilzada align='center'>R$ {total}</TableCellEstilzada>
                 </TableRowEstilizada>
             )
         })
 
-        const centrosCusto = tabela.centrosCusto.map((centroDeCusto: any, indexcentroCusto: number) => {
-            const porcentagem = centroDeCusto.porcentagem * 100
+        const centrosCusto = tabela.centrosCustoPagantes.map((centroDeCusto: any, indexcentroCusto: number) => {
+            const porcentagem = centroDeCusto.porcentagemDespesa * 100
 
             return (
                 <Typography key={indexcentroCusto} variant="body1" sx={{ color: "#595959" }}>
-                    {centroDeCusto.centroCusto} - {porcentagem}%
+                    {centroDeCusto.centroCusto.nomeCentroCusto} - {porcentagem}%
                 </Typography>
             )
         })

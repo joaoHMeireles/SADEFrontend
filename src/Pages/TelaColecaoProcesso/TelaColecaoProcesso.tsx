@@ -1,6 +1,6 @@
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getNomeComponente, getCorStatus, getCorTipo } from "../../utils";
+import { getNomeComponente, getCorStatus, getCorTipo, getBeneficiosPorTipo } from "../../utils";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Toolbar from "../../Components/Toolbar/Toolbar";
 import TabelaBeneficios from "../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios";
@@ -28,6 +28,7 @@ import {
   BoxBotoes,
   BoxHeader,
   GridPequenosAtributos,
+  TypographyTexto,
   TypographyTituloAtributo,
 } from "../TelaProcesso/TelaProcesso.styles";
 import {
@@ -309,13 +310,15 @@ function ContainerColecaoProcesso(props: {
     informacaoColecaoProcesso.dataReuniao
   ).toLocaleDateString();
 
+  // console.log(informacaoColecaoProcesso);
+
   return (
     <GridContainerColecao container spacing={2}>
       <Grid item xs={12}>
         <GridContainerHeader container>
           <GridTitulo item xs={10}>
             <Typography variant="h4">
-              {informacaoColecaoProcesso.comissao}
+              {informacaoColecaoProcesso.tituloReuniao}
             </Typography>
           </GridTitulo>
           <Grid item xs={2}>
@@ -331,6 +334,7 @@ function ContainerColecaoProcesso(props: {
       </Grid>
       <Propostas
         listaPropostas={informacaoColecaoProcesso.propostas}
+        listaPropostasAnteriores={informacaoColecaoProcesso.propostasPauta}
         tipoColecao={informacaoColecaoProcesso.tipo}
         avaliandoProcesso={props.avaliandoProcesso}
         verificacaoInputs={props.verificacaoInputs}
@@ -358,6 +362,7 @@ function ContainerColecaoProcesso(props: {
 
 function Propostas(props: {
   listaPropostas: [];
+  listaPropostasAnteriores?: [];
   tipoColecao: string;
   avaliandoProcesso: boolean;
   verificacaoInputs: boolean[];
@@ -385,6 +390,7 @@ function Propostas(props: {
 
 export function Proposta(props: {
   proposta: any;
+  propostaAnterior?: any;
   linkProposta: string;
   eUmaPauta: boolean;
   index: number;
@@ -403,42 +409,67 @@ export function Proposta(props: {
     helperText: "",
   });
   const verificacaoInputs = props.verificacaoInputs;
-  const proposta = props.proposta;
+  const decisaoProposta = props.proposta;
   const forumEscolhido = props.eUmaPauta ? "comissão" : "direção geral";
+  const beneficiosReais = getBeneficiosPorTipo(decisaoProposta.proposta.demanda.beneficiosDemanda, "REAL")
+  const beneficioPotenciais = getBeneficiosPorTipo(decisaoProposta.proposta.demanda.beneficiosDemanda, "POTENCIAL")
+  console.log(decisaoProposta); 
+
 
   const conteudoPropostaInicio = (
+    //fazer mostrar as avaliações do fórum anterior quando for mostrado um ata
     <>
-      <GridPequenosAtributos item xs={6}>
-        <TypographyTituloAtributo variant="body1">
-          Solicitante:
-        </TypographyTituloAtributo>
-        <TypographyTextoColecao variant="body1">
-          {proposta.solicitante}
-        </TypographyTextoColecao>
-      </GridPequenosAtributos>
-      <Grid item xs={12}>
-        <TabelaBeneficios
-          title="Benefícios reais"
-          atributos={proposta.beneficiosReais}
-        />
+      <Grid container xs={12} sx={{ marginBottom: "8px" }}>
+        <GridPequenosAtributos item xs={6}>
+          <TypographyTituloAtributo variant="body1">
+            Solicitante:
+          </TypographyTituloAtributo>
+          <TypographyTextoColecao variant="body1">
+            {decisaoProposta.proposta.demanda.usuario.nomeUsuario}
+          </TypographyTextoColecao>
+        </GridPequenosAtributos>
+        {!props.eUmaPauta &&
+          <GridPequenosAtributos item xs={6}>
+            <TypographyTituloAtributo variant='body1'>
+              {/* {nomeAtributo} */} nomeAtributo
+            </TypographyTituloAtributo>
+            <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+              {/* {valorAtributo} */} valorAtributo
+            </TypographyTexto>
+          </GridPequenosAtributos>
+        }
       </Grid>
-      <Grid item xs={12}>
-        <TabelaBeneficios
-          title="Benefícios potenciais"
-          atributos={proposta.beneficiosPotenciais}
-        />
-      </Grid>
-      {proposta.tabelasCusto && (
+      {
+        beneficiosReais.length != 0 &&
         <Grid item xs={12}>
-          <TabelasCusto tabelasCusto={proposta.tabelasCusto} />
+          <TabelaBeneficios
+            title="Benefícios reais"
+            atributos={beneficiosReais}
+          />
         </Grid>
-      )}
+      }
+      {
+        beneficioPotenciais.length != 0 &&
+        <Grid item xs={12}>
+          <TabelaBeneficios
+            title="Benefícios potenciais"
+            atributos={beneficioPotenciais}
+          />
+        </Grid>
+      }
+      {
+        decisaoProposta.proposta.tabelasCustoProposta && (
+          <Grid item xs={12}>
+            <TabelasCusto tabelasCusto={decisaoProposta.proposta.tabelasCustoProposta} />
+          </Grid>
+        )
+      }
       <Grid item xs={12}>
         <GridLinkTypograpfy variant="body2" width="auto !important">
           <Link
             to={props.linkProposta}
             onClick={() => {
-              setProposta(proposta);
+              setProposta(decisaoProposta.proposta);
             }}
           >
             Ver mais
@@ -623,10 +654,10 @@ export function Proposta(props: {
     <Grid
       item
       xs={12}
-      key={proposta.id}
+      key={decisaoProposta.id}
       sx={{ backgroundColor: "transparent" }}
     >
-      <CardProposta cor={getCorStatus(proposta.status)}>
+      <CardProposta cor={getCorStatus(decisaoProposta.proposta.demanda.statusDemanda)}>
         <AccordionProposta {...expanded}>
           <AccordionSummary
             onClick={mudarAcordeon}
@@ -635,7 +666,7 @@ export function Proposta(props: {
             id="panel1a-header"
           >
             <Typography variant="h5" sx={{ color: "#595959" }}>
-              {proposta.titulo}
+              {decisaoProposta.proposta.demanda.tituloDemanda}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -648,33 +679,5 @@ export function Proposta(props: {
         </AccordionProposta>
       </CardProposta>
     </Grid>
-    // <Grid item xs={12} key={proposta.id} sx={{ backgroundColor: "transparent" }}>
-    //     <GridProposta container >
-    //         <Grid item xs={0.2}>
-    //             <BoxCorStatus sx={{ backgroundColor: getCorStatus(proposta.status) }} ></BoxCorStatus>
-    //         </Grid>
-    //         <Grid item xs={11.8} borderRadius="0 10px 10px 0" padding="15px">
-    //             <AccordionProposta {...expanded} >
-    //                 <AccordionSummary
-    //                     onClick={mudarAcordeon}
-    //                     expandIcon={<ExpandMoreIcon />}
-    //                     aria-controls="panel1a-content"
-    //                     id="panel1a-header"
-    //                 >
-    //                     <Typography variant="h5" sx={{ color: "#595959" }}>{proposta.titulo}</Typography>
-    //                 </AccordionSummary>
-    //                 <AccordionDetails>
-    //                     <Grid container spacing={2}>
-    //                         {!props.avaliandoProcesso ?
-    //                             conteudoPropostaInicio
-    //                             :
-    //                             conteudoPropostaAvaliacao
-    //                         }
-    //                     </Grid>
-    //                 </AccordionDetails>
-    //             </AccordionProposta>
-    //         </Grid>
-    //     </GridProposta>
-    // </Grid>
   );
 }

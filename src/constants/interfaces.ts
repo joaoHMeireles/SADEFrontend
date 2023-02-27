@@ -16,6 +16,6 @@ export interface InterfaceColecaoComponenteProcesso {
     id: number,
     tipo: TipoColecaoComponenteProcesso,
     dataReuniao: Date,
-    comissao: string,
-    propostas: InterfaceComponenteProcesso[]
+    tituloReuniao: string,
+    propostas: any[]
 }
