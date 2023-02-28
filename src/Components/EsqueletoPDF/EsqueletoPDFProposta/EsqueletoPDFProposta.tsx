@@ -5,10 +5,11 @@ import { useRef } from "react";
 import Box from "@mui/material/Box";
 
 import {
-    BoxData, BoxPrincipal, BoxTitulo,
+    BoxPrincipal, BoxTitulo,
     BoxItens, BoxTituloItens, BoxObjetivo,
-    TypographyData, TypographyTitulos, TypographyTextos,
-    TableCellStyled, TypographyParticipantes, TypographyTituloATA
+    TypographyTitulos, TypographyTextos,
+    TableCellStyled, TypographyParticipantes, TypographyTituloATA,
+    BoxResponsaveis, BoxGeralResponsaveis
 } from "./EsqueletoPDFProposta.styles";
 
 import Table from '@mui/material/Table';
@@ -17,8 +18,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Typography from "@mui/material/Typography";
-import TableCell from "@mui/material/TableCell";
 
 interface Proposta {
     tituloProposta: string,
@@ -72,10 +71,10 @@ const proposta: Proposta = {
         titulo: "Titulo 01",
         solicitante: "Tal",
         objetivo: "Objetivo 01",
-        situacaoAtual: "Situação atual",
+        situacaoAtual: "Situacao atual",
         escopo: ["Escopo 01", "Escopo 02", "Escopo 03"],
         naoFazParteEscopo: "Nao faz parte escopo",
-        alternativaAvaliadas: "",
+        alternativaAvaliadas: "Alternativas avaliadas",
         abrangencia: "Abrangencia 01",
         principaisRisco: "Risco tal",
         resultadosQualitativos: ["Resultados Qualitativos 01", "Resultados Qualitativos 02"],
@@ -168,77 +167,79 @@ export default function EsqueletoPDFProposta() {
     const Proposta = (props: { proposta: Proposta }) => {
         return (
             <BoxPrincipal>
-                {/* <ItensATA proposta={props.proposta} /> */}
+                <ItensATA proposta={props.proposta} />
             </BoxPrincipal>
         )
     }
 
-    // const ItensATA = (props: { proposta: Proposta }) => {
-    //     return (
-    //         <BoxItens>
-    //             {props.proposta.itemProposta.map((proposta: ItemProposta, index: number) => {
-    //                 return (
-    //                     <>
-    //                         {index > 0 ?
-    //                             <BoxTituloItens className="break">
-    //                                 <TypographyTitulos> {index + 1}. {proposta.titulo}</TypographyTitulos>
-    //                             </BoxTituloItens>
-    //                             :
-    //                             <BoxTituloItens>
-    //                                 <TypographyTitulos> {index + 1}. {proposta.titulo}</TypographyTitulos>
-    //                             </BoxTituloItens>}
-    //                         <BoxObjetivo>
-    //                             <TypographyTextos>Objetivo: {proposta.objetivo} </TypographyTextos>
-    //                         </BoxObjetivo>
-    //                         <BoxObjetivo>
-    //                             <TypographyTextos>Escopo projeto: </TypographyTextos>
-    //                             <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
-    //                                 {proposta.escopo.map((escopo: string, index: number) => {
-    //                                     return (
-    //                                         <li key={index} className="itensEscopoProjeto">{escopo}</li>
-    //                                     )
-    //                                 })}
-    //                             </ul>
-    //                         </BoxObjetivo>
-    //                         <BoxObjetivo>
-    //                             <TypographyTextos>Nao faz parte do Escopo do Projeto:{proposta.naoFazParteEscopo}</TypographyTextos>
-    //                         </BoxObjetivo>
-    //                         <BoxObjetivo>
-    //                             <TypographyTextos>Abrangencia do Projeto:{proposta.abrangencia}</TypographyTextos>
-    //                         </BoxObjetivo>
-    //                         <BoxObjetivo>
-    //                             <TypographyTextos>Resultados Esperados (Qualitativos):  </TypographyTextos>
-    //                             <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
-    //                                 {proposta.resultadosQualitativos.map((resultadosQualitativos: string, index: number) => {
-    //                                     return (<li key={index}>{resultadosQualitativos}</li>)
-    //                                 })}
-    //                             </ul>
-    //                         </BoxObjetivo>
-    //                         <BoxObjetivo>
-    //                             <TypographyTextos>Beneficios potencias: </TypographyTextos>
-    //                             <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
-    //                                 {proposta.resultadosPotenciais.map((resultadosPotenciais: string, index: number) => {
-    //                                     return (<li key={index}>{resultadosPotenciais}</li>)
-    //                                 })}
-    //                             </ul>
-    //                         </BoxObjetivo>
-    //                         <BoxObjetivo>
-    //                             <TypographyTextos> <b> Custos totais do projeto: R${proposta.custosTotais.totalDespesas}</b> </TypographyTextos>
-    //                             <TypographyTextos>Total despesas recursos externos (Desembolso): R${proposta.custosTotais.totalDespesas}</TypographyTextos>
-    //                         </BoxObjetivo>
-    //                         <CentrosCusto proposta={proposta} />
-    //                         <BoxObjetivo>
-    //                             <TypographyTextos>Periodo de execucao: {proposta.periodoExecucaoInicio.toLocaleDateString()} a {proposta.periodoExecucaoFim.toLocaleDateString()}</TypographyTextos>
-    //                         </BoxObjetivo>
-    //                         <BoxObjetivo>
-    //                             <TypographyTextos>Payback: {proposta.payback} meses</TypographyTextos>
-    //                         </BoxObjetivo>
-    //                     </>
-    //                 )
-    //             })}
-    //         </BoxItens>
-    //     )
-    // }
+    const ItensATA = (props: { proposta: Proposta }) => {
+        let index = 0;
+        return (
+            <BoxItens>
+                <BoxTituloItens>
+                    <TypographyTitulos> {index + 1}. {props.proposta.itemProposta.titulo}</TypographyTitulos>
+                </BoxTituloItens>
+                <BoxObjetivo>
+                    <TypographyTextos>Solicitante: {props.proposta.itemProposta.solicitante}</TypographyTextos>
+                </BoxObjetivo>
+                <BoxObjetivo>
+                    <TypographyTextos>Objetivo: {props.proposta.itemProposta.objetivo} </TypographyTextos>
+                </BoxObjetivo>
+                <BoxObjetivo>
+                    <TypographyTextos>Situacao atual: {props.proposta.itemProposta.situacaoAtual}</TypographyTextos>
+                </BoxObjetivo>
+                <BoxObjetivo>
+                    <TypographyTextos>Escopo projeto: </TypographyTextos>
+                    <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
+                        {props.proposta.itemProposta.escopo.map((escopo: string, index: number) => {
+                            return (
+                                <li key={index} className="itensEscopoProjeto">{escopo}</li>
+                            )
+                        })}
+                    </ul>
+                </BoxObjetivo>
+                <BoxObjetivo>
+                    <TypographyTextos>Nao faz parte do Escopo do Projeto:{props.proposta.itemProposta.naoFazParteEscopo}</TypographyTextos>
+                </BoxObjetivo>
+                <BoxObjetivo>
+                    <TypographyTextos>Alternativas avaliadas: {props.proposta.itemProposta.alternativaAvaliadas}</TypographyTextos>
+                </BoxObjetivo>
+                <BoxObjetivo>
+                    <TypographyTextos>Abrangencia do Projeto:{props.proposta.itemProposta.abrangencia}</TypographyTextos>
+                </BoxObjetivo>
+                <BoxObjetivo>
+                    <TypographyTextos>Principais riscos: {props.proposta.itemProposta.principaisRisco}</TypographyTextos>
+                </BoxObjetivo>
+                <BoxObjetivo>
+                    <TypographyTextos>Resultados Esperados (Qualitativos):  </TypographyTextos>
+                    <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
+                        {props.proposta.itemProposta.resultadosQualitativos.map((resultadosQualitativos: string, index: number) => {
+                            return (<li key={index}>{resultadosQualitativos}</li>)
+                        })}
+                    </ul>
+                </BoxObjetivo>
+                <BoxObjetivo>
+                    <TypographyTextos>Beneficios potencias: </TypographyTextos>
+                    <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
+                        {props.proposta.itemProposta.resultadosPotenciais.map((resultadosPotenciais: string, index: number) => {
+                            return (<li key={index}>{resultadosPotenciais}</li>)
+                        })}
+                    </ul>
+                </BoxObjetivo>
+                <BoxObjetivo>
+                    <TypographyTextos> <b> Custos totais do projeto: R${props.proposta.itemProposta.custosTotais.totalDespesas}</b> </TypographyTextos>
+                    <TypographyTextos>Total despesas recursos externos (Desembolso): R${props.proposta.itemProposta.custosTotais.totalDespesas}</TypographyTextos>
+                </BoxObjetivo>
+                <CentrosCusto proposta={props.proposta.itemProposta} />
+                <BoxObjetivo>
+                    <TypographyTextos>Periodo de execucao: {props.proposta.itemProposta.periodoExecucaoInicio.toLocaleDateString()} a {props.proposta.itemProposta.periodoExecucaoFim.toLocaleDateString()}</TypographyTextos>
+                </BoxObjetivo>
+                <BoxObjetivo>
+                    <TypographyTextos>Payback: {props.proposta.itemProposta.payback} meses</TypographyTextos>
+                </BoxObjetivo>
+            </BoxItens>
+        )
+    }
 
     const CentrosCusto = (props: { proposta: ItemProposta }) => {
         return (
@@ -375,18 +376,18 @@ export default function EsqueletoPDFProposta() {
 
     const ParticipantesReuniao = (props: { proposta: Proposta }) => {
         return (
-            <BoxObjetivo>
+            <BoxGeralResponsaveis>
                 <>
-                    <Box>
-                        <TypographyParticipantes>Giocondo do Norte</TypographyParticipantes>
-                        <TypographyParticipantes>Responsável Negócio</TypographyParticipantes>
-                    </Box>
-                    <Box>
-                        <TypographyParticipantes>Severino do Sul</TypographyParticipantes>
-                        <TypographyParticipantes>Chefe Responsável TI</TypographyParticipantes>
-                    </Box>
+                    <BoxResponsaveis>
+                        <TypographyParticipantes>{props.proposta.responsavelNegocio}</TypographyParticipantes>
+                        <TypographyParticipantes>Responsavel Negocio</TypographyParticipantes>
+                    </BoxResponsaveis>
+                    <BoxResponsaveis>
+                        <TypographyParticipantes>{props.proposta.chefeResponsavelTI}</TypographyParticipantes>
+                        <TypographyParticipantes>Chefe Responsavel TI</TypographyParticipantes>
+                    </BoxResponsaveis>
                 </>
-            </BoxObjetivo >
+            </BoxGeralResponsaveis >
         )
     }
 

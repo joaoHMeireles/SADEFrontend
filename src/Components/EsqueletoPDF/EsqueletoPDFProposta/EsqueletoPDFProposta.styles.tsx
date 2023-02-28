@@ -14,14 +14,6 @@ export const BoxTitulo = styledBox({
     width: "100%", display: "flex", justifyContent: "center", alignItems: "center"
 })
 
-export const BoxData = styledBox({
-    display: "flex", justifyContent: "center", alignItems: "flex-end", flexDirection: "column"
-})
-
-export const TypographyData = styledTypography({
-    fontSize: "10px"
-})
-
 // -------------------------------------
 
 export const BoxItens = styledBox({
@@ -34,6 +26,14 @@ export const BoxTituloItens = styledBox({
 
 export const BoxObjetivo = styledBox({
     width: "100%", marginTop: 16
+})
+
+export const BoxGeralResponsaveis = styledBox({
+    display: "flex", justifyContent: "center", alignItems: "center", width: "100%", marginTop: 16
+})
+
+export const BoxResponsaveis = styledBox({
+    display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", width: "50%"
 })
 
 export const TypographyTituloATA = styledTypography({
@@ -53,7 +53,7 @@ export const TableCellStyled = styled(TableCell)({
 })
 
 export const TypographyParticipantes = styledTypography({
-    width: "50%", fontSize: "12px", textDecoration: "underline", fontWeight: "bold"
+    width: "50%", fontSize: "10px", fontWeight: "bold"
 })
 
 export const TypographyParecerComissao = styledTypography({
