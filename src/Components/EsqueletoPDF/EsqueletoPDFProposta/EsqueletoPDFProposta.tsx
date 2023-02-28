@@ -20,23 +20,23 @@ import Paper from '@mui/material/Paper';
 import Typography from "@mui/material/Typography";
 import TableCell from "@mui/material/TableCell";
 
-interface ATA {
-    tituloATA: string,
-    numeroAno: number,
-    numeroDG: number,
-    data: Date,
-    inicioReuniao: Date,
-    terminoReuniao: Date,
-    itensProposta: ItensATA[],
-    participantes: string[]
+interface Proposta {
+    tituloProposta: string,
+    itemProposta: ItemProposta,
+    responsavelNegocio: string,
+    chefeResponsavelTI: string
 }
 
-interface ItensATA {
+interface ItemProposta {
     titulo: string,
+    solicitante: string,
     objetivo: string,
+    situacaoAtual: string,
     escopo: string[],
     naoFazParteEscopo: string,
+    alternativaAvaliadas: string,
     abrangencia: string,
+    principaisRisco: string,
     resultadosQualitativos: string[],
     resultadosPotenciais: string[],
     custosTotais: {
@@ -46,8 +46,6 @@ interface ItensATA {
     periodoExecucaoInicio: Date,
     periodoExecucaoFim: Date,
     payback: number,
-    responsavel: string,
-    parecerComissao: string,
 }
 
 interface ItensTabela {
@@ -68,263 +66,93 @@ interface LinhaTabela {
     valorQuantidade: number
 }
 
-const ata: ATA = {
-    tituloATA: "Titulo ATA",
-    numeroAno: 2022,
-    numeroDG: 101010,
-    data: new Date(),
-    inicioReuniao: new Date(),
-    terminoReuniao: new Date(),
-    itensProposta: [
-        {
-            titulo: "Titulo 01",
-            objetivo: "Objetivo 01",
-            escopo: ["Escopo 01", "Escopo 02", "Escopo 03"],
-            naoFazParteEscopo: "Nao faz parte escopo",
-            abrangencia: "Abrangencia 01",
-            resultadosQualitativos: ["Resultados Qualitativos 01", "Resultados Qualitativos 02"],
-            resultadosPotenciais: ["Resultados Potenciais 01", "Resultados Potenciais 02"],
-            custosTotais: {
-                totalDespesas: 50000,
-                tabelas: [
-                    {
-                        titulo: "Titulo Tabela 01",
-                        temLicenca: true,
-                        centrosCusto: [
-                            {
-                                nomeCentroCusto: "Centro Custo 01",
-                                porcentagemDespesa: 20
-                            },
-                            {
-                                nomeCentroCusto: "Centro Custo 02",
-                                porcentagemDespesa: 100
-                            },
-                        ],
-                        linhastabela: [
-                            {
-                                tituloDespesa: "Titulo Despesa 01",
-                                quantidade: 10,
-                                valorQuantidade: 100
-                            },
-                            {
-                                tituloDespesa: "Titulo Despesa 02",
-                                quantidade: 20,
-                                valorQuantidade: 200
-                            },
-                            {
-                                tituloDespesa: "Titulo Despesa 03",
-                                quantidade: 30,
-                                valorQuantidade: 300
-                            },
-                        ]
-                    },
-                    {
-                        titulo: "Titulo Tabela 02",
-                        temLicenca: false,
-                        centrosCusto: [
-                            {
-                                nomeCentroCusto: "Centro Custo 01",
-                                porcentagemDespesa: 20
-                            },
-                            {
-                                nomeCentroCusto: "Centro Custo 02",
-                                porcentagemDespesa: 100
-                            },
-                        ],
-                        linhastabela: [
-                            {
-                                tituloDespesa: "Titulo Despesa 01",
-                                quantidade: 10,
-                                valorQuantidade: 100
-                            },
-                            {
-                                tituloDespesa: "Titulo Despesa 02",
-                                quantidade: 20,
-                                valorQuantidade: 200
-                            },
-                            {
-                                tituloDespesa: "Titulo Despesa 03",
-                                quantidade: 30,
-                                valorQuantidade: 300
-                            },
-                        ]
-                    }
-                ]
-            },
-            periodoExecucaoInicio: new Date(),
-            periodoExecucaoFim: new Date(),
-            payback: 4,
-            responsavel: "Responsavel 01",
-            parecerComissao: "Parecer comissao",
+const proposta: Proposta = {
+    tituloProposta: "Titulo Proposta",
+    itemProposta: {
+        titulo: "Titulo 01",
+        solicitante: "Tal",
+        objetivo: "Objetivo 01",
+        situacaoAtual: "Situação atual",
+        escopo: ["Escopo 01", "Escopo 02", "Escopo 03"],
+        naoFazParteEscopo: "Nao faz parte escopo",
+        alternativaAvaliadas: "",
+        abrangencia: "Abrangencia 01",
+        principaisRisco: "Risco tal",
+        resultadosQualitativos: ["Resultados Qualitativos 01", "Resultados Qualitativos 02"],
+        resultadosPotenciais: ["Resultados Potenciais 01", "Resultados Potenciais 02"],
+        custosTotais: {
+            totalDespesas: 50000,
+            tabelas: [
+                {
+                    titulo: "Titulo Tabela 01",
+                    temLicenca: true,
+                    centrosCusto: [
+                        {
+                            nomeCentroCusto: "Centro Custo 01",
+                            porcentagemDespesa: 20
+                        },
+                        {
+                            nomeCentroCusto: "Centro Custo 02",
+                            porcentagemDespesa: 100
+                        },
+                    ],
+                    linhastabela: [
+                        {
+                            tituloDespesa: "Titulo Despesa 01",
+                            quantidade: 10,
+                            valorQuantidade: 100
+                        },
+                        {
+                            tituloDespesa: "Titulo Despesa 02",
+                            quantidade: 20,
+                            valorQuantidade: 200
+                        },
+                        {
+                            tituloDespesa: "Titulo Despesa 03",
+                            quantidade: 30,
+                            valorQuantidade: 300
+                        },
+                    ]
+                },
+                {
+                    titulo: "Titulo Tabela 02",
+                    temLicenca: false,
+                    centrosCusto: [
+                        {
+                            nomeCentroCusto: "Centro Custo 01",
+                            porcentagemDespesa: 20
+                        },
+                        {
+                            nomeCentroCusto: "Centro Custo 02",
+                            porcentagemDespesa: 100
+                        },
+                    ],
+                    linhastabela: [
+                        {
+                            tituloDespesa: "Titulo Despesa 01",
+                            quantidade: 10,
+                            valorQuantidade: 100
+                        },
+                        {
+                            tituloDespesa: "Titulo Despesa 02",
+                            quantidade: 20,
+                            valorQuantidade: 200
+                        },
+                        {
+                            tituloDespesa: "Titulo Despesa 03",
+                            quantidade: 30,
+                            valorQuantidade: 300
+                        },
+                    ]
+                }
+            ]
         },
-        {
-            titulo: "Titulo 01",
-            objetivo: "Objetivo 01",
-            escopo: ["Escopo 01", "Escopo 02", "Escopo 03"],
-            naoFazParteEscopo: "Nao faz parte escopo",
-            abrangencia: "Abrangencia 01",
-            resultadosQualitativos: ["Resultados Qualitativos 01", "Resultados Qualitativos 02"],
-            resultadosPotenciais: ["Resultados Potenciais 01", "Resultados Potenciais 02"],
-            custosTotais: {
-                totalDespesas: 50000,
-                tabelas: [
-                    {
-                        titulo: "Titulo Tabela 01",
-                        temLicenca: false,
-                        centrosCusto: [
-                            {
-                                nomeCentroCusto: "Centro Custo 01",
-                                porcentagemDespesa: 20
-                            },
-                            {
-                                nomeCentroCusto: "Centro Custo 02",
-                                porcentagemDespesa: 100
-                            },
-                        ],
-                        linhastabela: [
-                            {
-                                tituloDespesa: "Titulo Despesa 01",
-                                quantidade: 10,
-                                valorQuantidade: 100
-                            },
-                            {
-                                tituloDespesa: "Titulo Despesa 02",
-                                quantidade: 20,
-                                valorQuantidade: 200
-                            },
-                            {
-                                tituloDespesa: "Titulo Despesa 03",
-                                quantidade: 30,
-                                valorQuantidade: 300
-                            },
-                        ]
-                    },
-                    {
-                        titulo: "Titulo Tabela 02",
-                        temLicenca: false,
-                        centrosCusto: [
-                            {
-                                nomeCentroCusto: "Centro Custo 01",
-                                porcentagemDespesa: 20
-                            },
-                            {
-                                nomeCentroCusto: "Centro Custo 02",
-                                porcentagemDespesa: 100
-                            },
-                        ],
-                        linhastabela: [
-                            {
-                                tituloDespesa: "Titulo Despesa 01",
-                                quantidade: 10,
-                                valorQuantidade: 100
-                            },
-                            {
-                                tituloDespesa: "Titulo Despesa 02",
-                                quantidade: 20,
-                                valorQuantidade: 200
-                            },
-                            {
-                                tituloDespesa: "Titulo Despesa 03",
-                                quantidade: 30,
-                                valorQuantidade: 300
-                            },
-                        ]
-                    }
-                ]
-            },
-            periodoExecucaoInicio: new Date(),
-            periodoExecucaoFim: new Date(),
-            payback: 4,
-            responsavel: "Responsavel 01",
-            parecerComissao: "Parecer comissao",
-        },
-        {
-            titulo: "Titulo 01",
-            objetivo: "Objetivo 01",
-            escopo: ["Escopo 01", "Escopo 02", "Escopo 03"],
-            naoFazParteEscopo: "Nao faz parte escopo",
-            abrangencia: "Abrangencia 01",
-            resultadosQualitativos: ["Resultados Qualitativos 01", "Resultados Qualitativos 02"],
-            resultadosPotenciais: ["Resultados Potenciais 01", "Resultados Potenciais 02"],
-            custosTotais: {
-                totalDespesas: 50000,
-                tabelas: [
-                    {
-                        titulo: "Titulo Tabela 01",
-                        temLicenca: true,
-                        centrosCusto: [
-                            {
-                                nomeCentroCusto: "Centro Custo 01",
-                                porcentagemDespesa: 20
-                            },
-                            {
-                                nomeCentroCusto: "Centro Custo 02",
-                                porcentagemDespesa: 100
-                            },
-                        ],
-                        linhastabela: [
-                            {
-                                tituloDespesa: "Titulo Despesa 01",
-                                quantidade: 10,
-                                valorQuantidade: 100
-                            },
-                            {
-                                tituloDespesa: "Titulo Despesa 02",
-                                quantidade: 20,
-                                valorQuantidade: 200
-                            },
-                            {
-                                tituloDespesa: "Titulo Despesa 03",
-                                quantidade: 30,
-                                valorQuantidade: 300
-                            },
-                        ]
-                    },
-                    {
-                        titulo: "Titulo Tabela 02",
-                        temLicenca: false,
-                        centrosCusto: [
-                            {
-                                nomeCentroCusto: "Centro Custo 01",
-                                porcentagemDespesa: 20
-                            },
-                            {
-                                nomeCentroCusto: "Centro Custo 02",
-                                porcentagemDespesa: 100
-                            },
-                        ],
-                        linhastabela: [
-                            {
-                                tituloDespesa: "Titulo Despesa 01",
-                                quantidade: 10,
-                                valorQuantidade: 100
-                            },
-                            {
-                                tituloDespesa: "Titulo Despesa 02",
-                                quantidade: 20,
-                                valorQuantidade: 200
-                            },
-                            {
-                                tituloDespesa: "Titulo Despesa 03",
-                                quantidade: 30,
-                                valorQuantidade: 300
-                            },
-                        ]
-                    }
-                ]
-            },
-            periodoExecucaoInicio: new Date(),
-            periodoExecucaoFim: new Date(),
-            payback: 4,
-            responsavel: "Responsavel 01",
-            parecerComissao: "Parecer comissao",
-        },
-    ],
-    participantes: [
-        "Participante 01",
-        "Participante 02",
-        "Participante 03"
-    ]
+        periodoExecucaoInicio: new Date(),
+        periodoExecucaoFim: new Date(),
+        payback: 4,
+    },
+    responsavelNegocio: "Tal",
+    chefeResponsavelTI: "Tal"
 }
 
 
@@ -337,88 +165,82 @@ export default function EsqueletoPDFProposta() {
         }
     };
 
-    const ATA = (props: { ata: ATA }) => {
+    const Proposta = (props: { proposta: Proposta }) => {
         return (
             <BoxPrincipal>
-                <ItensATA ata={props.ata} />
+                {/* <ItensATA proposta={props.proposta} /> */}
             </BoxPrincipal>
         )
     }
 
-    const ItensATA = (props: { ata: ATA }) => {
-        return (
-            <BoxItens>
-                {props.ata.itensProposta.map((proposta: ItensATA, index: number) => {
-                    return (
-                        <>
-                            {index > 0 ?
-                                <BoxTituloItens className="break">
-                                    <TypographyTitulos> {index + 1}. {proposta.titulo}</TypographyTitulos>
-                                </BoxTituloItens>
-                                :
-                                <BoxTituloItens>
-                                    <TypographyTitulos> {index + 1}. {proposta.titulo}</TypographyTitulos>
-                                </BoxTituloItens>}
-                            <BoxObjetivo>
-                                <TypographyTextos>Objetivo: {proposta.objetivo} </TypographyTextos>
-                            </BoxObjetivo>
-                            <BoxObjetivo>
-                                <TypographyTextos>Escopo projeto: </TypographyTextos>
-                                <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
-                                    {proposta.escopo.map((escopo: string, index: number) => {
-                                        return (
-                                            <li key={index} className="itensEscopoProjeto">{escopo}</li>
-                                        )
-                                    })}
-                                </ul>
-                            </BoxObjetivo>
-                            <BoxObjetivo>
-                                <TypographyTextos>Nao faz parte do Escopo do Projeto:{proposta.naoFazParteEscopo}</TypographyTextos>
-                            </BoxObjetivo>
-                            <BoxObjetivo>
-                                <TypographyTextos>Abrangencia do Projeto:{proposta.abrangencia}</TypographyTextos>
-                            </BoxObjetivo>
-                            <BoxObjetivo>
-                                <TypographyTextos>Resultados Esperados (Qualitativos):  </TypographyTextos>
-                                <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
-                                    {proposta.resultadosQualitativos.map((resultadosQualitativos: string, index: number) => {
-                                        return (<li key={index}>{resultadosQualitativos}</li>)
-                                    })}
-                                </ul>
-                            </BoxObjetivo>
-                            <BoxObjetivo>
-                                <TypographyTextos>Beneficios potencias: </TypographyTextos>
-                                <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
-                                    {proposta.resultadosPotenciais.map((resultadosPotenciais: string, index: number) => {
-                                        return (<li key={index}>{resultadosPotenciais}</li>)
-                                    })}
-                                </ul>
-                            </BoxObjetivo>
-                            <BoxObjetivo>
-                                <TypographyTextos> <b> Custos totais do projeto: R${proposta.custosTotais.totalDespesas}</b> </TypographyTextos>
-                                <TypographyTextos>Total despesas recursos externos (Desembolso): R${proposta.custosTotais.totalDespesas}</TypographyTextos>
-                            </BoxObjetivo>
-                            <CentrosCusto proposta={proposta} />
-                            <BoxObjetivo>
-                                <TypographyTextos>Periodo de execucao: {proposta.periodoExecucaoInicio.toLocaleDateString()} a {proposta.periodoExecucaoFim.toLocaleDateString()}</TypographyTextos>
-                            </BoxObjetivo>
-                            <BoxObjetivo>
-                                <TypographyTextos>Payback: {proposta.payback} meses</TypographyTextos>
-                            </BoxObjetivo>
-                            <BoxObjetivo>
-                                <TypographyTextos>Responsavel Negocio: {proposta.responsavel}</TypographyTextos>
-                            </BoxObjetivo>
-                            <BoxObjetivo>
-                                <TypographyParticipantes>PARECER COMISSAO: {proposta.parecerComissao}</TypographyParticipantes>
-                            </BoxObjetivo>
-                        </>
-                    )
-                })}
-            </BoxItens>
-        )
-    }
+    // const ItensATA = (props: { proposta: Proposta }) => {
+    //     return (
+    //         <BoxItens>
+    //             {props.proposta.itemProposta.map((proposta: ItemProposta, index: number) => {
+    //                 return (
+    //                     <>
+    //                         {index > 0 ?
+    //                             <BoxTituloItens className="break">
+    //                                 <TypographyTitulos> {index + 1}. {proposta.titulo}</TypographyTitulos>
+    //                             </BoxTituloItens>
+    //                             :
+    //                             <BoxTituloItens>
+    //                                 <TypographyTitulos> {index + 1}. {proposta.titulo}</TypographyTitulos>
+    //                             </BoxTituloItens>}
+    //                         <BoxObjetivo>
+    //                             <TypographyTextos>Objetivo: {proposta.objetivo} </TypographyTextos>
+    //                         </BoxObjetivo>
+    //                         <BoxObjetivo>
+    //                             <TypographyTextos>Escopo projeto: </TypographyTextos>
+    //                             <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
+    //                                 {proposta.escopo.map((escopo: string, index: number) => {
+    //                                     return (
+    //                                         <li key={index} className="itensEscopoProjeto">{escopo}</li>
+    //                                     )
+    //                                 })}
+    //                             </ul>
+    //                         </BoxObjetivo>
+    //                         <BoxObjetivo>
+    //                             <TypographyTextos>Nao faz parte do Escopo do Projeto:{proposta.naoFazParteEscopo}</TypographyTextos>
+    //                         </BoxObjetivo>
+    //                         <BoxObjetivo>
+    //                             <TypographyTextos>Abrangencia do Projeto:{proposta.abrangencia}</TypographyTextos>
+    //                         </BoxObjetivo>
+    //                         <BoxObjetivo>
+    //                             <TypographyTextos>Resultados Esperados (Qualitativos):  </TypographyTextos>
+    //                             <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
+    //                                 {proposta.resultadosQualitativos.map((resultadosQualitativos: string, index: number) => {
+    //                                     return (<li key={index}>{resultadosQualitativos}</li>)
+    //                                 })}
+    //                             </ul>
+    //                         </BoxObjetivo>
+    //                         <BoxObjetivo>
+    //                             <TypographyTextos>Beneficios potencias: </TypographyTextos>
+    //                             <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
+    //                                 {proposta.resultadosPotenciais.map((resultadosPotenciais: string, index: number) => {
+    //                                     return (<li key={index}>{resultadosPotenciais}</li>)
+    //                                 })}
+    //                             </ul>
+    //                         </BoxObjetivo>
+    //                         <BoxObjetivo>
+    //                             <TypographyTextos> <b> Custos totais do projeto: R${proposta.custosTotais.totalDespesas}</b> </TypographyTextos>
+    //                             <TypographyTextos>Total despesas recursos externos (Desembolso): R${proposta.custosTotais.totalDespesas}</TypographyTextos>
+    //                         </BoxObjetivo>
+    //                         <CentrosCusto proposta={proposta} />
+    //                         <BoxObjetivo>
+    //                             <TypographyTextos>Periodo de execucao: {proposta.periodoExecucaoInicio.toLocaleDateString()} a {proposta.periodoExecucaoFim.toLocaleDateString()}</TypographyTextos>
+    //                         </BoxObjetivo>
+    //                         <BoxObjetivo>
+    //                             <TypographyTextos>Payback: {proposta.payback} meses</TypographyTextos>
+    //                         </BoxObjetivo>
+    //                     </>
+    //                 )
+    //             })}
+    //         </BoxItens>
+    //     )
+    // }
 
-    const CentrosCusto = (props: { proposta: ItensATA }) => {
+    const CentrosCusto = (props: { proposta: ItemProposta }) => {
         return (
             <Box sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
                 {props.proposta.custosTotais.tabelas.map((tabela: ItensTabela) => {
@@ -551,14 +373,18 @@ export default function EsqueletoPDFProposta() {
         )
     }
 
-    const ParticipantesReuniao = (props: { ata: ATA }) => {
+    const ParticipantesReuniao = (props: { proposta: Proposta }) => {
         return (
             <BoxObjetivo>
                 <>
-                    <TypographyParticipantes>Participantes</TypographyParticipantes>
-                    {props.ata.participantes.map((parti: string, index: number) => {
-                        return <TypographyTextos key={index}>{parti}</TypographyTextos>
-                    })}
+                    <Box>
+                        <TypographyParticipantes>Giocondo do Norte</TypographyParticipantes>
+                        <TypographyParticipantes>Responsável Negócio</TypographyParticipantes>
+                    </Box>
+                    <Box>
+                        <TypographyParticipantes>Severino do Sul</TypographyParticipantes>
+                        <TypographyParticipantes>Chefe Responsável TI</TypographyParticipantes>
+                    </Box>
                 </>
             </BoxObjetivo >
         )
@@ -581,24 +407,10 @@ export default function EsqueletoPDFProposta() {
             </div>
             <PDFExport forcePageBreak=".break" paperSize="A4" pageTemplate={PageTemplate} margin="2cm" ref={pdfCompoente}>
                 <BoxTitulo>
-                    <TypographyTituloATA variant="h6">{ata.tituloATA}</TypographyTituloATA>
+                    <TypographyTituloATA variant="h6">{proposta.tituloProposta}</TypographyTituloATA>
                 </BoxTitulo>
-                <BoxData>
-                    <TypographyData variant="body2">
-                        ATA {ata.numeroDG}/{ata.numeroAno}
-                    </TypographyData>
-                    <TypographyData variant="body2">
-                        Data: {ata.data.toLocaleDateString()}
-                    </TypographyData>
-                    <TypographyData variant="body2">
-                        Inicio: {ata.inicioReuniao.toLocaleTimeString()}
-                    </TypographyData>
-                    <TypographyData variant="body2">
-                        Termino: {ata.terminoReuniao.toLocaleTimeString()}
-                    </TypographyData>
-                </BoxData>
-                <ATA ata={ata} />
-                <ParticipantesReuniao ata={ata} />
+                <Proposta proposta={proposta} />
+                <ParticipantesReuniao proposta={proposta} />
             </PDFExport>
         </BoxConteudo >
     );
