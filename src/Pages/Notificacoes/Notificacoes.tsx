@@ -144,9 +144,6 @@ export default function Notificacoes() {
               icone = AccessTimeRoundedIcon;
             }
 
-            console.log(notificacao.idNotificacao);
-
-
             return (
               <Notificacao key={notificacao.idNotificacao}
                 idNotificacao={notificacao.idNotificacao}

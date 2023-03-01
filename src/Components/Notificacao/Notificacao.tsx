@@ -18,7 +18,6 @@ import {
  * @param props
  * @returns Retorna um componente de notificação
  */
-
 export default function Notificacao(props: {
   idNotificacao: number;
   Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
@@ -30,11 +29,16 @@ export default function Notificacao(props: {
   // setNotificacoes: React.Dispatch<React.SetStateAction<Array<Object>>>;
 }) {
 
-  // function removerNotificacao(id: number) {
-  //   props.setNotificacoes((notificacao: any) => {
-  //     return notificacao.filter((notificacao) => notificacao.id !== id);
-  //   });
-  // }
+  const idUsuario = localStorage.getItem("IDUSUARIO") as string;
+
+  const bodyNotificacaoDTO: any = {
+    notificacao: {
+      idNotificacao: props.idNotificacao
+    },
+    usuario: {
+      idUsuario: parseInt(idUsuario)
+    }
+  }
 
   return (
     <>
@@ -58,7 +62,11 @@ export default function Notificacao(props: {
           <DeleteRoundedIcon
             sx={{ color: "#595959", cursor: "pointer" }}
             onClick={() => {
-              api.delete(`/sod/usuario/notificacao`, )
+              api.delete(`/sod/usuario/notificacao`, bodyNotificacaoDTO).then((res) => {
+                console.log(res);
+              }).catch((err) => {
+                console.log(err);
+              });
             }}
           />
         </NotificacaoLadoDireito>
