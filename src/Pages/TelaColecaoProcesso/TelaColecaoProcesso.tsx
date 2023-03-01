@@ -1,6 +1,6 @@
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getNomeComponente, getCorStatus, getCorTipo, getBeneficiosPorTipo } from "../../utils";
+import { getNomeComponente, getCorStatus, getCorTipo, getBeneficiosPorTipo, getNome } from "../../utils";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Toolbar from "../../Components/Toolbar/Toolbar";
 import TabelaBeneficios from "../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios";
@@ -20,6 +20,7 @@ import {
   FormHelperText,
   Snackbar,
   Alert,
+  Divider,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
@@ -29,6 +30,7 @@ import {
   BoxHeader,
   GridPequenosAtributos,
   TypographyTexto,
+  TypographyTitulo,
   TypographyTituloAtributo,
 } from "../TelaProcesso/TelaProcesso.styles";
 import {
@@ -362,7 +364,7 @@ function ContainerColecaoProcesso(props: {
 
 function Propostas(props: {
   listaPropostas: [];
-  listaPropostasAnteriores?: [];
+  listaPropostasAnteriores?: any[];
   tipoColecao: string;
   avaliandoProcesso: boolean;
   verificacaoInputs: boolean[];
@@ -371,11 +373,24 @@ function Propostas(props: {
   const location = useLocation().pathname;
   const linkProposta = location + "/proposal";
 
-  const propostas = props.listaPropostas.map((proposta: any, index: number) => {
+  const propostas = props.listaPropostas.map((decisaoProposta: any, index: number) => {
+    let propostaAnteriorEquivalente = null
+
+    if (props.listaPropostasAnteriores) {
+      for (let propostaAnterior of props.listaPropostasAnteriores) {
+        if (propostaAnterior.proposta.idProposta == decisaoProposta.proposta.idProposta) {
+          propostaAnteriorEquivalente = propostaAnterior
+        }
+      }
+    }
+
+
+
     return (
       <Proposta
         key={index}
-        proposta={proposta}
+        decisaoProposta={decisaoProposta}
+        propostaAnterior={propostaAnteriorEquivalente}
         linkProposta={linkProposta}
         eUmaPauta={eUmaPauta}
         index={index}
@@ -389,7 +404,7 @@ function Propostas(props: {
 }
 
 export function Proposta(props: {
-  proposta: any;
+  decisaoProposta: any;
   propostaAnterior?: any;
   linkProposta: string;
   eUmaPauta: boolean;
@@ -409,35 +424,30 @@ export function Proposta(props: {
     helperText: "",
   });
   const verificacaoInputs = props.verificacaoInputs;
-  const decisaoProposta = props.proposta;
+  const decisaoProposta = props.decisaoProposta;
   const forumEscolhido = props.eUmaPauta ? "comissão" : "direção geral";
   const beneficiosReais = getBeneficiosPorTipo(decisaoProposta.proposta.demanda.beneficiosDemanda, "REAL")
   const beneficioPotenciais = getBeneficiosPorTipo(decisaoProposta.proposta.demanda.beneficiosDemanda, "POTENCIAL")
-  console.log(decisaoProposta); 
+
+  console.log(props.propostaAnterior);
 
 
   const conteudoPropostaInicio = (
-    //fazer mostrar as avaliações do fórum anterior quando for mostrado um ata
     <>
-      <Grid container xs={12} sx={{ marginBottom: "8px" }}>
-        <GridPequenosAtributos item xs={6}>
-          <TypographyTituloAtributo variant="body1">
-            Solicitante:
-          </TypographyTituloAtributo>
-          <TypographyTextoColecao variant="body1">
-            {decisaoProposta.proposta.demanda.usuario.nomeUsuario}
-          </TypographyTextoColecao>
-        </GridPequenosAtributos>
-        {!props.eUmaPauta &&
+      <Grid item>
+        <Grid container >
+          <TypographyTitulo variant='h5'>
+            Informações Gerais
+          </TypographyTitulo>
           <GridPequenosAtributos item xs={6}>
-            <TypographyTituloAtributo variant='body1'>
-              {/* {nomeAtributo} */} nomeAtributo
+            <TypographyTituloAtributo variant="body1">
+              Solicitante:
             </TypographyTituloAtributo>
-            <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
-              {/* {valorAtributo} */} valorAtributo
-            </TypographyTexto>
+            <TypographyTextoColecao variant="body1">
+              {decisaoProposta.proposta.demanda.usuario.nomeUsuario}
+            </TypographyTextoColecao>
           </GridPequenosAtributos>
-        }
+        </Grid>
       </Grid>
       {
         beneficiosReais.length != 0 &&
@@ -463,6 +473,39 @@ export function Proposta(props: {
             <TabelasCusto tabelasCusto={decisaoProposta.proposta.tabelasCustoProposta} />
           </Grid>
         )
+      }
+      {!props.eUmaPauta &&
+        <Grid item>
+          <Divider />
+          <Grid container xs={12} sx={{ marginY: "8px" }} spacing={1}>
+            <Grid item xs={12}>
+              <TypographyTitulo variant='h5'>
+                Informações de Avaliação do Fórum
+              </TypographyTitulo>
+            </Grid>
+            <GridPequenosAtributos item xs={6}>
+              <TypographyTituloAtributo variant='body1'>
+                Estará em pauta Publicada :
+              </TypographyTituloAtributo>
+              <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+                {props.propostaAnterior.ataPublicada ? "Sim" : "Não"}
+              </TypographyTexto>
+            </GridPequenosAtributos>
+            <GridPequenosAtributos item xs={6}>
+              <TypographyTituloAtributo variant='body1'>
+                Status escolhido:
+              </TypographyTituloAtributo>
+              <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+                {getNome(props.propostaAnterior.statusDemandaComissao)}
+              </TypographyTexto>
+            </GridPequenosAtributos>
+            <Grid item>
+              <TypographyTexto variant='body1' >
+                <b>Comentário :</b>   {props.propostaAnterior.comentario}
+              </TypographyTexto>
+            </Grid>
+          </Grid>
+        </Grid>
       }
       <Grid item xs={12}>
         <GridLinkTypograpfy variant="body2" width="auto !important">
@@ -668,7 +711,9 @@ export function Proposta(props: {
             <Typography variant="h5" sx={{ color: "#595959" }}>
               {decisaoProposta.proposta.demanda.tituloDemanda}
             </Typography>
+
           </AccordionSummary>
+          <Divider />
           <AccordionDetails>
             <Grid container spacing={2}>
               {!props.avaliandoProcesso

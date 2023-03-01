@@ -19,6 +19,7 @@ import {
   UltimaListaTypography,
 } from "./ComponenteProcesso.styles";
 import { GlobalStyles } from "@mui/styled-engine";
+import { getNome } from "../../utils";
 
 export default function ComponenteProcesso(props: {
   grid: boolean;
@@ -473,23 +474,7 @@ function ListComponent(props: ComponentProps) {
   );
 }
 
-/**
- * Função que transforma o nome de um status do banco para uma conversão mais compreensível
- *
- * @param status
- * @returns
- */
-function getNome(status: string) {
-  const nomeStatus = {
-    BACKLOG: "Aguardando revisão",
-    ASSESMENT: "Em planejamento",
-    BUSINESSCASE: "Em planejamento demorado",
-    CANCELED: "Cancelado",
-    TODO: "A fazer",
-  };
 
-  return (nomeStatus as any)[status];
-}
 
 /**
  * Interface base para as propriedados de um Grid ou List Component

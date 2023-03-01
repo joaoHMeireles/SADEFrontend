@@ -161,6 +161,24 @@ export function getCorStatusHistorico(status: StatusTarefaHistorico) {
     return (cores as any)[status]
 }
 
+/**
+ * Função que transforma o nome de um status do banco para uma conversão mais compreensível
+ *
+ * @param status
+ * @returns
+ */
+export function getNome(status: string) {
+    const nomeStatus = {
+      BACKLOG: "Aguardando revisão",
+      ASSESMENT: "Em planejamento",
+      BUSINESSCASE: "Em planejamento demorado",
+      CANCELED: "Cancelado",
+      TODO: "A fazer",
+    };
+  
+    return (nomeStatus as any)[status];
+  }
+
 export function getBeneficiosPorTipo(listaBeneficios: any[], tipoBeneficio: string){
     return listaBeneficios.filter((beneficio: any) => beneficio.tipoBeneficio == tipoBeneficio)
 }
