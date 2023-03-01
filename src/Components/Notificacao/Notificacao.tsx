@@ -28,6 +28,7 @@ export default function Notificacao(props: {
   // notificacoes: any[];
   // setNotificacoes: React.Dispatch<React.SetStateAction<Array<Object>>>;
 }) {
+  
 
   const idUsuario = localStorage.getItem("IDUSUARIO") as string;
 
@@ -39,6 +40,9 @@ export default function Notificacao(props: {
       idUsuario: parseInt(idUsuario)
     }
   }
+
+  console.log(bodyNotificacaoDTO);
+  
 
   return (
     <>
@@ -62,7 +66,7 @@ export default function Notificacao(props: {
           <DeleteRoundedIcon
             sx={{ color: "#595959", cursor: "pointer" }}
             onClick={() => {
-              api.delete(`/sod/usuario/notificacao`, bodyNotificacaoDTO).then((res) => {
+              api.put(`/sod/usuario/deletarNotificacao`, bodyNotificacaoDTO).then((res) => {
                 console.log(res);
               }).catch((err) => {
                 console.log(err);
