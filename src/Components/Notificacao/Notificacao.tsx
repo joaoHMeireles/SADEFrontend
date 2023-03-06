@@ -1,3 +1,5 @@
+import api from "../../api/api";
+
 import { Box } from "@mui/system";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { SvgIconTypeMap } from "@mui/material";
@@ -16,22 +18,29 @@ import {
  * @param props
  * @returns Retorna um componente de notificação
  */
-
 export default function Notificacao(props: {
-  id: number;
+  idNotificacao: number;
   Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
   };
   titulo: string;
   mensagem: string;
-  lista: any[];
-  setLista: React.Dispatch<React.SetStateAction<Array<Object>>>;
+  notificacoes: any[];
+  setNotificacoes: React.Dispatch<React.SetStateAction<Array<Object>>>;
 }) {
-  function removerNotificacao(id: number) {
-    props.setLista((notificacao) => {
-      return notificacao.filter((notificacao) => notificacao.id !== id);
-    });
+  
+
+  const idUsuario = localStorage.getItem("IDUSUARIO") as string;
+
+  const bodyNotificacaoDTO: any = {
+    notificacao: {
+      idNotificacao: props.idNotificacao
+    },
+    usuario: {
+      idUsuario: parseInt(idUsuario)
+    }
   }
+  
 
   return (
     <>
@@ -54,7 +63,13 @@ export default function Notificacao(props: {
         <NotificacaoLadoDireito>
           <DeleteRoundedIcon
             sx={{ color: "#595959", cursor: "pointer" }}
-            onClick={() => removerNotificacao(props.id)}
+            onClick={() => {
+              api.put(`/sod/usuario/deletarNotificacao`, bodyNotificacaoDTO).then((res) => {
+                props.setNotificacoes(res.data.notificacoesUsuario)
+              }).catch((err) => {
+                console.log(err);
+              });
+            }}
           />
         </NotificacaoLadoDireito>
       </BoxNotificacao>

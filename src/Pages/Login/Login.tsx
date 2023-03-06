@@ -31,6 +31,8 @@ function Login(props: {
   const [tipo, setTipo] = useState("password");
   localStorage.setItem("PESSOA", "Solicitante")
   localStorage.setItem("PAGINATUAL", "login")
+  let contentLink;
+
 
   interface User {
     cargo: string,
@@ -46,6 +48,7 @@ function Login(props: {
   }
 
   const [usuarios, setUsuarios] = useState<User[]>([])
+  const [logado, setLogado] = useState(false)
   const [user, setUser] = useState()
   const [password, setPassword] = useState()
 
@@ -71,10 +74,13 @@ function Login(props: {
   function colocaPessoa() {
     localStorage.setItem("TIPOUSUARIO", "gerenteTI");
     console.log(usuarios);
+
+
     for (let i = 0; i < usuarios.length; i++) {
       if (user == usuarios[i].nomeUsuario) {
         if (password == usuarios[i].senha) {
-          alert("Logado")
+          setLogado(true);
+          localStorage.setItem("IDUSUARIO", JSON.stringify(usuarios[i].idUsuario));
         }
       }
     }
@@ -135,11 +141,9 @@ function Login(props: {
                   variant="contained"
                   startIcon={<InputRoundedIcon />}
                 >
-                  <Link className="textoBotao" onClick={colocaPessoa} to="/home">
                   <Box onClick={colocaPessoa}>
-                    Entrar
+                    {logado ? <Link className="textoBotao" onClick={colocaPessoa} to="/home">Entrar</Link> : "Entrar"}
                   </Box>
-                  </Link>
                 </EstilosBotao>
               </ContainerBotaoLogin>
             </ContainerBackgroundLogin>
