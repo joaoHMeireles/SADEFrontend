@@ -25,8 +25,8 @@ export default function Notificacao(props: {
   };
   titulo: string;
   mensagem: string;
-  // notificacoes: any[];
-  // setNotificacoes: React.Dispatch<React.SetStateAction<Array<Object>>>;
+  notificacoes: any[];
+  setNotificacoes: React.Dispatch<React.SetStateAction<Array<Object>>>;
 }) {
   
 
@@ -40,8 +40,6 @@ export default function Notificacao(props: {
       idUsuario: parseInt(idUsuario)
     }
   }
-
-  console.log(bodyNotificacaoDTO);
   
 
   return (
@@ -67,7 +65,7 @@ export default function Notificacao(props: {
             sx={{ color: "#595959", cursor: "pointer" }}
             onClick={() => {
               api.put(`/sod/usuario/deletarNotificacao`, bodyNotificacaoDTO).then((res) => {
-                console.log(res);
+                props.setNotificacoes(res.data.notificacoesUsuario)
               }).catch((err) => {
                 console.log(err);
               });

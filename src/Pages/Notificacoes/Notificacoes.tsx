@@ -119,7 +119,29 @@ export default function Notificacoes() {
       }).catch(err => {
         console.log(err);
       })
+    console.log("entrahdsahbdahd");
+
   }, [])
+
+  function getTipoIcone(acao: string) {
+    for (let i = 0; i < notificacoes.length; i++) {
+      if (acao == "DEMANDAAPROVADA") {
+        icone = CheckBoxRoundedIcon;
+      } else if (acao == "REDEFINICAOREQUERIDA") {
+        icone = EditNotificationsRoundedIcon;
+      } else if (acao == "NOVOWORKFLOWAPROVACAO") {
+        icone = LanRoundedIcon;
+      } else if (acao == "CHAT") {
+        icone = QuestionAnswerRoundedIcon;
+      } else if (acao == "REUNIAO") {
+        icone = GroupsRoundedIcon;
+      } else if (acao == "STATUSDEMANDA") {
+        icone = NewReleasesRoundedIcon;
+      } else if (acao == "PRAZOELABORACAO") {
+        icone = AccessTimeRoundedIcon;
+      }
+    }
+  }
 
 
   return (
@@ -128,30 +150,15 @@ export default function Notificacoes() {
       <Container>
         <Box>
           {notificacoes.map((notificacao: NotificacaoInfo) => {
-            if (notificacao.acao == "DEMANDAAPROVADA") {
-              icone = CheckBoxRoundedIcon;
-            } else if (notificacao.acao == "REDEFINICAOREQUERIDA") {
-              icone = EditNotificationsRoundedIcon;
-            } else if (notificacao.acao == "NOVOWORKFLOWAPROVACAO") {
-              icone = LanRoundedIcon;
-            } else if (notificacao.acao == "CHAT") {
-              icone = QuestionAnswerRoundedIcon;
-            } else if (notificacao.acao == "REUNIAO") {
-              icone = GroupsRoundedIcon;
-            } else if (notificacao.acao == "STATUSDEMANDA") {
-              icone = NewReleasesRoundedIcon;
-            } else if (notificacao.acao == "PRAZOELABORACAO") {
-              icone = AccessTimeRoundedIcon;
-            }
-
+            getTipoIcone(notificacao.acao)
             return (
               <Notificacao key={notificacao.idNotificacao}
                 idNotificacao={notificacao.idNotificacao}
                 Icone={icone}
                 titulo={notificacao.tituloNotificacao}
                 mensagem={notificacao.descricaoNotificacao}
-              // notificacoes={notificacoes}
-              // setNotificacoes={setNotificacoes} 
+                notificacoes={notificacoes}
+                setNotificacoes={setNotificacoes}
               />
             )
           })}
