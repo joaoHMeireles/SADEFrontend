@@ -58,25 +58,25 @@ export default function Dropzone(props: {
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-  function enviarProback() {
-    const formData = new FormData()
+  // function enviarProback() {
+  //   const formData = new FormData()
 
-    console.log(files);
+  //   console.log(files);
 
-    for (let i = 0; i < files.length; i++) {
-      // console.log(files[i]);
-      formData.append("files", files[i])
-    }
+  //   for (let i = 0; i < files.length; i++) {
+  //     // console.log(files[i]);
+  //     formData.append("files", files[i])
+  //   }
 
-    console.log(formData.getAll("files"));
+  //   console.log(formData.getAll("files"));
 
-    axios.post("http://localhost:8080/sod/demanda", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      }
-    }).then(response => console.log(response)).catch((err) => {console.log(err)});
+  //   axios.post("http://localhost:8080/sod/demanda", formData, {
+  //     headers: {
+  //       "Content-Type": "multipart/form-data",
+  //     }
+  //   }).then(response => console.log(response)).catch((err) => {console.log(err)});
 
-  }
+  // }
 
   return (
     <>
@@ -107,7 +107,6 @@ export default function Dropzone(props: {
           );
         })}
       </BoxContainerUploadImagens>
-      <button onClick={enviarProback}> ir pro back</button>
     </>
   );
 }

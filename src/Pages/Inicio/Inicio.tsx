@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { TipoColecaoComponenteProcesso, TipoComponenteProcesso} from "../../constants/enuns";
+import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
 import "./Inicio.scss";
 import api from "../../api/api";
 import Searchbar from "../../Components/Searchbar/Searchbar";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import { BoxConteudo } from "../App.styles";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
+import { useLocation } from "react-router-dom";
 
 
 /**
@@ -21,19 +22,20 @@ export default function Inicio(props: {
   const [grid, setGrid] = useState(true);
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
   const [listaComponents, setListaComponents] = useState<any[]>([])
+  const location = useLocation().pathname
 
-  useEffect(() => {
-    // api.get("/sod/demanda").then((response) => {
-    //   let listaDemandas: any[] = []
-    //   for(let demanda of response.data){
-    //     demanda.tipo = TipoComponenteProcesso.Demanda
-    //     listaDemandas.push(demanda)
-    //   }
-    //   setListaComponents(listaDemandas);
-      
-    // }).catch((err) => {
-    //   console.log(err);
-    // })
+  function buscarComponentes() {
+    api.get("/sod/demanda").then((response) => {
+      let listaDemandas: any[] = []
+      for (let demanda of response.data) {
+        demanda.tipo = TipoComponenteProcesso.Demanda
+        listaDemandas.push(demanda)
+      }
+      setListaComponents(listaDemandas);
+    }).catch((err) => {
+      console.log(err);
+    })
+
     // api.get("/sod/proposta").then((response) => {
     //   let listaPropostas: any[] = []
     //   for(let proposta of response.data){
@@ -46,10 +48,12 @@ export default function Inicio(props: {
     //     listaPropostas.push(proposta)
     //   }
     //   setListaComponents(listaPropostas);
-      
+
     // }).catch((err) => {
     //   console.log(err);
     // })
+
+
     // api.get("/sod/pauta").then((response) => {
     //   let listaPautas: any[] = []
     //   for(let pauta of response.data){
@@ -57,32 +61,38 @@ export default function Inicio(props: {
     //     pauta.propostasPauta = null 
     //     pauta.propostas = pauta.propostasPauta
     //     pauta.tituloReuniao = pauta.tituloReuniaoPauta 
-      
+
     //     pauta.tipo = TipoColecaoComponenteProcesso.Pauta
     //     listaPautas.push(pauta)
     //   }
     //   setListaComponents(listaPautas);
-      
+
     // }).catch((err) => {
     //   console.log(err);
     // })
-    api.get("/sod/ata").then((response) => {
-      let listaATAs: any[] = []
-      for(let ata of response.data){
-        // console.log(ata);
-        
-        ata.propostas = ata.propostasAta
-        ata.propostasPauta = ata.pauta.propostasPauta
-        ata.tituloReuniao = ata.tituloReuniaoATA
 
-        ata.tipo = TipoColecaoComponenteProcesso.ATA
-        listaATAs.push(ata)
-      }
-      setListaComponents(listaATAs);
-      
-    }).catch((err) => {
-      console.log(err);
-    })
+
+    // api.get("/sod/ata").then((response) => {
+    //   let listaATAs: any[] = []
+    //   for(let ata of response.data){
+    //     // console.log(ata);
+
+    //     ata.propostas = ata.propostasAta
+    //     ata.propostasPauta = ata.pauta.propostasPauta
+    //     ata.tituloReuniao = ata.tituloReuniaoATA
+
+    //     ata.tipo = TipoColecaoComponenteProcesso.ATA
+    //     listaATAs.push(ata)
+    //   }
+    //   setListaComponents(listaATAs);
+
+    // }).catch((err) => {
+    //   console.log(err);
+    // })
+  }
+
+  useEffect(() => {
+    buscarComponentes()
   }, [])
 
   localStorage.setItem("PAGINATUAL", "home");

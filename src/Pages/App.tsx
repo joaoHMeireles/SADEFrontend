@@ -22,6 +22,7 @@ import CriacaoProposta from "./CriacaoProposta/CriacaoProposta";
 import Rascunho from "./Rascunho/Rascunho";
 import CriacaoPauta from "./CriacaoPauta/CriacaoPauta";
 import VisualizarCriacaoPDF from "./VisualizarCriacaoPDF/VisualizarCriacaoPDF";
+import Enviadas from "./Enviadas/Enviadas";
 
 
 export default function App() {
@@ -49,7 +50,7 @@ export default function App() {
             <ThemeProvider theme={ContentTheme}>
               <Routes>
                 <Route path="/" element={<Login setAberto={setSidebarAberta} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />} />
-                <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} />} />
+                <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} inicio={true}/>} />
                 <Route path="/notifications" element={<Notificacoes />} />
                 <Route path="/chats" element={<Chats aberto={sidebarAberta} />}></Route>
                 <Route path="/createdemand" element={<CriacaoDemanda rascunho={false}/>} />
@@ -62,6 +63,8 @@ export default function App() {
                 <Route path="/home/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
                 <Route path="/home/agenda/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
                 <Route path="/home/ata/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
+
+                <Route path="/mydemands" element={<Enviadas setFiltrar={setFiltrar} filtrar={filtrar} />}></Route>
 
                 <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar}/>}></Route>
                 <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true}/>}></Route>

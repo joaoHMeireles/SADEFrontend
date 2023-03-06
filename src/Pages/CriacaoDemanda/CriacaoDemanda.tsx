@@ -28,7 +28,6 @@ export default function CriacaoDemanda(props: {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
 
-
   useEffect(() => {
     if (props.rascunho) {
       const info = JSON.parse(
