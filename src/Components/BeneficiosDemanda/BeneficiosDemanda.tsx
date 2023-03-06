@@ -27,27 +27,31 @@ import {
 export default function BeneficiosDemanda(props: {
   rascunho: boolean;
   proposta: boolean;
+  numeroBeneficiosReais: number
+  numeroBeneficiosPotenciais: number
+  numeroBeneficiosQualitativos: number
+  setNumeroBeneficiosReais: React.Dispatch<React.SetStateAction<number>>
+  setNumeroBeneficiosPotenciais: React.Dispatch<React.SetStateAction<number>>
+  setNumeroBeneficiosQualitativos: React.Dispatch<React.SetStateAction<number>>
 }) {
-  const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
-  const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
-  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
+
   const [frequencia, setFrequencia] = useState("");
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>()
 
   useEffect(() => {
-    if(props.rascunho || props.proposta){
+    if (props.rascunho || props.proposta) {
       let info
-      if(props.rascunho){
-        info = JSON.parse( localStorage.getItem("RASCUNHOESCOLHIDO") as string)
-      } else if(props.proposta){
-        info = JSON.parse( localStorage.getItem("DEMANDASELECIONADA") as string)
+      if (props.rascunho) {
+        info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string)
+      } else if (props.proposta) {
+        info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string)
       }
       setInformacaoProcesso(info);
-      setNumeroBeneficiosQualitativos(info.beneficiosQualitativos.length);
-      setNumeroBeneficiosReais(info.beneficiosReais.length);
-      setNumeroBeneficiosPotenciais(info.beneficiosPotenciais.length);
+      props.setNumeroBeneficiosQualitativos(info.beneficiosQualitativos.length);
+      props.setNumeroBeneficiosReais(info.beneficiosReais.length);
+      props.setNumeroBeneficiosPotenciais(info.beneficiosPotenciais.length);
     }
-    
+
   }, [])
 
   useEffect(() => {
@@ -122,9 +126,9 @@ export default function BeneficiosDemanda(props: {
       }
     }
   }, [
-    numeroBeneficiosReais,
-    numeroBeneficiosPotenciais,
-    numeroBeneficiosQualitativos,
+    props.numeroBeneficiosReais,
+    props.numeroBeneficiosPotenciais,
+    props.numeroBeneficiosQualitativos,
   ]);
 
   return (
@@ -133,9 +137,9 @@ export default function BeneficiosDemanda(props: {
         <BoxTitulos>
           <TypographyTitulos>Benefício Real</TypographyTitulos>
         </BoxTitulos>
-        <BeneficiosReais numeroBeneficios={numeroBeneficiosReais} />
+        <BeneficiosReais numeroBeneficios={props.numeroBeneficiosReais} />
         <BoxIcones>
-          {numeroBeneficiosReais > 1 ? (
+          {props.numeroBeneficiosReais > 1 ? (
             <RemoveRoundedIcon
               sx={{
                 fontSize: "2rem",
@@ -144,7 +148,7 @@ export default function BeneficiosDemanda(props: {
                 color: "#595959",
               }}
               onClick={() => {
-                setNumeroBeneficiosReais(numeroBeneficiosReais - 1);
+                props.setNumeroBeneficiosReais(props.numeroBeneficiosReais - 1);
               }}
             />
           ) : (
@@ -153,16 +157,16 @@ export default function BeneficiosDemanda(props: {
           <AddRoundedIcon
             sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
             onClick={() => {
-              setNumeroBeneficiosReais(numeroBeneficiosReais + 1);
+              props.setNumeroBeneficiosReais(props.numeroBeneficiosReais + 1);
             }}
           />
         </BoxIcones>
         <BoxTitulos>
           <TypographyTitulos>Benefício Potencial</TypographyTitulos>
         </BoxTitulos>
-        <BeneficiosPotenciais numeroBeneficios={numeroBeneficiosPotenciais} />
+        <BeneficiosPotenciais numeroBeneficios={props.numeroBeneficiosPotenciais} />
         <BoxIcones>
-          {numeroBeneficiosPotenciais > 1 ? (
+          {props.numeroBeneficiosPotenciais > 1 ? (
             <RemoveRoundedIcon
               sx={{
                 fontSize: "2rem",
@@ -171,7 +175,7 @@ export default function BeneficiosDemanda(props: {
                 color: "#595959",
               }}
               onClick={() => {
-                setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais - 1);
+                props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais - 1);
               }}
             />
           ) : (
@@ -180,7 +184,7 @@ export default function BeneficiosDemanda(props: {
           <AddRoundedIcon
             sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
             onClick={() => {
-              setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais + 1);
+              props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais + 1);
             }}
           />
         </BoxIcones>
@@ -188,10 +192,10 @@ export default function BeneficiosDemanda(props: {
           <TypographyTitulos>Benefício Qualitativo</TypographyTitulos>
         </BoxTitulos>
         <BeneficiosQualitativos
-          numeroBeneficios={numeroBeneficiosQualitativos}
+          numeroBeneficios={props.numeroBeneficiosQualitativos}
         />
         <BoxIcones>
-          {numeroBeneficiosQualitativos > 1 ? (
+          {props.numeroBeneficiosQualitativos > 1 ? (
             <RemoveRoundedIcon
               sx={{
                 fontSize: "2rem",
@@ -200,8 +204,8 @@ export default function BeneficiosDemanda(props: {
                 color: "#595959",
               }}
               onClick={() => {
-                setNumeroBeneficiosQualitativos(
-                  numeroBeneficiosQualitativos - 1
+                props.setNumeroBeneficiosQualitativos(
+                  props.numeroBeneficiosQualitativos - 1
                 );
               }}
             />
@@ -211,7 +215,7 @@ export default function BeneficiosDemanda(props: {
           <AddRoundedIcon
             sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
             onClick={() => {
-              setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos + 1);
+              props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos + 1);
             }}
           />
         </BoxIcones>
@@ -219,6 +223,7 @@ export default function BeneficiosDemanda(props: {
           <TypographyLabels>Frequêcia de uso da solução:</TypographyLabels>
           <TextField
             value={frequencia}
+            id="frequenciaUso"
             sx={{
               width: "30%",
               marginTop: 1,

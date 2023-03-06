@@ -14,7 +14,7 @@ import {
 } from "./InformacaoGeral.styles";
 import Checkbox from "@mui/material/Checkbox";
 
-export default function InformacaoGeral(props: { proposta: boolean }) {
+export default function InformacaoGeral(props: { proposta: boolean, centroCusto: [], setCentroCusto: React.Dispatch<React.SetStateAction<any[]>> }) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
 
   const lista = [
@@ -108,6 +108,9 @@ export default function InformacaoGeral(props: { proposta: boolean }) {
               sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
               multiple
               disableCloseOnSelect
+              onChange={(e, valor: any) => {
+                props.setCentroCusto(valor)
+              }}
               renderOption={(props, centroCusto, { selected }) => {
                 return (
                   <li {...props}>

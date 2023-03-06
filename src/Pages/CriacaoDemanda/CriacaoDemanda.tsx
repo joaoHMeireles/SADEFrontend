@@ -27,6 +27,13 @@ export default function CriacaoDemanda(props: {
 }) {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
+  const [centroCusto, setCentroCusto] = useState<any[]>([]);
+  const [data, setData] = useState<Object>()
+
+  const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
+  const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
+  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
+
 
 
   useEffect(() => {
@@ -70,7 +77,6 @@ export default function CriacaoDemanda(props: {
   }
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
-    console.log(newValue);
     setValor(newValue);
     if (newValue == 2) {
       setSegundo(true);
@@ -78,6 +84,134 @@ export default function CriacaoDemanda(props: {
       setSegundo(false);
     }
   }
+
+  function partUmDemanda() {
+    const titulo = document.getElementById("titulo").value;
+    const situacaoAtual = document.getElementById("situacaoAtual").value;
+    const objetivo = document.getElementById("objetivo").value;
+
+    const cc = [];
+
+    for (let i = 0; i < centroCusto.length; i++) {
+      let c = {
+        // rever
+        idCentroCusto: 1
+      }
+      cc.push(c)
+    }
+
+    const idUsuario = localStorage.getItem("IDUSUARIO");
+
+    let data = {
+      "tituloDemanda": titulo,
+      "objetivo": objetivo,
+      "situacaoAtual": situacaoAtual,
+      "centroCustoDemanda": cc,
+      "usuario": {
+        "idUsuario": idUsuario
+      }
+    }
+
+    setData(data);
+  }
+
+  function partDoisDemanda() {
+    const frequenciaUso = document.getElementById("frequenciaUso").value;
+
+    let valorMensal;
+    let moeda;
+    let descricao;
+
+    let beneficios = [];
+
+
+    for (let i = 0; i < numeroBeneficiosReais; i++) {
+      valorMensal = document.getElementById(`valorMensalReal${i}`).value;
+      moeda = document.getElementById(`moedaReal${i}`).value;
+      descricao = document.getElementById(`descricaoReal${i}`).value;
+
+      let beneficioReal = {
+        "tipoBeneficio": "REAL",
+        "descricao": descricao,
+        "moeda": moeda,
+        "valor": valorMensal
+      }
+
+      beneficios.push(beneficioReal);
+    }
+
+    for (let i = 0; i < numeroBeneficiosPotenciais; i++) {
+      valorMensal = document.getElementById(`valorMensalPotencial${i}`).value;
+      moeda = document.getElementById(`moedaPotencial${i}`).value;
+      descricao = document.getElementById(`descricaoPotencial${i}`).value;
+
+      let beneficioPotencial = {
+        "tipoBeneficio": "POTENCIAL",
+        "descricao": descricao,
+        "moeda": moeda,
+        "valor": valorMensal
+      }
+
+      beneficios.push(beneficioPotencial);
+    }
+
+    for (let i = 0; i < numeroBeneficiosQualitativos; i++) {
+      descricao = document.getElementById(`beneficiosQualitativos${i}`).value;
+
+      let beneficioQualitativo = {
+        "tipoBeneficio": "QUALITATIVO",
+        "descricao": descricao,
+      }
+
+      beneficios.push(beneficioQualitativo);
+    }
+
+    let data2 = {
+      "tituloDemanda": data.tituloDemanda,
+      "objetivo": data.objetivo,
+      "situacaoAtual": data.situacaoAtual,
+      "frequenciaUso": frequenciaUso,
+      "centroCustoDemanda": data.centroCustoDemanda,
+      "beneficiosDemanda": beneficios,
+      "usuario": {
+        "idUsuario": data.usuario.idUsuario
+      }
+    }
+
+    setData(data2)
+  }
+
+
+
+  function criarDemanda() {
+    console.log(data);
+
+    // const body = {
+    //   "tituloDemanda": titulo,
+    //   "objetivo": objetivo,
+    //   "situacaoAtual": situacaoAtual,
+    //   "frequenciaUso": frequenciaUso,
+    //   "score": 1,
+    //   "centroCustoDemanda": cc,
+    //   "beneficiosDemanda": [
+    //     {
+    //       "tipoBeneficio": "QUALITATIVO",
+    //       "descricao": "dá bastante dinheiro pq sim"
+    //     },
+    //     {
+    //       "tipoBeneficio": "REAL",
+    //       "descricao": "é bom joia",
+    //       "moeda": "EURO",
+    //       "valor": 87
+    //     }
+    //   ],
+    //   "usuario": {
+    //     "idUsuario": idUsuario
+    //   }
+    // }
+
+  }
+
 
   return (
     <BoxConteudo>
@@ -105,8 +239,8 @@ export default function CriacaoDemanda(props: {
 
         {valor == 0 && (
           <>
-            <InformacaoGeral proposta={false} />
-                          <BoxContainerBotoes>
+            <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} />
+            <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
                 variant="outlined"
@@ -122,6 +256,7 @@ export default function CriacaoDemanda(props: {
                 endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
                 onClick={() => {
                   setValor(1);
+                  partUmDemanda();
                 }}
               >
                 Proximo
@@ -132,7 +267,14 @@ export default function CriacaoDemanda(props: {
 
         {valor == 1 && (
           <>
-            <BeneficiosDemanda rascunho={props.rascunho} proposta={false}/>
+            <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
+              numeroBeneficiosReais={numeroBeneficiosReais}
+              numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
+              numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
+              setNumeroBeneficiosReais={setNumeroBeneficiosReais}
+              setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
+              setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
+            />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
@@ -170,6 +312,7 @@ export default function CriacaoDemanda(props: {
                   onClick={() => {
                     setValor(2);
                     setSegundo(true);
+                    partDoisDemanda();
                   }}
                 >
                   Proximo
@@ -181,7 +324,7 @@ export default function CriacaoDemanda(props: {
 
         {valor == 2 && (
           <>
-            <InputAnexos rascunho={props.rascunho} proposta={false}/>
+            <InputAnexos rascunho={props.rascunho} proposta={false} />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
@@ -216,6 +359,7 @@ export default function CriacaoDemanda(props: {
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
+                  onClick={() => criarDemanda()}
                 >
                   Enviar
                 </BotaoPrimario>
