@@ -8,13 +8,13 @@ const styledTypography = styled(Typography)
 
 export const BoxHeader = styledBox({
     backgroundColor: "rgb(255,255,255, 0.9)",
+    boxSizing: "border-box",
     display: "flex",
     justifyContent: "space-between",
     position: "fixed",
     padding: "19px 24px 24px 24px",
     top: "7.2vh",
     width: "96.5%",
-    boxSizing: "border-box",
     zIndex: 10
 })
 
@@ -60,6 +60,7 @@ export const BoxAviso = styledBox({
 })
 
 export const TypographyTitulo = styledTypography({
+    color: "#595959",
     marginBottom: "20px"
 })
 

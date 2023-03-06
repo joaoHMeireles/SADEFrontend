@@ -5,13 +5,12 @@ import { TableCellEstilzada, TableContainerEstilizado, TableRowEstilizada } from
 export default function TabelaBeneficios(props: { atributos: any[], title: string }) {
 
     const beneficios = props.atributos.map((beneficio: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
-        const valor = "R$" + beneficio.valor
 
         return (
             <TableRowEstilizada key={index}>
                 <TableCellEstilzada align='center' >{beneficio.descricao}</TableCellEstilzada>
                 <TableCellEstilzada align='center'>{beneficio.moeda}</TableCellEstilzada>
-                <TableCellEstilzada align='center'>{valor}</TableCellEstilzada>
+                <TableCellEstilzada align='center'>{beneficio.valor}</TableCellEstilzada>
             </TableRowEstilizada>
         )
     })

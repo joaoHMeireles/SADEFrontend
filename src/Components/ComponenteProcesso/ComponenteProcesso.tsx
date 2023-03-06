@@ -19,6 +19,7 @@ import {
   UltimaListaTypography,
 } from "./ComponenteProcesso.styles";
 import { GlobalStyles } from "@mui/styled-engine";
+import { getNome } from "../../utils";
 
 export default function ComponenteProcesso(props: {
   grid: boolean;
@@ -32,6 +33,7 @@ export default function ComponenteProcesso(props: {
   setPropostaSelecionada?: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const componente = props.atributosProcesso;
+  
   const paginaAtual = localStorage.getItem("PAGINATUAL");
   let corComponente,
     tituloToolTip,
@@ -88,6 +90,7 @@ export default function ComponenteProcesso(props: {
   );
 
   function verProcesso() {
+    setProcesso()
     location.href = nomeTipoLink;
   }
 
@@ -160,20 +163,20 @@ function GridComponent(props: ComponentProps) {
           </Tooltip>
           <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
             <GridTypography variant="h6">
-              {props.componente.titulo}
+              {props.componente.tituloDemanda}
             </GridTypography>
             <GridTypography variant="subtitle1">
-              <span>Solicitante:</span> {props.componente.solicitante}
+              <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
             </GridTypography>
             <GridTypography variant="subtitle1">
               <span>Score:</span> {props.componente.score}
             </GridTypography>
             <GridTypography variant="subtitle1">
-              <span>Status:</span> {getNome(props.componente.status)}
+              <span>Status:</span> {getNome(props.componente.statusDemanda)}
             </GridTypography>
             <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
               <BoxColecaoComponente>
-                <span>Tamanho:</span> {props.componente.tamanho}
+                <span>Frequencia de uso:</span> {props.componente.frequenciaUso}
               </BoxColecaoComponente>
               <GridLinkTypograpfy variant="body2">
                 {!props.rascunho ? (
@@ -201,7 +204,7 @@ function GridComponent(props: ComponentProps) {
           <GridComponenteProcesso item xs={11}>
             <GridBoxTituloRadio>
               <GridTypography variant="h6">
-                {props.componente.titulo}
+                {props.componente.tituloDemanda}
               </GridTypography>
               <Radio
                 checked={props.selecionado}
@@ -217,13 +220,13 @@ function GridComponent(props: ComponentProps) {
               />
             </GridBoxTituloRadio>
             <GridTypography variant="subtitle1">
-              <span>Solicitante:</span> {props.componente.solicitante}
+              <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
             </GridTypography>
             <GridTypography variant="subtitle1">
               <span>Score:</span> {props.componente.score}
             </GridTypography>
             <GridTypography variant="subtitle1">
-              <span>Status:</span> {getNome(props.componente.status)}
+              <span>Status:</span> {getNome(props.componente.statusDemanda)}
             </GridTypography>
             <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
               <BoxColecaoComponente>
@@ -256,13 +259,15 @@ function GridComponent(props: ComponentProps) {
             <GridComponenteProcesso item xs={11}>
               <GridBoxTituloRadio>
                 <GridTypography variant="h6">
-                  {props.componente.titulo}
+                  {props.componente.tituloDemanda}
                 </GridTypography>
                 <Checkbox
                   id="checkbox"
                   checked={props.isChecked}
                   onChange={(e) => {
-                    props.setIsChecked(e.target.checked);
+                    if (props.setIsChecked) {
+                      props.setIsChecked(e.target.checked);
+                    }
                   }}
                   onClick={(e: any) => {
                     const card = document.getElementById(
@@ -276,23 +281,25 @@ function GridComponent(props: ComponentProps) {
 
                       props.propostas?.push(props.componente);
                     } else {
-                      props.setPropostas((propostas) => {
-                        return propostas.filter(
-                          (proposta) => proposta.id !== props.componente.id
-                        );
-                      });
+                      if (props.setPropostas) {
+                        props.setPropostas((propostas) => {
+                          return propostas.filter(
+                            (proposta) => proposta.id !== props.componente.id
+                          );
+                        });
+                      }
                     }
                   }}
                 />
               </GridBoxTituloRadio>
               <GridTypography variant="subtitle1">
-                <span>Solicitante:</span> {props.componente.solicitante}
+                <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
               </GridTypography>
               <GridTypography variant="subtitle1">
                 <span>Score:</span> {props.componente.score}
               </GridTypography>
               <GridTypography variant="subtitle1">
-                <span>Status:</span> {getNome(props.componente.status)}
+                <span>Status:</span> {getNome(props.componente.statusDemanda)}
               </GridTypography>
               <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
                 <BoxColecaoComponente>
@@ -332,16 +339,16 @@ function ListComponent(props: ComponentProps) {
           </Tooltip>
           <ListaComponenteProcesso item xs={11.7} onClick={props.verProcesso}>
             <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
-              {props.componente.id} - {props.componente.titulo}
+              {props.componente.id} - {props.componente.tituloDemanda}
             </ListaTypography>
             <ListaTypography variant="subtitle2">
-              <span>Solicitante:</span> {props.componente.solicitante}
+              <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
             </ListaTypography>
             <ListaTypography variant="subtitle2" sx={{ maxWidth: "7.5vw" }}>
               <span>Score:</span> {props.componente.score}
             </ListaTypography>
             <ListaTypography variant="subtitle2">
-              <span>Status:</span> {getNome(props.componente.status)}
+              <span>Status:</span> {getNome(props.componente.statusDemanda)}
             </ListaTypography>
             <UltimaListaTypography variant="body2" sx={{ maxWidth: "10vw" }}>
               {!props.rascunho ? (
@@ -367,16 +374,16 @@ function ListComponent(props: ComponentProps) {
           </Tooltip>
           <ListaComponenteProcesso item xs={11.7}>
             <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
-              {props.componente.id} - {props.componente.titulo}
+              {props.componente.id} - {props.componente.tituloDemanda}
             </ListaTypography>
             <ListaTypography variant="subtitle2">
-              <span>Solicitante:</span> {props.componente.solicitante}
+              <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
             </ListaTypography>
             <ListaTypography variant="subtitle2" sx={{ maxWidth: "7.5vw" }}>
               <span>Score:</span> {props.componente.score}
             </ListaTypography>
             <ListaTypography variant="subtitle2">
-              <span>Status:</span> {getNome(props.componente.status)}
+              <span>Status:</span> {getNome(props.componente.statusDemanda)}
             </ListaTypography>
             <ListaTypography variant="subtitle2">
               {!props.rascunho ? (
@@ -418,16 +425,16 @@ function ListComponent(props: ComponentProps) {
             </Tooltip>
             <ListaComponenteProcesso item xs={11.7}>
               <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
-                {props.componente.id} - {props.componente.titulo}
+                {props.componente.id} - {props.componente.tituloDemanda}
               </ListaTypography>
               <ListaTypography variant="subtitle2">
-                <span>Solicitante:</span> {props.componente.solicitante}
+                <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
               </ListaTypography>
               <ListaTypography variant="subtitle2" sx={{ maxWidth: "7.5vw" }}>
                 <span>Score:</span> {props.componente.score}
               </ListaTypography>
               <ListaTypography variant="subtitle2">
-                <span>Status:</span> {getNome(props.componente.status)}
+                <span>Status:</span> {getNome(props.componente.statusDemanda)}
               </ListaTypography>
               <ListaTypography variant="subtitle2">
                 {!props.rascunho ? (
@@ -467,23 +474,7 @@ function ListComponent(props: ComponentProps) {
   );
 }
 
-/**
- * Função que transforma o nome de um status do banco para uma conversão mais compreensível
- *
- * @param status
- * @returns
- */
-function getNome(status: string) {
-  const nomeStatus = {
-    Backlog: "Aguardando revisão",
-    Assesment: "Em planejamento",
-    BusinessCase: "Em planejamento demorado",
-    Canceled: "Cancelado",
-    ToDo: "A fazer",
-  };
 
-  return (nomeStatus as any)[status];
-}
 
 /**
  * Interface base para as propriedados de um Grid ou List Component
@@ -498,7 +489,7 @@ interface ComponentProps {
   proposta?: boolean;
   pauta?: boolean;
   propostas?: any[];
-  setPropostas?: React.Dispatch<React.SetStateAction<Array<Object>>>;
+  setPropostas?: React.Dispatch<React.SetStateAction<Array<any>>>;
   selecionado?: boolean;
   setSelecionado?: React.Dispatch<React.SetStateAction<number>>;
   propostaSelecionada?: number;

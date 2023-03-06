@@ -1,6 +1,6 @@
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getNomeComponente, getCorStatus, getCorTipo } from "../../utils";
+import { getNomeComponente, getCorStatus, getCorTipo, getBeneficiosPorTipo, getNome } from "../../utils";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Toolbar from "../../Components/Toolbar/Toolbar";
 import TabelaBeneficios from "../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios";
@@ -20,6 +20,7 @@ import {
   FormHelperText,
   Snackbar,
   Alert,
+  Divider,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
@@ -28,6 +29,8 @@ import {
   BoxBotoes,
   BoxHeader,
   GridPequenosAtributos,
+  TypographyTexto,
+  TypographyTitulo,
   TypographyTituloAtributo,
 } from "../TelaProcesso/TelaProcesso.styles";
 import {
@@ -309,13 +312,15 @@ function ContainerColecaoProcesso(props: {
     informacaoColecaoProcesso.dataReuniao
   ).toLocaleDateString();
 
+  // console.log(informacaoColecaoProcesso);
+
   return (
     <GridContainerColecao container spacing={2}>
       <Grid item xs={12}>
         <GridContainerHeader container>
           <GridTitulo item xs={10}>
             <Typography variant="h4">
-              {informacaoColecaoProcesso.comissao}
+              {informacaoColecaoProcesso.tituloReuniao}
             </Typography>
           </GridTitulo>
           <Grid item xs={2}>
@@ -331,6 +336,7 @@ function ContainerColecaoProcesso(props: {
       </Grid>
       <Propostas
         listaPropostas={informacaoColecaoProcesso.propostas}
+        listaPropostasAnteriores={informacaoColecaoProcesso.propostasPauta}
         tipoColecao={informacaoColecaoProcesso.tipo}
         avaliandoProcesso={props.avaliandoProcesso}
         verificacaoInputs={props.verificacaoInputs}
@@ -358,6 +364,7 @@ function ContainerColecaoProcesso(props: {
 
 function Propostas(props: {
   listaPropostas: [];
+  listaPropostasAnteriores?: any[];
   tipoColecao: string;
   avaliandoProcesso: boolean;
   verificacaoInputs: boolean[];
@@ -366,11 +373,24 @@ function Propostas(props: {
   const location = useLocation().pathname;
   const linkProposta = location + "/proposal";
 
-  const propostas = props.listaPropostas.map((proposta: any, index: number) => {
+  const propostas = props.listaPropostas.map((decisaoProposta: any, index: number) => {
+    let propostaAnteriorEquivalente = null
+
+    if (props.listaPropostasAnteriores) {
+      for (let propostaAnterior of props.listaPropostasAnteriores) {
+        if (propostaAnterior.proposta.idProposta == decisaoProposta.proposta.idProposta) {
+          propostaAnteriorEquivalente = propostaAnterior
+        }
+      }
+    }
+
+
+
     return (
       <Proposta
         key={index}
-        proposta={proposta}
+        decisaoProposta={decisaoProposta}
+        propostaAnterior={propostaAnteriorEquivalente}
         linkProposta={linkProposta}
         eUmaPauta={eUmaPauta}
         index={index}
@@ -384,7 +404,8 @@ function Propostas(props: {
 }
 
 export function Proposta(props: {
-  proposta: any;
+  decisaoProposta: any;
+  propostaAnterior?: any;
   linkProposta: string;
   eUmaPauta: boolean;
   index: number;
@@ -403,42 +424,95 @@ export function Proposta(props: {
     helperText: "",
   });
   const verificacaoInputs = props.verificacaoInputs;
-  const proposta = props.proposta;
+  const decisaoProposta = props.decisaoProposta;
   const forumEscolhido = props.eUmaPauta ? "comissão" : "direção geral";
+  const beneficiosReais = getBeneficiosPorTipo(decisaoProposta.proposta.demanda.beneficiosDemanda, "REAL")
+  const beneficioPotenciais = getBeneficiosPorTipo(decisaoProposta.proposta.demanda.beneficiosDemanda, "POTENCIAL")
+
+  console.log(props.propostaAnterior);
+
 
   const conteudoPropostaInicio = (
     <>
-      <GridPequenosAtributos item xs={6}>
-        <TypographyTituloAtributo variant="body1">
-          Solicitante:
-        </TypographyTituloAtributo>
-        <TypographyTextoColecao variant="body1">
-          {proposta.solicitante}
-        </TypographyTextoColecao>
-      </GridPequenosAtributos>
-      <Grid item xs={12}>
-        <TabelaBeneficios
-          title="Benefícios reais"
-          atributos={proposta.beneficiosReais}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TabelaBeneficios
-          title="Benefícios potenciais"
-          atributos={proposta.beneficiosPotenciais}
-        />
-      </Grid>
-      {proposta.tabelasCusto && (
-        <Grid item xs={12}>
-          <TabelasCusto tabelasCusto={proposta.tabelasCusto} />
+      <Grid item>
+        <Grid container >
+          <TypographyTitulo variant='h5'>
+            Informações Gerais
+          </TypographyTitulo>
+          <GridPequenosAtributos item xs={6}>
+            <TypographyTituloAtributo variant="body1">
+              Solicitante:
+            </TypographyTituloAtributo>
+            <TypographyTextoColecao variant="body1">
+              {decisaoProposta.proposta.demanda.usuario.nomeUsuario}
+            </TypographyTextoColecao>
+          </GridPequenosAtributos>
         </Grid>
-      )}
+      </Grid>
+      {
+        beneficiosReais.length != 0 &&
+        <Grid item xs={12}>
+          <TabelaBeneficios
+            title="Benefícios reais"
+            atributos={beneficiosReais}
+          />
+        </Grid>
+      }
+      {
+        beneficioPotenciais.length != 0 &&
+        <Grid item xs={12}>
+          <TabelaBeneficios
+            title="Benefícios potenciais"
+            atributos={beneficioPotenciais}
+          />
+        </Grid>
+      }
+      {
+        decisaoProposta.proposta.tabelasCustoProposta && (
+          <Grid item xs={12}>
+            <TabelasCusto tabelasCusto={decisaoProposta.proposta.tabelasCustoProposta} />
+          </Grid>
+        )
+      }
+      {!props.eUmaPauta &&
+        <Grid item>
+          <Divider />
+          <Grid container xs={12} sx={{ marginY: "8px" }} spacing={1}>
+            <Grid item xs={12}>
+              <TypographyTitulo variant='h5'>
+                Informações de Avaliação do Fórum
+              </TypographyTitulo>
+            </Grid>
+            <GridPequenosAtributos item xs={6}>
+              <TypographyTituloAtributo variant='body1'>
+                Estará em pauta Publicada :
+              </TypographyTituloAtributo>
+              <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+                {props.propostaAnterior.ataPublicada ? "Sim" : "Não"}
+              </TypographyTexto>
+            </GridPequenosAtributos>
+            <GridPequenosAtributos item xs={6}>
+              <TypographyTituloAtributo variant='body1'>
+                Status escolhido:
+              </TypographyTituloAtributo>
+              <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+                {getNome(props.propostaAnterior.statusDemandaComissao)}
+              </TypographyTexto>
+            </GridPequenosAtributos>
+            <Grid item>
+              <TypographyTexto variant='body1' >
+                <b>Comentário :</b>   {props.propostaAnterior.comentario}
+              </TypographyTexto>
+            </Grid>
+          </Grid>
+        </Grid>
+      }
       <Grid item xs={12}>
         <GridLinkTypograpfy variant="body2" width="auto !important">
           <Link
             to={props.linkProposta}
             onClick={() => {
-              setProposta(proposta);
+              setProposta(decisaoProposta.proposta);
             }}
           >
             Ver mais
@@ -623,10 +697,10 @@ export function Proposta(props: {
     <Grid
       item
       xs={12}
-      key={proposta.id}
+      key={decisaoProposta.id}
       sx={{ backgroundColor: "transparent" }}
     >
-      <CardProposta cor={getCorStatus(proposta.status)}>
+      <CardProposta cor={getCorStatus(decisaoProposta.proposta.demanda.statusDemanda)}>
         <AccordionProposta {...expanded}>
           <AccordionSummary
             onClick={mudarAcordeon}
@@ -635,9 +709,11 @@ export function Proposta(props: {
             id="panel1a-header"
           >
             <Typography variant="h5" sx={{ color: "#595959" }}>
-              {proposta.titulo}
+              {decisaoProposta.proposta.demanda.tituloDemanda}
             </Typography>
+
           </AccordionSummary>
+          <Divider />
           <AccordionDetails>
             <Grid container spacing={2}>
               {!props.avaliandoProcesso
@@ -648,33 +724,5 @@ export function Proposta(props: {
         </AccordionProposta>
       </CardProposta>
     </Grid>
-    // <Grid item xs={12} key={proposta.id} sx={{ backgroundColor: "transparent" }}>
-    //     <GridProposta container >
-    //         <Grid item xs={0.2}>
-    //             <BoxCorStatus sx={{ backgroundColor: getCorStatus(proposta.status) }} ></BoxCorStatus>
-    //         </Grid>
-    //         <Grid item xs={11.8} borderRadius="0 10px 10px 0" padding="15px">
-    //             <AccordionProposta {...expanded} >
-    //                 <AccordionSummary
-    //                     onClick={mudarAcordeon}
-    //                     expandIcon={<ExpandMoreIcon />}
-    //                     aria-controls="panel1a-content"
-    //                     id="panel1a-header"
-    //                 >
-    //                     <Typography variant="h5" sx={{ color: "#595959" }}>{proposta.titulo}</Typography>
-    //                 </AccordionSummary>
-    //                 <AccordionDetails>
-    //                     <Grid container spacing={2}>
-    //                         {!props.avaliandoProcesso ?
-    //                             conteudoPropostaInicio
-    //                             :
-    //                             conteudoPropostaAvaliacao
-    //                         }
-    //                     </Grid>
-    //                 </AccordionDetails>
-    //             </AccordionProposta>
-    //         </Grid>
-    //     </GridProposta>
-    // </Grid>
   );
 }

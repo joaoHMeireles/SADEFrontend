@@ -4,7 +4,7 @@ const styledBox = styled(Box)
 
 export const BoxTabelaCusto = styledBox({
     display: 'flex',
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     marginBottom: "30px",
     minWidth: "40vw",
     width: "auto"

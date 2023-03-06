@@ -1,5 +1,5 @@
 import { Box, Grid, useMediaQuery } from "@mui/material";
-import { BoxContainer, BoxConteudo } from "../../Pages/App.styles";
+import { BoxContainer } from "../../Pages/App.styles";
 import ComponenteProcesso from "../ComponenteProcesso/ComponenteProcesso";
 import ComponenteColecaoProcesso from "../ComponenteProcesso/ComponenteColecaoProcesso/ComponenteColecaoProcesso";
 
@@ -16,7 +16,7 @@ export default function CardsProcesso(props: {
 }) {
   const matches = useMediaQuery("(max-width:1100px)");
 
-  const componentesProcessos = props.listaComponents.map((processo: any) => {
+  const componentesProcessos = props.listaComponents.map((processo: any, index: number) => {
     let componente;
     if (!processo.propostas) {
       componente = (
@@ -42,7 +42,7 @@ export default function CardsProcesso(props: {
     }
 
     return (
-      <Grid key={processo.id} item xs={props.grid ? (!matches ? 4 : 6) : 12}>
+      <Grid key={index} item xs={props.grid ? (!matches ? 4 : 6) : 12}>
         <BoxContainer>{componente}</BoxContainer>
       </Grid>
     );
