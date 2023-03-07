@@ -22,6 +22,9 @@ import {
   BoxBotoesPriSec,
 } from "./CriacaoDemanda.styles";
 import api from "../../api/api";
+import jsPDF from "jspdf";
+
+import EsqueletoPDFVersaoDemanda from "../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda";
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
@@ -29,8 +32,9 @@ export default function CriacaoDemanda(props: {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
-  const [data, setData] = useState<Object>()
-  const [files, setFiles] = useState([]);
+  const [data, setData] = useState<any>()
+  const [files, setFiles] = useState<any>([]);
+  const [pdfDemanda, setPDFDemanda] = useState<any>();
 
   const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
@@ -66,6 +70,14 @@ export default function CriacaoDemanda(props: {
     }
   }, [valor]);
 
+  useEffect(() => {
+    if (pdfDemanda == null || pdfDemanda == undefined) {
+      return
+    }
+
+    criarDemanda()
+  }, [pdfDemanda])
+
   function getIdByAtributo(atributo: string) {
     const idsInputsAtributo = {
       titulo: "titulo",
@@ -87,9 +99,9 @@ export default function CriacaoDemanda(props: {
   }
 
   function partUmDemanda() {
-    const titulo = document.getElementById("titulo").value;
-    const situacaoAtual = document.getElementById("situacaoAtual").value;
-    const objetivo = document.getElementById("objetivo").value;
+    const titulo = document.getElementById("titulo") as HTMLInputElement;
+    const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
+    const objetivo = document.getElementById("objetivo") as HTMLInputElement;
 
     const cc = [];
 
@@ -104,9 +116,9 @@ export default function CriacaoDemanda(props: {
     const idUsuario = localStorage.getItem("IDUSUARIO");
 
     let data = {
-      "tituloDemanda": titulo,
-      "objetivo": objetivo,
-      "situacaoAtual": situacaoAtual,
+      "tituloDemanda": titulo.value,
+      "objetivo": objetivo.value,
+      "situacaoAtual": situacaoAtual.value,
       "centroCustoDemanda": cc,
       "usuario": {
         "idUsuario": idUsuario
@@ -117,7 +129,7 @@ export default function CriacaoDemanda(props: {
   }
 
   function partDoisDemanda() {
-    const frequenciaUso = document.getElementById("frequenciaUso").value;
+    const frequenciaUso = document.getElementById("frequenciaUso") as HTMLInputElement;
 
     let valorMensal;
     let moeda;
@@ -127,51 +139,59 @@ export default function CriacaoDemanda(props: {
 
 
     for (let i = 0; i < numeroBeneficiosReais; i++) {
-      valorMensal = document.getElementById(`valorMensalReal${i}`).value;
-      moeda = document.getElementById(`moedaReal${i}`).value;
-      descricao = document.getElementById(`descricaoReal${i}`).value;
+      valorMensal = document.getElementById(`valorMensalReal${i}`) as HTMLInputElement;
+      moeda = document.getElementById(`moedaReal${i}`) as HTMLInputElement;
+      descricao = document.getElementById(`descricaoReal${i}`) as HTMLInputElement;
 
       let beneficioReal = {
         "tipoBeneficio": "REAL",
-        "descricao": descricao,
-        "moeda": moeda,
-        "valor": valorMensal
+        "descricao": descricao.value,
+        "moeda": moeda.value,
+        "valor": valorMensal.value
       }
 
-      beneficios.push(beneficioReal);
+      if (numeroBeneficiosReais > 0 && valorMensal.value && moeda.value && descricao.value) {
+        beneficios.push(beneficioReal);
+      }
+
     }
 
     for (let i = 0; i < numeroBeneficiosPotenciais; i++) {
-      valorMensal = document.getElementById(`valorMensalPotencial${i}`).value;
-      moeda = document.getElementById(`moedaPotencial${i}`).value;
-      descricao = document.getElementById(`descricaoPotencial${i}`).value;
+      valorMensal = document.getElementById(`valorMensalPotencial${i}`) as HTMLInputElement;
+      moeda = document.getElementById(`moedaPotencial${i}`) as HTMLInputElement;
+      descricao = document.getElementById(`descricaoPotencial${i}`) as HTMLInputElement;
 
       let beneficioPotencial = {
         "tipoBeneficio": "POTENCIAL",
-        "descricao": descricao,
-        "moeda": moeda,
-        "valor": valorMensal
+        "descricao": descricao.value,
+        "moeda": moeda.value,
+        "valor": valorMensal.value
       }
 
-      beneficios.push(beneficioPotencial);
+      if (numeroBeneficiosReais > 0 && valorMensal.value && moeda.value && descricao.value) {
+        beneficios.push(beneficioPotencial);
+      }
     }
 
     for (let i = 0; i < numeroBeneficiosQualitativos; i++) {
-      descricao = document.getElementById(`beneficiosQualitativos${i}`).value;
+      descricao = document.getElementById(`beneficiosQualitativos${i}`) as HTMLInputElement;
 
       let beneficioQualitativo = {
         "tipoBeneficio": "QUALITATIVO",
-        "descricao": descricao,
+        "descricao": descricao.value,
       }
 
-      beneficios.push(beneficioQualitativo);
+      if (numeroBeneficiosReais > 0 && descricao.value) {
+        beneficios.push(beneficioQualitativo);
+      }
     }
 
     let data2 = {
       "tituloDemanda": data.tituloDemanda,
       "objetivo": data.objetivo,
       "situacaoAtual": data.situacaoAtual,
-      "frequenciaUso": frequenciaUso,
+      "frequenciaUso": frequenciaUso.value,
+      "score": 1,
       "centroCustoDemanda": data.centroCustoDemanda,
       "beneficiosDemanda": beneficios,
       "usuario": {
@@ -182,6 +202,16 @@ export default function CriacaoDemanda(props: {
     setData(data2)
   }
 
+  function gerarPDFDemanda() {
+    const doc = new jsPDF()
+    const pdf = document.getElementById("BOX") as HTMLElement
+
+    doc.html(pdf)
+    const pdfArquivo = doc.output("blob")
+
+    setPDFDemanda(pdfArquivo)
+  }
+
   function criarDemanda() {
     let formData = new FormData();
     if (files != undefined) {
@@ -189,12 +219,12 @@ export default function CriacaoDemanda(props: {
     }
 
     if (data != undefined) {
-      formData.append("demanda", data);
+      formData.append("demanda", JSON.stringify(data));
     }
 
-    
-
-
+    if (pdfDemanda != undefined) {
+      formData.append("pdfVersaoHistorico", pdfDemanda);
+    }
 
     // api.post("/sod/demanda", formData, {
     //   headers: {
@@ -354,12 +384,13 @@ export default function CriacaoDemanda(props: {
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
-                  onClick={() => criarDemanda()}
+                  onClick={() => gerarPDFDemanda()}
                 >
                   Enviar
                 </BotaoPrimario>
               </BoxBotoesPriSec>
             </BoxContainerBotoes>
+            <EsqueletoPDFVersaoDemanda demanda={data} />
           </>
         )}
       </ContainerGeral>

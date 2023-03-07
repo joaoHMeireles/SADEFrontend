@@ -220,7 +220,7 @@ export default function BeneficiosDemanda(props: {
           />
         </BoxIcones>
         <BoxFrequencia>
-          <TypographyLabels>Frequêcia de uso da solução:</TypographyLabels>
+          <TypographyLabels>Frequência de uso da solução:</TypographyLabels>
           <TextField
             value={frequencia}
             id="frequenciaUso"

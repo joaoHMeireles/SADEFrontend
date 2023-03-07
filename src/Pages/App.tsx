@@ -52,8 +52,8 @@ export default function App() {
                 <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} />} />
                 <Route path="/notifications" element={<Notificacoes />} />
                 <Route path="/chats" element={<Chats aberto={sidebarAberta} />}></Route>
-                {/* <Route path="/createdemand" element={<CriacaoDemanda rascunho={false}/>} /> */}
-                <Route path="/createdemand" element={<VisualizarCriacaoPDF />} />
+                <Route path="/createdemand" element={<CriacaoDemanda rascunho={false} />} />
+                {/* <Route path="/createdemand" element={<VisualizarCriacaoPDF />} /> */}
                 <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar} />} />
                 <Route path="/createagenda" element={<CriacaoPauta setFiltrar={setFiltrar} filtrar={filtrar} />} />
 

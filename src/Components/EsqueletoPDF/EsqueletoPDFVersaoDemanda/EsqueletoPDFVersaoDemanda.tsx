@@ -1,7 +1,6 @@
 import { BoxConteudo } from "../../../Pages/App.styles";
 import { PDFExport } from "@progress/kendo-react-pdf";
-import { renderToStream, renderToString } from "@react-pdf/renderer"
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 
 import {
@@ -19,386 +18,234 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import jsPDF from "jspdf";
+import api from "../../../api/api";
 
-interface Proposta {
-    tituloProposta: string,
-    itemProposta: ItemProposta,
-    responsavelNegocio: string,
-    chefeResponsavelTI: string
-}
+// interface Demanda {
+//     tituloProposta: string,
+//     itemProposta: ItemProposta,
+//     responsavelNegocio: string,
+//     chefeResponsavelTI: string
+// }
 
-interface ItemProposta {
-    titulo: string,
-    solicitante: string,
-    objetivo: string,
-    situacaoAtual: string,
-    escopo: string[],
-    naoFazParteEscopo: string,
-    alternativaAvaliadas: string,
-    abrangencia: string,
-    principaisRisco: string,
-    resultadosQualitativos: string[],
-    resultadosPotenciais: string[],
-    custosTotais: {
-        totalDespesas: number,
-        tabelas: ItensTabela[]
-    },
-    periodoExecucaoInicio: Date,
-    periodoExecucaoFim: Date,
-    payback: number,
-}
+// interface ItemProposta {
+//     titulo: string,
+//     solicitante: string,
+//     objetivo: string,
+//     situacaoAtual: string,
+//     escopo: string[],
+//     naoFazParteEscopo: string,
+//     alternativaAvaliadas: string,
+//     abrangencia: string,
+//     principaisRisco: string,
+//     resultadosQualitativos: string[],
+//     resultadosPotenciais: string[],
+//     custosTotais: {
+//         totalDespesas: number,
+//         tabelas: ItensTabela[]
+//     },
+//     periodoExecucaoInicio: Date,
+//     periodoExecucaoFim: Date,
+//     payback: number,
+// }
 
-interface ItensTabela {
-    centrosCusto:
-    {
-        nomeCentroCusto: string,
-        porcentagemDespesa: number
-    }[]
-    ,
-    linhastabela: LinhaTabela[],
-    temLicenca: boolean,
-    titulo: string
-}
+// interface ItensTabela {
+//     centrosCusto:
+//     {
+//         nomeCentroCusto: string,
+//         porcentagemDespesa: number
+//     }[]
+//     ,
+//     linhastabela: LinhaTabela[],
+//     temLicenca: boolean,
+//     titulo: string
+// }
 
-interface LinhaTabela {
-    quantidade: number,
-    tituloDespesa: string,
-    valorQuantidade: number
-}
+// interface LinhaTabela {
+//     quantidade: number,
+//     tituloDespesa: string,
+//     valorQuantidade: number
+// }
 
-const proposta: Proposta = {
-    tituloProposta: "Titulo Proposta",
-    itemProposta: {
-        titulo: "Titulo 01",
-        solicitante: "Tal",
-        objetivo: "Objetivo 01",
-        situacaoAtual: "Situacao atual",
-        escopo: ["Escopo 01", "Escopo 02", "Escopo 03"],
-        naoFazParteEscopo: "Nao faz parte escopo",
-        alternativaAvaliadas: "Alternativas avaliadas",
-        abrangencia: "Abrangencia 01",
-        principaisRisco: "Risco tal",
-        resultadosQualitativos: ["Resultados Qualitativos 01", "Resultados Qualitativos 02"],
-        resultadosPotenciais: ["Resultados Potenciais 01", "Resultados Potenciais 02"],
-        custosTotais: {
-            totalDespesas: 50000,
-            tabelas: [
-                {
-                    titulo: "Titulo Tabela 01",
-                    temLicenca: true,
-                    centrosCusto: [
-                        {
-                            nomeCentroCusto: "Centro Custo 01",
-                            porcentagemDespesa: 20
-                        },
-                        {
-                            nomeCentroCusto: "Centro Custo 02",
-                            porcentagemDespesa: 100
-                        },
-                    ],
-                    linhastabela: [
-                        {
-                            tituloDespesa: "Titulo Despesa 01",
-                            quantidade: 10,
-                            valorQuantidade: 100
-                        },
-                        {
-                            tituloDespesa: "Titulo Despesa 02",
-                            quantidade: 20,
-                            valorQuantidade: 200
-                        },
-                        {
-                            tituloDespesa: "Titulo Despesa 03",
-                            quantidade: 30,
-                            valorQuantidade: 300
-                        },
-                    ]
-                },
-                {
-                    titulo: "Titulo Tabela 02",
-                    temLicenca: false,
-                    centrosCusto: [
-                        {
-                            nomeCentroCusto: "Centro Custo 01",
-                            porcentagemDespesa: 20
-                        },
-                        {
-                            nomeCentroCusto: "Centro Custo 02",
-                            porcentagemDespesa: 100
-                        },
-                    ],
-                    linhastabela: [
-                        {
-                            tituloDespesa: "Titulo Despesa 01",
-                            quantidade: 10,
-                            valorQuantidade: 100
-                        },
-                        {
-                            tituloDespesa: "Titulo Despesa 02",
-                            quantidade: 20,
-                            valorQuantidade: 200
-                        },
-                        {
-                            tituloDespesa: "Titulo Despesa 03",
-                            quantidade: 30,
-                            valorQuantidade: 300
-                        },
-                    ]
-                }
-            ]
-        },
-        periodoExecucaoInicio: new Date(),
-        periodoExecucaoFim: new Date(),
-        payback: 4,
-    },
-    responsavelNegocio: "Tal",
-    chefeResponsavelTI: "Tal"
-}
+// const proposta: Proposta = {
+//     tituloProposta: "Titulo Proposta",
+//     itemProposta: {
+//         titulo: "Titulo 01",
+//         solicitante: "Tal",
+//         objetivo: "Objetivo 01",
+//         situacaoAtual: "Situacao atual",
+//         escopo: ["Escopo 01", "Escopo 02", "Escopo 03"],
+//         naoFazParteEscopo: "Nao faz parte escopo",
+//         alternativaAvaliadas: "Alternativas avaliadas",
+//         abrangencia: "Abrangencia 01",
+//         principaisRisco: "Risco tal",
+//         resultadosQualitativos: ["Resultados Qualitativos 01", "Resultados Qualitativos 02"],
+//         resultadosPotenciais: ["Resultados Potenciais 01", "Resultados Potenciais 02"],
+//         custosTotais: {
+//             totalDespesas: 50000,
+//             tabelas: [
+//                 {
+//                     titulo: "Titulo Tabela 01",
+//                     temLicenca: true,
+//                     centrosCusto: [
+//                         {
+//                             nomeCentroCusto: "Centro Custo 01",
+//                             porcentagemDespesa: 20
+//                         },
+//                         {
+//                             nomeCentroCusto: "Centro Custo 02",
+//                             porcentagemDespesa: 100
+//                         },
+//                     ],
+//                     linhastabela: [
+//                         {
+//                             tituloDespesa: "Titulo Despesa 01",
+//                             quantidade: 10,
+//                             valorQuantidade: 100
+//                         },
+//                         {
+//                             tituloDespesa: "Titulo Despesa 02",
+//                             quantidade: 20,
+//                             valorQuantidade: 200
+//                         },
+//                         {
+//                             tituloDespesa: "Titulo Despesa 03",
+//                             quantidade: 30,
+//                             valorQuantidade: 300
+//                         },
+//                     ]
+//                 },
+//                 {
+//                     titulo: "Titulo Tabela 02",
+//                     temLicenca: false,
+//                     centrosCusto: [
+//                         {
+//                             nomeCentroCusto: "Centro Custo 01",
+//                             porcentagemDespesa: 20
+//                         },
+//                         {
+//                             nomeCentroCusto: "Centro Custo 02",
+//                             porcentagemDespesa: 100
+//                         },
+//                     ],
+//                     linhastabela: [
+//                         {
+//                             tituloDespesa: "Titulo Despesa 01",
+//                             quantidade: 10,
+//                             valorQuantidade: 100
+//                         },
+//                         {
+//                             tituloDespesa: "Titulo Despesa 02",
+//                             quantidade: 20,
+//                             valorQuantidade: 200
+//                         },
+//                         {
+//                             tituloDespesa: "Titulo Despesa 03",
+//                             quantidade: 30,
+//                             valorQuantidade: 300
+//                         },
+//                     ]
+//                 }
+//             ]
+//         },
+//         periodoExecucaoInicio: new Date(),
+//         periodoExecucaoFim: new Date(),
+//         payback: 4,
+//     },
+//     responsavelNegocio: "Tal",
+//     chefeResponsavelTI: "Tal"
+// }
 
 
-export default function EsqueletoPDFVersaoDemanda() {
+export default function EsqueletoPDFVersaoDemanda(props: { demanda: any }) {
     const pdfCompoente = useRef<PDFExport>(null)
 
+    const [centroCustoDemanda, setCentroCustoDemanda] = useState<any[]>([]);
+
+    useEffect(() => {
+        for (let i = 0; i < props.demanda.centroCustoDemanda.length; i++) {
+            api.get(`/sod/centroCusto/${props.demanda.centroCustoDemanda[i].idCentroCusto}`).then((res) => {
+                centroCustoDemanda.push(res.data);
+                setCentroCustoDemanda(centroCustoDemanda);
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+    }, [])
+
     const exportPDFWithComponent = async () => {
-        const doc = new jsPDF()
-        const pdf = document.getElementById("BOX") as HTMLElement
-        
-
-        doc.html(pdf)
-        const bytes = doc.output("arraybuffer")
-
-        const pdfArquivo = new File([bytes], "Versão 1")
-        console.log(pdfArquivo);
-
-        
-        const doc2 = new jsPDF()
-        doc2.addFileToVFS("Versão 1", )
-        doc2.save()
-
+        if (pdfCompoente.current) {
+            pdfCompoente.current.save();
+        }
     };
 
-    const Proposta = (props: { proposta: Proposta }) => {
+    const Demanda = (props: { demanda: any }) => {
         return (
             <BoxPrincipal>
-                <ItensATA proposta={props.proposta} />
+                <ItensDemanda demanda={props.demanda} />
             </BoxPrincipal>
         )
     }
 
-    const ItensATA = (props: { proposta: Proposta }) => {
-        let index = 0;
+    const ItensDemanda = (props: { demanda: any }) => {
         return (
             <BoxItens>
-                <BoxTituloItens>
-                    <TypographyTitulos> {index + 1}. {props.proposta.itemProposta.titulo}</TypographyTitulos>
-                </BoxTituloItens>
                 <BoxObjetivo>
-                    <TypographyTextos>Solicitante: {props.proposta.itemProposta.solicitante}</TypographyTextos>
+                    <TypographyTextos>Objetivo: {props.demanda.objetivo}</TypographyTextos>
                 </BoxObjetivo>
                 <BoxObjetivo>
-                    <TypographyTextos>Objetivo: {props.proposta.itemProposta.objetivo} </TypographyTextos>
+                    <TypographyTextos>Situacao atual: {props.demanda.situacaoAtual}</TypographyTextos>
                 </BoxObjetivo>
                 <BoxObjetivo>
-                    <TypographyTextos>Situacao atual: {props.proposta.itemProposta.situacaoAtual}</TypographyTextos>
+                    <TypographyTextos>Frequencia de uso: {props.demanda.frequenciaUso}</TypographyTextos>
                 </BoxObjetivo>
                 <BoxObjetivo>
-                    <TypographyTextos>Escopo projeto: </TypographyTextos>
-                    <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
-                        {props.proposta.itemProposta.escopo.map((escopo: string, index: number) => {
-                            return (
-                                <li key={index} className="itensEscopoProjeto">{escopo}</li>
-                            )
-                        })}
-                    </ul>
+                    <TypographyTextos>Score: {props.demanda.score}</TypographyTextos>
                 </BoxObjetivo>
                 <BoxObjetivo>
-                    <TypographyTextos>Nao faz parte do Escopo do Projeto:{props.proposta.itemProposta.naoFazParteEscopo}</TypographyTextos>
+                    <TypographyTextos>Beneficios:</TypographyTextos>
+                    {props.demanda.beneficiosDemanda.map((beneficio: any) => {
+                        return (
+                            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginY: 2 }}>
+                                <TypographyTextos>{beneficio.tipoBeneficio}</TypographyTextos>
+                                <TypographyTextos>{beneficio.descricao}</TypographyTextos>
+                                <TypographyTextos>{beneficio.moeda}</TypographyTextos>
+                                <TypographyTextos>{beneficio.valor}</TypographyTextos>
+                            </Box>
+                        )
+                    })}
                 </BoxObjetivo>
                 <BoxObjetivo>
-                    <TypographyTextos>Alternativas avaliadas: {props.proposta.itemProposta.alternativaAvaliadas}</TypographyTextos>
-                </BoxObjetivo>
-                <BoxObjetivo>
-                    <TypographyTextos>Abrangencia do Projeto:{props.proposta.itemProposta.abrangencia}</TypographyTextos>
-                </BoxObjetivo>
-                <BoxObjetivo>
-                    <TypographyTextos>Principais riscos: {props.proposta.itemProposta.principaisRisco}</TypographyTextos>
-                </BoxObjetivo>
-                <BoxObjetivo>
-                    <TypographyTextos>Resultados Esperados (Qualitativos):  </TypographyTextos>
-                    <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
-                        {props.proposta.itemProposta.resultadosQualitativos.map((resultadosQualitativos: string, index: number) => {
-                            return (<li key={index}>{resultadosQualitativos}</li>)
-                        })}
-                    </ul>
-                </BoxObjetivo>
-                <BoxObjetivo>
-                    <TypographyTextos>Beneficios potencias: </TypographyTextos>
-                    <ul style={{ width: "50%", fontSize: "10px", marginLeft: 15 }}>
-                        {props.proposta.itemProposta.resultadosPotenciais.map((resultadosPotenciais: string, index: number) => {
-                            return (<li key={index}>{resultadosPotenciais}</li>)
-                        })}
-                    </ul>
-                </BoxObjetivo>
-                <BoxObjetivo>
-                    <TypographyTextos> <b> Custos totais do projeto: R${props.proposta.itemProposta.custosTotais.totalDespesas}</b> </TypographyTextos>
-                    <TypographyTextos>Total despesas recursos externos (Desembolso): R${props.proposta.itemProposta.custosTotais.totalDespesas}</TypographyTextos>
-                </BoxObjetivo>
-                <CentrosCusto proposta={props.proposta.itemProposta} />
-                <BoxObjetivo>
-                    <TypographyTextos>Periodo de execucao: {props.proposta.itemProposta.periodoExecucaoInicio.toLocaleDateString()} a {props.proposta.itemProposta.periodoExecucaoFim.toLocaleDateString()}</TypographyTextos>
-                </BoxObjetivo>
-                <BoxObjetivo>
-                    <TypographyTextos>Payback: {props.proposta.itemProposta.payback} meses</TypographyTextos>
+                    <TypographyTextos>Centros de Custo: </TypographyTextos>
+                    <CentrosCusto demanda={props.demanda} />
                 </BoxObjetivo>
             </BoxItens>
         )
     }
 
-    const CentrosCusto = (props: { proposta: ItemProposta }) => {
+    const CentrosCusto = (props: { demanda: any }) => {
         return (
             <Box sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
-                {props.proposta.custosTotais.tabelas.map((tabela: ItensTabela) => {
-                    let totalEsfoco = 0;
-                    let valorTotal = 0;
-                    return (
-                        <>
-                            <Box sx={{ display: "flex", justifyContent: "flex", alignItems: "center" }}>
-                                <TableContainer component={Paper} sx={{ width: "50%", marginTop: 5 }}>
-                                    <Table>
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCellStyled align="center">Despesas (Desembolso)</TableCellStyled>
-                                                <TableCellStyled align="center">Esforco</TableCellStyled>
-                                                <TableCellStyled align="center">Valor total</TableCellStyled>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {tabela.linhastabela.map((linhaTabela: LinhaTabela) => {
-                                                totalEsfoco += linhaTabela.quantidade;
-                                                valorTotal += (linhaTabela.quantidade * linhaTabela.valorQuantidade);
-                                                return (
-                                                    <>
-                                                        <TableRow>
-                                                            <TableCellStyled align="center">{linhaTabela.tituloDespesa}</TableCellStyled>
-                                                            <TableCellStyled align="center">{linhaTabela.quantidade}</TableCellStyled>
-                                                            <TableCellStyled align="center">R$ {linhaTabela.quantidade * linhaTabela.valorQuantidade}</TableCellStyled>
-                                                        </TableRow>
-                                                    </>
-                                                )
-                                            })}
-                                            <TableRow>
-                                                <TableCellStyled align="center">Total despesas: </TableCellStyled>
-                                                <TableCellStyled align="center">{totalEsfoco}h</TableCellStyled>
-                                                <TableCellStyled align="center">R$ {valorTotal}</TableCellStyled>
-                                            </TableRow>
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                                <TableContainer>
-                                    <Table component={Paper} sx={{ width: "25%", marginLeft: 2, }}>
-                                        <TableHead>
-                                            <TableCellStyled align="center">CC Pagante</TableCellStyled>
-                                        </TableHead>
-                                        <TableBody>
-                                            <TableRow>
-                                                {tabela.centrosCusto.map((cc) => {
-                                                    return (
-                                                        <>
-                                                            <TableRow sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                                <TableCellStyled align="center">
-                                                                    {cc.porcentagemDespesa}%
-                                                                </TableCellStyled>
-                                                            </TableRow>
-                                                        </>
-                                                    )
-                                                })}
-                                            </TableRow>
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </Box>
-                            {tabela.temLicenca ?
-                                <>
-                                    <Box sx={{ display: "flex", justifyContent: "flex", alignItems: "center" }}>
-                                        <TableContainer component={Paper} sx={{ width: "50%", marginTop: 5 }}>
-                                            <Table>
-                                                <TableHead>
-                                                    <TableRow>
-                                                        <TableCellStyled align="center">Insvetimentos/recorrentes</TableCellStyled>
-                                                        <TableCellStyled align="center">Licencas</TableCellStyled>
-                                                        <TableCellStyled align="center">Valor total</TableCellStyled>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {tabela.linhastabela.map((linhaTabela: LinhaTabela) => {
-                                                        totalEsfoco += linhaTabela.quantidade;
-                                                        valorTotal += (linhaTabela.quantidade * linhaTabela.valorQuantidade);
-                                                        return (
-                                                            <>
-                                                                <TableRow>
-                                                                    <TableCellStyled align="center">{linhaTabela.tituloDespesa}</TableCellStyled>
-                                                                    <TableCellStyled align="center">{linhaTabela.quantidade}</TableCellStyled>
-                                                                    <TableCellStyled align="center">R$ {linhaTabela.quantidade * linhaTabela.valorQuantidade}</TableCellStyled>
-                                                                </TableRow>
-                                                            </>
-                                                        )
-                                                    })}
-                                                    <TableRow>
-                                                        <TableCellStyled align="center">Total despesas: </TableCellStyled>
-                                                        <TableCellStyled align="center">{totalEsfoco}h</TableCellStyled>
-                                                        <TableCellStyled align="center">R$ {valorTotal}</TableCellStyled>
-                                                    </TableRow>
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                        <TableContainer>
-                                            <Table component={Paper} sx={{ width: "25%", marginLeft: 2, }}>
-                                                <TableHead>
-                                                    <TableCellStyled align="center">CC Pagante</TableCellStyled>
-                                                </TableHead>
-                                                <TableBody>
-                                                    <TableRow>
-                                                        {tabela.centrosCusto.map((cc) => {
-                                                            return (
-                                                                <>
-                                                                    <TableRow sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                                        <TableCellStyled align="center">
-                                                                            {cc.porcentagemDespesa}%
-                                                                        </TableCellStyled>
-                                                                    </TableRow>
-                                                                </>
-                                                            )
-                                                        })}
-                                                    </TableRow>
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </Box>
-                                </>
-
-                                : ""
-                            }
-                        </>
-                    )
-                })}
+                <Box sx={{ display: "flex", justifyContent: "flex", alignItems: "center" }}>
+                    <TableContainer component={Paper} sx={{ width: "50%", marginTop: 5 }}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCellStyled align="center">Nome</TableCellStyled>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {centroCustoDemanda.map((centroCusto: any) => {
+                                    return (
+                                        <TableRow>
+                                            <TableCellStyled align="center">{centroCusto.nomeCentroCusto}</TableCellStyled>
+                                        </TableRow>
+                                    )
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Box>
             </Box>
-        )
-    }
-
-    const ParticipantesReuniao = (props: { proposta: Proposta }) => {
-        return (
-            <BoxGeralResponsaveis>
-                <>
-                    <BoxResponsaveis>
-                        <TypographyParticipantes>{props.proposta.responsavelNegocio}</TypographyParticipantes>
-                        <TypographyParticipantes>Responsavel Negocio</TypographyParticipantes>
-                    </BoxResponsaveis>
-                    <BoxResponsaveis>
-                        <TypographyParticipantes>{props.proposta.chefeResponsavelTI}</TypographyParticipantes>
-                        <TypographyParticipantes>Chefe Responsavel TI</TypographyParticipantes>
-                    </BoxResponsaveis>
-                </>
-            </BoxGeralResponsaveis >
         )
     }
 
@@ -408,7 +255,7 @@ export default function EsqueletoPDFVersaoDemanda() {
         );
     }
 
-    const Conteudo = () => (
+    return (
         <BoxConteudo>
             <div className="example-config">
                 <button
@@ -419,20 +266,16 @@ export default function EsqueletoPDFVersaoDemanda() {
             </div>
             <PDFExport forcePageBreak=".break" paperSize="A4" pageTemplate={PageTemplate} margin="2cm" ref={pdfCompoente}>
                 <BoxTitulo>
-                    <TypographyTituloATA variant="h6">{proposta.tituloProposta}</TypographyTituloATA>
+                    <TypographyTituloATA variant="h6">{props.demanda.tituloDemanda}</TypographyTituloATA>
                 </BoxTitulo>
-                <Proposta proposta={proposta} />
-                <ParticipantesReuniao proposta={proposta} />
+                <Demanda demanda={props.demanda} />
             </PDFExport>
-            <Box id="BOX" sx={{display: "none"}}>
+            <Box id="BOX" sx={{ display: "none" }}>
                 <BoxTitulo>
-                    <TypographyTituloATA variant="h6">{proposta.tituloProposta}</TypographyTituloATA>
+                    <TypographyTituloATA variant="h6">{props.demanda.tituloDemanda}</TypographyTituloATA>
                 </BoxTitulo>
-                <Proposta proposta={proposta} />
-                <ParticipantesReuniao proposta={proposta} />
+                <Demanda demanda={props.demanda} />
             </Box>
         </BoxConteudo >
-    );
-
-    return <Conteudo />
+    )
 }
