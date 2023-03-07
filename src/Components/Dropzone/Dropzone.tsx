@@ -15,12 +15,12 @@ type Anexos = {
   tipo: string;
 };
 
-
 export default function Dropzone(props: {
   rascunho: boolean;
   proposta: boolean;
+  files: any;
+  setFiles: React.Dispatch<React.SetStateAction<never[]>>;
 }) {
-  const [files, setFile] = useState([]);
   const [arquivos, setAquivos] = useState<Array<Anexos>>([]);
 
   useEffect(() => {
@@ -47,36 +47,36 @@ export default function Dropzone(props: {
       acceptedFiles,
     }));
 
-    if(file == undefined){
+    if (file == undefined) {
       return
     }
 
-    // files.push(file[0]["acceptedFiles"])
+    props.files.push(file[0]["acceptedFiles"])
 
-    setFile(files);
+    props.setFiles(props.files);
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-  function enviarProback() {
-    const formData = new FormData()
+  // function enviarProback() {
+  //   const formData = new FormData()
 
-    console.log(files);
+  //   console.log(files);
 
-    for (let i = 0; i < files.length; i++) {
-      // console.log(files[i]);
-      formData.append("files", files[i])
-    }
+  //   for (let i = 0; i < files.length; i++) {
+  //     // console.log(files[i]);
+  //     formData.append("files", files[i])
+  //   }
 
-    console.log(formData.getAll("files"));
+  //   console.log(formData.getAll("files"));
 
-    axios.post("http://localhost:8080/sod/demanda", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      }
-    }).then(response => console.log(response)).catch((err) => {console.log(err)});
+  //   axios.post("http://localhost:8080/sod/demanda", formData, {
+  //     headers: {
+  //       "Content-Type": "multipart/form-data",
+  //     }
+  //   }).then(response => console.log(response)).catch((err) => {console.log(err)});
 
-  }
+  // }
 
   return (
     <>
@@ -97,7 +97,8 @@ export default function Dropzone(props: {
           arquivos.map((e: Anexos) => {
             return <Arquivo icone={e.tipo} nome={e.nome} />;
           })}
-        {files.map((e, index) => {
+
+        {props.files.map((e: any, index: any) => {
           return (
             <Arquivo
               key={index}
@@ -107,7 +108,6 @@ export default function Dropzone(props: {
           );
         })}
       </BoxContainerUploadImagens>
-      <button onClick={enviarProback}> ir pro back</button>
     </>
   );
 }

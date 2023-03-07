@@ -23,17 +23,17 @@ export default function Inicio(props: {
   const [listaComponents, setListaComponents] = useState<any[]>([])
 
   useEffect(() => {
-    // api.get("/sod/demanda").then((response) => {
-    //   let listaDemandas: any[] = []
-    //   for(let demanda of response.data){
-    //     demanda.tipo = TipoComponenteProcesso.Demanda
-    //     listaDemandas.push(demanda)
-    //   }
-    //   setListaComponents(listaDemandas);
+    api.get("/sod/demanda").then((response) => {
+      let listaDemandas: any[] = []
+      for(let demanda of response.data){
+        demanda.tipo = TipoComponenteProcesso.Demanda
+        listaDemandas.push(demanda)
+      }
+      setListaComponents(listaDemandas);
       
-    // }).catch((err) => {
-    //   console.log(err);
-    // })
+    }).catch((err) => {
+      console.log(err);
+    })
     // api.get("/sod/proposta").then((response) => {
     //   let listaPropostas: any[] = []
     //   for(let proposta of response.data){
@@ -66,23 +66,24 @@ export default function Inicio(props: {
     // }).catch((err) => {
     //   console.log(err);
     // })
-    api.get("/sod/ata").then((response) => {
-      let listaATAs: any[] = []
-      for(let ata of response.data){
-        // console.log(ata);
-        
-        ata.propostas = ata.propostasAta
-        ata.propostasPauta = ata.pauta.propostasPauta
-        ata.tituloReuniao = ata.tituloReuniaoATA
 
-        ata.tipo = TipoColecaoComponenteProcesso.ATA
-        listaATAs.push(ata)
-      }
-      setListaComponents(listaATAs);
+    // api.get("/sod/ata").then((response) => {
+    //   let listaATAs: any[] = []
+    //   for(let ata of response.data){
+    //     // console.log(ata);
+        
+    //     ata.propostas = ata.propostasAta
+    //     ata.propostasPauta = ata.pauta.propostasPauta
+    //     ata.tituloReuniao = ata.tituloReuniaoATA
+
+    //     ata.tipo = TipoColecaoComponenteProcesso.ATA
+    //     listaATAs.push(ata)
+    //   }
+    //   setListaComponents(listaATAs);
       
-    }).catch((err) => {
-      console.log(err);
-    })
+    // }).catch((err) => {
+    //   console.log(err);
+    // })
   }, [])
 
   localStorage.setItem("PAGINATUAL", "home");

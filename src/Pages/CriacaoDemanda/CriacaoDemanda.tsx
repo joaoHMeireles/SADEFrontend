@@ -21,6 +21,7 @@ import {
   BoxBotaoTerciario,
   BoxBotoesPriSec,
 } from "./CriacaoDemanda.styles";
+import api from "../../api/api";
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
@@ -29,11 +30,11 @@ export default function CriacaoDemanda(props: {
   const [valor, setValor] = useState(0);
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
   const [data, setData] = useState<Object>()
+  const [files, setFiles] = useState([]);
 
   const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
-
 
 
   useEffect(() => {
@@ -181,35 +182,29 @@ export default function CriacaoDemanda(props: {
     setData(data2)
   }
 
-
-
   function criarDemanda() {
-    console.log(data);
+    let formData = new FormData();
+    if (files != undefined) {
+      formData.append("files", files);
+    }
 
-    // const body = {
-    //   "tituloDemanda": titulo,
-    //   "objetivo": objetivo,
-    //   "situacaoAtual": situacaoAtual,
-    //   "frequenciaUso": frequenciaUso,
-    //   "score": 1,
-    //   "centroCustoDemanda": cc,
-    //   "beneficiosDemanda": [
-    //     {
-    //       "tipoBeneficio": "QUALITATIVO",
-    //       "descricao": "dá bastante dinheiro pq sim"
-    //     },
-    //     {
-    //       "tipoBeneficio": "REAL",
-    //       "descricao": "é bom joia",
-    //       "moeda": "EURO",
-    //       "valor": 87
-    //     }
-    //   ],
-    //   "usuario": {
-    //     "idUsuario": idUsuario
+    if (data != undefined) {
+      formData.append("demanda", data);
+    }
+
+    
+
+
+
+    // api.post("/sod/demanda", formData, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
     //   }
-    // }
-
+    // }).then((res) => {
+    //   console.log(res);
+    // }).catch((err) => {
+    //   console.log(err);
+    // })
   }
 
 
@@ -324,7 +319,7 @@ export default function CriacaoDemanda(props: {
 
         {valor == 2 && (
           <>
-            <InputAnexos rascunho={props.rascunho} proposta={false} />
+            <InputAnexos rascunho={props.rascunho} proposta={false} files={files} setFiles={setFiles} />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario

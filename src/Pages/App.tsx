@@ -43,7 +43,7 @@ export default function App() {
       <ThemeProvider theme={MainTheme}>
         <Navbar aberto={sidebarAberta} setAberto={setSidebarAberta} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />
         <Box sx={{ marginLeft: sidebarAberta ? `${tamanhoSideBar}px` : 0, display: "flex" }} >
-          <Sidebar aberto={sidebarAberta} tamanho={tamanhoSideBar} setAberto={setSidebarAberta} setFiltro={setFiltrar}/>
+          <Sidebar aberto={sidebarAberta} tamanho={tamanhoSideBar} setAberto={setSidebarAberta} setFiltro={setFiltrar} />
           <MainBox component="main" sx={{ marginLeft: tamanhoSideBar }}>
             <Toolbar />
             <ThemeProvider theme={ContentTheme}>
@@ -52,19 +52,20 @@ export default function App() {
                 <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} />} />
                 <Route path="/notifications" element={<Notificacoes />} />
                 <Route path="/chats" element={<Chats aberto={sidebarAberta} />}></Route>
-                <Route path="/createdemand" element={<CriacaoDemanda rascunho={false}/>} />
-                <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar}/>} />
+                {/* <Route path="/createdemand" element={<CriacaoDemanda rascunho={false}/>} /> */}
+                <Route path="/createdemand" element={<VisualizarCriacaoPDF />} />
+                <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar} />} />
                 <Route path="/createagenda" element={<CriacaoPauta setFiltrar={setFiltrar} filtrar={filtrar} />} />
 
-                <Route path="/home/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
-                <Route path="/mydemands/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
-                <Route path="/notifications/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
-                <Route path="/home/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
-                <Route path="/home/agenda/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
-                <Route path="/home/ata/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
+                <Route path="/home/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
+                <Route path="/mydemands/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
+                <Route path="/notifications/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
+                <Route path="/home/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
+                <Route path="/home/agenda/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
+                <Route path="/home/ata/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
 
-                <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar}/>}></Route>
-                <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true}/>}></Route>
+                <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar} />}></Route>
+                <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true} />}></Route>
 
 
                 <Route path="/home/demand/history" element={<Historico />} />
@@ -78,17 +79,17 @@ export default function App() {
                 <Route path="/home/agenda/proposal/history" element={<Historico />} />
                 <Route path="/home/ata/proposal/history" element={<Historico />} />
 
-            
-                <Route path="/home/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
-                <Route path="/home/agenda/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
-                <Route path="/home/ata/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta}/>} />
+
+                <Route path="/home/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
+                <Route path="/home/agenda/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
+                <Route path="/home/ata/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
 
                 <Route path="/profile" element={<Perfil />} />
 
-                <Route path="/home/agenda" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta}/>} />
-                <Route path="/home/ata" element={<TelaColecaoProcesso  sidebarAberta={sidebarAberta}/>} />
+                <Route path="/home/agenda" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
+                <Route path="/home/ata" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
 
-                <Route path="/visualizarCriacaoPDF" element={<VisualizarCriacaoPDF/>}/>
+                <Route path="/visualizarCriacaoPDF" element={<VisualizarCriacaoPDF />} />
               </Routes>
             </ThemeProvider>
           </MainBox>

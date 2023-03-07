@@ -1,7 +1,6 @@
 import { BoxConteudo } from "../../../Pages/App.styles";
 import { PDFExport } from "@progress/kendo-react-pdf";
 import { renderToStream, renderToString } from "@react-pdf/renderer"
-import "./EsqueletoPDFProposta.scss";
 import { useRef } from "react";
 import Box from "@mui/material/Box";
 
@@ -11,7 +10,7 @@ import {
     TypographyTitulos, TypographyTextos,
     TableCellStyled, TypographyParticipantes, TypographyTituloATA,
     BoxResponsaveis, BoxGeralResponsaveis
-} from "./EsqueletoPDFProposta.styles";
+} from "../EsqueletoPDFProposta/EsqueletoPDFProposta.styles";
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -19,6 +18,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import jsPDF from "jspdf";
 
 interface Proposta {
     tituloProposta: string,
@@ -156,13 +156,25 @@ const proposta: Proposta = {
 }
 
 
-export default function EsqueletoPDFProposta() {
+export default function EsqueletoPDFVersaoDemanda() {
     const pdfCompoente = useRef<PDFExport>(null)
 
     const exportPDFWithComponent = async () => {
-        if (pdfCompoente.current) {
-            pdfCompoente.current.save();
-        }
+        const doc = new jsPDF()
+        const pdf = document.getElementById("BOX") as HTMLElement
+        
+
+        doc.html(pdf)
+        const bytes = doc.output("arraybuffer")
+
+        const pdfArquivo = new File([bytes], "Versão 1")
+        console.log(pdfArquivo);
+
+        
+        const doc2 = new jsPDF()
+        doc2.addFileToVFS("Versão 1", )
+        doc2.save()
+
     };
 
     const Proposta = (props: { proposta: Proposta }) => {
@@ -396,7 +408,7 @@ export default function EsqueletoPDFProposta() {
         );
     }
 
-    return (
+    const Conteudo = () => (
         <BoxConteudo>
             <div className="example-config">
                 <button
@@ -412,6 +424,15 @@ export default function EsqueletoPDFProposta() {
                 <Proposta proposta={proposta} />
                 <ParticipantesReuniao proposta={proposta} />
             </PDFExport>
+            <Box id="BOX" sx={{display: "none"}}>
+                <BoxTitulo>
+                    <TypographyTituloATA variant="h6">{proposta.tituloProposta}</TypographyTituloATA>
+                </BoxTitulo>
+                <Proposta proposta={proposta} />
+                <ParticipantesReuniao proposta={proposta} />
+            </Box>
         </BoxConteudo >
     );
+
+    return <Conteudo />
 }
