@@ -58,8 +58,8 @@ export default function Inicio(props: {
     //   let listaPautas: any[] = []
     //   for(let pauta of response.data){
     //     console.log(pauta);
-    //     pauta.propostasPauta = null 
     //     pauta.propostas = pauta.propostasPauta
+    //     pauta.propostasPauta = null 
     //     pauta.tituloReuniao = pauta.tituloReuniaoPauta 
 
     //     pauta.tipo = TipoColecaoComponenteProcesso.Pauta

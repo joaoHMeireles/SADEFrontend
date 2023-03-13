@@ -15,7 +15,7 @@ export default function InputAnexos(props: {
   return (
     <>
       <BoxTypographyAnexos>
-        <Typography sx={{ color: "#595959", marginTop: 2 }}>Anexos</Typography>
+        <Typography sx={{ color: "#595959", fontWeight: "bold", marginTop: 2 }}>Anexos</Typography>
       </BoxTypographyAnexos>
       <BoxContainerGeral sx={{ "&:hover": { borderColor: "#00579D" } }}>
         <BoxContainerConteudo>

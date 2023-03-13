@@ -34,6 +34,7 @@ import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 
 import pdfAssets from "../../Assets/2.pdf";
+import api from "../../api/api";
 
 const historicosDemandas: Historico[] = [
   //demanda 1
@@ -434,6 +435,7 @@ const colunas: GridColDef[] = [
 ];
 
 export default function Historico(props: {}) {
+  const [historicosDemanda, setHistoricosDemanda] = useState<any[]>([])
   const [tamanhoPagina, setTamanhoPagina] = useState(5);
   const [datagridHeight, setDatagridheight] = useState("44.5vh");
   const [mostrarPDF, setMostrarPDF] = useState(false);
@@ -451,6 +453,7 @@ export default function Historico(props: {}) {
   const informacaoProcessoCru = localStorage.getItem(
     eUmaDemanda ? "DEMANDAESCOLHIDA" : "PROPOSTAESCOLHIDA"
   );
+
   const informacaoProcesso = JSON.parse(
     informacaoProcessoCru != null ? informacaoProcessoCru : ""
   );
@@ -458,6 +461,7 @@ export default function Historico(props: {}) {
   const historicos = historicosDemandas.filter(
     (historico) => historico.idDemanda == informacaoProcesso.id
   );
+
   const historicosFormatados = historicos.map(
     (historico: Historico, index: number) => {
       let dataPrazoExecucao: any =
@@ -492,6 +496,30 @@ export default function Historico(props: {}) {
 
   useEffect(() => {
     mudarTamanhoDatagrid(5);
+
+    const demanda = JSON.parse(localStorage.getItem("DEMANDAESCOLHIDA") as string)
+
+    api.get("/sod/historicoWorkflow/demanda/" + demanda.idDemanda).then((response) => {
+      const lista: any[] = []
+      
+      for(let historico of response.data){
+        console.log(historico);
+        
+
+        const objetoHistorico = {
+
+        }
+
+        lista.push(objetoHistorico)
+      }
+
+      console.log(lista);
+      
+
+      // setHistoricosDemanda(lista)
+    }).catch((err) => {
+      console.log(err);
+    })
   }, []);
 
   function fecharPDF() {
