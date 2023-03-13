@@ -33,6 +33,8 @@ export default function BeneficiosDemanda(props: {
   setNumeroBeneficiosReais: React.Dispatch<React.SetStateAction<number>>
   setNumeroBeneficiosPotenciais: React.Dispatch<React.SetStateAction<number>>
   setNumeroBeneficiosQualitativos: React.Dispatch<React.SetStateAction<number>>
+  moeda: string
+  setMoeda: React.Dispatch<React.SetStateAction<string>>
 }) {
 
   const [frequencia, setFrequencia] = useState("");

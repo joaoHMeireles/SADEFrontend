@@ -40,6 +40,8 @@ export default function CriacaoDemanda(props: {
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
 
+  const [moeda, setMoeda] = useState("");
+
 
   useEffect(() => {
     if (props.rascunho) {
@@ -145,7 +147,7 @@ export default function CriacaoDemanda(props: {
       descricao = document.getElementById(`descricaoReal${i}`) as HTMLInputElement;
 
       console.log(moeda);
-      
+
 
       let beneficioReal = {
         "tipoBeneficio": "REAL",
@@ -165,7 +167,7 @@ export default function CriacaoDemanda(props: {
       descricao = document.getElementById(`descricaoPotencial${i}`) as HTMLInputElement;
 
       console.log(moeda);
-      
+
 
       let beneficioPotencial = {
         "tipoBeneficio": "POTENCIAL",
@@ -305,6 +307,8 @@ export default function CriacaoDemanda(props: {
               setNumeroBeneficiosReais={setNumeroBeneficiosReais}
               setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
+              moeda={moeda}
+              setMoeda={setMoeda}
             />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
