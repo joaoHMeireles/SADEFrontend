@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -13,17 +13,23 @@ import {
   BoxContainerCentroCusto,
 } from "./InformacaoGeral.styles";
 import Checkbox from "@mui/material/Checkbox";
+import api from "../../api/api";
 
 export default function InformacaoGeral(props: { proposta: boolean, centroCusto: any[], setCentroCusto: React.Dispatch<React.SetStateAction<any[]>> }) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
 
-  const lista = [
-    { label: "1234" },
-    { label: "teste 2" },
-    { label: "teste 3" },
-    { label: "5678" },
-    { label: "teste 5" },
-  ];
+
+  const [centroCusto, setCentroCusto] = useState<any[]>([]);
+
+  useEffect(() => {
+    api.get("/sod/centroCusto").then((res) => {
+      const lista = res.data.map((centroCusto: any) => centroCusto.nomeCentroCusto)
+
+      setCentroCusto(lista)
+    }).catch((err) => {
+      console.log(err);
+    })
+  }, [])
 
   useEffect(() => {
     if (props.proposta) {
@@ -121,11 +127,11 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto:
                       style={{ marginRight: 8 }}
                       checked={selected}
                     />
-                    {centroCusto.label}
+                    {centroCusto}
                   </li>
                 );
               }}
-              options={lista}
+              options={centroCusto}
               renderInput={(params) => <TextField {...params} />}
             />
           </BoxContainerCentroCusto>

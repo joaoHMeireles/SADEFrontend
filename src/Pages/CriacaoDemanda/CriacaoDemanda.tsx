@@ -108,7 +108,8 @@ export default function CriacaoDemanda(props: {
     for (let i = 0; i < centroCusto.length; i++) {
       let c = {
         // rever
-        idCentroCusto: 1
+        idCentroCusto: 1,
+        nomeCentroCusto: centroCusto[i].label
       }
       cc.push(c)
     }
@@ -143,6 +144,9 @@ export default function CriacaoDemanda(props: {
       moeda = document.getElementById(`moedaReal${i}`) as HTMLInputElement;
       descricao = document.getElementById(`descricaoReal${i}`) as HTMLInputElement;
 
+      console.log(moeda);
+      
+
       let beneficioReal = {
         "tipoBeneficio": "REAL",
         "descricao": descricao.value,
@@ -153,13 +157,15 @@ export default function CriacaoDemanda(props: {
       if (numeroBeneficiosReais > 0 && valorMensal.value && moeda.value && descricao.value) {
         beneficios.push(beneficioReal);
       }
-
     }
 
     for (let i = 0; i < numeroBeneficiosPotenciais; i++) {
       valorMensal = document.getElementById(`valorMensalPotencial${i}`) as HTMLInputElement;
       moeda = document.getElementById(`moedaPotencial${i}`) as HTMLInputElement;
       descricao = document.getElementById(`descricaoPotencial${i}`) as HTMLInputElement;
+
+      console.log(moeda);
+      
 
       let beneficioPotencial = {
         "tipoBeneficio": "POTENCIAL",
@@ -390,7 +396,9 @@ export default function CriacaoDemanda(props: {
                 </BotaoPrimario>
               </BoxBotoesPriSec>
             </BoxContainerBotoes>
-            <EsqueletoPDFVersaoDemanda demanda={data} />
+            {data != null &&
+              <EsqueletoPDFVersaoDemanda demanda={data} />
+            }
           </>
         )}
       </ContainerGeral>

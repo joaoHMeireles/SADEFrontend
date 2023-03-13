@@ -159,19 +159,6 @@ import api from "../../../api/api";
 export default function EsqueletoPDFVersaoDemanda(props: { demanda: any }) {
     const pdfCompoente = useRef<PDFExport>(null)
 
-    const [centroCustoDemanda, setCentroCustoDemanda] = useState<any[]>([]);
-
-    useEffect(() => {
-        for (let i = 0; i < props.demanda.centroCustoDemanda.length; i++) {
-            api.get(`/sod/centroCusto/${props.demanda.centroCustoDemanda[i].idCentroCusto}`).then((res) => {
-                centroCustoDemanda.push(res.data);
-                setCentroCustoDemanda(centroCustoDemanda);
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
-    }, [])
-
     const exportPDFWithComponent = async () => {
         if (pdfCompoente.current) {
             pdfCompoente.current.save();
@@ -202,17 +189,8 @@ export default function EsqueletoPDFVersaoDemanda(props: { demanda: any }) {
                     <TypographyTextos>Score: {props.demanda.score}</TypographyTextos>
                 </BoxObjetivo>
                 <BoxObjetivo>
-                    <TypographyTextos>Beneficios:</TypographyTextos>
-                    {props.demanda.beneficiosDemanda.map((beneficio: any) => {
-                        return (
-                            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginY: 2 }}>
-                                <TypographyTextos>{beneficio.tipoBeneficio}</TypographyTextos>
-                                <TypographyTextos>{beneficio.descricao}</TypographyTextos>
-                                <TypographyTextos>{beneficio.moeda}</TypographyTextos>
-                                <TypographyTextos>{beneficio.valor}</TypographyTextos>
-                            </Box>
-                        )
-                    })}
+                    <TypographyTextos>Beneficios: </TypographyTextos>
+                    <Beneficios demanda={props.demanda} />
                 </BoxObjetivo>
                 <BoxObjetivo>
                     <TypographyTextos>Centros de Custo: </TypographyTextos>
@@ -222,29 +200,58 @@ export default function EsqueletoPDFVersaoDemanda(props: { demanda: any }) {
         )
     }
 
+    const Beneficios = (props: { demanda: any }) => {
+        return (
+            <Box sx={{ width: "100%" }}>
+                <TableContainer component={Paper} sx={{ width: "50%", marginTop: 2 }}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCellStyled align="center">Tipo benenficio</TableCellStyled>
+                                <TableCellStyled align="center">Descricao</TableCellStyled>
+                                <TableCellStyled align="center">moeda</TableCellStyled>
+                                <TableCellStyled align="center">valor</TableCellStyled>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {/* {props.demanda.beneficiosDemanda.map((beneficio: any) => {
+                                return (
+                                    <TableRow>
+                                        <TableCellStyled align="center">{beneficio.tipoBeneficio}</TableCellStyled>
+                                        <TableCellStyled align="center">{beneficio.descricao}</TableCellStyled>
+                                        <TableCellStyled align="center">{beneficio.moeda}</TableCellStyled>
+                                        <TableCellStyled align="center">{beneficio.valor}</TableCellStyled>
+                                    </TableRow>
+                                )
+                            })} */}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Box>
+        )
+    }
+
     const CentrosCusto = (props: { demanda: any }) => {
         return (
-            <Box sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
-                <Box sx={{ display: "flex", justifyContent: "flex", alignItems: "center" }}>
-                    <TableContainer component={Paper} sx={{ width: "50%", marginTop: 5 }}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCellStyled align="center">Nome</TableCellStyled>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {centroCustoDemanda.map((centroCusto: any) => {
-                                    return (
-                                        <TableRow>
-                                            <TableCellStyled align="center">{centroCusto.nomeCentroCusto}</TableCellStyled>
-                                        </TableRow>
-                                    )
-                                })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Box>
+            <Box sx={{ width: "100%" }}>
+                <TableContainer component={Paper} sx={{ width: "50%", marginTop: 2 }}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCellStyled align="center">Nome</TableCellStyled>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {props.demanda.centroCustoDemanda.map((centroCusto: any) => {
+                                return (
+                                    <TableRow>
+                                        <TableCellStyled align="center">{centroCusto.nomeCentroCusto}</TableCellStyled>
+                                    </TableRow>
+                                )
+                            })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Box>
         )
     }
@@ -256,26 +263,22 @@ export default function EsqueletoPDFVersaoDemanda(props: { demanda: any }) {
     }
 
     return (
-        <BoxConteudo>
-            <div className="example-config">
-                <button
-                    onClick={exportPDFWithComponent}
-                >
-                    Export to PDF with component
-                </button>
-            </div>
-            <PDFExport forcePageBreak=".break" paperSize="A4" pageTemplate={PageTemplate} margin="2cm" ref={pdfCompoente}>
-                <BoxTitulo>
-                    <TypographyTituloATA variant="h6">{props.demanda.tituloDemanda}</TypographyTituloATA>
-                </BoxTitulo>
-                <Demanda demanda={props.demanda} />
-            </PDFExport>
-            <Box id="BOX" sx={{ display: "none" }}>
-                <BoxTitulo>
-                    <TypographyTituloATA variant="h6">{props.demanda.tituloDemanda}</TypographyTituloATA>
-                </BoxTitulo>
-                <Demanda demanda={props.demanda} />
-            </Box>
-        </BoxConteudo >
+        <Box id="BOX" sx={{ display: "none" }}>
+            <BoxConteudo>
+                <div className="example-config">
+                    <button
+                        onClick={exportPDFWithComponent}
+                    >
+                        Export to PDF with component
+                    </button>
+                </div>
+                <PDFExport forcePageBreak=".break" paperSize="A4" pageTemplate={PageTemplate} margin="2cm" ref={pdfCompoente}>
+                    <BoxTitulo>
+                        <TypographyTituloATA variant="h6">{props.demanda.tituloDemanda}</TypographyTituloATA>
+                    </BoxTitulo>
+                    <Demanda demanda={props.demanda} />
+                </PDFExport>
+            </BoxConteudo >
+        </Box>
     )
 }

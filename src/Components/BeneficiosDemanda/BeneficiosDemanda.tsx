@@ -38,6 +38,18 @@ export default function BeneficiosDemanda(props: {
   const [frequencia, setFrequencia] = useState("");
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>()
 
+  const moedas = [
+    {
+      moeda: "DOLAR",
+    },
+    {
+      moeda: "EURO",
+    },
+    {
+      moeda: "BRL",
+    },
+  ];
+
   useEffect(() => {
     if (props.rascunho || props.proposta) {
       let info
@@ -137,7 +149,7 @@ export default function BeneficiosDemanda(props: {
         <BoxTitulos>
           <TypographyTitulos>Benefício Real</TypographyTitulos>
         </BoxTitulos>
-        <BeneficiosReais numeroBeneficios={props.numeroBeneficiosReais} />
+        <BeneficiosReais numeroBeneficios={props.numeroBeneficiosReais} moedas={moedas} />
         <BoxIcones>
           {props.numeroBeneficiosReais > 1 ? (
             <RemoveRoundedIcon
@@ -164,7 +176,7 @@ export default function BeneficiosDemanda(props: {
         <BoxTitulos>
           <TypographyTitulos>Benefício Potencial</TypographyTitulos>
         </BoxTitulos>
-        <BeneficiosPotenciais numeroBeneficios={props.numeroBeneficiosPotenciais} />
+        <BeneficiosPotenciais numeroBeneficios={props.numeroBeneficiosPotenciais} moedas={moedas} />
         <BoxIcones>
           {props.numeroBeneficiosPotenciais > 1 ? (
             <RemoveRoundedIcon
@@ -239,21 +251,21 @@ export default function BeneficiosDemanda(props: {
   );
 }
 
-function BeneficiosReais(props: { numeroBeneficios: number }) {
+function BeneficiosReais(props: { numeroBeneficios: number, moedas: Object[] }) {
   let beneficios: JSX.Element[] = [];
 
   for (let i = 0; i < props.numeroBeneficios; i++) {
-    beneficios.push(<BeneficioReal index={i} />);
+    beneficios.push(<BeneficioReal index={i} moedas={props.moedas} />);
   }
 
   return <>{beneficios}</>;
 }
 
-function BeneficiosPotenciais(props: { numeroBeneficios: number }) {
+function BeneficiosPotenciais(props: { numeroBeneficios: number, moedas: Object[] }) {
   let beneficios: JSX.Element[] = [];
 
   for (let i = 0; i < props.numeroBeneficios; i++) {
-    beneficios.push(<BeneficioPotencial index={i} />);
+    beneficios.push(<BeneficioPotencial index={i} moedas={props.moedas} />);
   }
 
   return <>{beneficios}</>;
@@ -269,27 +281,8 @@ function BeneficiosQualitativos(props: { numeroBeneficios: number }) {
   return <>{beneficios}</>;
 }
 
-function BeneficioReal(props: { index: number }) {
+function BeneficioReal(props: { index: number, moedas: Object[] }) {
   const [moeda, setMoeda] = useState("BRL");
-
-  const moedas = [
-    {
-      value: "USD",
-      label: "$",
-    },
-    {
-      value: "EUR",
-      label: "€",
-    },
-    {
-      value: "BTC",
-      label: "฿",
-    },
-    {
-      value: "JPY",
-      label: "¥",
-    },
-  ];
 
   return (
     <>
@@ -309,17 +302,17 @@ function BeneficioReal(props: { index: number }) {
                 }}
               />
               <TextField
-                id={`moedaReal${props.index}`}
+                // id={`moedaReal${props.index}`}
                 sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
-                // select
+                select
                 label="Moeda"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setMoeda(event.target.value)
                 }
               >
-                {moedas.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.value}
+                {props.moedas.map((option: any) => (
+                  <MenuItem id={`moedaReal${props.index}`} key={option.moeda} value={option.moeda}>
+                    {option.moeda}
                   </MenuItem>
                 ))}
               </TextField>
@@ -341,27 +334,8 @@ function BeneficioReal(props: { index: number }) {
   );
 }
 
-function BeneficioPotencial(props: { index: number }) {
+function BeneficioPotencial(props: { index: number, moedas: Object[] }) {
   const [moeda, setMoeda] = useState("BRL");
-
-  const moedas = [
-    {
-      value: "USD",
-      label: "$",
-    },
-    {
-      value: "EUR",
-      label: "€",
-    },
-    {
-      value: "BTC",
-      label: "฿",
-    },
-    {
-      value: "JPY",
-      label: "¥",
-    },
-  ];
 
   return (
     <>
@@ -388,17 +362,17 @@ function BeneficioPotencial(props: { index: number }) {
                 }}
               />
               <TextField
-                id={`moedaPotencial${props.index}`}
+                // id={`moedaPotencial${props.index}`}
                 sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
-                // select
+                select
                 label="Moeda"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setMoeda(event.target.value)
                 }
               >
-                {moedas.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.value}
+                {props.moedas.map((option: any) => (
+                  <MenuItem id={`moedaPotencial${props.index}`} key={option.moeda} value={option.moeda}>
+                    {option.moeda}
                   </MenuItem>
                 ))}
               </TextField>
