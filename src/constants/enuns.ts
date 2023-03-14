@@ -46,25 +46,29 @@ export enum sessaoTI {
 }
 
 export enum TarefaExecucao {
+    CRIARDEMANDA = "Criar Demanda",
     AVALIARDEMANDA = "Avaliar Demanda",
-    CLASSIFICAR = "Classificar Demanda",
-    APROVAR = "Aprovar Demanda",
-    REPROVAR = "Reprovar Demanda",
-    DEVOLVER = "Devolver Demanda",
-    REENVIAR = "Reenviar Demanda",
-    ADICIONARINFORMACOES = "Adicionar Informações",
+    CLASSIFICARDEMANDA = "Classificar Demanda",
+    APROVARDEMANDA = "Aprovar Demanda",
+    REPROVARDEMANDA = "Reprovar Demanda",
+    DEVOLVERDEMANDA = "Devolver Demanda",
+    REENVIARDEMANDA = "Reenviar Demanda",
+    ADICIONARINFORMACOESDEMANDA = "Adicionar Informações",
     CRIARPROPOSTA = "Criar Proposta",
     INICIARWORKFLOW = "Iniciar Workflow",
     AVALIARWORKFLOW = "Avaliar Workflow",
+    APROVARWORKFLOW = "Aprovar Workflow",
+    REPROVARWORKFLOW = "Reprovar Workflow",
     CRIARPAUTA = "Criar Pauta",
-    ADICIONARPAUTA = "Adicionar a uma pauta",
     INFORMARPARECERFORUM = "Informar Parecer Fórum",
-    INFORMARPARECERDG = "Informar Parecer DG"
+    INFORMARPARECERDG = "Informar Parecer DG",
+    FINALIZAR = "Finalizar histórico"
 }
 
 export enum StatusTarefaHistorico {
     EMAGUARDO = "Em Aguardo",
     EMANDAMENTO = "Em Andamento", 
     CONCLUIDO = "Concluído", 
-    ATRASADO = "Atrasado" 
+    ATRASADO = "Atrasado",
+    CONCLUIDOCOMATRASO = "Concluído com atraso"
 }

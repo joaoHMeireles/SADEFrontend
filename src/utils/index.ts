@@ -182,3 +182,14 @@ export function getNome(status: string) {
 export function getBeneficiosPorTipo(listaBeneficios: any[], tipoBeneficio: string){
     return listaBeneficios.filter((beneficio: any) => beneficio.tipoBeneficio == tipoBeneficio)
 }
+
+/**
+ * Serve para pegar um valor específico de uma chave do enumerador
+ * 
+ * @param enumerador 
+ * @param valor 
+ * @returns 
+ */
+export function getValueEnum(enumerador: Object, valor: any ){
+    return Object.values(enumerador)[Object.keys(enumerador).indexOf(valor)]
+}

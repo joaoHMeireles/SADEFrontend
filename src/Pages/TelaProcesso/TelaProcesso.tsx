@@ -31,6 +31,7 @@ import {
     BoxAtributoInfoModal2, TypographyTituloAtributoModal, TextFieldURL
 } from './TelaProcesso.styles';
 import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
+import api from '../../api/api';
 
 /**
  * Componente principal das páginas de proposta de demanda sendo dinâmico conforme
@@ -151,10 +152,16 @@ export function Header(props: {
             </Alert>
         )
 
+        function reprovarDemanda(contaudoFeedback: JSX.Element){
+            
+
+            abrirFeedback(contaudoFeedback)
+        }
+
         props.setConteudoModal(
             <ConteudoModalConfirmacao
                 tituloModal='Quer reprovar essa demanda?'
-                abrirProximoComponente={abrirFeedback}
+                abrirProximoComponente={reprovarDemanda}
                 conteudoProximoComponente={conteudoFeedback}
                 descricaoModal="Caso confirme, a demanda não poderá mais ser avaliada novamente"
                 fecharModal={fecharModal}
@@ -207,12 +214,15 @@ export function Header(props: {
     }
 
     function verDemandaProposta() {
+        api.get(`/sod/demanda/${processo.idProposta}`).then((response: any) => {
+            const demanda = response.data
+            demanda.tipo = TipoComponenteProcesso.Demanda
 
-
-        //futuramente a proposta terá o mesmo id que a demanda a que se refere
-        //futuramente vai precisar fazer um fetch pra ver qual as informações da demanda escolhida
-        // localStorage.setItem("DEMANDAESCOLHIDA", (processo.id - 1) + "")
-        location.href = pathname + "/demand";
+            localStorage.setItem("DEMANDAESCOLHIDA", JSON.stringify(demanda))
+            location.href = pathname + "/demand";
+        }).catch((err) => {
+            console.log(err);
+        })
     }
 
     function criarNovaPauta() {
@@ -232,10 +242,54 @@ export function Header(props: {
             </Alert>
         )
 
+        function aprovarWorkflow(conteudoFeedback: JSX.Element) {
+            //fazer quando já tiver a parte de usuário funcionando
+            // const body = {
+            //     tarefa: "",
+            //     "demanda": {
+            //         "idDemanda": processo.idProposta
+            //     },
+            //     "acaoFeitaHistoricoAnterior": "APROVARDEMANDA",
+            //     "usuario": {
+            //         "idUsuario": 3
+            //     }
+            // }
+
+            // api.post("", body).then(() => {
+
+            // }).catch((err) => {
+            //     console.log(err);
+            // })
+
+            abrirFeedback(conteudoFeedback)
+        }
+
+        function reprovarWorkflow(conteudoFeedback: JSX.Element) {
+            //fazer quando já tiver a parte de usuário funcionando
+            // const body = {
+            //     tarefa: "",
+            //     "demanda": {
+            //         "idDemanda": processo.idProposta
+            //     },
+            //     "acaoFeitaHistoricoAnterior": "APROVARDEMANDA",
+            //     "usuario": {
+            //         "idUsuario": 3
+            //     }
+            // }
+
+            // api.post("", body).then(() => {
+
+            // }).catch((err) => {
+            //     console.log(err);
+            // })
+
+            abrirFeedback(conteudoFeedback)
+        }
+
         const modalAprovar = (
             <ConteudoModalConfirmacao
                 tituloModal='Quer aprovar esse workflow?'
-                abrirProximoComponente={abrirFeedback}
+                abrirProximoComponente={aprovarWorkflow}
                 conteudoProximoComponente={conteudoFeedbackAprovado}
                 descricaoModal="Caso confirme, a proposta será adicionada a proxima pauta a ser tratada em uma comissão"
                 fecharModal={fecharModal}
@@ -245,7 +299,7 @@ export function Header(props: {
         const modalReprovar = (
             <ConteudoModalConfirmacao
                 tituloModal='Quer reprovar esse workflow?'
-                abrirProximoComponente={abrirFeedback}
+                abrirProximoComponente={reprovarWorkflow}
                 conteudoProximoComponente={conteudoFeedbackReprovado}
                 descricaoModal="Caso confirme, o workflow de aprovação dessa proposta irá ser interrompido"
                 fecharModal={fecharModal}
@@ -803,9 +857,6 @@ function ContainerProcessoPrincipal(props: {
     setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
 }) {
     const informacaoProcesso = props.informacaoProcesso
-
-    console.log(informacaoProcesso);
-    
 
     return (
         <ContainerProcesso informacaoProcesso={informacaoProcesso}>

@@ -35,6 +35,7 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 
 import pdfAssets from "../../Assets/2.pdf";
 import api from "../../api/api";
+import { getValueEnum } from "../../utils";
 
 
 const colunas: GridColDef[] = [
@@ -122,13 +123,22 @@ const colunas: GridColDef[] = [
     disableColumnMenu: true,
     renderCell: (params: any) => {
       return (
-        <Link to={"/visualizarCriacaoPDF"}>
-          <Tooltip title="Ver pdf">
-            <PictureAsPdfRoundedIcon
-              sx={{ color: "#595959", "&:hover": { color: "#00579d" } }}
-            />
-          </Tooltip>
-        </Link>
+        // <Link to={"/visualizarCriacaoPDF"}>
+        <>
+          {params.row.pdfHistorico != null ?
+            <Tooltip title="Ver pdf">
+              <PictureAsPdfRoundedIcon
+                sx={{ color: "#595959", "&:hover": { color: "#00579d" } }}
+              />
+            </Tooltip>
+            :
+            <div>
+              -
+            </div>
+          }
+        </>
+
+        // </Link>
       );
     },
   },
@@ -169,16 +179,16 @@ export default function TelaHistoricos(props: {}) {
       const lista: Historico[] = []
 
       for (let historico of response.data) {
-        
+
         const objetoHistorico: Historico = {
           id: historico.idHistoricoWorkflow,
-          tarefa: historico.tarefa,
-          status: historico.status,
-          dataRecebimento: historico.recebimento != null? new Date(historico.recebimento): null,
-          prazoExecucao: historico.prazo != null ? new Date(historico.prazo) : null,
-          dataConclusao: historico.conclusaoTarefa != null? new Date(historico.conclusaoTarefa) : null,
+          tarefa: getValueEnum(TarefaExecucao, historico.tarefa),
+          status: getValueEnum(StatusTarefaHistorico, historico.status),
+          dataRecebimento: historico.recebimento != null ? new Date(historico.recebimento) : "-----------",
+          prazoExecucao: historico.prazo != null ? new Date(historico.prazo) : "-----------",
+          dataConclusao: historico.conclusaoTarefa != null ? new Date(historico.conclusaoTarefa) : "-----------",
           pdfHistorico: historico.arquivoHistoricoWorkflow,
-          tarefaExecutada: historico.acaoFeita,
+          tarefaExecutada: getValueEnum(TarefaExecucao, historico.acaoFeita),
           usuario: {
             nome: historico.usuario != null ? historico.usuario.nomeUsuario : null,
             // ainda ver como pegar o tipo dele pelo banco
@@ -198,31 +208,18 @@ export default function TelaHistoricos(props: {}) {
   useEffect(() => {
     const histForm = historicosDemanda.map(
       (historico: Historico, index: number) => {
-        let dataPrazoExecucao: any =
-          historico.prazoExecucao?.toLocaleDateString();
-
-        if (index != historicosDemanda.length) {
-          if (
-            historico.prazoExecucao == null ||
-            historico.prazoExecucao == undefined
-          ) {
-            // fazer isso pra todas as coisa de data
-            dataPrazoExecucao = "-----------";
-          }
-        }
-
         return {
           id: index,
           tarefa: historico.tarefa,
           status: historico.status,
-          dataRecebimento: historico.dataRecebimento?.toLocaleDateString(),
+          dataRecebimento: typeof historico.dataRecebimento === typeof "" ? historico.dataRecebimento : (historico.dataRecebimento as Date).toLocaleDateString(),
           prazoExecucaoTotal: historico.prazoExecucao,
-          dataPrazoExecucao: dataPrazoExecucao,
+          dataPrazoExecucao: typeof historico.prazoExecucao === typeof "" ? historico.prazoExecucao : (historico.prazoExecucao as Date).toLocaleDateString(),
           dataConclusaoTotal: historico.dataConclusao,
-          dataConclusao: historico.dataConclusao != null ? historico.dataConclusao.toLocaleDateString() : null,
+          dataConclusao: typeof historico.dataConclusao === typeof "" ? historico.dataConclusao : (historico.dataConclusao as Date).toLocaleDateString(),
           pdfHistorico: historico.pdfHistorico,
-          tarefaExecutada: historico.tarefaExecutada,
-          nomeUsuario: historico.usuario?.nome,
+          tarefaExecutada: historico.tarefaExecutada == null ? "-----------" : historico.tarefaExecutada,
+          nomeUsuario: historico.usuario?.nome == null ? "-----------" : historico.usuario.nome,
           cargoUsuario: historico.usuario?.tipoPessoa,
         };
       }
@@ -246,10 +243,11 @@ export default function TelaHistoricos(props: {}) {
       }
     } else if (nomeColuna === "status") {
       const cores = {
-        "EMAGUARDO": "em-aguardo",
-        "EMANDAMENTO": "em-andamento",
-        "CONCLUIDO": "concluido",
-        "ATRASADO": "atrasado",
+        "Em Aguardo": "em-aguardo",
+        "Em Andamento": "em-andamento",
+        "Concluído": "concluido",
+        "Atrasado": "atrasado",
+        "Concluído com Atraso": "concluido-atraso"
       };
 
       return (cores as any)[cell.row.status];
@@ -531,9 +529,9 @@ interface Historico {
   id: number;
   tarefa: TarefaExecucao;
   status: StatusTarefaHistorico;
-  dataRecebimento?: Date | null;
-  prazoExecucao?: Date | null;
-  dataConclusao?: Date | null;
+  dataRecebimento?: Date | string;
+  prazoExecucao?: Date | string;
+  dataConclusao?: Date | string;
   pdfHistorico?: string;
   motivoDevolucao?: string;
   tarefaExecutada?: TarefaExecucao;
