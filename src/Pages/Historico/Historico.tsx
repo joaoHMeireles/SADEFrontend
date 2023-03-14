@@ -36,302 +36,6 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import pdfAssets from "../../Assets/2.pdf";
 import api from "../../api/api";
 
-const historicosDemandas: Historico[] = [
-  //demanda 1
-  {
-    id: 1,
-    tarefa: TarefaExecucao.AVALIARDEMANDA,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 08:13:00"),
-    dataConclusao: new Date("June 13, 2022 08:37:00"),
-    pdfHistorico: "sacoifgdaifa9sfvqIv976V9WVQCYIDAVCUsvdcyuv",
-    motivoDevolucao: "Meio fraquinha",
-    tarefaExecutada: TarefaExecucao.DEVOLVER,
-    usuario: {
-      nome: "Rodrigo Antunes",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 1,
-  },
-  {
-    id: 2,
-    status: StatusTarefaHistorico.EMANDAMENTO,
-    tarefa: TarefaExecucao.REENVIAR,
-    dataRecebimento: new Date("June 13, 2022 08:37:01"),
-    prazoExecucao: new Date("June 18, 2022 08:37:01"),
-    usuario: {
-      nome: "Fabrício Marínho",
-      tipoPessoa: Persona.Solicitante,
-    },
-    idDemanda: 1,
-  },
-
-  //demanda 3
-  {
-    id: 3,
-    tarefa: TarefaExecucao.AVALIARDEMANDA,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 08:21:00"),
-    dataConclusao: new Date("June 13, 2022 08:32:00"),
-    pdfHistorico: "dsftv87V9gbsufbidsuvbFIV789vV97V9vuidvsf",
-    tarefaExecutada: TarefaExecucao.APROVAR,
-    usuario: {
-      nome: "Marcelo Gonzaga Vieira",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 3,
-  },
-  {
-    id: 4,
-    tarefa: TarefaExecucao.CLASSIFICAR,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 08:32:01"),
-    prazoExecucao: new Date("June 18, 2022 08:32:01"),
-    dataConclusao: new Date("June 13, 2022 09:03:00"),
-    pdfHistorico: "safasuidofhsdfb8GofdhfbOYUDFSUIFB",
-    tarefaExecutada: TarefaExecucao.CLASSIFICAR,
-    usuario: {
-      nome: "Marcelo Gonzaga Vieira",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 3,
-  },
-  {
-    id: 5,
-    tarefa: TarefaExecucao.AVALIARDEMANDA,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 09:03:01"),
-    prazoExecucao: new Date("June 18, 2022 09:03:01"),
-    dataConclusao: new Date("June 13, 2022 14:12:00"),
-    pdfHistorico: "fdbayuiV9mpsomOADOHREobd07FESFCMçidnfuoibS",
-    tarefaExecutada: TarefaExecucao.APROVAR,
-    usuario: {
-      nome: "Maria Gonçalves de Souza",
-      tipoPessoa: Persona.GerenteNegocio,
-    },
-    idDemanda: 3,
-  },
-  {
-    id: 6,
-    tarefa: TarefaExecucao.ADICIONARINFORMACOES,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 14:12:01"),
-    prazoExecucao: new Date("June 18, 2022 14:12:01"),
-    dataConclusao: new Date("June 13, 2022 14:58:00"),
-    pdfHistorico: "sacoifgdaifa9sfvqIv976V9WVQCYIDAVCUsvdcyuv",
-    tarefaExecutada: TarefaExecucao.ADICIONARINFORMACOES,
-    usuario: {
-      nome: "Marcelo Gonzaga Vieira",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 3,
-  },
-  {
-    id: 7,
-    tarefa: TarefaExecucao.CRIARPROPOSTA,
-    status: StatusTarefaHistorico.EMANDAMENTO,
-    dataRecebimento: new Date("June 13, 2022 14:58:01"),
-    prazoExecucao: new Date("June 20, 2022 14:58:01"),
-    usuario: {
-      nome: "Marcelo Gonzaga Vieira",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 3,
-  },
-
-  //proposta 4
-  {
-    id: 8,
-    tarefa: TarefaExecucao.AVALIARDEMANDA,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 09:42:00"),
-    dataConclusao: new Date("June 13, 2022 10:11:00"),
-    pdfHistorico: "dsftv87V9gbsufbidsuvbFIV789vV97V9vuidvsf",
-    tarefaExecutada: TarefaExecucao.APROVAR,
-    usuario: {
-      nome: "Kaique Macedos",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 4,
-  },
-  {
-    id: 9,
-    tarefa: TarefaExecucao.CLASSIFICAR,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 10:11:01"),
-    prazoExecucao: new Date("June 18, 2022 10:11:01"),
-    dataConclusao: new Date("June 13, 2022 10:25:00"),
-    pdfHistorico: "safasuidofhsdfb8GofdhfbOYUDFSUIFB",
-    tarefaExecutada: TarefaExecucao.CLASSIFICAR,
-    usuario: {
-      nome: "Kaique Macedos",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 4,
-  },
-  {
-    id: 10,
-    tarefa: TarefaExecucao.AVALIARDEMANDA,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 10:25:01"),
-    prazoExecucao: new Date("June 18, 2022 10:25:00"),
-    dataConclusao: new Date("June 13, 2022 16:06:00"),
-    pdfHistorico: "fdbayuiV9mpsomOADOHREobd07FESFCMçidnfuoibS",
-    tarefaExecutada: TarefaExecucao.APROVAR,
-    usuario: {
-      nome: "Marcelo Siqueira Peixoto",
-      tipoPessoa: Persona.GerenteNegocio,
-    },
-    idDemanda: 4,
-  },
-  {
-    id: 11,
-    tarefa: TarefaExecucao.ADICIONARINFORMACOES,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 16:06:01"),
-    prazoExecucao: new Date("June 13, 2022 16:06:01"),
-    dataConclusao: new Date("June 14, 2022 07:52:00"),
-    pdfHistorico: "sacoifgdaifa9sfvqIv976V9WVQCYIDAVCUsvdcyuv",
-    tarefaExecutada: TarefaExecucao.ADICIONARINFORMACOES,
-    usuario: {
-      nome: "Kaique Macedos",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 4,
-  },
-  {
-    id: 12,
-    tarefa: TarefaExecucao.CRIARPROPOSTA,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 14, 2022 07:52:01"),
-    prazoExecucao: new Date("June 28, 2022 07:52:01"),
-    dataConclusao: new Date("June 23, 2022 09:29:00"),
-    pdfHistorico: "OIM98CIDSAMNCpocmsdppomnDINdapNCSDMPSDCD",
-    tarefaExecutada: TarefaExecucao.CRIARPROPOSTA,
-    usuario: {
-      nome: "Kaique Macedos",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 4,
-  },
-  {
-    id: 13,
-    tarefa: TarefaExecucao.ADICIONARPAUTA,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 23, 2022 09:29:01"),
-    dataConclusao: new Date("June 28, 2022 11:20:00"),
-    tarefaExecutada: TarefaExecucao.ADICIONARPAUTA,
-    usuario: {
-      nome: "Kaique Macedos",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 4,
-  },
-  {
-    id: 14,
-    tarefa: TarefaExecucao.INFORMARPARECERFORUM,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 28, 2022 11:20:01"),
-    prazoExecucao: new Date("July 03, 2022 11:20:01 "),
-    dataConclusao: new Date("July 04, 2022 08:09:00"),
-    tarefaExecutada: TarefaExecucao.INFORMARPARECERFORUM,
-    pdfHistorico: "BUIVvcyiv9ygVC6c4CYBUOI08bVTvnbyuivyvob",
-    usuario: {
-      nome: "Kaique Macedos",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 4,
-  },
-
-  //testes
-  {
-    id: 15,
-    tarefa: TarefaExecucao.AVALIARDEMANDA,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 09:42:00"),
-    dataConclusao: new Date("June 13, 2022 10:11:00"),
-    pdfHistorico: "dsftv87V9gbsufbidsuvbFIV789vV97V9vuidvsf",
-    tarefaExecutada: TarefaExecucao.APROVAR,
-    usuario: {
-      nome: "Kaique Macedos",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 4,
-  },
-  {
-    id: 16,
-    tarefa: TarefaExecucao.CLASSIFICAR,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 10:11:01"),
-    prazoExecucao: new Date("June 18, 2022 10:11:01"),
-    dataConclusao: new Date("June 13, 2022 10:25:00"),
-    pdfHistorico: "safasuidofhsdfb8GofdhfbOYUDFSUIFB",
-    tarefaExecutada: TarefaExecucao.CLASSIFICAR,
-    usuario: {
-      nome: "Kaique Macedos",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 4,
-  },
-  {
-    id: 17,
-    tarefa: TarefaExecucao.AVALIARDEMANDA,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 10:25:01"),
-    prazoExecucao: new Date("June 18, 2022 10:25:00"),
-    dataConclusao: new Date("June 13, 2022 16:06:00"),
-    pdfHistorico: "fdbayuiV9mpsomOADOHREobd07FESFCMçidnfuoibS",
-    tarefaExecutada: TarefaExecucao.APROVAR,
-    usuario: {
-      nome: "Marcelo Siqueira Peixoto",
-      tipoPessoa: Persona.GerenteNegocio,
-    },
-    idDemanda: 4,
-  },
-  {
-    id: 18,
-    tarefa: TarefaExecucao.ADICIONARINFORMACOES,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 13, 2022 16:06:01"),
-    prazoExecucao: new Date("June 13, 2022 16:06:01"),
-    dataConclusao: new Date("June 14, 2022 07:52:00"),
-    pdfHistorico: "sacoifgdaifa9sfvqIv976V9WVQCYIDAVCUsvdcyuv",
-    tarefaExecutada: TarefaExecucao.ADICIONARINFORMACOES,
-    usuario: {
-      nome: "Kaique Macedos",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 4,
-  },
-  {
-    id: 19,
-    tarefa: TarefaExecucao.CRIARPROPOSTA,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 14, 2022 07:52:01"),
-    prazoExecucao: new Date("June 28, 2022 07:52:01"),
-    dataConclusao: new Date("June 23, 2022 09:29:00"),
-    pdfHistorico: "OIM98CIDSAMNCpocmsdppomnDINdapNCSDMPSDCD",
-    tarefaExecutada: TarefaExecucao.CRIARPROPOSTA,
-    usuario: {
-      nome: "Kaique Macedos",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 4,
-  },
-  {
-    id: 20,
-    tarefa: TarefaExecucao.ADICIONARPAUTA,
-    status: StatusTarefaHistorico.CONCLUIDO,
-    dataRecebimento: new Date("June 23, 2022 09:29:01"),
-    dataConclusao: new Date("June 28, 2022 11:20:00"),
-    tarefaExecutada: TarefaExecucao.ADICIONARPAUTA,
-    usuario: {
-      nome: "Kaique Macedos",
-      tipoPessoa: Persona.AnalistaTI,
-    },
-    idDemanda: 4,
-  },
-];
 
 const colunas: GridColDef[] = [
   {
@@ -340,8 +44,6 @@ const colunas: GridColDef[] = [
     headerName: "Tarefa requisitada",
     width: 155,
     renderCell: (params: any) => {
-      console.log(params);
-
       return (
         <Tooltip title={params.row.tarefa}>
           <span className="table-cell-trucate">{params.row.tarefa}</span>
@@ -382,7 +84,6 @@ const colunas: GridColDef[] = [
     headerName: "Status atual",
     width: 110,
     renderCell: (params: any) => {
-      console.log(params);
 
       return (
         <Tooltip title={params.row.status}>
@@ -397,7 +98,6 @@ const colunas: GridColDef[] = [
     headerName: "Tarefa executada",
     width: 155,
     renderCell: (params: any) => {
-      console.log(params);
 
       return (
         <Tooltip title={params.row.tarefaExecutada}>
@@ -434,12 +134,14 @@ const colunas: GridColDef[] = [
   },
 ];
 
-export default function Historico(props: {}) {
+export default function TelaHistoricos(props: {}) {
   const [historicosDemanda, setHistoricosDemanda] = useState<any[]>([])
   const [tamanhoPagina, setTamanhoPagina] = useState(5);
   const [datagridHeight, setDatagridheight] = useState("44.5vh");
   const [mostrarPDF, setMostrarPDF] = useState(false);
   const [arquivoPDF, setArquivoPDF] = useState("");
+  const [historicosFormatados, setHistoricosFormatados] = useState<any[]>([])
+  const [tamanhoLista, setTamanhoLista] = useState(5)
 
   const pdf =
     "https://www.caceres.mt.gov.br/fotos_institucional_downloads/2.pdf";
@@ -458,69 +160,76 @@ export default function Historico(props: {}) {
     informacaoProcessoCru != null ? informacaoProcessoCru : ""
   );
 
-  const historicos = historicosDemandas.filter(
-    (historico) => historico.idDemanda == informacaoProcesso.id
-  );
-
-  const historicosFormatados = historicos.map(
-    (historico: Historico, index: number) => {
-      let dataPrazoExecucao: any =
-        historico.prazoExecucao?.toLocaleDateString();
-
-      if (index != historicos.length) {
-        if (
-          historico.prazoExecucao == null ||
-          historico.prazoExecucao == undefined
-        ) {
-          dataPrazoExecucao = "-----------";
-        }
-      }
-
-      return {
-        id: index,
-        tarefa: historico.tarefa,
-        status: historico.status,
-        dataRecebimento: historico.dataRecebimento?.toLocaleDateString(),
-        prazoExecucaoTotal: historico.prazoExecucao,
-        dataPrazoExecucao: dataPrazoExecucao,
-        dataConclusaoTotal: historico.dataConclusao,
-        dataConclusao: historico.dataConclusao?.toLocaleDateString(),
-        pdfHistorico: historico.pdfHistorico,
-        tarefaExecutada: historico.tarefaExecutada,
-        nomeUsuario: historico.usuario?.nome,
-        cargoUsuario: historico.usuario?.tipoPessoa,
-      };
-    }
-  );
-  const tamanhoLista = historicosFormatados.length;
-
   useEffect(() => {
     mudarTamanhoDatagrid(5);
 
     const demanda = JSON.parse(localStorage.getItem("DEMANDAESCOLHIDA") as string)
 
     api.get("/sod/historicoWorkflow/demanda/" + demanda.idDemanda).then((response) => {
-      const lista: any[] = []
-      
-      for(let historico of response.data){
-        console.log(historico);
+      const lista: Historico[] = []
+
+      for (let historico of response.data) {
         
-
-        const objetoHistorico = {
-
+        const objetoHistorico: Historico = {
+          id: historico.idHistoricoWorkflow,
+          tarefa: historico.tarefa,
+          status: historico.status,
+          dataRecebimento: historico.recebimento != null? new Date(historico.recebimento): null,
+          prazoExecucao: historico.prazo != null ? new Date(historico.prazo) : null,
+          dataConclusao: historico.conclusaoTarefa != null? new Date(historico.conclusaoTarefa) : null,
+          pdfHistorico: historico.arquivoHistoricoWorkflow,
+          tarefaExecutada: historico.acaoFeita,
+          usuario: {
+            nome: historico.usuario != null ? historico.usuario.nomeUsuario : null,
+            // ainda ver como pegar o tipo dele pelo banco
+            tipoPessoa: Persona.AnalistaTI,
+          }
         }
-
         lista.push(objetoHistorico)
       }
 
-      console.log(lista);
-      
-
-      // setHistoricosDemanda(lista)
+      setTamanhoLista(lista.length)
+      setHistoricosDemanda(lista)
     }).catch((err) => {
       console.log(err);
     })
   }, []);
+
+  useEffect(() => {
+    const histForm = historicosDemanda.map(
+      (historico: Historico, index: number) => {
+        let dataPrazoExecucao: any =
+          historico.prazoExecucao?.toLocaleDateString();
+
+        if (index != historicosDemanda.length) {
+          if (
+            historico.prazoExecucao == null ||
+            historico.prazoExecucao == undefined
+          ) {
+            // fazer isso pra todas as coisa de data
+            dataPrazoExecucao = "-----------";
+          }
+        }
+
+        return {
+          id: index,
+          tarefa: historico.tarefa,
+          status: historico.status,
+          dataRecebimento: historico.dataRecebimento?.toLocaleDateString(),
+          prazoExecucaoTotal: historico.prazoExecucao,
+          dataPrazoExecucao: dataPrazoExecucao,
+          dataConclusaoTotal: historico.dataConclusao,
+          dataConclusao: historico.dataConclusao != null ? historico.dataConclusao.toLocaleDateString() : null,
+          pdfHistorico: historico.pdfHistorico,
+          tarefaExecutada: historico.tarefaExecutada,
+          nomeUsuario: historico.usuario?.nome,
+          cargoUsuario: historico.usuario?.tipoPessoa,
+        };
+      }
+    );
+
+    setHistoricosFormatados(histForm)
+  }, [historicosDemanda])
 
   function fecharPDF() {
     setMostrarPDF(false);
@@ -537,10 +246,10 @@ export default function Historico(props: {}) {
       }
     } else if (nomeColuna === "status") {
       const cores = {
-        "Em Aguardo": "em-aguardo",
-        "Em Andamento": "em-andamento",
-        Concluído: "concluido",
-        Atrasado: "atrasado",
+        "EMAGUARDO": "em-aguardo",
+        "EMANDAMENTO": "em-andamento",
+        "CONCLUIDO": "concluido",
+        "ATRASADO": "atrasado",
       };
 
       return (cores as any)[cell.row.status];
@@ -822,9 +531,9 @@ interface Historico {
   id: number;
   tarefa: TarefaExecucao;
   status: StatusTarefaHistorico;
-  dataRecebimento?: Date;
-  prazoExecucao?: Date;
-  dataConclusao?: Date;
+  dataRecebimento?: Date | null;
+  prazoExecucao?: Date | null;
+  dataConclusao?: Date | null;
   pdfHistorico?: string;
   motivoDevolucao?: string;
   tarefaExecutada?: TarefaExecucao;
@@ -832,5 +541,4 @@ interface Historico {
     nome: string;
     tipoPessoa: Persona;
   };
-  idDemanda: number;
 }
