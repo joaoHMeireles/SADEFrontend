@@ -20,12 +20,15 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto:
 
 
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
+  const [idCentroCusto, setIdCentroCusto] = useState<any[]>([]);
 
   useEffect(() => {
     api.get("/sod/centroCusto").then((res) => {
-      const lista = res.data.map((centroCusto: any) => centroCusto.nomeCentroCusto)
+      const listaCentroCusto = res.data.map((centroCusto: any) => centroCusto.nomeCentroCusto)
+      // const listaIdCentroCusto = res.data.map((centroCusto: any) => centroCusto.idCentroCusto);
 
-      setCentroCusto(lista)
+      setIdCentroCusto(res.data)
+      setCentroCusto(listaCentroCusto)
     }).catch((err) => {
       console.log(err);
     })
@@ -115,7 +118,18 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto:
               multiple
               disableCloseOnSelect
               onChange={(e, valor: any) => {
-                props.setCentroCusto(valor)
+                console.log(valor);
+
+                // if (valor.length > 1) {
+                //   valor.shift();
+                // }
+                // for (let i = 0; i < centroCusto.length; i++) {
+                //   if (valor[0] == idCentroCusto[i].nomeCentroCusto) {
+                //     console.log(valor);
+                //     console.log(idCentroCusto[i].nomeCentroCusto);
+                //   }
+                // }
+                // props.setCentroCusto(props.centroCusto)
               }}
               renderOption={(props, centroCusto, { selected }) => {
                 return (

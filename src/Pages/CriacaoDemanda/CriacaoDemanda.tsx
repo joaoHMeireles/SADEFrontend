@@ -40,7 +40,8 @@ export default function CriacaoDemanda(props: {
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
 
-  const [moeda, setMoeda] = useState("");
+  const [moedaReal, setMoedaReal] = useState<string[]>([]);
+  const [moedaPotencial, setMoedaPotencial] = useState<string[]>([]);
 
 
   useEffect(() => {
@@ -105,16 +106,19 @@ export default function CriacaoDemanda(props: {
     const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
     const objetivo = document.getElementById("objetivo") as HTMLInputElement;
 
-    const cc = [];
+    console.log(centroCusto);
 
-    for (let i = 0; i < centroCusto.length; i++) {
-      let c = {
-        // rever
-        idCentroCusto: 1,
-        nomeCentroCusto: centroCusto[i].label
-      }
-      cc.push(c)
-    }
+
+    // const cc = [""];
+
+    // for (let i = 0; i < centroCusto.length; i++) {
+    //   let c = {
+    //     // rever
+    //     idCentroCusto: 1,
+    //     nomeCentroCusto: centroCusto[i].label
+    //   }
+    //   cc.push(c)
+    // }
 
     const idUsuario = localStorage.getItem("IDUSUARIO");
 
@@ -122,7 +126,7 @@ export default function CriacaoDemanda(props: {
       "tituloDemanda": titulo.value,
       "objetivo": objetivo.value,
       "situacaoAtual": situacaoAtual.value,
-      "centroCustoDemanda": cc,
+      "centroCustoDemanda": centroCusto,
       "usuario": {
         "idUsuario": idUsuario
       }
@@ -135,48 +139,38 @@ export default function CriacaoDemanda(props: {
     const frequenciaUso = document.getElementById("frequenciaUso") as HTMLInputElement;
 
     let valorMensal;
-    let moeda;
     let descricao;
 
     let beneficios = [];
 
-
     for (let i = 0; i < numeroBeneficiosReais; i++) {
       valorMensal = document.getElementById(`valorMensalReal${i}`) as HTMLInputElement;
-      moeda = document.getElementById(`moedaReal${i}`) as HTMLInputElement;
       descricao = document.getElementById(`descricaoReal${i}`) as HTMLInputElement;
-
-      console.log(moeda);
-
 
       let beneficioReal = {
         "tipoBeneficio": "REAL",
         "descricao": descricao.value,
-        "moeda": moeda.value,
+        "moeda": moedaReal[i],
         "valor": valorMensal.value
       }
 
-      if (numeroBeneficiosReais > 0 && valorMensal.value && moeda.value && descricao.value) {
+      if (numeroBeneficiosReais > 0 && valorMensal.value && moedaReal && descricao.value) {
         beneficios.push(beneficioReal);
       }
     }
 
     for (let i = 0; i < numeroBeneficiosPotenciais; i++) {
       valorMensal = document.getElementById(`valorMensalPotencial${i}`) as HTMLInputElement;
-      moeda = document.getElementById(`moedaPotencial${i}`) as HTMLInputElement;
       descricao = document.getElementById(`descricaoPotencial${i}`) as HTMLInputElement;
-
-      console.log(moeda);
-
 
       let beneficioPotencial = {
         "tipoBeneficio": "POTENCIAL",
         "descricao": descricao.value,
-        "moeda": moeda.value,
+        "moeda": moedaPotencial[i],
         "valor": valorMensal.value
       }
 
-      if (numeroBeneficiosReais > 0 && valorMensal.value && moeda.value && descricao.value) {
+      if (numeroBeneficiosReais > 0 && valorMensal.value && moedaPotencial && descricao.value) {
         beneficios.push(beneficioPotencial);
       }
     }
@@ -208,6 +202,7 @@ export default function CriacaoDemanda(props: {
     }
 
     setData(data2)
+
   }
 
   function gerarPDFDemanda() {
@@ -307,8 +302,10 @@ export default function CriacaoDemanda(props: {
               setNumeroBeneficiosReais={setNumeroBeneficiosReais}
               setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
-              moeda={moeda}
-              setMoeda={setMoeda}
+              moedaReal={moedaReal}
+              setMoedaReal={setMoedaReal}
+              moedaPotencial={moedaPotencial}
+              setMoedaPotencial={setMoedaPotencial}
             />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
