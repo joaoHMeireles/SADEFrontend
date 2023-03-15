@@ -102,7 +102,11 @@ export function Header(props: {
     const estaEmWorkflow = processo.workflowIniciado
     const aprovadoWorkflow = processo.aprovadoWorkflow
     const workflowDeadline = processo.prazoWorkflow
+    const estaEmPauta = processo.estaEmPauta
     let listaBotoes: Botao[] = [{ nome: "chat", function: irChat }]
+
+    console.log(estaEmPauta);
+    
 
     function abrirModal() {
         props.setModalAberto(true)
@@ -152,8 +156,8 @@ export function Header(props: {
             </Alert>
         )
 
-        function reprovarDemanda(contaudoFeedback: JSX.Element){
-            
+        function reprovarDemanda(contaudoFeedback: JSX.Element) {
+
 
             abrirFeedback(contaudoFeedback)
         }
@@ -226,6 +230,7 @@ export function Header(props: {
     }
 
     function criarNovaPauta() {
+
         location.href = "/createagenda"
     }
 
@@ -392,8 +397,11 @@ export function Header(props: {
         if (!estaEmWorkflow) {
             if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
                 const iniciarWorkflow = { nome: "iniciarworkflow", function: iniciarNovoWorkflow }
-
-                listaBotoes.push(iniciarWorkflow, verDemanda, criarPauta)
+                listaBotoes.push(iniciarWorkflow, verDemanda)
+                
+                if (!estaEmPauta) {
+                    listaBotoes.push(criarPauta)
+                }
             } else if (tipoPessoa == "gerenteNegocio") {
                 listaBotoes.push(verDemanda)
             }
@@ -401,7 +409,9 @@ export function Header(props: {
             if (aprovadoWorkflow) {
                 listaBotoes.push(verDemanda)
                 if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                    listaBotoes.push(criarPauta)
+                    if (!estaEmPauta) {
+                        listaBotoes.push(criarPauta)
+                    }
                 }
             } else {
                 if (workflowDeadline < new Date()) {

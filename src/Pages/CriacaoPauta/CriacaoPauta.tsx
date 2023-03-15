@@ -50,7 +50,7 @@ export default function CriacaoPauta(props: {
 }) {
   const [valor, setValor] = useState(0);
   const [grid, setGrid] = useState(true);
-  const [propostas, setPropostas] = useState(Array<Object>);
+  const [propostas, setPropostas] = useState<any[]>([]);
   const [listaComponents, setListaComponents] = useState<any[]>([])
 
   const comissao = [
@@ -63,22 +63,25 @@ export default function CriacaoPauta(props: {
 
   const [comissoes, setComissoes] = useState(Array<String>);
 
-  api.get("/sod/proposta").then((response) => {
-    let listaPropostas: any[] = []
-    for(let proposta of response.data){
-      // console.log(proposta);
-      for(let atributo in proposta.demanda){
-        proposta[atributo] = proposta.demanda[atributo]
+  useEffect(() => {
+    //fazer ele ver se veio de uma página de proposta onde ele selecionou uma proposta para criar a pauta
+
+    api.get(`/sod/proposta/pauta/${false}`).then((response) => {
+      let listaPropostas: any[] = []
+      for(let proposta of response.data){
+        for(let atributo in proposta.demanda){
+          proposta[atributo] = proposta.demanda[atributo]
+        }
+  
+        proposta.tipo = TipoComponenteProcesso.Proposta
+        listaPropostas.push(proposta)
       }
-
-      proposta.tipo = TipoComponenteProcesso.Proposta
-      listaPropostas.push(proposta)
-    }
-    setListaComponents(listaPropostas);
-
-  }).catch((err) => {
-    console.log(err);
-  })
+      setListaComponents(listaPropostas);
+  
+    }).catch((err) => {
+      console.log(err);
+    })
+  }, [])
 
   useEffect(() => {
     for (let i = 0; i < propostas.length; i++) {
