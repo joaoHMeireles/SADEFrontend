@@ -106,20 +106,6 @@ export default function CriacaoDemanda(props: {
     const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
     const objetivo = document.getElementById("objetivo") as HTMLInputElement;
 
-    console.log(centroCusto);
-
-
-    // const cc = [""];
-
-    // for (let i = 0; i < centroCusto.length; i++) {
-    //   let c = {
-    //     // rever
-    //     idCentroCusto: 1,
-    //     nomeCentroCusto: centroCusto[i].label
-    //   }
-    //   cc.push(c)
-    // }
-
     const idUsuario = localStorage.getItem("IDUSUARIO");
 
     let data = {
@@ -229,15 +215,17 @@ export default function CriacaoDemanda(props: {
       formData.append("pdfVersaoHistorico", pdfDemanda);
     }
 
-    // api.post("/sod/demanda", formData, {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   }
-    // }).then((res) => {
-    //   console.log(res);
-    // }).catch((err) => {
-    //   console.log(err);
-    // })
+    api.post("/sod/demanda", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    }).then((res: any) => {
+      console.log(res);
+    }).catch((err: any) => {
+      console.log(err);
+    })
+
+    window.location.href = "/home";
   }
 
 

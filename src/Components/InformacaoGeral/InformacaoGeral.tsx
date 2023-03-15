@@ -23,13 +23,11 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto:
   const [idCentroCusto, setIdCentroCusto] = useState<any[]>([]);
 
   useEffect(() => {
-    api.get("/sod/centroCusto").then((res) => {
+    api.get("/sod/centroCusto").then((res: any) => {
       const listaCentroCusto = res.data.map((centroCusto: any) => centroCusto.nomeCentroCusto)
-      // const listaIdCentroCusto = res.data.map((centroCusto: any) => centroCusto.idCentroCusto);
-
       setIdCentroCusto(res.data)
       setCentroCusto(listaCentroCusto)
-    }).catch((err) => {
+    }).catch((err: any) => {
       console.log(err);
     })
   }, [])
@@ -118,18 +116,17 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto:
               multiple
               disableCloseOnSelect
               onChange={(e, valor: any) => {
-                console.log(valor);
+                let centroCustoDemanda: Object[] = []
 
-                // if (valor.length > 1) {
-                //   valor.shift();
-                // }
-                // for (let i = 0; i < centroCusto.length; i++) {
-                //   if (valor[0] == idCentroCusto[i].nomeCentroCusto) {
-                //     console.log(valor);
-                //     console.log(idCentroCusto[i].nomeCentroCusto);
-                //   }
-                // }
-                // props.setCentroCusto(props.centroCusto)
+                for (let centroCustoSelecionado of valor) {
+                  for (let centroCustoBanco of idCentroCusto) {
+                    if (centroCustoBanco.nomeCentroCusto == centroCustoSelecionado) {
+                      centroCustoDemanda.push({ idCentroCusto: centroCustoBanco.idCentroCusto })
+                    }
+                  }
+                }
+
+                props.setCentroCusto(centroCustoDemanda)
               }}
               renderOption={(props, centroCusto, { selected }) => {
                 return (
