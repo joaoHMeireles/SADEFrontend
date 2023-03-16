@@ -33,7 +33,7 @@ export default function ComponenteProcesso(props: {
   setPropostaSelecionada?: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const componente = props.atributosProcesso;
-  
+
   const paginaAtual = localStorage.getItem("PAGINATUAL");
   let corComponente,
     tituloToolTip,
@@ -90,7 +90,12 @@ export default function ComponenteProcesso(props: {
   );
 
   useEffect(() => {
-    const card = document.getElementById(`${componente.id}`);
+    const card = document.getElementById(`${componente.idDemanda}`);
+
+    console.log(card);
+    console.log(props.propostaSelecionada);
+    
+
     if (props.proposta) {
       if (props.propostaSelecionada == componente.id) {
         card?.classList.add("selecionado");
@@ -142,7 +147,7 @@ export default function ComponenteProcesso(props: {
           },
         }}
       />
-      <MainPaper key={componente.id} id={componente.id}>
+      <MainPaper key={componente.id} id={componente.idDemanda}>
         <Grid container>{processElement}</Grid>
       </MainPaper>
     </>
@@ -210,7 +215,7 @@ function GridComponent(props: ComponentProps) {
                 checked={props.selecionado}
                 onClick={() => {
                   if (props.setSelecionado) {
-                    props.setSelecionado(props.componente.id);
+                    props.setSelecionado(props.componente.idDemanda);
                     localStorage.setItem(
                       `DEMANDASELECIONADA`,
                       JSON.stringify(props.componente)
