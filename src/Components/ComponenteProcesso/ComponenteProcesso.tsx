@@ -19,7 +19,7 @@ import {
   UltimaListaTypography,
 } from "./ComponenteProcesso.styles";
 import { GlobalStyles } from "@mui/styled-engine";
-import { getNome } from "../../utils";
+import { getNome} from "../../utils";
 
 export default function ComponenteProcesso(props: {
   grid: boolean;
@@ -39,7 +39,7 @@ export default function ComponenteProcesso(props: {
     tituloToolTip,
     nomeTipoLink = "";
 
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(componente.escolhidaCriacao? true: false);
 
   if (componente.tipo == TipoComponenteProcesso.Demanda) {
     corComponente = "#00579d";
@@ -86,6 +86,8 @@ export default function ComponenteProcesso(props: {
       setSelecionado={props.setPropostaSelecionada}
       propostaSelecionada={props.propostaSelecionada}
       verProcesso={verProcesso}
+      isChecked={isChecked}
+      setIsChecked={setIsChecked}
     />
   );
 
@@ -450,6 +452,12 @@ function ListComponent(props: ComponentProps) {
               <UltimaListaTypography variant="body2" sx={{ maxWidth: "3vw" }}>
                 <Checkbox
                   id="checkbox"
+                  checked={props.isChecked}
+                  onChange={(e) => {
+                    if (props.setIsChecked) {
+                      props.setIsChecked(e.target.checked);
+                    }
+                  }}
                   onClick={(e: any) => {
                     const card = document.getElementById(
                       `${props.componente.id}`
@@ -457,10 +465,17 @@ function ListComponent(props: ComponentProps) {
                     card?.classList.toggle("selecionado");
 
                     if (e.target.checked) {
-                      if (props.propostas) {
-                        const componentePaginaPauta = props.componente;
-                        componentePaginaPauta.link = props.linkComponente;
-                        props.propostas.push(props.componente);
+                      const componentePaginaPauta = props.componente;
+                      componentePaginaPauta.link = props.linkComponente;
+
+                      props.propostas?.push(props.componente);
+                    } else {
+                      if (props.setPropostas) {
+                        props.setPropostas((propostas) => {
+                          return propostas.filter(
+                            (proposta) => proposta.id !== props.componente.id
+                          );
+                        });
                       }
                     }
                   }}

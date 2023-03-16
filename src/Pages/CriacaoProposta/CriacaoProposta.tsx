@@ -46,7 +46,11 @@ export default function CriacaoProposta(props: {
   const [listaComponents, setListaComponents] = useState<any[]>([])
 
   useEffect(() => {
-    api.get("/sod/demanda/status/BACKLOG").then((response) => {
+    const idDemandaCriacao = localStorage.getItem("DEMANDACRIARPROPOSTA")
+
+    console.log(idDemandaCriacao);
+
+    api.get(`/sod/demanda/proposta/${false}`).then((response) => {
       let listaDemandas: any[] = []
 
       for (let demanda of response.data) {

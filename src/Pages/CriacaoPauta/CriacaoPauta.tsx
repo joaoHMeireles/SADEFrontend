@@ -64,7 +64,10 @@ export default function CriacaoPauta(props: {
   const [comissoes, setComissoes] = useState(Array<String>);
 
   useEffect(() => {
-    //fazer ele ver se veio de uma página de proposta onde ele selecionou uma proposta para criar a pauta
+    const idPropostaEscolhida = localStorage.getItem("PROPOSTACRIARPAUTA")
+
+    console.log(idPropostaEscolhida);
+    
 
     api.get(`/sod/proposta/pauta/${false}`).then((response) => {
       let listaPropostas: any[] = []
@@ -72,10 +75,15 @@ export default function CriacaoPauta(props: {
         for(let atributo in proposta.demanda){
           proposta[atributo] = proposta.demanda[atributo]
         }
+
+        if(proposta.idProposta == idPropostaEscolhida){
+          proposta.escolhidaCriacao = true
+        }
   
         proposta.tipo = TipoComponenteProcesso.Proposta
         listaPropostas.push(proposta)
       }
+
       setListaComponents(listaPropostas);
   
     }).catch((err) => {
@@ -90,9 +98,9 @@ export default function CriacaoPauta(props: {
     }
   });
 
-  useEffect(() => {
-    console.log(propostas);
-  }, [valor]);
+  // useEffect(() => {
+  //   console.log(propostas);
+  // }, [valor]);
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     console.log(newValue);

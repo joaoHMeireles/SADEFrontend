@@ -9,7 +9,8 @@ export interface InterfaceComponenteProcesso {
     tamanho: TamanhoComponenteProcesso,
     frequenciaUso: string,
     tipo: TipoComponenteProcesso,
-    link?: String
+    link?: String,
+    escolhidaCriacao?: boolean
 }
 
 export interface InterfaceColecaoComponenteProcesso {

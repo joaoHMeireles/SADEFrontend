@@ -31,7 +31,7 @@ import {
     BoxAtributoInfoModal2, TypographyTituloAtributoModal, TextFieldURL
 } from './TelaProcesso.styles';
 import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
-import api from '../../api/api';
+import api, { verificarAprovado } from '../../api/api';
 
 /**
  * Componente principal das páginas de proposta de demanda sendo dinâmico conforme
@@ -93,10 +93,11 @@ export function Header(props: {
     const [tempoExcedido, setTempoExcedido] = useState(false)
     const { pathname } = useLocation()
     const processo = props.informacaoProcesso;
-    const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
+    const tipoPessoa = localStorage.getItem("TIPOUSUARIO") 
     const tipoProcesso = processo.tipo
     const tamanho = processo.tamanho
-    const aprovadoGerente = processo.aprovadoGerente
+    //fazer método
+    const aprovadoGerente = verificarAprovado(processo.id) || true
     const linkJira = processo.linkJira
     const prazoElaboracao = processo.prazoElaboracao
     const estaEmWorkflow = processo.workflowIniciado
@@ -104,9 +105,6 @@ export function Header(props: {
     const workflowDeadline = processo.prazoWorkflow
     const estaEmPauta = processo.estaEmPauta
     let listaBotoes: Botao[] = [{ nome: "chat", function: irChat }]
-
-    console.log(estaEmPauta);
-    
 
     function abrirModal() {
         props.setModalAberto(true)
@@ -124,9 +122,9 @@ export function Header(props: {
 
     //funções dos botões
     function irChat() {
-        localStorage.setItem("IDCHATESCOLHIDO", processo.id + "")
+        localStorage.setItem("IDCHATESCOLHIDO", processo.id)
         location.href = "/chats";
-    }
+    } //feito
 
     function aprovarDemanda() {
         function novoModal(conteudo: JSX.Element) {
@@ -176,7 +174,6 @@ export function Header(props: {
     }
 
     function devolverDemanda() {
-
         props.setConteudoModal(<ModalMotivoDevolucao abrirFeedback={abrirFeedback} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
 
         abrirModal()
@@ -184,7 +181,7 @@ export function Header(props: {
 
     function verHistorico() {
         location.href = pathname + "/history"
-    }
+    } //feito
 
     function adicionarInformacoesDemanda() {
         props.setConteudoModal(<ModalAdiconarInformações abrirFeedback={abrirFeedback} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
@@ -193,6 +190,8 @@ export function Header(props: {
     }
 
     function criarNovaProposta() {
+        localStorage.setItem("DEMANDACRIARPROPOSTA", processo.idDemanda)
+
         location.href = "/createproposal"
     }
 
@@ -227,12 +226,12 @@ export function Header(props: {
         }).catch((err) => {
             console.log(err);
         })
-    }
+    } //feito
 
     function criarNovaPauta() {
-
+        localStorage.setItem("PROPOSTACRIARPAUTA", processo.idProposta)
         location.href = "/createagenda"
-    }
+    } //feito
 
     function avaliarWorkflow() {
         const conteudoFeedbackAprovado = (

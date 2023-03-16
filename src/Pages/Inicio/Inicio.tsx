@@ -25,33 +25,34 @@ export default function Inicio(props: {
   const location = useLocation().pathname
 
   function buscarComponentes() {
-    // api.get("/sod/demanda").then((response) => {
-    //   let listaDemandas: any[] = []
-    //   for (let demanda of response.data) {
-    //     demanda.tipo = TipoComponenteProcesso.Demanda
-    //     listaDemandas.push(demanda)
-    //   }
-    //   setListaComponents(listaDemandas);
-    // }).catch((err) => {
-    //   console.log(err);
-    // })
-
-    api.get("/sod/proposta").then((response) => {
-      let listaPropostas: any[] = []
-      for(let proposta of response.data){
-        // console.log(proposta);
-        for(let atributo in proposta.demanda){
-          proposta[atributo] = proposta.demanda[atributo]
-        }
-
-        proposta.tipo = TipoComponenteProcesso.Proposta
-        listaPropostas.push(proposta)
+    api.get("/sod/demanda").then((response) => {
+      let listaDemandas: any[] = []
+      for (let demanda of response.data) {
+        demanda.tipo = TipoComponenteProcesso.Demanda
+        listaDemandas.push(demanda)
       }
-      setListaComponents(listaPropostas);
-
+      setListaComponents(listaDemandas);
     }).catch((err) => {
       console.log(err);
     })
+
+    // api.get("/sod/proposta").then((response) => {
+    //   let listaPropostas: any[] = []
+    //   for(let proposta of response.data){
+        
+    //     for(let atributo in proposta.demanda){
+    //       proposta[atributo] = proposta.demanda[atributo]
+    //     }
+
+    //     proposta.tipo = TipoComponenteProcesso.Proposta
+    //     proposta.id = proposta.idProposta
+    //     listaPropostas.push(proposta)
+    //   }
+    //   setListaComponents(listaPropostas);
+
+    // }).catch((err) => {
+    //   console.log(err);
+    // })
 
 
     // api.get("/sod/pauta").then((response) => {
