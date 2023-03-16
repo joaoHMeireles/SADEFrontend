@@ -31,7 +31,7 @@ import {
     BoxAtributoInfoModal2, TypographyTituloAtributoModal, TextFieldURL
 } from './TelaProcesso.styles';
 import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
-import api, { verificarAprovado } from '../../api/api';
+import api, { verificarHistoricoAprovado } from '../../api/api';
 
 /**
  * Componente principal das páginas de proposta de demanda sendo dinâmico conforme
@@ -97,7 +97,7 @@ export function Header(props: {
     const tipoProcesso = processo.tipo
     const tamanho = processo.tamanho
     //fazer método
-    const aprovadoGerente = verificarAprovado(processo.id) || true
+    const aprovadoGerente = verificarHistoricoAprovado(processo.id) 
     const linkJira = processo.linkJira
     const prazoElaboracao = processo.prazoElaboracao
     const estaEmWorkflow = processo.workflowIniciado

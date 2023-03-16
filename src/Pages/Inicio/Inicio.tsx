@@ -28,6 +28,7 @@ export default function Inicio(props: {
     api.get("/sod/demanda").then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
+        demanda.id = demanda.idDemanda
         demanda.tipo = TipoComponenteProcesso.Demanda
         listaDemandas.push(demanda)
       }
