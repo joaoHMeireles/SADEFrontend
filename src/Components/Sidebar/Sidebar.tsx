@@ -85,39 +85,18 @@ let drawerWidth = "240";
  * @returns 
  */
 export default function MiniDrawer(props: { aberto: boolean, tamanho: string, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<SetStateAction<boolean>> }) {
-  const [indexSelcionado, setIndexSelecionado] = useState(0);
   const location = useLocation()
   const itensMenu = lista.map((rota, index) => {
 
     if (rota.children) {
-      return <DropMenuItem key={index} index={index} item={rota} aberto={props.aberto} setAberto={props.setAberto} setFiltro={props.setFiltro} indexSelecionado={indexSelcionado} setIndexSelecionado={setIndexSelecionado} />
+      return <DropMenuItem key={index} index={index} item={rota} aberto={props.aberto} setAberto={props.setAberto} setFiltro={props.setFiltro} />
     } else {
-      return <MenuItem key={index} index={index} item={rota} aberto={props.aberto} indexSelecionado={indexSelcionado} setIndexSelecionado={setIndexSelecionado} />
+      return <MenuItem key={index} index={index} item={rota} aberto={props.aberto} />
     }
   })
 
   useEffect(() => {
     drawerWidth = props.tamanho
-  })
-
-  //fazer mudar quando atualizar a página tbm
-  useLocationChange(() => {
-    const opcoesSidebar = {
-      home: 1
-    }
-
-    // console.log(location.pathname);
-    
-    const chaveLocalizacao = location.pathname.slice(1, 5)
-
-    // console.log(chaveLocalizacao);
-
-    const valorLocalizacao = (opcoesSidebar as any)[chaveLocalizacao]
-
-    // console.log(valorLocalizacao);
-    
-
-    // setIndexSelecionado(valorLocalizacao)
   })
 
   return (
@@ -156,8 +135,18 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
  * @param props 
  * @returns 
  */
-function MenuItem(props: { index: number, item: { id: number, nome: string, rota: string, icone: JSX.Element }, aberto: boolean, indexSelecionado: number, setIndexSelecionado: React.Dispatch<SetStateAction<number>> }) {
-  const selecionado = props.indexSelecionado == props.index
+function MenuItem(props: { index: number, item: { id: number, nome: string, rota: string, icone: JSX.Element }, aberto: boolean}) {
+  const [selecionado, setSelecionado] = useState(false)
+  const location = useLocation()
+
+
+  useEffect(() => {
+    if (location.pathname.slice(1) == props.item.rota) {
+      setSelecionado(true)
+    } else {
+      setSelecionado(false)
+    }
+  })
 
   return (
     <Link to={props.item.rota}>
@@ -165,7 +154,7 @@ function MenuItem(props: { index: number, item: { id: number, nome: string, rota
         <Grid container>
           <Grid item xs={0.3} sx={{ backgroundColor: (selecionado ? "#00579d" : "inherit"), borderRadius: "0 5px 5px 0" }} />
           <Grid item xs={11.7}>
-            <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center', "& .MuiSvgIcon-root": { color: (selecionado ? "#00579d" : "inherit") } }} onClick={() => { props.setIndexSelecionado(props.index) }} selected={selecionado}>
+            <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center', "& .MuiSvgIcon-root": { color: (selecionado ? "#00579d" : "inherit") } }} selected={selecionado}>
               <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
                 {props.item.icone}
               </SidebarListItemIcon>
@@ -184,14 +173,18 @@ function MenuItem(props: { index: number, item: { id: number, nome: string, rota
  * @param props 
  * @returns 
  */
-function DropMenuItem(props: { index: number, item: { id: number, nome: string, icone: JSX.Element, children: { id: number, nome: string, rota: string, }[] }, aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<SetStateAction<boolean>>, indexSelecionado: number, setIndexSelecionado: React.Dispatch<SetStateAction<number>> }) {
+function DropMenuItem(props: { index: number, item: { id: number, nome: string, icone: JSX.Element, children: { id: number, nome: string, rota: string, }[] }, aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<SetStateAction<boolean>>}) {
   const [componenteAberto, setComponenteAberto] = useState(false);
-  let itensSelecionados = false
+  const [itensSelecionados, setItensSelecionados] = useState(false)
+  const location = useLocation()
+
   const rotasSecundarias = props.item.children.map((rotaSecundaria, index) => {
-    const indexItem = props.index * 10 + index
-    const selecionado = props.indexSelecionado == indexItem
-    if (selecionado) {
-      itensSelecionados = true
+    const selecionado = location.pathname.slice(1) == rotaSecundaria.rota
+
+    if (!itensSelecionados) {
+      if (selecionado) {
+        setItensSelecionados(true)
+      }
     }
 
     return (
@@ -200,7 +193,7 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
         <Grid item xs={11.7}>
           <SidebarTypography>
             <Link to={rotaSecundaria.rota} >
-              <SidebarListItemButton sx={{ pl: 4 }} onClick={() => { props.setIndexSelecionado(indexItem) }} selected={selecionado} >
+              <SidebarListItemButton sx={{ pl: 4 }} selected={selecionado} >
                 <ListItemText primary={rotaSecundaria.nome} />
               </SidebarListItemButton>
             </Link>
@@ -216,17 +209,19 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
     }
   })
 
-  useEffect(() => {
+  useLocationChange(() => {
     if (!componenteAberto) {
       const gridCollapse = document.getElementById(`gridCollapse${props.item.id}`)
       gridCollapse?.style.setProperty("background-color", "inherit")
     }
-  }, [props.indexSelecionado])
+
+    setItensSelecionados(false)
+  })
 
   useEffect(() => {
     const gridCollapse = document.getElementById(`gridCollapse${props.item.id}`)
+    
     if (!componenteAberto && itensSelecionados) {
-      console.log("fechou");
       gridCollapse?.style.setProperty("background-color", "#00579d")
     } else {
       gridCollapse?.style.setProperty("background-color", "inherit")
@@ -238,6 +233,7 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
       props.setFiltro(false)
       props.setAberto(true)
     }
+    
     setComponenteAberto(!componenteAberto)
   }
 

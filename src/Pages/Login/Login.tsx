@@ -23,29 +23,15 @@ import {
  * @returns Função que retorna a tela de login
  */
 
-function Login(props: {
+export default function Login(props: {
   setAberto: React.Dispatch<React.SetStateAction<boolean>>;
   setFiltro: React.Dispatch<React.SetStateAction<boolean>>;
   tamanhoNavbar: string;
 }) {
   const [tipo, setTipo] = useState("password");
-  localStorage.setItem("PESSOA", "Solicitante")
+  // localStorage.setItem("PESSOA", "Solicitante")
   localStorage.setItem("PAGINATUAL", "login")
-  let contentLink;
 
-
-  interface User {
-    cargo: string,
-    chatsUsuario: [],
-    departamento: string,
-    email: string,
-    idUsuario: number,
-    nomeUsuario: string,
-    notificacoesUsuario: [],
-    numeroCadastro: number,
-    senha: string,
-    setor: string
-  }
 
   const [usuarios, setUsuarios] = useState<User[]>([])
   const [logado, setLogado] = useState(false)
@@ -73,8 +59,6 @@ function Login(props: {
    */
   function colocaPessoa() {
     localStorage.setItem("TIPOUSUARIO", "gerenteTI");
-    console.log(usuarios);
-
 
     for (let i = 0; i < usuarios.length; i++) {
       if (user == usuarios[i].nomeUsuario) {
@@ -154,4 +138,15 @@ function Login(props: {
   );
 }
 
-export default Login;
+interface User {
+  cargo: string,
+  chatsUsuario: [],
+  departamento: string,
+  email: string,
+  idUsuario: number,
+  nomeUsuario: string,
+  notificacoesUsuario: [],
+  numeroCadastro: number,
+  senha: string,
+  setor: string
+}

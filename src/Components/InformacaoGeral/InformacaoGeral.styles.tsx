@@ -25,7 +25,8 @@ export const BoxContainerLabels = styledBox({
 
 export const TypographyLabels = styledTypography({
   color: "#595959",
-  marginBottom: 16,
+  fontWeight: "bold",
+  marginBottom: 16
 });
 
 export const BoxContainerCentroCusto = styledBox({

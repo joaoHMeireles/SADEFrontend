@@ -63,11 +63,13 @@ export default function ComponenteColecaoProcesso(props: {
   );
 
   function verProcesso() {
+    setProcesso()
     location.href = nomeTipoLink;
   }
 
   function setProcesso() {
     const tipoComponente = componente.tipo.toUpperCase();
+    
     localStorage.setItem(
       `${tipoComponente}ESCOLHIDA`,
       JSON.stringify(componente)

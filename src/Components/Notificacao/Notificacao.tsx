@@ -28,8 +28,6 @@ export default function Notificacao(props: {
   notificacoes: any[];
   setNotificacoes: React.Dispatch<React.SetStateAction<Array<Object>>>;
 }) {
-  
-
   const idUsuario = localStorage.getItem("IDUSUARIO") as string;
 
   const bodyNotificacaoDTO: any = {
