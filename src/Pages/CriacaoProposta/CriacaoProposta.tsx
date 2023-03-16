@@ -520,7 +520,7 @@ export default function CriacaoProposta(props: {
       <ContainerGeral>
         {valor == 1 && (
           <>
-            <InformacaoGeral proposta={true} />
+            <InformacaoGeral proposta={true}/>
             <BeneficiosDemanda rascunho={false} proposta={true} />
             <InputAnexos rascunho={false} proposta={true} />
             <BoxContainerBotoes>

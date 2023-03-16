@@ -15,7 +15,7 @@ import {
 import Checkbox from "@mui/material/Checkbox";
 import api from "../../api/api";
 
-export default function InformacaoGeral(props: { proposta: boolean, centroCusto: any[], setCentroCusto: React.Dispatch<React.SetStateAction<any[]>> }) {
+export default function InformacaoGeral(props: { proposta: boolean, centroCusto?: any[], setCentroCusto?: React.Dispatch<React.SetStateAction<any[]>> }) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
 
 

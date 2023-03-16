@@ -11,8 +11,8 @@ import Dropzone from "../Dropzone/Dropzone";
 export default function InputAnexos(props: {
   rascunho: boolean;
   proposta: boolean;
-  files: any;
-  setFiles: React.Dispatch<React.SetStateAction<never[]>>;
+  files?: any;
+  setFiles?: React.Dispatch<React.SetStateAction<never[]>>;
 }) {
   return (
     <>

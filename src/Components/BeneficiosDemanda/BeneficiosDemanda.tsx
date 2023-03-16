@@ -27,16 +27,16 @@ import {
 export default function BeneficiosDemanda(props: {
   rascunho: boolean;
   proposta: boolean;
-  numeroBeneficiosReais: number
-  numeroBeneficiosPotenciais: number
-  numeroBeneficiosQualitativos: number
-  setNumeroBeneficiosReais: React.Dispatch<React.SetStateAction<number>>
-  setNumeroBeneficiosPotenciais: React.Dispatch<React.SetStateAction<number>>
-  setNumeroBeneficiosQualitativos: React.Dispatch<React.SetStateAction<number>>
-  moedaReal: string[]
-  setMoedaReal: React.Dispatch<React.SetStateAction<string[]>>
-  moedaPotencial: string[]
-  setMoedaPotencial: React.Dispatch<React.SetStateAction<string[]>>
+  numeroBeneficiosReais?: number
+  numeroBeneficiosPotenciais?: number
+  numeroBeneficiosQualitativos?: number
+  setNumeroBeneficiosReais?: React.Dispatch<React.SetStateAction<number>>
+  setNumeroBeneficiosPotenciais?: React.Dispatch<React.SetStateAction<number>>
+  setNumeroBeneficiosQualitativos?: React.Dispatch<React.SetStateAction<number>>
+  moedaReal?: string[]
+  setMoedaReal?: React.Dispatch<React.SetStateAction<string[]>>
+  moedaPotencial?: string[]
+  setMoedaPotencial?: React.Dispatch<React.SetStateAction<string[]>>
 }) {
 
   const [frequencia, setFrequencia] = useState("");
