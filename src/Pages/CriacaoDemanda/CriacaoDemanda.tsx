@@ -43,7 +43,6 @@ export default function CriacaoDemanda(props: {
   const [moedaReal, setMoedaReal] = useState<string[]>([]);
   const [moedaPotencial, setMoedaPotencial] = useState<string[]>([]);
 
-
   useEffect(() => {
     if (props.rascunho) {
       const info = JSON.parse(

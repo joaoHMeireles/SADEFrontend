@@ -89,11 +89,6 @@ export default function ComponenteProcesso(props: {
     />
   );
 
-  function verProcesso() {
-    setProcesso()
-    location.href = nomeTipoLink;
-  }
-
   useEffect(() => {
     const card = document.getElementById(`${componente.id}`);
     if (props.proposta) {
@@ -120,6 +115,11 @@ export default function ComponenteProcesso(props: {
       }
     }
   }, [props.propostas]);
+
+  function verProcesso() {
+    setProcesso()
+    location.href = nomeTipoLink;
+  }
 
   function setProcesso() {
     if (props.rascunho) {

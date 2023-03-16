@@ -557,7 +557,7 @@ const listaComponents: {}[] = [
   },
 ];
 
-export default function Rascunho(props: {
+export default function Enviadas(props: {
   filtrar: boolean;
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
 }) {

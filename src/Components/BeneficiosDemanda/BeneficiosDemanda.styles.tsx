@@ -68,7 +68,8 @@ export const BoxValorMensal = styledBox({
 })
 
 export const TypographyLabels = styledTypography({
-    color: "#595959"
+    color: "#595959",
+    fontWeight: "bold"
 })
 
 export const BoxInputs = styledBox({

@@ -1,6 +1,6 @@
 
 import { Accordion, Grid } from '@mui/material';
-import { TypographyTexto, TypographyTituloAtributo } from '../TelaProcesso/TelaProcesso.styles';
+import { TypographyTexto, TypographyTitulo, TypographyTituloAtributo } from '../TelaProcesso/TelaProcesso.styles';
 import { styled } from '@mui/material/styles';
 import { GridContainer } from '../../Components/ContainerProcesso/ContainerProcesso.styles';
 const styledGrid = styled(Grid)
@@ -35,4 +35,15 @@ export const GridFooter = styledGrid({
 
 export const TypographyTituloDecisao = styled(TypographyTituloAtributo)({
     marginBottom: "10px"
+})
+
+export const TypographyTituloInput = styled(TypographyTitulo)({
+    fontWeight: "bold",
+    marginBottom: "10px"
+})
+
+export const GridInfoATA = styledGrid({
+    "& input": {
+        color: "#595959"
+    }
 })

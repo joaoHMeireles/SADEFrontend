@@ -44,9 +44,11 @@ import {
   AccordionProposta,
   GridContainerColecao,
   GridFooter,
+  GridInfoATA,
   GridProposta,
   TypographyTextoColecao,
   TypographyTituloDecisao,
+  TypographyTituloInput,
 } from "./TelaColecaoProcesso.styles";
 import {
   BoxCorStatus,
@@ -251,7 +253,7 @@ function Header(props: {
 
   /**
    * 1º informar parecer da comissão (Pauta, já passou a data da reunião)
-   * 2º finalizar processo (Ata, ainda não passou plea dg)
+   * 2º finalizar processo (Ata, ainda não passou pela dg)
    * */
   return (
     <>
@@ -266,7 +268,6 @@ function Header(props: {
                   props.setAvaliandoProcesso(true);
                 }}
               >
-                {" "}
                 {acao}
               </BotaoPrimario>
             ) : (
@@ -296,6 +297,7 @@ function Header(props: {
     </>
   );
 }
+
 /**
  * Container principal para todas as informações de uma proposta/demanda
  *
@@ -312,8 +314,6 @@ function ContainerColecaoProcesso(props: {
     informacaoColecaoProcesso.dataReuniao
   ).toLocaleDateString();
 
-  // console.log(informacaoColecaoProcesso);
-
   return (
     <GridContainerColecao container spacing={2}>
       <Grid item xs={12}>
@@ -328,18 +328,49 @@ function ContainerColecaoProcesso(props: {
           </Grid>
         </GridContainerHeader>
       </Grid>
-      <Grid item xs={12}>
-        Data da reunião: {dataFormatada}
-      </Grid>
-      <Grid item xs={12}>
-        Propostas:
-      </Grid>
+
+      <GridPequenosAtributos item xs={6}>
+        <TypographyTituloAtributo variant='body1'>
+          Data da reunião:
+        </TypographyTituloAtributo>
+        <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+          {dataFormatada}
+        </TypographyTexto>
+      </GridPequenosAtributos>
+      <GridPequenosAtributos item xs={6}>
+        <TypographyTituloAtributo variant='body1'>
+          Período da reunião:
+        </TypographyTituloAtributo>
+        <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+          {informacaoColecaoProcesso.inicioReuniao.slice(0, 5)} - {informacaoColecaoProcesso.finalReuniao.slice(0, 5)}
+        </TypographyTexto>
+      </GridPequenosAtributos>
+      {informacaoColecaoProcesso.tipo != "ATA" ?
+        <GridPequenosAtributos item xs={6}>
+          <TypographyTituloAtributo variant='body1'>
+            Fórum responsável:
+          </TypographyTituloAtributo>
+          <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+            {informacaoColecaoProcesso.forum.nomeForum}
+          </TypographyTexto>
+        </GridPequenosAtributos>
+        :
+        <div>
+          colcocar o nome das pessoas que vao participar
+        </div>
+      }
+      <GridPequenosAtributos item xs={12}>
+        <TypographyTituloAtributo variant='body1'>
+          Propostas:
+        </TypographyTituloAtributo>
+      </GridPequenosAtributos>
       <Propostas
         listaPropostas={informacaoColecaoProcesso.propostas}
         listaPropostasAnteriores={informacaoColecaoProcesso.propostasPauta}
         tipoColecao={informacaoColecaoProcesso.tipo}
         avaliandoProcesso={props.avaliandoProcesso}
         verificacaoInputs={props.verificacaoInputs}
+        tituloPauta={informacaoColecaoProcesso.tituloReuniao}
       />
       {informacaoColecaoProcesso.tipo == "ATA" && !props.avaliandoProcesso && (
         <GridFooter item xs={12}>
@@ -368,7 +399,9 @@ function Propostas(props: {
   tipoColecao: string;
   avaliandoProcesso: boolean;
   verificacaoInputs: boolean[];
+  tituloPauta?: string;
 }) {
+  const [data, setData] = useState<any>()
   const eUmaPauta = props.tipoColecao == "Pauta" ? true : false;
   const location = useLocation().pathname;
   const linkProposta = location + "/proposal";
@@ -384,8 +417,6 @@ function Propostas(props: {
       }
     }
 
-
-
     return (
       <Proposta
         key={index}
@@ -400,7 +431,67 @@ function Propostas(props: {
     );
   });
 
-  return <>{propostas}</>;
+  return (
+    <>
+      {propostas}
+      {props.avaliandoProcesso &&
+        <>
+          {eUmaPauta ?
+            <>
+              <Grid item xs={12}>
+                <Divider sx={{ marginBottom: "10px" }} />
+                <Typography variant="h5">
+                  Informações ATA
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container spacing={3}>
+                  <GridInfoATA item xs={12}>
+                    <TypographyTituloInput>
+                      Dia da reunião
+                    </TypographyTituloInput>
+                    <TextField type={"date"} id="dataReuniao" />
+                  </GridInfoATA>
+                  <GridInfoATA item xs={12}>
+                    <TypographyTituloInput>
+                      Título da reunião
+                    </TypographyTituloInput>
+                    <TextField sx={{ width: "100%" }} id="tituloReuniao" defaultValue={props.tituloPauta} />
+                  </GridInfoATA>
+                  <GridInfoATA item xs={6}>
+                    <TypographyTituloInput>
+                      Início da reunião
+                    </TypographyTituloInput>
+                    <TextField type={"time"} id="inicioReuniao" defaultValue={"00:00"} />
+                  </GridInfoATA>
+                  <GridInfoATA item xs={6}>
+                    <TypographyTituloInput>
+                      Final da reunião
+                    </TypographyTituloInput>
+                    <TextField type={"time"} id="finalReuniao" defaultValue={"00:00"} />
+                  </GridInfoATA>
+                </Grid>
+              </Grid>
+            </>
+            :
+            <>
+              <Grid item xs={12}>
+                <TypographyTituloDecisao variant="body1">
+                  Documento de aprovação:
+                </TypographyTituloDecisao>
+                <TextField
+                  placeholder="vai ter o inputzao de arquivo"
+                  multiline
+                  sx={{ width: "100%" }}
+                />
+              </Grid>
+            </>
+          }
+
+        </>
+      }
+    </>
+  );
 }
 
 export function Proposta(props: {
@@ -428,8 +519,6 @@ export function Proposta(props: {
   const forumEscolhido = props.eUmaPauta ? "comissão" : "direção geral";
   const beneficiosReais = getBeneficiosPorTipo(decisaoProposta.proposta.demanda.beneficiosDemanda, "REAL")
   const beneficioPotenciais = getBeneficiosPorTipo(decisaoProposta.proposta.demanda.beneficiosDemanda, "POTENCIAL")
-
-  console.log(props.propostaAnterior);
 
 
   const conteudoPropostaInicio = (
@@ -571,18 +660,6 @@ export function Proposta(props: {
               id={`inputNumeroATA${props.index}`}
               onChange={checarValor}
               {...objetoErroNumeroATA}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TypographyTituloDecisao variant="body1">
-              Documento de aprovação:
-            </TypographyTituloDecisao>
-            <TextField
-              placeholder="vai ter o inputzao de arquivo"
-              multiline
-              sx={{ width: "100%" }}
-              id={`inputDocumento${props.index}`}
-              {...objetoErroDocumento}
             />
           </Grid>
         </>

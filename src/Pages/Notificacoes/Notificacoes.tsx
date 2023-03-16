@@ -20,94 +20,14 @@ import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { BoxContainerNotificacoes } from "./Notificacoes.styles";
 
 /**
- * Lista de notificações, cuja função é usar como algo mais dinâmico com o componente de notificação
- */
-const listaNotificacoes: {
-  id: number;
-  Icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
-    muiName: string;
-  };
-  titulo: string;
-  mensagem: string;
-}[] = [
-    {
-      id: 1,
-      Icone: EditNotificationsRoundedIcon,
-      titulo: "Redefinição requisitada",
-      mensagem: "Nome da demanda",
-    },
-    {
-      id: 2,
-      Icone: CheckBoxRoundedIcon,
-      titulo: "Redefinição requisitada",
-      mensagem: "Nome da demanda",
-    },
-    {
-      id: 3,
-      Icone: EventAvailableRoundedIcon,
-      titulo: "Redefinição requisitada",
-      mensagem: "Nome da demanda",
-    },
-    {
-      id: 4,
-      Icone: EditNotificationsRoundedIcon,
-      titulo: "Redefinição requisitada",
-      mensagem: "Nome da demanda",
-    },
-    {
-      id: 5,
-      Icone: CheckBoxRoundedIcon,
-      titulo: "Redefinição requisitada",
-      mensagem: "Nome da demanda",
-    },
-    {
-      id: 6,
-      Icone: EventAvailableRoundedIcon,
-      titulo: "Redefinição requisitada",
-      mensagem: "Nome da demanda",
-    },
-  ];
-
-/**
  *
  * @returns Retorna uma lista de componentes de notificações, sendo que cada componente tem seus dados puxados de um lista estatica
  */
 export default function Notificacoes() {
-
-  interface TipoNotificacao {
-    DEMANDA: string
-    PROPOSTA: string
-    PAUTA: string
-    ATA: string
-    CHAT: string
-  }
-
-  interface AcaoNotificacao {
-    DEMANDAAPROVADA: string,
-    REDEFINICAOREQUERIDA: string
-    NOVOWORKFLOWAPROVACAO: string
-    CHAT: string
-    REUNIAO: string
-    STATUSDEMANDA: string
-    PRAZOELABORACAO: string
-  }
-
-  interface NotificacaoInfo {
-    idNotificacao: number
-    tituloNotificacao: string
-    descricaoNotificacao: string
-    linkNotificacao: string
-    tipoNotificacao: TipoNotificacao
-    idComponenteLink: number
-    acao: string
-  }
-
-  // const [lista, setLista] = useState(listaNotificacoes);
+  const [notificacoes, setNotificacoes] = useState<any[]>([]);
   localStorage.setItem("PAGINATUAL", "notification");
   const idUsuario = localStorage.getItem("IDUSUARIO");
-
-  const [notificacoes, setNotificacoes] = useState([]);
-
+  
   let icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
   };
@@ -166,4 +86,24 @@ export default function Notificacoes() {
       </Container>
     </BoxContainerNotificacoes>
   );
+}
+
+
+interface TipoNotificacao {
+  DEMANDA: string
+  PROPOSTA: string
+  PAUTA: string
+  ATA: string
+  CHAT: string
+}
+
+
+interface NotificacaoInfo {
+  idNotificacao: number
+  tituloNotificacao: string
+  descricaoNotificacao: string
+  linkNotificacao: string
+  tipoNotificacao: TipoNotificacao
+  idComponenteLink: number
+  acao: string
 }
