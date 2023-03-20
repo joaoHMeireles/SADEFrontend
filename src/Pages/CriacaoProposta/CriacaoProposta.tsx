@@ -48,13 +48,18 @@ export default function CriacaoProposta(props: {
   useEffect(() => {
     const idDemandaCriacao = localStorage.getItem("DEMANDACRIARPROPOSTA")
 
-    console.log(idDemandaCriacao);
-
     api.get(`/sod/demanda/proposta/${false}`).then((response) => {
       let listaDemandas: any[] = []
 
       for (let demanda of response.data) {
         demanda.tipo = TipoComponenteProcesso.Demanda
+        if(demanda.idDemanda == idDemandaCriacao){
+          //fazer para os valores irem para os inputs
+          // console.log("ESSA AQUI");
+          // setPropostaSelecionada(demanda)
+          // setValor(1)
+        }
+
         listaDemandas.push(demanda)
       }
 
