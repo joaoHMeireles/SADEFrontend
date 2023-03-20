@@ -63,9 +63,9 @@ export default function BeneficiosDemanda(props: {
         info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string)
       }
       setInformacaoProcesso(info);
-      props.setNumeroBeneficiosQualitativos(info.beneficiosQualitativos.length);
-      props.setNumeroBeneficiosReais(info.beneficiosReais.length);
-      props.setNumeroBeneficiosPotenciais(info.beneficiosPotenciais.length);
+      // props.setNumeroBeneficiosQualitativos(info.beneficiosQualitativos.length);
+      // props.setNumeroBeneficiosReais(info.beneficiosReais.length);
+      // props.setNumeroBeneficiosPotenciais(info.beneficiosPotenciais.length);
     }
 
   }, [])

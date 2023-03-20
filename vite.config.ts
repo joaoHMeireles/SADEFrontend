@@ -7,6 +7,5 @@ export default defineConfig({
   server: {
     open: true,
     port: 8081,
-    https: true
   }
 })

@@ -18,7 +18,6 @@ import api from "../../api/api";
 export default function InformacaoGeral(props: { proposta: boolean, centroCusto?: any[], setCentroCusto?: React.Dispatch<React.SetStateAction<any[]>> }) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
 
-
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
   const [idCentroCusto, setIdCentroCusto] = useState<any[]>([]);
 
@@ -39,11 +38,14 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
       );
 
       for (let atributo in demandaSelecionada) {
+        // console.log(atributo);
+
         if ((demandaSelecionada as any)[atributo]) {
           const inputAtributo = document.getElementById(
             getIdByAtributo(atributo)
           ) as HTMLInputElement;
           if (inputAtributo) {
+            // console.log(inputAtributo);
             if (inputAtributo.id == "titulo") {
               inputAtributo.value = demandaSelecionada.titulo;
             }
@@ -58,7 +60,7 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
           }
         }
       }
-      console.log(demandaSelecionada);
+      // console.log(demandaSelecionada);
     }
   }, []);
 
@@ -69,6 +71,10 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
       objetivo: "objetivo",
       situacaoAtual: "situacaoAtual",
     };
+
+    console.log(idsInputsAtributo);
+    console.log(atributo);
+
 
     return (idsInputsAtributo as any)[atributo];
   }

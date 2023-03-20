@@ -21,7 +21,7 @@ export default function InputAnexos(props: {
       </BoxTypographyAnexos>
       <BoxContainerGeral sx={{ "&:hover": { borderColor: "#00579D" } }}>
         <BoxContainerConteudo>
-          <Dropzone rascunho={props.rascunho} proposta={props.proposta} files={props.files} setFiles={props.setFiles} />
+          {/* <Dropzone rascunho={props.rascunho} proposta={props.proposta} files={props.files} setFiles={props.setFiles} /> */}
         </BoxContainerConteudo>
       </BoxContainerGeral>
     </>
