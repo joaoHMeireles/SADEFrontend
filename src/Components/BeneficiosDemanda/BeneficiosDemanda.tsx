@@ -41,6 +41,9 @@ export default function BeneficiosDemanda(props: {
 
   const [frequencia, setFrequencia] = useState("");
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>()
+  let numeroBeneficiosPotenciais = 0;
+  let numeroBeneficiosReais = 0;
+  let numeroBeneficiosQualitativos = 0;
 
   const moedas = [
     {
@@ -57,17 +60,27 @@ export default function BeneficiosDemanda(props: {
   useEffect(() => {
     if (props.rascunho || props.proposta) {
       let info
+
       if (props.rascunho) {
         info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string)
       } else if (props.proposta) {
         info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string)
       }
-      setInformacaoProcesso(info);
-      // props.setNumeroBeneficiosQualitativos(info.beneficiosQualitativos.length);
-      // props.setNumeroBeneficiosReais(info.beneficiosReais.length);
-      // props.setNumeroBeneficiosPotenciais(info.beneficiosPotenciais.length);
-    }
 
+      setInformacaoProcesso(info);
+
+      if (info) {
+        numeroBeneficiosPotenciais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL").length
+        numeroBeneficiosReais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "REAL").length
+        numeroBeneficiosQualitativos = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO").length
+      }
+
+      if (props.setNumeroBeneficiosQualitativos && props.setNumeroBeneficiosReais && props.setNumeroBeneficiosPotenciais) {
+        props.setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos);
+        props.setNumeroBeneficiosReais(numeroBeneficiosReais);
+        props.setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais);
+      }
+    }
   }, [])
 
   useEffect(() => {
@@ -77,65 +90,17 @@ export default function BeneficiosDemanda(props: {
           setFrequencia(informacaoProcesso[atributo]);
         }
 
-        if (atributo == "beneficiosQualitativos") {
-          for (let i = 0; i < informacaoProcesso[atributo].length; i++) {
-            const beneficioQualitativo = document.getElementById(
-              atributo + i
-            ) as HTMLInputElement;
-            if (beneficioQualitativo) {
-              beneficioQualitativo.value = informacaoProcesso[atributo][i];
-            }
-          }
-        }
+        if (atributo == "beneficiosDemanda") {
+          for (let i = 0; i < props.numeroBeneficiosReais; i++) {
 
-        if (atributo == "beneficiosPotenciais") {
-          for (let i = 0; i < informacaoProcesso[atributo].length; i++) {
-            const descricao = document.getElementById(
-              "descricaoPotencial" + i
-            ) as HTMLInputElement;
-            const valorMensal = document.getElementById(
-              "valorMensalPotencial" + i
-            ) as HTMLInputElement;
-            const moeda = document.getElementById(
-              "moedaPotencial" + i
-            ) as HTMLInputElement;
-
-            if (descricao) {
-              descricao.value = informacaoProcesso[atributo][i].descricao;
+            const beneficioRealValorMensal = document.getElementById("valorMensalReal" + i) as HTMLInputElement;
+            if (beneficioRealValorMensal) {
+              beneficioRealValorMensal.value = informacaoProcesso[atributo][i].valor;
             }
 
-            if (valorMensal) {
-              valorMensal.value = informacaoProcesso[atributo][i].valor;
-            }
-
-            if (moeda) {
-              moeda.value = informacaoProcesso[atributo][i].moeda;
-            }
-          }
-        }
-
-        if (atributo == "beneficiosReais") {
-          for (let i = 0; i < informacaoProcesso[atributo].length; i++) {
-            const descricao = document.getElementById(
-              "descricaoReal" + i
-            ) as HTMLInputElement;
-            const valorMensal = document.getElementById(
-              "valorMensalReal" + i
-            ) as HTMLInputElement;
-            const moeda = document.getElementById(
-              "moedaReal" + i
-            ) as HTMLInputElement;
-
-            if (descricao) {
-              descricao.value = informacaoProcesso[atributo][i].descricao;
-            }
-
-            if (valorMensal) {
-              valorMensal.value = informacaoProcesso[atributo][i].valor;
-            }
-
-            if (moeda) {
-              moeda.value = informacaoProcesso[atributo][i].moeda;
+            const beneficioRealDescricaoReal = document.getElementById("descricaoReal" + i) as HTMLInputElement;
+            if (beneficioRealDescricaoReal) {
+              beneficioRealDescricaoReal.value = informacaoProcesso[atributo][i].descricao
             }
           }
         }

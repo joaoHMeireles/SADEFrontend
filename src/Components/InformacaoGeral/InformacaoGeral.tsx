@@ -21,7 +21,6 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
   const [idCentroCusto, setIdCentroCusto] = useState<any[]>([]);
 
-
   const demandaSelecionada = JSON.parse(
     localStorage.getItem("DEMANDASELECIONADA") as string
   );
@@ -57,35 +56,7 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
         }
       }
     }
-
-
-    // console.log(centroCusto);
-    // console.log(demandaSelecionada.centroCustoDemanda);
-
-    // console.log(document.getElementById("centrosDeCusto")?.parentElement);
-    
-    // addIdAoCheckBox()
-
-    // console.log(addIdAoCheckBox());
-
-    console.log(document.getElementById("centrosDeCusto"));
-    console.log(document.getElementById("listaCentroCusto"));
-    
-    
-    
   }, []);
-
-  // function addIdAoCheckBox() {
-  //   for (const cc of centroCusto) {
-  //     for (const centroCustoDemanda of demandaSelecionada.centroCustoDemanda) {
-  //       if (cc == centroCustoDemanda.nomeCentroCusto) {
-  //         console.log("entrou");
-  //         return `checkBox${centroCustoDemanda.idCentroCusto}`
-  //       }
-  //     }
-  //   }
-  // }
-
 
   function getIdByAtributo(atributo: string) {
     const idsInputsAtributo = {
@@ -136,6 +107,7 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
             <TypographyLabels>Centros de custo:</TypographyLabels>
             <Autocomplete
               id="centrosDeCusto"
+              defaultValue={demandaSelecionada.centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto)}
               sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
               multiple
               disableCloseOnSelect

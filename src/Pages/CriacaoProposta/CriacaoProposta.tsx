@@ -45,6 +45,10 @@ export default function CriacaoProposta(props: {
   const [grid, setGrid] = useState(true);
   const [listaComponents, setListaComponents] = useState<any[]>([])
 
+  const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState(0)
+  const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState(0)
+  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState(0)
+
   useEffect(() => {
     api.get("/sod/demanda/status/BACKLOG").then((response) => {
       let listaDemandas: any[] = []
@@ -135,8 +139,15 @@ export default function CriacaoProposta(props: {
       <ContainerGeral>
         {valor == 1 && (
           <>
-            <InformacaoGeral proposta={true}/>
-            <BeneficiosDemanda rascunho={false} proposta={true} />
+            <InformacaoGeral proposta={true} />
+            <BeneficiosDemanda rascunho={false} proposta={true}
+              numeroBeneficiosReais={numeroBeneficiosReais}
+              numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
+              numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
+              setNumeroBeneficiosReais={setNumeroBeneficiosReais}
+              setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
+              setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
+            />
             <InputAnexos rascunho={false} proposta={true} />
             <BoxContainerBotoes>
               <BotaoTerciario
