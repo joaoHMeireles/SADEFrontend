@@ -184,7 +184,7 @@ export function getBeneficiosPorTipo(listaBeneficios: any[], tipoBeneficio: stri
 }
 
 /**
- * Serve para pegar um valor específico de uma chave do enumerador
+ * Serve para pegar um valor de uma chave do enumerador
  * 
  * @param enumerador 
  * @param valor 
@@ -192,4 +192,15 @@ export function getBeneficiosPorTipo(listaBeneficios: any[], tipoBeneficio: stri
  */
 export function getValueEnum(enumerador: Object, valor: any ){
     return Object.values(enumerador)[Object.keys(enumerador).indexOf(valor)]
+}
+
+/**
+ * Serve para pegar a chave de um valor do enumerador
+ * 
+ * @param enumerador 
+ * @param valor 
+ * @returns 
+ */
+export function getKeyEnum(enumerador: Object, valor: any ){
+    return Object.keys(enumerador)[Object.values(enumerador).indexOf(valor)]
 }

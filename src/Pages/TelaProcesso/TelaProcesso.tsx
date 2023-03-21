@@ -1,8 +1,8 @@
 import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getNomeComponente, urlValida, getIconeArquivo, getBeneficiosPorTipo } from '../../utils';
+import { getNomeComponente, urlValida, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum } from '../../utils';
 import Dayjs from '@date-io/dayjs'
-import { sessaoTI, TipoComponenteProcesso } from '../../constants/enuns';
+import { sessaoTI, TamanhoComponenteProcesso, TarefaExecucao, TipoComponenteProcesso } from '../../constants/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
 import SelectBox from '../../Components/SelectBox/SelectBox'
@@ -32,6 +32,17 @@ import {
 } from './TelaProcesso.styles';
 import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
 import api, { verificarHistoricoAprovado } from '../../api/api';
+
+const valoresInputBU: any[] = [
+    { idBU: 1, nomeBU: 'Motores Industrial' },
+    { idBU: 2, nomeBU: ' Motores Comercial' },
+    { idBU: 3, nomeBU: 'Energia' },
+    { idBU: 4, nomeBU: 'Automação' },
+    { idBU: 5, nomeBU: 'Digital e Sistemas' },
+    { idBU: 6, nomeBU: ' Drives e Controls' },
+    { idBU: 7, nomeBU: 'Tintas' },
+    { idBU: 8, nomeBU: 'Transmissão e Distribuição' }
+]
 
 /**
  * Componente principal das páginas de proposta de demanda sendo dinâmico conforme
@@ -95,17 +106,7 @@ export function Header(props: {
     const processo = props.informacaoProcesso;
     const prazoElaboracao = processo.prazoElaboracao
     const tipoProcesso = processo.tipo
-    const valoresInputBU: any[] = []
 
-    useEffect(() => {
-        api.get(`/sod/bu`).then((response) => {
-            for(let bu of response.data){
-                valoresInputBU.push(bu)
-            }
-        }).catch((err) => {
-          console.log(err);
-        })
-    }, [])
 
     function abrirModal() {
         props.setModalAberto(true)
@@ -133,37 +134,69 @@ export function Header(props: {
         }
 
         function finalizarAprovacao(conteudo: JSX.Element) {
-            const idAnalista = localStorage.getItem("IDPESSOALOGADA") || 1
+            const idAnalista = localStorage.getItem("IDPESSOALOGADA") || 3
             const tamanhoDemanda = document.getElementById("input-tamanho")?.innerText
-            const buSolicitante = document.getElementById("input-bu-solicitante")?.innerText
+            const nomeBUSolicitante = document.getElementById("input-bu-solicitante")?.innerText
             const busBeneficiadas = document.getElementsByClassName("bu-beneficiada")
             const sessaoTIResponsavel = document.getElementById("input-sessao-ti")?.innerText
-            const busBeneficiadasEscolhidas = []
+            const busBeneficiadasEscolhidas: any[] = []
 
-            for(const buBeneficiada of busBeneficiadas){
-                if(buBeneficiada.children[0].checked){
-                    busBeneficiadasEscolhidas
+            for (const buBeneficiada of busBeneficiadas) {
+                if ((buBeneficiada.children[0] as HTMLInputElement).checked) {
+                    busBeneficiadasEscolhidas.push({ idBU: buBeneficiada.children[0].id })
                 }
             }
 
+            const formDataHistorico = new FormData()
+            formDataHistorico.append("historico", JSON.stringify(
+                {
+                    tarefa: "CLASSIFICARDEMANDA",
+                    demanda: { idDemanda: processo.idDemanda },
+                    usuario: { idUsuario: idAnalista },
+                    acaoFeitaHistoricoAnterior: "APROVARDEMANDA"
+                }
+            ))
+
+            console.log(
+                {
+                    tarefa: "CLASSIFICARDEMANDA",
+                    demanda: { idDemanda: processo.idDemanda },
+                    usuario: { idUsuario: idAnalista },
+                    acaoFeitaHistoricoAnterior: "APROVARDEMANDA"
+                }
+            );
             
 
-            //fazer a atualização do histórico 
+            // const formDataDemanda = new FormData()
+            // formDataDemanda.append("demanda", JSON.stringify(
+            //     {
+            //         tamanho: getKeyEnum(TamanhoComponenteProcesso, tamanhoDemanda).toUpperCase(),
+            //         BUSolicitante: { idBU: valoresInputBU.find(bu => bu.nomeBU == nomeBUSolicitante).idBU },
+            //         BUsBeneficiadas: busBeneficiadasEscolhidas,
+            //         secaoTIResponsavel: getKeyEnum(sessaoTI, sessaoTIResponsavel)
+            //     }
+            // ))
+            
+            
 
+            //faz a atualização do histórico da demanda
+            api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response) => {
+                console.log(response.data);
+            }).catch((err) => {
+                console.log(err);
+            })
 
-
-            // api.put(`/sod/demanda/${processo.idDemanda}/${idAnalista}`).then((response) => {
-
-            //   }).catch((err) => {
+            //atualiza informações de demanda
+            // api.put(`/sod/demanda/${processo.idDemanda}/${idAnalista}`, infoClassificacaoDemanda).then((response) => {
+            //     console.log(response.data);                
+            // }).catch((err) => {
             //     console.log(err);
-            //   })
+            // })
 
-
-
-            // abrirFeedback(conteudo)
+            abrirFeedback(conteudo)
         }
 
-        const segundaParteAprovacao = <ModalClassificacaoDemanda abrirFeedback={finalizarAprovacao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} valoresInputBU={valoresInputBU}/>
+        const segundaParteAprovacao = <ModalClassificacaoDemanda abrirFeedback={finalizarAprovacao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />
 
 
         props.setConteudoModal(
@@ -408,7 +441,36 @@ function ModalClassificacaoDemanda(props: Modal) {
     const valoresInputTamanho = ["Muito pequeno", "Pequeno", "Médio", "Grande", "Muito grande"]
     const keysSessaoTI = Object.keys(sessaoTI)
     const valoresSessaoTI = Object.values(sessaoTI)
-   
+    const nomesBU = valoresInputBU.map((bu) => {
+        return bu.nomeBU
+    })
+
+    const BUsbeneficiadas = valoresInputBU.map((bu: any, index: number) => {
+
+        if (index + 1 == valoresInputBU.length) {
+            return (
+                <Grid key={index} item xs={6}>
+                    <FormControl {...BUsBeneficiadasErro.html} variant="standard">
+                        <FormControlLabel control={<Checkbox id={bu.idBU + ""} className="bu-beneficiada" />} label={bu.nomeBU} className="buBeneficiada" />
+                        <FormHelperText>{BUsBeneficiadasErro.helperText}</FormHelperText>
+                    </FormControl>
+                </Grid>
+            )
+        }
+
+        return (
+            <Grid key={index} item xs={6}>
+                <FormControlLabel control={<Checkbox id={bu.idBU + ""} className="bu-beneficiada" />} label={bu.nomeBU} className="buBeneficiada" />
+            </Grid>
+        )
+    })
+
+    const conteudoFeedbackFinalizacao = (
+        <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+            Aprovação concluída
+        </Alert>
+    )
+
 
     function selecionarTamanho(event: SelectChangeEvent) {
         setTamanhoDemanda(event.target.value)
@@ -421,32 +483,6 @@ function ModalClassificacaoDemanda(props: Modal) {
     function selecionarSessaoTI(event: SelectChangeEvent) {
         setSessaoTI(event.target.value)
     }
-
-    const BUsbeneficiadas = valoresInputBU.map((bu: any, index: number) => {
-
-        if (index + 1 == valoresInputBU.length) {
-            return (
-                <Grid key={index} item xs={6}>
-                    <FormControl {...BUsBeneficiadasErro.html} variant="standard">
-                        <FormControlLabel control={<Checkbox id={bu.idBu} className="bu-beneficiada" />} label={bu.nomebu} className="buBeneficiada" />
-                        <FormHelperText>{BUsBeneficiadasErro.helperText}</FormHelperText>
-                    </FormControl>
-                </Grid>
-            )
-        }
-
-        return (
-            <Grid key={index} item xs={6}>
-                <FormControlLabel control={<Checkbox id={bu.idBu} className="bu-beneficiada" />} label={bu.nomebu} className="buBeneficiada" />
-            </Grid>
-        )
-    })
-
-    const conteudoFeedbackFinalizacao = (
-        <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
-            Aprovação concluída
-        </Alert>
-    )
 
     function finalizarAcao() {
         const BUsBeneficiadas = document.getElementsByClassName("buBeneficiada")
@@ -491,7 +527,7 @@ function ModalClassificacaoDemanda(props: Modal) {
                         <TypographyTituloAtributo variant='body1'>
                             BU Solicitante:
                         </TypographyTituloAtributo>
-                        <SelectBox listaLabelValores={valoresInputBU} listaValores={valoresInputBU} mudarValor={selecionarBU} valorInicial={BUSolicitante} chave="input-bu-solicitante" />
+                        <SelectBox listaLabelValores={nomesBU} listaValores={nomesBU} mudarValor={selecionarBU} valorInicial={BUSolicitante} chave="input-bu-solicitante" />
                     </BoxAtributoInfoModal>
                 </BoxAtributosInfoModal>
                 <BoxBUsBeneficiadas>
@@ -852,7 +888,7 @@ function InfoGeral(props: { processo: any }) {
         sessaoTIResponsavel: processo.secaoTIResponsavel,
         BUSolicitante: processo.busolicitante ? processo.busolicitante.nomeBU : null,
         payback: processo.payback,
-        prazoElaboracao: new Date(processo.prazoElaboracao),
+        prazoElaboracao:processo.prazoElaboracao? new Date(processo.prazoElaboracao): null,
         codigoPPM: processo.codigoPPM
     }
 
@@ -1186,7 +1222,7 @@ function Footer(props: {
 
 function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonElement>[]) {
     const [aprovadoGerente, setAprovadoGerente] = useState(false)
-    verificarHistoricoAprovado(processo.id, setAprovadoGerente)
+    verificarHistoricoAprovado(4, setAprovadoGerente)
     const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
     const tipoProcesso = processo.tipo
     const tamanho = processo.tamanho
@@ -1360,8 +1396,7 @@ function getTituloBotao(botao: string) {
 interface Modal {
     fecharModal: MouseEventHandler<HTMLButtonElement>,
     abrirFeedback: Function,
-    setFeedbackAberto: React.Dispatch<SetStateAction<boolean>>,
-    valoresInputBU?: any[]
+    setFeedbackAberto: React.Dispatch<SetStateAction<boolean>>
 }
 
 interface Botao {

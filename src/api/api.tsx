@@ -2,7 +2,7 @@ import axios from "axios";
 import { SetStateAction } from "react";
 
 export default axios.create({
-    baseURL: `https://localhost:8443`
+    baseURL: `http://localhost:8080`
 });
 
 /**
@@ -11,7 +11,7 @@ export default axios.create({
  * @param id 
  */
 export async function verificarHistoricoAprovado(id: number, setAprovado: React.Dispatch<SetStateAction<boolean>>){
-    axios.get(`https://localhost:8443/sod/historicoWorkflow/aprovadaGerente/${id}`).then((response) => {
+    axios.get(`http://localhost:8080/sod/historicoWorkflow/aprovadaGerente/${id}`).then((response) => {
         setAprovado(response.data)
       }).catch((err) => {
         console.log(err);
