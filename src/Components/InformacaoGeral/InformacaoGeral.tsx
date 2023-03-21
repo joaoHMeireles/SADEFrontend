@@ -15,7 +15,7 @@ import {
 import Checkbox from "@mui/material/Checkbox";
 import api from "../../api/api";
 
-export default function InformacaoGeral(props: { proposta: boolean, centroCusto?: any[], setCentroCusto?: React.Dispatch<React.SetStateAction<any[]>> }) {
+export default function InformacaoGeral(props: { proposta: boolean, centroCusto?: any[], setCentroCusto?: React.Dispatch<React.SetStateAction<Object[]>> }) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
 
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
@@ -62,14 +62,30 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
     // console.log(centroCusto);
     // console.log(demandaSelecionada.centroCustoDemanda);
 
-    console.log(document.getElementById("centrosDeCusto")?.parentElement);
+    // console.log(document.getElementById("centrosDeCusto")?.parentElement);
     
+    // addIdAoCheckBox()
 
-    for(let i = 0; i < centroCusto.length; i++){
+    // console.log(addIdAoCheckBox());
 
-    }
-
+    console.log(document.getElementById("centrosDeCusto"));
+    console.log(document.getElementById("listaCentroCusto"));
+    
+    
+    
   }, []);
+
+  // function addIdAoCheckBox() {
+  //   for (const cc of centroCusto) {
+  //     for (const centroCustoDemanda of demandaSelecionada.centroCustoDemanda) {
+  //       if (cc == centroCustoDemanda.nomeCentroCusto) {
+  //         console.log("entrou");
+  //         return `checkBox${centroCustoDemanda.idCentroCusto}`
+  //       }
+  //     }
+  //   }
+  // }
+
 
   function getIdByAtributo(atributo: string) {
     const idsInputsAtributo = {
@@ -134,15 +150,15 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
                   }
                 }
 
-                props.setCentroCusto(centroCustoDemanda)
+                if (props.setCentroCusto) {
+                  props.setCentroCusto(centroCustoDemanda)
+                }
               }}
               renderOption={(props, centroCusto, { selected }) => {
-                console.log(centroCusto);
-                
                 return (
-                  <li {...props}>
+                  <li {...props} id="listaCentroCusto">
                     <Checkbox
-                      id={`checkBox`}
+                      id="checkbox"
                       icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                       checkedIcon={<CheckBoxIcon fontSize="small" />}
                       style={{ marginRight: 8 }}
