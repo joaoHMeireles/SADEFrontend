@@ -95,6 +95,17 @@ export function Header(props: {
     const processo = props.informacaoProcesso;
     const prazoElaboracao = processo.prazoElaboracao
     const tipoProcesso = processo.tipo
+    const valoresInputBU: any[] = []
+
+    useEffect(() => {
+        api.get(`/sod/bu`).then((response) => {
+            for(let bu of response.data){
+                valoresInputBU.push(bu)
+            }
+        }).catch((err) => {
+          console.log(err);
+        })
+    }, [])
 
     function abrirModal() {
         props.setModalAberto(true)
@@ -121,7 +132,38 @@ export function Header(props: {
             props.setConteudoModal(conteudo)
         }
 
-        const segundaParteAprovacao = <ModalClassificacaoDemanda abrirFeedback={abrirFeedback} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />
+        function finalizarAprovacao(conteudo: JSX.Element) {
+            const idAnalista = localStorage.getItem("IDPESSOALOGADA") || 1
+            const tamanhoDemanda = document.getElementById("input-tamanho")?.innerText
+            const buSolicitante = document.getElementById("input-bu-solicitante")?.innerText
+            const busBeneficiadas = document.getElementsByClassName("bu-beneficiada")
+            const sessaoTIResponsavel = document.getElementById("input-sessao-ti")?.innerText
+            const busBeneficiadasEscolhidas = []
+
+            for(const buBeneficiada of busBeneficiadas){
+                if(buBeneficiada.children[0].checked){
+                    busBeneficiadasEscolhidas
+                }
+            }
+
+            
+
+            //fazer a atualização do histórico 
+
+
+
+            // api.put(`/sod/demanda/${processo.idDemanda}/${idAnalista}`).then((response) => {
+
+            //   }).catch((err) => {
+            //     console.log(err);
+            //   })
+
+
+
+            // abrirFeedback(conteudo)
+        }
+
+        const segundaParteAprovacao = <ModalClassificacaoDemanda abrirFeedback={finalizarAprovacao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} valoresInputBU={valoresInputBU}/>
 
 
         props.setConteudoModal(
@@ -183,7 +225,7 @@ export function Header(props: {
         localStorage.setItem("DEMANDACRIARPROPOSTA", processo.idDemanda)
 
         location.href = "/createproposal"
-    }
+    } //feito
 
     function iniciarNovoWorkflow() {
         const conteudoFeedback = (
@@ -361,12 +403,12 @@ export function Header(props: {
 function ModalClassificacaoDemanda(props: Modal) {
     const [BUsBeneficiadasErro, setBUsBeneficiadasErro] = useState({ html: { error: false }, helperText: "" })
     const [tamanhoDemanda, setTamanhoDemanda] = useState("Médio")
-    const [BUSolicitante, setBUSolicitante] = useState("Motores")
+    const [BUSolicitante, setBUSolicitante] = useState("Energia")
     const [sessaoTIescolhida, setSessaoTI] = useState("AAS")
     const valoresInputTamanho = ["Muito pequeno", "Pequeno", "Médio", "Grande", "Muito grande"]
-    const valoresInputBU = ["Motores", "Digital", "Energia", "Corporativo", "Diretoria"]
     const keysSessaoTI = Object.keys(sessaoTI)
     const valoresSessaoTI = Object.values(sessaoTI)
+   
 
     function selecionarTamanho(event: SelectChangeEvent) {
         setTamanhoDemanda(event.target.value)
@@ -380,23 +422,22 @@ function ModalClassificacaoDemanda(props: Modal) {
         setSessaoTI(event.target.value)
     }
 
-    const BUsbeneficiadas = valoresInputBU.map((bu: string, index: number) => {
+    const BUsbeneficiadas = valoresInputBU.map((bu: any, index: number) => {
 
         if (index + 1 == valoresInputBU.length) {
             return (
                 <Grid key={index} item xs={6}>
                     <FormControl {...BUsBeneficiadasErro.html} variant="standard">
-                        <FormControlLabel control={<Checkbox />} label={bu} className="buBeneficiada" />
+                        <FormControlLabel control={<Checkbox id={bu.idBu} className="bu-beneficiada" />} label={bu.nomebu} className="buBeneficiada" />
                         <FormHelperText>{BUsBeneficiadasErro.helperText}</FormHelperText>
                     </FormControl>
                 </Grid>
             )
         }
 
-
         return (
             <Grid key={index} item xs={6}>
-                <FormControlLabel control={<Checkbox />} label={bu} className="buBeneficiada" />
+                <FormControlLabel control={<Checkbox id={bu.idBu} className="bu-beneficiada" />} label={bu.nomebu} className="buBeneficiada" />
             </Grid>
         )
     })
@@ -409,17 +450,23 @@ function ModalClassificacaoDemanda(props: Modal) {
 
     function finalizarAcao() {
         const BUsBeneficiadas = document.getElementsByClassName("buBeneficiada")
+        let contador = 0
 
         for (let buBeneficiada of BUsBeneficiadas) {
-            if ((buBeneficiada.children[0].children[0] as HTMLInputElement).checked) {
-                props.abrirFeedback(conteudoFeedbackFinalizacao)
+            if (!(buBeneficiada.children[0].children[0] as HTMLInputElement).checked) {
+                contador++
             }
         }
 
-        setBUsBeneficiadasErro({
-            html: { error: true },
-            helperText: "Nenhuma BU selecionada"
-        })
+        if (contador == 8) {
+            setBUsBeneficiadasErro({
+                html: { error: true },
+                helperText: "Nenhuma BU selecionada"
+            })
+            return
+        }
+
+        props.abrirFeedback(conteudoFeedbackFinalizacao)
     }
 
     return (
@@ -438,13 +485,13 @@ function ModalClassificacaoDemanda(props: Modal) {
                         <TypographyTituloAtributo variant='body1'>
                             Tamanho:
                         </TypographyTituloAtributo>
-                        <SelectBox listaLabelValores={valoresInputTamanho} listaValores={valoresInputTamanho} mudarValor={selecionarTamanho} valorInicial={tamanhoDemanda} />
+                        <SelectBox listaLabelValores={valoresInputTamanho} listaValores={valoresInputTamanho} mudarValor={selecionarTamanho} valorInicial={tamanhoDemanda} chave="input-tamanho" />
                     </BoxAtributoInfoModal>
                     <BoxAtributoInfoModal>
                         <TypographyTituloAtributo variant='body1'>
                             BU Solicitante:
                         </TypographyTituloAtributo>
-                        <SelectBox listaLabelValores={valoresInputBU} listaValores={valoresInputBU} mudarValor={selecionarBU} valorInicial={BUSolicitante} />
+                        <SelectBox listaLabelValores={valoresInputBU} listaValores={valoresInputBU} mudarValor={selecionarBU} valorInicial={BUSolicitante} chave="input-bu-solicitante" />
                     </BoxAtributoInfoModal>
                 </BoxAtributosInfoModal>
                 <BoxBUsBeneficiadas>
@@ -461,7 +508,7 @@ function ModalClassificacaoDemanda(props: Modal) {
                     <TypographyTituloAtributo variant='body1'>
                         Sessão TI responsável:
                     </TypographyTituloAtributo>
-                    <SelectBox listaLabelValores={valoresSessaoTI} listaValores={keysSessaoTI} mudarValor={selecionarSessaoTI} valorInicial={sessaoTIescolhida} maxWidth="none" />
+                    <SelectBox listaLabelValores={valoresSessaoTI} listaValores={keysSessaoTI} mudarValor={selecionarSessaoTI} valorInicial={sessaoTIescolhida} maxWidth="none" chave="input-sessao-ti" />
                 </BoxSessaoTI>
             </BoxInfoModal>
             <BoxBotoesModal>
@@ -1138,7 +1185,7 @@ function Footer(props: {
 }
 
 function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonElement>[]) {
-    const [aprovadoGerente, setAprovadoGerente ] = useState(false)
+    const [aprovadoGerente, setAprovadoGerente] = useState(false)
     verificarHistoricoAprovado(processo.id, setAprovadoGerente)
     const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
     const tipoProcesso = processo.tipo
@@ -1313,7 +1360,8 @@ function getTituloBotao(botao: string) {
 interface Modal {
     fecharModal: MouseEventHandler<HTMLButtonElement>,
     abrirFeedback: Function,
-    setFeedbackAberto: React.Dispatch<SetStateAction<boolean>>
+    setFeedbackAberto: React.Dispatch<SetStateAction<boolean>>,
+    valoresInputBU?: any[]
 }
 
 interface Botao {

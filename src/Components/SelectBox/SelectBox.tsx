@@ -8,7 +8,7 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@m
  * @param props 
  * @returns 
  */
-export default function SelectBox(props: { label?: string, valorInicial: any, mudarValor: ((event: SelectChangeEvent<any>, child: ReactNode) => void) | undefined, listaValores: any[], listaLabelValores: any[], maxWidth?: string }) {
+export default function SelectBox(props: { label?: string, valorInicial: any, mudarValor: ((event: SelectChangeEvent<any>, child: ReactNode) => void) | undefined, listaValores: any[], listaLabelValores: any[], chave: string, maxWidth?: string }) {
     const itens = props.listaValores.map((valor: any, index: number) => {
         return (
             <MenuItem key={index} value={valor}>{props.listaLabelValores[index]}</MenuItem>
@@ -19,6 +19,7 @@ export default function SelectBox(props: { label?: string, valorInicial: any, mu
         <FormControl sx={{ maxWidth: (props.maxWidth ? props.maxWidth : "180px"), marginLeft: "20px" }}>
             <InputLabel>{props.label}</InputLabel>
             <Select
+                id={props.chave}
                 value={props.valorInicial}
                 label={props.label}
                 onChange={props.mudarValor}
