@@ -15,12 +15,12 @@ type Anexos = {
   tipo: string;
 };
 
-
 export default function Dropzone(props: {
   rascunho: boolean;
   proposta: boolean;
+  files: any;
+  setFiles: React.Dispatch<React.SetStateAction<never[]>>;
 }) {
-  const [files, setFile] = useState([]);
   const [arquivos, setAquivos] = useState<Array<Anexos>>([]);
 
   useEffect(() => {
@@ -47,13 +47,13 @@ export default function Dropzone(props: {
       acceptedFiles,
     }));
 
-    if(file == undefined){
+    if (file == undefined) {
       return
     }
 
-    // files.push(file[0]["acceptedFiles"])
+    props.files.push(file[0]["acceptedFiles"])
 
-    setFile(files);
+    props.setFiles(props.files);
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
@@ -97,7 +97,8 @@ export default function Dropzone(props: {
           arquivos.map((e: Anexos) => {
             return <Arquivo icone={e.tipo} nome={e.nome} />;
           })}
-        {files.map((e, index) => {
+
+        {props.files.map((e: any, index: any) => {
           return (
             <Arquivo
               key={index}

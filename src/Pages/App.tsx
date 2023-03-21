@@ -72,7 +72,6 @@ export default function App() {
                   <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar} />}></Route>
                   <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true} />}></Route>
 
-
                   <Route path="/home/demand/history" element={<Historico />} />
                   <Route path="/mydemands/demand/history" element={<Historico />} />
                   <Route path="/notifications/demand/history" element={<Historico />} />
@@ -84,11 +83,10 @@ export default function App() {
                   <Route path="/home/agenda/proposal/history" element={<Historico />} />
                   <Route path="/home/ata/proposal/history" element={<Historico />} />
 
-
                   <Route path="/home/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
                   <Route path="/home/agenda/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
                   <Route path="/home/ata/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
-
+                  
                   <Route path="/profile" element={<Perfil />} />
 
                   <Route path="/home/agenda" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />

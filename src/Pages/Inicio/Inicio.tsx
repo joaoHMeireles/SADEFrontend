@@ -24,7 +24,20 @@ export default function Inicio(props: {
   const [listaComponents, setListaComponents] = useState<any[]>([])
   const location = useLocation().pathname
 
-  function buscarComponentes() {
+  // function buscarComponentes() {
+  //   api.get("/sod/demanda").then((response) => {
+  //     let listaDemandas: any[] = []
+  //     for (let demanda of response.data) {
+  //       demanda.tipo = TipoComponenteProcesso.Demanda
+  //       listaDemandas.push(demanda)
+  //     }
+  //     setListaComponents(listaDemandas);
+  //   }).catch((err) => {
+  //     console.log(err);
+  //   })
+  // }
+
+  useEffect(() => {
     api.get("/sod/demanda").then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
@@ -36,7 +49,6 @@ export default function Inicio(props: {
     }).catch((err) => {
       console.log(err);
     })
-
     // api.get("/sod/proposta").then((response) => {
     //   let listaPropostas: any[] = []
     //   for(let proposta of response.data){
@@ -79,6 +91,7 @@ export default function Inicio(props: {
     //   for(let ata of response.data){
     //     // console.log(ata);
 
+
     //     ata.propostas = ata.propostasAta
     //     ata.propostasPauta = ata.pauta.propostasPauta
     //     ata.tituloReuniao = ata.tituloReuniaoATA
@@ -91,11 +104,11 @@ export default function Inicio(props: {
     // }).catch((err) => {
     //   console.log(err);
     // })
-  }
+  })
 
-  useEffect(() => {
-    buscarComponentes()
-  }, [])
+  // useEffect(() => {
+  //   buscarComponentes()
+  // }, [])
 
   localStorage.setItem("PAGINATUAL", "home");
 

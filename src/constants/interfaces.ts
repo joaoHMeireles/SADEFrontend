@@ -2,6 +2,7 @@ import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponente
 
 export interface InterfaceComponenteProcesso {
     id: number,
+    idDemanda: number,
     tituloDemanda: string,
     score: number,
     usuario: any,

@@ -2,6 +2,7 @@ import { Box, Grid, useMediaQuery } from "@mui/material";
 import { BoxContainer } from "../../Pages/App.styles";
 import ComponenteProcesso from "../ComponenteProcesso/ComponenteProcesso";
 import ComponenteColecaoProcesso from "../ComponenteProcesso/ComponenteColecaoProcesso/ComponenteColecaoProcesso";
+import { useState } from "react";
 
 export default function CardsProcesso(props: {
   listaComponents: any[];
@@ -15,6 +16,7 @@ export default function CardsProcesso(props: {
   setPropostaSelecionada?: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const matches = useMediaQuery("(max-width:1100px)");
+  const [demandaSelecionada, setDemandaSelecionada] = useState(0)
 
   const componentesProcessos = props.listaComponents.map((processo: any, index: number) => {
     let componente;
@@ -30,6 +32,8 @@ export default function CardsProcesso(props: {
           setPropostas={props.setPropostas}
           propostaSelecionada={props.propostaSelecionada}
           setPropostaSelecionada={props.setPropostaSelecionada}
+          demandaSelecionada={demandaSelecionada}
+          setDemandaSelecionada={setDemandaSelecionada}
         />
       );
     } else {

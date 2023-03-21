@@ -27,13 +27,15 @@ export default function ComponenteProcesso(props: {
   rascunho?: boolean;
   proposta?: boolean;
   pauta?: boolean;
+  demandaSelecionada: number;
+  setDemandaSelecionada: React.Dispatch<React.SetStateAction<number>>
   propostas?: any[];
   setPropostas?: React.Dispatch<React.SetStateAction<Array<Object>>>;
   propostaSelecionada?: number;
   setPropostaSelecionada?: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const componente = props.atributosProcesso;
-  
+
   const paginaAtual = localStorage.getItem("PAGINATUAL");
   let corComponente,
     tituloToolTip,
@@ -63,9 +65,10 @@ export default function ComponenteProcesso(props: {
       pauta={props.pauta}
       propostas={props.propostas}
       setPropostas={props.setPropostas}
-      selecionado={props.propostaSelecionada == componente.id}
-      setSelecionado={props.setPropostaSelecionada}
+      demandaSelecionada={props.demandaSelecionada}
+      setDemandaSelecionada={props.setDemandaSelecionada}
       propostaSelecionada={props.propostaSelecionada}
+      setPropostaSelecionado={props.setPropostaSelecionada}
       verProcesso={verProcesso}
       isChecked={isChecked}
       setIsChecked={setIsChecked}
@@ -82,8 +85,9 @@ export default function ComponenteProcesso(props: {
       pauta={props.pauta}
       propostas={props.propostas}
       setPropostas={props.setPropostas}
-      selecionado={props.propostaSelecionada == componente.id}
-      setSelecionado={props.setPropostaSelecionada}
+      demandaSelecionada={props.demandaSelecionada}
+      setDemandaSelecionada={props.setDemandaSelecionada}
+      setPropostaSelecionado={props.setPropostaSelecionada}
       propostaSelecionada={props.propostaSelecionada}
       verProcesso={verProcesso}
       isChecked={isChecked}
@@ -92,13 +96,14 @@ export default function ComponenteProcesso(props: {
   );
 
   useEffect(() => {
-    const card = document.getElementById(`${componente.id}`);
+    const card = document.getElementById(`${componente.idDemanda}`);
+
     if (props.proposta) {
-      if (props.propostaSelecionada == componente.id) {
+      if (props.propostaSelecionada == componente.idDemanda) {
         card?.classList.add("selecionado");
-      } else {
-        card?.classList.remove("selecionado");
+        return;
       }
+      card?.classList.remove("selecionado");
     }
   }, [props.propostaSelecionada]);
 
@@ -144,7 +149,7 @@ export default function ComponenteProcesso(props: {
           },
         }}
       />
-      <MainPaper key={componente.id} id={componente.id}>
+      <MainPaper key={componente.id} id={componente.idDemanda}>
         <Grid container>{processElement}</Grid>
       </MainPaper>
     </>
@@ -152,6 +157,7 @@ export default function ComponenteProcesso(props: {
 }
 
 function GridComponent(props: ComponentProps) {
+
   return (
     <>
       {!props.proposta && !props.pauta ? (
@@ -203,22 +209,23 @@ function GridComponent(props: ComponentProps) {
               />
             </Grid>
           </Tooltip>
-          <GridComponenteProcesso item xs={11}>
+          <GridComponenteProcesso item xs={11}
+            onClick={() => {
+              if (props.setDemandaSelecionada && props.setPropostaSelecionado) {
+                props.setDemandaSelecionada(props.componente.idDemanda)
+                props.setPropostaSelecionado(props.componente.idDemanda);
+                localStorage.setItem(
+                  `DEMANDASELECIONADA`,
+                  JSON.stringify(props.componente)
+                );
+              }
+            }}>
             <GridBoxTituloRadio>
               <GridTypography variant="h6">
                 {props.componente.tituloDemanda}
               </GridTypography>
               <Radio
-                checked={props.selecionado}
-                onClick={() => {
-                  if (props.setSelecionado) {
-                    props.setSelecionado(props.componente.id);
-                    localStorage.setItem(
-                      `DEMANDASELECIONADA`,
-                      JSON.stringify(props.componente)
-                    );
-                  }
-                }}
+                checked={props.demandaSelecionada == props.componente.idDemanda}
               />
             </GridBoxTituloRadio>
             <GridTypography variant="subtitle1">
@@ -374,7 +381,18 @@ function ListComponent(props: ComponentProps) {
               />
             </Grid>
           </Tooltip>
-          <ListaComponenteProcesso item xs={11.7}>
+          <ListaComponenteProcesso item xs={11.7}
+            onClick={() => {
+              if (props.setDemandaSelecionada && props.setPropostaSelecionado) {
+                props.setDemandaSelecionada(props.componente.idDemanda)
+                props.setPropostaSelecionado(props.componente.idDemanda);
+                localStorage.setItem(
+                  `DEMANDASELECIONADA`,
+                  JSON.stringify(props.componente)
+                );
+              }
+            }}
+          >
             <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
               {props.componente.id} - {props.componente.tituloDemanda}
             </ListaTypography>
@@ -400,17 +418,8 @@ function ListComponent(props: ComponentProps) {
             </ListaTypography>
             <UltimaListaTypography variant="body2" sx={{ maxWidth: "3vw" }}>
               <Radio
-                id={`${props.componente.id}`}
-                checked={props.selecionado}
-                onClick={() => {
-                  if (props.setSelecionado) {
-                    props.setSelecionado(props.componente.id);
-                    localStorage.setItem(
-                      `DEMANDASELECIONADA`,
-                      JSON.stringify(props.componente)
-                    );
-                  }
-                }}
+                // id={`${props.componente.id}`}
+                checked={props.demandaSelecionada == props.componente.idDemanda}
               />
             </UltimaListaTypography>
           </ListaComponenteProcesso>
@@ -505,9 +514,10 @@ interface ComponentProps {
   pauta?: boolean;
   propostas?: any[];
   setPropostas?: React.Dispatch<React.SetStateAction<Array<any>>>;
-  selecionado?: boolean;
-  setSelecionado?: React.Dispatch<React.SetStateAction<number>>;
+  demandaSelecionada?: number;
+  setDemandaSelecionada?: React.Dispatch<React.SetStateAction<number>>;
   propostaSelecionada?: number;
+  setPropostaSelecionado?: React.Dispatch<React.SetStateAction<number>>;
   verProcesso: MouseEventHandler<HTMLDivElement>;
   isChecked?: boolean;
   setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;

@@ -21,12 +21,27 @@ import {
   BoxBotaoTerciario,
   BoxBotoesPriSec,
 } from "./CriacaoDemanda.styles";
+import api from "../../api/api";
+import jsPDF from "jspdf";
+
+import EsqueletoPDFVersaoDemanda from "../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda";
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
 }) {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
+  const [centroCusto, setCentroCusto] = useState<any[]>([]);
+  const [data, setData] = useState<any>()
+  const [files, setFiles] = useState<any>([]);
+  const [pdfDemanda, setPDFDemanda] = useState<any>();
+
+  const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
+  const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
+  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
+
+  const [moedaReal, setMoedaReal] = useState<string[]>([]);
+  const [moedaPotencial, setMoedaPotencial] = useState<string[]>([]);
 
   useEffect(() => {
     if (props.rascunho) {
@@ -57,6 +72,14 @@ export default function CriacaoDemanda(props: {
     }
   }, [valor]);
 
+  useEffect(() => {
+    if (pdfDemanda == null || pdfDemanda == undefined) {
+      return
+    }
+
+    criarDemanda()
+  }, [pdfDemanda])
+
   function getIdByAtributo(atributo: string) {
     const idsInputsAtributo = {
       titulo: "titulo",
@@ -69,7 +92,6 @@ export default function CriacaoDemanda(props: {
   }
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
-    console.log(newValue);
     setValor(newValue);
     if (newValue == 2) {
       setSegundo(true);
@@ -77,6 +99,134 @@ export default function CriacaoDemanda(props: {
       setSegundo(false);
     }
   }
+
+  function partUmDemanda() {
+    const titulo = document.getElementById("titulo") as HTMLInputElement;
+    const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
+    const objetivo = document.getElementById("objetivo") as HTMLInputElement;
+
+    const idUsuario = localStorage.getItem("IDUSUARIO");
+
+    let data = {
+      "tituloDemanda": titulo.value,
+      "objetivo": objetivo.value,
+      "situacaoAtual": situacaoAtual.value,
+      "centroCustoDemanda": centroCusto,
+      "usuario": {
+        "idUsuario": idUsuario
+      }
+    }
+
+    setData(data);
+  }
+
+  function partDoisDemanda() {
+    const frequenciaUso = document.getElementById("frequenciaUso") as HTMLInputElement;
+
+    let valorMensal;
+    let descricao;
+
+    let beneficios = [];
+
+    for (let i = 0; i < numeroBeneficiosReais; i++) {
+      valorMensal = document.getElementById(`valorMensalReal${i}`) as HTMLInputElement;
+      descricao = document.getElementById(`descricaoReal${i}`) as HTMLInputElement;
+
+      let beneficioReal = {
+        "tipoBeneficio": "REAL",
+        "descricao": descricao.value,
+        "moeda": moedaReal[i],
+        "valor": valorMensal.value
+      }
+
+      if (numeroBeneficiosReais > 0 && valorMensal.value && moedaReal && descricao.value) {
+        beneficios.push(beneficioReal);
+      }
+    }
+
+    for (let i = 0; i < numeroBeneficiosPotenciais; i++) {
+      valorMensal = document.getElementById(`valorMensalPotencial${i}`) as HTMLInputElement;
+      descricao = document.getElementById(`descricaoPotencial${i}`) as HTMLInputElement;
+
+      let beneficioPotencial = {
+        "tipoBeneficio": "POTENCIAL",
+        "descricao": descricao.value,
+        "moeda": moedaPotencial[i],
+        "valor": valorMensal.value
+      }
+
+      if (numeroBeneficiosReais > 0 && valorMensal.value && moedaPotencial && descricao.value) {
+        beneficios.push(beneficioPotencial);
+      }
+    }
+
+    for (let i = 0; i < numeroBeneficiosQualitativos; i++) {
+      descricao = document.getElementById(`beneficiosQualitativos${i}`) as HTMLInputElement;
+
+      let beneficioQualitativo = {
+        "tipoBeneficio": "QUALITATIVO",
+        "descricao": descricao.value,
+      }
+
+      if (numeroBeneficiosReais > 0 && descricao.value) {
+        beneficios.push(beneficioQualitativo);
+      }
+    }
+
+    let data2 = {
+      "tituloDemanda": data.tituloDemanda,
+      "objetivo": data.objetivo,
+      "situacaoAtual": data.situacaoAtual,
+      "frequenciaUso": frequenciaUso.value,
+      "score": 1,
+      "centroCustoDemanda": data.centroCustoDemanda,
+      "beneficiosDemanda": beneficios,
+      "usuario": {
+        "idUsuario": data.usuario.idUsuario
+      }
+    }
+
+    setData(data2)
+
+  }
+
+  function gerarPDFDemanda() {
+    const doc = new jsPDF()
+    const pdf = document.getElementById("BOX") as HTMLElement
+
+    doc.html(pdf)
+    const pdfArquivo = doc.output("blob")
+
+    setPDFDemanda(pdfArquivo)
+  }
+
+  function criarDemanda() {
+    let formData = new FormData();
+    if (files != undefined) {
+      formData.append("files", files);
+    }
+
+    if (data != undefined) {
+      formData.append("demanda", JSON.stringify(data));
+    }
+
+    if (pdfDemanda != undefined) {
+      formData.append("pdfVersaoHistorico", pdfDemanda);
+    }
+
+    api.post("/sod/demanda", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    }).then((res: any) => {
+      console.log(res);
+    }).catch((err: any) => {
+      console.log(err);
+    })
+
+    window.location.href = "/home";
+  }
+
 
   return (
     <BoxConteudo>
@@ -104,8 +254,8 @@ export default function CriacaoDemanda(props: {
 
         {valor == 0 && (
           <>
-            <InformacaoGeral proposta={false} />
-                          <BoxContainerBotoes>
+            <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} />
+            <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
                 variant="outlined"
@@ -121,6 +271,7 @@ export default function CriacaoDemanda(props: {
                 endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
                 onClick={() => {
                   setValor(1);
+                  partUmDemanda();
                 }}
               >
                 Proximo
@@ -131,7 +282,18 @@ export default function CriacaoDemanda(props: {
 
         {valor == 1 && (
           <>
-            <BeneficiosDemanda rascunho={props.rascunho} proposta={false}/>
+            <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
+              numeroBeneficiosReais={numeroBeneficiosReais}
+              numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
+              numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
+              setNumeroBeneficiosReais={setNumeroBeneficiosReais}
+              setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
+              setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
+              moedaReal={moedaReal}
+              setMoedaReal={setMoedaReal}
+              moedaPotencial={moedaPotencial}
+              setMoedaPotencial={setMoedaPotencial}
+            />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
@@ -169,6 +331,7 @@ export default function CriacaoDemanda(props: {
                   onClick={() => {
                     setValor(2);
                     setSegundo(true);
+                    partDoisDemanda();
                   }}
                 >
                   Proximo
@@ -180,7 +343,7 @@ export default function CriacaoDemanda(props: {
 
         {valor == 2 && (
           <>
-            <InputAnexos rascunho={props.rascunho} proposta={false}/>
+            <InputAnexos rascunho={props.rascunho} proposta={false} files={files} setFiles={setFiles} />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
@@ -215,11 +378,15 @@ export default function CriacaoDemanda(props: {
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
+                  onClick={() => gerarPDFDemanda()}
                 >
                   Enviar
                 </BotaoPrimario>
               </BoxBotoesPriSec>
             </BoxContainerBotoes>
+            {data != null &&
+              <EsqueletoPDFVersaoDemanda demanda={data} />
+            }
           </>
         )}
       </ContainerGeral>

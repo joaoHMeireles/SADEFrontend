@@ -1,5 +1,6 @@
 import { BoxConteudo } from "../../../Pages/App.styles";
 import { PDFExport } from "@progress/kendo-react-pdf";
+import { renderToStream, renderToString } from "@react-pdf/renderer"
 import "./EsqueletoPDFProposta.scss";
 import { useRef } from "react";
 import Box from "@mui/material/Box";
@@ -158,7 +159,7 @@ const proposta: Proposta = {
 export default function EsqueletoPDFProposta() {
     const pdfCompoente = useRef<PDFExport>(null)
 
-    const exportPDFWithComponent = () => {
+    const exportPDFWithComponent = async () => {
         if (pdfCompoente.current) {
             pdfCompoente.current.save();
         }
@@ -245,8 +246,6 @@ export default function EsqueletoPDFProposta() {
         return (
             <Box sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
                 {props.proposta.custosTotais.tabelas.map((tabela: ItensTabela) => {
-                    console.log(tabela.temLicenca);
-
                     let totalEsfoco = 0;
                     let valorTotal = 0;
                     return (
