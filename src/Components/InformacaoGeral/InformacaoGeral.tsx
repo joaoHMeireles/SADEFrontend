@@ -21,6 +21,11 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
   const [idCentroCusto, setIdCentroCusto] = useState<any[]>([]);
 
+
+  const demandaSelecionada = JSON.parse(
+    localStorage.getItem("DEMANDASELECIONADA") as string
+  );
+
   useEffect(() => {
     api.get("/sod/centroCusto").then((res: any) => {
       const listaCentroCusto = res.data.map((centroCusto: any) => centroCusto.nomeCentroCusto)
@@ -33,49 +38,46 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
 
   useEffect(() => {
     if (props.proposta) {
-      const demandaSelecionada = JSON.parse(
-        localStorage.getItem("DEMANDASELECIONADA") as string
-      );
-
       for (let atributo in demandaSelecionada) {
-        // console.log(atributo);
-
         if ((demandaSelecionada as any)[atributo]) {
           const inputAtributo = document.getElementById(
             getIdByAtributo(atributo)
           ) as HTMLInputElement;
           if (inputAtributo) {
-            // console.log(inputAtributo);
             if (inputAtributo.id == "titulo") {
-              inputAtributo.value = demandaSelecionada.titulo;
+              inputAtributo.value = demandaSelecionada.tituloDemanda;
             }
-
             if (inputAtributo.id == "objetivo") {
               inputAtributo.value = demandaSelecionada.objetivo;
             }
-
             if (inputAtributo.id == "situacaoAtual") {
               inputAtributo.value = demandaSelecionada.situacaoAtual;
             }
           }
         }
       }
-      // console.log(demandaSelecionada);
     }
+
+
+    // console.log(centroCusto);
+    // console.log(demandaSelecionada.centroCustoDemanda);
+
+    console.log(document.getElementById("centrosDeCusto")?.parentElement);
+    
+
+    for(let i = 0; i < centroCusto.length; i++){
+
+    }
+
   }, []);
 
   function getIdByAtributo(atributo: string) {
     const idsInputsAtributo = {
-      titulo: "titulo",
+      tituloDemanda: "titulo",
       centrosDeCusto: "centroDeCusto",
       objetivo: "objetivo",
       situacaoAtual: "situacaoAtual",
     };
-
-    console.log(idsInputsAtributo);
-    console.log(atributo);
-
-
     return (idsInputsAtributo as any)[atributo];
   }
 
@@ -135,10 +137,12 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
                 props.setCentroCusto(centroCustoDemanda)
               }}
               renderOption={(props, centroCusto, { selected }) => {
+                console.log(centroCusto);
+                
                 return (
                   <li {...props}>
                     <Checkbox
-                      id="checkBox"
+                      id={`checkBox`}
                       icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                       checkedIcon={<CheckBoxIcon fontSize="small" />}
                       style={{ marginRight: 8 }}
