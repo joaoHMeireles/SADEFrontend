@@ -16,6 +16,7 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
 import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
+import InfomacoesAdicionais from "../../Components/InfomacoesAdicionais/InformacoesAdicionais";
 
 import { ContainerGeral, ContainerBoxTabs } from "./CriacaoProposta.styles";
 
@@ -51,6 +52,10 @@ export default function CriacaoProposta(props: {
 
   const [moedaReal, setMoedaReal] = useState<string[]>([])
   const [moedaPotencial, setMoedaPotencial] = useState<string[]>([])
+
+  const [valorTamanho, setValorTamanho] = useState<string>("");
+  const [valorBUSolicitante, setValorBUSolicitante] = useState<string>("");
+  const [valorBUsBeneficadas, setValorBUsBeneficadas] = useState<string[]>([]);
 
 
   useEffect(() => {
@@ -156,6 +161,12 @@ export default function CriacaoProposta(props: {
               moedaPotencial={moedaPotencial}
               setMoedaPotencial={setMoedaPotencial}
             />
+            <InfomacoesAdicionais valorTamanho={valorTamanho}
+              setValorTamanho={setValorTamanho}
+              valorBUSolicitante={valorBUSolicitante}
+              setValorBUSolicitante={setValorBUSolicitante}
+              valorBUsBeneficadas={valorBUsBeneficadas}
+              setValorBUsBeneficadas={setValorBUsBeneficadas} />
             <InputAnexos rascunho={false} proposta={true} />
             <BoxContainerBotoes>
               <BotaoTerciario
