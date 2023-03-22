@@ -83,7 +83,7 @@ export default function BeneficiosDemanda(props: {
     }
   }, [])
 
-  useEffect(() => {
+  useEffect(() => {    
     for (let atributo in informacaoProcesso) {
       if ((informacaoProcesso as any)[atributo]) {
         if (atributo == "frequenciaUso") {
@@ -91,17 +91,55 @@ export default function BeneficiosDemanda(props: {
         }
 
         if (atributo == "beneficiosDemanda") {
+          const beneficiosBancoReais = informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "REAL")
+          const beneficiosBancoPotenciais = informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL")
+          const beneficiosBancoQualitativos = informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO")
+
           for (let i = 0; i < props.numeroBeneficiosReais; i++) {
 
             const beneficioRealValorMensal = document.getElementById("valorMensalReal" + i) as HTMLInputElement;
             if (beneficioRealValorMensal) {
-              beneficioRealValorMensal.value = informacaoProcesso[atributo][i].valor;
+              beneficioRealValorMensal.value = beneficiosBancoReais[i].valor;
             }
 
             const beneficioRealDescricaoReal = document.getElementById("descricaoReal" + i) as HTMLInputElement;
             if (beneficioRealDescricaoReal) {
-              beneficioRealDescricaoReal.value = informacaoProcesso[atributo][i].descricao
+              beneficioRealDescricaoReal.value = beneficiosBancoReais[i].descricao
             }
+
+            if (props.moedaReal && props.setMoedaReal) {
+              props.moedaReal.push(beneficiosBancoReais[i].moeda);
+              props.setMoedaReal(props.moedaReal);
+            }
+          }
+
+          for (let i = 0; i < props.numeroBeneficiosPotenciais; i++) {
+
+            const beneficioPotencialValorMensal = document.getElementById("valorMensalPotencial" + i) as HTMLInputElement;
+            if (beneficioPotencialValorMensal) {
+              beneficioPotencialValorMensal.value = beneficiosBancoPotenciais[i].valor;
+            }
+
+            const beneficioPotencialDescricaoPotencial = document.getElementById("descricaoPotencial" + i) as HTMLInputElement;
+            if (beneficioPotencialDescricaoPotencial) {
+              beneficioPotencialDescricaoPotencial.value = beneficiosBancoPotenciais[i].descricao
+            }
+
+            if (props.moedaPotencial && props.setMoedaPotencial) {
+              props.moedaPotencial.push(beneficiosBancoPotenciais[i].moeda);
+              props.setMoedaPotencial(props.moedaPotencial);
+            }
+
+          }
+
+          for (let i = 0; i < props.numeroBeneficiosQualitativos; i++) {
+
+            const beneficioQualitativoDescricao = document.getElementById("beneficiosQualitativos" + i) as HTMLInputElement;
+
+            if (beneficioQualitativoDescricao) {
+              beneficioQualitativoDescricao.value = beneficiosBancoQualitativos[i].descricao;
+            }
+
           }
         }
       }
@@ -270,7 +308,9 @@ function BeneficioReal(props: { index: number, moedas: Object[], moedaReal: stri
                 }}
               />
               <TextField
-                // id={`moedaReal${props.index}`}                sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
+                id={`moedaReal${props.index}`}
+                sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
+                defaultValue={props.moedaReal}
                 select
                 label="Moeda"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -330,8 +370,9 @@ function BeneficioPotencial(props: { index: number, moedas: Object[], moedaPoten
                 }}
               />
               <TextField
-                // id={`moedaPotencial${props.index}`}
+                id={`moedaPotencial${props.index}`}
                 sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
+                defaultValue={props.moedaPotencial}
                 select
                 label="Moeda"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

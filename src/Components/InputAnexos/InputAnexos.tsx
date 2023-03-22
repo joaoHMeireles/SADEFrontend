@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 import {
   BoxContainerGeral,
   BoxContainerConteudo,
@@ -11,9 +13,12 @@ import Dropzone from "../Dropzone/Dropzone";
 export default function InputAnexos(props: {
   rascunho: boolean;
   proposta: boolean;
-  files?: any;
-  setFiles?: React.Dispatch<React.SetStateAction<never[]>>;
+  files?: any[];
+  setFiles?: React.Dispatch<React.SetStateAction<any[]>>;
 }) {
+
+  const [files, setFiles] = useState<any[]>([])
+
   return (
     <>
       <BoxTypographyAnexos>
@@ -21,7 +26,7 @@ export default function InputAnexos(props: {
       </BoxTypographyAnexos>
       <BoxContainerGeral sx={{ "&:hover": { borderColor: "#00579D" } }}>
         <BoxContainerConteudo>
-          {/* <Dropzone rascunho={props.rascunho} proposta={props.proposta} files={props.files} setFiles={props.setFiles} /> */}
+          <Dropzone rascunho={props.rascunho} proposta={props.proposta} files={files} setFiles={setFiles} />
         </BoxContainerConteudo>
       </BoxContainerGeral>
     </>

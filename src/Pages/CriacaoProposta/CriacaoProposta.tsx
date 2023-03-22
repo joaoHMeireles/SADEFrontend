@@ -49,6 +49,10 @@ export default function CriacaoProposta(props: {
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState(0)
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState(0)
 
+  const [moedaReal, setMoedaReal] = useState<string[]>([])
+  const [moedaPotencial, setMoedaPotencial] = useState<string[]>([])
+
+
   useEffect(() => {
     api.get("/sod/demanda/status/BACKLOG").then((response) => {
       let listaDemandas: any[] = []
@@ -147,6 +151,10 @@ export default function CriacaoProposta(props: {
               setNumeroBeneficiosReais={setNumeroBeneficiosReais}
               setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
+              moedaReal={moedaReal}
+              setMoedaReal={setMoedaReal}
+              moedaPotencial={moedaPotencial}
+              setMoedaPotencial={setMoedaPotencial}
             />
             <InputAnexos rascunho={false} proposta={true} />
             <BoxContainerBotoes>

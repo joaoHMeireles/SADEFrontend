@@ -18,8 +18,8 @@ type Anexos = {
 export default function Dropzone(props: {
   rascunho: boolean;
   proposta: boolean;
-  files: any;
-  setFiles: React.Dispatch<React.SetStateAction<never[]>>;
+  files: any[];
+  setFiles: React.Dispatch<React.SetStateAction<any[]>>;
 }) {
   const [arquivos, setAquivos] = useState<Array<Anexos>>([]);
 
@@ -31,14 +31,18 @@ export default function Dropzone(props: {
       info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string);
     }
 
-    if (info) {
-      const novosArquivos = [];
 
-      for (let i = 0; i < info["anexos"].length; i++) {
-        novosArquivos.push(info["anexos"][i]);
+    if (info) {
+      const novosArquivos: any = [];
+
+      for (const arquivos of info.arquivosDemanda) {
+        novosArquivos.push(arquivos)
       }
 
       setAquivos(novosArquivos);
+
+      console.log(props.files);
+
     }
   }, []);
 
@@ -54,29 +58,12 @@ export default function Dropzone(props: {
     props.files.push(file[0]["acceptedFiles"])
 
     props.setFiles(props.files);
+
+
+
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
-
-  // function enviarProback() {
-  //   const formData = new FormData()
-
-  //   console.log(files);
-
-  //   for (let i = 0; i < files.length; i++) {
-  //     // console.log(files[i]);
-  //     formData.append("files", files[i])
-  //   }
-
-  //   console.log(formData.getAll("files"));
-
-  //   axios.post("http://localhost:8080/sod/demanda", formData, {
-  //     headers: {
-  //       "Content-Type": "multipart/form-data",
-  //     }
-  //   }).then(response => console.log(response)).catch((err) => {console.log(err)});
-
-  // }
 
   return (
     <>
