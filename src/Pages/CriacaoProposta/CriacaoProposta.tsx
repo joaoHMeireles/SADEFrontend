@@ -35,6 +35,7 @@ import {
   TipoComponenteProcesso,
 } from "../../constants/enuns";
 import api from "../../api/api";
+import { Dayjs } from "dayjs";
 
 export default function CriacaoProposta(props: {
   filtrar: boolean;
@@ -56,6 +57,8 @@ export default function CriacaoProposta(props: {
   const [valorTamanho, setValorTamanho] = useState<string>("");
   const [valorBUSolicitante, setValorBUSolicitante] = useState<string>("");
   const [valorBUsBeneficadas, setValorBUsBeneficadas] = useState<string[]>([]);
+
+  const [prazoElaboracao, setPrazoElaboracao] = useState<Dayjs | null>(null);
 
 
   useEffect(() => {
@@ -166,7 +169,9 @@ export default function CriacaoProposta(props: {
               valorBUSolicitante={valorBUSolicitante}
               setValorBUSolicitante={setValorBUSolicitante}
               valorBUsBeneficadas={valorBUsBeneficadas}
-              setValorBUsBeneficadas={setValorBUsBeneficadas} />
+              setValorBUsBeneficadas={setValorBUsBeneficadas}
+              prazoElaboracao={prazoElaboracao}
+              setPrazoElaboracao={setPrazoElaboracao} />
             <InputAnexos rascunho={false} proposta={true} />
             <BoxContainerBotoes>
               <BotaoTerciario

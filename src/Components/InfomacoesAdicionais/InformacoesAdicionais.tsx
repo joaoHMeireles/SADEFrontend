@@ -7,6 +7,14 @@ import Typography from "@mui/material/Typography";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import api from "../../api/api";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Dayjs } from "dayjs";
+
+import {
+    BoxPadraoDireta, BoxPadraoEsquerda, BoxTitulo, BoxGeral, TypographyPadrao,
+    SelectPadrao, BoxContainerInputs
+} from "./InfomacoesAdicionais.styles";
 
 export default function InfomacoesAdicionais(props: {
     valorTamanho: string;
@@ -15,6 +23,8 @@ export default function InfomacoesAdicionais(props: {
     setValorBUSolicitante: React.Dispatch<React.SetStateAction<string>>;
     valorBUsBeneficadas: string[];
     setValorBUsBeneficadas: React.Dispatch<React.SetStateAction<string[]>>;
+    prazoElaboracao: Dayjs | null;
+    setPrazoElaboracao: React.Dispatch<React.SetStateAction<Dayjs | null>>;
 }) {
 
     const tamanhos = [
@@ -33,46 +43,58 @@ export default function InfomacoesAdicionais(props: {
 
     return (
         <>
-            <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", marginY: 5 }}>
-                <Box sx={{ width: "100%", backgroundColor: "#00579d", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <BoxGeral>
+                <BoxTitulo>
                     <Typography variant="h6" component={"h1"} sx={{ fontSize: "20px", color: "#FFF" }}>Informações Adicionais</Typography>
-                </Box>
-                <Box>
-                    <Typography>Tamanho: </Typography>
-                    <Select
-                        id="tamanhos"
-                        label="Tamanho"
-                        value={props.valorTamanho}
-                        onChange={(e: SelectChangeEvent) => { props.setValorTamanho(e.target.value as string) }}
-                    >
-                        {tamanhos.map((tamanho: string) => {
-                            return (
-                                <MenuItem value={tamanho}>{tamanho}</MenuItem>
-                            )
-                        })}
+                </BoxTitulo>
+                <BoxContainerInputs>
+                    <BoxPadraoDireta sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "flex-start" }}>
+                        <TypographyPadrao>Tamanho: </TypographyPadrao>
+                        <SelectPadrao
+                            id="tamanhos"
+                            value={props.valorTamanho}
+                            onChange={(e: SelectChangeEvent) => { props.setValorTamanho(e.target.value as string) }}
+                        >
+                            {tamanhos.map((tamanho: string) => {
+                                return (
+                                    <MenuItem value={tamanho}>{tamanho}</MenuItem>
+                                )
+                            })}
 
-                    </Select>
-                </Box>
-                <Box>
-                    <Typography>BU Solicitante: </Typography>
-                    <Select
-                        id="busolicitante"
-                        label="BU Solicitante"
-                        value={props.valorBUSolicitante}
-                        onChange={(e: SelectChangeEvent) => { props.setValorBUSolicitante(e.target.value as string) }}
-                    >
-                        {bus.map((bu: any) => {
-                            return (
-                                <MenuItem value={bu.nomeBU}>{bu.nomeBU}</MenuItem>
-                            )
-                        })}
-                    </Select>
-                </Box>
-                <Box>
-                    <Typography>BUs Beneficiadas: </Typography>
-                    <Select
+                        </SelectPadrao>
+                    </BoxPadraoDireta>
+                    <Box>
+                        <Typography>Prazo elaboração da proposta: </Typography>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                value={props.prazoElaboracao}
+                                onChange={(newValue) => {
+                                    props.setPrazoElaboracao(newValue);
+                                }}
+                                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} />}
+                            />
+                        </LocalizationProvider>
+                    </Box>
+                    <BoxPadraoEsquerda>
+                        <TypographyPadrao>BU Solicitante: </TypographyPadrao>
+                        <SelectPadrao
+                            id="busolicitante"
+                            value={props.valorBUSolicitante}
+                            onChange={(e: SelectChangeEvent) => { props.setValorBUSolicitante(e.target.value as string) }}
+                        >
+                            {bus.map((bu: any) => {
+                                return (
+                                    <MenuItem value={bu.nomeBU}>{bu.nomeBU}</MenuItem>
+                                )
+                            })}
+                        </SelectPadrao>
+                    </BoxPadraoEsquerda>
+                </BoxContainerInputs>
+
+                {/* <BoxPadrao>
+                    <TypographyPadrao>BUs Beneficiadas: </TypographyPadrao>
+                    <SelectPadrao
                         id="busBeneficiadas"
-                        label="BUs Beneficiadas"
                         multiple
                         value={props.valorBUsBeneficadas}
                         onChange={(e: SelectChangeEvent<typeof props.valorBUsBeneficadas>) => {
@@ -88,7 +110,6 @@ export default function InfomacoesAdicionais(props: {
                             props.setValorBUsBeneficadas(props.valorBUsBeneficadas);
                         }}
                     >
-
                         {bus.map((bu: any) => {
                             return (
                                 <MenuItem value={bu.nomeBU}>
@@ -97,17 +118,21 @@ export default function InfomacoesAdicionais(props: {
                                 </MenuItem>
                             )
                         })}
-                    </Select>
-                </Box>
-                <Box>
+                    </SelectPadrao>
+                </BoxPadrao>
+                <BoxPadrao>
                     <Typography>Sessão TI responsável: </Typography>
                     <TextField id="sessaoTIResponsavel" label="Sessão TI" type="search"></TextField>
+                </BoxPadrao>
+                <Box>
+                    <Typography>Codigo PPM: </Typography>
+                    <TextField id="codigoPPM" label="Codigo PPM" type="search"></TextField>
                 </Box>
                 <Box>
-                    <Typography>Prazo elaboração da proposta: </Typography>
-                    <DatePicker label="Prazo"></DatePicker>
-                </Box>
-            </Box>
+                    <Typography>Link EPIC Jira: </Typography>
+                    <TextField id="linkJira" label="Link EPIC Jira" type="search"></TextField>
+                </Box> */}
+            </BoxGeral>
         </>
     );
 }
