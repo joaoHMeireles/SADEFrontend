@@ -32,6 +32,7 @@ import {
 } from './TelaProcesso.styles';
 import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
 import api, { verificarHistoricoAprovado } from '../../api/api';
+// import EsqueletoPDFVersaoDemanda from '../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda';
 
 const valoresInputBU: any[] = [
     { idBU: 1, nomeBU: 'Motores Industrial' },
@@ -57,8 +58,8 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
     const [feedbackAberto, setFeedbackAberto] = useState(false)
     const [conteudoFeedback, setConteudoFeedback] = useState(<div />)
     const location = useLocation().pathname
-    const idLocalStorage = localStorage.getItem(`${getNomeComponente(location)}ESCOLHIDA`)
-    const informacaoProcesso = JSON.parse(idLocalStorage != null ? idLocalStorage : "");
+    const processoLocalStorage = localStorage.getItem(`${getNomeComponente(location)}ESCOLHIDA`)
+    const informacaoProcesso = JSON.parse(processoLocalStorage != null ? processoLocalStorage : "");
 
     return (
         <>
@@ -106,7 +107,7 @@ export function Header(props: {
     const processo = props.informacaoProcesso;
     const prazoElaboracao = processo.prazoElaboracao
     const tipoProcesso = processo.tipo
-
+    const idAnalista = localStorage.getItem("IDPESSOALOGADA") || 3
 
     function abrirModal() {
         props.setModalAberto(true)
@@ -122,6 +123,19 @@ export function Header(props: {
         fecharModal()
     }
 
+    function recarregarPaginaDemanda(conteudo: JSX.Element) {
+        api.get(`/sod/demanda/${processo.id}`).then((response) => {
+            const demanda = response.data
+            demanda.tipo = TipoComponenteProcesso.Demanda
+            demanda.id = demanda.idDemanda
+            localStorage.setItem("DEMANDAESCOLHIDA", JSON.stringify(demanda))
+            abrirFeedback(conteudo)
+            location.reload()
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
     //funções dos botões
     function irChat() {
         localStorage.setItem("IDCHATESCOLHIDO", processo.id)
@@ -134,7 +148,6 @@ export function Header(props: {
         }
 
         function finalizarAprovacao(conteudo: JSX.Element) {
-            const idAnalista = localStorage.getItem("IDPESSOALOGADA") || 3
             const tamanhoDemanda = document.getElementById("input-tamanho")?.innerText
             const nomeBUSolicitante = document.getElementById("input-bu-solicitante")?.innerText
             const busBeneficiadas = document.getElementsByClassName("bu-beneficiada")
@@ -157,47 +170,44 @@ export function Header(props: {
                 }
             ))
 
-            console.log(
+            const formDataDemanda = new FormData()
+            formDataDemanda.append("demanda", JSON.stringify(
                 {
-                    tarefa: "CLASSIFICARDEMANDA",
-                    demanda: { idDemanda: processo.idDemanda },
-                    usuario: { idUsuario: idAnalista },
-                    acaoFeitaHistoricoAnterior: "APROVARDEMANDA"
+                    tamanho: getKeyEnum(TamanhoComponenteProcesso, tamanhoDemanda).toUpperCase(),
+                    busolicitante: { idBU: valoresInputBU.find(bu => bu.nomeBU == nomeBUSolicitante).idBU },
+                    busBeneficiadas: busBeneficiadasEscolhidas,
+                    secaoTIResponsavel: getKeyEnum(sessaoTI, sessaoTIResponsavel),
+                    classificando: true
                 }
-            );
-            
+            ))
 
-            // const formDataDemanda = new FormData()
-            // formDataDemanda.append("demanda", JSON.stringify(
-            //     {
-            //         tamanho: getKeyEnum(TamanhoComponenteProcesso, tamanhoDemanda).toUpperCase(),
-            //         BUSolicitante: { idBU: valoresInputBU.find(bu => bu.nomeBU == nomeBUSolicitante).idBU },
-            //         BUsBeneficiadas: busBeneficiadasEscolhidas,
-            //         secaoTIResponsavel: getKeyEnum(sessaoTI, sessaoTIResponsavel)
-            //     }
-            // ))
-            
-            
+            // Depois que conseguir fazer o arquivo de versionamento esse get não será mais necessário 
+            api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo) => {
+                //colocar pdf
+                formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
 
-            //faz a atualização do histórico da demanda
-            api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response) => {
-                console.log(response.data);
+                // faz a atualização do histórico da demanda
+                api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
+                    // atualiza informações de demanda
+                    api.put(`/sod/demanda/${processo.idDemanda}/${idAnalista}`, formDataDemanda, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        }
+                    }).then(() => {
+                        recarregarPaginaDemanda(conteudo)
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+                }).catch((err) => {
+                    console.log(err);
+                })
             }).catch((err) => {
                 console.log(err);
+
             })
-
-            //atualiza informações de demanda
-            // api.put(`/sod/demanda/${processo.idDemanda}/${idAnalista}`, infoClassificacaoDemanda).then((response) => {
-            //     console.log(response.data);                
-            // }).catch((err) => {
-            //     console.log(err);
-            // })
-
-            abrirFeedback(conteudo)
         }
 
         const segundaParteAprovacao = <ModalClassificacaoDemanda abrirFeedback={finalizarAprovacao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />
-
 
         props.setConteudoModal(
             <ConteudoModalConfirmacao
@@ -210,8 +220,9 @@ export function Header(props: {
         )
 
         abrirModal()
-    }
+    } //feito
 
+    //testar isso aqui
     function reprovarDemanda() {
         const conteudoFeedback = (
             <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
@@ -219,16 +230,26 @@ export function Header(props: {
             </Alert>
         )
 
-        function reprovarDemanda(contaudoFeedback: JSX.Element) {
+        function finalizarReprovacao(conteudoFeedback: JSX.Element) {
+            const formDataHistorico = new FormData()
+            formDataHistorico.append("historico", JSON.stringify(
+                {
+                    acaoFeita: "REPROVARDEMANDA",
+                    statusHistorico: "CONCLUIDO"
+                }
+            ))
 
-
-            abrirFeedback(contaudoFeedback)
+            api.put(`/sod/historicoWorkflow/demanda/${processo.id}`, formDataHistorico).then((response) => {
+                recarregarPaginaDemanda(conteudoFeedback)
+            }).catch((err) => {
+                console.log(err);
+            })
         }
 
         props.setConteudoModal(
             <ConteudoModalConfirmacao
                 tituloModal='Quer reprovar essa demanda?'
-                abrirProximoComponente={reprovarDemanda}
+                abrirProximoComponente={finalizarReprovacao}
                 conteudoProximoComponente={conteudoFeedback}
                 descricaoModal="Caso confirme, a demanda não poderá mais ser avaliada novamente"
                 fecharModal={fecharModal}
@@ -555,6 +576,7 @@ function ModalClassificacaoDemanda(props: Modal) {
                     Enviar
                 </BotaoPrimario>
             </BoxBotoesModal>
+            {/* <EsqueletoPDFVersaoDemanda demanda={data} /> */}
         </BoxConteudoModal>
     )
 }
@@ -888,7 +910,7 @@ function InfoGeral(props: { processo: any }) {
         sessaoTIResponsavel: processo.secaoTIResponsavel,
         BUSolicitante: processo.busolicitante ? processo.busolicitante.nomeBU : null,
         payback: processo.payback,
-        prazoElaboracao:processo.prazoElaboracao? new Date(processo.prazoElaboracao): null,
+        prazoElaboracao: processo.prazoElaboracao ? new Date(processo.prazoElaboracao) : null,
         codigoPPM: processo.codigoPPM
     }
 
@@ -1222,7 +1244,7 @@ function Footer(props: {
 
 function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonElement>[]) {
     const [aprovadoGerente, setAprovadoGerente] = useState(false)
-    verificarHistoricoAprovado(4, setAprovadoGerente)
+    verificarHistoricoAprovado(processo.id, setAprovadoGerente)
     const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
     const tipoProcesso = processo.tipo
     const tamanho = processo.tamanho
