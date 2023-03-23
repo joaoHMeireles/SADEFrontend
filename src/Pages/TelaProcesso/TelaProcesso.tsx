@@ -171,10 +171,12 @@ export function Header(props: {
             ))
 
             const formDataDemanda = new FormData()
+            //arrumar isso auqi
+            const bu = valoresInputBU.find(bu => bu.nomeBU == nomeBUSolicitante)
             formDataDemanda.append("demanda", JSON.stringify(
                 {
                     tamanho: getKeyEnum(TamanhoComponenteProcesso, tamanhoDemanda).toUpperCase(),
-                    busolicitante: { idBU: valoresInputBU.find(bu => bu.nomeBU == nomeBUSolicitante).idBU },
+                    busolicitante: { idBU: bu.idBU},
                     busBeneficiadas: busBeneficiadasEscolhidas,
                     secaoTIResponsavel: getKeyEnum(sessaoTI, sessaoTIResponsavel),
                     classificando: true
@@ -235,6 +237,7 @@ export function Header(props: {
             formDataHistorico.append("historico", JSON.stringify(
                 {
                     acaoFeita: "REPROVARDEMANDA",
+                    demanda: { idDemanda: processo.idDemanda },
                     statusHistorico: "CONCLUIDO"
                 }
             ))
