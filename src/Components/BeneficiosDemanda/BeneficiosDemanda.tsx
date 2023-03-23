@@ -394,12 +394,12 @@ function BeneficioPotencial(props: { index: number, moedas: Object[], moedaPoten
             ></TextField>
           </BoxInputsAbaixo>
         </BoxContainerDivisorio>
-        <BoxObrigacaoLegal>
+        {/* <BoxObrigacaoLegal>
           <TypographyLabels>
             Obrigação legal
             <Checkbox id={`obrigacaoLegal${props.index}`} />
           </TypographyLabels>
-        </BoxObrigacaoLegal>
+        </BoxObrigacaoLegal> */}
       </BoxContainerGeralBeneficio>
     </>
   );

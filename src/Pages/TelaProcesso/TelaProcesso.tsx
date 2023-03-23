@@ -1,6 +1,6 @@
 import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getNomeComponente, urlValida, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum } from '../../utils';
+import { getNomeComponente, urlValida, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum, getValueEnum } from '../../utils';
 import Dayjs from '@date-io/dayjs'
 import { sessaoTI, TamanhoComponenteProcesso, TarefaExecucao, TipoComponenteProcesso } from '../../constants/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
@@ -176,7 +176,7 @@ export function Header(props: {
             formDataDemanda.append("demanda", JSON.stringify(
                 {
                     tamanho: getKeyEnum(TamanhoComponenteProcesso, tamanhoDemanda).toUpperCase(),
-                    busolicitante: { idBU: bu.idBU},
+                    busolicitante: { idBU: bu.idBU },
                     busBeneficiadas: busBeneficiadasEscolhidas,
                     secaoTIResponsavel: getKeyEnum(sessaoTI, sessaoTIResponsavel),
                     classificando: true
@@ -224,7 +224,6 @@ export function Header(props: {
         abrirModal()
     } //feito
 
-    //testar isso aqui
     function reprovarDemanda() {
         const conteudoFeedback = (
             <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
@@ -238,6 +237,7 @@ export function Header(props: {
                 {
                     acaoFeita: "REPROVARDEMANDA",
                     demanda: { idDemanda: processo.idDemanda },
+                    usuario: { idUsuario: idAnalista },
                     statusHistorico: "CONCLUIDO"
                 }
             ))
@@ -260,10 +260,31 @@ export function Header(props: {
         )
 
         abrirModal()
-    }
+    }// feito
 
     function devolverDemanda() {
-        props.setConteudoModal(<ModalMotivoDevolucao abrirFeedback={abrirFeedback} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
+        function finalizarDevolucao(conteudoFeedback: JSX.Element) {
+            const elementoMotivoDevolucao = document.getElementById("textareaMotivo") as HTMLInputElement
+
+            const formDataHistorico = new FormData()
+            formDataHistorico.append("historico", JSON.stringify(
+                {
+                    acaoFeitaHistoricoAnterior: "DEVOLVERDEMANDA",
+                    demanda: { idDemanda: processo.idDemanda },
+                    usuario: { idUsuario: idAnalista },
+                    statusHistorico: "CONCLUIDO",
+                    motivoDevolucaoAnterior: elementoMotivoDevolucao.value
+                }
+            ))
+
+            api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response) => {
+                recarregarPaginaDemanda(conteudoFeedback)
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+
+        props.setConteudoModal(<ModalMotivoDevolucao abrirFeedback={finalizarDevolucao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
 
         abrirModal()
     }
@@ -882,11 +903,11 @@ function ContainerProcessoPrincipal(props: {
     return (
         <ContainerProcesso informacaoProcesso={informacaoProcesso}>
             <Divider />
+            <Contextualizacao processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
+            <Divider />
             <InfoGeral processo={informacaoProcesso} />
             <Divider />
-            <InfoComercial processo={informacaoProcesso} />
-            <Divider />
-            <Contextualizacao processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
+            <InfoComercial processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal}/>
         </ContainerProcesso >
     )
 }
@@ -909,8 +930,8 @@ function InfoGeral(props: { processo: any }) {
         //num sei oq é iso
         // gerenteResponsavel: processo.gerenteResponsavel,
         frequenciaDeUso: processo.frequenciaUso,
-        tamanho: processo.tamanho,
-        sessaoTIResponsavel: processo.secaoTIResponsavel,
+        tamanho: getValueEnum(TamanhoComponenteProcesso,processo.tamanho),
+        sessaoTIResponsavel: getValueEnum(sessaoTI, processo.secaoTIResponsavel),
         BUSolicitante: processo.busolicitante ? processo.busolicitante.nomeBU : null,
         payback: processo.payback,
         prazoElaboracao: processo.prazoElaboracao ? new Date(processo.prazoElaboracao) : null,
@@ -961,6 +982,8 @@ function InfoGeral(props: { processo: any }) {
         let valorAtributo = (atributosGrandes as any)[atributo]
 
         if (!valorAtributo) {
+            continue
+        } else if (valorAtributo.length == 0) {
             continue
         }
 
@@ -1074,7 +1097,12 @@ function AtributeList(props: { valorAtributo: [] }) {
  * @param props 
  * @returns 
  */
-function InfoComercial(props: { processo: any }) {
+function InfoComercial(props: {
+    processo: any,
+    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
+    setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
+}) {
+    const link = props.processo.linkJira
     const atributos = {
         beneficiosReais: getBeneficiosPorTipo(props.processo.beneficiosDemanda, "REAL"),
         beneficiosPotenciais: getBeneficiosPorTipo(props.processo.beneficiosDemanda, "POTENCIAL"),
@@ -1093,25 +1121,28 @@ function InfoComercial(props: { processo: any }) {
     }
 
     return (
-        <Box sx={{ marginY: "20px" }}>
-            <TypographyTitulo variant='h5'>
-                Informações Comerciais
-            </TypographyTitulo>
-            {atributos.beneficiosReais.length != 0 &&
-                <TabelaBeneficios title='Benefícios reais' atributos={atributos.beneficiosReais} />
-            }
-            {atributos.beneficiosPotenciais.length != 0 &&
-                <TabelaBeneficios title='Benefícios potenciais' atributos={atributos.beneficiosPotenciais} />
-            }
-            {atributos.tabelasCusto &&
-                <BoxTabela>
-                    <TypographyTitulo variant='subtitle1'>
-                        Tabelas de custo
-                    </TypographyTitulo>
-                    {elementosTabelaCusto}
-                </BoxTabela>
-            }
-        </Box >
+        <>
+            <Box sx={{ marginY: "20px" }}>
+                <TypographyTitulo variant='h5'>
+                    Informações Comerciais
+                </TypographyTitulo>
+                {atributos.beneficiosReais.length != 0 &&
+                    <TabelaBeneficios title='Benefícios reais' atributos={atributos.beneficiosReais} />
+                }
+                {atributos.beneficiosPotenciais.length != 0 &&
+                    <TabelaBeneficios title='Benefícios potenciais' atributos={atributos.beneficiosPotenciais} />
+                }
+                {atributos.tabelasCusto &&
+                    <BoxTabela>
+                        <TypographyTitulo variant='subtitle1'>
+                            Tabelas de custo
+                        </TypographyTitulo>
+                        {elementosTabelaCusto}
+                    </BoxTabela>
+                }
+            </Box >
+            <Footer link={link} tipo={props.processo.tipo} anexos={props.processo.arquivosDemanda} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
+        </>
     )
 
 }
@@ -1165,7 +1196,7 @@ function Contextualizacao(props: {
                 Contextualização
             </TypographyTitulo>
             {contextos}
-            <Footer link={link} tipo={props.processo.tipo} anexos={props.processo.arquivosDemanda} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
+            {/* <Footer link={link} tipo={props.processo.tipo} anexos={props.processo.arquivosDemanda} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} /> */}
         </Grid>
     )
 }
@@ -1250,6 +1281,7 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
     verificarHistoricoAprovado(processo.id, setAprovadoGerente)
     const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
     const tipoProcesso = processo.tipo
+    const statusProcesso = processo.statusDemanda
     const tamanho = processo.tamanho
     const linkJira = processo.linkJira
     const prazoElaboracao = processo.prazoElaboracao
@@ -1275,36 +1307,41 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
     if (tipoProcesso == "Demanda") {
         const aprovar = { nome: "aprovar", function: funcoes[1] }
         const reprovar = { nome: "reprovar", function: funcoes[2] }
+        const historico = { nome: "historico", function: funcoes[4] }
 
-        if (!tamanho) {
-            if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                const devolver = { nome: "devolver", function: funcoes[3] }
-
-                listaBotoes.push(reprovar, devolver, aprovar)
-            }
-        } else {
-            const historico = { nome: "historico", function: funcoes[4] }
-
+        if (statusProcesso == "CANCELED") {
             listaBotoes.push(historico)
+        } else {
 
-            if (tipoPessoa == "gerenteNegocio") {
-                if (aprovadoGerente) {
-                    listaBotoes.push(reprovar, aprovar)
+            if (!tamanho) {
+                if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                    const devolver = { nome: "devolver", function: funcoes[3] }
+
+                    listaBotoes.push(reprovar, devolver, aprovar)
                 }
-            } else if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                if (!aprovadoGerente) {
-                    if (!linkJira) {
-                        const adicionarInfo = { nome: "adicionarInfo", function: funcoes[5] }
+            } else {
 
-                        listaBotoes.push(adicionarInfo)
-                    } else {
-                        let criarProposta: Botao = { nome: " ", function: funcoes[6] }
-                        if (prazoElaboracao < new Date()) {
-                            criarProposta.nome = "criarProposta!"
+                listaBotoes.push(historico)
+
+                if (tipoPessoa == "gerenteNegocio") {
+                    if (aprovadoGerente) {
+                        listaBotoes.push(reprovar, aprovar)
+                    }
+                } else if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                    if (!aprovadoGerente) {
+                        if (!linkJira) {
+                            const adicionarInfo = { nome: "adicionarInfo", function: funcoes[5] }
+
+                            listaBotoes.push(adicionarInfo)
                         } else {
-                            criarProposta.nome = "criarProposta"
+                            let criarProposta: Botao = { nome: " ", function: funcoes[6] }
+                            if (prazoElaboracao < new Date()) {
+                                criarProposta.nome = "criarProposta!"
+                            } else {
+                                criarProposta.nome = "criarProposta"
+                            }
+                            listaBotoes.push(criarProposta)
                         }
-                        listaBotoes.push(criarProposta)
                     }
                 }
             }

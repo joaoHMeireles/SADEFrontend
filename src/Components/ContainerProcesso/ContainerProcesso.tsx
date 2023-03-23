@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { BoxConteudo } from "../../Pages/App.styles";
 import { getCorStatus, getCorTipo } from "../../utils";
 import Bandeira from "../Bandeira/Bandeira";
@@ -9,7 +9,7 @@ export default function ContainerProcesso(props: { informacaoProcesso: any, chil
     const informacaoProcesso = props.informacaoProcesso
 
     return (
-        <BoxConteudo>
+        <BoxConteudo >
             <GridContainer container>
                 <Grid item xs={0.2}>
                     <BoxCorStatus sx={{ backgroundColor: getCorStatus(informacaoProcesso?.statusDemanda) }} ></BoxCorStatus>

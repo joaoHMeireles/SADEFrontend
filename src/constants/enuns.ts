@@ -16,11 +16,11 @@ export enum TipoColecaoComponenteProcesso {
 }
 
 export enum TamanhoComponenteProcesso {
-    MuitoPequeno = "Muito Pequeno",
-    Pequeno = "Pequeno",
-    Medio = "Médio",
-    Grande = "Grande",
-    MuitoGrande = "Muito Grande"
+    MUITOPEQUENO = "Muito Pequeno",
+    PEQUENO = "Pequeno",
+    MEDIO = "Médio",
+    GRANDE = "Grande",
+    MUITOGRANDE = "Muito Grande"
 }
 
 export enum StatusComponenteProcesso {
