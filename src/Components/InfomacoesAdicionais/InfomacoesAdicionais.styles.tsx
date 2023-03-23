@@ -12,11 +12,11 @@ export const BoxGeral = styledBox({
 })
 
 export const BoxTitulo = styledBox({
-    width: "100%", backgroundColor: "#00579d", display: "flex", justifyContent: "center", alignItems: "center"
+    width: "100%", backgroundColor: "#00579d", display: "flex", justifyContent: "center", alignItems: "center", marginTop: 40, marginBottom: 20
 })
 
 export const BoxContainerInputs = styledBox({
-    width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center"
+    width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20
 })
 
 export const BoxPadraoDireta = styledBox({
@@ -27,8 +27,12 @@ export const BoxPadraoEsquerda = styledBox({
     width: "33%", display: "flex", justifyContent: "center", alignItems: "flex-end", flexDirection: "column", marginTop: 16, marginBottom: 16
 })
 
+export const BoxSessaoTIECodigoPPM = styledBox({
+    width: "100%", display: "flex", justifyContent: "start", alignItems: "center", marginTop: 40, marginBottom: 40
+})
+
 export const TypographyPadrao = styledTypography({
-    marginRight: 16
+    marginBottom: 16,
 })
 
 export const SelectPadrao = styledSelect({

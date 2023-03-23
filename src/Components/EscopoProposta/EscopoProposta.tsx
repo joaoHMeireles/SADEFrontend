@@ -7,13 +7,9 @@ import InputAnexos from "../InputAnexos/InputAnexos";
 import TabelaCustoCriacao from "../Tabelas/TabelaCustoCriacao/TabelaCustoCriacao";
 
 import {
-  BoxContainerGeral,
-  BoxPadrao,
-  BoxPaybackExecucao,
-  BoxResponsavel,
-  BoxPaybackExe,
-  BoxResponsaveis,
-  TypographyStyled,
+  BoxContainerGeral, BoxPadrao, BoxPaybackExecucao,
+  BoxResponsavel, BoxPaybackExe, BoxResponsaveis,
+  TypographyStyled
 } from "./EscopoProposta.styles";
 
 export default function EscopoProposta(props: { proposta: boolean }) {
@@ -21,7 +17,7 @@ export default function EscopoProposta(props: { proposta: boolean }) {
     <>
       <BoxContainerGeral>
         <BoxPadrao>
-          <TypographyStyled>Escopo</TypographyStyled>
+          <TypographyStyled>Escopo: </TypographyStyled>
           <TextField
             sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
             multiline
@@ -30,18 +26,18 @@ export default function EscopoProposta(props: { proposta: boolean }) {
           />
         </BoxPadrao>
         <BoxPadrao>
-          <TypographyStyled>Tabelas de Custo</TypographyStyled>
+          <TypographyStyled>Tabelas de Custo: </TypographyStyled>
           <TabelaCustoCriacao />
         </BoxPadrao>
         <BoxPaybackExecucao>
           <BoxPaybackExe>
-            <TypographyStyled>Payback</TypographyStyled>
+            <TypographyStyled>Payback: </TypographyStyled>
             <TextField
               sx={{ width: "95%", boxShadow: "5px 5px 10px 0 #00000050" }}
             ></TextField>
           </BoxPaybackExe>
           <BoxPaybackExe>
-            <TypographyStyled>Período de execução</TypographyStyled>
+            <TypographyStyled>Período de execução: </TypographyStyled>
             <TextField
               sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
               InputProps={{ endAdornment: <CalendarMonthRoundedIcon /> }}
@@ -50,13 +46,13 @@ export default function EscopoProposta(props: { proposta: boolean }) {
         </BoxPaybackExecucao>
         <BoxResponsavel>
           <BoxResponsaveis>
-            <TypographyStyled>Nome do responsável</TypographyStyled>
+            <TypographyStyled>Nome do responsável: </TypographyStyled>
             <TextField
               sx={{ width: "95%", boxShadow: "5px 5px 10px 0 #00000050" }}
             ></TextField>
           </BoxResponsaveis>
           <BoxResponsaveis>
-            <TypographyStyled>Área do responsável</TypographyStyled>
+            <TypographyStyled>Área do responsável: </TypographyStyled>
             <TextField
               sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
             ></TextField>

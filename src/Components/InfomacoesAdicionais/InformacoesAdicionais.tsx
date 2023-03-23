@@ -6,6 +6,9 @@ import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 import api from "../../api/api";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -13,7 +16,7 @@ import { Dayjs } from "dayjs";
 
 import {
     BoxPadraoDireta, BoxPadraoEsquerda, BoxTitulo, BoxGeral, TypographyPadrao,
-    SelectPadrao, BoxContainerInputs
+    SelectPadrao, BoxContainerInputs, BoxSessaoTIECodigoPPM
 } from "./InfomacoesAdicionais.styles";
 
 export default function InfomacoesAdicionais(props: {
@@ -35,20 +38,25 @@ export default function InfomacoesAdicionais(props: {
         "Muito Grande",
     ]
 
-    const [bus, setBus] = useState<Object[]>([])
+    const [bus, setBus] = useState<any[]>([])
 
     useEffect(() => {
-        api.get("/sod/bu").then((res) => setBus(res.data)).catch((err) => console.log(err));
+        api.get("/sod/bu").then((res) => {
+            const listaBus = res.data.map((bu: any) => bu.nomeBU)
+            setBus(listaBus)
+        }).catch((err) => console.log(err));
     }, [])
 
     return (
         <>
             <BoxGeral>
+
                 <BoxTitulo>
                     <Typography variant="h6" component={"h1"} sx={{ fontSize: "20px", color: "#FFF" }}>Informações Adicionais</Typography>
                 </BoxTitulo>
+
                 <BoxContainerInputs>
-                    <BoxPadraoDireta sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "flex-start" }}>
+                    <BoxPadraoDireta>
                         <TypographyPadrao>Tamanho: </TypographyPadrao>
                         <SelectPadrao
                             id="tamanhos"
@@ -64,7 +72,7 @@ export default function InfomacoesAdicionais(props: {
                         </SelectPadrao>
                     </BoxPadraoDireta>
                     <Box>
-                        <Typography>Prazo elaboração da proposta: </Typography>
+                        <TypographyPadrao>Prazo elaboração da proposta: </TypographyPadrao>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                                 value={props.prazoElaboracao}
@@ -76,7 +84,9 @@ export default function InfomacoesAdicionais(props: {
                         </LocalizationProvider>
                     </Box>
                     <BoxPadraoEsquerda>
-                        <TypographyPadrao>BU Solicitante: </TypographyPadrao>
+                        <Box sx={{ width: "50%" }}>
+                            <TypographyPadrao>BU Solicitante: </TypographyPadrao>
+                        </Box>
                         <SelectPadrao
                             id="busolicitante"
                             value={props.valorBUSolicitante}
@@ -84,54 +94,56 @@ export default function InfomacoesAdicionais(props: {
                         >
                             {bus.map((bu: any) => {
                                 return (
-                                    <MenuItem value={bu.nomeBU}>{bu.nomeBU}</MenuItem>
+                                    <MenuItem value={bu}>{bu}</MenuItem>
                                 )
                             })}
                         </SelectPadrao>
                     </BoxPadraoEsquerda>
                 </BoxContainerInputs>
 
-                {/* <BoxPadrao>
+                <Box sx={{ width: "100%" }}>
                     <TypographyPadrao>BUs Beneficiadas: </TypographyPadrao>
-                    <SelectPadrao
-                        id="busBeneficiadas"
+                    <Autocomplete
+                        id="BU"
+                        sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
                         multiple
-                        value={props.valorBUsBeneficadas}
-                        onChange={(e: SelectChangeEvent<typeof props.valorBUsBeneficadas>) => {
-
-                            const {
-                                target: { value },
-                            } = e;
-                            props.setValorBUsBeneficadas(
-                                typeof value === 'string' ? value.split(',') : value,
-                            );
-
-                            // props.valorBUsBeneficadas.push(e.target.value);
-                            props.setValorBUsBeneficadas(props.valorBUsBeneficadas);
-                        }}
-                    >
-                        {bus.map((bu: any) => {
+                        disableCloseOnSelect
+                        onChange={(e, valor: any) => { }}
+                        renderOption={(props, bu, { selected }) => {
                             return (
-                                <MenuItem value={bu.nomeBU}>
-                                    <Checkbox checked={props.valorBUsBeneficadas.indexOf(bu.nomeBU) > -1} />
-                                    {bu.nomeBU}
-                                </MenuItem>
-                            )
-                        })}
-                    </SelectPadrao>
-                </BoxPadrao>
-                <BoxPadrao>
-                    <Typography>Sessão TI responsável: </Typography>
-                    <TextField id="sessaoTIResponsavel" label="Sessão TI" type="search"></TextField>
-                </BoxPadrao>
-                <Box>
-                    <Typography>Codigo PPM: </Typography>
-                    <TextField id="codigoPPM" label="Codigo PPM" type="search"></TextField>
+                                <li {...props} id="listaBU">
+                                    <Checkbox
+                                        id="checkbox"
+                                        icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                                        checkedIcon={<CheckBoxIcon fontSize="small" />}
+                                        style={{ marginRight: 8 }}
+                                        checked={selected}
+                                    />
+                                    {bu}
+                                </li>
+                            );
+                        }}
+                        options={bus}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
                 </Box>
-                <Box>
-                    <Typography>Link EPIC Jira: </Typography>
-                    <TextField id="linkJira" label="Link EPIC Jira" type="search"></TextField>
-                </Box> */}
+
+                <BoxSessaoTIECodigoPPM>
+                    <Box sx={{ width: "30%", marginRight: 5 }}>
+                        <TypographyPadrao>Sessão TI responsável: </TypographyPadrao>
+                        <TextField sx={{ width: "100%" }} id="sessaoTIResponsavel" label="Sessão TI" type="search"></TextField>
+                    </Box>
+                    <Box sx={{ width: "30%" }}>
+                        <TypographyPadrao>Codigo PPM: </TypographyPadrao>
+                        <TextField sx={{ width: "80%" }} id="codigoPPM" label="Codigo PPM" type="search"></TextField>
+                    </Box>
+                </BoxSessaoTIECodigoPPM>
+
+                <Box sx={{ width: "100%" }}>
+                    <TypographyPadrao>Link EPIC Jira: </TypographyPadrao>
+                    <TextField sx={{ width: "100%" }} id="linkJira" label="Link EPIC Jira" type="search"></TextField>
+                </Box>
+
             </BoxGeral>
         </>
     );
