@@ -31,7 +31,7 @@ import {
     BoxAtributoInfoModal2, TypographyTituloAtributoModal, TextFieldURL
 } from './TelaProcesso.styles';
 import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
-import api, { verificarHistoricoAprovado } from '../../api/api';
+import api, { pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
 // import EsqueletoPDFVersaoDemanda from '../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda';
 
 const valoresInputBU: any[] = [
@@ -86,14 +86,14 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
     )
 }
 
-/**
- * Componente para o header da página que controlará os botões que aparecerão
- * de acordo com o status atual daquele processo, informações do processo
- * e a pessoa tualmente logada
- * 
- * @param props 
- * @returns 
- */
+// /**
+//  * Componente para o header da página que controlará os botões que aparecerão
+//  * de acordo com o status atual daquele processo, informações do processo
+//  * e a pessoa tualmente logada
+//  * 
+//  * @param props 
+//  * @returns 
+//  */
 export function Header(props: {
     informacaoProcesso: any,
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
@@ -103,11 +103,35 @@ export function Header(props: {
     sidebarAberta: boolean
 }) {
     const [tempoExcedido, setTempoExcedido] = useState(false)
+    const [aprovadoGerente, setAprovadoGerente] = useState(false)
+    const [ultimoHistorico, setUltimoHistorico] = useState<any>({})
     const { pathname } = useLocation()
     const processo = props.informacaoProcesso;
     const prazoElaboracao = processo.prazoElaboracao
     const tipoProcesso = processo.tipo
     const idAnalista = localStorage.getItem("IDPESSOALOGADA") || 3
+
+    const listaBotoes = getBotoesPagina(
+        processo,
+        [
+            irChat, aprovarDemanda, reprovarDemanda, devolverDemanda, verHistorico, adicionarInformacoesDemanda,
+            criarNovaProposta, iniciarNovoWorkflow, verDemandaProposta, criarNovaPauta, avaliarWorkflow
+        ],
+        aprovadoGerente,
+        ultimoHistorico
+    )
+
+    useEffect(() => {
+        verificarHistoricoAprovado(processo.id, setAprovadoGerente)
+        pegarUltimoHistorico(processo.id, setUltimoHistorico)
+        if (prazoElaboracao < new Date() && prazoElaboracao && tipoProcesso == "Demanda") {
+            setTempoExcedido(true)
+        }
+    }, [])
+
+    useEffect(() => {
+
+    })
 
     function abrirModal() {
         props.setModalAberto(true)
@@ -269,10 +293,10 @@ export function Header(props: {
             const formDataHistorico = new FormData()
             formDataHistorico.append("historico", JSON.stringify(
                 {
+                    tarefa: "REENVIARDEMANDA",
                     acaoFeitaHistoricoAnterior: "DEVOLVERDEMANDA",
                     demanda: { idDemanda: processo.idDemanda },
-                    usuario: { idUsuario: idAnalista },
-                    statusHistorico: "CONCLUIDO",
+                    usuario: { idUsuario: processo.usuario.idUsuario },
                     motivoDevolucaoAnterior: elementoMotivoDevolucao.value
                 }
             ))
@@ -287,14 +311,68 @@ export function Header(props: {
         props.setConteudoModal(<ModalMotivoDevolucao abrirFeedback={finalizarDevolucao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
 
         abrirModal()
-    }
+    }// feito
 
     function verHistorico() {
         location.href = pathname + "/history"
     } //feito
 
     function adicionarInformacoesDemanda() {
-        props.setConteudoModal(<ModalAdiconarInformações abrirFeedback={abrirFeedback} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
+        function finalizarAdicaoDeInformacoes(conteudo: JSX.Element) {
+            const prazoElaboracao = (document.getElementById("inputDataInformacoes") as HTMLInputElement).value
+            const códigoPPM = (document.getElementById("inputCodigoPPM") as HTMLInputElement).value
+            const linkJira = (document.getElementById("inputLinkJira") as HTMLInputElement).value
+            let prazoElaboracaoCerto = prazoElaboracao.slice(6) + "/" + prazoElaboracao.slice(0, 5)
+            prazoElaboracaoCerto = prazoElaboracaoCerto.replaceAll("/", "-")
+
+            const formDataHistorico = new FormData()
+            formDataHistorico.append("historico", JSON.stringify(
+                {
+                    tarefa: "CRIARPROPOSTA",
+                    demanda: { idDemanda: processo.idDemanda },
+                    usuario: { idUsuario: idAnalista },
+                    acaoFeitaHistoricoAnterior: "ADICIONARINFORMACOESDEMANDA"
+                }
+            ))
+
+            const formDataDemanda = new FormData()
+            formDataDemanda.append("demanda", JSON.stringify(
+                {
+                    prazoElaboracao: prazoElaboracaoCerto,
+                    codigoPPM: códigoPPM,
+                    linkJira: linkJira,
+                    //arrumar status
+                    statusDemanda: "BUSINESSCASE",
+                    adicionandoInformacoes: true
+                }
+            ))
+
+            // Depois que conseguir fazer o arquivo de versionamento esse get não será mais necessário 
+            api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo) => {
+                //colocar pdf
+                formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
+
+                // faz a atualização do histórico da demanda
+                api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
+                    // atualiza informações de demanda
+                    api.put(`/sod/demanda/${processo.idDemanda}/${idAnalista}`, formDataDemanda, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        }
+                    }).then(() => {
+                        recarregarPaginaDemanda(conteudo)
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+                }).catch((err) => {
+                    console.log(err);
+                })
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+
+        props.setConteudoModal(<ModalAdiconarInformações abrirFeedback={finalizarAdicaoDeInformacoes} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
 
         abrirModal()
     }
@@ -446,20 +524,6 @@ export function Header(props: {
 
         abrirModal()
     }
-
-    const listaBotoes = getBotoesPagina(
-        processo,
-        [
-            irChat, aprovarDemanda, reprovarDemanda, devolverDemanda, verHistorico, adicionarInformacoesDemanda,
-            criarNovaProposta, iniciarNovoWorkflow, verDemandaProposta, criarNovaPauta, avaliarWorkflow
-        ]
-    )
-
-    useEffect(() => {
-        if (prazoElaboracao < new Date() && prazoElaboracao && tipoProcesso == "Demanda") {
-            setTempoExcedido(true)
-        }
-    }, [])
 
     return (
         <>
@@ -662,6 +726,7 @@ function ModalMotivoDevolucao(props: Modal) {
     )
 }
 
+//ADICIONAR INPUT de STATUS DESEJADO
 function ModalAdiconarInformações(props: Modal) {
     const [valorData, setValorData] = useState<Dayjs | null>(null)
     const [erroObjectPrazo, setErroObjectPrazo] = useState({ error: false, helperText: "" })
@@ -907,7 +972,7 @@ function ContainerProcessoPrincipal(props: {
             <Divider />
             <InfoGeral processo={informacaoProcesso} />
             <Divider />
-            <InfoComercial processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal}/>
+            <InfoComercial processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
         </ContainerProcesso >
     )
 }
@@ -930,7 +995,7 @@ function InfoGeral(props: { processo: any }) {
         //num sei oq é iso
         // gerenteResponsavel: processo.gerenteResponsavel,
         frequenciaDeUso: processo.frequenciaUso,
-        tamanho: getValueEnum(TamanhoComponenteProcesso,processo.tamanho),
+        tamanho: getValueEnum(TamanhoComponenteProcesso, processo.tamanho),
         sessaoTIResponsavel: getValueEnum(sessaoTI, processo.secaoTIResponsavel),
         BUSolicitante: processo.busolicitante ? processo.busolicitante.nomeBU : null,
         payback: processo.payback,
@@ -1276,9 +1341,7 @@ function Footer(props: {
     )
 }
 
-function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonElement>[]) {
-    const [aprovadoGerente, setAprovadoGerente] = useState(false)
-    verificarHistoricoAprovado(processo.id, setAprovadoGerente)
+function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonElement>[], aprovadoGerente: boolean, ultimoHistorico: any) {
     const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
     const tipoProcesso = processo.tipo
     const statusProcesso = processo.statusDemanda
@@ -1309,7 +1372,7 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
         const reprovar = { nome: "reprovar", function: funcoes[2] }
         const historico = { nome: "historico", function: funcoes[4] }
 
-        if (statusProcesso == "CANCELED") {
+        if (statusProcesso == "CANCELED" || ultimoHistorico.tarefa == "REENVIARDEMANDA") {
             listaBotoes.push(historico)
         } else {
 
