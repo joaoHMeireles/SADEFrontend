@@ -144,17 +144,21 @@ function Tabela() {
         </TableContainerEstilizado>
         <BoxIconsAddMinus>
           {linha > 1 ? (
-            <RemoveRoundedIcon
-              sx={{ color: "#595959", cursor: "pointer", marginRight: 3 }}
-              onClick={() => setLinha(linha - 1)}
-            />
+            <Tooltip title="Remover linha">
+              <RemoveRoundedIcon
+                sx={{ color: "#595959", cursor: "pointer", marginRight: 3 }}
+                onClick={() => setLinha(linha - 1)}
+              />
+            </Tooltip>
           ) : (
             ""
           )}
-          <AddRoundedIcon
-            sx={{ color: "#595959", cursor: "pointer" }}
-            onClick={() => setLinha(linha + 1)}
-          />
+          <Tooltip title="Adicionar linha">
+            <AddRoundedIcon
+              sx={{ color: "#595959", cursor: "pointer" }}
+              onClick={() => setLinha(linha + 1)}
+            />
+          </Tooltip>
         </BoxIconsAddMinus>
       </BoxContainerTabela>
     </>

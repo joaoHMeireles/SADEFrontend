@@ -86,7 +86,6 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
             id="situacaoAtual"
             sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
             multiline
-            rows={7}
             maxRows={Infinity}
           />
         </BoxContainerLabels>
@@ -98,7 +97,6 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
             id="objetivo"
             sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
             multiline
-            rows={7}
             maxRows={Infinity}
           />
         </BoxContainerLabels>

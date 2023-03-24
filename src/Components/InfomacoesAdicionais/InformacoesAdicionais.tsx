@@ -20,6 +20,7 @@ import {
 } from "./InfomacoesAdicionais.styles";
 
 export default function InfomacoesAdicionais(props: {
+    informacaoProcesso: any;
     valorTamanho: string;
     setValorTamanho: React.Dispatch<React.SetStateAction<string>>;
     valorBUSolicitante: string;
@@ -31,20 +32,32 @@ export default function InfomacoesAdicionais(props: {
 }) {
 
     const tamanhos = [
-        "Muito Pequeno",
-        "Pequeno",
-        "Médio",
-        "Grande",
-        "Muito Grande",
+        "MUITO PEQUENO",
+        "PEQUENO",
+        "MEDIO",
+        "GRANDE",
+        "MUITO GRANDE",
     ]
 
     const [bus, setBus] = useState<any[]>([])
+
 
     useEffect(() => {
         api.get("/sod/bu").then((res) => {
             const listaBus = res.data.map((bu: any) => bu.nomeBU)
             setBus(listaBus)
         }).catch((err) => console.log(err));
+    }, [])
+
+    useEffect(() => {
+        if (props.informacaoProcesso) {
+            console.log(props.informacaoProcesso.busolicitante.nomeBU);
+            props.setValorTamanho(props.informacaoProcesso.tamanho);
+            props.setValorBUSolicitante(props.informacaoProcesso.busolicitante.nomerBU)
+
+        }
+
+
     }, [])
 
     return (
@@ -63,9 +76,9 @@ export default function InfomacoesAdicionais(props: {
                             value={props.valorTamanho}
                             onChange={(e: SelectChangeEvent) => { props.setValorTamanho(e.target.value as string) }}
                         >
-                            {tamanhos.map((tamanho: string) => {
+                            {tamanhos.map((tamanho: string, index: number) => {
                                 return (
-                                    <MenuItem value={tamanho}>{tamanho}</MenuItem>
+                                    <MenuItem key={index} value={tamanho}>{tamanho}</MenuItem>
                                 )
                             })}
 
@@ -92,9 +105,9 @@ export default function InfomacoesAdicionais(props: {
                             value={props.valorBUSolicitante}
                             onChange={(e: SelectChangeEvent) => { props.setValorBUSolicitante(e.target.value as string) }}
                         >
-                            {bus.map((bu: any) => {
+                            {bus.map((bu: any, index: number) => {
                                 return (
-                                    <MenuItem value={bu}>{bu}</MenuItem>
+                                    <MenuItem key={index} value={bu}>{bu}</MenuItem>
                                 )
                             })}
                         </SelectPadrao>

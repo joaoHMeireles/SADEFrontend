@@ -40,9 +40,6 @@ export default function Dropzone(props: {
       }
 
       setAquivos(novosArquivos);
-
-      console.log(props.files);
-
     }
   }, []);
 
@@ -76,16 +73,16 @@ export default function Dropzone(props: {
           <FileUploadRoundedIcon sx={{ color: "#595959" }} />
         </BoxTypography>
         {props.rascunho &&
-          arquivos.map((e: Anexos) => {
-            return <Arquivo icone={e.tipo} nome={e.nome} />;
+          arquivos.map((e: Anexos, index: number) => {
+            return <Arquivo key={index} icone={e.tipo} nome={e.nome} />;
           })}
 
         {props.proposta &&
-          arquivos.map((e: Anexos) => {
-            return <Arquivo icone={e.tipo} nome={e.nome} />;
+          arquivos.map((e: Anexos, index: number) => {
+            return <Arquivo key={index} icone={e.tipo} nome={e.nome} />;
           })}
 
-        {props.files.map((e: any, index: any) => {
+        {props.files.map((e: any, index: number) => {
           return (
             <Arquivo
               key={index}

@@ -43,7 +43,7 @@ export default function CriacaoProposta(props: {
 }) {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
-  const [propostaSelecionada, setPropostaSelecionada] = useState(1);
+  const [propostaSelecionada, setPropostaSelecionada] = useState(0);
   const [grid, setGrid] = useState(true);
   const [listaComponents, setListaComponents] = useState<any[]>([])
 
@@ -60,6 +60,7 @@ export default function CriacaoProposta(props: {
 
   const [prazoElaboracao, setPrazoElaboracao] = useState<Dayjs | null>(null);
 
+  const [informacaoProcesso, setInformacaoProcesso] = useState<any>();
 
   useEffect(() => {
     api.get("/sod/demanda/status/BACKLOG").then((response) => {
@@ -74,6 +75,12 @@ export default function CriacaoProposta(props: {
     }).catch((err) => {
       console.log(err);
     })
+  }, [])
+
+  useEffect(() => {
+    let info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string)
+
+    setInformacaoProcesso(info);
   }, [])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
@@ -163,8 +170,11 @@ export default function CriacaoProposta(props: {
               setMoedaReal={setMoedaReal}
               moedaPotencial={moedaPotencial}
               setMoedaPotencial={setMoedaPotencial}
+              valor={valor}
             />
-            <InfomacoesAdicionais valorTamanho={valorTamanho}
+            <InfomacoesAdicionais
+              informacaoProcesso={informacaoProcesso}
+              valorTamanho={valorTamanho}
               setValorTamanho={setValorTamanho}
               valorBUSolicitante={valorBUSolicitante}
               setValorBUSolicitante={setValorBUSolicitante}
