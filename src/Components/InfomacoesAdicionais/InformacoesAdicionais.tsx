@@ -29,6 +29,8 @@ export default function InfomacoesAdicionais(props: {
     setValorBUsBeneficadas: React.Dispatch<React.SetStateAction<string[]>>;
     prazoElaboracao: Dayjs | null;
     setPrazoElaboracao: React.Dispatch<React.SetStateAction<Dayjs | null>>;
+    valorSessaoTI: Object;
+    setValorSessaoTI: React.Dispatch<React.SetStateAction<Object>>;
 }) {
 
     const tamanhos = [
@@ -39,8 +41,21 @@ export default function InfomacoesAdicionais(props: {
         "MUITO GRANDE",
     ]
 
-    const [bus, setBus] = useState<any[]>([])
+    const sessoesTI = [
+        { nome: "Sistemas de Tecnologias Digitais", abreviacao: "STD" },
+        { nome: "Arquitetura e Governança de Dados", abreviacao: "AGD" },
+        { nome: "Segurança", abreviacao: "SEG" },
+        { nome: "Suporte", abreviacao: "SGI" },
+        { nome: "Tecnologias", abreviacao: "TIN" },
+        { nome: "Atendimento", abreviacao: "AAS" },
+        { nome: "Projetos de TI", abreviacao: "PTI" },
+        { nome: "Sistemas Corporativos", abreviacao: "SCO" },
+        { nome: "Sistemas de Manufatura", abreviacao: "SIM" },
+        { nome: "Sistemas de Engenharia", abreviacao: "SIE" },
+        { nome: "Sistemas de Vendas e ECommerce", abreviacao: "SVE" }
+    ]
 
+    const [bus, setBus] = useState<any[]>([])
 
     useEffect(() => {
         api.get("/sod/bu").then((res) => {
@@ -51,13 +66,38 @@ export default function InfomacoesAdicionais(props: {
 
     useEffect(() => {
         if (props.informacaoProcesso) {
-            console.log(props.informacaoProcesso.busolicitante.nomeBU);
+            // let nomeSessaoTIResponsavel;
+            console.log(props.informacaoProcesso);
             props.setValorTamanho(props.informacaoProcesso.tamanho);
-            props.setValorBUSolicitante(props.informacaoProcesso.busolicitante.nomerBU)
+            // props.setValorBUSolicitante(props.informacaoProcesso.busolicitante.nomerBU);
+            props.setPrazoElaboracao(props.informacaoProcesso.prazoElaboracao);
 
+            // for (const sessao of sessoesTI) {
+            //     if (sessao.abreviacao == props.informacaoProcesso.secaoTIResponsavel) {
+            //         nomeSessaoTIResponsavel = sessao.nome;
+            //     }
+            // }
+
+            // const sessao = {
+            //     nome: nomeSessaoTIResponsavel,
+            //     abreviacao: props.informacaoProcesso.secaoTIResponsavel
+            // }
+
+            // props.setValorSessaoTI(sessao)
+
+
+
+            const codigoPPM = document.getElementById("codigoPPM");
+            const linkJira = document.getElementById("linkJira");
+
+            if (codigoPPM) {
+                codigoPPM.value = props.informacaoProcesso.codigoPPM;
+            }
+
+            if (linkJira) {
+                linkJira.value = props.informacaoProcesso.linkJira;
+            }
         }
-
-
     }, [])
 
     return (
@@ -144,17 +184,34 @@ export default function InfomacoesAdicionais(props: {
                 <BoxSessaoTIECodigoPPM>
                     <Box sx={{ width: "30%", marginRight: 5 }}>
                         <TypographyPadrao>Sessão TI responsável: </TypographyPadrao>
-                        <TextField sx={{ width: "100%" }} id="sessaoTIResponsavel" label="Sessão TI" type="search"></TextField>
+                        <SelectPadrao
+                            id="sessaoTI"
+                            value={props.valorSessaoTI}
+                            onChange={(e: SelectChangeEvent) => {
+                                const sessaoTI = {
+                                    nome: e.target.value,
+                                    abreviacao: props.informacaoProcesso.secaoTIResponsavel
+                                }
+                                props.setValorSessaoTI(sessaoTI)
+                            }}>
+                            {sessoesTI.map((sessao: any, index: number) => {
+                                return (
+                                    <MenuItem key={index} value={sessao.nome}>
+                                        {sessao.nome}
+                                    </MenuItem>
+                                )
+                            })}
+                        </SelectPadrao>
                     </Box>
                     <Box sx={{ width: "30%" }}>
                         <TypographyPadrao>Codigo PPM: </TypographyPadrao>
-                        <TextField sx={{ width: "80%" }} id="codigoPPM" label="Codigo PPM" type="search"></TextField>
+                        <TextField sx={{ width: "80%" }} id="codigoPPM" type="search"></TextField>
                     </Box>
                 </BoxSessaoTIECodigoPPM>
 
                 <Box sx={{ width: "100%" }}>
                     <TypographyPadrao>Link EPIC Jira: </TypographyPadrao>
-                    <TextField sx={{ width: "100%" }} id="linkJira" label="Link EPIC Jira" type="search"></TextField>
+                    <TextField sx={{ width: "100%" }} id="linkJira" type="search"></TextField>
                 </Box>
 
             </BoxGeral>

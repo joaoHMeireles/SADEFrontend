@@ -57,6 +57,7 @@ export default function CriacaoProposta(props: {
   const [valorTamanho, setValorTamanho] = useState<string>("");
   const [valorBUSolicitante, setValorBUSolicitante] = useState<string>("");
   const [valorBUsBeneficadas, setValorBUsBeneficadas] = useState<string[]>([]);
+  const [valorSessaoTI, setValorSessaoTI] = useState<Object>();
 
   const [prazoElaboracao, setPrazoElaboracao] = useState<Dayjs | null>(null);
 
@@ -181,7 +182,9 @@ export default function CriacaoProposta(props: {
               valorBUsBeneficadas={valorBUsBeneficadas}
               setValorBUsBeneficadas={setValorBUsBeneficadas}
               prazoElaboracao={prazoElaboracao}
-              setPrazoElaboracao={setPrazoElaboracao} />
+              setPrazoElaboracao={setPrazoElaboracao}
+              valorSessaoTI={valorSessaoTI}
+              setValorSessaoTI={setValorSessaoTI} />
             <InputAnexos rascunho={false} proposta={true} />
             <BoxContainerBotoes>
               <BotaoTerciario
