@@ -56,7 +56,7 @@ export default function CriacaoProposta(props: {
 
   const [valorTamanho, setValorTamanho] = useState<string>("");
   const [valorBUSolicitante, setValorBUSolicitante] = useState<string>("");
-  const [valorBUsBeneficadas, setValorBUsBeneficadas] = useState<string[]>([]);
+  const [valorBUsBeneficadas, setValorBUsBeneficadas] = useState<Object[]>([]);
   const [valorSessaoTI, setValorSessaoTI] = useState<Object>();
 
   const [prazoElaboracao, setPrazoElaboracao] = useState<Dayjs | null>(null);

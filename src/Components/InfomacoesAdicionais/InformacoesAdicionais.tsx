@@ -25,8 +25,8 @@ export default function InfomacoesAdicionais(props: {
     setValorTamanho: React.Dispatch<React.SetStateAction<string>>;
     valorBUSolicitante: string;
     setValorBUSolicitante: React.Dispatch<React.SetStateAction<string>>;
-    valorBUsBeneficadas: string[];
-    setValorBUsBeneficadas: React.Dispatch<React.SetStateAction<string[]>>;
+    valorBUsBeneficadas: Object[];
+    setValorBUsBeneficadas: React.Dispatch<React.SetStateAction<Object[]>>;
     prazoElaboracao: Dayjs | null;
     setPrazoElaboracao: React.Dispatch<React.SetStateAction<Dayjs | null>>;
     valorSessaoTI: Object;
@@ -67,7 +67,6 @@ export default function InfomacoesAdicionais(props: {
     useEffect(() => {
         if (props.informacaoProcesso) {
             // let nomeSessaoTIResponsavel;
-            console.log(props.informacaoProcesso);
             props.setValorTamanho(props.informacaoProcesso.tamanho);
             // props.setValorBUSolicitante(props.informacaoProcesso.busolicitante.nomerBU);
             props.setPrazoElaboracao(props.informacaoProcesso.prazoElaboracao);
@@ -85,6 +84,16 @@ export default function InfomacoesAdicionais(props: {
 
             // props.setValorSessaoTI(sessao)
 
+            console.log(props.valorBUsBeneficadas);
+
+            for (const bu of props.informacaoProcesso.busBeneficiadas) {
+                const buBeneficiada = {
+                    idBU: bu.idBU,
+                    nomeBU: bu.nomeBU
+                }
+                props.valorBUsBeneficadas.push(buBeneficiada)
+                props.setValorBUsBeneficadas(props.valorBUsBeneficadas)
+            }
 
 
             const codigoPPM = document.getElementById("codigoPPM");
@@ -161,7 +170,20 @@ export default function InfomacoesAdicionais(props: {
                         sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
                         multiple
                         disableCloseOnSelect
-                        onChange={(e, valor: any) => { }}
+                        defaultValue={props.informacaoProcesso.busBeneficiadas.map((bus: any) => bus.nomeBU)}
+                        onChange={(e, valor: any) => {
+                            let busBeneficiadas: Object[] = []
+
+                            for (let buSelecionada of valor) {
+                                for (let bu of props.informacaoProcesso.busBeneficiadas) {
+                                    if (bu.nomeBU == buSelecionada) {
+                                        props.valorBUsBeneficadas.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                    }
+                                }
+                            }
+
+                            props.setValorBUsBeneficadas(props.valorBUsBeneficadas);
+                        }}
                         renderOption={(props, bu, { selected }) => {
                             return (
                                 <li {...props} id="listaBU">
