@@ -19,7 +19,7 @@ export async function verificarHistoricoAprovado(id: number, setAprovado: React.
   })
 }
 
-export async function pegarUltimoHistorico(id: number, setUltimohistorico: React.Dispatch<SetStateAction<any>>){
+export async function pegarUltimoHistorico(id: number, setUltimohistorico: React.Dispatch<SetStateAction<any>>) {
   axios.get(`${url}/sod/historicoWorkflow/demanda/ultimo/${id}`).then((response) => {
     setUltimohistorico(response.data)
   }).catch((err) => {

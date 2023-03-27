@@ -41,4 +41,5 @@ export const BoxContainerTabela = styledBox({
   width: "auto",
   borderRadius: "5px",
   boxShadow: "5px 5px 10px 0 #00000050",
+  marginBottom: 24
 });

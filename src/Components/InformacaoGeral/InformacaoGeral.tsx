@@ -21,7 +21,6 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
   const [idCentroCusto, setIdCentroCusto] = useState<any[]>([]);
 
-
   const demandaSelecionada = JSON.parse(
     localStorage.getItem("DEMANDASELECIONADA") as string
   );
@@ -57,35 +56,7 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
         }
       }
     }
-
-
-    // console.log(centroCusto);
-    // console.log(demandaSelecionada.centroCustoDemanda);
-
-    // console.log(document.getElementById("centrosDeCusto")?.parentElement);
-    
-    // addIdAoCheckBox()
-
-    // console.log(addIdAoCheckBox());
-
-    console.log(document.getElementById("centrosDeCusto"));
-    console.log(document.getElementById("listaCentroCusto"));
-    
-    
-    
   }, []);
-
-  // function addIdAoCheckBox() {
-  //   for (const cc of centroCusto) {
-  //     for (const centroCustoDemanda of demandaSelecionada.centroCustoDemanda) {
-  //       if (cc == centroCustoDemanda.nomeCentroCusto) {
-  //         console.log("entrou");
-  //         return `checkBox${centroCustoDemanda.idCentroCusto}`
-  //       }
-  //     }
-  //   }
-  // }
-
 
   function getIdByAtributo(atributo: string) {
     const idsInputsAtributo = {
@@ -115,7 +86,6 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
             id="situacaoAtual"
             sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
             multiline
-            rows={7}
             maxRows={Infinity}
           />
         </BoxContainerLabels>
@@ -127,50 +97,89 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
             id="objetivo"
             sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
             multiline
-            rows={7}
             maxRows={Infinity}
           />
         </BoxContainerLabels>
         <BoxContainerLabels>
           <BoxContainerCentroCusto>
             <TypographyLabels>Centros de custo:</TypographyLabels>
-            <Autocomplete
-              id="centrosDeCusto"
-              sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
-              multiple
-              disableCloseOnSelect
-              onChange={(e, valor: any) => {
-                let centroCustoDemanda: Object[] = []
+            {props.proposta ? (
+              <Autocomplete
+                id="centrosDeCusto"
+                defaultValue={demandaSelecionada.centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto)}
+                sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+                multiple
+                disableCloseOnSelect
+                onChange={(e, valor: any) => {
+                  let centroCustoDemanda: Object[] = []
 
-                for (let centroCustoSelecionado of valor) {
-                  for (let centroCustoBanco of idCentroCusto) {
-                    if (centroCustoBanco.nomeCentroCusto == centroCustoSelecionado) {
-                      centroCustoDemanda.push({ idCentroCusto: centroCustoBanco.idCentroCusto })
+                  for (let centroCustoSelecionado of valor) {
+                    for (let centroCustoBanco of idCentroCusto) {
+                      if (centroCustoBanco.nomeCentroCusto == centroCustoSelecionado) {
+                        centroCustoDemanda.push({ idCentroCusto: centroCustoBanco.idCentroCusto })
+                      }
                     }
                   }
-                }
 
-                if (props.setCentroCusto) {
-                  props.setCentroCusto(centroCustoDemanda)
-                }
-              }}
-              renderOption={(props, centroCusto, { selected }) => {
-                return (
-                  <li {...props} id="listaCentroCusto">
-                    <Checkbox
-                      id="checkbox"
-                      icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                      checkedIcon={<CheckBoxIcon fontSize="small" />}
-                      style={{ marginRight: 8 }}
-                      checked={selected}
-                    />
-                    {centroCusto}
-                  </li>
-                );
-              }}
-              options={centroCusto}
-              renderInput={(params) => <TextField {...params} />}
-            />
+                  if (props.setCentroCusto) {
+                    props.setCentroCusto(centroCustoDemanda)
+                  }
+                }}
+                renderOption={(props, centroCusto, { selected }) => {
+                  return (
+                    <li {...props} id="listaCentroCusto">
+                      <Checkbox
+                        id="checkbox"
+                        icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                        checkedIcon={<CheckBoxIcon fontSize="small" />}
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                      />
+                      {centroCusto}
+                    </li>
+                  );
+                }}
+                options={centroCusto}
+                renderInput={(params) => <TextField {...params} />}
+              />) : (
+              <Autocomplete
+                id="centrosDeCusto"
+                sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+                multiple
+                disableCloseOnSelect
+                onChange={(e, valor: any) => {
+                  let centroCustoDemanda: Object[] = []
+
+                  for (let centroCustoSelecionado of valor) {
+                    for (let centroCustoBanco of idCentroCusto) {
+                      if (centroCustoBanco.nomeCentroCusto == centroCustoSelecionado) {
+                        centroCustoDemanda.push({ idCentroCusto: centroCustoBanco.idCentroCusto })
+                      }
+                    }
+                  }
+
+                  if (props.setCentroCusto) {
+                    props.setCentroCusto(centroCustoDemanda)
+                  }
+                }}
+                renderOption={(props, centroCusto, { selected }) => {
+                  return (
+                    <li {...props} id="listaCentroCusto">
+                      <Checkbox
+                        id="checkbox"
+                        icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                        checkedIcon={<CheckBoxIcon fontSize="small" />}
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                      />
+                      {centroCusto}
+                    </li>
+                  );
+                }}
+                options={centroCusto}
+                renderInput={(params) => <TextField {...params} />}
+              />)}
+
           </BoxContainerCentroCusto>
         </BoxContainerLabels>
       </BoxContainerGeralInformacaoGeral>

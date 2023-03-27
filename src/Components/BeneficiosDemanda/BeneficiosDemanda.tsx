@@ -37,10 +37,13 @@ export default function BeneficiosDemanda(props: {
   setMoedaReal?: React.Dispatch<React.SetStateAction<string[]>>
   moedaPotencial?: string[]
   setMoedaPotencial?: React.Dispatch<React.SetStateAction<string[]>>
+  valor?: number
 }) {
-
   const [frequencia, setFrequencia] = useState("");
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>()
+  let numeroBeneficiosPotenciais = 0;
+  let numeroBeneficiosReais = 0;
+  let numeroBeneficiosQualitativos = 0;
 
   const moedas = [
     {
@@ -55,88 +58,63 @@ export default function BeneficiosDemanda(props: {
   ];
 
   useEffect(() => {
-    if (props.rascunho || props.proposta) {
-      let info
-      if (props.rascunho) {
-        info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string)
-      } else if (props.proposta) {
-        info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string)
-      }
-      setInformacaoProcesso(info);
-      // props.setNumeroBeneficiosQualitativos(info.beneficiosQualitativos.length);
-      // props.setNumeroBeneficiosReais(info.beneficiosReais.length);
-      // props.setNumeroBeneficiosPotenciais(info.beneficiosPotenciais.length);
-    }
 
-  }, [])
-
-  useEffect(() => {
     for (let atributo in informacaoProcesso) {
       if ((informacaoProcesso as any)[atributo]) {
         if (atributo == "frequenciaUso") {
           setFrequencia(informacaoProcesso[atributo]);
         }
 
-        if (atributo == "beneficiosQualitativos") {
-          for (let i = 0; i < informacaoProcesso[atributo].length; i++) {
-            const beneficioQualitativo = document.getElementById(
-              atributo + i
-            ) as HTMLInputElement;
-            if (beneficioQualitativo) {
-              beneficioQualitativo.value = informacaoProcesso[atributo][i];
+        if (atributo == "beneficiosDemanda") {
+          const beneficiosBancoReais = informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "REAL")
+          const beneficiosBancoPotenciais = informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL")
+          const beneficiosBancoQualitativos = informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO")
+
+          for (let i = 0; i < props.numeroBeneficiosReais; i++) {
+
+            const beneficioRealValorMensal = document.getElementById("valorMensalReal" + i) as HTMLInputElement;
+            if (beneficioRealValorMensal) {
+              beneficioRealValorMensal.value = beneficiosBancoReais[i].valor;
+            }
+
+            const beneficioRealDescricaoReal = document.getElementById("descricaoReal" + i) as HTMLInputElement;
+            if (beneficioRealDescricaoReal) {
+              beneficioRealDescricaoReal.value = beneficiosBancoReais[i].descricao
+            }
+
+            if (props.moedaReal && props.setMoedaReal) {
+              props.moedaReal.push(beneficiosBancoReais[i].moeda);
+              props.setMoedaReal(props.moedaReal);
             }
           }
-        }
 
-        if (atributo == "beneficiosPotenciais") {
-          for (let i = 0; i < informacaoProcesso[atributo].length; i++) {
-            const descricao = document.getElementById(
-              "descricaoPotencial" + i
-            ) as HTMLInputElement;
-            const valorMensal = document.getElementById(
-              "valorMensalPotencial" + i
-            ) as HTMLInputElement;
-            const moeda = document.getElementById(
-              "moedaPotencial" + i
-            ) as HTMLInputElement;
+          for (let i = 0; i < props.numeroBeneficiosPotenciais; i++) {
 
-            if (descricao) {
-              descricao.value = informacaoProcesso[atributo][i].descricao;
+            const beneficioPotencialValorMensal = document.getElementById("valorMensalPotencial" + i) as HTMLInputElement;
+            if (beneficioPotencialValorMensal) {
+              beneficioPotencialValorMensal.value = beneficiosBancoPotenciais[i].valor;
             }
 
-            if (valorMensal) {
-              valorMensal.value = informacaoProcesso[atributo][i].valor;
+            const beneficioPotencialDescricaoPotencial = document.getElementById("descricaoPotencial" + i) as HTMLInputElement;
+            if (beneficioPotencialDescricaoPotencial) {
+              beneficioPotencialDescricaoPotencial.value = beneficiosBancoPotenciais[i].descricao
             }
 
-            if (moeda) {
-              moeda.value = informacaoProcesso[atributo][i].moeda;
+            if (props.moedaPotencial && props.setMoedaPotencial) {
+              props.moedaPotencial.push(beneficiosBancoPotenciais[i].moeda);
+              props.setMoedaPotencial(props.moedaPotencial);
             }
+
           }
-        }
 
-        if (atributo == "beneficiosReais") {
-          for (let i = 0; i < informacaoProcesso[atributo].length; i++) {
-            const descricao = document.getElementById(
-              "descricaoReal" + i
-            ) as HTMLInputElement;
-            const valorMensal = document.getElementById(
-              "valorMensalReal" + i
-            ) as HTMLInputElement;
-            const moeda = document.getElementById(
-              "moedaReal" + i
-            ) as HTMLInputElement;
+          for (let i = 0; i < props.numeroBeneficiosQualitativos; i++) {
 
-            if (descricao) {
-              descricao.value = informacaoProcesso[atributo][i].descricao;
+            const beneficioQualitativoDescricao = document.getElementById("beneficiosQualitativos" + i) as HTMLInputElement;
+
+            if (beneficioQualitativoDescricao) {
+              beneficioQualitativoDescricao.value = beneficiosBancoQualitativos[i].descricao;
             }
 
-            if (valorMensal) {
-              valorMensal.value = informacaoProcesso[atributo][i].valor;
-            }
-
-            if (moeda) {
-              moeda.value = informacaoProcesso[atributo][i].moeda;
-            }
           }
         }
       }
@@ -145,7 +123,34 @@ export default function BeneficiosDemanda(props: {
     props.numeroBeneficiosReais,
     props.numeroBeneficiosPotenciais,
     props.numeroBeneficiosQualitativos,
+    informacaoProcesso
   ]);
+
+  useEffect(() => {
+    if (props.rascunho || props.proposta) {
+      let info
+
+      if (props.rascunho) {
+        info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string)
+      } else if (props.proposta) {
+        info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string)
+      }
+
+      setInformacaoProcesso(info);
+
+      if (info) {
+        numeroBeneficiosPotenciais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL").length
+        numeroBeneficiosReais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "REAL").length
+        numeroBeneficiosQualitativos = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO").length
+      }
+
+      if (props.setNumeroBeneficiosQualitativos && props.setNumeroBeneficiosReais && props.setNumeroBeneficiosPotenciais) {
+        props.setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos);
+        props.setNumeroBeneficiosReais(numeroBeneficiosReais);
+        props.setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais);
+      }
+    }
+  }, [])
 
   return (
     <>
@@ -288,138 +293,132 @@ function BeneficiosQualitativos(props: { numeroBeneficios: number }) {
 function BeneficioReal(props: { index: number, moedas: Object[], moedaReal: string[], setMoedaReal: React.Dispatch<React.SetStateAction<string[]>> }) {
 
   return (
-    <>
-      <BoxContainerGeralBeneficio>
-        <BoxContainerDivisorio>
-          <BoxInputsAcima>
-            <BoxValorMensal>
-              <TypographyLabels>Valor Mensal: </TypographyLabels>
-            </BoxValorMensal>
-            <BoxInputs>
-              <TextField
-                id={`valorMensalReal${props.index}`}
-                sx={{
-                  width: "30%",
-                  marginRight: 5,
-                  boxShadow: "5px 5px 10px 0 #00000050",
-                }}
-              />
-              <TextField
-                // id={`moedaReal${props.index}`}                sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
-                select
-                label="Moeda"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  props.moedaReal.push(event.target.value)
-                  props.setMoedaReal(props.moedaReal)
-                }
-                }
-              >
-                {props.moedas.map((option: any) => (
-                  <MenuItem id={`moedaReal${props.index}`} key={option.moeda} value={option.moeda}>
-                    {option.moeda}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </BoxInputs>
-          </BoxInputsAcima>
-          <BoxInputsAbaixo>
-            <TypographyLabels>Descrição: </TypographyLabels>
+    <BoxContainerGeralBeneficio key={props.index}>
+      <BoxContainerDivisorio>
+        <BoxInputsAcima>
+          <BoxValorMensal>
+            <TypographyLabels>Valor Mensal: </TypographyLabels>
+          </BoxValorMensal>
+          <BoxInputs>
             <TextField
-              id={`descricaoReal${props.index}`}
-              multiline
-              rows={7}
-              maxRows={Infinity}
-              sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
-            ></TextField>
-          </BoxInputsAbaixo>
-        </BoxContainerDivisorio>
-      </BoxContainerGeralBeneficio>
-    </>
+              id={`valorMensalReal${props.index}`}
+              sx={{
+                width: "30%",
+                marginRight: 5,
+                boxShadow: "5px 5px 10px 0 #00000050",
+              }}
+            />
+            <TextField
+              id={`moedaReal${props.index}`}
+              sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
+              defaultValue={props.moedaReal}
+              select
+              label="Moeda"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                props.moedaReal.push(event.target.value)
+                props.setMoedaReal(props.moedaReal)
+              }
+              }
+            >
+              {props.moedas.map((option: any, index: number) => (
+                <MenuItem id={`moedaReal${props.index}`} key={index} value={option.moeda}>
+                  {option.moeda}
+                </MenuItem>
+              ))}
+            </TextField>
+          </BoxInputs>
+        </BoxInputsAcima>
+        <BoxInputsAbaixo>
+          <TypographyLabels>Descrição: </TypographyLabels>
+          <TextField
+            id={`descricaoReal${props.index}`}
+            multiline
+            maxRows={Infinity}
+            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
+          ></TextField>
+        </BoxInputsAbaixo>
+      </BoxContainerDivisorio>
+    </BoxContainerGeralBeneficio>
   );
 }
 
 function BeneficioPotencial(props: { index: number, moedas: Object[], moedaPotencial: string[], setMoedaPotencial: React.Dispatch<React.SetStateAction<string[]>> }) {
 
   return (
-    <>
-      <BoxContainerGeralBeneficio>
-        <BoxContainerDivisorio>
-          <BoxInputsAcima>
-            <BoxValorMensal>
-              <TypographyLabels>Valor Mensal: </TypographyLabels>
-            </BoxValorMensal>
-            <BoxInputs
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "start",
-                alignItems: "center",
-              }}
-            >
-              <TextField
-                id={`valorMensalPotencial${props.index}`}
-                sx={{
-                  width: "30%",
-                  marginRight: 5,
-                  boxShadow: "5px 5px 10px 0 #00000050",
-                }}
-              />
-              <TextField
-                // id={`moedaPotencial${props.index}`}
-                sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
-                select
-                label="Moeda"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  props.moedaPotencial.push(event.target.value)
-                  props.setMoedaPotencial(props.moedaPotencial)
-                }
-                }
-              >
-                {props.moedas.map((option: any) => (
-                  <MenuItem id={`moedaPotencial${props.index}`} key={option.moeda} value={option.moeda}>
-                    {option.moeda}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </BoxInputs>
-          </BoxInputsAcima>
-          <BoxInputsAbaixo>
-            <TypographyLabels>Descrição: </TypographyLabels>
+    <BoxContainerGeralBeneficio key={props.index}>
+      <BoxContainerDivisorio>
+        <BoxInputsAcima>
+          <BoxValorMensal>
+            <TypographyLabels>Valor Mensal: </TypographyLabels>
+          </BoxValorMensal>
+          <BoxInputs
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "start",
+              alignItems: "center",
+            }}
+          >
             <TextField
-              id={`descricaoPotencial${props.index}`}
-              multiline
-              rows={7}
-              maxRows={Infinity}
-              sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
-            ></TextField>
-          </BoxInputsAbaixo>
-        </BoxContainerDivisorio>
-        {/* <BoxObrigacaoLegal>
-          <TypographyLabels>
-            Obrigação legal
-            <Checkbox id={`obrigacaoLegal${props.index}`} />
-          </TypographyLabels>
-        </BoxObrigacaoLegal> */}
-      </BoxContainerGeralBeneficio>
-    </>
+              id={`valorMensalPotencial${props.index}`}
+              sx={{
+                width: "30%",
+                marginRight: 5,
+                boxShadow: "5px 5px 10px 0 #00000050",
+              }}
+            />
+            <TextField
+              id={`moedaPotencial${props.index}`}
+              sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
+              defaultValue={props.moedaPotencial}
+              select
+              label="Moeda"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                props.moedaPotencial.push(event.target.value)
+                props.setMoedaPotencial(props.moedaPotencial)
+              }
+              }
+            >
+              {props.moedas.map((option: any, index: number) => (
+                <MenuItem id={`moedaPotencial${props.index}`} key={index} value={option.moeda}>
+                  {option.moeda}
+                </MenuItem>
+              ))}
+            </TextField>
+          </BoxInputs>
+        </BoxInputsAcima>
+        <BoxInputsAbaixo>
+          <TypographyLabels>Descrição: </TypographyLabels>
+          <TextField
+            id={`descricaoPotencial${props.index}`}
+            multiline
+            maxRows={Infinity}
+            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
+          ></TextField>
+        </BoxInputsAbaixo>
+      </BoxContainerDivisorio>
+      <BoxObrigacaoLegal>
+        <TypographyLabels>
+          Obrigação legal
+          <Checkbox id={`obrigacaoLegal${props.index}`} />
+        </TypographyLabels>
+      </BoxObrigacaoLegal>
+    </BoxContainerGeralBeneficio>
   );
 }
 
 function BeneficioQualitativo(props: { index: number }) {
   return (
-    <>
-      <BoxContainerGeralBeneficio>
-        <BoxDescricaoRequeistosControle>
-          <TypographyLabels>Descrição: </TypographyLabels>
-          <TextField
-            id={`beneficiosQualitativos${props.index}`}
-            multiline
-            rows={7}
-            maxRows={Infinity}
-            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
-          ></TextField>
-        </BoxDescricaoRequeistosControle>
-      </BoxContainerGeralBeneficio>
-    </>
+    <BoxContainerGeralBeneficio key={props.index}>
+      <BoxDescricaoRequeistosControle>
+        <TypographyLabels>Descrição: </TypographyLabels>
+        <TextField
+          id={`beneficiosQualitativos${props.index}`}
+          multiline
+          maxRows={Infinity}
+          sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
+        ></TextField>
+      </BoxDescricaoRequeistosControle>
+    </BoxContainerGeralBeneficio>
   );
 }

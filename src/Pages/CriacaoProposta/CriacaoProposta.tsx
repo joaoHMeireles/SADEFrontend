@@ -16,6 +16,7 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
 import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
+import InfomacoesAdicionais from "../../Components/InfomacoesAdicionais/InformacoesAdicionais";
 
 import { ContainerGeral, ContainerBoxTabs } from "./CriacaoProposta.styles";
 
@@ -34,6 +35,7 @@ import {
   TipoComponenteProcesso,
 } from "../../constants/enuns";
 import api from "../../api/api";
+import { Dayjs } from "dayjs";
 
 export default function CriacaoProposta(props: {
   filtrar: boolean;
@@ -41,9 +43,25 @@ export default function CriacaoProposta(props: {
 }) {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
-  const [propostaSelecionada, setPropostaSelecionada] = useState(1);
+  const [propostaSelecionada, setPropostaSelecionada] = useState(0);
   const [grid, setGrid] = useState(true);
   const [listaComponents, setListaComponents] = useState<any[]>([])
+
+  const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState(0)
+  const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState(0)
+  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState(0)
+
+  const [moedaReal, setMoedaReal] = useState<string[]>([])
+  const [moedaPotencial, setMoedaPotencial] = useState<string[]>([])
+
+  const [valorTamanho, setValorTamanho] = useState<string>("");
+  const [valorBUSolicitante, setValorBUSolicitante] = useState<string>("");
+  const [valorBUsBeneficadas, setValorBUsBeneficadas] = useState<Object[]>([]);
+  const [valorSessaoTI, setValorSessaoTI] = useState<Object>();
+
+  const [prazoElaboracao, setPrazoElaboracao] = useState<Dayjs | null>(null);
+
+  const [informacaoProcesso, setInformacaoProcesso] = useState<any>();
 
   useEffect(() => {
     const idDemandaCriacao = localStorage.getItem("DEMANDACRIARPROPOSTA")
@@ -67,6 +85,12 @@ export default function CriacaoProposta(props: {
     }).catch((err) => {
       console.log(err);
     })
+  }, [])
+
+  useEffect(() => {
+    let info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string)
+
+    setInformacaoProcesso(info);
   }, [])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
@@ -144,8 +168,32 @@ export default function CriacaoProposta(props: {
       <ContainerGeral>
         {valor == 1 && (
           <>
-            <InformacaoGeral proposta={true}/>
-            <BeneficiosDemanda rascunho={false} proposta={true} />
+            <InformacaoGeral proposta={true} />
+            <BeneficiosDemanda rascunho={false} proposta={true}
+              numeroBeneficiosReais={numeroBeneficiosReais}
+              numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
+              numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
+              setNumeroBeneficiosReais={setNumeroBeneficiosReais}
+              setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
+              setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
+              moedaReal={moedaReal}
+              setMoedaReal={setMoedaReal}
+              moedaPotencial={moedaPotencial}
+              setMoedaPotencial={setMoedaPotencial}
+              valor={valor}
+            />
+            <InfomacoesAdicionais
+              informacaoProcesso={informacaoProcesso}
+              valorTamanho={valorTamanho}
+              setValorTamanho={setValorTamanho}
+              valorBUSolicitante={valorBUSolicitante}
+              setValorBUSolicitante={setValorBUSolicitante}
+              valorBUsBeneficadas={valorBUsBeneficadas}
+              setValorBUsBeneficadas={setValorBUsBeneficadas}
+              prazoElaboracao={prazoElaboracao}
+              setPrazoElaboracao={setPrazoElaboracao}
+              valorSessaoTI={valorSessaoTI}
+              setValorSessaoTI={setValorSessaoTI} />
             <InputAnexos rascunho={false} proposta={true} />
             <BoxContainerBotoes>
               <BotaoTerciario
