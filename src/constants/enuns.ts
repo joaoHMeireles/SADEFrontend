@@ -24,11 +24,11 @@ export enum TamanhoComponenteProcesso {
 }
 
 export enum StatusComponenteProcesso {
-    Backlog = "Backlog",
-    Assesment = "Assesment",
-    BusinessCase = "BusinessCase",
-    Canceled = "Canceled",
-    ToDo = "ToDo"
+    BACKLOG = "Backlog",
+    ASSESMENT = "Assesment",
+    BUSINESSCASE = "Business Case",
+    CANCELED = "Canceled",
+    TODO = "ToDo"
 }
 
 export enum sessaoTI {

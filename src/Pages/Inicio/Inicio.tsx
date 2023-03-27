@@ -24,19 +24,6 @@ export default function Inicio(props: {
   const [listaComponents, setListaComponents] = useState<any[]>([])
   const location = useLocation().pathname
 
-  // function buscarComponentes() {
-  //   api.get("/sod/demanda").then((response) => {
-  //     let listaDemandas: any[] = []
-  //     for (let demanda of response.data) {
-  //       demanda.tipo = TipoComponenteProcesso.Demanda
-  //       listaDemandas.push(demanda)
-  //     }
-  //     setListaComponents(listaDemandas);
-  //   }).catch((err) => {
-  //     console.log(err);
-  //   })
-  // }
-
   useEffect(() => {
     api.get("/sod/demanda").then((response) => {
       let listaDemandas: any[] = []
@@ -49,7 +36,8 @@ export default function Inicio(props: {
     }).catch((err) => {
       console.log(err);
     })
-    // api.get("/sod/proposta").then((response) => {
+
+    // api.get("/sod/proposta").then((response: any) => {
     //   let listaPropostas: any[] = []
     //   for(let proposta of response.data){
         
@@ -63,7 +51,7 @@ export default function Inicio(props: {
     //   }
     //   setListaComponents(listaPropostas);
 
-    // }).catch((err) => {
+    // }).catch((err: any) => {
     //   console.log(err);
     // })
 

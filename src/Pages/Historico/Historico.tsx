@@ -162,9 +162,9 @@ export default function TelaHistoricos(props: {}) {
   const eUmaDemanda =
     location.pathname.slice(inicioDaPalavra, finalDaPalavra) == "demand";
 
-  const informacaoProcessoCru = localStorage.getItem(
+  const informacaoProcessoCru = (localStorage.getItem(
     eUmaDemanda ? "DEMANDAESCOLHIDA" : "PROPOSTAESCOLHIDA"
-  );
+  ) as string);
 
   const informacaoProcesso = JSON.parse(
     informacaoProcessoCru != null ? informacaoProcessoCru : ""
@@ -173,9 +173,7 @@ export default function TelaHistoricos(props: {}) {
   useEffect(() => {
     mudarTamanhoDatagrid(5);
 
-    const demanda = JSON.parse(localStorage.getItem("DEMANDAESCOLHIDA") as string)
-
-    api.get("/sod/historicoWorkflow/demanda/" + demanda.idDemanda).then((response) => {
+    api.get("/sod/historicoWorkflow/demanda/" + informacaoProcesso.id).then((response) => {
       const lista: Historico[] = []
 
       for (let historico of response.data) {

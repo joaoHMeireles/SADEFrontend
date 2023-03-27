@@ -36,6 +36,7 @@ import {
 } from "../../constants/enuns";
 import api from "../../api/api";
 import { Dayjs } from "dayjs";
+import { useLocationChange } from "../../utils";
 
 export default function CriacaoProposta(props: {
   filtrar: boolean;
@@ -73,9 +74,8 @@ export default function CriacaoProposta(props: {
         demanda.tipo = TipoComponenteProcesso.Demanda
         if(demanda.idDemanda == idDemandaCriacao){
           //fazer para os valores irem para os inputs
-          // console.log("ESSA AQUI");
-          // setPropostaSelecionada(demanda)
-          // setValor(1)
+          setPropostaSelecionada(demanda)
+          setValor(1)
         }
 
         listaDemandas.push(demanda)
@@ -92,6 +92,10 @@ export default function CriacaoProposta(props: {
 
     setInformacaoProcesso(info);
   }, [])
+
+  useLocationChange(() => {
+    localStorage.removeItem("DEMANDACRIARPROPOSTA")
+  })
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     console.log(newValue);

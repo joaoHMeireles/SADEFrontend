@@ -37,7 +37,7 @@ export default function TabelasCusto(props: { tabelasCusto: any[] }) {
                     <TableContainerEstilizado sx={{ width: "auto" }}>
                         <TableHead >
                             <TableRow >
-                                <TableCellEstilzada align='center'>{tabela.titulo}</TableCellEstilzada>
+                                <TableCellEstilzada align='center'>{tabela.tituloTabela}</TableCellEstilzada>
                                 <TableCellEstilzada align='center'>{!tabela.isLicenca ? "Esforço" : "Licenças"}</TableCellEstilzada>
                                 <TableCellEstilzada align='center'>Valor </TableCellEstilzada>
                                 <TableCellEstilzada align='center'>Total</TableCellEstilzada>
@@ -46,7 +46,7 @@ export default function TabelasCusto(props: { tabelasCusto: any[] }) {
                         <TableBody >
                             {linhasTabela}
                             <TableRowEstilizada>
-                                <TableCellEstilzada align='center'> <b>Total {tabela.titulo}</b></TableCellEstilzada>
+                                <TableCellEstilzada align='center'> <b>Total {tabela.tituloTabela}</b></TableCellEstilzada>
                                 <TableCellEstilzada align='center'> <b>{tempoTotal}{!tabela.isLicenca ? "h" : ""}</b></TableCellEstilzada>
                                 <TableCellEstilzada align='center'> </TableCellEstilzada>
                                 <TableCellEstilzada align='center'> <b>R$ {valorTotal}</b></TableCellEstilzada>

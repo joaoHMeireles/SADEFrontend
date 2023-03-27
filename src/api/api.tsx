@@ -6,23 +6,18 @@ export default axios.create({
   baseURL: url
 });
 
-/**
- * 
- * @returns response
- * @param id 
- */
 export async function verificarHistoricoAprovado(id: number, setAprovado: React.Dispatch<SetStateAction<boolean>>) {
-  axios.get(`${url}/sod/historicoWorkflow/aprovadaGerente/${id}`).then((response) => {
+  axios.get(`${url}/sod/historicoWorkflow/aprovadaGerente/${id}`).then((response: any) => {
     setAprovado(response.data)
-  }).catch((err) => {
+  }).catch((err: any) => {
     console.log(err);
   })
 }
 
 export async function pegarUltimoHistorico(id: number, setUltimohistorico: React.Dispatch<SetStateAction<any>>) {
-  axios.get(`${url}/sod/historicoWorkflow/demanda/ultimo/${id}`).then((response) => {
+  axios.get(`${url}/sod/historicoWorkflow/demanda/ultimo/${id}`).then((response: any) => {
     setUltimohistorico(response.data)
-  }).catch((err) => {
+  }).catch((err: any) => {
     console.log(err);
   })
 }

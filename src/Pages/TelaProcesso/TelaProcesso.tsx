@@ -1,8 +1,8 @@
 import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getNomeComponente, urlValida, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum, getValueEnum } from '../../utils';
-import Dayjs from '@date-io/dayjs'
-import { sessaoTI, TamanhoComponenteProcesso, TarefaExecucao, TipoComponenteProcesso } from '../../constants/enuns';
+import { Dayjs } from 'dayjs';
+import { sessaoTI, StatusComponenteProcesso, TamanhoComponenteProcesso, TarefaExecucao, TipoComponenteProcesso } from '../../constants/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
 import SelectBox from '../../Components/SelectBox/SelectBox'
@@ -11,7 +11,7 @@ import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentr
 import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
     Alert, Badge, Box, Checkbox, Container, Dialog, Divider, FormControl, FormControlLabel, FormGroup, FormHelperText,
-    Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, SelectChangeEvent, Snackbar, TextField, Typography
+    Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Radio, RadioGroup, SelectChangeEvent, Snackbar, TextField, Typography
 } from '@mui/material';
 import ChatBubbleRounded from '@mui/icons-material/ChatBubbleRounded';
 import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
@@ -21,7 +21,7 @@ import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import CloseIcon from '@mui/icons-material/Close';
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker, LocalizationProvider, MuiPickersAdapterContext } from '@mui/x-date-pickers';
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles"
 import {
     BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBotoes, BoxHeader, BoxTabela, CircleIconPonto,
@@ -32,6 +32,7 @@ import {
 } from './TelaProcesso.styles';
 import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
 import api, { pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
+import { TypographyTituloDecisao } from '../TelaColecaoProcesso/TelaColecaoProcesso.styles';
 // import EsqueletoPDFVersaoDemanda from '../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda';
 
 const valoresInputBU: any[] = [
@@ -129,10 +130,6 @@ export function Header(props: {
         }
     }, [])
 
-    useEffect(() => {
-
-    })
-
     function abrirModal() {
         props.setModalAberto(true)
     }
@@ -148,16 +145,29 @@ export function Header(props: {
     }
 
     function recarregarPaginaDemanda(conteudo: JSX.Element) {
-        api.get(`/sod/demanda/${processo.id}`).then((response) => {
-            const demanda = response.data
-            demanda.tipo = TipoComponenteProcesso.Demanda
-            demanda.id = demanda.idDemanda
-            localStorage.setItem("DEMANDAESCOLHIDA", JSON.stringify(demanda))
-            abrirFeedback(conteudo)
-            location.reload()
-        }).catch((err) => {
-            console.log(err);
-        })
+        if (processo.tipo == TipoComponenteProcesso.Demanda) {
+            api.get(`/sod/demanda/${processo.id}`).then((response: any) => {
+                const demanda = response.data
+                demanda.tipo = TipoComponenteProcesso.Demanda
+                demanda.id = demanda.idDemanda
+                localStorage.setItem("DEMANDAESCOLHIDA", JSON.stringify(demanda))
+                abrirFeedback(conteudo)
+                location.reload()
+            }).catch((err: any) => {
+                console.log(err);
+            })
+        } else {
+            api.get(`/sod/proposta/${processo.id}`).then((response: any) => {
+                const proposta = response.data
+                proposta.tipo = TipoComponenteProcesso.Proposta
+                proposta.id = proposta.idProposta
+                localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta))
+                abrirFeedback(conteudo)
+                location.reload()
+            }).catch((err: any) => {
+                console.log(err);
+            })
+        }
     }
 
     //funções dos botões
@@ -208,7 +218,7 @@ export function Header(props: {
             ))
 
             // Depois que conseguir fazer o arquivo de versionamento esse get não será mais necessário 
-            api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo) => {
+            api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
                 //colocar pdf
                 formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
 
@@ -221,13 +231,13 @@ export function Header(props: {
                         }
                     }).then(() => {
                         recarregarPaginaDemanda(conteudo)
-                    }).catch((err) => {
+                    }).catch((err: any) => {
                         console.log(err);
                     })
-                }).catch((err) => {
+                }).catch((err: any) => {
                     console.log(err);
                 })
-            }).catch((err) => {
+            }).catch((err: any) => {
                 console.log(err);
 
             })
@@ -266,9 +276,9 @@ export function Header(props: {
                 }
             ))
 
-            api.put(`/sod/historicoWorkflow/demanda/${processo.id}`, formDataHistorico).then((response) => {
+            api.put(`/sod/historicoWorkflow/demanda/${processo.id}`, formDataHistorico).then((response: any) => {
                 recarregarPaginaDemanda(conteudoFeedback)
-            }).catch((err) => {
+            }).catch((err: any) => {
                 console.log(err);
             })
         }
@@ -301,9 +311,9 @@ export function Header(props: {
                 }
             ))
 
-            api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response) => {
+            api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response: any) => {
                 recarregarPaginaDemanda(conteudoFeedback)
-            }).catch((err) => {
+            }).catch((err: any) => {
                 console.log(err);
             })
         }
@@ -322,8 +332,16 @@ export function Header(props: {
             const prazoElaboracao = (document.getElementById("inputDataInformacoes") as HTMLInputElement).value
             const códigoPPM = (document.getElementById("inputCodigoPPM") as HTMLInputElement).value
             const linkJira = (document.getElementById("inputLinkJira") as HTMLInputElement).value
+            const botoesStatus = document.getElementsByClassName("radio-status")
             let prazoElaboracaoCerto = prazoElaboracao.slice(6) + "/" + prazoElaboracao.slice(0, 5)
             prazoElaboracaoCerto = prazoElaboracaoCerto.replaceAll("/", "-")
+            let status = ""
+
+            for (let botao of botoesStatus) {
+                if ((botao.children[0].children[0] as HTMLInputElement).checked) {
+                    status = (botao.children[1] as HTMLInputElement).innerText;
+                }
+            }
 
             const formDataHistorico = new FormData()
             formDataHistorico.append("historico", JSON.stringify(
@@ -341,14 +359,14 @@ export function Header(props: {
                     prazoElaboracao: prazoElaboracaoCerto,
                     codigoPPM: códigoPPM,
                     linkJira: linkJira,
-                    //arrumar status
-                    statusDemanda: "BUSINESSCASE",
+                    statusDemanda: getKeyEnum(StatusComponenteProcesso, status),
                     adicionandoInformacoes: true
                 }
             ))
 
+
             // Depois que conseguir fazer o arquivo de versionamento esse get não será mais necessário 
-            api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo) => {
+            api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
                 //colocar pdf
                 formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
 
@@ -361,13 +379,13 @@ export function Header(props: {
                         }
                     }).then(() => {
                         recarregarPaginaDemanda(conteudo)
-                    }).catch((err) => {
+                    }).catch((err: any) => {
                         console.log(err);
                     })
-                }).catch((err) => {
+                }).catch((err: any) => {
                     console.log(err);
                 })
-            }).catch((err) => {
+            }).catch((err: any) => {
                 console.log(err);
             })
         }
@@ -375,7 +393,7 @@ export function Header(props: {
         props.setConteudoModal(<ModalAdiconarInformações abrirFeedback={finalizarAdicaoDeInformacoes} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
 
         abrirModal()
-    }
+    } // feito
 
     function criarNovaProposta() {
         localStorage.setItem("DEMANDACRIARPROPOSTA", processo.idDemanda)
@@ -390,10 +408,18 @@ export function Header(props: {
             </Alert>
         )
 
+        function iniciarWorkflowAprovacao(conteudo: JSX.Element) {
+            api.get(`/sod/demanda/${processo.id}`).then((response: any) => {
+                recarregarPaginaDemanda(conteudo)
+            }).catch((err: any) => {
+                console.log(err);
+            })
+        }
+
         props.setConteudoModal(
             <ConteudoModalConfirmacao
                 tituloModal='Quer iniciar esse worflow?'
-                abrirProximoComponente={abrirFeedback}
+                abrirProximoComponente={iniciarWorkflowAprovacao}
                 conteudoProximoComponente={conteudoFeedback}
                 descricaoModal="Caso confirme, a proposta será enviada e avaliada pelos gerentes envolvidos a ela"
                 fecharModal={fecharModal}
@@ -411,7 +437,7 @@ export function Header(props: {
 
             localStorage.setItem("DEMANDAESCOLHIDA", JSON.stringify(demanda))
             location.href = pathname + "/demand";
-        }).catch((err) => {
+        }).catch((err: any) => {
             console.log(err);
         })
     } //feito
@@ -726,7 +752,6 @@ function ModalMotivoDevolucao(props: Modal) {
     )
 }
 
-//ADICIONAR INPUT de STATUS DESEJADO
 function ModalAdiconarInformações(props: Modal) {
     const [valorData, setValorData] = useState<Dayjs | null>(null)
     const [erroObjectPrazo, setErroObjectPrazo] = useState({ error: false, helperText: "" })
@@ -847,6 +872,29 @@ function ModalAdiconarInformações(props: Modal) {
                 </IconButton>
             </BoxTituloModal>
             <BoxInfoModal>
+                <BoxAtributosInfoModal >
+                    <BoxAtributoInfoModal2 sx={{ width: "60%" }}>
+                        <TypographyTituloDecisao variant="body1">
+                            Status escolhido:
+                        </TypographyTituloDecisao>
+                        <FormControl error sx={{ display: "flex", flexDirection: "row" }}>
+                            <RadioGroup sx={{ display: "flex", flexDirection: "row" }}>
+                                <FormControlLabel
+                                    className='radio-status'
+                                    value="Assesment"
+                                    control={<Radio sx={{ "&.Mui-checked": { color: "#595959" } }} />}
+                                    label="Assesment"
+                                />
+                                <FormControlLabel
+                                    className='radio-status'
+                                    value="Business Case"
+                                    control={<Radio sx={{ "&.Mui-checked": { color: "#FFD600" } }} />}
+                                    label="Business Case"
+                                />
+                            </RadioGroup>
+                        </FormControl>
+                    </BoxAtributoInfoModal2>
+                </BoxAtributosInfoModal>
                 <BoxAtributosInfoModal >
                     <BoxAtributoInfoModal2 sx={{ width: "50%" }}>
                         <TypographyTituloAtributoModal variant='body1'>
@@ -1353,7 +1401,7 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
     const workflowDeadline = processo.prazoWorkflow
     const estaEmPauta = processo.estaEmPauta
     let listaBotoes: Botao[] = [{ nome: "chat", function: funcoes[0] }]
-
+    
     /**
      *  1º chat, reprovar, devolver, aprovar (Analista de TI, demanda)
         2º chat, histórico, reprovar aprovar (Gerente de negócio, demanda)
@@ -1412,7 +1460,7 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
     } else {
         const historico = { nome: "historico", function: funcoes[4] }
         const verDemanda = { nome: "verDemanda", function: funcoes[8] }
-        const criarPauta = { nome: "criarPauta", function: funcoes[6] }
+        const criarPauta = { nome: "criarPauta", function: funcoes[9] }
 
         listaBotoes.push(historico)
         if (!estaEmWorkflow) {
