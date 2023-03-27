@@ -58,9 +58,23 @@ export default function CriacaoProposta(props: {
   const [valorTamanho, setValorTamanho] = useState<string>("");
   const [valorBUSolicitante, setValorBUSolicitante] = useState<string>("");
   const [valorBUsBeneficadas, setValorBUsBeneficadas] = useState<Object[]>([]);
-  const [valorSessaoTI, setValorSessaoTI] = useState<Object>();
+  const [valorSessaoTI, setValorSessaoTI] = useState<string>("");
 
   const [prazoElaboracao, setPrazoElaboracao] = useState<Dayjs | null>(null);
+
+  const [valorCodigoPPM, setValorCodigoPPM] = useState<number>(0);
+  const [valorLinkJira, setValorLinkJira] = useState<string>("");
+
+  const [escopoProposta, setEscopoProposta] = useState<string>("")
+  const [payback, setPayback] = useState<number>(0)
+  const [periodoExecucao, setPeriodoExecucao] = useState<Date | null>(null)
+  const [nomeResponsavel, setNomeResponsavel] = useState<string>("")
+  const [areaResponsavel, setAreaResponsavel] = useState<string>("")
+
+  // const [centroCustoTabela, setCentroCustoTabela] = useState<string[]>([])
+  // const [valorTotalTabela, setValorTotalTabela] = useState<number>(0)
+  // const [esforcoTabela, setEsforcoTabela] = useState<number>(0)
+  // const [tituloLinhaTabela, setTituloLinhaTabela] = useState<string>("")
 
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>();
 
@@ -72,7 +86,7 @@ export default function CriacaoProposta(props: {
 
       for (let demanda of response.data) {
         demanda.tipo = TipoComponenteProcesso.Demanda
-        if(demanda.idDemanda == idDemandaCriacao){
+        if (demanda.idDemanda == idDemandaCriacao) {
           //fazer para os valores irem para os inputs
           setPropostaSelecionada(demanda)
           setValor(1)
@@ -98,7 +112,6 @@ export default function CriacaoProposta(props: {
   })
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
-    console.log(newValue);
     setValor(newValue);
     if (newValue == 2) {
       setSegundo(true);
@@ -197,7 +210,12 @@ export default function CriacaoProposta(props: {
               prazoElaboracao={prazoElaboracao}
               setPrazoElaboracao={setPrazoElaboracao}
               valorSessaoTI={valorSessaoTI}
-              setValorSessaoTI={setValorSessaoTI} />
+              setValorSessaoTI={setValorSessaoTI}
+              valorCodigoPPM={valorCodigoPPM}
+              setValorCodigoPPM={setValorCodigoPPM}
+              valorLinkJira={valorLinkJira}
+              setValorLinkJira={setValorLinkJira}
+            />
             <InputAnexos rascunho={false} proposta={true} />
             <BoxContainerBotoes>
               <BotaoTerciario
@@ -225,7 +243,16 @@ export default function CriacaoProposta(props: {
         )}
         {valor == 2 && (
           <>
-            <EscopoProposta proposta={true} />
+            <EscopoProposta proposta={true} escopoProposta={escopoProposta} setEscopoProposta={setEscopoProposta}
+              payback={payback} setPayback={setPayback}
+              periodoExecucao={periodoExecucao} setPeriodoExecucao={setPeriodoExecucao}
+              nomeResponsavel={nomeResponsavel} setNomeResponsavel={setNomeResponsavel}
+              areaResponsavel={areaResponsavel} setAreaResponsavel={setAreaResponsavel}
+              // centroCustoTabela={centroCustoTabela} setCentroCustoTabela={setCentroCustoTabela}
+              // valorTotalTabela={valorTotalTabela} setValorTotalTabela={setValorTotalTabela}
+              // esforcoTabela={esforcoTabela} setEsforcoTabela={setEsforcoTabela}
+              // tituloLinhaTabela={tituloLinhaTabela} setTituloLinhaTabela={setTituloLinhaTabela}
+            />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario

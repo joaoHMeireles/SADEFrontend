@@ -31,7 +31,10 @@ export default function TabelaCustoCriacao() {
 
   return (
     <>
-      <Tabelas tabela={tabela} />
+      <Tabelas tabela={tabela} centroCustoTabela={props.centroCustoTabela} setCentroCustoTabela={props.setCentroCustoTabela}
+        valorTotalTabela={props.valorTotalTabela} setValorTotalTabela={props.setValorTotalTabela}
+        esforcoTabela={props.esforcoTabela} setEsforcoTabela={props.setEsforcoTabela}
+        tituloLinhaTabela={props.tituloLinhaTabela} setTituloLinhaTabela={props.setTituloLinhaTabela} />
       <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         {tabela > 1 &&
           <Tooltip
@@ -54,13 +57,36 @@ export default function TabelaCustoCriacao() {
   );
 }
 
-function ConteudoTabela() {
+function ConteudoTabela(props: {
+  centroCustoTabela: string[]
+  setCentroCustoTabela: React.Dispatch<React.SetStateAction<string[]>>
+  valorTotalTabela: number
+  setValorTotalTabela: React.Dispatch<React.SetStateAction<number>>
+  esforcoTabela: number
+  setEsforcoTabela: React.Dispatch<React.SetStateAction<number>>
+  tituloLinhaTabela: string
+  setTituloLinhaTabela: React.Dispatch<React.SetStateAction<string>>
+  //esforcoTotal, valorTotal
+}) {
+  //esforco, valor hora
+
+  // useEffect(() => {
+  //   setEsforcoTotal(esforcoTotal + esforco)
+  // },[
+  //   esforco,
+  //   valorHora
+  // ])
+
+
+
+
   return (
     <>
       <TableRow>
         <TableCell sx={{ width: "25%" }} align="center">
           <FormControl fullWidth sx={{ m: 1 }} variant="filled">
             <TextField
+              onChange={(e: any) => { props.setTituloLinhaTabela(e.target.value) }}
               sx={{ width: "100%" }}
               InputProps={{
                 startAdornment: <GroupsRoundedIcon sx={{ paddingRight: 1 }} />,
@@ -70,6 +96,7 @@ function ConteudoTabela() {
         </TableCell>
         <TableCell sx={{ width: "25%" }} align="center">
           <TextField
+
             sx={{ width: "100%" }}
             InputProps={{
               startAdornment: (
@@ -80,6 +107,7 @@ function ConteudoTabela() {
         </TableCell>
         <TableCell sx={{ width: "25%" }} align="center">
           <TextField
+            id={`valorTotal${props.index}`}
             sx={{ width: "100%" }}
             InputProps={{
               startAdornment: (
@@ -90,6 +118,7 @@ function ConteudoTabela() {
         </TableCell>
         <TableCell sx={{ width: "25%" }} align="center">
           <TextField
+            id={`centroCusto${props.index}`}
             sx={{ width: "100%" }}
             InputProps={{
               startAdornment: (
@@ -103,18 +132,42 @@ function ConteudoTabela() {
   );
 }
 
-function LinhasTabela(props: { linha: number }) {
+function LinhasTabela(props: {
+  linha: number
+  centroCusto: string[]
+  setCentroCusto: React.Dispatch<React.SetStateAction<string[]>>
+  valorTotal: number
+  setValorTotal: React.Dispatch<React.SetStateAction<number>>
+  esforcoTotal: number
+  setEsforcoTotal: React.Dispatch<React.SetStateAction<number>>
+}) {
   let linhas: JSX.Element[] = [];
 
   for (let i = 0; i < props.linha; i++) {
-    linhas.push(<ConteudoTabela />);
+    linhas.push(<ConteudoTabela
+      centroCusto={props.centroCusto}
+      setCentroCusto={props.setCentroCusto}
+      valorTotal={props.valorTotal}
+      setValorTotal={props.setValorTotal}
+      esforcoTotal={props.esforcoTotal}
+      setEsforcoTotal={props.setEsforcoTotal}
+    //esforcoTotal, valorTotal
+    />);
   }
 
-  return <>{linhas}</>;
+  return (
+    <>
+      {linhas}
+    </>
+  )
 }
 
 function Tabela() {
   const [linha, setLinha] = useState(1);
+  const [esforcoTotal, setEsforcoTotal] = useState(0)
+  const [valorTotal, setValorTotal] = useState(0)
+  const [centroCusto, setCentroCusto] = useState<string[]>([])
+  // esforcoTotal, valorTotal, centrosCusto
 
   return (
     <>
@@ -124,13 +177,14 @@ function Tabela() {
             <TableHead>
               <TableRowEstilizada>
                 <TableCellEstilzada align="center">
-                  Recursos Internos (Sem desembolso)
+                  <TextField id={`tituloTabela`} placeholder="Titulo tabela"
+                    sx={{ width: "100%", input: { color: "#FFF", borderColor: "#FFF" } }}></TextField>
                 </TableCellEstilzada>
                 <TableCellEstilzada align="center">
                   Esforço (h)
                 </TableCellEstilzada>
                 <TableCellEstilzada align="center">
-                  Valor Total
+                  Valor Hora
                 </TableCellEstilzada>
                 <TableCellEstilzada align="center">
                   CC Pagante
@@ -138,7 +192,14 @@ function Tabela() {
               </TableRowEstilizada>
             </TableHead>
             <TableBody>
-              <LinhasTabela linha={linha} />
+              <LinhasTabela linha={linha}
+                esforcoTotal={esforcoTotal}
+                setEsforcoTotal={setEsforcoTotal}
+                valorTotal={valorTotal}
+                setValorTotal={setValorTotal}
+                centroCusto={centroCusto}
+                setCentroCusto={setCentroCusto}
+              />
             </TableBody>
           </Table>
         </TableContainerEstilizado>

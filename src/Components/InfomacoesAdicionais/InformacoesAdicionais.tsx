@@ -18,6 +18,8 @@ import {
     BoxPadraoDireta, BoxPadraoEsquerda, BoxTitulo, BoxGeral, TypographyPadrao,
     SelectPadrao, BoxContainerInputs, BoxSessaoTIECodigoPPM
 } from "./InfomacoesAdicionais.styles";
+import { getValueEnum } from "../../utils";
+import { sessaoTI } from "../../constants/enuns";
 
 export default function InfomacoesAdicionais(props: {
     informacaoProcesso: any;
@@ -29,8 +31,12 @@ export default function InfomacoesAdicionais(props: {
     setValorBUsBeneficadas: React.Dispatch<React.SetStateAction<Object[]>>;
     prazoElaboracao: Dayjs | null;
     setPrazoElaboracao: React.Dispatch<React.SetStateAction<Dayjs | null>>;
-    valorSessaoTI: Object;
-    setValorSessaoTI: React.Dispatch<React.SetStateAction<Object>>;
+    valorSessaoTI: string;
+    setValorSessaoTI: React.Dispatch<React.SetStateAction<string>>;
+    valorCodigoPPM: number;
+    setValorCodigoPPM: React.Dispatch<React.SetStateAction<number>>;
+    valorLinkJira: string;
+    setValorLinkJira: React.Dispatch<React.SetStateAction<string>>;
 }) {
 
     const tamanhos = [
@@ -66,48 +72,41 @@ export default function InfomacoesAdicionais(props: {
 
     useEffect(() => {
         if (props.informacaoProcesso) {
-            // let nomeSessaoTIResponsavel;
-            props.setValorTamanho(props.informacaoProcesso.tamanho);
-            // props.setValorBUSolicitante(props.informacaoProcesso.busolicitante.nomerBU);
-            props.setPrazoElaboracao(props.informacaoProcesso.prazoElaboracao);
-
-            // for (const sessao of sessoesTI) {
-            //     if (sessao.abreviacao == props.informacaoProcesso.secaoTIResponsavel) {
-            //         nomeSessaoTIResponsavel = sessao.nome;
-            //     }
-            // }
-
-            // const sessao = {
-            //     nome: nomeSessaoTIResponsavel,
-            //     abreviacao: props.informacaoProcesso.secaoTIResponsavel
-            // }
-
-            // props.setValorSessaoTI(sessao)
-
-            console.log(props.valorBUsBeneficadas);
 
             for (const bu of props.informacaoProcesso.busBeneficiadas) {
-                const buBeneficiada = {
-                    idBU: bu.idBU,
-                    nomeBU: bu.nomeBU
-                }
-                props.valorBUsBeneficadas.push(buBeneficiada)
-                props.setValorBUsBeneficadas(props.valorBUsBeneficadas)
+                props.valorBUsBeneficadas.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
             }
 
+            props.setValorBUsBeneficadas(props.valorBUsBeneficadas)
 
-            const codigoPPM = document.getElementById("codigoPPM");
-            const linkJira = document.getElementById("linkJira");
-
-            if (codigoPPM) {
-                codigoPPM.value = props.informacaoProcesso.codigoPPM;
+            if (props.informacaoProcesso.tamanho) {
+                props.setValorTamanho(props.informacaoProcesso.tamanho);
             }
 
-            if (linkJira) {
-                linkJira.value = props.informacaoProcesso.linkJira;
+            if (props.informacaoProcesso.prazoElaboracao) {
+                props.setPrazoElaboracao(props.informacaoProcesso.prazoElaboracao);
+            }
+
+            const sessaoTIResponsavel = getValueEnum(sessaoTI, props.informacaoProcesso.secaoTIResponsavel)
+
+            if (sessaoTIResponsavel) {
+                props.setValorSessaoTI(sessaoTIResponsavel)
+            }
+
+            if (props.informacaoProcesso.busolicitante) {
+                props.setValorBUSolicitante(props.informacaoProcesso.busolicitante.nomeBU)
+            }
+
+            if (props.informacaoProcesso.codigoPPM) {
+                props.setValorCodigoPPM(props.informacaoProcesso.codigoPPM)
+            }
+
+            if (props.informacaoProcesso.linkJira) {
+                props.setValorLinkJira(props.informacaoProcesso.linkJira)
             }
         }
     }, [])
+
 
     return (
         <>
@@ -227,13 +226,13 @@ export default function InfomacoesAdicionais(props: {
                     </Box>
                     <Box sx={{ width: "30%" }}>
                         <TypographyPadrao>Codigo PPM: </TypographyPadrao>
-                        <TextField sx={{ width: "80%" }} id="codigoPPM" type="search"></TextField>
+                        <TextField sx={{ width: "80%" }} id="codigoPPM" type="search" value={props.valorCodigoPPM}></TextField>
                     </Box>
                 </BoxSessaoTIECodigoPPM>
 
                 <Box sx={{ width: "100%" }}>
                     <TypographyPadrao>Link EPIC Jira: </TypographyPadrao>
-                    <TextField sx={{ width: "100%" }} id="linkJira" type="search"></TextField>
+                    <TextField sx={{ width: "100%" }} id="linkJira" type="search" value={props.valorLinkJira}></TextField>
                 </Box>
 
             </BoxGeral>
