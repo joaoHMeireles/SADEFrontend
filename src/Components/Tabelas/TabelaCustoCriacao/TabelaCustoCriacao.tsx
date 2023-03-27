@@ -58,17 +58,16 @@ export default function TabelaCustoCriacao() {
 }
 
 function ConteudoTabela(props: {
-  centroCustoTabela: string[]
-  setCentroCustoTabela: React.Dispatch<React.SetStateAction<string[]>>
-  valorTotalTabela: number
-  setValorTotalTabela: React.Dispatch<React.SetStateAction<number>>
-  esforcoTabela: number
-  setEsforcoTabela: React.Dispatch<React.SetStateAction<number>>
-  tituloLinhaTabela: string
-  setTituloLinhaTabela: React.Dispatch<React.SetStateAction<string>>
-  //esforcoTotal, valorTotal
+  centroCusto: string[]
+  setCentroCusto: React.Dispatch<React.SetStateAction<string[]>>
+  valorTotal: number
+  setValorTotal: React.Dispatch<React.SetStateAction<number>>
+  esforcoTotal: number
+  setEsforcoTotal: React.Dispatch<React.SetStateAction<number>>
 }) {
   //esforco, valor hora
+
+  
 
   // useEffect(() => {
   //   setEsforcoTotal(esforcoTotal + esforco)
@@ -151,7 +150,6 @@ function LinhasTabela(props: {
       setValorTotal={props.setValorTotal}
       esforcoTotal={props.esforcoTotal}
       setEsforcoTotal={props.setEsforcoTotal}
-    //esforcoTotal, valorTotal
     />);
   }
 
