@@ -70,6 +70,9 @@ export default function CriacaoProposta(props: {
   const [nomeResponsavel, setNomeResponsavel] = useState<string>("")
   const [areaResponsavel, setAreaResponsavel] = useState<string>("")
 
+  const [centroCusto, setCentroCusto] = useState<any>();
+  const [centroCustoEscolhidas, setCentroCustoEscolhidas] = useState<any>();
+
   // const [centroCustoTabela, setCentroCustoTabela] = useState<string[]>([])
   // const [valorTotalTabela, setValorTotalTabela] = useState<number>(0)
   // const [esforcoTabela, setEsforcoTabela] = useState<number>(0)
@@ -105,6 +108,10 @@ export default function CriacaoProposta(props: {
     let info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string)
 
     setInformacaoProcesso(info);
+  }, [])
+
+  useEffect(() => {
+    api.get("/sod/centroCusto").then((res) => setCentroCusto(res.data))
   }, [])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
@@ -244,10 +251,13 @@ export default function CriacaoProposta(props: {
               periodoExecucao={periodoExecucao} setPeriodoExecucao={setPeriodoExecucao}
               nomeResponsavel={nomeResponsavel} setNomeResponsavel={setNomeResponsavel}
               areaResponsavel={areaResponsavel} setAreaResponsavel={setAreaResponsavel}
-              // centroCustoTabela={centroCustoTabela} setCentroCustoTabela={setCentroCustoTabela}
-              // valorTotalTabela={valorTotalTabela} setValorTotalTabela={setValorTotalTabela}
-              // esforcoTabela={esforcoTabela} setEsforcoTabela={setEsforcoTabela}
-              // tituloLinhaTabela={tituloLinhaTabela} setTituloLinhaTabela={setTituloLinhaTabela}
+              centroCusto={centroCusto}
+              centroCustoEscolhidas={centroCustoEscolhidas}
+              setCentroCustoEscolhidas={setCentroCustoEscolhidas}
+            // centroCustoTabela={centroCustoTabela} setCentroCustoTabela={setCentroCustoTabela}
+            // valorTotalTabela={valorTotalTabela} setValorTotalTabela={setValorTotalTabela}
+            // esforcoTabela={esforcoTabela} setEsforcoTabela={setEsforcoTabela}
+            // tituloLinhaTabela={tituloLinhaTabela} setTituloLinhaTabela={setTituloLinhaTabela}
             />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>

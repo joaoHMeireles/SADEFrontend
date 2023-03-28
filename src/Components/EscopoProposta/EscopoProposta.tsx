@@ -24,14 +24,17 @@ export default function EscopoProposta(props: {
   setNomeResponsavel: React.Dispatch<React.SetStateAction<string>>
   areaResponsavel: string
   setAreaResponsavel: React.Dispatch<React.SetStateAction<string>>
-  centroCustoTabela: string[]
-  setCentroCustoTabela: React.Dispatch<React.SetStateAction<string[]>>
-  valorTotalTabela: number
-  setValorTotalTabela: React.Dispatch<React.SetStateAction<number>>
-  esforcoTabela: number
-  setEsforcoTabela: React.Dispatch<React.SetStateAction<number>>
-  tituloLinhaTabela: string
-  setTituloLinhaTabela: React.Dispatch<React.SetStateAction<string>>
+  centroCusto: any
+  centroCustoEscolhidas: any[]
+  setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<any[]>>
+  // centroCustoTabela: string[]
+  // setCentroCustoTabela: React.Dispatch<React.SetStateAction<string[]>>
+  // valorTotalTabela: number
+  // setValorTotalTabela: React.Dispatch<React.SetStateAction<number>>
+  // esforcoTabela: number
+  // setEsforcoTabela: React.Dispatch<React.SetStateAction<number>>
+  // tituloLinhaTabela: string
+  // setTituloLinhaTabela: React.Dispatch<React.SetStateAction<string>>
 }) {
 
   return (
@@ -51,6 +54,9 @@ export default function EscopoProposta(props: {
         <BoxPadrao>
           <TypographyStyled>Tabelas de Custo: </TypographyStyled>
           <TabelaCustoCriacao
+            centroCusto={props.centroCusto}
+            centroCustoEscolhidas={props.centroCustoEscolhidas}
+            setCentroCustoEscolhidas={props.setCentroCustoEscolhidas}
           // centroCustoTabela={props.centroCustoTabela} setCentroCustoTabela={props.setCentroCustoTabela}
           //   valorTotalTabela={props.valorTotalTabela} setValorTotalTabela={props.setValorTotalTabela}
           //   esforcoTabela={props.esforcoTabela} setEsforcoTabela={props.setEsforcoTabela}
@@ -90,7 +96,7 @@ export default function EscopoProposta(props: {
           </BoxResponsaveis>
         </BoxResponsavel>
         <BoxPadrao>
-          <InputAnexos rascunho={false} proposta={props.proposta} />
+          <InputAnexos rascunho={false} proposta={false} />
         </BoxPadrao>
       </BoxContainerGeral>
     </>
