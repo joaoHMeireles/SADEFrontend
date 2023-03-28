@@ -21,3 +21,11 @@ export async function pegarUltimoHistorico(id: number, setUltimohistorico: React
     console.log(err);
   })
 }
+
+export async function pegarGerenteSolicitante(id: number, setGerenteSolicitante: React.Dispatch<SetStateAction<any>>) {
+  axios.get(`${url}/sod/usuario/gerente/usuario/${id}`).then((response: any) => {
+    setGerenteSolicitante(response.data)
+  }).catch((err: any) => {
+    console.log(err);
+  })
+}

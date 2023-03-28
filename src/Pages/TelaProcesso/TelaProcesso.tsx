@@ -31,7 +31,7 @@ import {
     BoxAtributoInfoModal2, TypographyTituloAtributoModal, TextFieldURL
 } from './TelaProcesso.styles';
 import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
-import api, { pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
+import api, { pegarGerenteSolicitante, pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
 import { TypographyTituloDecisao } from '../TelaColecaoProcesso/TelaColecaoProcesso.styles';
 // import EsqueletoPDFVersaoDemanda from '../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda';
 
@@ -106,6 +106,7 @@ export function Header(props: {
     const [tempoExcedido, setTempoExcedido] = useState(false)
     const [aprovadoGerente, setAprovadoGerente] = useState(false)
     const [ultimoHistorico, setUltimoHistorico] = useState<any>({})
+    const [gerenteSolicitante, setGerenteSolicitante] = useState<any>(null)
     const { pathname } = useLocation()
     const processo = props.informacaoProcesso;
     const prazoElaboracao = processo.prazoElaboracao
@@ -125,6 +126,7 @@ export function Header(props: {
     useEffect(() => {
         verificarHistoricoAprovado(processo.id, setAprovadoGerente)
         pegarUltimoHistorico(processo.id, setUltimoHistorico)
+        pegarGerenteSolicitante(processo.usuario.idUsuario, setGerenteSolicitante)
         if (prazoElaboracao < new Date() && prazoElaboracao && tipoProcesso == "Demanda") {
             setTempoExcedido(true)
         }
@@ -409,7 +411,17 @@ export function Header(props: {
         )
 
         function iniciarWorkflowAprovacao(conteudo: JSX.Element) {
-            api.get(`/sod/demanda/${processo.id}`).then((response: any) => {
+            const formDataHistorico = new FormData()
+            formDataHistorico.append("historico", JSON.stringify(
+                {
+                    tarefa: "AVALIARWORKFLOW",
+                    demanda: { idDemanda: processo.id },
+                    usuario: { idUsuario: gerenteSolicitante.idUsuario },
+                    acaoFeitaHistoricoAnterior: "INICIARWORKFLOW"
+                }
+            ))
+
+            api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response: any) => {
                 recarregarPaginaDemanda(conteudo)
             }).catch((err: any) => {
                 console.log(err);
@@ -428,7 +440,7 @@ export function Header(props: {
 
         abrirModal()
 
-    }
+    } //feito
 
     function verDemandaProposta() {
         api.get(`/sod/demanda/${processo.idProposta}`).then((response: any) => {
@@ -1399,9 +1411,11 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
     const estaEmWorkflow = processo.workflowIniciado
     const aprovadoWorkflow = processo.aprovadoWorkflow
     const workflowDeadline = processo.prazoWorkflow
+    const estaEmProposta = processo.pertenceUmaProposta
     const estaEmPauta = processo.estaEmPauta
     let listaBotoes: Botao[] = [{ nome: "chat", function: funcoes[0] }]
-    
+
+
     /**
      *  1º chat, reprovar, devolver, aprovar (Analista de TI, demanda)
         2º chat, histórico, reprovar aprovar (Gerente de negócio, demanda)
@@ -1420,38 +1434,41 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
         const reprovar = { nome: "reprovar", function: funcoes[2] }
         const historico = { nome: "historico", function: funcoes[4] }
 
-        if (statusProcesso == "CANCELED" || ultimoHistorico.tarefa == "REENVIARDEMANDA") {
+        if (estaEmProposta) {
             listaBotoes.push(historico)
         } else {
-
-            if (!tamanho) {
-                if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                    const devolver = { nome: "devolver", function: funcoes[3] }
-
-                    listaBotoes.push(reprovar, devolver, aprovar)
-                }
+            if (statusProcesso == "CANCELED" || ultimoHistorico.tarefa == "REENVIARDEMANDA") {
+                listaBotoes.push(historico)
             } else {
 
-                listaBotoes.push(historico)
+                if (!tamanho) {
+                    if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                        const devolver = { nome: "devolver", function: funcoes[3] }
 
-                if (tipoPessoa == "gerenteNegocio") {
-                    if (aprovadoGerente) {
-                        listaBotoes.push(reprovar, aprovar)
+                        listaBotoes.push(reprovar, devolver, aprovar)
                     }
-                } else if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                    if (!aprovadoGerente) {
-                        if (!linkJira) {
-                            const adicionarInfo = { nome: "adicionarInfo", function: funcoes[5] }
+                } else {
+                    listaBotoes.push(historico)
 
-                            listaBotoes.push(adicionarInfo)
-                        } else {
-                            let criarProposta: Botao = { nome: " ", function: funcoes[6] }
-                            if (prazoElaboracao < new Date()) {
-                                criarProposta.nome = "criarProposta!"
+                    if (tipoPessoa == "gerenteNegocio") {
+                        if (aprovadoGerente) {
+                            listaBotoes.push(reprovar, aprovar)
+                        }
+                    } else if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                        if (!aprovadoGerente) {
+                            if (!linkJira) {
+                                const adicionarInfo = { nome: "adicionarInfo", function: funcoes[5] }
+
+                                listaBotoes.push(adicionarInfo)
                             } else {
-                                criarProposta.nome = "criarProposta"
+                                let criarProposta: Botao = { nome: " ", function: funcoes[6] }
+                                if (prazoElaboracao < new Date()) {
+                                    criarProposta.nome = "criarProposta!"
+                                } else {
+                                    criarProposta.nome = "criarProposta"
+                                }
+                                listaBotoes.push(criarProposta)
                             }
-                            listaBotoes.push(criarProposta)
                         }
                     }
                 }
@@ -1463,40 +1480,45 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
         const criarPauta = { nome: "criarPauta", function: funcoes[9] }
 
         listaBotoes.push(historico)
-        if (!estaEmWorkflow) {
-            if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
-                const iniciarWorkflow = { nome: "iniciarworkflow", function: funcoes[7] }
-                listaBotoes.push(iniciarWorkflow, verDemanda)
-
-                if (!estaEmPauta) {
-                    listaBotoes.push(criarPauta)
-                }
-            } else if (tipoPessoa == "gerenteNegocio") {
-                listaBotoes.push(verDemanda)
-            }
-        } else {
-            if (aprovadoWorkflow) {
-                listaBotoes.push(verDemanda)
+        if (estaEmPauta) {
+            listaBotoes.push(verDemanda)
+        }
+        else {
+            if (!estaEmWorkflow) {
                 if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                    const iniciarWorkflow = { nome: "iniciarworkflow", function: funcoes[7] }
+                    listaBotoes.push(iniciarWorkflow, verDemanda)
+
                     if (!estaEmPauta) {
                         listaBotoes.push(criarPauta)
                     }
+                } else if (tipoPessoa == "gerenteNegocio") {
+                    listaBotoes.push(verDemanda)
                 }
             } else {
-                if (workflowDeadline < new Date()) {
-                    if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
-                        const workflow = { nome: "workflow!", function: funcoes[10] }
-
-                        listaBotoes.push(workflow)
+                if (aprovadoWorkflow) {
+                    listaBotoes.push(verDemanda)
+                    if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                        if (!estaEmPauta) {
+                            listaBotoes.push(criarPauta)
+                        }
                     }
                 } else {
-                    if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
-                        const workflow = { nome: "workflow", function: funcoes[10] }
+                    if (workflowDeadline < new Date()) {
+                        if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
+                            const workflow = { nome: "workflow!", function: funcoes[10] }
 
-                        listaBotoes.push(workflow)
+                            listaBotoes.push(workflow)
+                        }
+                    } else {
+                        if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
+                            const workflow = { nome: "workflow", function: funcoes[10] }
+
+                            listaBotoes.push(workflow)
+                        }
                     }
+                    listaBotoes.push(verDemanda)
                 }
-                listaBotoes.push(verDemanda)
             }
         }
     }

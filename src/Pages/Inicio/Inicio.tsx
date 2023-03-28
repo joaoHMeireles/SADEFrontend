@@ -25,35 +25,35 @@ export default function Inicio(props: {
   const location = useLocation().pathname
 
   useEffect(() => {
-    api.get("/sod/demanda").then((response) => {
-      let listaDemandas: any[] = []
-      for (let demanda of response.data) {
-        demanda.id = demanda.idDemanda
-        demanda.tipo = TipoComponenteProcesso.Demanda
-        listaDemandas.push(demanda)
-      }
-      setListaComponents(listaDemandas);
-    }).catch((err) => {
-      console.log(err);
-    })
-
-    // api.get("/sod/proposta").then((response: any) => {
-    //   let listaPropostas: any[] = []
-    //   for(let proposta of response.data){
-        
-    //     for(let atributo in proposta.demanda){
-    //       proposta[atributo] = proposta.demanda[atributo]
-    //     }
-
-    //     proposta.tipo = TipoComponenteProcesso.Proposta
-    //     proposta.id = proposta.idProposta
-    //     listaPropostas.push(proposta)
+    // api.get("/sod/demanda").then((response) => {
+    //   let listaDemandas: any[] = []
+    //   for (let demanda of response.data) {
+    //     demanda.id = demanda.idDemanda
+    //     demanda.tipo = TipoComponenteProcesso.Demanda
+    //     listaDemandas.push(demanda)
     //   }
-    //   setListaComponents(listaPropostas);
-
-    // }).catch((err: any) => {
+    //   setListaComponents(listaDemandas);
+    // }).catch((err) => {
     //   console.log(err);
     // })
+
+    api.get("/sod/proposta").then((response: any) => {
+      let listaPropostas: any[] = []
+      for(let proposta of response.data){
+        
+        for(let atributo in proposta.demanda){
+          proposta[atributo] = proposta.demanda[atributo]
+        }
+
+        proposta.tipo = TipoComponenteProcesso.Proposta
+        proposta.id = proposta.idProposta
+        listaPropostas.push(proposta)
+      }
+      setListaComponents(listaPropostas);
+
+    }).catch((err: any) => {
+      console.log(err);
+    })
 
 
     // api.get("/sod/pauta").then((response) => {
