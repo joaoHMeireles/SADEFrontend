@@ -58,19 +58,19 @@ export default function TabelaCustoCriacao(props: {
           sx={{ boxShadow: "5px 5px 10px 0 #00000050", marginBottom: 2 }}
           multiple
           disableCloseOnSelect
-          // onChange={(e, valor: any) => {
-          //   let busBeneficiadas: Object[] = []
+          onChange={(e, valor: any) => {
+            let busBeneficiadas: Object[] = []
 
-          //   for (let buSelecionada of valor) {
-          //     for (let bu of props.informacaoProcesso.busBeneficiadas) {
-          //       if (bu.nomeBU == buSelecionada) {
-          //         props.valorBUsBeneficadas.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
-          //       }
-          //     }
-          //   }
+            for (let buSelecionada of valor) {
+              for (let bu of props.informacaoProcesso.busBeneficiadas) {
+                if (bu.nomeBU == buSelecionada) {
+                  props.valorBUsBeneficadas.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                }
+              }
+            }
 
-          //   props.setValorBUsBeneficadas(props.valorBUsBeneficadas);
-          // }}
+            props.setValorBUsBeneficadas(props.valorBUsBeneficadas);
+          }}
           renderOption={(props, cc: any, { selected }) => {
             return (
               <li {...props}>
