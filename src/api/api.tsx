@@ -29,3 +29,19 @@ export async function pegarGerenteSolicitante(id: number, setGerenteSolicitante:
     console.log(err);
   })
 }
+
+export async function pegarGerenteTISolicitante(id: number, setGerenteTISolicitante: React.Dispatch<SetStateAction<any>>) {
+  axios.get(`${url}/sod/usuario/gerenteTI/usuario/${id}`).then((response: any) => {
+    setGerenteTISolicitante(response.data)
+  }).catch((err: any) => {
+    console.log(err);
+  })
+}
+
+export async function pegarAnalistaTIResponsavel(id: number, setAnalistaTIResponsavel: React.Dispatch<SetStateAction<any>>) {
+  axios.get(`${url}/sod/historicoWorkflow/analistaResponsavel/${id}`).then((response: any) => {
+    setAnalistaTIResponsavel(response.data)
+  }).catch((err: any) => {
+    console.log(err);
+  })
+}

@@ -37,29 +37,29 @@ export default function Inicio(props: {
     //   console.log(err);
     // })
 
-    api.get("/sod/proposta").then((response: any) => {
-      let listaPropostas: any[] = []
-      for(let proposta of response.data){
+
+    // api.get("/sod/proposta").then((response: any) => {
+    //   let listaPropostas: any[] = []
+    //   for(let proposta of response.data){
         
-        for(let atributo in proposta.demanda){
-          proposta[atributo] = proposta.demanda[atributo]
-        }
+    //     for(let atributo in proposta.demanda){
+    //       proposta[atributo] = proposta.demanda[atributo]
+    //     }
 
-        proposta.tipo = TipoComponenteProcesso.Proposta
-        proposta.id = proposta.idProposta
-        listaPropostas.push(proposta)
-      }
-      setListaComponents(listaPropostas);
+    //     proposta.tipo = TipoComponenteProcesso.Proposta
+    //     proposta.id = proposta.idProposta
+    //     listaPropostas.push(proposta)
+    //   }
+    //   setListaComponents(listaPropostas);
 
-    }).catch((err: any) => {
-      console.log(err);
-    })
+    // }).catch((err: any) => {
+    //   console.log(err);
+    // })
 
 
     // api.get("/sod/pauta").then((response) => {
     //   let listaPautas: any[] = []
     //   for(let pauta of response.data){
-    //     console.log(pauta);
     //     pauta.propostas = pauta.propostasPauta
     //     pauta.propostasPauta = null 
     //     pauta.tituloReuniao = pauta.tituloReuniaoPauta 
@@ -74,29 +74,25 @@ export default function Inicio(props: {
     // })
 
 
-    // api.get("/sod/ata").then((response) => {
-    //   let listaATAs: any[] = []
-    //   for(let ata of response.data){
-    //     // console.log(ata);
+    api.get("/sod/ata").then((response) => {
+      let listaATAs: any[] = []
+      for(let ata of response.data){
+        // console.log(ata);
 
 
-    //     ata.propostas = ata.propostasAta
-    //     ata.propostasPauta = ata.pauta.propostasPauta
-    //     ata.tituloReuniao = ata.tituloReuniaoATA
+        ata.propostas = ata.propostasAta
+        ata.propostasPauta = ata.pauta.propostasPauta
+        ata.tituloReuniao = ata.tituloReuniaoATA
 
-    //     ata.tipo = TipoColecaoComponenteProcesso.ATA
-    //     listaATAs.push(ata)
-    //   }
-    //   setListaComponents(listaATAs);
+        ata.tipo = TipoColecaoComponenteProcesso.ATA
+        listaATAs.push(ata)
+      }
+      setListaComponents(listaATAs);
 
-    // }).catch((err) => {
-    //   console.log(err);
-    // })
-  })
-
-  // useEffect(() => {
-  //   buscarComponentes()
-  // }, [])
+    }).catch((err) => {
+      console.log(err);
+    })
+  }, [])
 
   localStorage.setItem("PAGINATUAL", "home");
 

@@ -21,6 +21,7 @@ import {
   Snackbar,
   Alert,
   Divider,
+  Dialog,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
@@ -237,11 +238,13 @@ function Header(props: {
 
   useEffect(() => {
     if (tipoColecao == "Pauta") {
-      // if (dataReuniao <= new Date()) {
-      setAcao("Informar parecer");
-      // }
+      if (!informacaoColecaoProcesso.pertenceUmaATA) {
+        // if (dataReuniao <= new Date()) {
+        setAcao("Informar parecer");
+        // }
+      }
     } else {
-      if (!informacaoColecaoProcesso.numeroAtaDG) {
+      if (!informacaoColecaoProcesso.numeroDG) {
         setAcao("Finalizar processo");
       }
     }
@@ -309,10 +312,15 @@ function ContainerColecaoProcesso(props: {
   avaliandoProcesso: boolean;
   verificacaoInputs: boolean[];
 }) {
+  const [modalAberto, setModalAberto] = useState(false)
   const informacaoColecaoProcesso = props.informacaoColecaoProcesso;
   const dataFormatada = new Date(
     informacaoColecaoProcesso.dataReuniao
   ).toLocaleDateString();
+
+  function abrirModal(){
+    setModalAberto(true)
+  }
 
   return (
     <GridContainerColecao container spacing={2}>
@@ -386,9 +394,12 @@ function ContainerColecaoProcesso(props: {
               </>
             )}
           </Box>
-          <BotaoTerciario variant="outlined">Ver anexos </BotaoTerciario>
+          <BotaoTerciario variant="outlined" onClick={abrirModal}>Ver anexos </BotaoTerciario>
         </GridFooter>
       )}
+      <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { minWidth: "35vw" } }}>
+        tá aberto
+      </Dialog>
     </GridContainerColecao>
   );
 }

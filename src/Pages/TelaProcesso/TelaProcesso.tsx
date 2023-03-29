@@ -31,7 +31,7 @@ import {
     BoxAtributoInfoModal2, TypographyTituloAtributoModal, TextFieldURL
 } from './TelaProcesso.styles';
 import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
-import api, { pegarGerenteSolicitante, pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
+import api, { pegarAnalistaTIResponsavel, pegarGerenteSolicitante, pegarGerenteTISolicitante, pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
 import { TypographyTituloDecisao } from '../TelaColecaoProcesso/TelaColecaoProcesso.styles';
 // import EsqueletoPDFVersaoDemanda from '../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda';
 
@@ -107,6 +107,8 @@ export function Header(props: {
     const [aprovadoGerente, setAprovadoGerente] = useState(false)
     const [ultimoHistorico, setUltimoHistorico] = useState<any>({})
     const [gerenteSolicitante, setGerenteSolicitante] = useState<any>(null)
+    const [gerenteTISolicitante, setGerenteTISolicitante] = useState<any>(null)
+    const [analistaTIResponsavel, setAnalistaTIResponsavel] = useState<any>(null)
     const { pathname } = useLocation()
     const processo = props.informacaoProcesso;
     const prazoElaboracao = processo.prazoElaboracao
@@ -124,9 +126,36 @@ export function Header(props: {
     )
 
     useEffect(() => {
-        verificarHistoricoAprovado(processo.id, setAprovadoGerente)
-        pegarUltimoHistorico(processo.id, setUltimoHistorico)
-        pegarGerenteSolicitante(processo.usuario.idUsuario, setGerenteSolicitante)
+        try {
+            verificarHistoricoAprovado(processo.id, setAprovadoGerente)
+        } catch (erro: any) {
+            console.log(erro);
+        }
+
+        try {
+            pegarUltimoHistorico(processo.id, setUltimoHistorico)
+        } catch (erro: any) {
+            console.log(erro);
+        }
+
+        try {
+            pegarGerenteSolicitante(processo.usuario.idUsuario, setGerenteSolicitante)
+        } catch (erro: any) {
+            console.log(erro);
+        }
+        
+        try {
+            pegarGerenteTISolicitante(processo.usuario.id, setGerenteTISolicitante)
+        } catch (erro: any) {
+            console.log(erro);
+        }
+
+        try {
+            pegarAnalistaTIResponsavel(processo.id, setAnalistaTIResponsavel)
+        } catch (erro: any) {
+            console.log(erro);
+        }
+        
         if (prazoElaboracao < new Date() && prazoElaboracao && tipoProcesso == "Demanda") {
             setTempoExcedido(true)
         }
@@ -403,6 +432,7 @@ export function Header(props: {
         location.href = "/createproposal"
     } //feito
 
+    //testar depois de já ter como cadastrar proposta
     function iniciarNovoWorkflow() {
         const conteudoFeedback = (
             <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
@@ -459,6 +489,7 @@ export function Header(props: {
         location.href = "/createagenda"
     } //feito
 
+    //testar depois de já ter como cadastrar proposta
     function avaliarWorkflow() {
         const conteudoFeedbackAprovado = (
             <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
@@ -473,47 +504,68 @@ export function Header(props: {
         )
 
         function aprovarWorkflow(conteudoFeedback: JSX.Element) {
-            //fazer quando já tiver a parte de usuário funcionando
-            // const body = {
-            //     tarefa: "",
-            //     "demanda": {
-            //         "idDemanda": processo.idProposta
-            //     },
-            //     "acaoFeitaHistoricoAnterior": "APROVARDEMANDA",
-            //     "usuario": {
-            //         "idUsuario": 3
-            //     }
-            // }
+            const tipoUsuario = localStorage.getItem("TIPOUSUARIO")
+            const formDataHistorico = new FormData()
 
-            // api.post("", body).then(() => {
+            if (tipoUsuario == "gerenteTI") {
+                formDataHistorico.append("historico", JSON.stringify(
+                    {
+                        tarefa: "CRIARPAUTA",
+                        demanda: { idDemanda: processo.id },
+                        usuario: { idUsuario: analistaTIResponsavel.idUsuario },
+                        acaoFeitaHistoricoAnterior: "APROVARWORKFLOW"
+                    }
+                ))
+            } else {
+                formDataHistorico.append("historico", JSON.stringify(
+                    {
+                        tarefa: "AVALIARWORKFLOW",
+                        demanda: { idDemanda: processo.id },
+                        usuario: { idUsuario: gerenteTISolicitante.idUsuario },
+                        acaoFeitaHistoricoAnterior: "APROVARWORKFLOW"
+                    }
+                ))
+            }
 
-            // }).catch((err) => {
-            //     console.log(err);
-            // })
-
-            abrirFeedback(conteudoFeedback)
+            api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response) => {
+                console.log(response.data);
+                recarregarPaginaDemanda(conteudoFeedback)
+            }).catch((err) => {
+                console.log(err);
+            })
         }
 
         function reprovarWorkflow(conteudoFeedback: JSX.Element) {
-            //fazer quando já tiver a parte de usuário funcionando
-            // const body = {
-            //     tarefa: "",
-            //     "demanda": {
-            //         "idDemanda": processo.idProposta
-            //     },
-            //     "acaoFeitaHistoricoAnterior": "APROVARDEMANDA",
-            //     "usuario": {
-            //         "idUsuario": 3
-            //     }
-            // }
+            const tipoUsuario = localStorage.getItem("TIPOUSUARIO")
+            const formDataHistorico = new FormData()
 
-            // api.post("", body).then(() => {
+            if (tipoUsuario == "gerenteTI") {
+                formDataHistorico.append("historico", JSON.stringify(
+                    {
+                        tarefa: "CRIARPAUTA",
+                        demanda: { idDemanda: processo.id },
+                        usuario: { idUsuario: analistaTIResponsavel.idUsuario },
+                        acaoFeitaHistoricoAnterior: "REPROVARWORKFLOW"
+                    }
+                ))
+            } else {
+                formDataHistorico.append("historico", JSON.stringify(
+                    {
+                        tarefa: "AVALIARWORKFLOW",
+                        demanda: { idDemanda: processo.id },
+                        usuario: { idUsuario: gerenteTISolicitante.idUsuario },
+                        acaoFeitaHistoricoAnterior: "REPROVARWORKFLOW"
+                    }
+                ))
+            }
 
-            // }).catch((err) => {
-            //     console.log(err);
-            // })
+            api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response) => {
+                console.log(response.data);
+                recarregarPaginaDemanda(conteudoFeedback)
+            }).catch((err) => {
+                console.log(err);
+            })
 
-            abrirFeedback(conteudoFeedback)
         }
 
         const modalAprovar = (
@@ -561,7 +613,7 @@ export function Header(props: {
         )
 
         abrirModal()
-    }
+    } //feito
 
     return (
         <>
