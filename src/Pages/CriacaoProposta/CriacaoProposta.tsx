@@ -71,7 +71,7 @@ export default function CriacaoProposta(props: {
   const [areaResponsavel, setAreaResponsavel] = useState<string>("")
 
   const [centroCusto, setCentroCusto] = useState<any>();
-  const [centroCustoEscolhidas, setCentroCustoEscolhidas] = useState<any>();
+  const [centroCustoEscolhidas, setCentroCustoEscolhidas] = useState<Object[]>([]);
 
   // const [centroCustoTabela, setCentroCustoTabela] = useState<string[]>([])
   // const [valorTotalTabela, setValorTotalTabela] = useState<number>(0)
@@ -114,6 +114,10 @@ export default function CriacaoProposta(props: {
     api.get("/sod/centroCusto").then((res) => setCentroCusto(res.data))
   }, [])
 
+  useEffect(() => {
+    console.log(informacaoProcesso);
+  }, [informacaoProcesso])
+
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
     if (newValue == 2) {
@@ -121,6 +125,62 @@ export default function CriacaoProposta(props: {
     } else {
       setSegundo(false);
     }
+  }
+
+  function criarProposta() {
+    console.log(informacaoProcesso);
+
+
+    // {
+    //   "escopo": "hum, é viável, bora ver no que da",
+    //     "periodoExecucaoInicio": "2023-07-12",
+    //       "periodoExecucaoFim": "2023-07-22",
+    //         "demanda": {
+    //     "idDemanda": 15
+    //   },
+    //   "responsaveisNegocio": [
+    //     {
+    //       "idUsuario": 3
+    //     },
+    //     {
+    //       "idUsuario": 5
+    //     }
+    //   ],
+    //     "tabelasCustoProposta": [
+    //       {
+    //         "tituloTabela": "despesas iniciais",
+    //         "quantidadeTotal": 90,
+    //         "valorTotal": 960,
+    //         "licenca": false,
+    //         "centrosCustoPagantes": [
+    //           {
+    //             "centroCusto": {
+    //               "idCentroCusto": 3
+    //             },
+    //             "porcentagemDespesa": 0.4
+    //           },
+    //           {
+    //             "centroCusto": {
+    //               "idCentroCusto": 1
+    //             },
+    //             "porcentagemDespesa": 0.6
+    //           }
+    //         ],
+    //         "linhasTabela": [
+    //           {
+    //             "nomeRecurso": "trabalho",
+    //             "quantidade": 40,
+    //             "valorQuantidade": 9
+    //           },
+    //           {
+    //             "nomeRecurso": "trabalho2",
+    //             "quantidade": 50,
+    //             "valorQuantidade": 12
+    //           }
+    //         ]
+    //       }
+    //     ]
+    // }
   }
 
   return (
@@ -188,7 +248,7 @@ export default function CriacaoProposta(props: {
       <ContainerGeral>
         {valor == 1 && (
           <>
-            <InformacaoGeral proposta={true} />
+            <InformacaoGeral proposta={true} informacaoProcesso={informacaoProcesso} setInformacaoProcesso={setInformacaoProcesso} />
             <BeneficiosDemanda rascunho={false} proposta={true}
               numeroBeneficiosReais={numeroBeneficiosReais}
               numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
@@ -201,6 +261,8 @@ export default function CriacaoProposta(props: {
               moedaPotencial={moedaPotencial}
               setMoedaPotencial={setMoedaPotencial}
               valor={valor}
+              informacaoProcesso={informacaoProcesso}
+              setInformacaoProcesso={setInformacaoProcesso}
             />
             <InfomacoesAdicionais
               informacaoProcesso={informacaoProcesso}
@@ -293,6 +355,7 @@ export default function CriacaoProposta(props: {
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
+                  onClick={() => criarProposta}
                 >
                   Enviar
                 </BotaoPrimario>

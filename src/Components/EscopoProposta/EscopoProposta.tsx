@@ -25,8 +25,8 @@ export default function EscopoProposta(props: {
   areaResponsavel: string
   setAreaResponsavel: React.Dispatch<React.SetStateAction<string>>
   centroCusto: any
-  centroCustoEscolhidas: any[]
-  setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<any[]>>
+  centroCustoEscolhidas: Object[]
+  setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<Object[]>>
   // centroCustoTabela: string[]
   // setCentroCustoTabela: React.Dispatch<React.SetStateAction<string[]>>
   // valorTotalTabela: number

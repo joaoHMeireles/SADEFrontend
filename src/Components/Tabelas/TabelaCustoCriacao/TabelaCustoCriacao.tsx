@@ -33,8 +33,8 @@ import Checkbox from "@mui/material/Checkbox";
 
 export default function TabelaCustoCriacao(props: {
   centroCusto: any
-  centroCustoEscolhidas: any[]
-  setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<any[]>>
+  centroCustoEscolhidas: Object[]
+  setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<Object[]>>
 }) {
   const [quantidadeTabela, setQuantidadeTabela] = useState(1);
   const [tabelas, setTabelas] = useState<JSX.Element[]>([])
@@ -43,7 +43,8 @@ export default function TabelaCustoCriacao(props: {
     const newTabelas = []
 
     for (let i = 0; i < quantidadeTabela; i++) {
-      newTabelas.push(<Tabela tabela={i} />)
+      newTabelas.push(<Tabela tabela={i} centroCusto={props.centroCusto} centroCustoEscolhidas={props.centroCustoEscolhidas}
+        setCentroCustoEscolhidas={props.setCentroCustoEscolhidas} />)
     }
 
     setTabelas(newTabelas)
@@ -52,43 +53,6 @@ export default function TabelaCustoCriacao(props: {
   return (
     <>
       {tabelas}
-      <Box>
-        <Autocomplete
-          id={`centroCusto${quantidadeTabela - 1}`}
-          sx={{ boxShadow: "5px 5px 10px 0 #00000050", marginBottom: 2 }}
-          multiple
-          disableCloseOnSelect
-          onChange={(e, valor: any) => {
-            let busBeneficiadas: Object[] = []
-
-            for (let buSelecionada of valor) {
-              for (let bu of props.informacaoProcesso.busBeneficiadas) {
-                if (bu.nomeBU == buSelecionada) {
-                  props.valorBUsBeneficadas.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
-                }
-              }
-            }
-
-            props.setValorBUsBeneficadas(props.valorBUsBeneficadas);
-          }}
-          renderOption={(props, cc: any, { selected }) => {
-            return (
-              <li {...props}>
-                <Checkbox
-                  id="checkbox"
-                  icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                  checkedIcon={<CheckBoxIcon fontSize="small" />}
-                  style={{ marginRight: 8 }}
-                  checked={selected}
-                />
-                {cc.nomeCentroCusto}
-              </li>
-            );
-          }}
-          options={props.centroCusto}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </Box>
       <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         {quantidadeTabela > 1 &&
           <Tooltip
@@ -111,7 +75,12 @@ export default function TabelaCustoCriacao(props: {
   );
 }
 
-function Tabela(props: { tabela: number }) {
+function Tabela(props: {
+  tabela: number
+  centroCusto: any
+  centroCustoEscolhidas: Object[]
+  setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<Object[]>>
+}) {
   const [quantidadeLinha, setQuantidadeLinha] = useState(1);
   const [esforcoTotal, setEsforcoTotal] = useState(0)
   const [valorTotal, setValorTotal] = useState(0)
@@ -132,17 +101,6 @@ function Tabela(props: { tabela: number }) {
     setLinhas(newLinhas)
   }, [quantidadeLinha])
 
-  // useEffect(() => {
-  //   console.log(props.tabela);
-  //   console.log(linha);
-  //   for (let i = 0; i < props.tabela; i++) {
-  //     for (let j = 0; j < linha; j++) {
-  //       console.log(document.getElementById(`tituloLinha${i}`));
-  //       console.log(document.getElementById(`tituloLinha${j}`));
-  //     }
-  //   }
-  // }, [props.tabela, linha])
-
   function atualizarValor() {
     let newEsforcoTotal = 0
     let newValorTotal = 0
@@ -160,7 +118,6 @@ function Tabela(props: { tabela: number }) {
     setEsforcoTotal(newEsforcoTotal)
     setValorTotal(newValorTotal)
   }
-
 
   return (
     <>
@@ -205,6 +162,41 @@ function Tabela(props: { tabela: number }) {
           </Tooltip>
         </BoxIconsAddMinus>
       </BoxContainerTabela>
+      <Box>
+        <Autocomplete
+          id={`centroCusto${props.tabela - 1}`}
+          sx={{ boxShadow: "5px 5px 10px 0 #00000050", marginBottom: 2 }}
+          multiple
+          disableCloseOnSelect
+          onChange={(e, valor: any) => {
+            for (let centroCustoSelecionada of valor) {
+              for (let centroCusto of props.centroCusto) {
+                if (centroCustoSelecionada.nomeCentroCusto == centroCusto.nomeCentroCusto) {
+                  props.centroCustoEscolhidas.push({ idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto })
+                }
+              }
+            }
+
+            props.setCentroCustoEscolhidas(props.centroCustoEscolhidas);
+          }}
+          renderOption={(props, cc: any, { selected }) => {
+            return (
+              <li {...props}>
+                <Checkbox
+                  id="checkbox"
+                  icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                  checkedIcon={<CheckBoxIcon fontSize="small" />}
+                  style={{ marginRight: 8 }}
+                  checked={selected}
+                />
+                {cc}
+              </li>
+            );
+          }}
+          options={props.centroCusto.map((centroCusto: any) => centroCusto.nomeCentroCusto)}
+          renderInput={(params) => <TextField {...params} />}
+        />
+      </Box>
     </>
   );
 }

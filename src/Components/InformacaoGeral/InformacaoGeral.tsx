@@ -15,7 +15,13 @@ import {
 import Checkbox from "@mui/material/Checkbox";
 import api from "../../api/api";
 
-export default function InformacaoGeral(props: { proposta: boolean, centroCusto?: any[], setCentroCusto?: React.Dispatch<React.SetStateAction<Object[]>> }) {
+export default function InformacaoGeral(props: {
+  proposta: boolean,
+  centroCusto?: any[],
+  setCentroCusto?: React.Dispatch<React.SetStateAction<Object[]>>
+  informacaoProcesso: any
+  setInformacaoProcesso: React.Dispatch<React.SetStateAction<any>>
+}) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
 
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
@@ -76,6 +82,13 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
           <TextField
             id="titulo"
             sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+            onChange={(e: any) => {
+              const novaInfoDemanda = {
+                ...props.informacaoProcesso,
+                tituloDemanda: e.target.value,
+              };
+              props.setInformacaoProcesso(novaInfoDemanda);
+            }}
           />
         </BoxContainerLabels>
         <BoxContainerLabels>
@@ -87,6 +100,13 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
             sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
             multiline
             maxRows={Infinity}
+            onChange={(e: any) => {
+              const novaInfoDemanda = {
+                ...props.informacaoProcesso,
+                situacaoAtual: e.target.value,
+              };
+              props.setInformacaoProcesso(novaInfoDemanda);
+            }}
           />
         </BoxContainerLabels>
         <BoxContainerLabels>
@@ -98,6 +118,13 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
             sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
             multiline
             maxRows={Infinity}
+            onChange={(e: any) => {
+              const novaInfoDemanda = {
+                ...props.informacaoProcesso,
+                objetivo: e.target.value,
+              };
+              props.setInformacaoProcesso(novaInfoDemanda);
+            }}
           />
         </BoxContainerLabels>
         <BoxContainerLabels>
@@ -123,6 +150,14 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
 
                   if (props.setCentroCusto) {
                     props.setCentroCusto(centroCustoDemanda)
+                  }
+
+                  const novaInfoDemanda = {
+                    ...props.informacaoProcesso,
+                    centroCustoDemanda: centroCustoDemanda,
+                  };
+                  if (novaInfoDemanda) {
+                    props.setInformacaoProcesso(novaInfoDemanda);
                   }
                 }}
                 renderOption={(props, centroCusto, { selected }) => {

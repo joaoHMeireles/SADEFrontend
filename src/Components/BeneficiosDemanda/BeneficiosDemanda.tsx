@@ -38,9 +38,11 @@ export default function BeneficiosDemanda(props: {
   moedaPotencial?: string[]
   setMoedaPotencial?: React.Dispatch<React.SetStateAction<string[]>>
   valor?: number
+  informacaoProcesso: any
+  setInformacaoProcesso: any
 }) {
   const [frequencia, setFrequencia] = useState("");
-  const [informacaoProcesso, setInformacaoProcesso] = useState<any>()
+  // const [informacaoProcesso, setInformacaoProcesso] = useState<any>()
   let numeroBeneficiosPotenciais = 0;
   let numeroBeneficiosReais = 0;
   let numeroBeneficiosQualitativos = 0;
@@ -59,50 +61,54 @@ export default function BeneficiosDemanda(props: {
 
   useEffect(() => {
 
-    for (let atributo in informacaoProcesso) {
-      if ((informacaoProcesso as any)[atributo]) {
+    for (let atributo in props.informacaoProcesso) {
+      if ((props.informacaoProcesso as any)[atributo]) {
         if (atributo == "frequenciaUso") {
-          setFrequencia(informacaoProcesso[atributo]);
+          setFrequencia(props.informacaoProcesso[atributo]);
         }
 
         if (atributo == "beneficiosDemanda") {
-          const beneficiosBancoReais = informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "REAL")
-          const beneficiosBancoPotenciais = informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL")
-          const beneficiosBancoQualitativos = informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO")
+          const beneficiosBancoReais = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "REAL")
+          const beneficiosBancoPotenciais = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL")
+          const beneficiosBancoQualitativos = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO")
 
           for (let i = 0; i < props.numeroBeneficiosReais; i++) {
 
             const beneficioRealValorMensal = document.getElementById("valorMensalReal" + i) as HTMLInputElement;
-            if (beneficioRealValorMensal) {
+            if (beneficioRealValorMensal && beneficiosBancoReais[i]) {
               beneficioRealValorMensal.value = beneficiosBancoReais[i].valor;
             }
 
             const beneficioRealDescricaoReal = document.getElementById("descricaoReal" + i) as HTMLInputElement;
-            if (beneficioRealDescricaoReal) {
+            if (beneficioRealDescricaoReal && beneficiosBancoReais[i]) {
               beneficioRealDescricaoReal.value = beneficiosBancoReais[i].descricao
             }
 
             if (props.moedaReal && props.setMoedaReal) {
-              props.moedaReal.push(beneficiosBancoReais[i].moeda);
-              props.setMoedaReal(props.moedaReal);
+              if (beneficiosBancoReais[i]) {
+                props.moedaReal.push(beneficiosBancoReais[i].moeda);
+                props.setMoedaReal(props.moedaReal);
+              }
             }
           }
 
           for (let i = 0; i < props.numeroBeneficiosPotenciais; i++) {
 
             const beneficioPotencialValorMensal = document.getElementById("valorMensalPotencial" + i) as HTMLInputElement;
-            if (beneficioPotencialValorMensal) {
+            if (beneficioPotencialValorMensal && beneficiosBancoPotenciais[i]) {
               beneficioPotencialValorMensal.value = beneficiosBancoPotenciais[i].valor;
             }
 
             const beneficioPotencialDescricaoPotencial = document.getElementById("descricaoPotencial" + i) as HTMLInputElement;
-            if (beneficioPotencialDescricaoPotencial) {
+            if (beneficioPotencialDescricaoPotencial && beneficiosBancoPotenciais[i]) {
               beneficioPotencialDescricaoPotencial.value = beneficiosBancoPotenciais[i].descricao
             }
 
             if (props.moedaPotencial && props.setMoedaPotencial) {
-              props.moedaPotencial.push(beneficiosBancoPotenciais[i].moeda);
-              props.setMoedaPotencial(props.moedaPotencial);
+              if (beneficiosBancoPotenciais[i]) {
+                props.moedaPotencial.push(beneficiosBancoPotenciais[i].moeda);
+                props.setMoedaPotencial(props.moedaPotencial);
+              }
             }
 
           }
@@ -111,7 +117,7 @@ export default function BeneficiosDemanda(props: {
 
             const beneficioQualitativoDescricao = document.getElementById("beneficiosQualitativos" + i) as HTMLInputElement;
 
-            if (beneficioQualitativoDescricao) {
+            if (beneficioQualitativoDescricao && beneficiosBancoQualitativos[i]) {
               beneficioQualitativoDescricao.value = beneficiosBancoQualitativos[i].descricao;
             }
 
@@ -123,7 +129,7 @@ export default function BeneficiosDemanda(props: {
     props.numeroBeneficiosReais,
     props.numeroBeneficiosPotenciais,
     props.numeroBeneficiosQualitativos,
-    informacaoProcesso
+    props.informacaoProcesso
   ]);
 
   useEffect(() => {
@@ -136,7 +142,7 @@ export default function BeneficiosDemanda(props: {
         info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string)
       }
 
-      setInformacaoProcesso(info);
+      props.setInformacaoProcesso(info);
 
       if (info) {
         numeroBeneficiosPotenciais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL").length
@@ -158,7 +164,7 @@ export default function BeneficiosDemanda(props: {
         <BoxTitulos>
           <TypographyTitulos>Benefício Real</TypographyTitulos>
         </BoxTitulos>
-        <BeneficiosReais numeroBeneficios={props.numeroBeneficiosReais} moedas={moedas} moedaReal={props.moedaReal} setMoedaReal={props.setMoedaReal} />
+        <BeneficiosReais numeroBeneficios={props.numeroBeneficiosReais} moedas={moedas} moedaReal={props.moedaReal} setMoedaReal={props.setMoedaReal} informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} />
         <BoxIcones>
           {props.numeroBeneficiosReais > 1 ? (
             <RemoveRoundedIcon
@@ -185,7 +191,7 @@ export default function BeneficiosDemanda(props: {
         <BoxTitulos>
           <TypographyTitulos>Benefício Potencial</TypographyTitulos>
         </BoxTitulos>
-        <BeneficiosPotenciais numeroBeneficios={props.numeroBeneficiosPotenciais} moedas={moedas} moedaPotencial={props.moedaPotencial} setMoedaPotencial={props.setMoedaPotencial} />
+        <BeneficiosPotenciais numeroBeneficios={props.numeroBeneficiosPotenciais} moedas={moedas} moedaPotencial={props.moedaPotencial} setMoedaPotencial={props.setMoedaPotencial} informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} />
         <BoxIcones>
           {props.numeroBeneficiosPotenciais > 1 ? (
             <RemoveRoundedIcon
@@ -214,6 +220,7 @@ export default function BeneficiosDemanda(props: {
         </BoxTitulos>
         <BeneficiosQualitativos
           numeroBeneficios={props.numeroBeneficiosQualitativos}
+          informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso}
         />
         <BoxIcones>
           {props.numeroBeneficiosQualitativos > 1 ? (
@@ -260,37 +267,37 @@ export default function BeneficiosDemanda(props: {
   );
 }
 
-function BeneficiosReais(props: { numeroBeneficios: number, moedas: Object[], moedaReal: string[], setMoedaReal: React.Dispatch<React.SetStateAction<string[]>> }) {
+function BeneficiosReais(props: { numeroBeneficios: number, moedas: Object[], moedaReal: string[], setMoedaReal: React.Dispatch<React.SetStateAction<string[]>>, informacaoProcesso: any, setInformacaoProcesso: any }) {
   let beneficios: JSX.Element[] = [];
 
   for (let i = 0; i < props.numeroBeneficios; i++) {
-    beneficios.push(<BeneficioReal index={i} moedas={props.moedas} moedaReal={props.moedaReal} setMoedaReal={props.setMoedaReal} />);
+    beneficios.push(<BeneficioReal index={i} moedas={props.moedas} moedaReal={props.moedaReal} setMoedaReal={props.setMoedaReal} informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} />);
   }
 
   return <>{beneficios}</>;
 }
 
-function BeneficiosPotenciais(props: { numeroBeneficios: number, moedas: Object[], moedaPotencial: string[], setMoedaPotencial: React.Dispatch<React.SetStateAction<string[]>> }) {
+function BeneficiosPotenciais(props: { numeroBeneficios: number, moedas: Object[], moedaPotencial: string[], setMoedaPotencial: React.Dispatch<React.SetStateAction<string[]>>, informacaoProcesso: any, setInformacaoProcesso: any }) {
   let beneficios: JSX.Element[] = [];
 
   for (let i = 0; i < props.numeroBeneficios; i++) {
-    beneficios.push(<BeneficioPotencial index={i} moedas={props.moedas} moedaPotencial={props.moedaPotencial} setMoedaPotencial={props.setMoedaPotencial} />);
+    beneficios.push(<BeneficioPotencial index={i} moedas={props.moedas} moedaPotencial={props.moedaPotencial} setMoedaPotencial={props.setMoedaPotencial} informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} />);
   }
 
   return <>{beneficios}</>;
 }
 
-function BeneficiosQualitativos(props: { numeroBeneficios: number }) {
+function BeneficiosQualitativos(props: { numeroBeneficios: number, informacaoProcesso: any, setInformacaoProcesso: any }) {
   let beneficios: JSX.Element[] = [];
 
   for (let i = 0; i < props.numeroBeneficios; i++) {
-    beneficios.push(<BeneficioQualitativo index={i} />);
+    beneficios.push(<BeneficioQualitativo index={i} informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} />);
   }
 
   return <>{beneficios}</>;
 }
 
-function BeneficioReal(props: { index: number, moedas: Object[], moedaReal: string[], setMoedaReal: React.Dispatch<React.SetStateAction<string[]>> }) {
+function BeneficioReal(props: { index: number, moedas: Object[], moedaReal: string[], setMoedaReal: React.Dispatch<React.SetStateAction<string[]>>, informacaoProcesso: any, setInformacaoProcesso: any }) {
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -306,6 +313,28 @@ function BeneficioReal(props: { index: number, moedas: Object[], moedaReal: stri
                 width: "30%",
                 marginRight: 5,
                 boxShadow: "5px 5px 10px 0 #00000050",
+              }}
+              onChange={(e: any) => {
+                for (let beneficio of props.informacaoProcesso.beneficiosDemanda) {
+                  if ((props.index + 1) == beneficio.idBeneficio) {
+
+                    let b = {
+                      idBeneficio: beneficio.idBeneficio,
+                      tipoBeneficio: beneficio.tipoBeneficio,
+                      descricao: beneficio.descricao,
+                      moeda: beneficio.moeda,
+                      valor: e.target.value
+                    }
+
+                    const novaInfoDemanda = {
+                      ...props.informacaoProcesso,
+                      beneficiosDemanda: b,
+                    };
+                    if (novaInfoDemanda) {
+                      props.setInformacaoProcesso(novaInfoDemanda);
+                    }
+                  }
+                }
               }}
             />
             <TextField
@@ -342,7 +371,7 @@ function BeneficioReal(props: { index: number, moedas: Object[], moedaReal: stri
   );
 }
 
-function BeneficioPotencial(props: { index: number, moedas: Object[], moedaPotencial: string[], setMoedaPotencial: React.Dispatch<React.SetStateAction<string[]>> }) {
+function BeneficioPotencial(props: { index: number, moedas: Object[], moedaPotencial: string[], setMoedaPotencial: React.Dispatch<React.SetStateAction<string[]>>, informacaoProcesso: any, setInformacaoProcesso: any }) {
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -407,7 +436,7 @@ function BeneficioPotencial(props: { index: number, moedas: Object[], moedaPoten
   );
 }
 
-function BeneficioQualitativo(props: { index: number }) {
+function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, setInformacaoProcesso: any }) {
   return (
     <BoxContainerGeralBeneficio key={props.index}>
       <BoxDescricaoRequeistosControle>
