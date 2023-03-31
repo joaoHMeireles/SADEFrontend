@@ -35,8 +35,43 @@ export default function Login(props: {
 
   const [usuarios, setUsuarios] = useState<User[]>([])
   const [logado, setLogado] = useState(false)
-  const [user, setUser] = useState()
-  const [password, setPassword] = useState()
+  const [user, setUser] = useState({
+    email: '',
+    senha: ''
+  });
+
+  function atualizarUsuario(event: any) {
+    setUser({
+      ...user, [event.target.name]: event.target.value
+    })
+  }
+
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      const config = {
+        withCredentials: true,
+      };
+
+      api.post(`/sod/login/auth`, user, config).then((response: any) => {
+        console.log(response.data);
+
+        setLogado(true);
+
+        //ver como pegar o tipo do filha da puta
+        localStorage.setItem("TIPOUSUARIO", "gerenteTI");
+        localStorage.setItem("IDUSUARIO", JSON.stringify(response.data.idUsuario));
+        // location.href = "/home";
+
+      }).catch((err: any) => {
+        console.log(err);
+      })
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   /**
    * Função para setar o filtro e o menu como fechados
@@ -46,29 +81,6 @@ export default function Login(props: {
     props.setFiltro(false);
   });
 
-  useEffect(() => {
-    api.get("/sod/usuario").then((response) => {
-      setUsuarios(response.data);
-    }).catch((err) => {
-      console.log(err);
-    })
-  }, [])
-
-  /**
-   * Função que coloca o tipo do usuário no localStorage
-   */
-  function colocaPessoa() {
-    localStorage.setItem("TIPOUSUARIO", "gerenteTI");
-
-    for (let i = 0; i < usuarios.length; i++) {
-      if (user == usuarios[i].nomeUsuario) {
-        if (password == usuarios[i].senha) {
-          setLogado(true);
-          localStorage.setItem("IDUSUARIO", JSON.stringify(usuarios[i].idUsuario));
-        }
-      }
-    }
-  }
 
   /**
    * Função para conseguir ver a senha do input password
@@ -100,15 +112,17 @@ export default function Login(props: {
               </ContainerTituloTexto>
               <ContainerInputsLogin>
                 <InputEmail
+                  name="email"
                   placeholder="Usuário"
-                  onChange={(e: any) => { setUser(e.target.value) }}
+                  onChange={atualizarUsuario}
                   InputProps={{
                     startAdornment: <AccountCircle sx={{ color: "#595959", paddingRight: 1 }} />,
                   }}
                 />
                 <InputSenha type={tipo} id="inputSenha"
                   placeholder="Senha"
-                  onChange={(e: any) => { setPassword(e.target.value) }}
+                  name="senha"
+                  onChange={atualizarUsuario}
                   InputProps={{
                     startAdornment: <LockRoundedIcon sx={{ color: "#595959", paddingRight: 1 }} />,
                     endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} />)
@@ -120,14 +134,12 @@ export default function Login(props: {
                   </TextoEsqueceuSenha>
                 </BoxEsqueceuSenha>
               </ContainerInputsLogin>
-              <ContainerBotaoLogin>
+              <ContainerBotaoLogin onClick={handleLogin}>
                 <EstilosBotao
                   variant="contained"
                   startIcon={<InputRoundedIcon />}
                 >
-                  <Box onClick={colocaPessoa}>
-                    {logado ? <Link className="textoBotao" onClick={colocaPessoa} to="/home">Entrar</Link> : "Entrar"}
-                  </Box>
+                  Entrar
                 </EstilosBotao>
               </ContainerBotaoLogin>
             </ContainerBackgroundLogin>
