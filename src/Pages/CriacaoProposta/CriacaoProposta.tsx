@@ -37,6 +37,8 @@ import {
 import api from "../../api/api";
 import { Dayjs } from "dayjs";
 import { useLocationChange } from "../../utils";
+import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
+import semDemanda from "../../Assets/empty-folder.png"
 
 export default function CriacaoProposta(props: {
   filtrar: boolean;
@@ -157,14 +159,17 @@ export default function CriacaoProposta(props: {
             grid={grid}
             setGrid={setGrid}
           />
-
-          <CardsProcesso
-            listaComponents={listaComponents}
-            grid={grid}
-            proposta={true}
-            propostaSelecionada={propostaSelecionada}
-            setPropostaSelecionada={setPropostaSelecionada}
-          />
+          {listaComponents.length != 0 ?
+            <CardsProcesso
+              listaComponents={listaComponents}
+              grid={grid}
+              proposta={true}
+              propostaSelecionada={propostaSelecionada}
+              setPropostaSelecionada={setPropostaSelecionada}
+            />
+            :
+            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda disponível no sistema"} />
+          }
           <BotaoPrimario
             sx={{
               height: "3rem",
@@ -248,10 +253,10 @@ export default function CriacaoProposta(props: {
               periodoExecucao={periodoExecucao} setPeriodoExecucao={setPeriodoExecucao}
               nomeResponsavel={nomeResponsavel} setNomeResponsavel={setNomeResponsavel}
               areaResponsavel={areaResponsavel} setAreaResponsavel={setAreaResponsavel}
-              // centroCustoTabela={centroCustoTabela} setCentroCustoTabela={setCentroCustoTabela}
-              // valorTotalTabela={valorTotalTabela} setValorTotalTabela={setValorTotalTabela}
-              // esforcoTabela={esforcoTabela} setEsforcoTabela={setEsforcoTabela}
-              // tituloLinhaTabela={tituloLinhaTabela} setTituloLinhaTabela={setTituloLinhaTabela}
+            // centroCustoTabela={centroCustoTabela} setCentroCustoTabela={setCentroCustoTabela}
+            // valorTotalTabela={valorTotalTabela} setValorTotalTabela={setValorTotalTabela}
+            // esforcoTabela={esforcoTabela} setEsforcoTabela={setEsforcoTabela}
+            // tituloLinhaTabela={tituloLinhaTabela} setTituloLinhaTabela={setTituloLinhaTabela}
             />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>

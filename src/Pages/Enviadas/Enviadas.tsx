@@ -4,12 +4,11 @@ import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
 import Searchbar from "../../Components/Searchbar/Searchbar";
 import {
-  sessaoTI,
-  StatusComponenteProcesso,
-  TamanhoComponenteProcesso,
   TipoComponenteProcesso,
 } from "../../constants/enuns";
 import api from "../../api/api";
+import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
+import semDemanda from "../../Assets/empty-folder.png"
 
 export default function Enviadas(props: {
   filtrar: boolean;
@@ -42,14 +41,18 @@ export default function Enviadas(props: {
           grid={grid}
           setGrid={setGrid}
         />
-        <CardsProcesso
-          listaComponents={listaComponents}
-          grid={grid}
-          rascunho={true}
-          proposta={false}
-          propostaSelecionada={0}
-          setPropostaSelecionada={setPropostaSelecionada}
-        />
+         {listaComponents.length != 0 ?
+          <CardsProcesso
+            listaComponents={listaComponents}
+            grid={grid}
+            rascunho={true}
+            proposta={false}
+            propostaSelecionada={0}
+            setPropostaSelecionada={setPropostaSelecionada}
+          />
+          :
+          <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda sua cadastrada"} />
+        }
       </BoxConteudo>
     </>
   );

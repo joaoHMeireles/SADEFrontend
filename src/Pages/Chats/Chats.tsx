@@ -12,6 +12,8 @@ import {
   BoxGeralMensagensLadoDireito, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoDireito, BoxMensagensLadoEsquerdo,
   BoxMensagemLadoDireito, BoxMensagemLadoEsquerdo, TypographyPessoa, TypographyMensagem
 } from "./Chats.styles";
+import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
+import semChats from "../../Assets/leaf.png"
 
 
 const listaChats = [
@@ -575,34 +577,40 @@ export default function Chats(props: { aberto: boolean }) {
       <ContainerGeralChats>
         <Breadcrumb />
         <ContainerChats sx={{ width: (props.aberto ? "80vw" : "92vw") }}>
-          <LadoEsquerdoGeralChats>
-            <LadoEsquerdoChat>
-              {listaChats.map((chat) => {
-                const ultimaMensagem = chat.mensagens[chat.mensagens.length - 1]
-                const pessoa = listaPessoas.find(pessoa => pessoa.id == ultimaMensagem.idPessoa)
-                return (
-                  <Chat id={chat.id} titulo={chat.tituloDemanda} pessoa={(pessoa?.nome != undefined ? pessoa.nome : "")} mensagem={ultimaMensagem.mensagem} verChat={verChat} />
-                )
-              })}
-            </LadoEsquerdoChat>
-          </LadoEsquerdoGeralChats>
-          <LadoDireitoGeralChats>
-            <LadoDiretoChat>
-              {
-                listaMensagem.map((mensagem: any) => {
-                  const pessoa = listaPessoas.find(p => p.id == mensagem.idPessoa);
-                  return (
-                    <Mensagens mensagem={mensagem.mensagem} pessoa={(pessoa?.nome != undefined ? pessoa.nome : "")} />
-                  )
-                })}
-              <Toolbar />
-            </LadoDiretoChat>
-            <BoxBarraPesquisa>
-              <AttachmentRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
-              <BarraPesquisa />
-              <SendRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
-            </BoxBarraPesquisa>
-          </LadoDireitoGeralChats>
+          {listaChats.length != 0 ?
+            <>
+              <LadoEsquerdoGeralChats>
+                <LadoEsquerdoChat>
+                  {listaChats.map((chat) => {
+                    const ultimaMensagem = chat.mensagens[chat.mensagens.length - 1]
+                    const pessoa = listaPessoas.find(pessoa => pessoa.id == ultimaMensagem.idPessoa)
+                    return (
+                      <Chat id={chat.id} titulo={chat.tituloDemanda} pessoa={(pessoa?.nome != undefined ? pessoa.nome : "")} mensagem={ultimaMensagem.mensagem} verChat={verChat} />
+                    )
+                  })}
+                </LadoEsquerdoChat>
+              </LadoEsquerdoGeralChats>
+              <LadoDireitoGeralChats>
+                <LadoDiretoChat>
+                  {
+                    listaMensagem.map((mensagem: any) => {
+                      const pessoa = listaPessoas.find(p => p.id == mensagem.idPessoa);
+                      return (
+                        <Mensagens mensagem={mensagem.mensagem} pessoa={(pessoa?.nome != undefined ? pessoa.nome : "")} />
+                      )
+                    })}
+                  <Toolbar />
+                </LadoDiretoChat>
+                <BoxBarraPesquisa>
+                  <AttachmentRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
+                  <BarraPesquisa />
+                  <SendRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
+                </BoxBarraPesquisa>
+              </LadoDireitoGeralChats>
+            </>
+            :
+            <ResultadoVazio imagem={semChats} legenda={"Nenhum chat disponível"} />
+          }
         </ContainerChats>
       </ContainerGeralChats>
     </>

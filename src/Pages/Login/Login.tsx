@@ -29,7 +29,6 @@ export default function Login(props: {
   tamanhoNavbar: string;
 }) {
   const [tipo, setTipo] = useState("password");
-  // localStorage.setItem("PESSOA", "Solicitante")
   localStorage.setItem("PAGINATUAL", "login")
 
   const [logado, setLogado] = useState(false)
@@ -54,13 +53,14 @@ export default function Login(props: {
 
       api.post(`/sod/login/auth`, user, config).then((response: any) => {
         console.log(response.data);
+        const dadosUserJPA = response.data
 
         setLogado(true);
-        //ver como pegar o tipo 
-        localStorage.setItem("TIPOUSUARIO", "gerenteTI");
-        localStorage.setItem("IDUSUARIO", JSON.stringify(response.data.idUsuario));
-        location.href = "/home";
 
+        localStorage.setItem("TIPOUSUARIO", dadosUserJPA.authorities[0].authority);
+        localStorage.setItem("IDUSUARIO", JSON.stringify(dadosUserJPA.usuario.idUsuario));
+        
+        location.href = "/home";
       }).catch((err: any) => {
         console.log(err);
       })

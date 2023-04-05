@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
 import "./Inicio.scss";
+import { TipoComponenteProcesso } from "../../constants/enuns";
 import api from "../../api/api";
+import semDemanda from "../../Assets/empty-folder.png"
 import Searchbar from "../../Components/Searchbar/Searchbar";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import { BoxConteudo } from "../App.styles";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
-import { useLocation } from "react-router-dom";
-import Cookie from 'js-cookie'
-import { log } from "console";
+import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 
 
 /**
@@ -24,20 +23,19 @@ export default function Inicio(props: {
   const [grid, setGrid] = useState(true);
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
   const [listaComponents, setListaComponents] = useState<any[]>([])
-  const location = useLocation().pathname
 
   useEffect(() => {
-    // api.get("/sod/demanda").then((response) => {
-    //   let listaDemandas: any[] = []
-    //   for (let demanda of response.data) {
-    //     demanda.id = demanda.idDemanda
-    //     demanda.tipo = TipoComponenteProcesso.Demanda
-    //     listaDemandas.push(demanda)
-    //   }
-    //   setListaComponents(listaDemandas);
-    // }).catch((err) => {
-    //   console.log(err);
-    // })
+    api.get("/sod/demanda").then((response) => {
+      let listaDemandas: any[] = []
+      for (let demanda of response.data) {
+        demanda.id = demanda.idDemanda
+        demanda.tipo = TipoComponenteProcesso.Demanda
+        listaDemandas.push(demanda)
+      }
+      setListaComponents(listaDemandas);
+    }).catch((err) => {
+      console.log(err);
+    })
 
 
     // api.get("/sod/proposta").then((response: any) => {
@@ -75,32 +73,21 @@ export default function Inicio(props: {
     //   console.log(err);
     // })
 
-    const cookie = Cookie.get("jwt")
+    // api.get("/sod/ata").then((response) => {
+    //   let listaATAs: any[] = []
+    //   for (let ata of response.data) {
+    //     ata.propostas = ata.propostasAta
+    //     ata.propostasPauta = ata.pauta.propostasPauta
+    //     ata.tituloReuniao = ata.tituloReuniaoATA
 
-    api.get("/sod/ata", {
-      withCredentials: true,
-      headers: {
-        // "Content-Type": "application/json",
-        // Cookie: `name=${cookie};`
-      }
-    }).then((response) => {
-      let listaATAs: any[] = []
-      for (let ata of response.data) {
-        // console.log(ata);
+    //     ata.tipo = TipoColecaoComponenteProcesso.ATA
+    //     listaATAs.push(ata)
+    //   }
+    //   setListaComponents(listaATAs);
 
-
-        ata.propostas = ata.propostasAta
-        ata.propostasPauta = ata.pauta.propostasPauta
-        ata.tituloReuniao = ata.tituloReuniaoATA
-
-        ata.tipo = TipoColecaoComponenteProcesso.ATA
-        listaATAs.push(ata)
-      }
-      setListaComponents(listaATAs);
-
-    }).catch((err) => {
-      console.log(err);
-    })
+    // }).catch((err) => {
+    //   console.log(err);
+    // })
   }, [])
 
   localStorage.setItem("PAGINATUAL", "home");
@@ -114,15 +101,19 @@ export default function Inicio(props: {
         grid={grid}
         setGrid={setGrid}
       />
-      <CardsProcesso
-        listaComponents={listaComponents}
-        grid={grid}
-        rascunho={false}
-        proposta={false}
-        pauta={false}
-        propostaSelecionada={0}
-        setPropostaSelecionada={setPropostaSelecionada}
-      />
+      {listaComponents.length != 0 ?
+        <CardsProcesso
+          listaComponents={listaComponents}
+          grid={grid}
+          rascunho={false}
+          proposta={false}
+          pauta={false}
+          propostaSelecionada={0}
+          setPropostaSelecionada={setPropostaSelecionada}
+        />
+        :
+        <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda cadastrada no sistema"}/>
+      }
     </BoxConteudo>
   );
 }

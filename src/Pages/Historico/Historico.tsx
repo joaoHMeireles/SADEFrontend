@@ -189,8 +189,7 @@ export default function TelaHistoricos(props: {}) {
           tarefaExecutada: getValueEnum(TarefaExecucao, historico.acaoFeita),
           usuario: {
             nome: historico.usuario != null ? historico.usuario.nomeUsuario : null,
-            // ainda ver como pegar o tipo dele pelo banco
-            tipoPessoa: Persona.AnalistaTI,
+            tipoPessoa: localStorage.getItem("TIPOUSUARIO"),
           }
         }
         lista.push(objetoHistorico)
@@ -535,6 +534,6 @@ interface Historico {
   tarefaExecutada?: TarefaExecucao;
   usuario?: {
     nome: string;
-    tipoPessoa: Persona;
+    tipoPessoa: string | null;
   };
 }

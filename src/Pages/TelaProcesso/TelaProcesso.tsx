@@ -145,7 +145,7 @@ export function Header(props: {
         }
         
         try {
-            pegarGerenteTISolicitante(processo.usuario.id, setGerenteTISolicitante)
+            pegarGerenteTISolicitante(processo.usuario.idUsuario, setGerenteTISolicitante)
         } catch (erro: any) {
             console.log(erro);
         }
@@ -507,7 +507,7 @@ export function Header(props: {
             const tipoUsuario = localStorage.getItem("TIPOUSUARIO")
             const formDataHistorico = new FormData()
 
-            if (tipoUsuario == "gerenteTI") {
+            if (tipoUsuario == "GerenteTI") {
                 formDataHistorico.append("historico", JSON.stringify(
                     {
                         tarefa: "CRIARPAUTA",
@@ -539,7 +539,7 @@ export function Header(props: {
             const tipoUsuario = localStorage.getItem("TIPOUSUARIO")
             const formDataHistorico = new FormData()
 
-            if (tipoUsuario == "gerenteTI") {
+            if (tipoUsuario == "GerenteTI") {
                 formDataHistorico.append("historico", JSON.stringify(
                     {
                         tarefa: "CRIARPAUTA",
@@ -1494,7 +1494,7 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
             } else {
 
                 if (!tamanho) {
-                    if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                    if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
                         const devolver = { nome: "devolver", function: funcoes[3] }
 
                         listaBotoes.push(reprovar, devolver, aprovar)
@@ -1502,11 +1502,11 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
                 } else {
                     listaBotoes.push(historico)
 
-                    if (tipoPessoa == "gerenteNegocio") {
+                    if (tipoPessoa == "GerenteNegocio") {
                         if (aprovadoGerente) {
                             listaBotoes.push(reprovar, aprovar)
                         }
-                    } else if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                    } else if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
                         if (!aprovadoGerente) {
                             if (!linkJira) {
                                 const adicionarInfo = { nome: "adicionarInfo", function: funcoes[5] }
@@ -1537,33 +1537,33 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
         }
         else {
             if (!estaEmWorkflow) {
-                if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
                     const iniciarWorkflow = { nome: "iniciarworkflow", function: funcoes[7] }
                     listaBotoes.push(iniciarWorkflow, verDemanda)
 
                     if (!estaEmPauta) {
                         listaBotoes.push(criarPauta)
                     }
-                } else if (tipoPessoa == "gerenteNegocio") {
+                } else if (tipoPessoa == "GerenteNegocio") {
                     listaBotoes.push(verDemanda)
                 }
             } else {
                 if (aprovadoWorkflow) {
                     listaBotoes.push(verDemanda)
-                    if (tipoPessoa == "analista" || tipoPessoa == "gerenteTI") {
+                    if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
                         if (!estaEmPauta) {
                             listaBotoes.push(criarPauta)
                         }
                     }
                 } else {
                     if (workflowDeadline < new Date()) {
-                        if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
+                        if (tipoPessoa == "GerenteTI" || tipoPessoa == "GerenteNegocio") {
                             const workflow = { nome: "workflow!", function: funcoes[10] }
 
                             listaBotoes.push(workflow)
                         }
                     } else {
-                        if (tipoPessoa == "gerenteTI" || tipoPessoa == "gerenteNegocio") {
+                        if (tipoPessoa == "GerenteTI" || tipoPessoa == "GerenteNegocio") {
                             const workflow = { nome: "workflow", function: funcoes[10] }
 
                             listaBotoes.push(workflow)

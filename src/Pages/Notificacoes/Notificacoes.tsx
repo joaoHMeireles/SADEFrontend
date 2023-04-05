@@ -9,7 +9,6 @@ import { SvgIconTypeMap } from "@mui/material/SvgIcon";
 
 import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import EditNotificationsRoundedIcon from "@mui/icons-material/EditNotificationsRounded";
-import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded";
 import NewReleasesRoundedIcon from '@mui/icons-material/NewReleasesRounded';
 import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
@@ -18,6 +17,9 @@ import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { BoxContainerNotificacoes } from "./Notificacoes.styles";
+import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
+
+import semNotificacao from "../../Assets/notification-bell.png"
 
 /**
  *
@@ -27,7 +29,7 @@ export default function Notificacoes() {
   const [notificacoes, setNotificacoes] = useState<any[]>([]);
   localStorage.setItem("PAGINATUAL", "notification");
   const idUsuario = localStorage.getItem("IDUSUARIO");
-  
+
   let icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
   };
@@ -63,25 +65,33 @@ export default function Notificacoes() {
     }
   }
 
+  const notificacoesElement = notificacoes.map((notificacao: NotificacaoInfo) => {
+    getTipoIcone(notificacao.acao)
+    return (
+      <Notificacao key={notificacao.idNotificacao}
+        idNotificacao={notificacao.idNotificacao}
+        Icone={icone}
+        titulo={notificacao.tituloNotificacao}
+        mensagem={notificacao.descricaoNotificacao}
+        notificacoes={notificacoes}
+        setNotificacoes={setNotificacoes}
+      />
+    )
+  })
+
 
   return (
     <BoxContainerNotificacoes>
       <Breadcrumb />
       <Container>
         <Box>
-          {notificacoes.map((notificacao: NotificacaoInfo) => {
-            getTipoIcone(notificacao.acao)
-            return (
-              <Notificacao key={notificacao.idNotificacao}
-                idNotificacao={notificacao.idNotificacao}
-                Icone={icone}
-                titulo={notificacao.tituloNotificacao}
-                mensagem={notificacao.descricaoNotificacao}
-                notificacoes={notificacoes}
-                setNotificacoes={setNotificacoes}
-              />
-            )
-          })}
+          {notificacoesElement.length != 0 ?
+            <>
+              {notificacoesElement}
+            </>
+            :
+            <ResultadoVazio imagem={semNotificacao} legenda={"Nenhuma notificação presente"} />
+          }
         </Box>
       </Container>
     </BoxContainerNotificacoes>

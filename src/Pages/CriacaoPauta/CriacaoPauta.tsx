@@ -43,6 +43,8 @@ import {
   TipoComponenteProcesso,
 } from "../../constants/enuns";
 import api from "../../api/api";
+import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
+import semDemanda from "../../Assets/empty-folder.png"
 
 export default function CriacaoPauta(props: {
   filtrar: boolean;
@@ -67,25 +69,25 @@ export default function CriacaoPauta(props: {
     const idPropostaEscolhida = localStorage.getItem("PROPOSTACRIARPAUTA")
 
     console.log(idPropostaEscolhida);
-    
+
 
     api.get(`/sod/proposta/pauta/${false}`).then((response) => {
       let listaPropostas: any[] = []
-      for(let proposta of response.data){
-        for(let atributo in proposta.demanda){
+      for (let proposta of response.data) {
+        for (let atributo in proposta.demanda) {
           proposta[atributo] = proposta.demanda[atributo]
         }
 
-        if(proposta.idProposta == idPropostaEscolhida){
+        if (proposta.idProposta == idPropostaEscolhida) {
           proposta.escolhidaCriacao = true
         }
-  
+
         proposta.tipo = TipoComponenteProcesso.Proposta
         listaPropostas.push(proposta)
       }
 
       setListaComponents(listaPropostas);
-  
+
     }).catch((err) => {
       console.log(err);
     })
@@ -142,14 +144,18 @@ export default function CriacaoPauta(props: {
             grid={grid}
             setGrid={setGrid}
           />
+          {listaComponents.length != 0 ?
+            <CardsProcesso
+              listaComponents={listaComponents}
+              grid={grid}
+              pauta={true}
+              propostas={propostas}
+              setPropostas={setPropostas}
+            />
+            :
+            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma proposta disponível no sistema"} />
+          }
 
-          <CardsProcesso
-            listaComponents={listaComponents}
-            grid={grid}
-            pauta={true}
-            propostas={propostas}
-            setPropostas={setPropostas}
-          />
           <BotaoPrimario
             sx={{
               height: "3rem",
