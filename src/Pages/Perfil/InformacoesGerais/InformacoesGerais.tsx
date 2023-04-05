@@ -1,12 +1,7 @@
 import "./InformacoesGerais.scss";
 
 import Box from '@mui/material/Box';
-import fotoPerfil from '../../../Assets/fotoPerfil.jpg'
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import SettingsIcon from '@mui/icons-material/Settings';
+import fotoPerfil from '../../../Assets/fotoPerfil.jpg';
 
 export default function InformacoesGerais() {
   return (
@@ -14,12 +9,6 @@ export default function InformacoesGerais() {
       <Box sx={{ alignItems: "flex-start", borderBottom: "2px solid #ddd", display: "flex", flexDirection: "column", justifyContent: "flex-start", height: "auto", padding: "2rem 0", width: "90%" }}>
         <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", height: "auto", width: "100%" }}>
           <h2>Dados pessoais</h2>
-
-          <Box>
-            <IconButton sx={{ marginLeft: "1rem" }}>
-              <SettingsIcon />
-            </IconButton>
-          </Box>
         </Box>
 
         <Box sx={{ alignItems: "center", borderRadius: "360px", display: "flex", height: "10vw", justifyContent: "center", overflow: "hidden", marginTop: "1rem", width: "10vw" }}>
