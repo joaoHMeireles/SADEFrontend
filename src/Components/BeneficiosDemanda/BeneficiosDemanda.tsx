@@ -211,7 +211,7 @@ export default function BeneficiosDemanda(props: {
           setMoedaPotencial={props.setMoedaPotencial}
           informacaoProcesso={props.informacaoProcesso}
           setInformacaoProcesso={props.setInformacaoProcesso}
-          beneficiosPotenciaisLista={beneficiosPotenciaisLista}
+          beneficiosPotenciasLista={beneficiosPotenciaisLista}
         />
         <BoxIcones>
           {props.numeroBeneficiosPotenciais > 1 ? (
@@ -280,16 +280,21 @@ export default function BeneficiosDemanda(props: {
               marginTop: 1,
               boxShadow: "5px 5px 10px 0 #00000050",
             }}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setFrequencia(event.target.value)
-            }
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setFrequencia(e.target.value)
+
+              const novaInfoDemanda = {
+                ...props.informacaoProcesso,
+                frequenciaUso: e.target.value,
+              };
+              props.setInformacaoProcesso(novaInfoDemanda);
+            }}
           />
         </BoxFrequencia>
       </BoxContainerGeral>
     </>
   );
 }
-
 
 function BeneficiosReais(props: { numeroBeneficios: number, moedas: Object[], moedaReal: string[], setMoedaReal: React.Dispatch<React.SetStateAction<string[]>>, informacaoProcesso: any, setInformacaoProcesso: any, beneficiosReaisLista: any }) {
   let beneficios: JSX.Element[] = [];
@@ -306,7 +311,6 @@ function BeneficiosReais(props: { numeroBeneficios: number, moedas: Object[], mo
         setInformacaoProcesso={props.setInformacaoProcesso}
       />);
     }
-
   }
 
   return <>{beneficios}</>;
@@ -316,17 +320,32 @@ function BeneficiosPotenciais(props: { numeroBeneficios: number, moedas: Object[
   let beneficios: JSX.Element[] = [];
 
   for (let i = 0; i < props.numeroBeneficios; i++) {
-    beneficios.push(<BeneficioPotencial index={i} moedas={props.moedas} moedaPotencial={props.moedaPotencial} setMoedaPotencial={props.setMoedaPotencial} informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} numeroBeneficiosPotencias={props.beneficiosPotenciasLista} />);
+    if (props.beneficiosPotenciasLista[i]) {
+      beneficios.push(<BeneficioPotencial index={i} moedas={props.moedas} moedaPotencial={props.moedaPotencial} setMoedaPotencial={props.setMoedaPotencial}
+        informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso}
+        idBeneficioPotencial={props.beneficiosPotenciasLista[i].idBeneficio} />);
+    } else {
+      beneficios.push(<BeneficioPotencial index={i} moedas={props.moedas} moedaPotencial={props.moedaPotencial}
+        setMoedaPotencial={props.setMoedaPotencial} informacaoProcesso={props.informacaoProcesso}
+        setInformacaoProcesso={props.setInformacaoProcesso} />);
+    }
   }
 
   return <>{beneficios}</>;
 }
 
-function BeneficiosQualitativos(props: { numeroBeneficios: number, informacaoProcesso: any, setInformacaoProcesso: any, benficiosQualitativosLista: any }) {
+function BeneficiosQualitativos(props: { numeroBeneficios: number, informacaoProcesso: any, setInformacaoProcesso: any, beneficiosQualitativosLista: any }) {
   let beneficios: JSX.Element[] = [];
 
   for (let i = 0; i < props.numeroBeneficios; i++) {
-    beneficios.push(<BeneficioQualitativo index={i} informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} numeroBeneficiosQualitativos={props.benficiosQualitativosLista} />);
+    if (props.beneficiosQualitativosLista[i]) {
+      beneficios.push(<BeneficioQualitativo index={i} informacaoProcesso={props.informacaoProcesso}
+        setInformacaoProcesso={props.setInformacaoProcesso} idBeneficioQualitativo={props.beneficiosQualitativosLista[i].idBeneficio} />);
+
+    } else {
+      beneficios.push(<BeneficioQualitativo index={i} informacaoProcesso={props.informacaoProcesso}
+        setInformacaoProcesso={props.setInformacaoProcesso} />);
+    }
   }
 
   return <>{beneficios}</>;
@@ -352,13 +371,14 @@ function BeneficioReal(props: { index: number, moedas: Object[], moedaReal: stri
               }}
               onChange={(e: any) => {
                 atualizarBeneficiosDemanda(
-                  props.informacaoProcesso.beneficiosDemanda, 
-                  idBeneficioComponente, 
-                  setIdBeneficioComponente, 
+                  props.informacaoProcesso.beneficiosDemanda,
+                  idBeneficioComponente,
+                  setIdBeneficioComponente,
                   "valor",
                   e.target.value,
                   props.informacaoProcesso,
-                  props.setInformacaoProcesso
+                  props.setInformacaoProcesso,
+                  "REAL"
                 )
               }}
             />
@@ -368,9 +388,19 @@ function BeneficioReal(props: { index: number, moedas: Object[], moedaReal: stri
               defaultValue={props.moedaReal}
               select
               label="Moeda"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                props.moedaReal.push(event.target.value)
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                props.moedaReal.push(e.target.value)
                 props.setMoedaReal(props.moedaReal)
+                atualizarBeneficiosDemanda(
+                  props.informacaoProcesso.beneficiosDemanda,
+                  idBeneficioComponente,
+                  setIdBeneficioComponente,
+                  "moeda",
+                  e.target.value,
+                  props.informacaoProcesso,
+                  props.setInformacaoProcesso,
+                  "REAL"
+                )
               }
               }
             >
@@ -386,6 +416,18 @@ function BeneficioReal(props: { index: number, moedas: Object[], moedaReal: stri
           <TypographyLabels>Descrição: </TypographyLabels>
           <TextField
             id={`descricaoReal${props.index}`}
+            onChange={(e: any) => {
+              atualizarBeneficiosDemanda(
+                props.informacaoProcesso.beneficiosDemanda,
+                idBeneficioComponente,
+                setIdBeneficioComponente,
+                "descricao",
+                e.target.value,
+                props.informacaoProcesso,
+                props.setInformacaoProcesso,
+                "REAL"
+              )
+            }}
             multiline
             maxRows={Infinity}
             sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
@@ -396,7 +438,9 @@ function BeneficioReal(props: { index: number, moedas: Object[], moedaReal: stri
   );
 }
 
-function BeneficioPotencial(props: { index: number, moedas: Object[], moedaPotencial: string[], setMoedaPotencial: React.Dispatch<React.SetStateAction<string[]>>, informacaoProcesso: any, setInformacaoProcesso: any, numeroBeneficiosPotencias: any }) {
+function BeneficioPotencial(props: { index: number, moedas: Object[], moedaPotencial: string[], setMoedaPotencial: React.Dispatch<React.SetStateAction<string[]>>, informacaoProcesso: any, setInformacaoProcesso: any, idBeneficioPotencial?: any }) {
+  const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioPotencial)
+
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -415,6 +459,18 @@ function BeneficioPotencial(props: { index: number, moedas: Object[], moedaPoten
           >
             <TextField
               id={`valorMensalPotencial${props.index}`}
+              onChange={(e: any) => {
+                atualizarBeneficiosDemanda(
+                  props.informacaoProcesso.beneficiosDemanda,
+                  idBeneficioComponente,
+                  setIdBeneficioComponente,
+                  "valor",
+                  e.target.value,
+                  props.informacaoProcesso,
+                  props.setInformacaoProcesso,
+                  "POTENCIAL"
+                )
+              }}
               sx={{
                 width: "30%",
                 marginRight: 5,
@@ -427,9 +483,20 @@ function BeneficioPotencial(props: { index: number, moedas: Object[], moedaPoten
               defaultValue={props.moedaPotencial}
               select
               label="Moeda"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                props.moedaPotencial.push(event.target.value)
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                props.moedaPotencial.push(e.target.value)
                 props.setMoedaPotencial(props.moedaPotencial)
+
+                atualizarBeneficiosDemanda(
+                  props.informacaoProcesso.beneficiosDemanda,
+                  idBeneficioComponente,
+                  setIdBeneficioComponente,
+                  "moeda",
+                  e.target.value,
+                  props.informacaoProcesso,
+                  props.setInformacaoProcesso,
+                  "POTENCIAL"
+                )
               }
               }
             >
@@ -445,6 +512,18 @@ function BeneficioPotencial(props: { index: number, moedas: Object[], moedaPoten
           <TypographyLabels>Descrição: </TypographyLabels>
           <TextField
             id={`descricaoPotencial${props.index}`}
+            onChange={(e: any) => {
+              atualizarBeneficiosDemanda(
+                props.informacaoProcesso.beneficiosDemanda,
+                idBeneficioComponente,
+                setIdBeneficioComponente,
+                "descricao",
+                e.target.value,
+                props.informacaoProcesso,
+                props.setInformacaoProcesso,
+                "POTENCIAL"
+              )
+            }}
             multiline
             maxRows={Infinity}
             sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
@@ -461,13 +540,27 @@ function BeneficioPotencial(props: { index: number, moedas: Object[], moedaPoten
   );
 }
 
-function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, setInformacaoProcesso: any, numeroBeneficiosQualitativos: any }) {
+function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, setInformacaoProcesso: any, idBeneficioQualitativo?: any }) {
+  const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioQualitativo)
+
   return (
     <BoxContainerGeralBeneficio key={props.index}>
       <BoxDescricaoRequeistosControle>
         <TypographyLabels>Descrição: </TypographyLabels>
         <TextField
           id={`beneficiosQualitativos${props.index}`}
+          onChange={(e: any) => {
+            atualizarBeneficiosDemanda(
+              props.informacaoProcesso.beneficiosDemanda,
+              idBeneficioComponente,
+              setIdBeneficioComponente,
+              "descricao",
+              e.target.value,
+              props.informacaoProcesso,
+              props.setInformacaoProcesso,
+              "QUALITATIVO"
+            )
+          }}
           multiline
           maxRows={Infinity}
           sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
@@ -478,14 +571,15 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
 }
 
 function atualizarBeneficiosDemanda(
-  atualizacaoBeneficiosDemanda: any[], 
-  idBeneficioComponente: number, 
+  atualizacaoBeneficiosDemanda: any[],
+  idBeneficioComponente: number,
   setIdBeneficioComponente: React.Dispatch<React.SetStateAction<number>>,
   nomeAtributo: string,
   valorInput: string,
   informacaoProcesso: any,
-  setInformacaoProcesso: React.Dispatch<React.SetStateAction<any>>
-  ) {
+  setInformacaoProcesso: React.Dispatch<React.SetStateAction<any>>,
+  tipoBeneficio: string
+) {
   const beneficioComponente = atualizacaoBeneficiosDemanda.find((beneficio: any) => beneficio.idBeneficio == idBeneficioComponente)
   let newBeneficio: {
     idBeneficio?: number,
@@ -517,7 +611,8 @@ function atualizarBeneficiosDemanda(
   } else {
     newBeneficio = {
       ...beneficioComponente,
-      [nomeAtributo]: Number.parseInt(valorInput)
+      [nomeAtributo]: valorInput as any,
+      tipoBeneficio: tipoBeneficio
     }
 
     let index = -1
