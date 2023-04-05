@@ -3,7 +3,14 @@ import { SetStateAction } from "react";
 const url = `http://localhost:8443`
 
 export default axios.create({
-  baseURL: url
+  baseURL: url,
+  withCredentials: true,
+  // headers: {
+  //   common: {
+  //     'Access-Control-Allow-Credentials': true,
+  //     'Access-Control-Allow-Origin': 'http://localhost:8081'
+  //   }
+  // }
 });
 
 export async function verificarHistoricoAprovado(id: number, setAprovado: React.Dispatch<SetStateAction<boolean>>) {

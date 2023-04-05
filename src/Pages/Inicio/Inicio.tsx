@@ -7,6 +7,8 @@ import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import { BoxConteudo } from "../App.styles";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
 import { useLocation } from "react-router-dom";
+import Cookie from 'js-cookie'
+import { log } from "console";
 
 
 /**
@@ -41,7 +43,7 @@ export default function Inicio(props: {
     // api.get("/sod/proposta").then((response: any) => {
     //   let listaPropostas: any[] = []
     //   for(let proposta of response.data){
-        
+
     //     for(let atributo in proposta.demanda){
     //       proposta[atributo] = proposta.demanda[atributo]
     //     }
@@ -73,10 +75,17 @@ export default function Inicio(props: {
     //   console.log(err);
     // })
 
+    const cookie = Cookie.get("jwt")
 
-    api.get("/sod/ata").then((response) => {
+    api.get("/sod/ata", {
+      withCredentials: true,
+      headers: {
+        // "Content-Type": "application/json",
+        // Cookie: `name=${cookie};`
+      }
+    }).then((response) => {
       let listaATAs: any[] = []
-      for(let ata of response.data){
+      for (let ata of response.data) {
         // console.log(ata);
 
 

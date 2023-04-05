@@ -32,8 +32,6 @@ export default function Login(props: {
   // localStorage.setItem("PESSOA", "Solicitante")
   localStorage.setItem("PAGINATUAL", "login")
 
-
-  const [usuarios, setUsuarios] = useState<User[]>([])
   const [logado, setLogado] = useState(false)
   const [user, setUser] = useState({
     email: '',
@@ -58,11 +56,10 @@ export default function Login(props: {
         console.log(response.data);
 
         setLogado(true);
-
-        //ver como pegar o tipo do filha da puta
+        //ver como pegar o tipo 
         localStorage.setItem("TIPOUSUARIO", "gerenteTI");
         localStorage.setItem("IDUSUARIO", JSON.stringify(response.data.idUsuario));
-        // location.href = "/home";
+        location.href = "/home";
 
       }).catch((err: any) => {
         console.log(err);
@@ -148,17 +145,4 @@ export default function Login(props: {
       </Box>
     </>
   );
-}
-
-interface User {
-  cargo: string,
-  chatsUsuario: [],
-  departamento: string,
-  email: string,
-  idUsuario: number,
-  nomeUsuario: string,
-  notificacoesUsuario: [],
-  numeroCadastro: number,
-  senha: string,
-  setor: string
 }
