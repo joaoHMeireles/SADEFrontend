@@ -265,7 +265,6 @@ export default function CriacaoProposta(props: {
               setInformacaoProcesso={setInformacaoProcesso}
             />
             <InfomacoesAdicionais
-              informacaoProcesso={informacaoProcesso}
               valorTamanho={valorTamanho}
               setValorTamanho={setValorTamanho}
               valorBUSolicitante={valorBUSolicitante}
@@ -280,6 +279,8 @@ export default function CriacaoProposta(props: {
               setValorCodigoPPM={setValorCodigoPPM}
               valorLinkJira={valorLinkJira}
               setValorLinkJira={setValorLinkJira}
+              informacaoProcesso={informacaoProcesso}
+              setInformacaoProcesso={setInformacaoProcesso}
             />
             <InputAnexos rascunho={false} proposta={true} />
             <BoxContainerBotoes>

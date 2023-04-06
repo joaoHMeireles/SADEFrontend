@@ -22,7 +22,6 @@ import { getValueEnum } from "../../utils";
 import { sessaoTI } from "../../constants/enuns";
 
 export default function InfomacoesAdicionais(props: {
-    informacaoProcesso: any;
     valorTamanho: string;
     setValorTamanho: React.Dispatch<React.SetStateAction<string>>;
     valorBUSolicitante: string;
@@ -37,6 +36,8 @@ export default function InfomacoesAdicionais(props: {
     setValorCodigoPPM: React.Dispatch<React.SetStateAction<number>>;
     valorLinkJira: string;
     setValorLinkJira: React.Dispatch<React.SetStateAction<string>>;
+    informacaoProcesso: any
+    setInformacaoProcesso: any
 }) {
 
     const tamanhos = [
@@ -122,7 +123,15 @@ export default function InfomacoesAdicionais(props: {
                         <SelectPadrao
                             id="tamanhos"
                             value={props.valorTamanho}
-                            onChange={(e: SelectChangeEvent) => { props.setValorTamanho(e.target.value as string) }}
+                            onChange={(e: SelectChangeEvent) => {
+                                props.setValorTamanho(e.target.value as string)
+
+                                const novaInfoDemanda = {
+                                    ...props.informacaoProcesso,
+                                    tamanho: e.target.value,
+                                };
+                                props.setInformacaoProcesso(novaInfoDemanda);
+                            }}
                         >
                             {tamanhos.map((tamanho: string, index: number) => {
                                 return (
@@ -137,8 +146,14 @@ export default function InfomacoesAdicionais(props: {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                                 value={props.prazoElaboracao}
-                                onChange={(newValue) => {
-                                    props.setPrazoElaboracao(newValue);
+                                onChange={(e: any) => {
+                                    props.setPrazoElaboracao(e.$d);
+
+                                    const novaInfoDemanda = {
+                                        ...props.informacaoProcesso,
+                                        prazoElaboracao: e.$d,
+                                    };
+                                    props.setInformacaoProcesso(novaInfoDemanda);
                                 }}
                                 renderInput={(params) => <TextField id='inputDataInformacoes' {...params} />}
                             />
@@ -151,7 +166,15 @@ export default function InfomacoesAdicionais(props: {
                         <SelectPadrao
                             id="busolicitante"
                             value={props.valorBUSolicitante}
-                            onChange={(e: SelectChangeEvent) => { props.setValorBUSolicitante(e.target.value as string) }}
+                            onChange={(e: SelectChangeEvent) => {
+                                props.setValorBUSolicitante(e.target.value as string)
+
+                                const novaInfoDemanda = {
+                                    ...props.informacaoProcesso,
+                                    busolicitante: e.target.value,
+                                };
+                                props.setInformacaoProcesso(novaInfoDemanda);
+                            }}
                         >
                             {bus.map((bu: any, index: number) => {
                                 return (
@@ -213,7 +236,13 @@ export default function InfomacoesAdicionais(props: {
                                     nome: e.target.value,
                                     abreviacao: props.informacaoProcesso.secaoTIResponsavel
                                 }
-                                props.setValorSessaoTI(sessaoTI)
+                                props.setValorSessaoTI(sessaoTI);
+
+                                const novaInfoDemanda = {
+                                    ...props.informacaoProcesso,
+                                    secaoTIResponsavel: props.valorSessaoTI.abreviacao,
+                                };
+                                props.setInformacaoProcesso(novaInfoDemanda);
                             }}>
                             {sessoesTI.map((sessao: any, index: number) => {
                                 return (
@@ -226,13 +255,26 @@ export default function InfomacoesAdicionais(props: {
                     </Box>
                     <Box sx={{ width: "30%" }}>
                         <TypographyPadrao>Codigo PPM: </TypographyPadrao>
-                        <TextField sx={{ width: "80%" }} id="codigoPPM" type="search" value={props.valorCodigoPPM}></TextField>
+                        <TextField sx={{ width: "80%" }} id="codigoPPM" type="search" value={props.valorCodigoPPM} onChange={(e: any) => {
+                            const novaInfoDemanda = {
+                                ...props.informacaoProcesso,
+                                codigoPPM: e.target.value,
+                            };
+                            props.setInformacaoProcesso(novaInfoDemanda);
+                        }}></TextField>
                     </Box>
                 </BoxSessaoTIECodigoPPM>
 
                 <Box sx={{ width: "100%" }}>
                     <TypographyPadrao>Link EPIC Jira: </TypographyPadrao>
-                    <TextField sx={{ width: "100%" }} id="linkJira" type="search" value={props.valorLinkJira}></TextField>
+                    <TextField sx={{ width: "100%" }} id="linkJira" type="search" value={props.valorLinkJira}
+                        onChange={(e: any) => {
+                            const novaInfoDemanda = {
+                                ...props.informacaoProcesso,
+                                linkJira: e.target.value,
+                            };
+                            props.setInformacaoProcesso(novaInfoDemanda);
+                        }}></TextField>
                 </Box>
 
             </BoxGeral>
