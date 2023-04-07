@@ -9,8 +9,8 @@ export const BoxContainerGeral = styledBox({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-around",
     height: "auto",
+    justifyContent: "space-around",
     width: '100%',
 })
 
@@ -27,8 +27,8 @@ export const TypographyTitulos = styledTypography({
     alignItems: "center",
     color: "#FFF",
     display: "flex",
-    justifyContent: "center",
     height: "2rem",
+    justifyContent: "center",
 })
 
 export const BoxIcones = styledBox({
@@ -39,8 +39,8 @@ export const BoxContainerGeralBeneficio = styledBox({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "start",
     height: "50%",
+    justifyContent: "start",
     width: "100%",
 })
 
@@ -48,8 +48,8 @@ export const BoxContainerDivisorio = styledBox({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-around",
     height: "80%",
+    justifyContent: "space-around",
     marginTop: 40,
     width: "100%",
 })

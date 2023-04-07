@@ -86,59 +86,6 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
       <BoxContainerGeralInformacaoGeral>
         <BoxContainerLabels>
           <TypographyLabels>
-            <ClickAwayListener onClickAway={handleTooltipClose}>
-              <div>
-                <Tooltip
-                  PopperProps={{
-                    disablePortal: true,
-                  }}
-                  open={open}
-                  disableFocusListener
-                  disableHoverListener
-                  disableTouchListener
-                  title={
-                    <>
-                      <Box sx={{ width: "200px", height: "150px" }}>
-                        {paginaTooltip == 0 ?
-                          <Box>
-                            informações sobre o titulo e o que deveria ser colocado
-                          </Box>
-                          : paginaTooltip == 1 ?
-                            <Box>
-                              informações sobre oproblema a ser resolvido
-                            </Box>
-                            : paginaTooltip == 2 ?
-                              <Box>
-                                informações sobre a proposta e tudo mais
-                              </Box>
-                              :
-                              <Box>
-                                informações sobre os centros de custo
-                              </Box>
-                        }
-                        <Box color={"white"}>
-                          {paginaTooltip > 0 &&
-                            <Button onClick={() => { setPaginaTooltip(paginaTooltip - 1) }} sx={{ color: "#ffffff" }}>
-                              Voltar
-                            </Button>
-                          }
-                          {paginaTooltip < 3 &&
-                            <Button onClick={() => { setPaginaTooltip(paginaTooltip + 1) }} sx={{ color: "#ffffff" }}>
-                              Próximo
-                            </Button>
-                          }
-                        </Box>
-                      </Box>
-                    </>
-                  }
-                >
-                  <IconButton onClick={handleTooltipOpen}>
-                    <HelpOutlineIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            </ClickAwayListener>
-
             Título:
           </TypographyLabels>
           <TextField
@@ -148,11 +95,6 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
         </BoxContainerLabels>
         <BoxContainerLabels>
           <TypographyLabels>
-            <Tooltip title="Escreva uma breve explicação da situação atual, descrevendo o problema em mais detalhes. Forneça informações relevantes e quantitativas, se possível, para apoiar sua argumentação">
-              <IconButton>
-                <HelpOutlineIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
             Problema a ser resolvido (situação atual):
           </TypographyLabels>
           <TextField
@@ -164,11 +106,6 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
         </BoxContainerLabels>
         <BoxContainerLabels>
           <TypographyLabels>
-            <Tooltip title="Proponha uma solução ou solicite uma proposta para resolver o problema. Se você já tiver uma ideia de como resolver o problema, descreva-a em detalhes. Se você não tiver uma solução, solicite propostas de soluções de outras pessoas ou organizações">
-              <IconButton>
-                <HelpOutlineIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
             Proposta / Solicitação de proposta:
           </TypographyLabels>
           <TextField
@@ -181,11 +118,6 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
         <BoxContainerLabels>
           <BoxContainerCentroCusto>
             <TypographyLabels>
-              <Tooltip title="Identifique os centros de custo envolvidos na solução do problema. Isso pode incluir recursos financeiros, materiais ou humanos necessários para implementar a solução">
-                <IconButton>
-                  <HelpOutlineIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
               Centros de custo:
             </TypographyLabels>
             {props.proposta ? (

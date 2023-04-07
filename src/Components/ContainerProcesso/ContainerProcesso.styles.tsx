@@ -6,12 +6,12 @@ const styledGrid = styled(Grid)
 export const GridContainer = styledGrid({
     borderRadius: "10px",
     boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
+    color: "#595959"
     display: "flex",
     flexWrap: "wrap",
     height: "auto",
     marginTop: "2.5vh",
     width: "100%",
-    color: "#595959"
 })
 
 export const BoxCorStatus = styledBox({
