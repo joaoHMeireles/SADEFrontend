@@ -63,11 +63,15 @@ export default function InfomacoesAdicionais(props: {
     ]
 
     const [bus, setBus] = useState<any[]>([])
+    const [objetoBus, setObjetoBus] = useState<any[]>([])
 
     useEffect(() => {
         api.get("/sod/bu").then((res) => {
+
             const listaBus = res.data.map((bu: any) => bu.nomeBU)
+
             setBus(listaBus)
+            setObjetoBus(res.data)
         }).catch((err) => console.log(err));
     }, [])
 
@@ -169,11 +173,34 @@ export default function InfomacoesAdicionais(props: {
                             onChange={(e: SelectChangeEvent) => {
                                 props.setValorBUSolicitante(e.target.value as string)
 
+                                let idBu;
+
+                                let buSolicitanteObjeto: {
+                                    idBU: number,
+                                    nomeBU: string
+                                }
+
+                                for (const bu of objetoBus) {
+                                    if (bu.nomeBU == e.target.value) {
+                                        idBu = bu.idBU
+                                    }
+
+                                }
+
+                                buSolicitanteObjeto = {
+                                    idBU: idBu,
+                                    nomeBU: e.target.value
+                                };
+
                                 const novaInfoDemanda = {
                                     ...props.informacaoProcesso,
-                                    busolicitante: e.target.value,
+                                    busolicitante: buSolicitanteObjeto
                                 };
-                                props.setInformacaoProcesso(novaInfoDemanda);
+
+                                if (novaInfoDemanda) {
+                                    props.setInformacaoProcesso(novaInfoDemanda);
+                                }
+
                             }}
                         >
                             {bus.map((bu: any, index: number) => {
@@ -194,17 +221,24 @@ export default function InfomacoesAdicionais(props: {
                         disableCloseOnSelect
                         defaultValue={props.informacaoProcesso.busBeneficiadas.map((bus: any) => bus.nomeBU)}
                         onChange={(e, valor: any) => {
-                            let busBeneficiadas: Object[] = []
+                            let busBeneficiada: Object[] = []
 
                             for (let buSelecionada of valor) {
-                                for (let bu of props.informacaoProcesso.busBeneficiadas) {
+                                for (let bu of objetoBus) {
                                     if (bu.nomeBU == buSelecionada) {
-                                        props.valorBUsBeneficadas.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                        busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
                                     }
                                 }
                             }
 
-                            props.setValorBUsBeneficadas(props.valorBUsBeneficadas);
+                            props.setValorBUsBeneficadas(busBeneficiada);
+
+                            const novaInfoDemanda = {
+                                ...props.informacaoProcesso,
+                                busBeneficiadas: busBeneficiada,
+                            };
+                            props.setInformacaoProcesso(novaInfoDemanda);
+
                         }}
                         renderOption={(props, bu, { selected }) => {
                             return (
@@ -236,11 +270,19 @@ export default function InfomacoesAdicionais(props: {
                                     nome: e.target.value,
                                     abreviacao: props.informacaoProcesso.secaoTIResponsavel
                                 }
-                                props.setValorSessaoTI(sessaoTI);
+                                props.setValorSessaoTI(sessaoTI.nome);
+
+                                let abreviacaoSessao;
+
+                                for (const sessaoTI of sessoesTI) {
+                                    if (sessaoTI.nome == e.target.value) {
+                                        abreviacaoSessao = sessaoTI.abreviacao;
+                                    }
+                                }
 
                                 const novaInfoDemanda = {
                                     ...props.informacaoProcesso,
-                                    secaoTIResponsavel: props.valorSessaoTI.abreviacao,
+                                    secaoTIResponsavel: abreviacaoSessao,
                                 };
                                 props.setInformacaoProcesso(novaInfoDemanda);
                             }}>
@@ -256,6 +298,9 @@ export default function InfomacoesAdicionais(props: {
                     <Box sx={{ width: "30%" }}>
                         <TypographyPadrao>Codigo PPM: </TypographyPadrao>
                         <TextField sx={{ width: "80%" }} id="codigoPPM" type="search" value={props.valorCodigoPPM} onChange={(e: any) => {
+
+                            props.setValorCodigoPPM(e.target.value)
+
                             const novaInfoDemanda = {
                                 ...props.informacaoProcesso,
                                 codigoPPM: e.target.value,
@@ -269,6 +314,8 @@ export default function InfomacoesAdicionais(props: {
                     <TypographyPadrao>Link EPIC Jira: </TypographyPadrao>
                     <TextField sx={{ width: "100%" }} id="linkJira" type="search" value={props.valorLinkJira}
                         onChange={(e: any) => {
+                            props.setValorLinkJira(e.target.value)
+
                             const novaInfoDemanda = {
                                 ...props.informacaoProcesso,
                                 linkJira: e.target.value,

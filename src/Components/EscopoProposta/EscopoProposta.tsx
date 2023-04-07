@@ -12,18 +12,30 @@ import {
   TypographyStyled
 } from "./EscopoProposta.styles";
 
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useEffect, useState } from "react";
+
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+
+import api from "../../api/api";
+import Autocomplete from "@mui/material/Autocomplete";
+import Checkbox from "@mui/material/Checkbox";
+
 export default function EscopoProposta(props: {
   proposta: boolean
   escopoProposta: string
   setEscopoProposta: React.Dispatch<React.SetStateAction<string>>
   payback: number
   setPayback: React.Dispatch<React.SetStateAction<number>>
-  periodoExecucao: Date | null
-  setPeriodoExecucao: React.Dispatch<React.SetStateAction<Date | null>>
-  nomeResponsavel: string
-  setNomeResponsavel: React.Dispatch<React.SetStateAction<string>>
-  areaResponsavel: string
-  setAreaResponsavel: React.Dispatch<React.SetStateAction<string>>
+  periodoExecucaoInicio: Date | null
+  setPeriodoExecucaoInicio: React.Dispatch<React.SetStateAction<Date | null>>
+  periodoExecucaoFim: Date | null
+  setPeriodoExecucaoFim: React.Dispatch<React.SetStateAction<Date | null>>
+  usuariosResponsaveis: any[]
+  setUsuariosResponsaveis: React.Dispatch<React.SetStateAction<any[]>>
   centroCusto: any
   centroCustoEscolhidas: Object[]
   setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<Object[]>>
@@ -36,6 +48,14 @@ export default function EscopoProposta(props: {
   // tituloLinhaTabela: string
   // setTituloLinhaTabela: React.Dispatch<React.SetStateAction<string>>
 }) {
+
+  const [usuarios, setUsuarios] = useState<any[]>([])
+
+  useEffect(() => {
+    api.get("/sod/usuario").then((res) => {
+      setUsuarios(res.data)
+    })
+  }, [])
 
   return (
     <>
@@ -65,40 +85,85 @@ export default function EscopoProposta(props: {
         </BoxPadrao>
         <BoxPaybackExecucao>
           <BoxPaybackExe>
-            <TypographyStyled>Payback: </TypographyStyled>
-            <TextField onChange={(e: any) => { props.setPayback(e.target.value) }}
-              sx={{ width: "95%", boxShadow: "5px 5px 10px 0 #00000050" }}
-            ></TextField>
+            <TypographyStyled>Período de Execução Inicio: </TypographyStyled>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                value={props.periodoExecucaoInicio}
+                onChange={(e: any) => {
+                  props.setPeriodoExecucaoInicio(e.$d);
+                }}
+                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} />}
+              />
+            </LocalizationProvider>
           </BoxPaybackExe>
           <BoxPaybackExe>
-            <TypographyStyled>Período de execução: </TypographyStyled>
+            <TypographyStyled>Período de execução Fim: </TypographyStyled>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                value={props.periodoExecucaoFim}
+                onChange={(e: any) => {
+                  props.setPeriodoExecucaoFim(e.$d);
+                }}
+                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} />}
+              />
+            </LocalizationProvider>
+          </BoxPaybackExe>
+          <BoxPaybackExe>
+            <TypographyStyled>Payback: </TypographyStyled>
             <TextField
-              onChange={(e: any) => { props.setPeriodoExecucao(e.target.value) }}
-              sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
-              InputProps={{ endAdornment: <CalendarMonthRoundedIcon /> }}
+              value={props.payback}
+              onChange={(e: any) => {
+                props.setPayback(e.target.value)
+              }}
+              sx={{ width: "66%", boxShadow: "5px 5px 10px 0 #00000050" }}
             ></TextField>
           </BoxPaybackExe>
         </BoxPaybackExecucao>
         <BoxResponsavel>
           <BoxResponsaveis>
             <TypographyStyled>Nome do responsável: </TypographyStyled>
-            <TextField
-              onChange={(e: any) => { props.setNomeResponsavel(e.target.value) }}
-              sx={{ width: "95%", boxShadow: "5px 5px 10px 0 #00000050" }}
-            ></TextField>
-          </BoxResponsaveis>
-          <BoxResponsaveis>
-            <TypographyStyled>Área do responsável: </TypographyStyled>
-            <TextField
-              onChange={(e: any) => { props.setAreaResponsavel(e.target.value) }}
-              sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
-            ></TextField>
+            <Autocomplete
+              id="nomeResponsavel"
+              sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+              multiple
+              disableCloseOnSelect
+              onChange={(e: any, valor: any) => {
+                let usuariosSelecionados: Object[] = []
+
+                for (let usuarioSelecionado of valor) {
+                  for (let usuario of usuarios) {
+                    if (usuario.nomeUsuario == usuarioSelecionado) {
+                      usuariosSelecionados.push({ idUsuario: usuario.idUsuario })
+                    }
+                  }
+                }
+
+                props.setUsuariosResponsaveis(usuariosSelecionados);
+
+              }}
+              renderOption={(props, nomeResponsavel, { selected }) => {
+                return (
+                  <li {...props} id="listaBU">
+                    <Checkbox
+                      id="checkbox"
+                      icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                      checkedIcon={<CheckBoxIcon fontSize="small" />}
+                      style={{ marginRight: 8 }}
+                      checked={selected}
+                    />
+                    {nomeResponsavel}
+                  </li>
+                );
+              }}
+              options={usuarios.map((usuario: any) => usuario.nomeUsuario)}
+              renderInput={(params) => <TextField {...params} />}
+            />
           </BoxResponsaveis>
         </BoxResponsavel>
         <BoxPadrao>
           <InputAnexos rascunho={false} proposta={false} />
         </BoxPadrao>
-      </BoxContainerGeral>
+      </BoxContainerGeral >
     </>
   );
 }

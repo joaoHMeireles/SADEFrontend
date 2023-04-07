@@ -28,7 +28,7 @@ export const BoxPaybackExecucao = styledBox({
 });
 
 export const BoxPaybackExe = styledBox({
-  width: "100%",
+  width: "33%",
 });
 
 export const BoxResponsavel = styledBox({

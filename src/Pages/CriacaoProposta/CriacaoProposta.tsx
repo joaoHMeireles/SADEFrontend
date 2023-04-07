@@ -65,10 +65,10 @@ export default function CriacaoProposta(props: {
   const [valorLinkJira, setValorLinkJira] = useState<string>("");
 
   const [escopoProposta, setEscopoProposta] = useState<string>("")
-  const [payback, setPayback] = useState<number>(0)
-  const [periodoExecucao, setPeriodoExecucao] = useState<Date | null>(null)
-  const [nomeResponsavel, setNomeResponsavel] = useState<string>("")
-  const [areaResponsavel, setAreaResponsavel] = useState<string>("")
+  const [payback, setPayback] = useState<number>()
+  const [periodoExecucaoInicio, setPeriodoExecucaoInicio] = useState<Date | null>(null)
+  const [periodoExecucaoFim, setPeriodoExecucaoFim] = useState<Date | null>(null)
+  const [usuariosResponsaveis, setUsuariosResponsaveis] = useState<any[]>([])
 
   const [centroCusto, setCentroCusto] = useState<any>();
   const [centroCustoEscolhidas, setCentroCustoEscolhidas] = useState<Object[]>([]);
@@ -129,6 +129,15 @@ export default function CriacaoProposta(props: {
 
   function criarProposta() {
     console.log(informacaoProcesso);
+
+    let proposta = {
+      escopo: escopoProposta,
+      periodoExecucao: periodoExecucaoInicio,
+      periodoExecucaoFim: periodoExecucaoFim,
+      demanda: { informacaoProcesso },
+      responsaveisNegocio: usuariosResponsaveis,
+      tabelasCustoProposta: ""
+    }
 
 
     // {
@@ -311,9 +320,9 @@ export default function CriacaoProposta(props: {
           <>
             <EscopoProposta proposta={true} escopoProposta={escopoProposta} setEscopoProposta={setEscopoProposta}
               payback={payback} setPayback={setPayback}
-              periodoExecucao={periodoExecucao} setPeriodoExecucao={setPeriodoExecucao}
-              nomeResponsavel={nomeResponsavel} setNomeResponsavel={setNomeResponsavel}
-              areaResponsavel={areaResponsavel} setAreaResponsavel={setAreaResponsavel}
+              periodoExecucaoInicio={periodoExecucaoInicio} setPeriodoExecucaoInicio={setPeriodoExecucaoInicio}
+              periodoExecucaoFim={periodoExecucaoFim} setPeriodoExecucaoFim={setPeriodoExecucaoFim}
+              usuariosResponsaveis={usuariosResponsaveis} setUsuariosResponsaveis={setUsuariosResponsaveis}
               centroCusto={centroCusto}
               centroCustoEscolhidas={centroCustoEscolhidas}
               setCentroCustoEscolhidas={setCentroCustoEscolhidas}
