@@ -86,7 +86,19 @@ let drawerWidth = "240";
  */
 export default function MiniDrawer(props: { aberto: boolean, tamanho: string, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<SetStateAction<boolean>> }) {
   const location = useLocation()
+  const cargoUser = localStorage.getItem("TIPOUSUARIO")
   const itensMenu = lista.map((rota, index) => {
+
+    if (rota.nome == "Criar" && (cargoUser == "Solicitante" || cargoUser == "GerenteNegocio")) {
+      const rotaArrumada = {
+        id: rota.id,
+        nome: rota.nome + " demanda",
+        rota: rota.children[0].rota,
+        icone: rota.icone
+      }
+
+      return <MenuItem key={index} index={index} item={rotaArrumada} aberto={props.aberto} />
+    }
 
     if (rota.children) {
       return <DropMenuItem key={index} index={index} item={rota} aberto={props.aberto} setAberto={props.setAberto} setFiltro={props.setFiltro} />
@@ -135,7 +147,7 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
  * @param props 
  * @returns 
  */
-function MenuItem(props: { index: number, item: { id: number, nome: string, rota: string, icone: JSX.Element }, aberto: boolean}) {
+function MenuItem(props: { index: number, item: { id: number, nome: string, rota: string, icone: JSX.Element }, aberto: boolean }) {
   const [selecionado, setSelecionado] = useState(false)
   const location = useLocation()
 
@@ -173,7 +185,7 @@ function MenuItem(props: { index: number, item: { id: number, nome: string, rota
  * @param props 
  * @returns 
  */
-function DropMenuItem(props: { index: number, item: { id: number, nome: string, icone: JSX.Element, children: { id: number, nome: string, rota: string, }[] }, aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<SetStateAction<boolean>>}) {
+function DropMenuItem(props: { index: number, item: { id: number, nome: string, icone: JSX.Element, children: { id: number, nome: string, rota: string, }[] }, aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<SetStateAction<boolean>> }) {
   const [componenteAberto, setComponenteAberto] = useState(false);
   const [itensSelecionados, setItensSelecionados] = useState(false)
   const location = useLocation()
@@ -220,7 +232,7 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
 
   useEffect(() => {
     const gridCollapse = document.getElementById(`gridCollapse${props.item.id}`)
-    
+
     if (!componenteAberto && itensSelecionados) {
       gridCollapse?.style.setProperty("background-color", "#00579d")
     } else {
@@ -233,7 +245,7 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
       props.setFiltro(false)
       props.setAberto(true)
     }
-    
+
     setComponenteAberto(!componenteAberto)
   }
 

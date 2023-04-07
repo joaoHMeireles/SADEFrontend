@@ -16,6 +16,7 @@ import {
   ContainerLogin, ContainerTituloTexto, InputEmail, InputSenha, TextoEsqueceuSenha, TypographyTexto, TypographyTitulo,
   EstilosBotao
 } from "./Login.styles";
+import { Alert, FormControl, FormHelperText, Snackbar } from "@mui/material";
 
 /**
  * 
@@ -29,13 +30,13 @@ export default function Login(props: {
   tamanhoNavbar: string;
 }) {
   const [tipo, setTipo] = useState("password");
-  localStorage.setItem("PAGINATUAL", "login")
-
-  const [logado, setLogado] = useState(false)
+  const [feedbackAberto, setFeedbackAberto] = useState(false)
+  const [invalido, setInvalido] = useState(false)
   const [user, setUser] = useState({
     email: '',
     senha: ''
   });
+  localStorage.setItem("PAGINATUAL", "login")
 
   function atualizarUsuario(event: any) {
     setUser({
@@ -46,28 +47,27 @@ export default function Login(props: {
   const handleLogin = async (e: any) => {
     e.preventDefault();
 
-    try {
-      const config = {
-        withCredentials: true,
-      };
-
-      api.post(`/sod/login/auth`, user, config).then((response: any) => {
-        console.log(response.data);
-        const dadosUserJPA = response.data
-
-        setLogado(true);
-
-        localStorage.setItem("TIPOUSUARIO", dadosUserJPA.authorities[0].authority);
-        localStorage.setItem("IDUSUARIO", JSON.stringify(dadosUserJPA.usuario.idUsuario));
-        
-        location.href = "/home";
-      }).catch((err: any) => {
-        console.log(err);
-      })
-
-    } catch (error) {
-      console.log(error);
+    if ((user.email == '' || user.email == null) || (user.senha == '' || user.senha == null)) {
+      setInvalido(true)
+      return
+    } else {
+      setInvalido(false)
     }
+
+    const config = {
+      withCredentials: true,
+    };
+
+    api.post(`/sod/login/auth`, user, config).then((response: any) => {
+      const dadosUserJPA = response.data
+      localStorage.setItem("TIPOUSUARIO", dadosUserJPA.authorities[0].authority);
+      localStorage.setItem("IDUSUARIO", JSON.stringify(dadosUserJPA.usuario.idUsuario));
+
+      location.href = "/home";
+    }).catch((err: any) => {
+      console.log(err);
+      setFeedbackAberto(true)
+    })
   }
 
   /**
@@ -108,23 +108,28 @@ export default function Login(props: {
                 </TypographyTexto>
               </ContainerTituloTexto>
               <ContainerInputsLogin>
-                <InputEmail
-                  name="email"
-                  placeholder="Usuário"
-                  onChange={atualizarUsuario}
-                  InputProps={{
-                    startAdornment: <AccountCircle sx={{ color: "#595959", paddingRight: 1 }} />,
-                  }}
-                />
-                <InputSenha type={tipo} id="inputSenha"
-                  placeholder="Senha"
-                  name="senha"
-                  onChange={atualizarUsuario}
-                  InputProps={{
-                    startAdornment: <LockRoundedIcon sx={{ color: "#595959", paddingRight: 1 }} />,
-                    endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} />)
-                  }}
-                />
+                <FormControl sx={{ minWidth: "80%" }}>
+                  <InputEmail
+                    name="email"
+                    placeholder="Usuário"
+                    onChange={atualizarUsuario}
+                    InputProps={{
+                      startAdornment: <AccountCircle sx={{ color: "#595959", paddingRight: 1 }} />,
+                    }}
+                  />
+                  <InputSenha type={tipo} id="inputSenha"
+                    placeholder="Senha"
+                    name="senha"
+                    onChange={atualizarUsuario}
+                    InputProps={{
+                      startAdornment: <LockRoundedIcon sx={{ color: "#595959", paddingRight: 1 }} />,
+                      endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} />)
+                    }}
+                  />
+                  <FormHelperText id="component-error-text" sx={{ color: "#E90821" }}>
+                    {invalido && "Um dos campos não foi preenchido"}
+                  </FormHelperText>
+                </FormControl>
                 <BoxEsqueceuSenha>
                   <TextoEsqueceuSenha variant="body2">
                     Esqueci minha senha
@@ -143,6 +148,16 @@ export default function Login(props: {
           </ContainerLogin>
         </ContainerGeralLogin>
       </Box>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        autoHideDuration={3000}
+        open={feedbackAberto}
+        onClose={() => { setFeedbackAberto(false) }}
+      >
+        <Alert onClose={() => { setFeedbackAberto(false) }} severity="error" sx={{ width: '100%' }}>
+          Usuário ou senha, inválidos
+        </Alert>
+      </Snackbar>
     </>
   );
 }

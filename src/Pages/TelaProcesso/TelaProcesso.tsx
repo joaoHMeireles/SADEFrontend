@@ -119,7 +119,7 @@ export function Header(props: {
         processo,
         [
             irChat, aprovarDemanda, reprovarDemanda, devolverDemanda, verHistorico, adicionarInformacoesDemanda,
-            criarNovaProposta, iniciarNovoWorkflow, verDemandaProposta, criarNovaPauta, avaliarWorkflow
+            criarNovaProposta, iniciarNovoWorkflow, verDemandaProposta, criarNovaPauta, avaliarWorkflow, criarChat
         ],
         aprovadoGerente,
         ultimoHistorico
@@ -143,7 +143,7 @@ export function Header(props: {
         } catch (erro: any) {
             console.log(erro);
         }
-        
+
         try {
             pegarGerenteTISolicitante(processo.usuario.idUsuario, setGerenteTISolicitante)
         } catch (erro: any) {
@@ -155,7 +155,7 @@ export function Header(props: {
         } catch (erro: any) {
             console.log(erro);
         }
-        
+
         if (prazoElaboracao < new Date() && prazoElaboracao && tipoProcesso == "Demanda") {
             setTempoExcedido(true)
         }
@@ -614,6 +614,10 @@ export function Header(props: {
 
         abrirModal()
     } //feito
+
+    function criarChat() {
+        // blah
+    }
 
     return (
         <>
@@ -1465,7 +1469,16 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
     const workflowDeadline = processo.prazoWorkflow
     const estaEmProposta = processo.pertenceUmaProposta
     const estaEmPauta = processo.estaEmPauta
-    let listaBotoes: Botao[] = [{ nome: "chat", function: funcoes[0] }]
+    const temChat = processo.temChat
+    let listaBotoes: Botao[] = []
+
+    if (temChat) {
+        listaBotoes.push({ nome: "chat", function: funcoes[0] })
+    } else {
+        if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
+            listaBotoes.push({ nome: "chat", function: funcoes[11] })
+        }
+    }
 
 
     /**
@@ -1486,10 +1499,10 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
         const reprovar = { nome: "reprovar", function: funcoes[2] }
         const historico = { nome: "historico", function: funcoes[4] }
 
-        if (estaEmProposta) {
+        if (estaEmProposta && (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI")) {
             listaBotoes.push(historico)
         } else {
-            if (statusProcesso == "CANCELED" || ultimoHistorico.tarefa == "REENVIARDEMANDA") {
+            if (statusProcesso == "CANCELED" || ultimoHistorico.tarefa == "REENVIARDEMANDA" && (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI")) {
                 listaBotoes.push(historico)
             } else {
 
@@ -1500,7 +1513,9 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
                         listaBotoes.push(reprovar, devolver, aprovar)
                     }
                 } else {
-                    listaBotoes.push(historico)
+                    if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
+                        listaBotoes.push(historico)
+                    }
 
                     if (tipoPessoa == "GerenteNegocio") {
                         if (aprovadoGerente) {
@@ -1531,11 +1546,13 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
         const verDemanda = { nome: "verDemanda", function: funcoes[8] }
         const criarPauta = { nome: "criarPauta", function: funcoes[9] }
 
-        listaBotoes.push(historico)
+        if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
+            listaBotoes.push(historico)
+        }
+
         if (estaEmPauta) {
             listaBotoes.push(verDemanda)
-        }
-        else {
+        }else {
             if (!estaEmWorkflow) {
                 if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
                     const iniciarWorkflow = { nome: "iniciarworkflow", function: funcoes[7] }
