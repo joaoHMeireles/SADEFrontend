@@ -89,6 +89,7 @@ function Tabela(props: {
 
   function valorTituloTabela() {
     console.log("entrou");
+    console.log(props.tabela);
     
     for (let i = 0; i < props.tabela; i++) {
       console.log("entrou for");
