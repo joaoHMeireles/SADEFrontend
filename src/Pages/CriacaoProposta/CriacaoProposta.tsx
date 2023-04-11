@@ -115,8 +115,8 @@ export default function CriacaoProposta(props: {
   }, [])
 
   useEffect(() => {
-    console.log(informacaoProcesso);
-  }, [informacaoProcesso])
+    criarProposta()
+  }, [informacaoProcesso, escopoProposta, periodoExecucaoInicio, periodoExecucaoFim, usuariosResponsaveis, payback])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
@@ -128,16 +128,18 @@ export default function CriacaoProposta(props: {
   }
 
   function criarProposta() {
-    console.log(informacaoProcesso);
-
     let proposta = {
       escopo: escopoProposta,
-      periodoExecucao: periodoExecucaoInicio,
+      periodoExecucaoInicio: periodoExecucaoInicio,
       periodoExecucaoFim: periodoExecucaoFim,
-      demanda: { informacaoProcesso },
+      payback: payback,
+      demanda: informacaoProcesso,
       responsaveisNegocio: usuariosResponsaveis,
       tabelasCustoProposta: ""
     }
+
+    console.log(proposta);
+
 
 
     // {

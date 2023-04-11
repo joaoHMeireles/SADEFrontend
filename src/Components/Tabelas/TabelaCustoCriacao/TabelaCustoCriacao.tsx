@@ -87,6 +87,17 @@ function Tabela(props: {
   const [centroCusto, setCentroCusto] = useState<string[]>([])
   const [linhas, setLinhas] = useState<JSX.Element[]>([])
 
+  function valorTituloTabela() {
+    console.log("entrou");
+    
+    for (let i = 0; i < props.tabela; i++) {
+      console.log("entrou for");
+      
+      const tituloTabela = document.getElementById("tituloTabela" + i);
+      console.log(tituloTabela);
+    }
+  }
+
   useEffect(() => {
     const newLinhas = []
 
@@ -127,7 +138,7 @@ function Tabela(props: {
             <TableHead>
               <TableRowEstilizada>
                 <TableCellEstilzada align="center">
-                  <TextField id={`tituloTabela${props.tabela - 1}`} placeholder="Titulo tabela"
+                  <TextField id={`tituloTabela${props.tabela - 1}`} placeholder="Titulo tabela" onChange={() => valorTituloTabela()}
                     sx={{ width: "100%", input: { color: "#595959", borderColor: "#FFF", backgroundColor: "#FFF", borderRadius: "5px" } }}></TextField>
                 </TableCellEstilzada>
                 <TableCellEstilzada align="center">
