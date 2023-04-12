@@ -14,6 +14,7 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
+import EsqueletoPDFProposta from "../../Components/EsqueletoPDF/EsqueletoPDFProposta/EsqueletoPDFProposta";
 import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import InfomacoesAdicionais from "../../Components/InfomacoesAdicionais/InformacoesAdicionais";
@@ -73,12 +74,19 @@ export default function CriacaoProposta(props: {
   const [centroCusto, setCentroCusto] = useState<any>();
   const [centroCustoEscolhidas, setCentroCustoEscolhidas] = useState<any[]>([]);
 
-  // const [centroCustoTabela, setCentroCustoTabela] = useState<string[]>([])
-  // const [valorTotalTabela, setValorTotalTabela] = useState<number>(0)
-  // const [esforcoTabela, setEsforcoTabela] = useState<number>(0)
-  // const [tituloLinhaTabela, setTituloLinhaTabela] = useState<string>("")
-
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>();
+
+  const [propostaPDF, setPropostaPDF] = useState<any>(
+    {
+      escopo: "escopoProposta",
+      periodoExecucaoInicio: "12/04/2023",
+      periodoExecucaoFim: "14/04/2023",
+      payback: 4,
+      demanda: informacaoProcesso,
+      responsaveisNegocio: [],
+      tabelasCustoProposta: []
+    }
+  );
 
   useEffect(() => {
     const idDemandaCriacao = localStorage.getItem("DEMANDACRIARPROPOSTA")
@@ -115,8 +123,17 @@ export default function CriacaoProposta(props: {
   }, [])
 
   useEffect(() => {
-    criarProposta()
-  }, [informacaoProcesso, escopoProposta, periodoExecucaoInicio, periodoExecucaoFim, usuariosResponsaveis, payback])
+    const novaPropostaPDF = {
+      ...propostaPDF,
+      demanda: informacaoProcesso
+    }
+
+    setPropostaPDF(novaPropostaPDF)
+  }, [informacaoProcesso])
+
+  // useEffect(() => {
+  //   criarProposta()
+  // }, [informacaoProcesso, escopoProposta, periodoExecucaoInicio, periodoExecucaoFim, usuariosResponsaveis, payback])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
@@ -199,60 +216,18 @@ export default function CriacaoProposta(props: {
       tabelasCustoProposta: listaTabelasCustoProposta
     }
 
-    console.log(proposta);
+    setPropostaPDF(proposta);
 
+    let formData = new FormData()
+    let idUsuario = localStorage.getItem("IDUSUARIO");
 
+    formData.append("proposta", JSON.stringify(proposta));
 
-    // {
-    //   "escopo": "hum, é viável, bora ver no que da",
-    //     "periodoExecucaoInicio": "2023-07-12",
-    //       "periodoExecucaoFim": "2023-07-22",
-    //         "demanda": {
-    //     "idDemanda": 15
-    //   },
-    //   "responsaveisNegocio": [
-    //     {
-    //       "idUsuario": 3
-    //     },
-    //     {
-    //       "idUsuario": 5
-    //     }
-    //   ],
-    //     "tabelasCustoProposta": [
-    //       {
-    //         "tituloTabela": "despesas iniciais",
-    //         "quantidadeTotal": 90,
-    //         "valorTotal": 960,
-    //         "licenca": false,
-    //         "centrosCustoPagantes": [
-    //           {
-    //             "centroCusto": {
-    //               "idCentroCusto": 3
-    //             },
-    //             "porcentagemDespesa": 0.4
-    //           },
-    //           {
-    //             "centroCusto": {
-    //               "idCentroCusto": 1
-    //             },
-    //             "porcentagemDespesa": 0.6
-    //           }
-    //         ],
-    //         "linhasTabela": [
-    //           {
-    //             "nomeRecurso": "trabalho",
-    //             "quantidade": 40,
-    //             "valorQuantidade": 9
-    //           },
-    //           {
-    //             "nomeRecurso": "trabalho2",
-    //             "quantidade": 50,
-    //             "valorQuantidade": 12
-    //           }
-    //         ]
-    //       }
-    //     ]
-    // }
+    // api.post(`/sod/proposta/${idUsuario}`, formData, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   }
+    // })
   }
 
   return (
@@ -389,10 +364,6 @@ export default function CriacaoProposta(props: {
               centroCusto={centroCusto}
               centroCustoEscolhidas={centroCustoEscolhidas}
               setCentroCustoEscolhidas={setCentroCustoEscolhidas}
-            // centroCustoTabela={centroCustoTabela} setCentroCustoTabela={setCentroCustoTabela}
-            // valorTotalTabela={valorTotalTabela} setValorTotalTabela={setValorTotalTabela}
-            // esforcoTabela={esforcoTabela} setEsforcoTabela={setEsforcoTabela}
-            // tituloLinhaTabela={tituloLinhaTabela} setTituloLinhaTabela={setTituloLinhaTabela}
             />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
@@ -434,6 +405,7 @@ export default function CriacaoProposta(props: {
                 </BotaoPrimario>
               </BoxBotoesPriSec>
             </BoxContainerBotoes>
+            <EsqueletoPDFProposta proposta={propostaPDF} />
           </>
         )}
       </ContainerGeral>
