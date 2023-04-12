@@ -133,12 +133,11 @@ export default function CriacaoProposta(props: {
 
     for (let i = 0; i < listaTabelas.length; i++) {
       const listaLinhasTabelaCustoProposta: any[] = []
+      let listaLinhasTabela = document.getElementsByClassName(`linhaTabelaCustoCriacao${i}`);
 
       let valorTotal: number = 0;
       let quantidadeTotal: number = 0;
       let linhaTabela;
-
-      let listaLinhasTabela = document.getElementsByClassName(`linhaTabelaCustoCriacao${i}`);
 
       const tituloTabela = (document.getElementById(`tituloTabela${i}`) as HTMLInputElement).value;
 
@@ -162,23 +161,26 @@ export default function CriacaoProposta(props: {
         listaLinhasTabelaCustoProposta.push(linhaTabela);
       }
 
+      let listaCentroCustoTabela: any[] = []
 
+      for (const centroCusto of centroCustoEscolhidas) {
+        let centroCustoTabela: {
+          idCentroCusto: number,
+          nomeCentroCusto: string
+        };
 
-      // for (let c = 0; c < listaTabelas.length; c++) {
-      //   const cc = document.getElementById(`centroCusto${c}`).value;
-      //   console.log(cc);
-
-      // }
-
-      console.log(centroCustoEscolhidas);
-      
+        if (centroCusto.tabela == i) {
+          centroCustoTabela = { idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto }
+          listaCentroCustoTabela.push(centroCustoTabela);
+        }
+      }
 
       let tabela = {
         tituloTabela: tituloTabela,
         quantidadeTotal: quantidadeTotal,
         valorTotal: valorTotal,
         licenca: false,
-        centroCustoPagantes: centroCustoEscolhidas,
+        centroCustoPagantes: listaCentroCustoTabela,
         linhasTabela: listaLinhasTabelaCustoProposta
       }
 
@@ -196,8 +198,6 @@ export default function CriacaoProposta(props: {
     }
 
     console.log(proposta);
-
-
 
     // {
     //   "escopo": "hum, é viável, bora ver no que da",

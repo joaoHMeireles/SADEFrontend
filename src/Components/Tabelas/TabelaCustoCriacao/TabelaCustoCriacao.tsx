@@ -170,16 +170,17 @@ function Tabela(props: {
           multiple
           disableCloseOnSelect
           onChange={(e, valor: any) => {
-            
+            let listaCentroCustoTabela: any[] = [];
+
             for (let centroCustoSelecionada of valor) {
-              for (let centroCusto of props.centroCusto) {                
+              for (let centroCusto of props.centroCusto) {
                 if (centroCustoSelecionada == centroCusto.nomeCentroCusto) {
-                  props.centroCustoEscolhidas.push({ idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto })
+                  listaCentroCustoTabela.push({ idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto, tabela: props.tabela })
                 }
               }
             }
 
-            props.setCentroCustoEscolhidas(props.centroCustoEscolhidas);
+            props.setCentroCustoEscolhidas(listaCentroCustoTabela);
           }}
           renderOption={(props, cc: any, { selected }) => {
             return (
