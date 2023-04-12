@@ -1,5 +1,13 @@
-@import "../variables.scss";
+@import "../../variables.scss";
+ 
+.text {
+    margin-top: 0.5rem;
+    &:hover {
+        color: $azul-weg;
+        cursor: pointer;
+    }
+}
 
-a {
-    color: $cinza-escuro;
+.topicText {
+    margin: 0.1rem 0 0.1rem 2rem
 }

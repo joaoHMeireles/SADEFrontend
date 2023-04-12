@@ -40,7 +40,7 @@ export default function InformacoesGerais() {
         </h4>
 
         <p>
-          RH
+          Desenvolvimento de RH
         </p>
 
         <h4>
@@ -48,7 +48,7 @@ export default function InformacoesGerais() {
         </h4>
 
         <p>
-          Treinamento
+          CentroWEG
         </p>
       </Box>
     </Box>
