@@ -88,6 +88,8 @@ function Tabela(props: {
   const [centroCusto, setCentroCusto] = useState<string[]>([])
   const [linhas, setLinhas] = useState<JSX.Element[]>([])
 
+  const [centroCustoEscolhidos, setCentroCustoEscolhidos] = useState<any[]>([])
+
   useEffect(() => {
     const newLinhas = []
 
@@ -102,13 +104,22 @@ function Tabela(props: {
     setLinhas(newLinhas)
   }, [quantidadeLinha])
 
+  useEffect(() => {
+    if(centroCustoEscolhidos.length == 0){
+      return
+    }
+
+    props.centroCustoEscolhidas[props.tabela] = centroCustoEscolhidos
+    props.setCentroCustoEscolhidas(props.centroCustoEscolhidas);
+  }, [centroCustoEscolhidos])
+
   function atualizarValor() {
     let newEsforcoTotal = 0
     let newValorTotal = 0
 
     for (let i = 0; i < quantidadeLinha; i++) {
-      const esforco = document.getElementById(`esforco${props.tabela}-${i}`).value;
-      const valorHora = document.getElementById(`valorHora${props.tabela}-${i}`).value;
+      const esforco = (document.getElementById(`esforco${props.tabela}-${i}`) as HTMLInputElement).value;
+      const valorHora = (document.getElementById(`valorHora${props.tabela}-${i}`) as HTMLInputElement).value;
 
       if (esforco && valorHora) {
         newEsforcoTotal += Number.parseInt(esforco)
@@ -180,7 +191,7 @@ function Tabela(props: {
               }
             }
 
-            props.setCentroCustoEscolhidas(listaCentroCustoTabela);
+            setCentroCustoEscolhidos(listaCentroCustoTabela);
           }}
           renderOption={(props, cc: any, { selected }) => {
             return (

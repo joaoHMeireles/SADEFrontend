@@ -71,7 +71,7 @@ export default function CriacaoProposta(props: {
   const [usuariosResponsaveis, setUsuariosResponsaveis] = useState<any[]>([])
 
   const [centroCusto, setCentroCusto] = useState<any>();
-  const [centroCustoEscolhidas, setCentroCustoEscolhidas] = useState<Object[]>([]);
+  const [centroCustoEscolhidas, setCentroCustoEscolhidas] = useState<any[]>([]);
 
   // const [centroCustoTabela, setCentroCustoTabela] = useState<string[]>([])
   // const [valorTotalTabela, setValorTotalTabela] = useState<number>(0)
@@ -163,15 +163,17 @@ export default function CriacaoProposta(props: {
 
       let listaCentroCustoTabela: any[] = []
 
-      for (const centroCusto of centroCustoEscolhidas) {
-        let centroCustoTabela: {
-          idCentroCusto: number,
-          nomeCentroCusto: string
-        };
+      for (const centroCustos of centroCustoEscolhidas) {
+        for (const centroCusto of centroCustos) {
+          let centroCustoTabela: {
+            idCentroCusto: number,
+            nomeCentroCusto: string
+          };
 
-        if (centroCusto.tabela == i) {
-          centroCustoTabela = { idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto }
-          listaCentroCustoTabela.push(centroCustoTabela);
+          if (centroCusto.tabela == i) {
+            centroCustoTabela = { idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto }
+            listaCentroCustoTabela.push(centroCustoTabela);
+          }
         }
       }
 
@@ -198,6 +200,8 @@ export default function CriacaoProposta(props: {
     }
 
     console.log(proposta);
+
+
 
     // {
     //   "escopo": "hum, é viável, bora ver no que da",
