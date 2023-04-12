@@ -43,7 +43,7 @@ export default function TabelaCustoCriacao(props: {
     const newTabelas = []
 
     for (let i = 0; i < quantidadeTabela; i++) {
-      newTabelas.push(<Tabela tabela={i} centroCusto={props.centroCusto} centroCustoEscolhidas={props.centroCustoEscolhidas}
+      newTabelas.push(<Tabela tabela={i} quantidadeTabela={quantidadeTabela} centroCusto={props.centroCusto} centroCustoEscolhidas={props.centroCustoEscolhidas}
         setCentroCustoEscolhidas={props.setCentroCustoEscolhidas} />)
     }
 
@@ -77,6 +77,7 @@ export default function TabelaCustoCriacao(props: {
 
 function Tabela(props: {
   tabela: number
+  quantidadeTabela: number
   centroCusto: any
   centroCustoEscolhidas: Object[]
   setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<Object[]>>
@@ -86,18 +87,6 @@ function Tabela(props: {
   const [valorTotal, setValorTotal] = useState(0)
   const [centroCusto, setCentroCusto] = useState<string[]>([])
   const [linhas, setLinhas] = useState<JSX.Element[]>([])
-
-  function valorTituloTabela() {
-    console.log("entrou");
-    console.log(props.tabela);
-    
-    for (let i = 0; i < props.tabela; i++) {
-      console.log("entrou for");
-      
-      const tituloTabela = document.getElementById("tituloTabela" + i);
-      console.log(tituloTabela);
-    }
-  }
 
   useEffect(() => {
     const newLinhas = []
@@ -133,13 +122,13 @@ function Tabela(props: {
 
   return (
     <>
-      <BoxContainerTabela>
+      <BoxContainerTabela className="tabelaCustoCriacao">
         <TableContainerEstilizado sx={{ boxShadow: "none" }}>
           <Table>
             <TableHead>
               <TableRowEstilizada>
                 <TableCellEstilzada align="center">
-                  <TextField id={`tituloTabela${props.tabela - 1}`} placeholder="Titulo tabela" onChange={() => valorTituloTabela()}
+                  <TextField id={`tituloTabela${props.tabela}`} placeholder="Titulo tabela"
                     sx={{ width: "100%", input: { color: "#595959", borderColor: "#FFF", backgroundColor: "#FFF", borderRadius: "5px" } }}></TextField>
                 </TableCellEstilzada>
                 <TableCellEstilzada align="center">
@@ -176,14 +165,15 @@ function Tabela(props: {
       </BoxContainerTabela>
       <Box>
         <Autocomplete
-          id={`centroCusto${props.tabela - 1}`}
+          id={`centroCusto${props.tabela}`}
           sx={{ boxShadow: "5px 5px 10px 0 #00000050", marginBottom: 2 }}
           multiple
           disableCloseOnSelect
           onChange={(e, valor: any) => {
+            
             for (let centroCustoSelecionada of valor) {
-              for (let centroCusto of props.centroCusto) {
-                if (centroCustoSelecionada.nomeCentroCusto == centroCusto.nomeCentroCusto) {
+              for (let centroCusto of props.centroCusto) {                
+                if (centroCustoSelecionada == centroCusto.nomeCentroCusto) {
                   props.centroCustoEscolhidas.push({ idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto })
                 }
               }
@@ -230,7 +220,7 @@ function LinhaTabela(props: {
 
   return (
     <>
-      <TableRow>
+      <TableRow className={`linhaTabelaCustoCriacao${props.indexTabela}`}>
         <TableCell sx={{ width: "25%" }} align="center">
           <FormControl fullWidth sx={{ m: 1 }} variant="filled">
             <TextField

@@ -65,7 +65,7 @@ export default function CriacaoProposta(props: {
   const [valorLinkJira, setValorLinkJira] = useState<string>("");
 
   const [escopoProposta, setEscopoProposta] = useState<string>("")
-  const [payback, setPayback] = useState<number>()
+  const [payback, setPayback] = useState<any>()
   const [periodoExecucaoInicio, setPeriodoExecucaoInicio] = useState<Date | null>(null)
   const [periodoExecucaoFim, setPeriodoExecucaoFim] = useState<Date | null>(null)
   const [usuariosResponsaveis, setUsuariosResponsaveis] = useState<any[]>([])
@@ -128,6 +128,63 @@ export default function CriacaoProposta(props: {
   }
 
   function criarProposta() {
+    const listaTabelasCustoProposta: any[] = []
+    let listaTabelas = document.getElementsByClassName("tabelaCustoCriacao");
+
+    for (let i = 0; i < listaTabelas.length; i++) {
+      const listaLinhasTabelaCustoProposta: any[] = []
+
+      let valorTotal: number = 0;
+      let quantidadeTotal: number = 0;
+      let linhaTabela;
+
+      let listaLinhasTabela = document.getElementsByClassName(`linhaTabelaCustoCriacao${i}`);
+
+      const tituloTabela = (document.getElementById(`tituloTabela${i}`) as HTMLInputElement).value;
+
+      for (let j = 0; j < listaLinhasTabela.length; j++) {
+
+        const nomeRecurso = (document.getElementById(`tituloLinha${i}-${j}`) as HTMLInputElement).value
+        const quantidade = (document.getElementById(`esforco${i}-${j}`) as HTMLInputElement).value
+        const valorQuantidade = (document.getElementById(`valorHora${i}-${j}`) as HTMLInputElement).value
+
+
+        if (nomeRecurso && quantidade && valorQuantidade) {
+          linhaTabela = {
+            nomeRecurso: nomeRecurso,
+            quantidade: parseInt(quantidade),
+            valorQuantidade: parseInt(valorQuantidade)
+          }
+          valorTotal += (parseInt(valorQuantidade) * parseInt(quantidade));
+          quantidadeTotal += parseInt(quantidade);
+        }
+
+        listaLinhasTabelaCustoProposta.push(linhaTabela);
+      }
+
+
+
+      // for (let c = 0; c < listaTabelas.length; c++) {
+      //   const cc = document.getElementById(`centroCusto${c}`).value;
+      //   console.log(cc);
+
+      // }
+
+      console.log(centroCustoEscolhidas);
+      
+
+      let tabela = {
+        tituloTabela: tituloTabela,
+        quantidadeTotal: quantidadeTotal,
+        valorTotal: valorTotal,
+        licenca: false,
+        centroCustoPagantes: centroCustoEscolhidas,
+        linhasTabela: listaLinhasTabelaCustoProposta
+      }
+
+      listaTabelasCustoProposta.push(tabela)
+    }
+
     let proposta = {
       escopo: escopoProposta,
       periodoExecucaoInicio: periodoExecucaoInicio,
@@ -135,7 +192,7 @@ export default function CriacaoProposta(props: {
       payback: payback,
       demanda: informacaoProcesso,
       responsaveisNegocio: usuariosResponsaveis,
-      tabelasCustoProposta: ""
+      tabelasCustoProposta: listaTabelasCustoProposta
     }
 
     console.log(proposta);
@@ -367,7 +424,7 @@ export default function CriacaoProposta(props: {
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
-                  onClick={() => criarProposta}
+                  onClick={() => criarProposta()}
                 >
                   Enviar
                 </BotaoPrimario>
