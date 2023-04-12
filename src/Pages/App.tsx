@@ -25,6 +25,7 @@ import Rascunho from "./Rascunho/Rascunho";
 import CriacaoPauta from "./CriacaoPauta/CriacaoPauta";
 import VisualizarCriacaoPDF from "./VisualizarCriacaoPDF/VisualizarCriacaoPDF";
 import Enviadas from "./Enviadas/Enviadas";
+import AjudaUsuario from "./AjudaUsuario/AjudaUsuario";
 
 
 export default function App() {
@@ -93,6 +94,8 @@ export default function App() {
                   <Route path="/home/ata" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
 
                   <Route path="/visualizarCriacaoPDF" element={<VisualizarCriacaoPDF />} />
+
+                  <Route path="/userhelp" element={<AjudaUsuario aberto={sidebarAberta} sidebarAberta={sidebarAberta}/>} />
                 </Routes>
               </ThemeProvider>
             </MainBox>

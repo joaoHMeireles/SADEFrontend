@@ -14,12 +14,25 @@ import {
 } from "./InformacaoGeral.styles";
 import Checkbox from "@mui/material/Checkbox";
 import api from "../../api/api";
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import { Box, Button, ClickAwayListener } from "@mui/material";
 
 export default function InformacaoGeral(props: { proposta: boolean, centroCusto?: any[], setCentroCusto?: React.Dispatch<React.SetStateAction<Object[]>> }) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
-
+  const [paginaTooltip, setPaginaTooltip] = useState(0);
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
   const [idCentroCusto, setIdCentroCusto] = useState<any[]>([]);
+  const [open, setOpen] = useState(false);
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
 
   const demandaSelecionada = JSON.parse(
     localStorage.getItem("DEMANDASELECIONADA") as string
@@ -72,7 +85,9 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
     <>
       <BoxContainerGeralInformacaoGeral>
         <BoxContainerLabels>
-          <TypographyLabels>Título:</TypographyLabels>
+          <TypographyLabels>
+            Título:
+          </TypographyLabels>
           <TextField
             id="titulo"
             sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
@@ -102,7 +117,9 @@ export default function InformacaoGeral(props: { proposta: boolean, centroCusto?
         </BoxContainerLabels>
         <BoxContainerLabels>
           <BoxContainerCentroCusto>
-            <TypographyLabels>Centros de custo:</TypographyLabels>
+            <TypographyLabels>
+              Centros de custo:
+            </TypographyLabels>
             {props.proposta ? (
               <Autocomplete
                 id="centrosDeCusto"

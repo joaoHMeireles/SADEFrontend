@@ -10,13 +10,13 @@ export const ContainerGeralChat = styledBox({
     backgroundColor: "#EEEEEE",
     borderRadius: "5px",
     display: "flex",
-    justifyContent: "start",
     height: "50px",
+    justifyContent: "start",
     marginBottom: "15px",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    width: "100%",
     whiteSpace: "nowrap",
+    width: "100%",
 })
 
 export const BoxIconePessoa = styledBox({
@@ -29,8 +29,8 @@ export const BoxContainerChat = styledBox({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-around",
     height: "100%",
+    justifyContent: "space-around",
     width: "30%",
 })
 

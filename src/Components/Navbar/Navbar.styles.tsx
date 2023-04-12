@@ -43,8 +43,8 @@ export const TextFieldLinguas = styled(TextField)({
     }
 })
 
-export const BoxTextField = styled(Box)({
-    display: "flex", 
-    width: "17vw", 
-    justifyContent: "space-evenly"
-})
+// export const BoxTextField = styled(Box)({
+//     display: "flex", 
+//     width: "17vw", 
+//     justifyContent: "space-evenly"
+// })

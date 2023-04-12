@@ -7,8 +7,8 @@ export const BoxContainerUploadImagens = styledBox({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
   height: "100%",
+  justifyContent: "center",
   width: "100%",
 });
 
