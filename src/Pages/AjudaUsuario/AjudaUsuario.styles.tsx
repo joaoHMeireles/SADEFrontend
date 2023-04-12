@@ -16,6 +16,7 @@ export const FirstColumn = styled(Box)({
     height: "100%",
     justifyContent: "flex-start",
     padding: "1rem 0 0 1rem",
+    position: "fixed",
     width: "20%",
 })
 
@@ -36,20 +37,23 @@ export const SubtitleFirstColumn = styled(Box)({
 export const SecondColumn = styled(Box)({
     height: "100%",
     padding: "0 1rem 1rem 1rem",
-    width: "80%"
+    width: "80%",
+    marginLeft: "20%"
 })
 
 export const TitleSecondColumn = styled(Box)({
     fontSize: "20px",
+    fontWeight: "bold",
     marginTop: "2rem",
 })
 
 export const SubtitleSecondColumn = styled(Box)({
     fontSize: "18px",
-    marginTop: "1rem",
+    fontWeight: "bold",
+    marginTop: "1.5rem",
 })
 
 export const TextSecondColumn = styled(Box)({
     fontSize: "16px",
-    marginTop: "0.5rem",
+    marginTop: "1rem",
 })

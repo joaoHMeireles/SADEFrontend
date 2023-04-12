@@ -95,7 +95,7 @@ export default function App() {
 
                   <Route path="/visualizarCriacaoPDF" element={<VisualizarCriacaoPDF />} />
 
-                  <Route path="/userhelp" element={<AjudaUsuario aberto={sidebarAberta}/>} />
+                  <Route path="/userhelp" element={<AjudaUsuario aberto={sidebarAberta} sidebarAberta={sidebarAberta}/>} />
                 </Routes>
               </ThemeProvider>
             </MainBox>
