@@ -36,8 +36,7 @@ export const SubtitleFirstColumn = styled(Box)({
 export const SecondColumn = styled(Box)({
     height: "100%",
     padding: "0 1rem 1rem 1rem",
-    width: "80camilly1402
-    %"
+    width: "80%"
 })
 
 export const TitleSecondColumn = styled(Box)({
