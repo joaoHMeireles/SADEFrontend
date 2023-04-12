@@ -4,6 +4,7 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import { BoxContainerInput, ContainerGrid, SearchTextField, GridIconButton } from './Search.styles';
+import {ChangeEventHandler} from 'react';
 
 /**
  * Componente principal de barra de pesquisa
@@ -11,11 +12,11 @@ import { BoxContainerInput, ContainerGrid, SearchTextField, GridIconButton } fro
  * @param props 
  * @returns 
  */
-export default function Searchbar(props:
-    {
-        filtrar: boolean, setFiltrar: React.Dispatch<React.SetStateAction<boolean>>,
-        grid: boolean, setGrid: React.Dispatch<React.SetStateAction<boolean>>
-    }) {
+export default function Searchbar(props: {
+    filtrar: boolean, setFiltrar: React.Dispatch<React.SetStateAction<boolean>>,
+    grid: boolean, setGrid: React.Dispatch<React.SetStateAction<boolean>>
+    filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+}) {
 
     const lupaAdornment = (
         <InputAdornment position='start'>
@@ -43,9 +44,9 @@ export default function Searchbar(props:
         <BoxContainerInput>
             <ContainerGrid container spacing={2}>
                 <Grid item xs={10}>
-                    <SearchTextField InputProps={{
+                    <SearchTextField onChange={props.filtrarResultados} id='input-pesquisa' InputProps={{
                         startAdornment: lupaAdornment, endAdornment: filtroAdorment,
-                        placeholder: "Pesquisar Título, Solicitante ou Gerente responsável"
+                        placeholder: "Pesquisar por Título ou Solicitante"
                     }} />
                 </Grid>
                 <Grid item xs={2}>

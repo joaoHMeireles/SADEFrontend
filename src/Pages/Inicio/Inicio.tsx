@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import "./Inicio.scss";
-import { TipoComponenteProcesso } from "../../constants/enuns";
-import api from "../../api/api";
 import semDemanda from "../../Assets/empty-folder.png"
+import semResultado from "../../Assets/empty.png"
 import Searchbar from "../../Components/Searchbar/Searchbar";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import { BoxConteudo } from "../App.styles";
@@ -19,89 +18,36 @@ import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 export default function Inicio(props: {
   filtrar: boolean;
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
+  listaComponents: any[];
+  filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }) {
-  const listaComponentesLocalStorage = localStorage.getItem("LISTACOMPONENTS") != null ? JSON.parse(localStorage.getItem("LISTACOMPONENTS") as string) : []
+  // const listaComponentesLocalStorage = localStorage.getItem("LISTACOMPONENTS") != null ? JSON.parse(localStorage.getItem("LISTACOMPONENTS") as string) : []
   const [grid, setGrid] = useState(true);
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
-  const [listaComponents, setListaComponents] = useState<any[]>(listaComponentesLocalStorage)
   const [temComponente, setTemComponente] = useState(false)
+  const [imagemSemNada, setImagemSemNada] = useState("")
+  const [textoSemNada, setTextoSemNada] = useState("")
 
   useEffect(() => {
-    if (listaComponents.length == 0) {
-      api.get("/sod/demanda").then((response) => {
-        let listaDemandas: any[] = []
-        for (let demanda of response.data) {
-          demanda.id = demanda.idDemanda
-          demanda.tipo = TipoComponenteProcesso.Demanda
-          listaDemandas.push(demanda)
-        }
-        setListaComponents(listaDemandas);
-      }).catch((err) => {
-        console.log(err);
-      })
-
-
-      // api.get("/sod/proposta").then((response: any) => {
-      //   let listaPropostas: any[] = []
-      //   for(let proposta of response.data){
-
-      //     for(let atributo in proposta.demanda){
-      //       proposta[atributo] = proposta.demanda[atributo]
-      //     }
-
-      //     proposta.tipo = TipoComponenteProcesso.Proposta
-      //     proposta.id = proposta.idProposta
-      //     listaPropostas.push(proposta)
-      //   }
-      //   setListaComponents(listaPropostas);
-
-      // }).catch((err: any) => {
-      //   console.log(err);
-      // })
-
-
-      // api.get("/sod/pauta").then((response) => {
-      //   let listaPautas: any[] = []
-      //   for(let pauta of response.data){
-      //     pauta.propostas = pauta.propostasPauta
-      //     pauta.propostasPauta = null 
-      //     pauta.tituloReuniao = pauta.tituloReuniaoPauta 
-
-      //     pauta.tipo = TipoColecaoComponenteProcesso.Pauta
-      //     listaPautas.push(pauta)
-      //   }
-      //   setListaComponents(listaPautas);
-
-      // }).catch((err) => {
-      //   console.log(err);
-      // })
-
-      // api.get("/sod/ata").then((response) => {
-      //   let listaATAs: any[] = []
-      //   for (let ata of response.data) {
-      //     ata.propostas = ata.propostasAta
-      //     ata.propostasPauta = ata.pauta.propostasPauta
-      //     ata.tituloReuniao = ata.tituloReuniaoATA
-
-      //     ata.tipo = TipoColecaoComponenteProcesso.ATA
-      //     listaATAs.push(ata)
-      //   }
-      //   setListaComponents(listaATAs);
-
-      // }).catch((err) => {
-      //   console.log(err);
-      // })
-    }
-  }, [])
-
-  useEffect(() => {
-    if(listaComponents.length != 0){
+    if (props.listaComponents.length != 0) {
       setTemComponente(true)
-      localStorage.setItem("LISTACOMPONENTS",JSON.stringify(listaComponents))
     } else {
       setTemComponente(false)
     }
-  }, [listaComponents])
+  }, [props.listaComponents])
+
+  useEffect(() => {
+    if(!temComponente){
+      const inputPesquisa = document.getElementById("input-pesquisa") as HTMLInputElement
+      if(inputPesquisa.value != ""){
+        setImagemSemNada(semResultado)
+        setTextoSemNada("Nenhuma demanda encontrada")
+      } else {
+        setImagemSemNada(semDemanda)
+        setTextoSemNada("Nenhuma demanda cadastrada no sistema")
+      }
+    }
+  })
 
   localStorage.setItem("PAGINATUAL", "home");
 
@@ -113,10 +59,11 @@ export default function Inicio(props: {
         filtrar={props.filtrar}
         grid={grid}
         setGrid={setGrid}
+        filtrarResultados={props.filtrarResultados}
       />
       {temComponente ?
         <CardsProcesso
-          listaComponents={listaComponents}
+          listaComponents={props.listaComponents}
           grid={grid}
           rascunho={false}
           proposta={false}
@@ -125,7 +72,7 @@ export default function Inicio(props: {
           setPropostaSelecionada={setPropostaSelecionada}
         />
         :
-        <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda cadastrada no sistema"} />
+        <ResultadoVazio imagem={imagemSemNada} legenda={textoSemNada} />
       }
     </BoxConteudo>
   );

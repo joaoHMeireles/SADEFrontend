@@ -25,13 +25,100 @@ import Rascunho from "./Rascunho/Rascunho";
 import CriacaoPauta from "./CriacaoPauta/CriacaoPauta";
 import VisualizarCriacaoPDF from "./VisualizarCriacaoPDF/VisualizarCriacaoPDF";
 import Enviadas from "./Enviadas/Enviadas";
+import api from "../api/api";
+import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../constants/enuns";
 
 
 export default function App() {
   const [sidebarAberta, setSidebarAberta] = useState(false)
   const [tamanhoSideBar, setTamanhoSideBar] = useState("220")
   const [filtrar, setFiltrar] = useState(false)
+  const [listaComponents, setListaComponents] = useState<any[]>([])
+  const [listaFiltrada, setListaFiltrada] = useState<any[]>([]);
+  const [listaDemandas, setListaDemandas] = useState<any[]>([])
+  const [listaPropostas, setListaPropostas] = useState<any[]>([])
+  const [listaPautas, setListaPautas] = useState<any[]>([])
+  const [listaATAs, setListaATAs] = useState<any[]>([])
   const tamanhoNavbar = "8.5vh"
+
+
+  useEffect(() => {
+    api.get("/sod/demanda").then((response) => {
+      let listaDemandas: any[] = []
+      for (let demanda of response.data) {
+        demanda.id = demanda.idDemanda
+        demanda.tipo = TipoComponenteProcesso.Demanda
+        listaDemandas.push(demanda)
+      }
+
+      setListaDemandas(listaDemandas);
+    }).catch((err) => {
+      console.log(err);
+    })
+
+
+    api.get("/sod/proposta").then((response: any) => {
+      let listaPropostas: any[] = []
+      for (let proposta of response.data) {
+
+        for (let atributo in proposta.demanda) {
+          proposta[atributo] = proposta.demanda[atributo]
+        }
+
+        proposta.tipo = TipoComponenteProcesso.Proposta
+        proposta.id = proposta.idProposta
+        listaPropostas.push(proposta)
+      }
+
+      setListaPropostas(listaPropostas);
+    }).catch((err: any) => {
+      console.log(err);
+    })
+
+
+    api.get("/sod/pauta").then((response) => {
+      let listaPautas: any[] = []
+      for (let pauta of response.data) {
+        pauta.propostas = pauta.propostasPauta
+        pauta.propostasPauta = null
+        pauta.tituloReuniao = pauta.tituloReuniaoPauta
+
+        pauta.tipo = TipoColecaoComponenteProcesso.Pauta
+        listaPautas.push(pauta)
+      }
+
+      setListaPautas(listaPautas);
+    }).catch((err) => {
+      console.log(err);
+    })
+
+    api.get("/sod/ata").then((response) => {
+      let listaATAs: any[] = []
+      for (let ata of response.data) {
+        ata.propostas = ata.propostasAta
+        ata.propostasPauta = ata.pauta.propostasPauta
+        ata.tituloReuniao = ata.tituloReuniaoATA
+
+        ata.tipo = TipoColecaoComponenteProcesso.ATA
+        listaATAs.push(ata)
+      }
+
+      setListaATAs(listaATAs);
+    }).catch((err) => {
+      console.log(err);
+    })
+
+    localStorage.setItem("VALORFILTROTipo", "Demanda")
+  }, [])
+
+  useEffect(() => {
+    setListaComponents(listaDemandas)
+    filtrarResultados()
+  }, [listaDemandas])
+
+  useEffect(() => {
+    filtrarResultados()
+  }, [listaComponents])
 
   useEffect(() => {
     if (sidebarAberta) {
@@ -40,6 +127,52 @@ export default function App() {
       setTamanhoSideBar("65");
     }
   });
+
+  function filtrarResultados() {
+    const grupoOpcoesTipo = document.getElementById("grupo-opcoes-Tipo")
+    if (grupoOpcoesTipo) {
+      for (let opcao of grupoOpcoesTipo.children) {
+        if ((opcao.children[0].children[0] as HTMLInputElement).checked) {
+          filtrarTipoComponente((opcao.children[1] as HTMLElement).innerText);
+        }
+      }
+    }
+
+
+    //arrumar isso aqui miodio
+    const inputPesquisa = document.getElementById("input-pesquisa") as HTMLInputElement
+    if (inputPesquisa) {
+      if (inputPesquisa.value !== '') {
+        const filteredData = listaComponents.filter((item) => {
+          let listaAtributos = []
+
+          if(item.tipo == "Demanda" || item.tipo == "Proposta"){
+            listaAtributos.push(item.usuario.nomeUsuario, item.tituloDemanda)
+          } else {
+            listaAtributos.push( item.tituloReuniao)
+          }
+
+          return listaAtributos.join('').toLowerCase().includes(inputPesquisa.value.toLowerCase())
+        })
+        setListaFiltrada(filteredData)
+      }
+      else {
+        setListaFiltrada(listaComponents)
+      }
+    }
+  }
+
+  function filtrarTipoComponente(tipo: string) {
+    if (tipo == TipoComponenteProcesso.Demanda) {
+      setListaComponents(listaDemandas)
+    } else if (tipo == TipoComponenteProcesso.Proposta) {
+      setListaComponents(listaPropostas)
+    } else if (tipo == TipoColecaoComponenteProcesso.Pauta) {
+      setListaComponents(listaPautas)
+    } else if (tipo == TipoColecaoComponenteProcesso.ATA) {
+      setListaComponents(listaATAs)
+    }
+  }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -53,7 +186,7 @@ export default function App() {
               <ThemeProvider theme={ContentTheme}>
                 <Routes>
                   <Route path="/" element={<Login setAberto={setSidebarAberta} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />} />
-                  <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} />} />
+                  <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} />} />
                   <Route path="/notifications" element={<Notificacoes />} />
                   <Route path="/chats" element={<Chats aberto={sidebarAberta} />}></Route>
                   <Route path="/createdemand" element={<CriacaoDemanda rascunho={false} />} />
@@ -86,7 +219,7 @@ export default function App() {
                   <Route path="/home/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
                   <Route path="/home/agenda/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
                   <Route path="/home/ata/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
-                  
+
                   <Route path="/profile" element={<Perfil />} />
 
                   <Route path="/home/agenda" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
@@ -96,7 +229,7 @@ export default function App() {
                 </Routes>
               </ThemeProvider>
             </MainBox>
-            <Filter aberto={filtrar} setAberto={setFiltrar} setSidebar={setSidebarAberta} />
+            <Filter aberto={filtrar} setAberto={setFiltrar} setSidebar={setSidebarAberta} filtrarResultados={filtrarResultados} />
           </Box>
         </ThemeProvider>
       </BrowserRouter>
