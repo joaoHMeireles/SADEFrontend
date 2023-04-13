@@ -2,7 +2,7 @@ import { BoxConteudo } from "../../../Pages/App.styles";
 import { PDFExport } from "@progress/kendo-react-pdf";
 import { renderToStream, renderToString } from "@react-pdf/renderer"
 import "./EsqueletoPDFProposta.scss";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 
 import {
@@ -19,6 +19,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import api from "../../../api/api";
 
 // interface Proposta {
 //     tituloProposta: string,
@@ -177,9 +178,6 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
         let index = 0;
         return (
             <BoxItens>
-                <BoxTituloItens>
-                    <TypographyTitulos> {index + 1}. {props.proposta.titulo}</TypographyTitulos>
-                </BoxTituloItens>
                 <BoxObjetivo>
                     <TypographyTextos>Solicitante: {props.proposta.demanda.usuario.nomeUsuario}</TypographyTextos>
                 </BoxObjetivo>
@@ -239,7 +237,6 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
                 {props.proposta.tabelasCustoProposta.map((tabela: any) => {
                     let totalEsfoco = 0;
                     let valorTotal = 0;
-                    console.log(tabela);
 
                     return (
                         <>
@@ -248,19 +245,19 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
                                     <Table>
                                         <TableHead>
                                             <TableRow>
-                                                <TableCellStyled align="center">Despesas (Desembolso)</TableCellStyled>
+                                                <TableCellStyled align="center">{tabela.tituloTabela}</TableCellStyled>
                                                 <TableCellStyled align="center">Esforco</TableCellStyled>
                                                 <TableCellStyled align="center">Valor total</TableCellStyled>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {tabela.linhastabela.map((linhaTabela: any) => {
+                                            {tabela.linhasTabela.map((linhaTabela: any) => {
                                                 totalEsfoco += linhaTabela.quantidade;
                                                 valorTotal += (linhaTabela.quantidade * linhaTabela.valorQuantidade);
                                                 return (
                                                     <>
                                                         <TableRow>
-                                                            <TableCellStyled align="center">{linhaTabela.tituloDespesa}</TableCellStyled>
+                                                            <TableCellStyled align="center">{linhaTabela.nomeRecurso}</TableCellStyled>
                                                             <TableCellStyled align="center">{linhaTabela.quantidade}</TableCellStyled>
                                                             <TableCellStyled align="center">R$ {linhaTabela.quantidade * linhaTabela.valorQuantidade}</TableCellStyled>
                                                         </TableRow>
@@ -282,7 +279,9 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
                                         </TableHead>
                                         <TableBody>
                                             <TableRow>
-                                                {tabela.centrosCusto.map((cc) => {
+                                                {tabela.centrosCustoPagantes.map((cc: any) => {
+                                                    console.log(cc);
+
                                                     return (
                                                         <>
                                                             <TableRow sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -298,7 +297,7 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
                                     </Table>
                                 </TableContainer>
                             </Box>
-                            {tabela.temLicenca ?
+                            {/* {tabela.temLicenca ?
                                 <>
                                     <Box sx={{ display: "flex", justifyContent: "flex", alignItems: "center" }}>
                                         <TableContainer component={Paper} sx={{ width: "50%", marginTop: 5 }}>
@@ -356,9 +355,9 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
                                         </TableContainer>
                                     </Box>
                                 </>
-
-                                : ""
-                            }
+                                : 
+                                ""
+                            } */}
                         </>
                     )
                 })}
@@ -367,14 +366,16 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
     }
 
     const ParticipantesReuniao = (props: { proposta: any }) => {
-        console.log(props.proposta.responsaveisNegocio);
-
         return (
             <BoxGeralResponsaveis>
                 <>
                     <BoxResponsaveis>
                         <TypographyParticipantes>Responsaveis Negocio</TypographyParticipantes>
-                        <TypographyParticipantes>{props.proposta.responsavelNegocio}</TypographyParticipantes>
+                        {props.proposta.responsaveisNegocio.map((usuario: any) => {
+                            return (
+                                <TypographyParticipantes>{usuario.nomeUsuario}</TypographyParticipantes>
+                            )
+                        })}
                     </BoxResponsaveis>
                 </>
             </BoxGeralResponsaveis >
@@ -396,9 +397,6 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
                 </button>
             </div>
             <PDFExport forcePageBreak=".break" paperSize="A4" pageTemplate={PageTemplate} margin="2cm" ref={pdfCompoente}>
-                <BoxTitulo>
-                    <TypographyTituloATA variant="h6">{props.proposta.tituloProposta}</TypographyTituloATA>
-                </BoxTitulo>
                 <Proposta proposta={props.proposta} />
                 <ParticipantesReuniao proposta={props.proposta} />
             </PDFExport>

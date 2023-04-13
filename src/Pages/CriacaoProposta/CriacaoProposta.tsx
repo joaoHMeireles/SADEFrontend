@@ -83,8 +83,39 @@ export default function CriacaoProposta(props: {
       periodoExecucaoFim: "14/04/2023",
       payback: 4,
       demanda: informacaoProcesso,
-      responsaveisNegocio: [],
-      tabelasCustoProposta: []
+      responsaveisNegocio: [{ idUsuario: 1, nomeUsuario: "Diego" }],
+      tabelasCustoProposta: [{
+        tituloTabela: "Despesas iniciais",
+        quantidadeTotal: 90,
+        valorTotal: 960,
+        licenca: false,
+        centrosCustoPagantes: [
+          {
+            centroCusto: {
+              "idCentroCusto": 3
+            },
+            porcentagemDespesa: 0.4
+          },
+          {
+            centroCusto: {
+              "idCentroCusto": 1
+            },
+            porcentagemDespesa: 0.6
+          }
+        ],
+        linhasTabela: [
+          {
+            nomeRecurso: "trabalho",
+            quantidade: 40,
+            valorQuantidade: 9
+          },
+          {
+            nomeRecurso: "trabalho2",
+            quantidade: 50,
+            valorQuantidade: 12
+          }
+        ]
+      }]
     }
   );
 
@@ -133,6 +164,8 @@ export default function CriacaoProposta(props: {
 
   // useEffect(() => {
   //   criarProposta()
+  // console.log(usuariosResponsaveis);
+
   // }, [informacaoProcesso, escopoProposta, periodoExecucaoInicio, periodoExecucaoFim, usuariosResponsaveis, payback])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {

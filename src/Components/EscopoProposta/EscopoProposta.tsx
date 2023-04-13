@@ -133,7 +133,7 @@ export default function EscopoProposta(props: {
                 for (let usuarioSelecionado of valor) {
                   for (let usuario of usuarios) {
                     if (usuario.nomeUsuario == usuarioSelecionado) {
-                      usuariosSelecionados.push({ idUsuario: usuario.idUsuario })
+                      usuariosSelecionados.push({ idUsuario: usuario.idUsuario, nomeUsuario: usuario.nomeUsuario })
                     }
                   }
                 }

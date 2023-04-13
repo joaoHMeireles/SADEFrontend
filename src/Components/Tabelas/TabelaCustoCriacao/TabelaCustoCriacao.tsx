@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Typography from "@mui/material/Typography";
@@ -30,6 +30,8 @@ import {
 import { BoxIconsAddMinus } from "./TabelaCustoCriacao.styles";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
+import { Button, Chip } from "@mui/material";
+import { TypographyStyled } from "../../EscopoProposta/EscopoProposta.styles";
 
 export default function TabelaCustoCriacao(props: {
   centroCusto: any
@@ -105,7 +107,7 @@ function Tabela(props: {
   }, [quantidadeLinha])
 
   useEffect(() => {
-    if(centroCustoEscolhidos.length == 0){
+    if (centroCustoEscolhidos.length == 0) {
       return
     }
 
@@ -129,6 +131,15 @@ function Tabela(props: {
 
     setEsforcoTotal(newEsforcoTotal)
     setValorTotal(newValorTotal)
+  }
+
+  function mudarPorcentagem(porcentagem: number, setPorcentagem: React.Dispatch<SetStateAction<number>>) {
+    if (porcentagem == 100) {
+      setPorcentagem(0)
+      return
+    }
+
+    setPorcentagem(porcentagem + 5)
   }
 
   return (
@@ -175,6 +186,7 @@ function Tabela(props: {
         </BoxIconsAddMinus>
       </BoxContainerTabela>
       <Box>
+        <TypographyStyled>Centro de Custo:</TypographyStyled>
         <Autocomplete
           id={`centroCusto${props.tabela}`}
           sx={{ boxShadow: "5px 5px 10px 0 #00000050", marginBottom: 2 }}
@@ -207,12 +219,34 @@ function Tabela(props: {
               </li>
             );
           }}
+          renderTags={(elementos: any) => {
+            const elementosRenderizados = elementos.map((nome: string) => {
+
+              return <ChipAutocompleteCentroCusto nome={nome} mudarPorcentagem={mudarPorcentagem} />
+            })
+
+
+            return elementosRenderizados
+          }}
           options={props.centroCusto.map((centroCusto: any) => centroCusto.nomeCentroCusto)}
           renderInput={(params) => <TextField {...params} />}
         />
       </Box>
     </>
   );
+}
+
+function ChipAutocompleteCentroCusto(props: { nome: string, mudarPorcentagem: Function }) {
+  const [porcentagem, setPorcentagem] = useState(0)
+
+  return (
+    <>
+      <Box>
+        <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#59595930 solid 1px" }} label={props.nome} />
+        <Button sx={{ backgroundColor: "rgba(0,0,0,0.08)", height: "32px", borderRadius: "0 16px 16px 0" }} onClick={() => { props.mudarPorcentagem(porcentagem, setPorcentagem) }}>{porcentagem}</Button>
+      </Box>
+    </>
+  )
 }
 
 function LinhaTabela(props: {
