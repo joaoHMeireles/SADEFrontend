@@ -89,8 +89,9 @@ function Tabela(props: {
   const [valorTotal, setValorTotal] = useState(0)
   const [centroCusto, setCentroCusto] = useState<string[]>([])
   const [linhas, setLinhas] = useState<JSX.Element[]>([])
-
   const [centroCustoEscolhidos, setCentroCustoEscolhidos] = useState<any[]>([])
+  const [atualizouPorcentagem, setAtualizouPorcentagem] = useState(false)
+  const [valorCentroCustoInput, setValorCentroCustoInput] = useState([])
 
   useEffect(() => {
     const newLinhas = []
@@ -115,6 +116,33 @@ function Tabela(props: {
     props.setCentroCustoEscolhidas(props.centroCustoEscolhidas);
   }, [centroCustoEscolhidos])
 
+  useEffect(() => {
+    atualizarCentrosDeCusto()
+  }, [valorCentroCustoInput])
+
+  useEffect(() => {
+    if (atualizouPorcentagem) {
+      atualizarCentrosDeCusto()
+      setAtualizouPorcentagem(false)
+    }
+  }, [atualizouPorcentagem])
+
+  function atualizarCentrosDeCusto() {
+    let listaCentroCustoTabela: any[] = [];
+
+    for (let centroCustoSelecionada of valorCentroCustoInput) {
+      for (let centroCusto of props.centroCusto) {
+        if (centroCustoSelecionada == centroCusto.nomeCentroCusto) {
+          const valorPorcetagem = document.getElementById(`chipCentroCusto${centroCusto.idCentroCusto}`) as HTMLButtonElement;
+
+          listaCentroCustoTabela.push({ idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto, tabela: props.tabela, porcentagem: valorPorcetagem.innerText })
+        }
+      }
+    }
+
+    setCentroCustoEscolhidos(listaCentroCustoTabela);
+  }
+
   function atualizarValor() {
     let newEsforcoTotal = 0
     let newValorTotal = 0
@@ -134,12 +162,14 @@ function Tabela(props: {
   }
 
   function mudarPorcentagem(porcentagem: number, setPorcentagem: React.Dispatch<SetStateAction<number>>) {
-    if (porcentagem == 100) {
-      setPorcentagem(0)
+    setAtualizouPorcentagem(true)
+
+    if (porcentagem == 5) {
+      setPorcentagem(100)
       return
     }
 
-    setPorcentagem(porcentagem + 5)
+    setPorcentagem(porcentagem - 5)
   }
 
   return (
@@ -193,17 +223,7 @@ function Tabela(props: {
           multiple
           disableCloseOnSelect
           onChange={(e, valor: any) => {
-            let listaCentroCustoTabela: any[] = [];
-
-            for (let centroCustoSelecionada of valor) {
-              for (let centroCusto of props.centroCusto) {
-                if (centroCustoSelecionada == centroCusto.nomeCentroCusto) {
-                  listaCentroCustoTabela.push({ idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto, tabela: props.tabela })
-                }
-              }
-            }
-
-            setCentroCustoEscolhidos(listaCentroCustoTabela);
+            setValorCentroCustoInput(valor)
           }}
           renderOption={(props, cc: any, { selected }) => {
             return (
@@ -220,9 +240,9 @@ function Tabela(props: {
             );
           }}
           renderTags={(elementos: any) => {
-            const elementosRenderizados = elementos.map((nome: string) => {
+            const elementosRenderizados = elementos.map((nome: string, index: number) => {
 
-              return <ChipAutocompleteCentroCusto nome={nome} mudarPorcentagem={mudarPorcentagem} />
+              return <ChipAutocompleteCentroCusto id={`chipCentroCusto${index + 1}`} nome={nome} mudarPorcentagem={mudarPorcentagem} />
             })
 
 
@@ -236,16 +256,20 @@ function Tabela(props: {
   );
 }
 
-function ChipAutocompleteCentroCusto(props: { nome: string, mudarPorcentagem: Function }) {
-  const [porcentagem, setPorcentagem] = useState(0)
+function ChipAutocompleteCentroCusto(props: { id: any, nome: string, mudarPorcentagem: Function }) {
+  const [porcentagem, setPorcentagem] = useState(100)
+
+  function atualizarPorcentagem() {
+
+    props.mudarPorcentagem(porcentagem, setPorcentagem)
+
+  }
 
   return (
-    <>
-      <Box>
-        <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#59595930 solid 1px" }} label={props.nome} />
-        <Button sx={{ backgroundColor: "rgba(0,0,0,0.08)", height: "32px", borderRadius: "0 16px 16px 0" }} onClick={() => { props.mudarPorcentagem(porcentagem, setPorcentagem) }}>{porcentagem}</Button>
-      </Box>
-    </>
+    <Box sx={{ marginRight: 2 }}>
+      <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#59595930 solid 1px" }} label={props.nome} />
+      <Button id={props.id} sx={{ backgroundColor: "rgba(0,0,0,0.08)", height: "32px", borderRadius: "0 16px 16px 0" }} onClick={atualizarPorcentagem}>{porcentagem} %</Button>
+    </Box>
   )
 }
 
