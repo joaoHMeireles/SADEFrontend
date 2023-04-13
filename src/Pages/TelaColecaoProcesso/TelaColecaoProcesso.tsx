@@ -1,6 +1,6 @@
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getNomeComponente, getCorStatus, getCorTipo, getBeneficiosPorTipo, getNome } from "../../utils";
+import { getNomeComponente, getCorStatus, getCorTipo, getBeneficiosPorTipo, getNomeStatus } from "../../utils";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Toolbar from "../../Components/Toolbar/Toolbar";
 import TabelaBeneficios from "../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios";
@@ -596,7 +596,7 @@ export function Proposta(props: {
                 Status escolhido:
               </TypographyTituloAtributo>
               <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
-                {getNome(props.propostaAnterior.statusDemandaComissao)}
+                {getNomeStatus(props.propostaAnterior.statusDemandaComissao)}
               </TypographyTexto>
             </GridPequenosAtributos>
             <Grid item>

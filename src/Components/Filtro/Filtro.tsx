@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useLocationChange } from "../../utils";
 import {
@@ -36,7 +36,7 @@ export default function Filtro(props: {
       id: 4,
       nome: "ATA"
     },
-  ]; 
+  ];
   const foruns = [
     {
       id: 1,
@@ -119,6 +119,7 @@ export default function Filtro(props: {
   ];
   const [drawerWidth, setDrawerWidth] = useState("0px");
   const location = useLocation()
+  const tipoFiltrado = localStorage.getItem(`VALORFILTROTipo`)
 
   useEffect(() => {
     if (props.aberto) {
@@ -148,13 +149,20 @@ export default function Filtro(props: {
           open={props.aberto}
         >
           <Toolbar variant="dense" sx={{ marginBottom: "10px" }} />
-          <Item itens={tiposDeComponentes} titulo="Tipo" tipo={1} filtrarResultados={props.filtrarResultados}/>
-          <Item itens={status} titulo="Status" tipo={1} filtrarResultados={props.filtrarResultados}/>
-          <Item itens={tamanhos} titulo="Tamanho" tipo={2} filtrarResultados={props.filtrarResultados}/>
-          <Item itens={departamentos} titulo="Departamento" tipo={2} filtrarResultados={props.filtrarResultados}/>
-          <Item titulo="Código PPM" tipo={3} filtrarResultados={props.filtrarResultados}/>
-          <Item titulo="Número" tipo={3} filtrarResultados={props.filtrarResultados}/>
-          <Item itens={foruns} titulo="Fórum" tipo={2} filtrarResultados={props.filtrarResultados}/>
+          <Item itens={tiposDeComponentes} titulo="Tipo" tipo={1} filtrarResultados={props.filtrarResultados} />
+          {tipoFiltrado == "Demanda" || tipoFiltrado == "Proposta" ?
+            <>
+              <Item itens={status} titulo="Status" tipo={1} filtrarResultados={props.filtrarResultados} />
+              <Item itens={tamanhos} titulo="Tamanho" tipo={2} filtrarResultados={props.filtrarResultados} />
+              <Item itens={departamentos} titulo="Departamento" tipo={2} filtrarResultados={props.filtrarResultados} />
+              <Item titulo="Código PPM" tipo={3} filtrarResultados={props.filtrarResultados} />
+            </>
+            :
+            <>
+              <Item titulo="Número" tipo={3} filtrarResultados={props.filtrarResultados} />
+              <Item itens={foruns} titulo="Fórum" tipo={2} filtrarResultados={props.filtrarResultados} />
+            </>
+          }
         </DrawerFiltro>
       }
     </>
@@ -177,15 +185,19 @@ function Item(props: {
 }) {
   const [aberto, setAberto] = useState(false);
 
+  useEffect(() => {
+    props.filtrarResultados()
+  }, [aberto])
+
   let opcao: JSX.Element = <div />;
 
   if (!props.itens) {
-    opcao = <OpcaoInput filtrarResultados={props.filtrarResultados}/>;
+    opcao = <OpcaoInput filtrarResultados={props.filtrarResultados} />;
   } else {
     if (props.tipo == 1) {
-      opcao = <OpcoesRadio itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados}/>;
+      opcao = <OpcoesRadio itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados} />;
     } else if (props.tipo == 2) {
-      opcao = <OpcoesCheck itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados}/>;
+      opcao = <OpcoesCheck itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados} />;
     }
   }
 
@@ -215,7 +227,7 @@ function Item(props: {
 function OpcoesRadio(props: OptionInterface) {
   const valorDefault = localStorage.getItem(`VALORFILTRO${props.titulo}`)
 
-  function handleClick(valor: string){
+  function handleClick(valor: string) {
     localStorage.setItem(`VALORFILTRO${props.titulo}`, valor)
 
     props.filtrarResultados()
@@ -240,9 +252,7 @@ function OpcoesRadio(props: OptionInterface) {
     <FormControl>
       <RadioGroup
         id={`grupo-opcoes-${props.titulo}`}
-        aria-labelledby="demo-radio-buttons-group-label"
         defaultValue={valorDefault}
-        name="radio-buttons-group"
       >
         {opcoes}
       </RadioGroup>
@@ -251,20 +261,47 @@ function OpcoesRadio(props: OptionInterface) {
 }
 
 function OpcoesCheck(props: OptionInterface) {
-  const opcoes = props.itens.map((e) => {
-    return (
-      <FormControlLabel control={<Checkbox />} label={e.nome} />
-    )
-  })
+  const opcoesChecadas = localStorage.getItem(`VALORFILTRO${props.titulo}`)
+  const [listaOpcoesChecadas, setListaOpcoesChecadas] = useState(opcoesChecadas ? JSON.parse(opcoesChecadas) : [])
+  // const [listaElementosChecados, setListaElementosChecados] = useState([false, false, false, false, false])
+
+  //tem que arrumar isso ainda
+  function handleClick(e: any) {
+    const elemento = e.target
+    const novaListaOpcoesChecadas = listaOpcoesChecadas
+
+    if (elemento.checked) {
+      novaListaOpcoesChecadas[Number.parseInt(elemento.id) - 1] = elemento.name
+    } else {
+      novaListaOpcoesChecadas.splice(elemento.id - 1, 1)
+    }
+
+    setListaOpcoesChecadas(novaListaOpcoesChecadas)
+    localStorage.setItem(`VALORFILTRO${props.titulo}`, JSON.stringify(listaOpcoesChecadas))
+    
+
+    // props.filtrarResultados()
+  }
 
   return (
-    <FormGroup sx={{ color: "#595959" }}>
-      {opcoes}
+    <FormGroup id={`grupo-opcoes-${props.titulo}`} sx={{ color: "#595959" }}>
+      {
+        props.itens.map((e) =>
+          <FormControlLabel
+            key={e.id}
+            control={<Checkbox onClick={handleClick}
+              name={e.nome} id={e.id + ""}
+              defaultChecked={listaOpcoesChecadas.includes(e.nome)}
+            />}
+            label={e.nome}
+          />
+        )
+      }
     </FormGroup>
   )
 }
 
-function OpcaoInput(props: {filtrarResultados: Function}) {
+function OpcaoInput(props: { filtrarResultados: Function }) {
   return (
     <TextField id="standard-basic" variant="standard" InputProps={{
       sx: {
@@ -283,7 +320,7 @@ function OpcaoInput(props: {filtrarResultados: Function}) {
  * Interface dos atributos dos componentes Options
  */
 interface OptionInterface {
-  itens: { id: number; nome: string}[],
+  itens: { id: number; nome: string }[],
   titulo: string,
   filtrarResultados: Function
 }

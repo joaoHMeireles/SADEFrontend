@@ -19,7 +19,7 @@ import {
   UltimaListaTypography,
 } from "./ComponenteProcesso.styles";
 import { GlobalStyles } from "@mui/styled-engine";
-import { getNome} from "../../utils";
+import { getNomeStatus} from "../../utils";
 
 export default function ComponenteProcesso(props: {
   grid: boolean;
@@ -180,7 +180,7 @@ function GridComponent(props: ComponentProps) {
               <span>Score:</span> {props.componente.score}
             </GridTypography>
             <GridTypography variant="subtitle1">
-              <span>Status:</span> {getNome(props.componente.statusDemanda)}
+              <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
             </GridTypography>
             <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
               <BoxColecaoComponente>
@@ -235,7 +235,7 @@ function GridComponent(props: ComponentProps) {
               <span>Score:</span> {props.componente.score}
             </GridTypography>
             <GridTypography variant="subtitle1">
-              <span>Status:</span> {getNome(props.componente.statusDemanda)}
+              <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
             </GridTypography>
             <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
               <BoxColecaoComponente>
@@ -308,7 +308,7 @@ function GridComponent(props: ComponentProps) {
                 <span>Score:</span> {props.componente.score}
               </GridTypography>
               <GridTypography variant="subtitle1">
-                <span>Status:</span> {getNome(props.componente.statusDemanda)}
+                <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
               </GridTypography>
               <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
                 <BoxColecaoComponente>
@@ -357,7 +357,7 @@ function ListComponent(props: ComponentProps) {
               <span>Score:</span> {props.componente.score}
             </ListaTypography>
             <ListaTypography variant="subtitle2">
-              <span>Status:</span> {getNome(props.componente.statusDemanda)}
+              <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
             </ListaTypography>
             <UltimaListaTypography variant="body2" sx={{ maxWidth: "10vw" }}>
               {!props.rascunho ? (
@@ -403,7 +403,7 @@ function ListComponent(props: ComponentProps) {
               <span>Score:</span> {props.componente.score}
             </ListaTypography>
             <ListaTypography variant="subtitle2">
-              <span>Status:</span> {getNome(props.componente.statusDemanda)}
+              <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
             </ListaTypography>
             <ListaTypography variant="subtitle2">
               {!props.rascunho ? (
@@ -445,7 +445,7 @@ function ListComponent(props: ComponentProps) {
                 <span>Score:</span> {props.componente.score}
               </ListaTypography>
               <ListaTypography variant="subtitle2">
-                <span>Status:</span> {getNome(props.componente.statusDemanda)}
+                <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
               </ListaTypography>
               <ListaTypography variant="subtitle2">
                 {!props.rascunho ? (

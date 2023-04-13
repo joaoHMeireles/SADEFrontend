@@ -167,19 +167,19 @@ export function getCorStatusHistorico(status: StatusTarefaHistorico) {
  * @param status
  * @returns
  */
-export function getNome(status: string) {
+export function getNomeStatus(status: string) {
     const nomeStatus = {
-      BACKLOG: "Aguardando revisão",
-      ASSESMENT: "Em planejamento",
-      BUSINESSCASE: "Em planejamento demorado",
-      CANCELED: "Cancelado",
-      TODO: "A fazer",
+        BACKLOG: "Aguardando revisão",
+        ASSESMENT: "Em planejamento",
+        BUSINESSCASE: "Em planejamento demorado",
+        CANCELED: "Cancelado",
+        TODO: "A fazer",
     };
-  
-    return (nomeStatus as any)[status];
-  }
 
-export function getBeneficiosPorTipo(listaBeneficios: any[], tipoBeneficio: string){
+    return (nomeStatus as any)[status];
+}
+
+export function getBeneficiosPorTipo(listaBeneficios: any[], tipoBeneficio: string) {
     return listaBeneficios.filter((beneficio: any) => beneficio.tipoBeneficio == tipoBeneficio)
 }
 
@@ -190,7 +190,7 @@ export function getBeneficiosPorTipo(listaBeneficios: any[], tipoBeneficio: stri
  * @param valor 
  * @returns 
  */
-export function getValueEnum(enumerador: Object, valor: any ){
+export function getValueEnum(enumerador: Object, valor: any) {
     return Object.values(enumerador)[Object.keys(enumerador).indexOf(valor)]
 }
 
@@ -201,6 +201,6 @@ export function getValueEnum(enumerador: Object, valor: any ){
  * @param valor 
  * @returns 
  */
-export function getKeyEnum(enumerador: Object, valor: any ){
+export function getKeyEnum(enumerador: Object, valor: any) {
     return Object.keys(enumerador)[Object.values(enumerador).indexOf(valor)]
 }

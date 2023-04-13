@@ -27,6 +27,7 @@ import VisualizarCriacaoPDF from "./VisualizarCriacaoPDF/VisualizarCriacaoPDF";
 import Enviadas from "./Enviadas/Enviadas";
 import api from "../api/api";
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../constants/enuns";
+import { getNomeStatus } from "../utils";
 
 
 export default function App() {
@@ -131,46 +132,75 @@ export default function App() {
   function filtrarResultados() {
     const grupoOpcoesTipo = document.getElementById("grupo-opcoes-Tipo")
     if (grupoOpcoesTipo) {
-      for (let opcao of grupoOpcoesTipo.children) {
-        if ((opcao.children[0].children[0] as HTMLInputElement).checked) {
-          filtrarTipoComponente((opcao.children[1] as HTMLElement).innerText);
-        }
-      }
+      filtrarTipoComponente(grupoOpcoesTipo)
     }
 
-
-    //arrumar isso aqui miodio
     const inputPesquisa = document.getElementById("input-pesquisa") as HTMLInputElement
     if (inputPesquisa) {
-      if (inputPesquisa.value !== '') {
-        const filteredData = listaComponents.filter((item) => {
-          let listaAtributos = []
+      filtrarPelaSearchBar(inputPesquisa.value)
+    }
 
-          if(item.tipo == "Demanda" || item.tipo == "Proposta"){
-            listaAtributos.push(item.usuario.nomeUsuario, item.tituloDemanda)
-          } else {
-            listaAtributos.push( item.tituloReuniao)
-          }
+    const tipoFiltrado = localStorage.getItem(`VALORFILTROTipo`)
 
-          return listaAtributos.join('').toLowerCase().includes(inputPesquisa.value.toLowerCase())
-        })
-        setListaFiltrada(filteredData)
+    if(tipoFiltrado == "Demanda" || tipoFiltrado == "Proposta"){
+      const grupoOpcoesStatus = document.getElementById("grupo-opcoes-Status")
+      
+      if(grupoOpcoesStatus){
+        filtrarStatusComponente(grupoOpcoesStatus)
+      } else {
+        if (grupoOpcoesTipo) {
+          filtrarTipoComponente(grupoOpcoesTipo)
+        }
       }
-      else {
-        setListaFiltrada(listaComponents)
+    } else {
+
+    }
+  }
+
+  function filtrarTipoComponente(opcoes: HTMLElement) {
+    for (let opcao of opcoes.children) {
+      if ((opcao.children[0].children[0] as HTMLInputElement).checked) {
+        const tipo = (opcao.children[1] as HTMLElement).innerText
+        if (tipo == TipoComponenteProcesso.Demanda) {
+          setListaComponents(listaDemandas)
+        } else if (tipo == TipoComponenteProcesso.Proposta) {
+          setListaComponents(listaPropostas)
+        } else if (tipo == TipoColecaoComponenteProcesso.Pauta) {
+          setListaComponents(listaPautas)
+        } else if (tipo == TipoColecaoComponenteProcesso.ATA) {
+          setListaComponents(listaATAs)
+        }
       }
     }
   }
 
-  function filtrarTipoComponente(tipo: string) {
-    if (tipo == TipoComponenteProcesso.Demanda) {
-      setListaComponents(listaDemandas)
-    } else if (tipo == TipoComponenteProcesso.Proposta) {
-      setListaComponents(listaPropostas)
-    } else if (tipo == TipoColecaoComponenteProcesso.Pauta) {
-      setListaComponents(listaPautas)
-    } else if (tipo == TipoColecaoComponenteProcesso.ATA) {
-      setListaComponents(listaATAs)
+  function filtrarPelaSearchBar(valorPesquisa: string) {
+    if (valorPesquisa !== '') {
+      const filteredData = listaComponents.filter((item) => {
+        let listaAtributos = []
+
+        if (item.tipo == "Demanda" || item.tipo == "Proposta") {
+          listaAtributos.push(item.usuario.nomeUsuario, item.tituloDemanda)
+        } else {
+          listaAtributos.push(item.tituloReuniao)
+        }
+
+        return listaAtributos.join('').toLowerCase().includes(valorPesquisa.toLowerCase())
+      })
+      setListaFiltrada(filteredData)
+    }
+    else {
+      setListaFiltrada(listaComponents)
+    }
+  }
+
+  function filtrarStatusComponente(opcoes: HTMLElement) {
+    for (let opcao of opcoes.children) {
+      if ((opcao.children[0].children[0] as HTMLInputElement).checked) {
+        const status = (opcao.children[1] as HTMLElement).innerText
+        const novaListaComponentes = listaComponents.filter((componente: any) => getNomeStatus(componente.statusDemanda) == status)
+        setListaFiltrada(novaListaComponentes)
+      }
     }
   }
 
