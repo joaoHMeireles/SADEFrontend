@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useLocationChange } from "../../utils";
 import {
@@ -131,8 +131,13 @@ export default function Filtro(props: {
   });
 
   useLocationChange(() => {
+    localStorage.removeItem("VALORFILTROTamanho")
+
+    props.filtrarResultados()
+
     props.setAberto(false)
   })
+
 
   return (
     <>
@@ -154,7 +159,7 @@ export default function Filtro(props: {
             <>
               <Item itens={status} titulo="Status" tipo={1} filtrarResultados={props.filtrarResultados} />
               <Item itens={tamanhos} titulo="Tamanho" tipo={2} filtrarResultados={props.filtrarResultados} />
-              <Item itens={departamentos} titulo="Departamento" tipo={2} filtrarResultados={props.filtrarResultados} />
+              {/* <Item itens={departamentos} titulo="Departamento" tipo={2} filtrarResultados={props.filtrarResultados} /> */}
               <Item titulo="Código PPM" tipo={3} filtrarResultados={props.filtrarResultados} />
             </>
             :
@@ -263,9 +268,8 @@ function OpcoesRadio(props: OptionInterface) {
 function OpcoesCheck(props: OptionInterface) {
   const opcoesChecadas = localStorage.getItem(`VALORFILTRO${props.titulo}`)
   const [listaOpcoesChecadas, setListaOpcoesChecadas] = useState(opcoesChecadas ? JSON.parse(opcoesChecadas) : [])
-  // const [listaElementosChecados, setListaElementosChecados] = useState([false, false, false, false, false])
 
-  //tem que arrumar isso ainda
+
   function handleClick(e: any) {
     const elemento = e.target
     const novaListaOpcoesChecadas = listaOpcoesChecadas
@@ -273,14 +277,13 @@ function OpcoesCheck(props: OptionInterface) {
     if (elemento.checked) {
       novaListaOpcoesChecadas[Number.parseInt(elemento.id) - 1] = elemento.name
     } else {
-      novaListaOpcoesChecadas.splice(elemento.id - 1, 1)
+      novaListaOpcoesChecadas.splice(novaListaOpcoesChecadas.indexOf(elemento.name), 1)
     }
 
     setListaOpcoesChecadas(novaListaOpcoesChecadas)
     localStorage.setItem(`VALORFILTRO${props.titulo}`, JSON.stringify(listaOpcoesChecadas))
-    
 
-    // props.filtrarResultados()
+    props.filtrarResultados()
   }
 
   return (
@@ -303,16 +306,18 @@ function OpcoesCheck(props: OptionInterface) {
 
 function OpcaoInput(props: { filtrarResultados: Function }) {
   return (
-    <TextField id="standard-basic" variant="standard" InputProps={{
-      sx: {
-        color: "#595959"
-      },
-      startAdornment: (
-        <InputAdornment position="start">
-          <SearchRoundedIcon />
-        </InputAdornment>
-      ),
-    }} />
+    <TextField id="input-pesquisa-ppm" variant="standard" 
+      InputProps={{
+        sx: {
+          color: "#595959"
+        },
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchRoundedIcon />
+          </InputAdornment>
+        ),
+        onChange: props.filtrarResultados as ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+      }} />
   )
 }
 

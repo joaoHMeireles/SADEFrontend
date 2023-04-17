@@ -28,6 +28,7 @@ import Enviadas from "./Enviadas/Enviadas";
 import api from "../api/api";
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../constants/enuns";
 import { getNomeStatus } from "../utils";
+import { useLocationChange } from "../utils";
 
 
 export default function App() {
@@ -41,7 +42,6 @@ export default function App() {
   const [listaPautas, setListaPautas] = useState<any[]>([])
   const [listaATAs, setListaATAs] = useState<any[]>([])
   const tamanhoNavbar = "8.5vh"
-
 
   useEffect(() => {
     api.get("/sod/demanda").then((response) => {
@@ -141,11 +141,10 @@ export default function App() {
     }
 
     const tipoFiltrado = localStorage.getItem(`VALORFILTROTipo`)
-
-    if(tipoFiltrado == "Demanda" || tipoFiltrado == "Proposta"){
+    if (tipoFiltrado == "Demanda" || tipoFiltrado == "Proposta") {
       const grupoOpcoesStatus = document.getElementById("grupo-opcoes-Status")
-      
-      if(grupoOpcoesStatus){
+
+      if (grupoOpcoesStatus) {
         filtrarStatusComponente(grupoOpcoesStatus)
       } else {
         if (grupoOpcoesTipo) {
@@ -155,6 +154,32 @@ export default function App() {
     } else {
 
     }
+
+    const grupoOpcoesTamanho = document.getElementById("grupo-opcoes-Tamanho")
+    if (grupoOpcoesTamanho) {
+      const tamanhosLocalStorage = localStorage.getItem("VALORFILTROTamanho")
+      const tamanhos = tamanhosLocalStorage ? JSON.parse(tamanhosLocalStorage) : null
+
+      if (tamanhos) {
+        filtrarTamanhoComponente(tamanhos.filter((tamanho: any) => tamanho != null))
+      }
+    }
+
+    // const grupoOpcoesDepartamento = document.getElementById("grupo-opcoes-Departamento")
+    // if (grupoOpcoesDepartamento) {
+    //   const departamentosLocalStorage = localStorage.getItem("VALORFILTROTamanho")
+    //   const departamentos = departamentosLocalStorage ? JSON.parse(departamentosLocalStorage) : null
+
+    //   if (departamentos) {
+    //     filtrarDepartamentoComponente(departamentos.filter((departamento: any) => departamento != null))
+    //   }
+    // }
+
+    const inputPesquisaPPM = document.getElementById("input-pesquisa-ppm") as HTMLInputElement
+    if (inputPesquisaPPM) {
+      filtrarPelaSearchBarPPM(inputPesquisaPPM.value)
+    }
+
   }
 
   function filtrarTipoComponente(opcoes: HTMLElement) {
@@ -201,6 +226,59 @@ export default function App() {
         const novaListaComponentes = listaComponents.filter((componente: any) => getNomeStatus(componente.statusDemanda) == status)
         setListaFiltrada(novaListaComponentes)
       }
+    }
+  }
+
+  function filtrarTamanhoComponente(tamanhos: string[]) {
+    if (tamanhos.length > 0) {
+      const mapObject: any = {
+        "MUITOPEQUENO": "Muito pequeno",
+        "PEQUENO": "Pequeno",
+        "MEDIO": "Médio",
+        "GRANDE": "Grande",
+        "MUITOGRANDE": "Muito grande"
+      }  
+      const novaListaComponentes = listaComponents.filter((componente: any) => tamanhos.indexOf(mapObject[componente.tamanho]) != -1)
+
+      setListaFiltrada(novaListaComponentes)
+    } else {
+      setListaFiltrada(listaComponents)
+    }
+  }
+
+  // function filtrarDepartamentoComponente(departamentos: string[]) {
+  //   // if (departamentos.length > 0) {
+  //     const mapObject: any = {
+  //       "MUITOPEQUENO": "Muito pequeno",
+  //       "PEQUENO": "Pequeno",
+  //       "MEDIO": "Médio",
+  //       "GRANDE": "Grande",
+  //       "MUITOGRANDE": "Muito grande"
+  //     }  
+
+  //     for(let componente of listaComponents){
+  //       console.log(componente.usuario.departamento);
+  //     }
+      
+  //   //   const novaListaComponentes = listaComponents.filter((componente: any) => tamanhos.indexOf(mapObject[componente.tamanho]) != -1)
+
+  //   //   setListaFiltrada(novaListaComponentes)
+  //   // } else {
+  //   //   setListaFiltrada(listaComponents)
+  //   // }
+  // }
+
+  function filtrarPelaSearchBarPPM(valorPesquisa: string) {
+    if (valorPesquisa !== '') {
+      const filteredData = listaComponents.filter((item) => {
+        let listaAtributos: string[] = [item.codigoPPM]
+
+        return listaAtributos.join('').toLowerCase().includes(valorPesquisa.toLowerCase())
+      })
+      setListaFiltrada(filteredData)
+    }
+    else {
+      setListaFiltrada(listaComponents)
     }
   }
 
