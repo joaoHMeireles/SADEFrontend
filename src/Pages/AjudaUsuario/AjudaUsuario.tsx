@@ -18,45 +18,45 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
             <BoxHeader sx={{ width: (props.sidebarAberta ? "88.35%" : "96.5%") }}>
                 <Breadcrumb />
             </BoxHeader>
-            
+
             <Toolbar />
 
             <BoxConteudo>
                 <Container>
                     <FirstColumn>
                         <TitleFirstColumn>
-                            <span className="text" onClick={() => { irParaTitulo("introducao") }}>1 INTRODUÇÃO</span>
+                            <span className="text" onClick={() => { irParaTitulo("introducao") }}>INTRODUÇÃO</span>
                         </TitleFirstColumn>
 
                         <TitleFirstColumn>
-                            <span className="text">2 ATIVIDADES PRINCIPAIS</span>
+                            <span className="text">ATIVIDADES PRINCIPAIS</span>
                         </TitleFirstColumn>
 
                         <SubtitleFirstColumn>
-                            <span className="text" onClick={() => { irParaTitulo("criarDemanda") }}>2.1 Criar Demanda</span>
-                            <span className="text" onClick={() => { irParaTitulo("avaliarDemandaA") }}>2.2 Avaliar Demanda (Analista)</span>
-                            <span className="text" onClick={() => { irParaTitulo("avaliarDemandaG") }}>2.3 Avaliar Demanda (Gerente)</span>
-                            <span className="text" onClick={() => { irParaTitulo("addInfoDemanda") }}>2.4 Adicionar informações na Demanda (Analista)</span>
-                            <span className="text" onClick={() => { irParaTitulo("criarProsposta") }}>2.5 Criar Proposta</span>
-                            <span className="text" onClick={() => { irParaTitulo("criarPauta") }}>2.6 Criar Pauta</span>
-                            <span className="text" onClick={() => { irParaTitulo("informarParecerComissao") }}>2.7 Informar o parecer do Comissão (Analista)</span>
-                            <span className="text" onClick={() => { irParaTitulo("criarATA") }}>2.8 Criar ATA</span>
-                            <span className="text" onClick={() => { irParaTitulo("informarParecerDG") }}>2.9 Informar o parecer da Diretoria Geral</span>
+                            <span className="text" onClick={() => { irParaTitulo("criarDemanda") }}>Criar Demanda</span>
+                            <span className="text" onClick={() => { irParaTitulo("avaliarDemandaA") }}>Avaliar Demanda (Analista)</span>
+                            <span className="text" onClick={() => { irParaTitulo("avaliarDemandaG") }}>Avaliar Demanda (Gerente)</span>
+                            <span className="text" onClick={() => { irParaTitulo("addInfoDemanda") }}>Adicionar informações na Demanda (Analista)</span>
+                            <span className="text" onClick={() => { irParaTitulo("criarProsposta") }}>Criar Proposta</span>
+                            <span className="text" onClick={() => { irParaTitulo("criarPauta") }}>Criar Pauta</span>
+                            <span className="text" onClick={() => { irParaTitulo("informarParecerComissao") }}>Informar o parecer do Comissão (Analista)</span>
+                            <span className="text" onClick={() => { irParaTitulo("criarATA") }}>Criar ATA</span>
+                            <span className="text" onClick={() => { irParaTitulo("informarParecerDG") }}>Informar o parecer da Diretoria Geral</span>
                         </SubtitleFirstColumn>
 
                         <TitleFirstColumn>
-                            <span className="text">3 ATIVIDADES SECUNDÁRIAS</span>
+                            <span className="text">ATIVIDADES SECUNDÁRIAS</span>
                         </TitleFirstColumn>
 
                         <SubtitleFirstColumn>
-                            <span className="text" onClick={() => { irParaTitulo("iniciarWorkflow") }}>3.1 Iniciar Workflow de Aprovação (Analista)</span>
-                            <span className="text" onClick={() => { irParaTitulo("avaliarWorkflow") }}>3.2 Avaliar Workflow de Aprovação (Gerentes)</span>
+                            <span className="text" onClick={() => { irParaTitulo("iniciarWorkflow") }}>Iniciar Workflow de Aprovação (Analista)</span>
+                            <span className="text" onClick={() => { irParaTitulo("avaliarWorkflow") }}>Avaliar Workflow de Aprovação (Gerentes)</span>
                         </SubtitleFirstColumn>
                     </FirstColumn>
 
                     <SecondColumn>
                         <TitleSecondColumn id="introducao">
-                            <p>1 INTRODUÇÃO</p>
+                            <p>INTRODUÇÃO</p>
                         </TitleSecondColumn>
 
                         <TextSecondColumn>
@@ -64,11 +64,11 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                         </TextSecondColumn>
 
                         <TitleSecondColumn>
-                            <p>2 ATIVIDADES PRINCIPAIS</p>
+                            <p>ATIVIDADES PRINCIPAIS</p>
                         </TitleSecondColumn>
 
                         <SubtitleSecondColumn id="criarDemanda">
-                            <p>2.1 Criar Demanda</p>
+                            <p>Criar Demanda</p>
                         </SubtitleSecondColumn>
 
                         <TextSecondColumn>
@@ -118,7 +118,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                         </TextSecondColumn>
 
                         <SubtitleSecondColumn id="avaliarDemandaA">
-                            <p>2.2 Avaliar Demanda(Analista)</p>
+                            <p>Avaliar Demanda(Analista)</p>
                         </SubtitleSecondColumn>
 
                         <TextSecondColumn>
@@ -134,7 +134,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                         </TextSecondColumn>
 
                         <SubtitleSecondColumn id="avaliarDemandaG">
-                            <p>2.3 Avaliar Demanda(Gerente)</p>
+                            <p>Avaliar Demanda(Gerente)</p>
                         </SubtitleSecondColumn>
 
                         <TextSecondColumn>
@@ -142,7 +142,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                         </TextSecondColumn>
 
                         <SubtitleSecondColumn id="addInfoDemanda">
-                            <p>2.4 Adicionar Informações na Demanda(Analista)</p>
+                            <p>Adicionar Informações na Demanda(Analista)</p>
                         </SubtitleSecondColumn>
 
                         <TextSecondColumn>
@@ -150,7 +150,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                         </TextSecondColumn>
 
                         <SubtitleSecondColumn id="criarProsposta">
-                            <p>2.5 Criar Proposta</p>
+                            <p>Criar Proposta</p>
                         </SubtitleSecondColumn>
 
                         <TextSecondColumn>
@@ -158,7 +158,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                         </TextSecondColumn>
 
                         <SubtitleSecondColumn id="criarPauta">
-                            <p>2.6 Criar Pauta</p>
+                            <p>Criar Pauta</p>
                         </SubtitleSecondColumn>
 
                         <TextSecondColumn>
@@ -174,7 +174,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                         </TextSecondColumn>
 
                         <SubtitleSecondColumn id="informarParecerComissao">
-                            <p>2.7 Informar o parecer do Comissão (Analista)</p>
+                            <p>Informar o parecer do Comissão (Analista)</p>
                         </SubtitleSecondColumn>
 
                         <TextSecondColumn>
@@ -182,7 +182,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                         </TextSecondColumn>
 
                         <SubtitleSecondColumn id="criarATA">
-                            <p>2.8 Criar ATA</p>
+                            <p>Criar ATA</p>
                         </SubtitleSecondColumn>
 
                         <TextSecondColumn>
@@ -190,7 +190,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                         </TextSecondColumn>
 
                         <SubtitleSecondColumn id="informarParecerDG">
-                            <p>2.9 Informar o parecer da Diretoria Geral</p>
+                            <p>Informar o parecer da Diretoria Geral</p>
                         </SubtitleSecondColumn>
 
                         <TextSecondColumn>
@@ -198,11 +198,11 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                         </TextSecondColumn>
 
                         <TitleSecondColumn>
-                            <p>3 ATIVIDADES SECUNDÁRIAS</p>
+                            <p>ATIVIDADES SECUNDÁRIAS</p>
                         </TitleSecondColumn>
 
                         <SubtitleSecondColumn id="iniciarWorkflow">
-                            <p>3.1 Iniciar Workflow de Aprovação (Analista)</p>
+                            <p>Iniciar Workflow de Aprovação (Analista)</p>
                         </SubtitleSecondColumn>
 
                         <TextSecondColumn>
@@ -210,7 +210,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                         </TextSecondColumn>
 
                         <SubtitleSecondColumn id="avaliarWorkflow">
-                            <p>3.2 Avaliar Workflow de Aprovação (Gerentes)</p>
+                            <p>Avaliar Workflow de Aprovação (Gerentes)</p>
                         </SubtitleSecondColumn>
 
                         <TextSecondColumn>
