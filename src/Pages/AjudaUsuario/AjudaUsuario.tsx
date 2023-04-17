@@ -18,9 +18,10 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
             <BoxHeader sx={{ width: (props.sidebarAberta ? "88.35%" : "96.5%") }}>
                 <Breadcrumb />
             </BoxHeader>
+            
             <Toolbar />
-            <BoxConteudo >
 
+            <BoxConteudo>
                 <Container>
                     <FirstColumn>
                         <TitleFirstColumn>
