@@ -5,6 +5,10 @@ import Typography from "@mui/material/Typography";
 const styledBox = styled(Box);
 const styledTypography = styled(Typography);
 
+export const BoxInfoPauta = styledBox({
+
+})
+
 export const BoxGeral = styledBox({
   alignItems: "center",
   display: "flex",
@@ -47,16 +51,13 @@ export const TypographyVermais = styledTypography({
 });
 
 export const BoxInputsDataComissao = styledBox({
-  // position: "fixed",
-  // top: "80%",
-  // left: "71%",
-  // width: "100%",
   alignItems: "center",
   display: "flex",
-  justifyContent: "flex-end",
+  // flexDirection: "column",
+  justifyContent: "center",
   marginTop: 40,
   height: "100%",
-  width: "90%",
+  width: "100%",
 });
 
 export const BoxBotoes = styledBox({

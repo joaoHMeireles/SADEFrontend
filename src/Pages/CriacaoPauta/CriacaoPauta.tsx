@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
@@ -8,7 +8,7 @@ import Searchbar from "../../Components/Searchbar/Searchbar";
 
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { MenuItem, Select, TextField } from "@mui/material";
+import { Box, Grid, MenuItem, Select, TextField } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 
@@ -17,14 +17,8 @@ import LensRoundedIcon from "@mui/icons-material/LensRounded";
 import PanoramaFishEyeRoundedIcon from "@mui/icons-material/PanoramaFishEyeRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-
 import { BotaoPrimario, BotaoSecundario, BoxConteudo } from "../App.styles";
 import { ContainerBoxTabs } from "../CriacaoProposta/CriacaoProposta.styles";
-import {
-  BoxBotoesPriSec,
-  BoxContainerBotoes,
-} from "../CriacaoDemanda/CriacaoDemanda.styles";
-
 import {
   BoxBotoes,
   BoxConteudoProposta,
@@ -35,41 +29,32 @@ import {
   BoxTituloProposta,
   TypographyVermais,
 } from "./CriacaoPauta.styles";
-
 import {
-  sessaoTI,
-  StatusComponenteProcesso,
-  TamanhoComponenteProcesso,
   TipoComponenteProcesso,
 } from "../../constants/enuns";
 import api from "../../api/api";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semDemanda from "../../Assets/empty-folder.png"
+import { GridInfoATA, TypographyTituloInput } from "../TelaColecaoProcesso/TelaColecaoProcesso.styles";
+import { DatePicker } from "@mui/x-date-pickers";
+import { Dayjs } from "dayjs";
 
 export default function CriacaoPauta(props: {
   filtrar: boolean;
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
+  listaComponents: any[];
+  filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }) {
   const [valor, setValor] = useState(0);
   const [grid, setGrid] = useState(true);
   const [propostas, setPropostas] = useState<any[]>([]);
   const [listaComponents, setListaComponents] = useState<any[]>([])
-
-  const comissao = [
-    "Comissão 1",
-    "Comissão 2",
-    "Comissão 3",
-    "Comissão 4",
-    "Comissão 5",
-  ];
-
-  const [comissoes, setComissoes] = useState(Array<String>);
+  const [comissoes, setComissoes] = useState<any[]>([]);
+  const [comissaoEscolhida, setComissaoEscolhida] = useState<any>()
+  const [valorData, setValorData] = useState<Dayjs | null>(null)
 
   useEffect(() => {
     const idPropostaEscolhida = localStorage.getItem("PROPOSTACRIARPAUTA")
-
-    console.log(idPropostaEscolhida);
-
 
     api.get(`/sod/proposta/pauta/${false}`).then((response) => {
       let listaPropostas: any[] = []
@@ -91,6 +76,12 @@ export default function CriacaoPauta(props: {
     }).catch((err) => {
       console.log(err);
     })
+
+    api.get('/sod/forum').then((response) => {
+      setComissoes(response.data)
+    }).catch((err) => {
+      console.log(err);
+    })
   }, [])
 
   useEffect(() => {
@@ -100,12 +91,7 @@ export default function CriacaoPauta(props: {
     }
   });
 
-  // useEffect(() => {
-  //   console.log(propostas);
-  // }, [valor]);
-
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
-    console.log(newValue);
     setValor(newValue);
   }
 
@@ -114,6 +100,64 @@ export default function CriacaoPauta(props: {
       return propostas.filter((proposta) => proposta.id !== id);
     });
   }
+
+  function atualizarPropostaEscolhida(proposta: any) {
+    localStorage.setItem(`PROPOSTAESCOLHIDA`, JSON.stringify(proposta));
+  }
+
+  function criarPauta() {
+
+  }
+
+  {/* <Grid container spacing={3}>
+              <GridInfoATA item xs={12}>
+                <TypographyTituloInput>
+                  Dia da reunião
+                </TypographyTituloInput>
+                <TextField type={"date"} id="dataReuniao" />
+              </GridInfoATA>
+              <GridInfoATA item xs={12}>
+                <TypographyTituloInput>
+                  Título da reunião
+                </TypographyTituloInput>
+                <TextField sx={{ width: "100%" }} id="tituloReuniao" />
+              </GridInfoATA>
+              <GridInfoATA item xs={6}>
+                <TypographyTituloInput>
+                  Início da reunião
+                </TypographyTituloInput>
+                <TextField type={"time"} id="inicioReuniao" defaultValue={"00:00"} />
+              </GridInfoATA>
+              <GridInfoATA item xs={6}>
+                <TypographyTituloInput>
+                  Final da reunião
+                </TypographyTituloInput>
+                <TextField type={"time"} id="finalReuniao" defaultValue={"00:00"} />
+              </GridInfoATA>
+            </Grid> */}
+  {/* <FormControl sx={{ width: "10%" }}>
+              <InputLabel>Comissão</InputLabel>
+              <Select
+                sx={{ width: "auto" }}
+                value={comissaoEscolhida}
+                onChange={(e: any) => {
+                  const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
+                  setComissaoEscolhida(novaComissaoEscolhida);
+                }}
+                label="Comissão"
+              >
+                {comissoes.map((comissao) => {
+                  return <MenuItem value={comissao.nomeForum} id={comissao.idForum}>{comissao.nomeForum}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+            <DatePicker
+              value={valorData}
+              onChange={(newValue) => {
+                setValorData(newValue);
+              }}
+              renderInput={(params) => <TextField id='inputDataInformacoes' {...params} />}
+            /> */}
 
   return (
     <BoxConteudo>
@@ -143,6 +187,7 @@ export default function CriacaoPauta(props: {
             filtrar={props.filtrar}
             grid={grid}
             setGrid={setGrid}
+            filtrarResultados={props.filtrarResultados}
           />
           {listaComponents.length != 0 ?
             <CardsProcesso
@@ -180,39 +225,21 @@ export default function CriacaoPauta(props: {
       {valor == 1 && (
         <>
           <BoxInputsDataComissao>
-            <FormControl sx={{ width: "10%" }}>
-              <InputLabel>Comissão</InputLabel>
-              <Select
-                sx={{ width: "100%" }}
-                value={comissoes}
-                onChange={(e) => {
-                  setComissoes(e.target.value);
-                }}
-                label="Comissão"
-              >
-                {comissao.map((comissao) => {
-                  return <MenuItem value={comissao}>{comissao}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
-            <TextField
-              sx={{ marginLeft: 3 }}
-              type="date"
-              label="Data reunião"
-              defaultValue="0000-00-00"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            ></TextField>
+            <Grid container spacing={1}>
+              <Grid item xs={6}>
+                
+              </Grid>
+            </Grid>
+
           </BoxInputsDataComissao>
-          {propostas.map((proposta: any, index) => {
+          {propostas.map((proposta: any) => {
             return (
               <>
                 <BoxGeral key={proposta.id}>
                   <BoxProposta>
                     <CardProposta cor="#6AACDA">
                       <BoxConteudoProposta>
-                        <BoxTituloProposta>{proposta.titulo}</BoxTituloProposta>
+                        <BoxTituloProposta>{proposta.tituloDemanda}</BoxTituloProposta>
                         <BoxIconeLink>
                           <DeleteIcon
                             sx={{
@@ -224,7 +251,7 @@ export default function CriacaoPauta(props: {
                             onClick={() => removerProposta(proposta.id)}
                           />
                           <TypographyVermais variant="body2">
-                            <Link to={proposta.link}>Ver mais</Link>
+                            <Link to={proposta.link} onClick={() => { atualizarPropostaEscolhida(proposta) }}>Ver mais</Link>
                           </TypographyVermais>
                         </BoxIconeLink>
                       </BoxConteudoProposta>
@@ -252,6 +279,7 @@ export default function CriacaoPauta(props: {
               sx={{ width: "10%", minWidth: "auto", height: "3rem" }}
               variant="contained"
               endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
+              onClick={criarPauta}
             >
               Enviar
             </BotaoPrimario>
