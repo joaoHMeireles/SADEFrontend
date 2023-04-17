@@ -14,6 +14,7 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
+import EsqueletoPDFProposta from "../../Components/EsqueletoPDF/EsqueletoPDFProposta/EsqueletoPDFProposta";
 import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import InfomacoesAdicionais from "../../Components/InfomacoesAdicionais/InformacoesAdicionais";
@@ -39,6 +40,7 @@ import { Dayjs } from "dayjs";
 import { useLocationChange } from "../../utils";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semDemanda from "../../Assets/empty-folder.png"
+import jsPDF from "jspdf";
 
 export default function CriacaoProposta(props: {
   filtrar: boolean;
@@ -68,17 +70,58 @@ export default function CriacaoProposta(props: {
   const [valorLinkJira, setValorLinkJira] = useState<string>("");
 
   const [escopoProposta, setEscopoProposta] = useState<string>("")
-  const [payback, setPayback] = useState<number>(0)
-  const [periodoExecucao, setPeriodoExecucao] = useState<Date | null>(null)
-  const [nomeResponsavel, setNomeResponsavel] = useState<string>("")
-  const [areaResponsavel, setAreaResponsavel] = useState<string>("")
+  const [payback, setPayback] = useState<any>()
+  const [periodoExecucaoInicio, setPeriodoExecucaoInicio] = useState<any>(null)
+  const [periodoExecucaoFim, setPeriodoExecucaoFim] = useState<any>(null)
+  const [usuariosResponsaveis, setUsuariosResponsaveis] = useState<any[]>([])
 
-  // const [centroCustoTabela, setCentroCustoTabela] = useState<string[]>([])
-  // const [valorTotalTabela, setValorTotalTabela] = useState<number>(0)
-  // const [esforcoTabela, setEsforcoTabela] = useState<number>(0)
-  // const [tituloLinhaTabela, setTituloLinhaTabela] = useState<string>("")
+  const [centroCusto, setCentroCusto] = useState<any>();
+  const [centroCustoEscolhidas, setCentroCustoEscolhidas] = useState<any[]>([]);
 
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>();
+
+  const [propostaPDF, setPropostaPDF] = useState<any>(
+    {
+      escopo: "escopoProposta",
+      periodoExecucaoInicio: "12/04/2023",
+      periodoExecucaoFim: "14/04/2023",
+      payback: 4,
+      demanda: informacaoProcesso,
+      responsaveisNegocio: [{ idUsuario: 1, nomeUsuario: "Diego" }],
+      tabelasCustoProposta: [{
+        tituloTabela: "Despesas iniciais",
+        quantidadeTotal: 90,
+        valorTotal: 960,
+        licenca: false,
+        centrosCustoPagantes: [
+          {
+            centroCusto: {
+              idCentroCusto: 3
+            },
+            porcentagemDespesa: 0.4
+          },
+          {
+            centroCusto: {
+              idCentroCusto: 1
+            },
+            porcentagemDespesa: 0.6
+          }
+        ],
+        linhasTabela: [
+          {
+            nomeRecurso: "trabalho",
+            quantidade: 40,
+            valorQuantidade: 9
+          },
+          {
+            nomeRecurso: "trabalho2",
+            quantidade: 50,
+            valorQuantidade: 12
+          }
+        ]
+      }]
+    }
+  );
 
   useEffect(() => {
     const idDemandaCriacao = localStorage.getItem("DEMANDACRIARPROPOSTA")
@@ -113,6 +156,25 @@ export default function CriacaoProposta(props: {
     localStorage.removeItem("DEMANDACRIARPROPOSTA")
   })
 
+  useEffect(() => {
+    api.get("/sod/centroCusto").then((res) => setCentroCusto(res.data))
+  }, [])
+
+  useEffect(() => {
+    const novaPropostaPDF = {
+      ...propostaPDF,
+      demanda: informacaoProcesso
+    }
+
+    setPropostaPDF(novaPropostaPDF)
+  }, [informacaoProcesso])
+
+  // useEffect(() => {
+  //   criarProposta()
+  // console.log(usuariosResponsaveis);
+
+  // }, [informacaoProcesso, escopoProposta, periodoExecucaoInicio, periodoExecucaoFim, usuariosResponsaveis, payback])
+
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
     if (newValue == 2) {
@@ -120,6 +182,118 @@ export default function CriacaoProposta(props: {
     } else {
       setSegundo(false);
     }
+  }
+
+  function criarProposta() {
+    const listaTabelasCustoProposta: any[] = []
+    let listaTabelas = document.getElementsByClassName("tabelaCustoCriacao");
+
+    for (let i = 0; i < listaTabelas.length; i++) {
+      const listaLinhasTabelaCustoProposta: any[] = []
+      let listaLinhasTabela = document.getElementsByClassName(`linhaTabelaCustoCriacao${i}`);
+
+      let valorTotal: number = 0;
+      let quantidadeTotal: number = 0;
+      let linhaTabela;
+
+      const tituloTabela = (document.getElementById(`tituloTabela${i}`) as HTMLInputElement).value;
+
+      for (let j = 0; j < listaLinhasTabela.length; j++) {
+
+        const nomeRecurso = (document.getElementById(`tituloLinha${i}-${j}`) as HTMLInputElement).value
+        const quantidade = (document.getElementById(`esforco${i}-${j}`) as HTMLInputElement).value
+        const valorQuantidade = (document.getElementById(`valorHora${i}-${j}`) as HTMLInputElement).value
+
+
+        if (nomeRecurso && quantidade && valorQuantidade) {
+          linhaTabela = {
+            nomeRecurso: nomeRecurso,
+            quantidade: parseInt(quantidade),
+            valorQuantidade: parseInt(valorQuantidade)
+          }
+          valorTotal += (parseInt(valorQuantidade) * parseInt(quantidade));
+          quantidadeTotal += parseInt(quantidade);
+        }
+
+        listaLinhasTabelaCustoProposta.push(linhaTabela);
+      }
+
+      let listaCentroCustoTabela: any[] = []
+
+      for (const centroCustos of centroCustoEscolhidas) {
+        for (const centroCusto of centroCustos) {
+
+          let objetoCentroCusto: {
+            centroCusto: Object,
+            porcentagemDespesa: number
+          }
+
+          let centroCustoTabela: {
+            idCentroCusto: number,
+            nomeCentroCusto: string
+          };
+
+          if (centroCusto.tabela == i) {
+            centroCustoTabela = { idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto }
+            objetoCentroCusto = { centroCusto: centroCustoTabela, porcentagemDespesa: (parseFloat(centroCusto.porcentagem) / 100) }
+            listaCentroCustoTabela.push(objetoCentroCusto);
+          }
+        }
+      }
+
+      let tabela = {
+        tituloTabela: tituloTabela,
+        quantidadeTotal: quantidadeTotal,
+        valorTotal: valorTotal,
+        licenca: false,
+        centrosCustoPagantes: listaCentroCustoTabela,
+        linhasTabela: listaLinhasTabelaCustoProposta
+      }
+
+      listaTabelasCustoProposta.push(tabela)
+    }
+
+    const dataExecucaoInicio = (document.getElementById("periodoExecucaoInicio") as HTMLInputElement).value
+    const dataExecucaoFim = (document.getElementById("periodoExecucaoFim") as HTMLInputElement).value
+
+    let dataExecucaoInicioCerto = dataExecucaoInicio.slice(6) + "/" + dataExecucaoInicio.slice(0, 5)
+    dataExecucaoInicioCerto = dataExecucaoInicioCerto.replaceAll("/", "-")
+
+    let dataExecucaoFimCerto = dataExecucaoFim.slice(6) + "/" + dataExecucaoFim.slice(0, 5)
+    dataExecucaoFimCerto = dataExecucaoFimCerto.replaceAll("/", "-")
+
+    const {tipo, ...informacaoProcessoCerto} = informacaoProcesso
+
+    let proposta = {
+      escopo: escopoProposta,
+      periodoExecucaoInicio: dataExecucaoInicioCerto,
+      periodoExecucaoFim: dataExecucaoFimCerto,
+      payback: payback,
+      demanda: informacaoProcessoCerto,
+      responsaveisNegocio: usuariosResponsaveis,
+      tabelasCustoProposta: listaTabelasCustoProposta
+    }
+
+    setPropostaPDF(proposta);
+
+    let formData = new FormData()
+    let idUsuario = localStorage.getItem("IDUSUARIO");
+
+    formData.append("proposta", JSON.stringify(proposta));
+
+    const doc = new jsPDF()
+    const pdf = document.getElementById("BOX") as HTMLElement
+
+    doc.html(pdf)
+    const pdfArquivo = doc.output("blob")
+
+    formData.append("pdfVersaoHistorico", pdfArquivo);
+
+    api.post(`/sod/proposta/${idUsuario}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    })
   }
 
   return (
@@ -190,7 +364,7 @@ export default function CriacaoProposta(props: {
       <ContainerGeral>
         {valor == 1 && (
           <>
-            <InformacaoGeral proposta={true} />
+            <InformacaoGeral proposta={true} informacaoProcesso={informacaoProcesso} setInformacaoProcesso={setInformacaoProcesso} />
             <BeneficiosDemanda rascunho={false} proposta={true}
               numeroBeneficiosReais={numeroBeneficiosReais}
               numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
@@ -203,9 +377,10 @@ export default function CriacaoProposta(props: {
               moedaPotencial={moedaPotencial}
               setMoedaPotencial={setMoedaPotencial}
               valor={valor}
+              informacaoProcesso={informacaoProcesso}
+              setInformacaoProcesso={setInformacaoProcesso}
             />
             <InfomacoesAdicionais
-              informacaoProcesso={informacaoProcesso}
               valorTamanho={valorTamanho}
               setValorTamanho={setValorTamanho}
               valorBUSolicitante={valorBUSolicitante}
@@ -220,6 +395,8 @@ export default function CriacaoProposta(props: {
               setValorCodigoPPM={setValorCodigoPPM}
               valorLinkJira={valorLinkJira}
               setValorLinkJira={setValorLinkJira}
+              informacaoProcesso={informacaoProcesso}
+              setInformacaoProcesso={setInformacaoProcesso}
             />
             <InputAnexos rascunho={false} proposta={true} />
             <BoxContainerBotoes>
@@ -250,13 +427,12 @@ export default function CriacaoProposta(props: {
           <>
             <EscopoProposta proposta={true} escopoProposta={escopoProposta} setEscopoProposta={setEscopoProposta}
               payback={payback} setPayback={setPayback}
-              periodoExecucao={periodoExecucao} setPeriodoExecucao={setPeriodoExecucao}
-              nomeResponsavel={nomeResponsavel} setNomeResponsavel={setNomeResponsavel}
-              areaResponsavel={areaResponsavel} setAreaResponsavel={setAreaResponsavel}
-            // centroCustoTabela={centroCustoTabela} setCentroCustoTabela={setCentroCustoTabela}
-            // valorTotalTabela={valorTotalTabela} setValorTotalTabela={setValorTotalTabela}
-            // esforcoTabela={esforcoTabela} setEsforcoTabela={setEsforcoTabela}
-            // tituloLinhaTabela={tituloLinhaTabela} setTituloLinhaTabela={setTituloLinhaTabela}
+              periodoExecucaoInicio={periodoExecucaoInicio} setPeriodoExecucaoInicio={setPeriodoExecucaoInicio}
+              periodoExecucaoFim={periodoExecucaoFim} setPeriodoExecucaoFim={setPeriodoExecucaoFim}
+              usuariosResponsaveis={usuariosResponsaveis} setUsuariosResponsaveis={setUsuariosResponsaveis}
+              centroCusto={centroCusto}
+              centroCustoEscolhidas={centroCustoEscolhidas}
+              setCentroCustoEscolhidas={setCentroCustoEscolhidas}
             />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
@@ -292,11 +468,13 @@ export default function CriacaoProposta(props: {
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
+                  onClick={() => criarProposta()}
                 >
                   Enviar
                 </BotaoPrimario>
               </BoxBotoesPriSec>
             </BoxContainerBotoes>
+            <EsqueletoPDFProposta proposta={propostaPDF} />
           </>
         )}
       </ContainerGeral>

@@ -152,9 +152,9 @@ export const dataDoughnut = {
 
 let total: number = 0;
 
-for (let numero of dataDoughnut.datasets[0].data) {
-    total += Number.parseInt(numero);
-};
+// for (let numero of dataDoughnut.datasets[0].data) {
+//     total += Number.parseInt(numero);
+// };
 
 export const pluginsDoughnut = {
     id: "textCenter",

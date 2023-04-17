@@ -6,17 +6,17 @@ const styledBox = styled(Box);
 const styledTypography = styled(Typography);
 
 export const BoxContainerGeral = styledBox({
-  display: "flex",
-  justifyContent: "center",
   alignItems: "center",
+  display: "flex",
   flexDirection: "column",
   height: "auto",
+  justifyContent: "center",
   width: "100%",
 });
 
 export const BoxPadrao = styledBox({
-  width: "100%",
   marginTop: 24,
+  width: "100%",
 });
 
 export const BoxPaybackExecucao = styledBox({
@@ -28,7 +28,7 @@ export const BoxPaybackExecucao = styledBox({
 });
 
 export const BoxPaybackExe = styledBox({
-  width: "100%",
+  width: "33%",
 });
 
 export const BoxResponsavel = styledBox({

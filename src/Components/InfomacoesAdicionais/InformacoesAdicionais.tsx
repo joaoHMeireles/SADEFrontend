@@ -22,7 +22,6 @@ import { getValueEnum } from "../../utils";
 import { sessaoTI } from "../../constants/enuns";
 
 export default function InfomacoesAdicionais(props: {
-    informacaoProcesso: any;
     valorTamanho: string;
     setValorTamanho: React.Dispatch<React.SetStateAction<string>>;
     valorBUSolicitante: string;
@@ -37,6 +36,8 @@ export default function InfomacoesAdicionais(props: {
     setValorCodigoPPM: React.Dispatch<React.SetStateAction<number>>;
     valorLinkJira: string;
     setValorLinkJira: React.Dispatch<React.SetStateAction<string>>;
+    informacaoProcesso: any
+    setInformacaoProcesso: any
 }) {
 
     const tamanhos = [
@@ -62,11 +63,15 @@ export default function InfomacoesAdicionais(props: {
     ]
 
     const [bus, setBus] = useState<any[]>([])
+    const [objetoBus, setObjetoBus] = useState<any[]>([])
 
     useEffect(() => {
         api.get("/sod/bu").then((res) => {
+
             const listaBus = res.data.map((bu: any) => bu.nomeBU)
+
             setBus(listaBus)
+            setObjetoBus(res.data)
         }).catch((err) => console.log(err));
     }, [])
 
@@ -122,7 +127,15 @@ export default function InfomacoesAdicionais(props: {
                         <SelectPadrao
                             id="tamanhos"
                             value={props.valorTamanho}
-                            onChange={(e: SelectChangeEvent) => { props.setValorTamanho(e.target.value as string) }}
+                            onChange={(e: SelectChangeEvent) => {
+                                props.setValorTamanho(e.target.value as string)
+
+                                const novaInfoDemanda = {
+                                    ...props.informacaoProcesso,
+                                    tamanho: e.target.value,
+                                };
+                                props.setInformacaoProcesso(novaInfoDemanda);
+                            }}
                         >
                             {tamanhos.map((tamanho: string, index: number) => {
                                 return (
@@ -137,8 +150,14 @@ export default function InfomacoesAdicionais(props: {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                                 value={props.prazoElaboracao}
-                                onChange={(newValue) => {
-                                    props.setPrazoElaboracao(newValue);
+                                onChange={(e: any) => {
+                                    props.setPrazoElaboracao(e.$d);
+
+                                    const novaInfoDemanda = {
+                                        ...props.informacaoProcesso,
+                                        prazoElaboracao: e.$d,
+                                    };
+                                    props.setInformacaoProcesso(novaInfoDemanda);
                                 }}
                                 renderInput={(params) => <TextField id='inputDataInformacoes' {...params} />}
                             />
@@ -151,7 +170,38 @@ export default function InfomacoesAdicionais(props: {
                         <SelectPadrao
                             id="busolicitante"
                             value={props.valorBUSolicitante}
-                            onChange={(e: SelectChangeEvent) => { props.setValorBUSolicitante(e.target.value as string) }}
+                            onChange={(e: SelectChangeEvent) => {
+                                props.setValorBUSolicitante(e.target.value as string)
+
+                                let idBu;
+
+                                let buSolicitanteObjeto: {
+                                    idBU: number,
+                                    nomeBU: string
+                                }
+
+                                for (const bu of objetoBus) {
+                                    if (bu.nomeBU == e.target.value) {
+                                        idBu = bu.idBU
+                                    }
+
+                                }
+
+                                buSolicitanteObjeto = {
+                                    idBU: idBu,
+                                    nomeBU: e.target.value
+                                };
+
+                                const novaInfoDemanda = {
+                                    ...props.informacaoProcesso,
+                                    busolicitante: buSolicitanteObjeto
+                                };
+
+                                if (novaInfoDemanda) {
+                                    props.setInformacaoProcesso(novaInfoDemanda);
+                                }
+
+                            }}
                         >
                             {bus.map((bu: any, index: number) => {
                                 return (
@@ -164,42 +214,92 @@ export default function InfomacoesAdicionais(props: {
 
                 <Box sx={{ width: "100%" }}>
                     <TypographyPadrao>BUs Beneficiadas: </TypographyPadrao>
-                    <Autocomplete
-                        id="BU"
-                        sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
-                        multiple
-                        disableCloseOnSelect
-                        defaultValue={props.informacaoProcesso.busBeneficiadas.map((bus: any) => bus.nomeBU)}
-                        onChange={(e, valor: any) => {
-                            let busBeneficiadas: Object[] = []
+                    {props.informacaoProcesso.busBeneficiadas ?
+                        <Autocomplete
+                            id="BU"
+                            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+                            multiple
+                            disableCloseOnSelect
+                            defaultValue={props.informacaoProcesso.busBeneficiadas.map((bus: any) => bus.nomeBU)}
+                            onChange={(e, valor: any) => {
+                                let busBeneficiada: Object[] = []
 
-                            for (let buSelecionada of valor) {
-                                for (let bu of props.informacaoProcesso.busBeneficiadas) {
-                                    if (bu.nomeBU == buSelecionada) {
-                                        props.valorBUsBeneficadas.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                for (let buSelecionada of valor) {
+                                    for (let bu of objetoBus) {
+                                        if (bu.nomeBU == buSelecionada) {
+                                            busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                        }
                                     }
                                 }
-                            }
 
-                            props.setValorBUsBeneficadas(props.valorBUsBeneficadas);
-                        }}
-                        renderOption={(props, bu, { selected }) => {
-                            return (
-                                <li {...props} id="listaBU">
-                                    <Checkbox
-                                        id="checkbox"
-                                        icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                                        checkedIcon={<CheckBoxIcon fontSize="small" />}
-                                        style={{ marginRight: 8 }}
-                                        checked={selected}
-                                    />
-                                    {bu}
-                                </li>
-                            );
-                        }}
-                        options={bus}
-                        renderInput={(params) => <TextField {...params} />}
-                    />
+                                props.setValorBUsBeneficadas(busBeneficiada);
+
+                                const novaInfoDemanda = {
+                                    ...props.informacaoProcesso,
+                                    busBeneficiadas: busBeneficiada,
+                                };
+                                props.setInformacaoProcesso(novaInfoDemanda);
+
+                            }}
+                            renderOption={(props, bu, { selected }) => {
+                                return (
+                                    <li {...props} id="listaBU">
+                                        <Checkbox
+                                            id="checkbox"
+                                            icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                                            checkedIcon={<CheckBoxIcon fontSize="small" />}
+                                            style={{ marginRight: 8 }}
+                                            checked={selected}
+                                        />
+                                        {bu}
+                                    </li>
+                                );
+                            }}
+                            options={bus}
+                            renderInput={(params) => <TextField {...params} />}
+                        /> :
+                        <Autocomplete
+                            id="BU"
+                            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+                            multiple
+                            disableCloseOnSelect
+                            onChange={(e, valor: any) => {
+                                let busBeneficiada: Object[] = []
+
+                                for (let buSelecionada of valor) {
+                                    for (let bu of objetoBus) {
+                                        if (bu.nomeBU == buSelecionada) {
+                                            busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                        }
+                                    }
+                                }
+
+                                props.setValorBUsBeneficadas(busBeneficiada);
+
+                                const novaInfoDemanda = {
+                                    ...props.informacaoProcesso,
+                                    busBeneficiadas: busBeneficiada,
+                                };
+                                props.setInformacaoProcesso(novaInfoDemanda);
+
+                            }}
+                            renderOption={(props, bu, { selected }) => {
+                                return (
+                                    <li {...props} id="listaBU">
+                                        <Checkbox
+                                            id="checkbox"
+                                            icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                                            checkedIcon={<CheckBoxIcon fontSize="small" />}
+                                            style={{ marginRight: 8 }}
+                                            checked={selected}
+                                        />
+                                        {bu}
+                                    </li>
+                                );
+                            }}
+                            options={bus}
+                            renderInput={(params) => <TextField {...params} />}
+                        />}
                 </Box>
 
                 <BoxSessaoTIECodigoPPM>
@@ -213,7 +313,21 @@ export default function InfomacoesAdicionais(props: {
                                     nome: e.target.value,
                                     abreviacao: props.informacaoProcesso.secaoTIResponsavel
                                 }
-                                props.setValorSessaoTI(sessaoTI)
+                                props.setValorSessaoTI(sessaoTI.nome);
+
+                                let abreviacaoSessao;
+
+                                for (const sessaoTI of sessoesTI) {
+                                    if (sessaoTI.nome == e.target.value) {
+                                        abreviacaoSessao = sessaoTI.abreviacao;
+                                    }
+                                }
+
+                                const novaInfoDemanda = {
+                                    ...props.informacaoProcesso,
+                                    secaoTIResponsavel: abreviacaoSessao,
+                                };
+                                props.setInformacaoProcesso(novaInfoDemanda);
                             }}>
                             {sessoesTI.map((sessao: any, index: number) => {
                                 return (
@@ -226,13 +340,31 @@ export default function InfomacoesAdicionais(props: {
                     </Box>
                     <Box sx={{ width: "30%" }}>
                         <TypographyPadrao>Codigo PPM: </TypographyPadrao>
-                        <TextField sx={{ width: "80%" }} id="codigoPPM" type="search" value={props.valorCodigoPPM}></TextField>
+                        <TextField sx={{ width: "80%" }} id="codigoPPM" type="search" value={props.valorCodigoPPM} onChange={(e: any) => {
+
+                            props.setValorCodigoPPM(e.target.value)
+
+                            const novaInfoDemanda = {
+                                ...props.informacaoProcesso,
+                                codigoPPM: e.target.value,
+                            };
+                            props.setInformacaoProcesso(novaInfoDemanda);
+                        }}></TextField>
                     </Box>
                 </BoxSessaoTIECodigoPPM>
 
                 <Box sx={{ width: "100%" }}>
                     <TypographyPadrao>Link EPIC Jira: </TypographyPadrao>
-                    <TextField sx={{ width: "100%" }} id="linkJira" type="search" value={props.valorLinkJira}></TextField>
+                    <TextField sx={{ width: "100%" }} id="linkJira" type="search" value={props.valorLinkJira}
+                        onChange={(e: any) => {
+                            props.setValorLinkJira(e.target.value)
+
+                            const novaInfoDemanda = {
+                                ...props.informacaoProcesso,
+                                linkJira: e.target.value,
+                            };
+                            props.setInformacaoProcesso(novaInfoDemanda);
+                        }}></TextField>
                 </Box>
 
             </BoxGeral>

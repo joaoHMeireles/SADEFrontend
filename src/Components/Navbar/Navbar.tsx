@@ -4,13 +4,15 @@ import logo from '../../assets/wegLogo.png';
 import './Navbar.scss';
 import { Avatar, Box, IconButton, Toolbar, MenuItem } from '@mui/material';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
-import { NavBar, BoxTextField, TextFieldLinguas } from "./Navbar.styles";
+import { NavBar, /*BoxTextField,*/ TextFieldLinguas } from "./Navbar.styles";
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import Tooltip from '@mui/material/Tooltip';
 
 const listaLinguas = [
     "Português",
-    "English(USA)",
+    "English (USA)",
     "Espanõl",
-    "Englsh(UK)",
+    "Englsh (UK)",
     "Français"
 ]
 
@@ -45,7 +47,7 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                         <Box sx={{ flexGrow: 1 }}>
                             <img src={logo} alt="" />
                         </Box>
-                        <BoxTextField>
+                        <Box sx={{ display: "flex" }}>
                             <TextFieldLinguas
                                 select
                                 value={lingua}
@@ -58,10 +60,21 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                                     </MenuItem>
                                 ))}
                             </TextFieldLinguas>
-                            <Avatar {...stringAvatar('camilly_pessotti')} onClick={() => {
-                                window.location.href = "/profile";
-                            }} />
-                        </BoxTextField>
+
+                            <Box sx={{ marginLeft: "1rem", "&:hover": { cursor: "pointer"} }}>
+                                <Avatar {...stringAvatar('Benson Rodrigues')} onClick={() => {
+                                    window.location.href = "/profile";
+                                }} />
+                            </Box>
+
+                            <Box sx={{ marginLeft: "1rem" }}>
+                                <Tooltip title="Ajuda ao usuário">
+                                    <IconButton onClick={() => {window.location.href = "/userhelp";}}>
+                                        <HelpOutlineIcon sx={{ color: "#fff" }} />
+                                    </IconButton>
+                                </Tooltip>
+                            </Box>
+                        </Box>
                     </Toolbar>
                 </NavBar>
             }

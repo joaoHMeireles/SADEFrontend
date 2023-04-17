@@ -8,7 +8,7 @@ const listaComponents: {}[] = [
   {
     id: 1,
     titulo: "Primeira Demanda",
-    tamanho: TamanhoComponenteProcesso.Pequeno,
+    tamanho: TamanhoComponenteProcesso.PEQUENO,
     solicitante: "Carlos Drumond de Andrade",
     status: StatusComponenteProcesso.Backlog,
     tipo: TipoComponenteProcesso.Demanda,
@@ -75,7 +75,7 @@ const listaComponents: {}[] = [
         id: 7,
         titulo:
           "Gastos desnecessários no processo de preparação de mercadorias",
-        tamanho: TamanhoComponenteProcesso.Pequeno,
+        tamanho: TamanhoComponenteProcesso.PEQUENO,
         solicitante: "Leandro Polanski",
         status: StatusComponenteProcesso.Assesment,
         tipo: TipoComponenteProcesso.Demanda,
@@ -140,7 +140,7 @@ const listaComponents: {}[] = [
       {
         id: 9,
         titulo: "Impecílios da equipe de limpeza no setor de usinagem",
-        tamanho: TamanhoComponenteProcesso.Pequeno,
+        tamanho: TamanhoComponenteProcesso.PEQUENO,
         solicitante: "Felícia Gonçalves",
         status: StatusComponenteProcesso.ToDo,
         tipo: TipoComponenteProcesso.Proposta,
@@ -242,7 +242,7 @@ const listaComponents: {}[] = [
     id: 3,
     titulo:
       "Titulozao pra ver como fica muito grande a responsividade do sistema todao com esses titulozao",
-    tamanho: TamanhoComponenteProcesso.Grande,
+    tamanho: TamanhoComponenteProcesso.GRANDE,
     solicitante: "Marcos Fernandez Braga",
     status: StatusComponenteProcesso.Assesment,
     tipo: TipoComponenteProcesso.Demanda,
@@ -320,7 +320,7 @@ const listaComponents: {}[] = [
   {
     id: 4,
     titulo: "Mudança no processo de produção de peças, melhora de segurança",
-    tamanho: TamanhoComponenteProcesso.MuitoGrande,
+    tamanho: TamanhoComponenteProcesso.MUITOGRANDE,
     solicitante: "Jefferson Rodrigues",
     status: StatusComponenteProcesso.Canceled,
     tipo: TipoComponenteProcesso.Proposta,
@@ -420,7 +420,7 @@ const listaComponents: {}[] = [
   {
     id: 5,
     titulo: "Melhoras da cantina",
-    tamanho: TamanhoComponenteProcesso.Medio,
+    tamanho: TamanhoComponenteProcesso.MEDIO,
     solicitante: "Cleide Nunes",
     status: StatusComponenteProcesso.BusinessCase,
     tipo: TipoComponenteProcesso.Proposta,
@@ -556,7 +556,7 @@ const listaComponents: {}[] = [
       {
         id: 5,
         titulo: "Melhoras da cantina",
-        tamanho: TamanhoComponenteProcesso.Medio,
+        tamanho: TamanhoComponenteProcesso.MEDIO,
         solicitante: "Cleide Nunes",
         status: StatusComponenteProcesso.BusinessCase,
         tipo: TipoComponenteProcesso.Proposta,
@@ -687,7 +687,7 @@ const listaComponents: {}[] = [
         id: 3,
         titulo:
           "Titulozao pra ver como fica muito grande a responsividade do sistema todao com esses titulozao",
-        tamanho: TamanhoComponenteProcesso.Grande,
+        tamanho: TamanhoComponenteProcesso.GRANDE,
         solicitante: "Marcos Fernandez Braga",
         status: StatusComponenteProcesso.Assesment,
         tipo: TipoComponenteProcesso.Demanda,
@@ -766,7 +766,7 @@ const listaComponents: {}[] = [
         id: 4,
         titulo:
           "Mudança no processo de produção de peças, melhora de segurança",
-        tamanho: TamanhoComponenteProcesso.MuitoGrande,
+        tamanho: TamanhoComponenteProcesso.MUITOGRANDE,
         solicitante: "Jefferson Rodrigues",
         status: StatusComponenteProcesso.Canceled,
         tipo: TipoComponenteProcesso.Proposta,
@@ -866,7 +866,7 @@ const listaComponents: {}[] = [
       {
         id: 1,
         titulo: "Primeira Demanda",
-        tamanho: TamanhoComponenteProcesso.Pequeno,
+        tamanho: TamanhoComponenteProcesso.PEQUENO,
         solicitante: "Carlos Drumond de Andrade",
         status: StatusComponenteProcesso.Backlog,
         tipo: TipoComponenteProcesso.Demanda,
@@ -922,7 +922,7 @@ const listaComponents: {}[] = [
   {
     id: 7,
     titulo: "Gastos desnecessários no processo de preparação de mercadorias",
-    tamanho: TamanhoComponenteProcesso.Pequeno,
+    tamanho: TamanhoComponenteProcesso.PEQUENO,
     solicitante: "Leandro Polanski",
     status: StatusComponenteProcesso.Assesment,
     tipo: TipoComponenteProcesso.Demanda,
@@ -998,7 +998,7 @@ const listaComponents: {}[] = [
         id: 4,
         titulo:
           "Mudança no processo de produção de peças, melhora de segurança",
-        tamanho: TamanhoComponenteProcesso.MuitoGrande,
+        tamanho: TamanhoComponenteProcesso.MUITOGRANDE,
         solicitante: "Jefferson Rodrigues",
         status: StatusComponenteProcesso.Canceled,
         tipo: TipoComponenteProcesso.Proposta,
@@ -1098,7 +1098,7 @@ const listaComponents: {}[] = [
       {
         id: 9,
         titulo: "Impecílios da equipe de limpeza no setor de usinagem",
-        tamanho: TamanhoComponenteProcesso.Pequeno,
+        tamanho: TamanhoComponenteProcesso.PEQUENO,
         solicitante: "Felícia Gonçalves",
         status: StatusComponenteProcesso.ToDo,
         tipo: TipoComponenteProcesso.Proposta,
@@ -1199,7 +1199,7 @@ const listaComponents: {}[] = [
   {
     id: 9,
     titulo: "Impecílios da equipe de limpeza no setor de usinagem",
-    tamanho: TamanhoComponenteProcesso.Pequeno,
+    tamanho: TamanhoComponenteProcesso.PEQUENO,
     solicitante: "Felícia Gonçalves",
     status: StatusComponenteProcesso.ToDo,
     tipo: TipoComponenteProcesso.Proposta,

@@ -29,6 +29,7 @@ import api from "../api/api";
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../constants/enuns";
 import { getNomeStatus } from "../utils";
 import { useLocationChange } from "../utils";
+import AjudaUsuario from "./AjudaUsuario/AjudaUsuario";
 
 
 export default function App() {
@@ -334,6 +335,8 @@ export default function App() {
                   <Route path="/home/ata" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
 
                   <Route path="/visualizarCriacaoPDF" element={<VisualizarCriacaoPDF />} />
+
+                  <Route path="/userhelp" element={<AjudaUsuario aberto={sidebarAberta} sidebarAberta={sidebarAberta}/>} />
                 </Routes>
               </ThemeProvider>
             </MainBox>
