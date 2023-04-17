@@ -50,8 +50,8 @@ export const GridLinkTypograpfy = styledTypograpfy({
   "& a": {
     color: "#2382BA",
     "&:hover": {
-      fontWeight: "500",
       color: "#00579d",
+      fontWeight: "500",
     },
   },
 });
@@ -76,8 +76,8 @@ export const ListaTypography = styled(GridTypography)({
     color: "#2382BA",
 
     "&:hover": {
-      fontWeight: "500",
       color: "#00579d",
+      fontWeight: "500",
     },
   },
 });
@@ -90,8 +90,8 @@ export const UltimaListaTypography = styled(ListaTypography)({
     color: "#2382BA",
 
     "&:hover": {
-      fontWeight: "500",
       color: "#00579d",
+      fontWeight: "500",
     },
   },
 });
