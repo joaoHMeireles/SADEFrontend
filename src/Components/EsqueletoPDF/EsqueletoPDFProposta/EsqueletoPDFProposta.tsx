@@ -231,12 +231,16 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
         )
     }
 
-    const CentrosCusto = (props: { proposta: any }) => {
+    const CentrosCusto = (props: { proposta: any }) => {     
+
         return (
             <Box sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
                 {props.proposta.tabelasCustoProposta.map((tabela: any) => {
                     let totalEsfoco = 0;
-                    let valorTotal = 0;
+                    let valorTotal = 0;                   
+
+                    console.log(tabela);
+                    
 
                     return (
                         <>
@@ -280,13 +284,11 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
                                         <TableBody>
                                             <TableRow>
                                                 {tabela.centrosCustoPagantes.map((cc: any) => {
-                                                    console.log(cc);
-
                                                     return (
                                                         <>
                                                             <TableRow sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                                                                 <TableCellStyled align="center">
-                                                                    {cc.porcentagemDespesa}%
+                                                                    {cc.centroCusto.idCentroCusto} - {cc.porcentagemDespesa}%
                                                                 </TableCellStyled>
                                                             </TableRow>
                                                         </>
@@ -297,7 +299,7 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
                                     </Table>
                                 </TableContainer>
                             </Box>
-                            {/* {tabela.temLicenca ?
+                            {tabela.temLicenca ?
                                 <>
                                     <Box sx={{ display: "flex", justifyContent: "flex", alignItems: "center" }}>
                                         <TableContainer component={Paper} sx={{ width: "50%", marginTop: 5 }}>
@@ -338,12 +340,12 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
                                                 </TableHead>
                                                 <TableBody>
                                                     <TableRow>
-                                                        {tabela.centrosCusto.map((cc) => {
+                                                        {tabela.centrosCustoPagantes.map((cc: any) => {
                                                             return (
                                                                 <>
                                                                     <TableRow sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                                                                         <TableCellStyled align="center">
-                                                                            {cc.porcentagemDespesa}%
+                                                                            {cc.centroCusto.idCentroCusto} - {cc.porcentagemDespesa}%
                                                                         </TableCellStyled>
                                                                     </TableRow>
                                                                 </>
@@ -355,9 +357,9 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
                                         </TableContainer>
                                     </Box>
                                 </>
-                                : 
+                                :
                                 ""
-                            } */}
+                            }
                         </>
                     )
                 })}
@@ -387,19 +389,22 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
             <></>
         );
     }
+
     return (
-        <BoxConteudo>
-            <div className="example-config">
-                <button
-                    onClick={exportPDFWithComponent}
-                >
-                    Export to PDF with component
-                </button>
-            </div>
-            <PDFExport forcePageBreak=".break" paperSize="A4" pageTemplate={PageTemplate} margin="2cm" ref={pdfCompoente}>
-                <Proposta proposta={props.proposta} />
-                <ParticipantesReuniao proposta={props.proposta} />
-            </PDFExport>
-        </BoxConteudo >
+        <Box id="BOX" sx={{ display: "none" }}>
+            <BoxConteudo>
+                <div className="example-config">
+                    <button
+                        onClick={exportPDFWithComponent}
+                    >
+                        Export to PDF with component
+                    </button>
+                </div>
+                <PDFExport forcePageBreak=".break" paperSize="A4" pageTemplate={PageTemplate} margin="2cm" ref={pdfCompoente}>
+                    <Proposta proposta={props.proposta} />
+                    <ParticipantesReuniao proposta={props.proposta} />
+                </PDFExport>
+            </BoxConteudo >
+        </Box>
     );
 }

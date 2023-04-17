@@ -37,6 +37,7 @@ import {
 } from "../../constants/enuns";
 import api from "../../api/api";
 import { Dayjs } from "dayjs";
+import jsPDF from "jspdf";
 
 export default function CriacaoProposta(props: {
   filtrar: boolean;
@@ -67,8 +68,8 @@ export default function CriacaoProposta(props: {
 
   const [escopoProposta, setEscopoProposta] = useState<string>("")
   const [payback, setPayback] = useState<any>()
-  const [periodoExecucaoInicio, setPeriodoExecucaoInicio] = useState<Date | null>(null)
-  const [periodoExecucaoFim, setPeriodoExecucaoFim] = useState<Date | null>(null)
+  const [periodoExecucaoInicio, setPeriodoExecucaoInicio] = useState<any>(null)
+  const [periodoExecucaoFim, setPeriodoExecucaoFim] = useState<any>(null)
   const [usuariosResponsaveis, setUsuariosResponsaveis] = useState<any[]>([])
 
   const [centroCusto, setCentroCusto] = useState<any>();
@@ -92,13 +93,13 @@ export default function CriacaoProposta(props: {
         centrosCustoPagantes: [
           {
             centroCusto: {
-              "idCentroCusto": 3
+              idCentroCusto: 3
             },
             porcentagemDespesa: 0.4
           },
           {
             centroCusto: {
-              "idCentroCusto": 1
+              idCentroCusto: 1
             },
             porcentagemDespesa: 0.6
           }
@@ -215,6 +216,12 @@ export default function CriacaoProposta(props: {
 
       for (const centroCustos of centroCustoEscolhidas) {
         for (const centroCusto of centroCustos) {
+
+          let objetoCentroCusto: {
+            centroCusto: Object,
+            porcentagemDespesa: number
+          }
+
           let centroCustoTabela: {
             idCentroCusto: number,
             nomeCentroCusto: string
@@ -222,7 +229,8 @@ export default function CriacaoProposta(props: {
 
           if (centroCusto.tabela == i) {
             centroCustoTabela = { idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto }
-            listaCentroCustoTabela.push(centroCustoTabela);
+            objetoCentroCusto = { centroCusto: centroCustoTabela, porcentagemDespesa: (parseFloat(centroCusto.porcentagem) / 100) }
+            listaCentroCustoTabela.push(objetoCentroCusto);
           }
         }
       }
@@ -232,19 +240,30 @@ export default function CriacaoProposta(props: {
         quantidadeTotal: quantidadeTotal,
         valorTotal: valorTotal,
         licenca: false,
-        centroCustoPagantes: listaCentroCustoTabela,
+        centrosCustoPagantes: listaCentroCustoTabela,
         linhasTabela: listaLinhasTabelaCustoProposta
       }
 
       listaTabelasCustoProposta.push(tabela)
     }
 
+    const dataExecucaoInicio = (document.getElementById("periodoExecucaoInicio") as HTMLInputElement).value
+    const dataExecucaoFim = (document.getElementById("periodoExecucaoFim") as HTMLInputElement).value
+
+    let dataExecucaoInicioCerto = dataExecucaoInicio.slice(6) + "/" + dataExecucaoInicio.slice(0, 5)
+    dataExecucaoInicioCerto = dataExecucaoInicioCerto.replaceAll("/", "-")
+
+    let dataExecucaoFimCerto = dataExecucaoFim.slice(6) + "/" + dataExecucaoFim.slice(0, 5)
+    dataExecucaoFimCerto = dataExecucaoFimCerto.replaceAll("/", "-")
+
+    const {tipo, ...informacaoProcessoCerto} = informacaoProcesso
+
     let proposta = {
       escopo: escopoProposta,
-      periodoExecucaoInicio: periodoExecucaoInicio,
-      periodoExecucaoFim: periodoExecucaoFim,
+      periodoExecucaoInicio: dataExecucaoInicioCerto,
+      periodoExecucaoFim: dataExecucaoFimCerto,
       payback: payback,
-      demanda: informacaoProcesso,
+      demanda: informacaoProcessoCerto,
       responsaveisNegocio: usuariosResponsaveis,
       tabelasCustoProposta: listaTabelasCustoProposta
     }
@@ -256,11 +275,19 @@ export default function CriacaoProposta(props: {
 
     formData.append("proposta", JSON.stringify(proposta));
 
-    // api.post(`/sod/proposta/${idUsuario}`, formData, {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   }
-    // })
+    const doc = new jsPDF()
+    const pdf = document.getElementById("BOX") as HTMLElement
+
+    doc.html(pdf)
+    const pdfArquivo = doc.output("blob")
+
+    formData.append("pdfVersaoHistorico", pdfArquivo);
+
+    api.post(`/sod/proposta/${idUsuario}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    })
   }
 
   return (

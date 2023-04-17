@@ -30,10 +30,10 @@ export default function EscopoProposta(props: {
   setEscopoProposta: React.Dispatch<React.SetStateAction<string>>
   payback: number
   setPayback: React.Dispatch<React.SetStateAction<number>>
-  periodoExecucaoInicio: Date | null
-  setPeriodoExecucaoInicio: React.Dispatch<React.SetStateAction<Date | null>>
-  periodoExecucaoFim: Date | null
-  setPeriodoExecucaoFim: React.Dispatch<React.SetStateAction<Date | null>>
+  periodoExecucaoInicio: any
+  setPeriodoExecucaoInicio: React.Dispatch<React.SetStateAction<any>>
+  periodoExecucaoFim: any
+  setPeriodoExecucaoFim: React.Dispatch<React.SetStateAction<any>>
   usuariosResponsaveis: any[]
   setUsuariosResponsaveis: React.Dispatch<React.SetStateAction<any[]>>
   centroCusto: any
@@ -92,7 +92,7 @@ export default function EscopoProposta(props: {
                 onChange={(e: any) => {
                   props.setPeriodoExecucaoInicio(e.$d);
                 }}
-                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} />}
+                renderInput={(params) => <TextField id='periodoExecucaoInicio' {...params} />}
               />
             </LocalizationProvider>
           </BoxPaybackExe>
@@ -104,7 +104,7 @@ export default function EscopoProposta(props: {
                 onChange={(e: any) => {
                   props.setPeriodoExecucaoFim(e.$d);
                 }}
-                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} />}
+                renderInput={(params) => <TextField id='periodoExecucaoFim' {...params} />}
               />
             </LocalizationProvider>
           </BoxPaybackExe>
