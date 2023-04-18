@@ -10,18 +10,7 @@ import { Toolbar } from "@mui/material";
 export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: boolean }) {
     function irParaTitulo(id: string) {
         const elemento = document.getElementById(id);
-        elemento?.scrollIntoView({ behavior: "smooth" });
-
-        mostrarTitulo(id)
-    }
-    
-    function mostrarTitulo(id: string) {
-        const elemento = document.getElementById(id);
-        if (elemento != null) {
-            elemento.style.transform = "translateX(-50%) translateY(-50)";
-            elemento.style.opacity = elemento?.style.opacity == "0" ? "1" : "0";
-            setTimeout(mostrarTitulo, 100);
-        }
+        elemento?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
     }
 
     return (
@@ -84,10 +73,9 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
 
                         <TextSecondColumn>
                             <p>Para criar uma demanda, acesse o tópico pela sidebar no ícone  e selecione a opção “Demanda”, preencha os inputs da página, que está dividida em três partes, sendo eles:</p>
-                        </TextSecondColumn>
 
-                        <TextSecondColumn>
                             <p>Primeira parte:</p>
+
                             <ul>
                                 <li className="topicText">
                                     <p><b>Título:</b> Escreva um título que descreva claramente o problema ou necessidade. O título deve ser conciso e direto ao ponto;</p>
@@ -102,10 +90,9 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                                     <p><b>Centros de custo:</b> Identifique os centros de custo envolvidos na solução do problema. Isso pode incluir recursos financeiros, materiais ou humanos necessários para implementar a solução.</p>
                                 </li>
                             </ul>
-                        </TextSecondColumn>
 
-                        <TextSecondColumn>
                             <p>Segunda parte:</p>
+
                             <ul>
                                 <li className="topicText">
                                     <p><b>Benefícios Reais:</b> Preencha o valor mensal do benefício, a moeda em que ele será expresso e uma breve descrição do benefício real que será alcançado com a solução proposta. O benefício real refere-se a ganhos financeiros tangíveis que serão obtidos com a solução, como redução de custos, aumento de receita, etc;</p>
@@ -117,10 +104,9 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                                     <p><b>Benefícios Qualitativos:</b> Descreva os benefícios qualitativos que a solução irá proporcionar, como melhoria da qualidade de vida dos funcionários, aumento da satisfação dos clientes, etc. Indique também a frequência de uso da solução, ou seja, com que frequência ela será utilizada para obter esses benefícios.</p>
                                 </li>
                             </ul>
-                        </TextSecondColumn>
-
-                        <TextSecondColumn>
+                            
                             <p>Terceira parte:</p>
+
                             <ul>
                                 <li className="topicText">
                                     <p><b>Anexos:</b> Refere-se à possibilidade de anexar arquivos que possam complementar ou apoiar as informações apresentadas nas duas primeiras partes. Esta seção é opcional e serve para incluir qualquer informação adicional que possa ajudar a avaliar e implementar a solução proposta ; Para anexar um arquivo à demanda, basta clicar no botão "Anexar arquivo" ou arrastar o arquivo até a dropzone.</p>
@@ -134,13 +120,9 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
 
                         <TextSecondColumn>
                             <p>Avalie a demanda: Caso a ela seja devolvida, explique claramente o motivo. Isso permite que o solicitante entenda os pontos que precisam ser melhorados ou esclarecidos, para que possa refazer a demanda e entregá-la novamente. O objetivo é garantir que a demanda possa ser atendida com sucesso e dentro dos parâmetros estabelecidos.</p>
-                        </TextSecondColumn>
 
-                        <TextSecondColumn>
                             <p>Se a demanda for reprovada, explique porquê ela não pode ser atendida. Isso pode ocorrer por vários motivos, como falta de recursos técnicos ou financeiros, incompatibilidade com as estratégias da organização, ou simplesmente por não ser viável. O objetivo é fornecer informações claras para o solicitante, para que ele possa entender as razões da reprovação.</p>
-                        </TextSecondColumn>
 
-                        <TextSecondColumn>
                             <p>Finalmente, se a demanda for aprovada, classifique a demanda por tamanho, informe a BU solicitante, a(s) BU(s) beneficiada(s) e a sessão de TI responsável pela demanda.</p>
                         </TextSecondColumn>
 
@@ -174,13 +156,9 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
 
                         <TextSecondColumn>
                             <p>Para criar uma proposta, acesse o tópico pela sidebar no ícone  e selecione a opção “Proposta”. Escolha a demanda que quer transformar em proposta podendo editar seus atributos. Posteriormente, adicione os novos atributos, sendo eles o escopo, linhas da tabela de custo, payback, o período de execução e as informações do responsável, o nome e a área que trabalha. Por fim, sendo opcional, os anexos para a proposta.</p>
-                        </TextSecondColumn>
 
-                        <TextSecondColumn>
                             <p>Após a seleção das propostas, escolha a comissão que participará da reunião. Para isso, deve-se clicar na opção "Comissão" e selecionar a comissão desejada;</p>
-                        </TextSecondColumn>
 
-                        <TextSecondColumn>
                             <p>Por fim, escolha a data da reunião. Para isso, clique na opção "Data" e selecione a data desejada no calendário.</p>
                         </TextSecondColumn>
 
