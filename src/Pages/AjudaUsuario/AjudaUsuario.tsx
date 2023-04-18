@@ -9,8 +9,19 @@ import { Toolbar } from "@mui/material";
 
 export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: boolean }) {
     function irParaTitulo(id: string) {
-        const elemento = document.getElementById(id)
-        elemento?.scrollIntoView({ behavior: "smooth" })
+        const elemento = document.getElementById(id);
+        elemento?.scrollIntoView({ behavior: "smooth" });
+
+        mostrarTitulo(id)
+    }
+    
+    function mostrarTitulo(id: string) {
+        const elemento = document.getElementById(id);
+        if (elemento != null) {
+            elemento.style.transform = "translateX(-50%) translateY(-50)";
+            elemento.style.opacity = elemento?.style.opacity == "0" ? "1" : "0";
+            setTimeout(mostrarTitulo, 100);
+        }
     }
 
     return (
