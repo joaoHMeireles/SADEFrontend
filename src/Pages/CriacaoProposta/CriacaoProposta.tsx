@@ -332,6 +332,7 @@ export default function CriacaoProposta(props: {
             filtrar={props.filtrar}
             grid={grid}
             setGrid={setGrid}
+            // filtrarResultados={}
           />
           {listaComponents.length != 0 ?
             <CardsProcesso
