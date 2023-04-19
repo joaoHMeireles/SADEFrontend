@@ -78,6 +78,8 @@ export default function CriacaoProposta(props: {
   const [centroCusto, setCentroCusto] = useState<any>();
   const [centroCustoEscolhidas, setCentroCustoEscolhidas] = useState<any[]>([]);
 
+  const [arquivosProposta, setArquivosProposta] = useState<any>([])
+
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>();
 
   const [propostaPDF, setPropostaPDF] = useState<any>(
@@ -262,7 +264,7 @@ export default function CriacaoProposta(props: {
     let dataExecucaoFimCerto = dataExecucaoFim.slice(6) + "/" + dataExecucaoFim.slice(0, 5)
     dataExecucaoFimCerto = dataExecucaoFimCerto.replaceAll("/", "-")
 
-    const {tipo, ...informacaoProcessoCerto} = informacaoProcesso
+    const { tipo, ...informacaoProcessoCerto } = informacaoProcesso
 
     let proposta = {
       escopo: escopoProposta,
@@ -288,6 +290,10 @@ export default function CriacaoProposta(props: {
     const pdfArquivo = doc.output("blob")
 
     formData.append("pdfVersaoHistorico", pdfArquivo);
+
+    if (arquivosProposta || arquivosProposta != undefined) {
+      formData.append("files", arquivosProposta);
+    }
 
     api.post(`/sod/proposta/${idUsuario}`, formData, {
       headers: {
@@ -332,7 +338,7 @@ export default function CriacaoProposta(props: {
             filtrar={props.filtrar}
             grid={grid}
             setGrid={setGrid}
-            // filtrarResultados={}
+          // filtrarResultados={}
           />
           {listaComponents.length != 0 ?
             <CardsProcesso
@@ -434,6 +440,8 @@ export default function CriacaoProposta(props: {
               centroCusto={centroCusto}
               centroCustoEscolhidas={centroCustoEscolhidas}
               setCentroCustoEscolhidas={setCentroCustoEscolhidas}
+              arquivosProposta={arquivosProposta}
+              setArquivosProposta={setArquivosProposta}
             />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>

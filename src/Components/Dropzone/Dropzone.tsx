@@ -20,6 +20,8 @@ export default function Dropzone(props: {
   proposta: boolean;
   files: any[];
   setFiles: React.Dispatch<React.SetStateAction<any[]>>;
+  arquivosProposta?: any[];
+  setArquivosProposta?: React.Dispatch<React.SetStateAction<any[]>>;
 }) {
   const [arquivos, setAquivos] = useState<Array<Anexos>>([]);
 
@@ -52,11 +54,24 @@ export default function Dropzone(props: {
       return
     }
 
-    props.files.push(file[0]["acceptedFiles"])
+    let listaArquivos: any[] = []
 
-    props.setFiles(props.files);
+    for (const arquivo of file) {
+      console.log(arquivo.acceptedFiles);
+      listaArquivos.push(arquivo.acceptedFiles);
+    }
+
+    // console.log(file[0]["acceptedFiles"]);
 
 
+    // props.files.push(file[0]["acceptedFiles"])
+    // props.arquivosProposta?.push(file[0]["acceptedFiles"])
+
+    if (props.setArquivosProposta && props.arquivosProposta) {
+      props.setArquivosProposta(listaArquivos);
+    }
+
+    props.setFiles(listaArquivos);
 
   }, []);
 

@@ -202,6 +202,8 @@ export default function CriacaoDemanda(props: {
 
   function criarDemanda() {
     let formData = new FormData();
+    console.log(files);
+    
     if (files != undefined) {
       formData.append("files", files);
     }
@@ -214,17 +216,17 @@ export default function CriacaoDemanda(props: {
       formData.append("pdfVersaoHistorico", pdfDemanda);
     }
 
-    api.post("/sod/demanda", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      }
-    }).then((res: any) => {
-      console.log(res);
-    }).catch((err: any) => {
-      console.log(err);
-    })
+    // api.post("/sod/demanda", formData, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   }
+    // }).then((res: any) => {
+    //   console.log(res);
+    // }).catch((err: any) => {
+    //   console.log(err);
+    // })
 
-    window.location.href = "/home";
+    // window.location.href = "/home";
   }
 
 
