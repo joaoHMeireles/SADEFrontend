@@ -18,8 +18,7 @@ export default function InputAnexos(props: {
   arquivosProposta?: any[];
   setArquivosProposta?: React.Dispatch<React.SetStateAction<any[]>>;
 }) {
-
-  const [files, setFiles] = useState<any[]>([])
+  const [files, setFiles] = props.files && props.setFiles ? [props.files, props.setFiles] : useState<any[]>([])
 
   return (
     <>

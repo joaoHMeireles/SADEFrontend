@@ -25,7 +25,7 @@ export default function Dropzone(props: {
 }) {
   const [arquivos, setAquivos] = useState<Array<Anexos>>([]);
 
-  useEffect(() => {
+  useEffect(() => {  
     let info;
     if (props.rascunho) {
       info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
@@ -54,28 +54,21 @@ export default function Dropzone(props: {
       return
     }
 
-    let listaArquivos: any[] = []
+    props.files.push(file[0]["acceptedFiles"])
 
-    for (const arquivo of file) {
-      console.log(arquivo.acceptedFiles);
-      listaArquivos.push(arquivo.acceptedFiles);
-    }
-
-    // console.log(file[0]["acceptedFiles"]);
-
-
-    // props.files.push(file[0]["acceptedFiles"])
-    // props.arquivosProposta?.push(file[0]["acceptedFiles"])
+    props.arquivosProposta?.push(file[0]["acceptedFiles"])
 
     if (props.setArquivosProposta && props.arquivosProposta) {
-      props.setArquivosProposta(listaArquivos);
+      props.setArquivosProposta(props.files);
     }
 
-    props.setFiles(listaArquivos);
+
+    props.setFiles(props.files);
 
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  
 
   return (
     <>
@@ -89,20 +82,23 @@ export default function Dropzone(props: {
         </BoxTypography>
         {props.rascunho &&
           arquivos.map((e: Anexos, index: number) => {
-            return <Arquivo key={index} icone={e.tipo} nome={e.nome} />;
+            return <Arquivo key={index} id={index} icone={e.tipo} nome={e.nome} />;
           })}
 
         {props.proposta &&
           arquivos.map((e: Anexos, index: number) => {
-            return <Arquivo key={index} icone={e.tipo} nome={e.nome} />;
+            return <Arquivo key={index} id={index} icone={e.tipo} nome={e.nome} />;
           })}
 
-        {props.files.map((e: any, index: number) => {
+        {props.files && props.files.map((e: any, index: number) => {
           return (
             <Arquivo
               key={index}
+              id={index}
               icone={e["type"]}
               nome={e["name"]}
+              files={props.files}
+              setFiles={props.setFiles}
             />
           );
         })}

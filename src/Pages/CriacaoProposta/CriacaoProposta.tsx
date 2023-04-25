@@ -56,9 +56,6 @@ export default function CriacaoProposta(props: {
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState(0)
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState(0)
 
-  const [moedaReal, setMoedaReal] = useState<string[]>([])
-  const [moedaPotencial, setMoedaPotencial] = useState<string[]>([])
-
   const [valorTamanho, setValorTamanho] = useState<string>("");
   const [valorBUSolicitante, setValorBUSolicitante] = useState<string>("");
   const [valorBUsBeneficadas, setValorBUsBeneficadas] = useState<Object[]>([]);
@@ -277,6 +274,8 @@ export default function CriacaoProposta(props: {
     }
 
     setPropostaPDF(proposta);
+    console.log(proposta);
+    
 
     let formData = new FormData()
     let idUsuario = localStorage.getItem("IDUSUARIO");
@@ -295,11 +294,11 @@ export default function CriacaoProposta(props: {
       formData.append("files", arquivosProposta);
     }
 
-    api.post(`/sod/proposta/${idUsuario}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      }
-    })
+    // api.post(`/sod/proposta/${idUsuario}`, formData, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   }
+    // })
   }
 
   return (
@@ -379,10 +378,10 @@ export default function CriacaoProposta(props: {
               setNumeroBeneficiosReais={setNumeroBeneficiosReais}
               setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
-              moedaReal={moedaReal}
-              setMoedaReal={setMoedaReal}
-              moedaPotencial={moedaPotencial}
-              setMoedaPotencial={setMoedaPotencial}
+              // moedaReal={moedaReal}
+              // setMoedaReal={setMoedaReal}
+              // moedaPotencial={moedaPotencial}
+              // setMoedaPotencial={setMoedaPotencial}
               valor={valor}
               informacaoProcesso={informacaoProcesso}
               setInformacaoProcesso={setInformacaoProcesso}
