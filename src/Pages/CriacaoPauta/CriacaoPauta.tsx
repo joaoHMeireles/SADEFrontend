@@ -38,6 +38,8 @@ import semDemanda from "../../Assets/empty-folder.png"
 import { GridInfoATA, TypographyTituloInput } from "../TelaColecaoProcesso/TelaColecaoProcesso.styles";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
+import dayjs from 'dayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
 export default function CriacaoPauta(props: {
   filtrar: boolean;
@@ -52,6 +54,8 @@ export default function CriacaoPauta(props: {
   const [comissoes, setComissoes] = useState<any[]>([]);
   const [comissaoEscolhida, setComissaoEscolhida] = useState<any>()
   const [valorData, setValorData] = useState<Dayjs | null>(null)
+  const [inicioReuniao, setInicioReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T15:30'));
+  const [finalReuniao, setFinalReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T15:30'));
 
   useEffect(() => {
     const idPropostaEscolhida = localStorage.getItem("PROPOSTACRIARPAUTA")
@@ -105,59 +109,32 @@ export default function CriacaoPauta(props: {
     localStorage.setItem(`PROPOSTAESCOLHIDA`, JSON.stringify(proposta));
   }
 
+  //testar com todo o fluxo de pauta
   function criarPauta() {
+    const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
+    const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
+    const horarioInicioReuniao = (document.getElementById("horarioInicioReuniao") as HTMLInputElement).value
+    const horarioFinalReuniao = (document.getElementById("horarioFinalReuniao") as HTMLInputElement).value
+    let dataReuniaoCerta = dataReuniaoEscolhida.slice(6) + "/" + dataReuniaoEscolhida.slice(0, 5)
+    dataReuniaoCerta = dataReuniaoCerta.replaceAll("/", "-")
 
+    const pauta = {
+      tituloReuniaoPauta: tituloReuniao,
+      dataReuniao: dataReuniaoCerta,
+      inicioReuniao: horarioInicioReuniao + ":" + "00",
+      finalReuniao: horarioFinalReuniao + ":" + "00",
+      forum: comissaoEscolhida,
+      propostasPauta: propostas
+    }
+
+    console.log(pauta);
+
+    api.post("/sod/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then((response) => {
+      console.log(response.data);
+
+      location.href = "/home"
+    })
   }
-
-  {/* <Grid container spacing={3}>
-              <GridInfoATA item xs={12}>
-                <TypographyTituloInput>
-                  Dia da reunião
-                </TypographyTituloInput>
-                <TextField type={"date"} id="dataReuniao" />
-              </GridInfoATA>
-              <GridInfoATA item xs={12}>
-                <TypographyTituloInput>
-                  Título da reunião
-                </TypographyTituloInput>
-                <TextField sx={{ width: "100%" }} id="tituloReuniao" />
-              </GridInfoATA>
-              <GridInfoATA item xs={6}>
-                <TypographyTituloInput>
-                  Início da reunião
-                </TypographyTituloInput>
-                <TextField type={"time"} id="inicioReuniao" defaultValue={"00:00"} />
-              </GridInfoATA>
-              <GridInfoATA item xs={6}>
-                <TypographyTituloInput>
-                  Final da reunião
-                </TypographyTituloInput>
-                <TextField type={"time"} id="finalReuniao" defaultValue={"00:00"} />
-              </GridInfoATA>
-            </Grid> */}
-  {/* <FormControl sx={{ width: "10%" }}>
-              <InputLabel>Comissão</InputLabel>
-              <Select
-                sx={{ width: "auto" }}
-                value={comissaoEscolhida}
-                onChange={(e: any) => {
-                  const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
-                  setComissaoEscolhida(novaComissaoEscolhida);
-                }}
-                label="Comissão"
-              >
-                {comissoes.map((comissao) => {
-                  return <MenuItem value={comissao.nomeForum} id={comissao.idForum}>{comissao.nomeForum}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
-            <DatePicker
-              value={valorData}
-              onChange={(newValue) => {
-                setValorData(newValue);
-              }}
-              renderInput={(params) => <TextField id='inputDataInformacoes' {...params} />}
-            /> */}
 
   return (
     <BoxConteudo>
@@ -225,12 +202,73 @@ export default function CriacaoPauta(props: {
       {valor == 1 && (
         <>
           <BoxInputsDataComissao>
-            <Grid container spacing={1}>
-              <Grid item xs={6}>
-                
+            <Box sx={{ width: "75%", display: "flex" }}>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <TypographyTituloInput>
+                    Título da reunião
+                  </TypographyTituloInput>
+                  <TextField sx={{ width: "100%" }} id="tituloReuniao" />
+                </Grid>
+                <Grid item xs={6}>
+                  <TypographyTituloInput>
+                    Fórum da reunião
+                  </TypographyTituloInput>
+                  <Select
+                    sx={{ width: "auto" }}
+                    defaultValue={"Comitê de TI"}
+                    value={comissaoEscolhida}
+                    inputProps={{ id: "comissaoEscolhida" }}
+                    onChange={(e: any) => {
+                      const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
+                      setComissaoEscolhida(novaComissaoEscolhida);
+                    }}
+                  >
+                    {comissoes.map((comissao) => {
+                      return <MenuItem value={comissao.nomeForum} id={comissao.idForum}>{comissao.nomeForum}</MenuItem>;
+                    })}
+                  </Select>
+                </Grid>
+                <Grid item xs={6}>
+                  <TypographyTituloInput>
+                    Data da Reunião
+                  </TypographyTituloInput>
+                  <DatePicker
+                    value={valorData}
+                    onChange={(newValue) => {
+                      setValorData(newValue);
+                    }}
+                    renderInput={(params) => <TextField id='dataReuniaoEscolhida' {...params} />}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TypographyTituloInput>
+                    Início da reunião
+                  </TypographyTituloInput>
+                  <TimePicker
+                    ampm={false}
+                    value={inicioReuniao}
+                    onChange={(newValue) => setInicioReuniao(newValue)}
+                    renderInput={(params) => {
+                      return <TextField id="horarioInicioReuniao" {...params} />;
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TypographyTituloInput>
+                    Final da reunião
+                  </TypographyTituloInput>
+                  <TimePicker
+                    ampm={false}
+                    value={finalReuniao}
+                    onChange={(newValue) => setFinalReuniao(newValue)}
+                    renderInput={(params) => {
+                      return <TextField id="horarioFinalReuniao" {...params} />;
+                    }}
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-
+            </Box>
           </BoxInputsDataComissao>
           {propostas.map((proposta: any) => {
             return (

@@ -1,6 +1,6 @@
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getNomeComponente, getCorStatus, getCorTipo, getBeneficiosPorTipo, getNomeStatus } from "../../utils";
+import { getNomeComponente, getCorStatus, getCorTipo, getBeneficiosPorTipo, getNomeStatus, getKeyEnum } from "../../utils";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Toolbar from "../../Components/Toolbar/Toolbar";
 import TabelaBeneficios from "../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios";
@@ -58,6 +58,10 @@ import {
 } from "../../Components/ContainerProcesso/ContainerProcesso.styles";
 import Bandeira from "../../Components/Bandeira/Bandeira";
 import CardProposta from "../../Components/CardProposta/CardProposta";
+import dayjs, { Dayjs } from "dayjs";
+import { DatePicker, TimePicker } from "@mui/x-date-pickers";
+import { StatusComponenteProcesso } from "../../constants/enuns";
+import api from "../../api/api";
 
 export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
   const [avaliandoProcesso, setAvaliandoProcesso] = useState(false);
@@ -70,7 +74,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
   );
   const informacaoColecaoProcesso = JSON.parse(
     idLocalStorage != null ? idLocalStorage : ""
-  );
+  )
 
   function fecharAvaliacao() {
     setAvaliandoProcesso(false);
@@ -99,7 +103,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
 
       if (informacaoColecaoProcesso.tipo == "Pauta") {
         const radioButtonsAta = document.getElementsByClassName(
-          `radioButtonATA${i}`
+          `radioButtonPublicacao${i}`
         );
         let tipoAtaPreenchida = checarRadioButtons(radioButtonsAta);
 
@@ -124,21 +128,80 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
     setVerificacaoInputs(novaVerificacaoInputs);
 
     if (checarPreenchimento(novaVerificacaoInputs)) {
-      fecharAvaliacao();
+      const decisoesPauta: any[] = []
+      const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
+      const dataReuniao = (document.getElementById("dataReuniao") as HTMLInputElement).value
+      const inicioReuniao = (document.getElementById("inicioReuniao") as HTMLInputElement).value
+      const finalReuniao = (document.getElementById("finalReuniao") as HTMLInputElement).value
+      let dataReuniaoCerta = dataReuniao.slice(6) + "/" + dataReuniao.slice(0, 5)
+      dataReuniaoCerta = dataReuniaoCerta.replaceAll("/", "-")
 
-      feedback = (
-        <Alert
-          onClose={() => {
-            setFeedbackAberto(false);
-          }}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          {informacaoColecaoProcesso.tipo} avaliada com sucesso
-        </Alert>
-      );
+      for (let i = 0; i < informacaoColecaoProcesso.propostas.length; i++) {
+        const botoesStatusDemanda = document.getElementsByClassName(`radioButtonStatus${i}`)
+        const botoesFormaPublicacao = document.getElementsByClassName(`radioButtonPublicacao${i}`)
+        const comentario = (document.getElementById(`comentario${i}`) as HTMLInputElement).value
+        const formatoPublicacaoEscolhido = (botoesFormaPublicacao[0].children[0].children[0] as HTMLInputElement).checked
+        let statusEscolhido = ""
 
-      abrirFeedback(feedback);
+        for (let botaoRadio of botoesStatusDemanda) {
+          if ((botaoRadio.children[0].children[0] as HTMLInputElement).checked) {
+            statusEscolhido = (botaoRadio.children[0].children[0] as HTMLInputElement).value
+          }
+        }
+
+        let propostaPauta = {
+          idDecisaoPropostaPauta: informacaoColecaoProcesso.propostas[i].idDecisaoPropostaPauta,
+          statusDemandaComissao: getKeyEnum(StatusComponenteProcesso, statusEscolhido),
+          ataPublicada: formatoPublicacaoEscolhido,
+          comentario: comentario
+        }
+
+        decisoesPauta.push(propostaPauta);
+      }
+
+      let pautaEditar = {
+        propostasPauta: decisoesPauta
+      }
+
+      const formDataPauta = new FormData()
+
+      formDataPauta.append("pauta", JSON.stringify(pautaEditar))
+
+      console.log(pautaEditar);
+      
+
+      // api.put("caminho editar pauta", formDataPauta).then((response) => {
+
+      //   const ata = {
+      //     pauta: response.data,
+      //     tituloReuniaoATA: tituloReuniao,
+      //     dataReuniao: dataReuniao,
+      //     inicioReuniao: inicioReuniao,
+      //     finalReuniao: finalReuniao
+      //   }
+
+      //   api.post("caminho criar ata", ata).then((response) => {
+      //     fecharAvaliacao();
+
+      //     feedback = (
+      //       <Alert
+      //         onClose={() => {
+      //           setFeedbackAberto(false);
+      //         }}
+      //         severity="success"
+      //         sx={{ width: "100%" }}
+      //       >
+      //         {informacaoColecaoProcesso.tipo} avaliada com sucesso
+      //       </Alert>
+      //     );
+
+      //     abrirFeedback(feedback);
+      //   })
+
+      // }).catch((err) => {
+      //   console.log(err);
+      // })
+
     } else {
       feedback = (
         <Alert
@@ -239,9 +302,9 @@ function Header(props: {
   useEffect(() => {
     if (tipoColecao == "Pauta") {
       // if (!informacaoColecaoProcesso.pertenceUmaATA) {
-        // if (dataReuniao <= new Date()) {
-        setAcao("Informar parecer");
-        // }
+      // if (dataReuniao <= new Date()) {
+      setAcao("Informar parecer");
+      // }
       // }
     } else {
       if (!informacaoColecaoProcesso.numeroDG) {
@@ -318,7 +381,7 @@ function ContainerColecaoProcesso(props: {
     informacaoColecaoProcesso.dataReuniao
   ).toLocaleDateString();
 
-  function abrirModal(){
+  function abrirModal() {
     setModalAberto(true)
   }
 
@@ -412,10 +475,12 @@ function Propostas(props: {
   verificacaoInputs: boolean[];
   tituloPauta?: string;
 }) {
-  const [data, setData] = useState<any>()
   const eUmaPauta = props.tipoColecao == "Pauta" ? true : false;
   const location = useLocation().pathname;
   const linkProposta = location + "/proposal";
+  const [valorData, setValorData] = useState<Dayjs | null>(null)
+  const [inicioReuniao, setInicioReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T15:30'));
+  const [finalReuniao, setFinalReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T16:30'));
 
   const propostas = props.listaPropostas.map((decisaoProposta: any, index: number) => {
     let propostaAnteriorEquivalente = null
@@ -459,27 +524,47 @@ function Propostas(props: {
                 <Grid container spacing={3}>
                   <GridInfoATA item xs={12}>
                     <TypographyTituloInput>
-                      Dia da reunião
-                    </TypographyTituloInput>
-                    <TextField type={"date"} id="dataReuniao" />
-                  </GridInfoATA>
-                  <GridInfoATA item xs={12}>
-                    <TypographyTituloInput>
                       Título da reunião
                     </TypographyTituloInput>
                     <TextField sx={{ width: "100%" }} id="tituloReuniao" defaultValue={props.tituloPauta} />
+                  </GridInfoATA>
+                  <GridInfoATA item xs={12}>
+                    <TypographyTituloInput>
+                      Data da reunião
+                    </TypographyTituloInput>
+                    <DatePicker
+                      value={valorData}
+                      onChange={(newValue) => {
+                        setValorData(newValue);
+                      }}
+                      renderInput={(params) => <TextField id='dataReuniao' {...params} />}
+                    />
                   </GridInfoATA>
                   <GridInfoATA item xs={6}>
                     <TypographyTituloInput>
                       Início da reunião
                     </TypographyTituloInput>
-                    <TextField type={"time"} id="inicioReuniao" defaultValue={"00:00"} />
+                    <TimePicker
+                      ampm={false}
+                      value={inicioReuniao}
+                      onChange={(newValue) => setInicioReuniao(newValue)}
+                      renderInput={(params) => {
+                        return <TextField id="inicioReuniao" {...params} />;
+                      }}
+                    />
                   </GridInfoATA>
                   <GridInfoATA item xs={6}>
                     <TypographyTituloInput>
                       Final da reunião
                     </TypographyTituloInput>
-                    <TextField type={"time"} id="finalReuniao" defaultValue={"00:00"} />
+                    <TimePicker
+                      ampm={false}
+                      value={finalReuniao}
+                      onChange={(newValue) => setFinalReuniao(newValue)}
+                      renderInput={(params) => {
+                        return <TextField id="finalReuniao" {...params} />;
+                      }}
+                    />
                   </GridInfoATA>
                 </Grid>
               </Grid>
@@ -498,7 +583,6 @@ function Propostas(props: {
               </Grid>
             </>
           }
-
         </>
       }
     </>
@@ -530,7 +614,6 @@ export function Proposta(props: {
   const forumEscolhido = props.eUmaPauta ? "comissão" : "direção geral";
   const beneficiosReais = getBeneficiosPorTipo(decisaoProposta.proposta.demanda.beneficiosDemanda, "REAL")
   const beneficioPotenciais = getBeneficiosPorTipo(decisaoProposta.proposta.demanda.beneficiosDemanda, "POTENCIAL")
-
 
   const conteudoPropostaInicio = (
     <>
@@ -682,13 +765,13 @@ export function Proposta(props: {
           <FormControl error>
             <RadioGroup sx={{ flexDirection: "row" }}>
               <FormControlLabel
-                className={`radioButtonATA${props.index}`}
+                className={`radioButtonPublicacao${props.index}`}
                 value="Ata publicada"
                 control={<Radio />}
                 label="Ata publicada"
               />
               <FormControlLabel
-                className={`radioButtonATA${props.index}`}
+                className={`radioButtonPublicacao${props.index}`}
                 value="Ata não publicada"
                 control={<Radio />}
                 label="Ata não publicada"
@@ -705,6 +788,7 @@ export function Proposta(props: {
           Comentários
         </TypographyTituloDecisao>
         <TextField
+          id={`comentario${props.index}`}
           placeholder="Coloque aqui pontos interessantes que foram discutidos durante a reunião"
           multiline
           rows={5}

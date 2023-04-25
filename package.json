@@ -11,10 +11,11 @@
   },
   "dependencies": {
     "@date-io/dayjs": "^2.16.0",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.10.3",
-    "@mui/material": "^5.10.17",
+    "@mui/material": "^5.12.1",
+    "@mui/styled-engine-sc": "^5.12.0",
     "@mui/x-data-grid": "^5.17.14",
     "@mui/x-date-pickers": "^5.0.9",
     "@popperjs/core": "^2.11.6",
@@ -35,7 +36,8 @@
     "react-pdf-viewer": "^0.1.0",
     "react-router-dom": "^6.3.0",
     "react-routes": "^0.2.6",
-    "sass": "^1.54.9"
+    "sass": "^1.54.9",
+    "styled-components": "^5.3.9"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",

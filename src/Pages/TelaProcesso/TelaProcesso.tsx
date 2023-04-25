@@ -33,7 +33,8 @@ import {
 import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
 import api, { pegarAnalistaTIResponsavel, pegarGerenteSolicitante, pegarGerenteTISolicitante, pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
 import { TypographyTituloDecisao } from '../TelaColecaoProcesso/TelaColecaoProcesso.styles';
-// import EsqueletoPDFVersaoDemanda from '../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda';
+import imagemSemNada from "../../Assets/empty-folder.png"
+import ResultadoVazio from '../../Components/ResultadoVazio/ResultadoVazio';
 
 const valoresInputBU: any[] = [
     { idBU: 1, nomeBU: 'Motores Industrial' },
@@ -303,7 +304,7 @@ export function Header(props: {
                     acaoFeita: "REPROVARDEMANDA",
                     demanda: { idDemanda: processo.idDemanda },
                     usuario: { idUsuario: idAnalista },
-                    statusHistorico: "CONCLUIDO"
+                    status: "CONCLUIDO"
                 }
             ))
 
@@ -974,7 +975,7 @@ function ModalAdiconarInformações(props: Modal) {
                                 onChange={(newValue) => {
                                     setValorData(newValue);
                                 }}
-                                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} {...erroObjectPrazo}/>}
+                                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} {...erroObjectPrazo} />}
                             />
                         </LocalizationProvider>
                     </BoxAtributoInfoModal2>
@@ -1382,6 +1383,7 @@ function Contextualizacao(props: {
     )
 }
 
+
 function Footer(props: {
     link: string,
     tipo: TipoComponenteProcesso,
@@ -1422,19 +1424,26 @@ function Footer(props: {
         })
 
         props.setConteudoModal(
-            <BoxConteudoModal>
-                <BoxTituloModal >
-                    <TypographyTituloModal variant='h5' >
-                        Anexos da {props.tipo.toLowerCase()}
-                    </TypographyTituloModal>
-                    <IconButton onClick={() => { props.setModalAberto(false) }}>
-                        <CloseIcon />
-                    </IconButton>
-                </BoxTituloModal>
-                <List>
-                    {anexos}
-                </List>
-            </BoxConteudoModal>
+            <>
+                <BoxConteudoModal>
+                    <BoxTituloModal >
+                        <TypographyTituloModal variant='h5' >
+                            Anexos da {props.tipo.toLowerCase()}
+                        </TypographyTituloModal>
+                        <IconButton onClick={() => { props.setModalAberto(false) }}>
+                            <CloseIcon />
+                        </IconButton>
+                    </BoxTituloModal>
+                    {anexos == null || anexos.length < 1 ?
+                        <ResultadoVazio imagem={imagemSemNada} legenda={"Sem anexos aqui!"} />
+                        :
+                        <List>
+                            {anexos}
+                        </List>
+                    }
+                </BoxConteudoModal>
+
+            </>
         )
 
         props.setModalAberto(true)
@@ -1456,6 +1465,7 @@ function Footer(props: {
         </Grid>
     )
 }
+
 
 function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonElement>[], aprovadoGerente: boolean, ultimoHistorico: any) {
     const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
@@ -1552,7 +1562,7 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
 
         if (estaEmPauta) {
             listaBotoes.push(verDemanda)
-        }else {
+        } else {
             if (!estaEmWorkflow) {
                 if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
                     const iniciarWorkflow = { nome: "iniciarworkflow", function: funcoes[7] }
