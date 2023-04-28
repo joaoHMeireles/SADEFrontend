@@ -18,25 +18,23 @@ export default function Chat(props: {
   verChat: any
 }) {
   return (
-    <>
-      <ContainerGeralChat id={props.id + ""} onClick={props.verChat}>
-        <BoxIconePessoa>
-          {<PersonRoundedIcon />}
-        </BoxIconePessoa>
-        <BoxContainerChat>
-          <BoxChat>
-            <TypographyTitulo variant="h6">
-              {props.titulo}
-            </TypographyTitulo>
-          </BoxChat>
-          <BoxChat>
-            <TypographyPessoaMensagem
-              variant="caption">
-              {props.pessoa}: {props.mensagem}
-            </TypographyPessoaMensagem>
-          </BoxChat>
-        </BoxContainerChat>
-      </ContainerGeralChat>
-    </>
+    <ContainerGeralChat id={props.id + ""} onClick={props.verChat} key={props.id}>
+      <BoxIconePessoa id={props.id + ""} >
+        {<PersonRoundedIcon id={props.id + ""} />}
+      </BoxIconePessoa>
+      <BoxContainerChat id={props.id + ""} >
+        <BoxChat id={props.id + ""} >
+          <TypographyTitulo variant="h6" id={props.id + ""} >
+            {props.titulo}
+          </TypographyTitulo>
+        </BoxChat>
+        <BoxChat id={props.id + ""} >
+          <TypographyPessoaMensagem id={props.id + ""} 
+            variant="caption">
+            {props.pessoa}: {props.mensagem}
+          </TypographyPessoaMensagem>
+        </BoxChat>
+      </BoxContainerChat>
+    </ContainerGeralChat>
   );
 }

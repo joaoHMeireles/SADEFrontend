@@ -172,30 +172,33 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
 
       // api.put("caminho editar pauta", formDataPauta).then((response) => {
 
-      //   const ata = {
-      //     pauta: response.data,
-      //     tituloReuniaoATA: tituloReuniao,
-      //     dataReuniao: dataReuniao,
-      //     inicioReuniao: inicioReuniao,
-      //     finalReuniao: finalReuniao
-      //   }
+        const ata = {
+          // pauta: response.data,
+          tituloReuniaoATA: tituloReuniao,
+          dataReuniao: dataReuniao,
+          inicioReuniao: inicioReuniao,
+          finalReuniao: finalReuniao
+        }
+
+        console.log(ata);
+        
 
       //   api.post("caminho criar ata", ata).then((response) => {
-      //     fecharAvaliacao();
+          fecharAvaliacao();
 
-      //     feedback = (
-      //       <Alert
-      //         onClose={() => {
-      //           setFeedbackAberto(false);
-      //         }}
-      //         severity="success"
-      //         sx={{ width: "100%" }}
-      //       >
-      //         {informacaoColecaoProcesso.tipo} avaliada com sucesso
-      //       </Alert>
-      //     );
+          feedback = (
+            <Alert
+              onClose={() => {
+                setFeedbackAberto(false);
+              }}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              {informacaoColecaoProcesso.tipo} avaliada com sucesso
+            </Alert>
+          );
 
-      //     abrirFeedback(feedback);
+          abrirFeedback(feedback);
       //   })
 
       // }).catch((err) => {
@@ -307,9 +310,9 @@ function Header(props: {
       // }
       // }
     } else {
-      if (!informacaoColecaoProcesso.numeroDG) {
+      // if (!informacaoColecaoProcesso.numeroDG) {
         setAcao("Finalizar processo");
-      }
+      // }
     }
   }, []);
 
@@ -385,6 +388,9 @@ function ContainerColecaoProcesso(props: {
     setModalAberto(true)
   }
 
+  console.log(informacaoColecaoProcesso);
+  
+
   return (
     <GridContainerColecao container spacing={2}>
       <Grid item xs={12}>
@@ -399,7 +405,6 @@ function ContainerColecaoProcesso(props: {
           </Grid>
         </GridContainerHeader>
       </Grid>
-
       <GridPequenosAtributos item xs={6}>
         <TypographyTituloAtributo variant='body1'>
           Data da reunião:
@@ -538,6 +543,7 @@ function Propostas(props: {
                         setValorData(newValue);
                       }}
                       renderInput={(params) => <TextField id='dataReuniao' {...params} />}
+                      disablePast
                     />
                   </GridInfoATA>
                   <GridInfoATA item xs={6}>

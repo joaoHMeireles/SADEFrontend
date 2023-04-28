@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Chat from "../../Components/Chat/Chat";
 import Toolbar from "../../Components/Toolbar/Toolbar";
@@ -14,545 +14,11 @@ import {
 } from "./Chats.styles";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semChats from "../../Assets/leaf.png"
+import { WebSocketContext } from "../../api/websocketservice.jsx";
+import Cookies from "js-cookie";
+import api from "../../api/api";
+import { useLocationChange } from "../../utils";
 
-
-const listaChats = [
-  {
-    id: 1,
-    tituloDemanda: "Demanda 01",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 1,
-        mensagem: "njksfdnjksfdnjkdnjksfdnjksfdnjkfnsdndjkndjkfnsdjkfsdnjkfnsdjkfnsjkdjkfjkjdnksfnjksdfnjksdfnksdnkflsdnf"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 3,
-        mensagem: "njksfdnjksfdnjkdnjksfdnjksfdnjkfnsdndjkndjkfnsdjkfsdnjkfnsdjkfnsjkdjkfjkjdnksfnjksdfnjksdfnksdnkflsdnf"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-    ]
-  },
-  {
-    id: 2,
-    tituloDemanda: "Demanda 02",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-    ]
-  },
-  {
-    id: 3,
-    tituloDemanda: "Demanda 03",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 4,
-    tituloDemanda: "Demanda 04",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 5,
-    tituloDemanda: "Demanda 05",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 6,
-    tituloDemanda: "Demanda 06",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 7,
-    tituloDemanda: "Demanda 07",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 8,
-    tituloDemanda: "Demanda 08",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 9,
-    tituloDemanda: "Demanda 09",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 10,
-    tituloDemanda: "Demanda 10",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 11,
-    tituloDemanda: "Demanda 11",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 12,
-    tituloDemanda: "Demanda 12",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 13,
-    tituloDemanda: "Demanda 13",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 14,
-    tituloDemanda: "Demanda 14",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 15,
-    tituloDemanda: "Demanda 15",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 16,
-    tituloDemanda: "Demanda 16",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 17,
-    tituloDemanda: "Demanda 17",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 18,
-    tituloDemanda: "Demanda 18",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 19,
-    tituloDemanda: "Demanda 19",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 1,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-  {
-    id: 20,
-    tituloDemanda: "Demanda 20",
-    mensagens: [
-      {
-        idMensagem: 1,
-        idPessoa: 3,
-        mensagem: "fjdngkfjdngjkfdngkfjdlngklfdngljfdngjklfdngjkdfgfdlgndfgljfdngjkfdngjkfdngfjkdngfjkdngkjfdnjgnfdjkgkjfdgjkfdgjkfdngjkdfngjkfdngjkfdngfjkdjgfdnjgkfjdgnfjkdngfjkdgnfjdngkdfknjg"
-      },
-      {
-        idMensagem: 2,
-        idPessoa: 3,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 3,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      },
-      {
-        idMensagem: 4,
-        idPessoa: 2,
-        mensagem: "Mensagem"
-      }
-    ]
-  },
-]
-
-const listaPessoas = [
-  {
-    id: 1,
-    nome: "Diego"
-  },
-  {
-    id: 2,
-    nome: "João"
-  },
-  {
-    id: 3,
-    nome: "Solicitante"
-  }
-]
 
 /**
  * Função que tem dois componentes jutamente a ela, sendo um para chats e outro para as mensagem de determinado chat
@@ -562,14 +28,84 @@ const listaPessoas = [
 
 export default function Chats(props: { aberto: boolean }) {
   localStorage.setItem("PAGINATUAL", "chat")
-  const [listaMensagem, setListaMensagem] = useState<any>([]);
+
+  const [listaChats, setListaChats] = useState<any[]>([])
+  const [componenteChats, setComponenteChats] = useState<any>()
+  const [listaMensagem, setListaMensagem] = useState<any[]>([]);
+  const [chatEscolhido, setChatEscolhido] = useState<any>()
+  const [inscricao, setInscricao] = useState(null)
+
+  const webSocketService: any = useContext(WebSocketContext)
+
+  //fazer só puxar os chats da pessoa
+  useEffect(() => {
+    api.get("/sod/chat/").then((response) => {
+      setListaChats(response.data)
+    }).catch((err) => {
+      console.log(err);
+    })
+  }, []);
 
   useEffect(() => {
-    setListaMensagem(listaChats[0].mensagens);
-  }, [])
+    atualizarComponentes()
+    setChatEscolhido(listaChats[0])
+  }, [listaChats])
+
+  useEffect(() => {
+    if (chatEscolhido) {
+      setListaMensagem(chatEscolhido.mensagens)
+    }
+  }, [chatEscolhido])
+
+  useEffect(() => {
+    if (chatEscolhido) {
+      const acaoNovaMensagem = (response: any) => {
+        const mensagemRecebida = JSON.parse(response.body);
+
+        setListaMensagem((mensagensPrevias) => [...mensagensPrevias, mensagemRecebida])
+      }
+
+      if (webSocketService.stompClient && !inscricao) {
+        setInscricao(webSocketService.inscrever(`/demanda/${chatEscolhido.idChat}/chat`, acaoNovaMensagem))
+      }
+    }
+
+    atualizarComponentes()
+
+  }, [listaMensagem, webSocketService.stompClient])
+
+  useLocationChange(() => {
+    webSocketService.desconectar()
+  })
 
   function verChat(e: any) {
-    setListaMensagem(listaChats[e.target.id - 1].mensagens);
+    setChatEscolhido(listaChats.find(chat => chat.idChat == parseInt(e.target.id)))
+  }
+
+  function atualizarComponentes(){
+    const componenteChatsNovo = listaChats.map((chat) => {
+      if (chat.usuariosChat) {
+        console.log(chat);
+        
+        const ultimaMensagem = listaMensagem[listaMensagem.length - 1]
+        console.log(ultimaMensagem);
+        
+
+        const usuario = chat.usuariosChat.find((usuario: any) => {
+          if(ultimaMensagem){
+            if(usuario.idUsuario == ultimaMensagem.usuario.idUsuario){
+              return usuario;
+            }
+          }
+        })
+
+        return (
+          <Chat id={chat.idChat} titulo={chat.demanda.tituloDemanda} pessoa={(usuario?.nomeUsuario != undefined ? usuario.nomeUsuario : "")} mensagem={ultimaMensagem ? ultimaMensagem.mensagem : ""} verChat={verChat} />
+        )
+      }
+    })
+
+    setComponenteChats(componenteChatsNovo)
   }
 
   return (
@@ -581,31 +117,11 @@ export default function Chats(props: { aberto: boolean }) {
             <>
               <LadoEsquerdoGeralChats>
                 <LadoEsquerdoChat>
-                  {listaChats.map((chat) => {
-                    const ultimaMensagem = chat.mensagens[chat.mensagens.length - 1]
-                    const pessoa = listaPessoas.find(pessoa => pessoa.id == ultimaMensagem.idPessoa)
-                    return (
-                      <Chat id={chat.id} titulo={chat.tituloDemanda} pessoa={(pessoa?.nome != undefined ? pessoa.nome : "")} mensagem={ultimaMensagem.mensagem} verChat={verChat} />
-                    )
-                  })}
+                  {componenteChats}
                 </LadoEsquerdoChat>
               </LadoEsquerdoGeralChats>
               <LadoDireitoGeralChats>
-                <LadoDiretoChat>
-                  {
-                    listaMensagem.map((mensagem: any) => {
-                      const pessoa = listaPessoas.find(p => p.id == mensagem.idPessoa);
-                      return (
-                        <Mensagens mensagem={mensagem.mensagem} pessoa={(pessoa?.nome != undefined ? pessoa.nome : "")} />
-                      )
-                    })}
-                  <Toolbar />
-                </LadoDiretoChat>
-                <BoxBarraPesquisa>
-                  <AttachmentRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
-                  <BarraPesquisa />
-                  <SendRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
-                </BoxBarraPesquisa>
+                <ConversaChat chatEscolhido={chatEscolhido} listaMensagens={listaMensagem} enviar={webSocketService.enviar} />
               </LadoDireitoGeralChats>
             </>
             :
@@ -617,20 +133,104 @@ export default function Chats(props: { aberto: boolean }) {
   );
 }
 
+function ConversaChat(props: { listaMensagens: any[], chatEscolhido: any, enviar: Function }) {
+  const [mensagem, setMensagem] = useState<any>({
+    chat: {
+      idChat: 1
+    },
+    usuario: {
+      idUsuario: localStorage.getItem("IDUSUARIO")
+    },
+    dataHoraMensagem: new Date(),
+    mensagem: null
+  })
+  const [elementoMensagens, setElementoMensagens] = useState<any>()
+
+  useEffect(() => {
+    if(props.listaMensagens.length == 0){
+      return
+    }
+
+    const componenteMensagensNovo = props.listaMensagens.map((mensagem: any) => {
+      const usuario = props.chatEscolhido.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
+   
+      return (
+        <Mensagens mensagem={mensagem.mensagem} usuario={usuario} />
+      )
+    })
+
+    setElementoMensagens(componenteMensagensNovo)
+  }, [props.listaMensagens])
+
+  function setDefaultMensagem() {
+    let mensagemPadrao: any = {
+      chat: {
+        idChat: props.chatEscolhido.idChat
+      },
+      usuario: {
+        idUsuario: localStorage.getItem("IDUSUARIO")
+      },
+      dataHoraMensagem: new Date(),
+      mensagem: null
+    }
+
+    setMensagem(mensagemPadrao)
+
+    const elemento = (document.getElementById("input-mensagem") as HTMLInputElement);
+    elemento.value = ""
+  }
+
+  function atualizarMensagem(e: any) {
+    setMensagem({
+      chat: {
+        idChat: props.chatEscolhido.idChat
+      },
+      usuario: {
+        idUsuario: localStorage.getItem("IDUSUARIO")
+      },
+      dataHoraMensagem: new Date(),
+      mensagem: e.target.value
+    })
+  }
+
+  function enviarMensagem(e: any) {
+    e.preventDefault()
+
+    props.enviar("/sod/demanda/" + props.chatEscolhido.idChat, mensagem)
+
+    setDefaultMensagem()
+  }
+
+  return (
+    <>
+      <LadoDiretoChat>
+        {elementoMensagens}
+        <Toolbar />
+      </LadoDiretoChat>
+      <BoxBarraPesquisa>
+        <AttachmentRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
+        <BarraPesquisa onChange={atualizarMensagem} id="input-mensagem"/>
+        <SendRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} onClick={enviarMensagem} />
+      </BoxBarraPesquisa>
+    </>
+  )
+}
+
+
 /**
  * 
  * @param props 
  * @returns Retorna uma mensagem que será direcionada de acordo com quem é, e para qual lado a mensagem dever ir, sendo esquerdo ou direito
  */
-function Mensagens(props: { mensagem: string, pessoa: string }) {
-  const pessoaLocalStorage = localStorage.getItem("PESSOA");
+function Mensagens(props: { mensagem: string, usuario: any }) {
+  const idUsuarioLocalStorage = parseInt(localStorage.getItem("IDUSUARIO") as string);
 
-  if (pessoaLocalStorage == props.pessoa) {
+  if (idUsuarioLocalStorage == props.usuario.idUsuario) {
     return (
       <BoxGeralMensagensLadoDireito>
         <BoxMensagensLadoDireito>
           <BoxMensagemLadoDireito>
-            <TypographyPessoa variant="body1">{props.pessoa}</TypographyPessoa>
+            <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
             <TypographyMensagem variant="body2">
               {props.mensagem}
             </TypographyMensagem>
@@ -643,7 +243,7 @@ function Mensagens(props: { mensagem: string, pessoa: string }) {
       <BoxGeralMensagensLadoEsquerdo>
         <BoxMensagensLadoEsquerdo>
           <BoxMensagemLadoEsquerdo>
-            <TypographyPessoa variant="body1">{props.pessoa}</TypographyPessoa>
+            <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
             <TypographyMensagem variant="body2">
               {props.mensagem}
             </TypographyMensagem>
