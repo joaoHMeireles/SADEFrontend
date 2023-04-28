@@ -46,9 +46,13 @@ export default function Dropzone(props: {
   }, []);
 
   const onDrop = useCallback((acceptedFiles: any) => {
-    const file: [] = acceptedFiles.map((acceptedFiles: any) => ({
-      acceptedFiles,
-    }));
+    const file: [] = acceptedFiles.map((files: any) => {
+      files
+    });
+
+    console.log(file);
+    
+    
 
     if (file == undefined) {
       return

@@ -168,12 +168,6 @@ export default function CriacaoProposta(props: {
     setPropostaPDF(novaPropostaPDF)
   }, [informacaoProcesso])
 
-  // useEffect(() => {
-  //   criarProposta()
-  // console.log(usuariosResponsaveis);
-
-  // }, [informacaoProcesso, escopoProposta, periodoExecucaoInicio, periodoExecucaoFim, usuariosResponsaveis, payback])
-
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
     if (newValue == 2) {
@@ -294,11 +288,13 @@ export default function CriacaoProposta(props: {
       formData.append("files", arquivosProposta);
     }
 
-    // api.post(`/sod/proposta/${idUsuario}`, formData, {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   }
-    // })
+    api.post(`/sod/proposta/${idUsuario}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    })
+
+    window.location.href = "/home"
   }
 
   return (
@@ -378,10 +374,6 @@ export default function CriacaoProposta(props: {
               setNumeroBeneficiosReais={setNumeroBeneficiosReais}
               setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
-              // moedaReal={moedaReal}
-              // setMoedaReal={setMoedaReal}
-              // moedaPotencial={moedaPotencial}
-              // setMoedaPotencial={setMoedaPotencial}
               valor={valor}
               informacaoProcesso={informacaoProcesso}
               setInformacaoProcesso={setInformacaoProcesso}

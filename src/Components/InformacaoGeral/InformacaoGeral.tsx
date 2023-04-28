@@ -23,8 +23,8 @@ export default function InformacaoGeral(props: {
   proposta: boolean,
   centroCusto?: any[],
   setCentroCusto?: React.Dispatch<React.SetStateAction<Object[]>>
-  informacaoProcesso: any
-  setInformacaoProcesso: React.Dispatch<React.SetStateAction<any>>
+  informacaoProcesso?: any
+  setInformacaoProcesso?: React.Dispatch<React.SetStateAction<any>>
 }) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
   const [paginaTooltip, setPaginaTooltip] = useState(0);
