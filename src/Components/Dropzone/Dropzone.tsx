@@ -20,6 +20,8 @@ export default function Dropzone(props: {
   proposta: boolean;
   files: any[];
   setFiles: React.Dispatch<React.SetStateAction<any[]>>;
+  arquivosProposta?: any[];
+  setArquivosProposta?: React.Dispatch<React.SetStateAction<any[]>>;
 }) {
   const [arquivos, setAquivos] = useState<Array<Anexos>>([]);
 
@@ -44,23 +46,27 @@ export default function Dropzone(props: {
   }, []);
 
   const onDrop = useCallback((acceptedFiles: any) => {
-    const file: [] = acceptedFiles.map((acceptedFiles: any) => ({
-      acceptedFiles,
-    }));
+    const files: [] = acceptedFiles.map((file: any) => {
+      return file
+    })  
 
-    if (file == undefined) {
+    if (files == undefined) {
       return
     }
 
-    props.files.push(file[0]["acceptedFiles"])
+    for (const file of files) {
+      props.files.push(file)
+    }
 
     props.setFiles(props.files);
 
-
-
+    if (props.setArquivosProposta && props.arquivosProposta) {
+      props.setArquivosProposta(props.files);
+    }
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
 
   return (
     <>
@@ -74,20 +80,23 @@ export default function Dropzone(props: {
         </BoxTypography>
         {props.rascunho &&
           arquivos.map((e: Anexos, index: number) => {
-            return <Arquivo key={index} icone={e.tipo} nome={e.nome} />;
+            return <Arquivo key={index} id={index} icone={e.tipo} nome={e.nome} />;
           })}
 
         {props.proposta &&
           arquivos.map((e: Anexos, index: number) => {
-            return <Arquivo key={index} icone={e.tipo} nome={e.nome} />;
+            return <Arquivo key={index} id={index} icone={e.tipo} nome={e.nome} />;
           })}
 
-        {props.files.map((e: any, index: number) => {
+        {props.files && props.files.map((e: any, index: number) => {
           return (
             <Arquivo
               key={index}
+              id={index}
               icone={e["type"]}
               nome={e["name"]}
+              files={props.files}
+              setFiles={props.setFiles}
             />
           );
         })}

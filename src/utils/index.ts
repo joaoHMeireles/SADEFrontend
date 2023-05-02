@@ -112,7 +112,7 @@ export function getNomeRota(palavra: string) {
         chat: "Chat",
         history: "Histórico",
         alteration: "Alteração",
-        userhelp: "Manual do Usuário"
+        userhelp: "Ajuda ao usuário"
     }
 
     return (nomesRotas as any)[palavra]

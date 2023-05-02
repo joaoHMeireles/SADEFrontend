@@ -237,10 +237,7 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
             <Box sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
                 {props.proposta.tabelasCustoProposta.map((tabela: any) => {
                     let totalEsfoco = 0;
-                    let valorTotal = 0;                   
-
-                    console.log(tabela);
-                    
+                    let valorTotal = 0;                    
 
                     return (
                         <>

@@ -39,14 +39,8 @@ export default function EscopoProposta(props: {
   centroCusto: any
   centroCustoEscolhidas: Object[]
   setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<Object[]>>
-  // centroCustoTabela: string[]
-  // setCentroCustoTabela: React.Dispatch<React.SetStateAction<string[]>>
-  // valorTotalTabela: number
-  // setValorTotalTabela: React.Dispatch<React.SetStateAction<number>>
-  // esforcoTabela: number
-  // setEsforcoTabela: React.Dispatch<React.SetStateAction<number>>
-  // tituloLinhaTabela: string
-  // setTituloLinhaTabela: React.Dispatch<React.SetStateAction<string>>
+  arquivosProposta: any[]
+  setArquivosProposta: React.Dispatch<React.SetStateAction<any[]>>
 }) {
 
   const [usuarios, setUsuarios] = useState<any[]>([])
@@ -77,10 +71,6 @@ export default function EscopoProposta(props: {
             centroCusto={props.centroCusto}
             centroCustoEscolhidas={props.centroCustoEscolhidas}
             setCentroCustoEscolhidas={props.setCentroCustoEscolhidas}
-          // centroCustoTabela={props.centroCustoTabela} setCentroCustoTabela={props.setCentroCustoTabela}
-          //   valorTotalTabela={props.valorTotalTabela} setValorTotalTabela={props.setValorTotalTabela}
-          //   esforcoTabela={props.esforcoTabela} setEsforcoTabela={props.setEsforcoTabela}
-          //   tituloLinhaTabela={props.tituloLinhaTabela} setTituloLinhaTabela={props.setTituloLinhaTabela} 
           />
         </BoxPadrao>
         <BoxPaybackExecucao>
@@ -161,7 +151,7 @@ export default function EscopoProposta(props: {
           </BoxResponsaveis>
         </BoxResponsavel>
         <BoxPadrao>
-          <InputAnexos rascunho={false} proposta={false} />
+          <InputAnexos rascunho={false} proposta={false} arquivosProposta={props.arquivosProposta} setArquivosProposta={props.setArquivosProposta}/>
         </BoxPadrao>
       </BoxContainerGeral >
     </>
