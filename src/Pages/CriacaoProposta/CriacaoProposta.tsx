@@ -269,7 +269,7 @@ export default function CriacaoProposta(props: {
 
     setPropostaPDF(proposta);
     console.log(proposta);
-    
+
 
     let formData = new FormData()
     let idUsuario = localStorage.getItem("IDUSUARIO");
@@ -285,19 +285,23 @@ export default function CriacaoProposta(props: {
     formData.append("pdfVersaoHistorico", pdfArquivo);
 
     console.log(arquivosProposta);
-    
+
 
     if (arquivosProposta || arquivosProposta != undefined) {
-      formData.append("files", arquivosProposta);
+      for (const arquivo of arquivosProposta) {
+        formData.append("files", arquivo);
+      }
     }
 
-    // api.post(`/sod/proposta/${idUsuario}`, formData, {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   }
-    // })
+    api.post(`/sod/proposta/${idUsuario}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    }).then((res) => {
+      console.log(res);
+    })
 
-    // window.location.href = "/home"
+    window.location.href = "/home"
   }
 
   return (
