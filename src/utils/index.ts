@@ -204,3 +204,13 @@ export function getValueEnum(enumerador: Object, valor: any) {
 export function getKeyEnum(enumerador: Object, valor: any) {
     return Object.keys(enumerador)[Object.values(enumerador).indexOf(valor)]
 }
+
+export function baixarArquivo(anexo: any) {
+    const url = window.URL.createObjectURL(new Blob([anexo.arquivo]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', anexo.nome);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}

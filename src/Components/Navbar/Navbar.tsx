@@ -18,6 +18,7 @@ const listaLinguas = [
 
 export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
     const [lingua, setLingua] = useState("Português")
+    const usuario = JSON.parse(localStorage.getItem("USUARIO") as string)
     const path = useLocation()
 
     function mudarSidebar() {
@@ -62,9 +63,9 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                             </TextFieldLinguas>
 
                             <Box sx={{ marginLeft: "1rem", "&:hover": { cursor: "pointer"} }}>
-                                <Avatar {...stringAvatar('Benson Rodrigues')} onClick={() => {
+                                <Avatar {...stringAvatar(usuario.nomeUsuario)} onClick={() => {
                                     window.location.href = "/profile";
-                                }} />
+                                }} src={usuario.foto} />
                             </Box>
 
                             <Box sx={{ marginLeft: "1rem" }}>

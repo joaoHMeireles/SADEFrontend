@@ -39,7 +39,9 @@ export default function Chats(props: { aberto: boolean }) {
 
   //fazer só puxar os chats da pessoa
   useEffect(() => {
-    api.get("/sod/chat/").then((response) => {
+    const idUsuario = localStorage.getItem("IDUSUARIO")
+
+    api.get("/sod/usuario/" + idUsuario + "/chat").then((response) => {
       setListaChats(response.data)
     }).catch((err) => {
       console.log(err);

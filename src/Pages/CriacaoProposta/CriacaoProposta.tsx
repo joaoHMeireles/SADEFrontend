@@ -5,7 +5,7 @@ import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
 
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { BoxConteudo } from "../App.styles";
 
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
@@ -45,6 +45,7 @@ import jsPDF from "jspdf";
 export default function CriacaoProposta(props: {
   filtrar: boolean;
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
+  filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }) {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
@@ -332,6 +333,7 @@ export default function CriacaoProposta(props: {
             filtrar={props.filtrar}
             grid={grid}
             setGrid={setGrid}
+            filtrarResultados={props.filtrarResultados}
           />
           {listaComponents.length != 0 ?
             <CardsProcesso

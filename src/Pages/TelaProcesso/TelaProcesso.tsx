@@ -1,6 +1,6 @@
 import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getNomeComponente, urlValida, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum, getValueEnum } from '../../utils';
+import { getNomeComponente, urlValida, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum, getValueEnum, baixarArquivo } from '../../utils';
 import { Dayjs } from 'dayjs';
 import { sessaoTI, StatusComponenteProcesso, TamanhoComponenteProcesso, TarefaExecucao, TipoComponenteProcesso } from '../../constants/enuns';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
@@ -470,7 +470,6 @@ export function Header(props: {
         )
 
         abrirModal()
-
     } //feito
 
     function verDemandaProposta() {
@@ -617,7 +616,36 @@ export function Header(props: {
     } //feito
 
     function criarChat() {
-        // blah
+        const conteudoFeedback = (
+            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                Chat iniciado
+            </Alert>
+        )
+
+        function iniciarWorkflowAprovacao(conteudo: JSX.Element) {
+            const chatBody = {
+                ativo: true,
+                demanda: { idDemanda: processo.id }
+            }
+
+            api.post(`/sod/chat/${idAnalista}`, chatBody).then((response: any) => {
+                recarregarPaginaDemanda(conteudo)
+            }).catch((err: any) => {
+                console.log(err);
+            })
+        }
+
+        props.setConteudoModal(
+            <ConteudoModalConfirmacao
+                tituloModal='Quer iniciar esse chat?'
+                abrirProximoComponente={iniciarWorkflowAprovacao}
+                conteudoProximoComponente={conteudoFeedback}
+                descricaoModal="Caso confirme, será criado um chat vinculado a essa demanda para os envolvidos a ela"
+                fecharModal={fecharModal}
+            />
+        )
+
+        abrirModal()
     }
 
     return (
@@ -1391,15 +1419,7 @@ function Footer(props: {
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
     setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
 }) {
-    function baixarArquivo(anexo: any) {
-        const url = window.URL.createObjectURL(new Blob([anexo.arquivo]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', anexo.nome);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
+
 
     function mostrarAnexos() {
         const anexos = props.anexos.map((anexo: any, index: number) => {
@@ -1442,7 +1462,6 @@ function Footer(props: {
                         </List>
                     }
                 </BoxConteudoModal>
-
             </>
         )
 

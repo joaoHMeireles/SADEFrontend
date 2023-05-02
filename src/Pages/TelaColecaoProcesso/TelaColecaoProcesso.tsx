@@ -1,10 +1,12 @@
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getNomeComponente, getCorStatus, getCorTipo, getBeneficiosPorTipo, getNomeStatus, getKeyEnum } from "../../utils";
+import { getNomeComponente, getCorStatus, getCorTipo, getBeneficiosPorTipo, getNomeStatus, getKeyEnum, getIconeArquivo, baixarArquivo } from "../../utils";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Toolbar from "../../Components/Toolbar/Toolbar";
 import TabelaBeneficios from "../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios";
 import TabelasCusto from "../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto";
+import InputAnexos from "../../Components/InputAnexos/InputAnexos";
+import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import {
   AccordionDetails,
   AccordionSummary,
@@ -22,17 +24,28 @@ import {
   Alert,
   Divider,
   Dialog,
+  List,
+  ListItemIcon,
+  ListItem,
+  IconButton,
+  ListItemText,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CloseIcon from '@mui/icons-material/Close';
+import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 import {
   BotaoPrimarioHeader,
   BotaoSecundarioHeader,
   BoxBotoes,
+  BoxConteudoModal,
   BoxHeader,
+  BoxTituloModal,
+  CircleIconPonto,
   GridPequenosAtributos,
   TypographyTexto,
   TypographyTitulo,
   TypographyTituloAtributo,
+  TypographyTituloModal,
 } from "../TelaProcesso/TelaProcesso.styles";
 import {
   BoxContainer,
@@ -62,12 +75,16 @@ import dayjs, { Dayjs } from "dayjs";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import { StatusComponenteProcesso } from "../../constants/enuns";
 import api from "../../api/api";
+import imagemSemNada from "../../Assets/empty-folder.png"
+
+
 
 export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
   const [avaliandoProcesso, setAvaliandoProcesso] = useState(false);
   const [verificacaoInputs, setVerificacaoInputs] = useState<boolean[]>([]);
   const [feedbackAberto, setFeedbackAberto] = useState(false);
   const [conteudoFeedback, setConteudoFeedback] = useState(<div />);
+  const [files, setFiles] = useState<any[]>([])
   const location = useLocation().pathname;
   const idLocalStorage = localStorage.getItem(
     `${getNomeComponente(location)}ESCOLHIDA`
@@ -75,6 +92,25 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
   const informacaoColecaoProcesso = JSON.parse(
     idLocalStorage != null ? idLocalStorage : ""
   )
+  const idUsuario = localStorage.getItem("IDUSUARIO")
+
+  useEffect(() => {
+    console.log(informacaoColecaoProcesso);
+    const idRequisicao = informacaoColecaoProcesso.idPauta? informacaoColecaoProcesso.idPauta : informacaoColecaoProcesso.pauta.idPauta
+    
+
+    api.get("/sod/pauta/arquivos/" + idRequisicao).then((response) => {
+      console.log("deu baobaobaob");
+      
+      console.log(response);
+      
+      informacaoColecaoProcesso.arquivos = response.data
+    }).catch((err) => {
+      console.log("deu errroroororoor");
+      
+      console.log(err);
+    })
+  }, [])
 
   function fecharAvaliacao() {
     setAvaliandoProcesso(false);
@@ -114,63 +150,59 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         const inputNumeroAta = (
           document.getElementById(`inputNumeroATA${i}`) as HTMLInputElement
         ).value;
-        const inputDocumentoAprovacao = (
-          document.getElementById(`inputDocumento${i}`) as HTMLInputElement
-        ).value;
 
         novaVerificacaoInputs[primeiroIndexProposta + 3] =
           inputNumeroAta != "" ? true : false;
-        novaVerificacaoInputs[primeiroIndexProposta + 4] =
-          inputDocumentoAprovacao != "" ? true : false;
       }
     }
 
     setVerificacaoInputs(novaVerificacaoInputs);
 
     if (checarPreenchimento(novaVerificacaoInputs)) {
-      const decisoesPauta: any[] = []
-      const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
-      const dataReuniao = (document.getElementById("dataReuniao") as HTMLInputElement).value
-      const inicioReuniao = (document.getElementById("inicioReuniao") as HTMLInputElement).value
-      const finalReuniao = (document.getElementById("finalReuniao") as HTMLInputElement).value
-      let dataReuniaoCerta = dataReuniao.slice(6) + "/" + dataReuniao.slice(0, 5)
-      dataReuniaoCerta = dataReuniaoCerta.replaceAll("/", "-")
+      if (informacaoColecaoProcesso.tipo != "ATA") {
+        const decisoesPauta: any[] = []
+        const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
+        const dataReuniao = (document.getElementById("dataReuniao") as HTMLInputElement).value
+        const inicioReuniao = (document.getElementById("inicioReuniao") as HTMLInputElement).value
+        const finalReuniao = (document.getElementById("finalReuniao") as HTMLInputElement).value
+        let dataReuniaoCerta = dataReuniao.slice(6) + "/" + dataReuniao.slice(0, 5)
+        dataReuniaoCerta = dataReuniaoCerta.replaceAll("/", "-")
 
-      for (let i = 0; i < informacaoColecaoProcesso.propostas.length; i++) {
-        const botoesStatusDemanda = document.getElementsByClassName(`radioButtonStatus${i}`)
-        const botoesFormaPublicacao = document.getElementsByClassName(`radioButtonPublicacao${i}`)
-        const comentario = (document.getElementById(`comentario${i}`) as HTMLInputElement).value
-        const formatoPublicacaoEscolhido = (botoesFormaPublicacao[0].children[0].children[0] as HTMLInputElement).checked
-        let statusEscolhido = ""
+        for (let i = 0; i < informacaoColecaoProcesso.propostas.length; i++) {
+          const botoesStatusDemanda = document.getElementsByClassName(`radioButtonStatus${i}`)
+          const botoesFormaPublicacao = document.getElementsByClassName(`radioButtonPublicacao${i}`)
+          const comentario = (document.getElementById(`comentario${i}`) as HTMLInputElement).value
+          const formatoPublicacaoEscolhido = (botoesFormaPublicacao[0].children[0].children[0] as HTMLInputElement).checked
+          let statusEscolhido = ""
 
-        for (let botaoRadio of botoesStatusDemanda) {
-          if ((botaoRadio.children[0].children[0] as HTMLInputElement).checked) {
-            statusEscolhido = (botaoRadio.children[0].children[0] as HTMLInputElement).value
+          for (let botaoRadio of botoesStatusDemanda) {
+            if ((botaoRadio.children[0].children[0] as HTMLInputElement).checked) {
+              statusEscolhido = (botaoRadio.children[0].children[0] as HTMLInputElement).value
+            }
           }
+
+          let propostaPauta = {
+            idDecisaoPropostaPauta: informacaoColecaoProcesso.propostas[i].idDecisaoPropostaPauta,
+            statusDemandaComissao: getKeyEnum(StatusComponenteProcesso, statusEscolhido),
+            ataPublicada: formatoPublicacaoEscolhido,
+            comentario: comentario
+          }
+
+          decisoesPauta.push(propostaPauta);
         }
 
-        let propostaPauta = {
-          idDecisaoPropostaPauta: informacaoColecaoProcesso.propostas[i].idDecisaoPropostaPauta,
-          statusDemandaComissao: getKeyEnum(StatusComponenteProcesso, statusEscolhido),
-          ataPublicada: formatoPublicacaoEscolhido,
-          comentario: comentario
+        let pautaEditar = {
+          propostasPauta: decisoesPauta
         }
 
-        decisoesPauta.push(propostaPauta);
-      }
+        const formDataPauta = new FormData()
 
-      let pautaEditar = {
-        propostasPauta: decisoesPauta
-      }
+        formDataPauta.append("pauta", JSON.stringify(pautaEditar))
 
-      const formDataPauta = new FormData()
+        console.log(pautaEditar);
 
-      formDataPauta.append("pauta", JSON.stringify(pautaEditar))
 
-      console.log(pautaEditar);
-      
-
-      // api.put("caminho editar pauta", formDataPauta).then((response) => {
+        // api.put("caminho editar pauta", formDataPauta).then((response) => {
 
         const ata = {
           // pauta: response.data,
@@ -181,29 +213,101 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         }
 
         console.log(ata);
-        
 
-      //   api.post("caminho criar ata", ata).then((response) => {
-          fecharAvaliacao();
 
-          feedback = (
-            <Alert
-              onClose={() => {
-                setFeedbackAberto(false);
-              }}
-              severity="success"
-              sx={{ width: "100%" }}
-            >
-              {informacaoColecaoProcesso.tipo} avaliada com sucesso
-            </Alert>
-          );
+        //   api.post("caminho criar ata", ata).then((response) => {
+        fecharAvaliacao();
 
-          abrirFeedback(feedback);
-      //   })
+        feedback = (
+          <Alert
+            onClose={() => {
+              setFeedbackAberto(false);
+            }}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            {informacaoColecaoProcesso.tipo} avaliada com sucesso
+          </Alert>
+        );
 
-      // }).catch((err) => {
-      //   console.log(err);
-      // })
+        abrirFeedback(feedback);
+        //   })
+
+        // }).catch((err) => {
+        //   console.log(err);
+        // })
+
+      } else {
+        const decisoesATA: any[] = []
+
+        for (let i = 0; i < informacaoColecaoProcesso.propostas.length; i++) {
+          const botoesStatusDemanda = document.getElementsByClassName(`radioButtonStatus${i}`)
+          const numeroATADG = (document.getElementById(`inputNumeroATA${i}`) as HTMLInputElement).value
+          const comentario = (document.getElementById(`comentario${i}`) as HTMLInputElement).value
+          let statusEscolhido = ""
+
+          for (let botaoRadio of botoesStatusDemanda) {
+            if ((botaoRadio.children[0].children[0] as HTMLInputElement).checked) {
+              statusEscolhido = (botaoRadio.children[0].children[0] as HTMLInputElement).value
+            }
+          }
+
+          const chaveEnum = getKeyEnum(StatusComponenteProcesso, statusEscolhido)
+
+          let propostaATA = {
+            ...informacaoColecaoProcesso.propostas[i],
+            numeroSequencial: numeroATADG,
+            statusDemandaComissao: chaveEnum != null ? chaveEnum : "TODO",
+            comentario: comentario
+          }
+
+
+          decisoesATA.push(propostaATA);
+        }
+
+        let todaInfoATA = {
+          ...informacaoColecaoProcesso,
+          propostasAta: decisoesATA
+        }
+
+        const { tipo, propostasPauta, propostas, ...ataEditar } = todaInfoATA
+
+        const formData = new FormData()
+
+        formData.append("ata", JSON.stringify(ataEditar))
+
+        if (files != null) {
+          if (files.length != 0) {
+            for (const file of files) {
+              formData.append("arquivos", file)
+            }
+          }
+        }
+
+
+        // api.put("/sod/ata/" + informacaoColecaoProcesso.idATA + "/" + idUsuario, formData).then((response) => {
+        fecharAvaliacao();
+
+        feedback = (
+          <Alert
+            onClose={() => {
+              setFeedbackAberto(false);
+            }}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            {informacaoColecaoProcesso.tipo} avaliada com sucesso
+          </Alert>
+        );
+
+        abrirFeedback(feedback);
+
+
+        // }).catch((err) => {
+        //   console.log(err);
+        // })
+
+      }
 
     } else {
       feedback = (
@@ -245,6 +349,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
 
     return true;
   }
+  
 
   return (
     <>
@@ -263,6 +368,8 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
               informacaoColecaoProcesso={informacaoColecaoProcesso}
               avaliandoProcesso={avaliandoProcesso}
               verificacaoInputs={verificacaoInputs}
+              files={files}
+              setFiles={setFiles}
             />
             <Snackbar
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -311,7 +418,7 @@ function Header(props: {
       // }
     } else {
       // if (!informacaoColecaoProcesso.numeroDG) {
-        setAcao("Finalizar processo");
+      setAcao("Finalizar processo");
       // }
     }
   }, []);
@@ -377,19 +484,42 @@ function ContainerColecaoProcesso(props: {
   informacaoColecaoProcesso: any;
   avaliandoProcesso: boolean;
   verificacaoInputs: boolean[];
+  files: any;
+  setFiles: React.Dispatch<SetStateAction<any>>;
 }) {
   const [modalAberto, setModalAberto] = useState(false)
+  const [anexos, setAnexos] = useState([])
   const informacaoColecaoProcesso = props.informacaoColecaoProcesso;
   const dataFormatada = new Date(
     informacaoColecaoProcesso.dataReuniao
   ).toLocaleDateString();
 
   function abrirModal() {
+    console.log(props.informacaoColecaoProcesso);
+    
+
+    setAnexos(props.informacaoColecaoProcesso.arquivos.map((anexo: any, index: number) => {
+      const IconeAnexo = getIconeArquivo(anexo.nome)
+  
+      return (
+        <ListItem key={index}
+          secondaryAction={
+            <IconButton edge="end" aria-label="delete" type='button' onClick={() => { baixarArquivo(anexo) }} >
+              <FileDownloadRoundedIcon />
+            </IconButton>
+          }>
+          <ListItemIcon>
+            <IconeAnexo />
+          </ListItemIcon>
+          <ListItemText
+            primary={anexo.nome}
+            secondary={`Anexado por ${anexo.insersor.nomeUsuario}`}
+          />
+        </ListItem >
+      )
+    }))
     setModalAberto(true)
   }
-
-  console.log(informacaoColecaoProcesso);
-  
 
   return (
     <GridContainerColecao container spacing={2}>
@@ -431,9 +561,24 @@ function ContainerColecaoProcesso(props: {
           </TypographyTexto>
         </GridPequenosAtributos>
         :
-        <div>
-          colcocar o nome das pessoas que vao participar
-        </div>
+        <Grid item>
+          <TypographyTexto variant='body1' >
+            <b>Pessoas presentes na reunião:</b>
+          </TypographyTexto>
+          <List>
+            {informacaoColecaoProcesso.usuariosReuniaoATA.map((usuario: any, index: number) => {
+              return (
+                <ListItem key={index} sx={{ textAlign: "justify" }}>
+                  <ListItemIcon>
+                    <CircleIconPonto />
+                  </ListItemIcon>
+                  {usuario.nomeUsuario} - {usuario.cargo} - {usuario.numeroCadastro}
+                </ListItem>
+              )
+            })
+            }
+          </List>
+        </Grid>
       }
       <GridPequenosAtributos item xs={12}>
         <TypographyTituloAtributo variant='body1'>
@@ -447,6 +592,8 @@ function ContainerColecaoProcesso(props: {
         avaliandoProcesso={props.avaliandoProcesso}
         verificacaoInputs={props.verificacaoInputs}
         tituloPauta={informacaoColecaoProcesso.tituloReuniao}
+        files={props.files}
+        setFiles={props.setFiles}
       />
       {informacaoColecaoProcesso.tipo == "ATA" && !props.avaliandoProcesso && (
         <GridFooter item xs={12}>
@@ -466,7 +613,23 @@ function ContainerColecaoProcesso(props: {
         </GridFooter>
       )}
       <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { minWidth: "35vw" } }}>
-        tá aberto
+        <BoxConteudoModal>
+          <BoxTituloModal >
+            <TypographyTituloModal variant='h5' >
+              Anexos da {informacaoColecaoProcesso.tipo.toLowerCase()}
+            </TypographyTituloModal>
+            <IconButton onClick={() => {setModalAberto(false) }}>
+              <CloseIcon />
+            </IconButton>
+          </BoxTituloModal>
+          {anexos == null || anexos.length < 1 ?
+            <ResultadoVazio imagem={imagemSemNada} legenda={"Sem anexos aqui!"} />
+            :
+            <List>
+              {anexos}
+            </List>
+          }
+        </BoxConteudoModal>
       </Dialog>
     </GridContainerColecao>
   );
@@ -479,6 +642,8 @@ function Propostas(props: {
   avaliandoProcesso: boolean;
   verificacaoInputs: boolean[];
   tituloPauta?: string;
+  files: any;
+  setFiles: React.Dispatch<SetStateAction<any>>;
 }) {
   const eUmaPauta = props.tipoColecao == "Pauta" ? true : false;
   const location = useLocation().pathname;
@@ -578,14 +743,7 @@ function Propostas(props: {
             :
             <>
               <Grid item xs={12}>
-                <TypographyTituloDecisao variant="body1">
-                  Documento de aprovação:
-                </TypographyTituloDecisao>
-                <TextField
-                  placeholder="vai ter o inputzao de arquivo"
-                  multiline
-                  sx={{ width: "100%" }}
-                />
+                <InputAnexos rascunho={false} proposta={false} files={props.files} setFiles={props.setFiles} />
               </Grid>
             </>
           }

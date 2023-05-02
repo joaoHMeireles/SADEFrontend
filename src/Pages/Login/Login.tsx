@@ -61,6 +61,7 @@ export default function Login(props: {
     api.post(`/sod/login/auth`, user, config).then((response: any) => {
       const dadosUserJPA = response.data
       localStorage.setItem("TIPOUSUARIO", dadosUserJPA.authorities[0].authority);
+      localStorage.setItem("USUARIO", JSON.stringify(dadosUserJPA.usuario))
       localStorage.setItem("IDUSUARIO", JSON.stringify(dadosUserJPA.usuario.idUsuario));
 
       location.href = "/home";
