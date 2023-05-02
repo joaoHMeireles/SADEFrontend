@@ -26,8 +26,8 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
   };
 
   return (
-    <Box sx={{ backgroundColor: "#EEE" }}>
-      <BoxHeader sx={{ backgroundColor: "#EEE", width: (props.sidebarAberta ? "88.35%" : "96.5%") }}>
+    <Box>
+      <BoxHeader sx={{ width: (props.sidebarAberta ? "88.35%" : "96.5%") }}>
         <Breadcrumb />
       </BoxHeader>
 
@@ -36,7 +36,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
       <BoxConteudo>
         <Container>
           <FirstColumn>
-          <Lista sx={{ backgroundColor: "#FFF" }}>
+          <Lista>
             <ListItemButton>
               <ListItemText primary="INTRODUÇÃO" />
             </ListItemButton>
