@@ -56,9 +56,6 @@ export default function CriacaoProposta(props: {
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState(0)
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState(0)
 
-  const [moedaReal, setMoedaReal] = useState<string[]>([])
-  const [moedaPotencial, setMoedaPotencial] = useState<string[]>([])
-
   const [valorTamanho, setValorTamanho] = useState<string>("");
   const [valorBUSolicitante, setValorBUSolicitante] = useState<string>("");
   const [valorBUsBeneficadas, setValorBUsBeneficadas] = useState<Object[]>([]);
@@ -77,6 +74,8 @@ export default function CriacaoProposta(props: {
 
   const [centroCusto, setCentroCusto] = useState<any>();
   const [centroCustoEscolhidas, setCentroCustoEscolhidas] = useState<any[]>([]);
+
+  const [arquivosProposta, setArquivosProposta] = useState<any>([])
 
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>();
 
@@ -169,12 +168,6 @@ export default function CriacaoProposta(props: {
     setPropostaPDF(novaPropostaPDF)
   }, [informacaoProcesso])
 
-  // useEffect(() => {
-  //   criarProposta()
-  // console.log(usuariosResponsaveis);
-
-  // }, [informacaoProcesso, escopoProposta, periodoExecucaoInicio, periodoExecucaoFim, usuariosResponsaveis, payback])
-
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
     if (newValue == 2) {
@@ -262,7 +255,7 @@ export default function CriacaoProposta(props: {
     let dataExecucaoFimCerto = dataExecucaoFim.slice(6) + "/" + dataExecucaoFim.slice(0, 5)
     dataExecucaoFimCerto = dataExecucaoFimCerto.replaceAll("/", "-")
 
-    const {tipo, ...informacaoProcessoCerto} = informacaoProcesso
+    const { tipo, ...informacaoProcessoCerto } = informacaoProcesso
 
     let proposta = {
       escopo: escopoProposta,
@@ -275,6 +268,8 @@ export default function CriacaoProposta(props: {
     }
 
     setPropostaPDF(proposta);
+    console.log(proposta);
+    
 
     let formData = new FormData()
     let idUsuario = localStorage.getItem("IDUSUARIO");
@@ -289,11 +284,20 @@ export default function CriacaoProposta(props: {
 
     formData.append("pdfVersaoHistorico", pdfArquivo);
 
-    api.post(`/sod/proposta/${idUsuario}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      }
-    })
+    console.log(arquivosProposta);
+    
+
+    if (arquivosProposta || arquivosProposta != undefined) {
+      formData.append("files", arquivosProposta);
+    }
+
+    // api.post(`/sod/proposta/${idUsuario}`, formData, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   }
+    // })
+
+    // window.location.href = "/home"
   }
 
   return (
@@ -332,6 +336,7 @@ export default function CriacaoProposta(props: {
             filtrar={props.filtrar}
             grid={grid}
             setGrid={setGrid}
+          // filtrarResultados={}
           />
           {listaComponents.length != 0 ?
             <CardsProcesso
@@ -372,10 +377,6 @@ export default function CriacaoProposta(props: {
               setNumeroBeneficiosReais={setNumeroBeneficiosReais}
               setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
-              moedaReal={moedaReal}
-              setMoedaReal={setMoedaReal}
-              moedaPotencial={moedaPotencial}
-              setMoedaPotencial={setMoedaPotencial}
               valor={valor}
               informacaoProcesso={informacaoProcesso}
               setInformacaoProcesso={setInformacaoProcesso}
@@ -433,6 +434,8 @@ export default function CriacaoProposta(props: {
               centroCusto={centroCusto}
               centroCustoEscolhidas={centroCustoEscolhidas}
               setCentroCustoEscolhidas={setCentroCustoEscolhidas}
+              arquivosProposta={arquivosProposta}
+              setArquivosProposta={setArquivosProposta}
             />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
