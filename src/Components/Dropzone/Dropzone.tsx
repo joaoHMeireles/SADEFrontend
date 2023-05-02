@@ -25,7 +25,7 @@ export default function Dropzone(props: {
 }) {
   const [arquivos, setAquivos] = useState<Array<Anexos>>([]);
 
-  useEffect(() => {  
+  useEffect(() => {
     let info;
     if (props.rascunho) {
       info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
@@ -46,33 +46,27 @@ export default function Dropzone(props: {
   }, []);
 
   const onDrop = useCallback((acceptedFiles: any) => {
-    const file: [] = acceptedFiles.map((files: any) => {
-      files
-    });
+    const files: [] = acceptedFiles.map((file: any) => {
+      return file
+    })  
 
-    console.log(file);
-    
-    
-
-    if (file == undefined) {
+    if (files == undefined) {
       return
     }
 
-    props.files.push(file[0]["acceptedFiles"])
+    for (const file of files) {
+      props.files.push(file)
+    }
 
-    props.arquivosProposta?.push(file[0]["acceptedFiles"])
+    props.setFiles(props.files);
 
     if (props.setArquivosProposta && props.arquivosProposta) {
       props.setArquivosProposta(props.files);
     }
-
-
-    props.setFiles(props.files);
-
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
-  
+
 
   return (
     <>

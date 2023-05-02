@@ -201,10 +201,12 @@ export default function CriacaoDemanda(props: {
   }
 
   function criarDemanda() {
-    let formData = new FormData();
+    let formData = new FormData();    
 
     if (files != undefined) {
-      formData.append("files", files);
+      for(const file of files){        
+        formData.append("files", file);
+      }
     }
 
     if (data != undefined) {
@@ -214,15 +216,6 @@ export default function CriacaoDemanda(props: {
     if (pdfDemanda != undefined) {
       formData.append("pdfVersaoHistorico", pdfDemanda);
     }
-
-    // console.log(data);
-    // console.log(files);
-
-    for (const file of formData.values()) {
-      console.log(file);
-    }
-
-
 
     api.post("/sod/demanda", formData, {
       headers: {
@@ -234,7 +227,7 @@ export default function CriacaoDemanda(props: {
       console.log(err);
     })
 
-    // window.location.href = "/home";
+    window.location.href = "/home";
   }
 
 
