@@ -5,6 +5,7 @@ import { BoxConteudo } from "../App.styles";
 import { BoxHeader } from "../TelaProcesso/TelaProcesso.styles";
 import { Toolbar } from "@mui/material";
 import Collapse from '@mui/material/Collapse';
+import { Container, Lista, FirstColumn, SecondColumn } from "./AjudaUsuario.styles";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useState } from "react";
@@ -25,82 +26,90 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
   };
 
   return (
-    <>
-      <BoxHeader sx={{ width: (props.sidebarAberta ? "88.35%" : "96.5%") }}>
+    <Box sx={{ backgroundColor: "#EEE" }}>
+      <BoxHeader sx={{ backgroundColor: "#EEE", width: (props.sidebarAberta ? "88.35%" : "96.5%") }}>
         <Breadcrumb />
       </BoxHeader>
 
       <Toolbar />
 
       <BoxConteudo>
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-          <ListItemButton>
-            <ListItemText primary="INTRODUÇÃO" />
-          </ListItemButton>
+        <Container>
+          <FirstColumn>
+          <Lista sx={{ backgroundColor: "#FFF" }}>
+            <ListItemButton>
+              <ListItemText primary="INTRODUÇÃO" />
+            </ListItemButton>
 
-          <ListItemButton onClick={atividadesPrincipaisClick}>
-            <ListItemText primary="ATIVIDADES PRINCIPAIS" />
-            {atividadesPrincipaisOpen ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
+            <ListItemButton onClick={atividadesPrincipaisClick}>
+              <ListItemText primary="ATIVIDADES PRINCIPAIS" />
+              {atividadesPrincipaisOpen ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
 
-          <Collapse in={atividadesPrincipaisOpen} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Criar Demanda" />
-              </ListItemButton>
+            <Collapse in={atividadesPrincipaisOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Criar Demanda" />
+                </ListItemButton>
 
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Avaliar Demanda (A)" />
-              </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Avaliar Demanda (A)" />
+                </ListItemButton>
 
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Avaliar Demanda (GN)" />
-              </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Avaliar Demanda (GN)" />
+                </ListItemButton>
 
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Adicionar informações na Demanda(A)" />
-              </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Adicionar informações na Demanda(A)" />
+                </ListItemButton>
 
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Criar Proposta" />
-              </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Criar Proposta" />
+                </ListItemButton>
 
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Criar Pauta" />
-              </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Criar Pauta" />
+                </ListItemButton>
 
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Informar o parecer da Comissão(A)" />
-              </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Informar o parecer da Comissão(A)" />
+                </ListItemButton>
 
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Criar ATA" />
-              </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Criar ATA" />
+                </ListItemButton>
 
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Informar o parecer da Diretoria Geral" />
-              </ListItemButton>
-            </List>
-          </Collapse>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Informar o parecer da Diretoria Geral" />
+                </ListItemButton>
+              </List>
+            </Collapse>
 
-          <ListItemButton onClick={atividadesSecundariasClick}>
-            <ListItemText primary="ATIVIDADES SECUNDÁRIAS" />
-            {atividadesSecundariasOpen ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
+            <ListItemButton onClick={atividadesSecundariasClick}>
+              <ListItemText primary="ATIVIDADES SECUNDÁRIAS" />
+              {atividadesSecundariasOpen ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
 
-          <Collapse in={atividadesSecundariasOpen} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Iniciar Workflow de Aprovação(A)" />
-              </ListItemButton>
+            <Collapse in={atividadesSecundariasOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Iniciar Workflow de Aprovação(A)" />
+                </ListItemButton>
 
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Avaliar Workflow de Aprovação(GN/GTI)" />
-              </ListItemButton>
-            </List>
-          </Collapse>
-        </List>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Avaliar Workflow de Aprovação(GN/GTI)" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+          </Lista>
+          </FirstColumn>
+
+          <SecondColumn>
+
+          </SecondColumn>
+        </Container>
       </BoxConteudo>
-    </>
+    </Box>
   );
 }
