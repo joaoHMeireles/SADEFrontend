@@ -4,6 +4,9 @@ import Box from '@mui/material/Box';
 import fotoPerfil from '../../../Assets/fotoPerfil.jpg';
 
 export default function InformacoesGerais() {
+
+  let usuario: any = JSON.parse(localStorage.getItem("USUARIO") as any);
+
   return (
     <Box sx={{ alignItems: "center", color: "#595959", display: "flex", flexDirection: "column", height: "100%", justifyContent: "center", width: "100%" }}>
       <Box sx={{ alignItems: "flex-start", borderBottom: "2px solid #ddd", display: "flex", flexDirection: "column", justifyContent: "flex-start", height: "auto", padding: "2rem 0", width: "90%" }}>
@@ -12,7 +15,7 @@ export default function InformacoesGerais() {
         </Box>
 
         <Box sx={{ alignItems: "center", borderRadius: "360px", display: "flex", height: "10vw", justifyContent: "center", overflow: "hidden", marginTop: "1rem", width: "10vw" }}>
-          <img id="fotoPerfil" src={fotoPerfil} alt="Foto de perfil" />
+          <img id="fotoPerfil" src={usuario.foto} alt="Foto de perfil" />
         </Box>
 
         <h4>
@@ -20,7 +23,7 @@ export default function InformacoesGerais() {
         </h4>
 
         <p>
-          Benson Rodrigues
+          {usuario.nomeUsuario}
         </p>
 
         <h4>
@@ -28,7 +31,7 @@ export default function InformacoesGerais() {
         </h4>
 
         <p>
-          benson_rodrigues@weg.net
+          {usuario.email}
         </p>
       </Box>
 
@@ -40,7 +43,7 @@ export default function InformacoesGerais() {
         </h4>
 
         <p>
-          Desenvolvimento de RH
+          {usuario.departamento}
         </p>
 
         <h4>
@@ -48,7 +51,7 @@ export default function InformacoesGerais() {
         </h4>
 
         <p>
-          CentroWEG
+          {usuario.setor}
         </p>
       </Box>
     </Box>
