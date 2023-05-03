@@ -269,8 +269,6 @@ export default function CriacaoProposta(props: {
     }
 
     setPropostaPDF(proposta);
-    console.log(proposta);
-
 
     let formData = new FormData()
     let idUsuario = localStorage.getItem("IDUSUARIO");
@@ -284,9 +282,6 @@ export default function CriacaoProposta(props: {
     const pdfArquivo = doc.output("blob")
 
     formData.append("pdfVersaoHistorico", pdfArquivo);
-
-    console.log(arquivosProposta);
-
 
     if (arquivosProposta || arquivosProposta != undefined) {
       for (const arquivo of arquivosProposta) {

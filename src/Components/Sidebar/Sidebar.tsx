@@ -13,6 +13,7 @@ import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import { GridIndicadorItem, SidebarListItem, SidebarListItemButton, SidebarListItemIcon, SidebarTypography } from "./Sidebar.styles";
 import { useLocationChange } from "../../utils";
+import api from "../../api/api";
 
 //listas de ícones e opções do menu
 const lista = [
@@ -111,6 +112,11 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
     drawerWidth = props.tamanho
   })
 
+  function deslogar(){
+    api.get("/logout")
+    localStorage.clear()
+  }
+
   return (
     <>
       {location.pathname != "/" &&
@@ -122,7 +128,7 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
           {/* arrumar a posição dessa budega de logout */}
           <Box sx={{ width: "100%", height: "100%", display: "flex", alignItems: "flex-end" }}>
             <Box sx={{ width: "50%", paddingBottom: "3rem", paddingLeft: "1rem", display: "flex", justifyContent: "space-around" }}>
-              <Link to="/" className="link">
+              <Link to="/" className="link" onClick={deslogar}>
                 <Box sx={{ width: "20px", height: "20px" }}>
                   <Icon>
                     <LogoutRoundedIcon />

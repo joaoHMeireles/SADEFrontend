@@ -94,23 +94,13 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
   ))
   const idUsuario = localStorage.getItem("IDUSUARIO")
 
-  console.log(informacaoColecaoProcesso);
-  
 
   useEffect(() => {
-    console.log(informacaoColecaoProcesso);
-    const idRequisicao = informacaoColecaoProcesso.idPauta? informacaoColecaoProcesso.idPauta : informacaoColecaoProcesso.pauta.idPauta
-    
+    const idRequisicao = informacaoColecaoProcesso.idPauta ? informacaoColecaoProcesso.idPauta : informacaoColecaoProcesso.pauta.idPauta
 
     api.get("/sod/pauta/arquivos/" + idRequisicao).then((response) => {
-      console.log("deu baobaobaob");
-      
-      console.log(response);
-      
       informacaoColecaoProcesso.arquivos = response.data
     }).catch((err) => {
-      console.log("deu errroroororoor");
-      
       console.log(err);
     })
   }, [])
@@ -164,7 +154,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
     if (checarPreenchimento(novaVerificacaoInputs)) {
       if (informacaoColecaoProcesso.tipo != "ATA") {
         const decisoesPauta: any[] = []
-        const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
+        const tituloReuniaoInput = (document.getElementById("tituloReuniao") as HTMLInputElement).value
         const dataReuniao = (document.getElementById("dataReuniao") as HTMLInputElement).value
         const inicioReuniao = (document.getElementById("inicioReuniao") as HTMLInputElement).value
         const finalReuniao = (document.getElementById("finalReuniao") as HTMLInputElement).value
@@ -188,15 +178,22 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
             idDecisaoPropostaPauta: informacaoColecaoProcesso.propostas[i].idDecisaoPropostaPauta,
             statusDemandaComissao: getKeyEnum(StatusComponenteProcesso, statusEscolhido),
             ataPublicada: formatoPublicacaoEscolhido,
-            comentario: comentario
+            comentario: comentario,
+            proposta: informacaoColecaoProcesso.propostas[i].proposta
           }
 
           decisoesPauta.push(propostaPauta);
         }
 
-        let pautaEditar = {
+        const infoPauta = {
+          ...informacaoColecaoProcesso,
           propostasPauta: decisoesPauta
         }
+
+        const { propostas, tipo, tituloReuniao, pertenceUmaATA, arquivos, idPauta, ...pautaEditar } = infoPauta
+
+        console.log(pautaEditar);
+
 
         const formDataPauta = new FormData()
 
@@ -205,40 +202,40 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         console.log(pautaEditar);
 
 
-        // api.put("caminho editar pauta", formDataPauta).then((response) => {
+        api.put("/sod/pauta/" + idPauta + "/" + idUsuario, formDataPauta).then((response) => {
 
-        const ata = {
-          // pauta: response.data,
-          tituloReuniaoATA: tituloReuniao,
-          dataReuniao: dataReuniao,
-          inicioReuniao: inicioReuniao,
-          finalReuniao: finalReuniao
-        }
+          const ataDTO = {
+            pauta: response.data,
+            tituloReuniaoATA: tituloReuniaoInput,
+            dataReuniao: dataReuniaoCerta,
+            inicioReuniao: inicioReuniao,
+            finalReuniao: finalReuniao
+          }
 
-        console.log(ata);
+          console.log(ataDTO);
 
 
-        //   api.post("caminho criar ata", ata).then((response) => {
-        fecharAvaliacao();
+          api.post("/sod/ata", ataDTO).then((response) => {
+            fecharAvaliacao();
 
-        feedback = (
-          <Alert
-            onClose={() => {
-              setFeedbackAberto(false);
-            }}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            {informacaoColecaoProcesso.tipo} avaliada com sucesso
-          </Alert>
-        );
+            feedback = (
+              <Alert
+                onClose={() => {
+                  setFeedbackAberto(false);
+                }}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                {informacaoColecaoProcesso.tipo} avaliada com sucesso
+              </Alert>
+            );
 
-        abrirFeedback(feedback);
-        //   })
+            abrirFeedback(feedback);
+          })
 
-        // }).catch((err) => {
-        //   console.log(err);
-        // })
+        }).catch((err) => {
+          console.log(err);
+        })
 
       } else {
         const decisoesATA: any[] = []
@@ -352,7 +349,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
 
     return true;
   }
-  
+
 
   return (
     <>
@@ -415,14 +412,14 @@ function Header(props: {
   useEffect(() => {
     if (tipoColecao == "Pauta") {
       // if (!informacaoColecaoProcesso.pertenceUmaATA) {
-      // if (dataReuniao <= new Date()) {
-      setAcao("Informar parecer");
-      // }
+      //   if (dataReuniao <= new Date()) {
+          setAcao("Informar parecer");
+      //   }
       // }
     } else {
-      // if (!informacaoColecaoProcesso.numeroDG) {
-      setAcao("Finalizar processo");
-      // }
+      if (!informacaoColecaoProcesso.numeroDG) {
+        setAcao("Finalizar processo");
+      }
     }
   }, []);
 
@@ -499,11 +496,11 @@ function ContainerColecaoProcesso(props: {
 
   function abrirModal() {
     console.log(props.informacaoColecaoProcesso);
-    
+
 
     setAnexos(props.informacaoColecaoProcesso.arquivos.map((anexo: any, index: number) => {
       const IconeAnexo = getIconeArquivo(anexo.nome)
-  
+
       return (
         <ListItem key={index}
           secondaryAction={
@@ -621,7 +618,7 @@ function ContainerColecaoProcesso(props: {
             <TypographyTituloModal variant='h5' >
               Anexos da {informacaoColecaoProcesso.tipo.toLowerCase()}
             </TypographyTituloModal>
-            <IconButton onClick={() => {setModalAberto(false) }}>
+            <IconButton onClick={() => { setModalAberto(false) }}>
               <CloseIcon />
             </IconButton>
           </BoxTituloModal>
@@ -1031,9 +1028,7 @@ export function Proposta(props: {
   function mudarAcordeon() {
     setExpanded({ expanded: !expanded.expanded });
   }
-  
-  console.log(decisaoProposta.proposta.demanda.statusDemanda);
-  
+
   return (
     <Grid
       item

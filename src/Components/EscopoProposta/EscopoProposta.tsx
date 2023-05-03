@@ -1,6 +1,5 @@
+import '@progress/kendo-theme-default/dist/default-ocean-blue.scss';
 import TextField from "@mui/material/TextField";
-
-import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 
 import InputAnexos from "../InputAnexos/InputAnexos";
 
@@ -23,6 +22,23 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import api from "../../api/api";
 import Autocomplete from "@mui/material/Autocomplete";
 import Checkbox from "@mui/material/Checkbox";
+
+import { Editor, EditorTools } from "@progress/kendo-react-editor";
+const {
+  Bold,
+  Italic,
+  Underline,
+  AlignLeft,
+  AlignRight,
+  AlignCenter,
+  Indent,
+  Outdent,
+  OrderedList,
+  UnorderedList,
+  Undo,
+  Redo,
+  FontName,
+} = EditorTools;
 
 export default function EscopoProposta(props: {
   proposta: boolean
@@ -56,12 +72,24 @@ export default function EscopoProposta(props: {
       <BoxContainerGeral>
         <BoxPadrao>
           <TypographyStyled>Escopo: </TypographyStyled>
-          <TextField
-            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
-            multiline
-            maxRows={Infinity}
+          <Editor
+            tools={[
+              [Bold, Italic, Underline],
+              [Undo, Redo],
+              [AlignLeft, AlignCenter, AlignRight],
+              [OrderedList, UnorderedList, Indent, Outdent],
+              FontName,
+            ]}
+            contentStyle={{
+              height: 320,
+              width: "100%", 
+              boxShadow: "5px 5px 10px 0 #00000050",
+              borderRadius: "5px",
+              fontFamily: "'Roboto','Helvetica','Arial', sans-serif"
+            }}
+
             onChange={(e: any) => {
-              props.setEscopoProposta(e.target.value)
+              props.setEscopoProposta(e.target.value.textContent)
             }}
           />
         </BoxPadrao>
@@ -111,7 +139,7 @@ export default function EscopoProposta(props: {
         </BoxPaybackExecucao>
         <BoxResponsavel>
           <BoxResponsaveis>
-            <TypographyStyled>Nome do responsável: </TypographyStyled>
+            <TypographyStyled>Nome dos responsáveis: </TypographyStyled>
             <Autocomplete
               id="nomeResponsavel"
               sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
@@ -151,7 +179,7 @@ export default function EscopoProposta(props: {
           </BoxResponsaveis>
         </BoxResponsavel>
         <BoxPadrao>
-          <InputAnexos rascunho={false} proposta={false} arquivosProposta={props.arquivosProposta} setArquivosProposta={props.setArquivosProposta}/>
+          <InputAnexos rascunho={false} proposta={false} arquivosProposta={props.arquivosProposta} setArquivosProposta={props.setArquivosProposta} />
         </BoxPadrao>
       </BoxContainerGeral >
     </>

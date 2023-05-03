@@ -54,8 +54,8 @@ export default function CriacaoPauta(props: {
   const [comissoes, setComissoes] = useState<any[]>([]);
   const [comissaoEscolhida, setComissaoEscolhida] = useState<any>()
   const [valorData, setValorData] = useState<Dayjs | null>(null)
-  const [inicioReuniao, setInicioReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T15:30'));
-  const [finalReuniao, setFinalReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T15:30'));
+  const [inicioReuniao, setInicioReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T13:30'));
+  const [finalReuniao, setFinalReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T14:30'));
 
   useEffect(() => {
     const idPropostaEscolhida = localStorage.getItem("PROPOSTACRIARPAUTA")
@@ -95,6 +95,10 @@ export default function CriacaoPauta(props: {
     }
   });
 
+  // useEffect(() => {
+  //   setComissaoEscolhida(comissoes[0])
+  // }, [comissoes])
+
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
   }
@@ -109,7 +113,6 @@ export default function CriacaoPauta(props: {
     localStorage.setItem(`PROPOSTAESCOLHIDA`, JSON.stringify(proposta));
   }
 
-  //testar com todo o fluxo de pauta
   function criarPauta() {
     const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
     const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
