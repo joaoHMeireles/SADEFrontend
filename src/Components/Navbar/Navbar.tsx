@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logo from '../../assets/wegLogo.png';
 import './Navbar.scss';
@@ -7,6 +7,7 @@ import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
 import { NavBar, /*BoxTextField,*/ TextFieldLinguas } from "./Navbar.styles";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
+import api from '../../api/api';
 
 const listaLinguas = [
     "Português",
@@ -17,9 +18,18 @@ const listaLinguas = [
 ]
 
 export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
-    const [lingua, setLingua] = useState("Português")
-    const usuario = JSON.parse(localStorage.getItem("USUARIO") as string)
-    const path = useLocation()
+    const usuario = JSON.parse(localStorage.getItem("USUARIO") as string);
+    const [fotoUsuario, setFotoUsuario] = useState<Blob>(new Blob);
+    
+    const [lingua, setLingua] = useState("Português");
+    const path = useLocation();
+
+    useEffect(() => {
+        api.get("/sod/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
+            .then((response) => {
+                setFotoUsuario(response.data);
+            });
+    }, []);
 
     function mudarSidebar() {
         props.setAberto(!props.aberto)
@@ -35,26 +45,16 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
             {path.pathname != "/" &&
                 <NavBar position="fixed" sx={{ height: props.tamanhoNavbar }}>
                     <Toolbar>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{ mr: 2 }}
-                            onClick={mudarSidebar}
-                        >
+                        <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={mudarSidebar}>
                             <DehazeRoundedIcon />
                         </IconButton>
+
                         <Box sx={{ flexGrow: 1 }}>
                             <img src={logo} alt="" />
                         </Box>
+
                         <Box sx={{ display: "flex" }}>
-                            <TextFieldLinguas
-                                select
-                                value={lingua}
-                                onChange={mudarLingua}
-                                variant="standard"
-                            >
+                            <TextFieldLinguas select value={lingua} onChange={mudarLingua} variant="standard">
                                 {listaLinguas.map((option) => (
                                     <MenuItem key={option} value={option}>
                                         {option}
@@ -62,15 +62,15 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                                 ))}
                             </TextFieldLinguas>
 
-                            <Box sx={{ marginLeft: "1rem", "&:hover": { cursor: "pointer"} }}>
+                            <Box sx={{ marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>
                                 <Avatar {...stringAvatar(usuario.nomeUsuario)} onClick={() => {
                                     window.location.href = "/profile";
-                                }} src={usuario.foto} />
+                                }}  src={URL.createObjectURL(fotoUsuario)} />
                             </Box>
 
                             <Box sx={{ marginLeft: "1rem" }}>
                                 <Tooltip title="Ajuda ao usuário">
-                                    <IconButton onClick={() => {window.location.href = "/userhelp";}}>
+                                    <IconButton onClick={() => { window.location.href = "/userhelp"; }}>
                                         <HelpOutlineIcon sx={{ color: "#fff" }} />
                                     </IconButton>
                                 </Tooltip>

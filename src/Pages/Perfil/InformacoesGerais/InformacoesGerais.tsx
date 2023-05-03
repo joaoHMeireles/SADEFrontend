@@ -1,11 +1,20 @@
 import "./InformacoesGerais.scss";
 
-import Box from '@mui/material/Box';
 import fotoPerfilVazia from '../../../Assets/fotoPerfilVazia.png';
 import { BoxBackground, FirstContainer, BoxImage, SecondContainer } from "./InformacoesGerais.style";
+import { useEffect, useState } from "react";
+import api from "../../../api/api";
 
 export default function InformacoesGerais() {
   const usuario = JSON.parse(localStorage.getItem("USUARIO") as string);
+  const [fotoUsuario, setFotoUsuario] = useState();
+
+  useEffect(() => {
+    api.get("/sod/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
+      .then((response) => {
+        setFotoUsuario(response.data);
+      });
+  }, []);
 
   return (
     <BoxBackground>
@@ -13,7 +22,7 @@ export default function InformacoesGerais() {
         <h2>Dados pessoais</h2>
 
         <BoxImage>
-          {usuario.foto != null ? <img id="fotoPerfil" src={usuario.foto} alt="Foto de perfil" /> : <img id="fotoPerfil" src={fotoPerfilVazia} alt="Foto de perfil" />}
+          {fotoUsuario != null ? <img id="fotoPerfil" src={URL.createObjectURL(fotoUsuario)} alt="Foto de perfil" /> : <img id="fotoPerfil" src={fotoPerfilVazia} alt="Foto de perfil" />}
         </BoxImage>
 
         <h4>Nome</h4>
