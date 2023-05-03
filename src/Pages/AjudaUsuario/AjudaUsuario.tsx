@@ -14,8 +14,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
 export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: boolean }) {
-  const [atividadesPrincipaisOpen, setAtividadesPrincipaisopen] = useState(true);
-  const [atividadesSecundariasOpen, setAtividadesSecundariasOpen] = useState(true);
+  const [atividadesPrincipaisOpen, setAtividadesPrincipaisopen] = useState(false);
+  const [atividadesSecundariasOpen, setAtividadesSecundariasOpen] = useState(false);
 
   const atividadesPrincipaisClick = () => {
     setAtividadesPrincipaisopen(!atividadesPrincipaisOpen);
