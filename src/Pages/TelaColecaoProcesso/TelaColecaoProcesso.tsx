@@ -89,9 +89,9 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
   const idLocalStorage = localStorage.getItem(
     `${getNomeComponente(location)}ESCOLHIDA`
   );
-  const informacaoColecaoProcesso = JSON.parse(
+  const [informacaoColecaoProcesso, setInformacaoColecaoProcesso] = useState(JSON.parse(
     idLocalStorage != null ? idLocalStorage : ""
-  )
+  ))
   const idUsuario = localStorage.getItem("IDUSUARIO")
 
   useEffect(() => {
