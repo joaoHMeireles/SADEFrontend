@@ -40,6 +40,20 @@ export default function ComponenteColecaoProcesso(props: {
     nomeTipoLink = `/${paginaAtual}/agenda`;
   }
 
+  function verProcesso() {
+    setProcesso()
+    location.href = nomeTipoLink;
+  }
+
+  function setProcesso() {
+    const tipoComponente = componente.tipo.toUpperCase();
+
+    localStorage.setItem(
+      `${tipoComponente}ESCOLHIDA`,
+      JSON.stringify(componente)
+    );
+  }
+
   const processElement = props.grid ? (
     <GridComponent
       componente={componente}
@@ -62,20 +76,6 @@ export default function ComponenteColecaoProcesso(props: {
     />
   );
 
-  function verProcesso() {
-    setProcesso()
-    location.href = nomeTipoLink;
-  }
-
-  function setProcesso() {
-    const tipoComponente = componente.tipo.toUpperCase();
-    
-    localStorage.setItem(
-      `${tipoComponente}ESCOLHIDA`,
-      JSON.stringify(componente)
-    );
-  }
-
   return (
     <MainPaper key={componente.id}>
       <Grid container>{processElement}</Grid>
@@ -84,6 +84,9 @@ export default function ComponenteColecaoProcesso(props: {
 }
 
 function GridComponent(props: ComponentCollectionProps) {
+  console.log(props.componente);
+
+
   return (
     <>
       <Tooltip title={props.tituloToolTip} placement="left">
@@ -106,9 +109,15 @@ function GridComponent(props: ComponentCollectionProps) {
           - {props.componente.propostas[0].proposta.demanda.tituloDemanda}
         </GridTypography>
         <GridTypography variant="body1" sx={{ display: "flex" }}>
-          <BoxColecaoComponente>
-            - {props.componente.propostas[1].proposta.demanda.tituloDemanda}
-          </BoxColecaoComponente>
+          {props.componente.propostas.length > 1 ?
+            <BoxColecaoComponente>
+              - {props.componente.propostas[1].proposta.demanda.tituloDemanda}
+            </BoxColecaoComponente>
+            :
+            <BoxColecaoComponente>
+              {""}
+            </BoxColecaoComponente>
+          }
           <GridLinkTypograpfy variant="body2">
             <Link to={props.linkComponente} onClick={props.setProcesso}>
               Ver mais
