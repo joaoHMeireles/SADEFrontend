@@ -211,7 +211,6 @@ export default function CriacaoDemanda(props: {
 
     console.log(pdfArquivo);
     
-
     setPDFDemanda(pdfArquivo)
   }
 
@@ -232,17 +231,17 @@ export default function CriacaoDemanda(props: {
       formData.append("pdfVersaoHistorico", pdfDemanda);
     }
 
-    // api.post("/sod/demanda", formData, {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   }
-    // }).then((res: any) => {
-    //   console.log(res);
-    // }).catch((err: any) => {
-    //   console.log(err);
-    // })
+    api.post("/sod/demanda", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    }).then((res: any) => {
+      console.log(res);
+    }).catch((err: any) => {
+      console.log(err);
+    })
 
-    // window.location.href = "/home";
+    window.location.href = "/home";
   }
 
 
