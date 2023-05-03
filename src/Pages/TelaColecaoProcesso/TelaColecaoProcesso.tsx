@@ -94,6 +94,9 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
   ))
   const idUsuario = localStorage.getItem("IDUSUARIO")
 
+  console.log(informacaoColecaoProcesso);
+  
+
   useEffect(() => {
     console.log(informacaoColecaoProcesso);
     const idRequisicao = informacaoColecaoProcesso.idPauta? informacaoColecaoProcesso.idPauta : informacaoColecaoProcesso.pauta.idPauta
@@ -1028,7 +1031,9 @@ export function Proposta(props: {
   function mudarAcordeon() {
     setExpanded({ expanded: !expanded.expanded });
   }
-
+  
+  console.log(decisaoProposta.proposta.demanda.statusDemanda);
+  
   return (
     <Grid
       item

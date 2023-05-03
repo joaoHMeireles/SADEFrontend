@@ -57,7 +57,7 @@ export function getCorTipo(tipo: string | undefined) {
 export function getCorStatus(status: string | undefined) {
     const coresStatus = {
         BACKLOG: "#DDDDDD",
-        ASSESTMENT: "#595959",
+        ASSESMENT: "#595959",
         BUSINESSCASE: "#FFD600",
         CANCELED: "#FF1616",
         TODO: "#00612e"
