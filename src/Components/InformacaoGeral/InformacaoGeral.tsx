@@ -87,6 +87,9 @@ export default function InformacaoGeral(props: {
     return (idsInputsAtributo as any)[atributo];
   }
 
+  console.log(demandaSelecionada);
+  
+
   return (
     <>
       <BoxContainerGeralInformacaoGeral>

@@ -23,6 +23,8 @@ import {
   BoxDescricaoRequeistosControle,
   BoxFrequencia,
 } from "./BeneficiosDemanda.styles";
+import SelectBox from "../SelectBox/SelectBox";
+import { Select } from "@mui/material";
 
 
 const moedas = [
@@ -54,10 +56,15 @@ export default function BeneficiosDemanda(props: {
   informacaoProcesso?: any
   setInformacaoProcesso?: any
 }) {
-  const [frequencia, setFrequencia] = useState("");
+  const [frequencia, setFrequencia] = useState("DIARIAMENTE");
   const [beneficiosReaisLista, setBeneficiosReaisLista] = useState<any[]>([]);
   const [beneficiosPotenciaisLista, setBeneficiosPotenciaisLista] = useState<any[]>([]);
   const [beneficiosQualitativosLista, setBeneficiosQualitativosLista] = useState<any[]>([]);
+  const valoresFrequencia = [
+    "DIARIAMENTE",
+    "SEMANALMENTE",
+    "MENSALMENTE"
+  ]
 
   let numeroBeneficiosPotenciais = 0;
   let numeroBeneficiosReais = 0;
@@ -166,6 +173,18 @@ export default function BeneficiosDemanda(props: {
     }
   }, [])
 
+  function onFrequenciaChange(e: any) {
+    setFrequencia(e.target.value)
+
+    const novaInfoDemanda = {
+      ...props.informacaoProcesso,
+      frequenciaUso: e.target.value,
+    };
+
+    props.setInformacaoProcesso(novaInfoDemanda);
+  }
+
+
   return (
     <>
       <BoxContainerGeral>
@@ -273,24 +292,16 @@ export default function BeneficiosDemanda(props: {
         </BoxIcones>
         <BoxFrequencia>
           <TypographyLabels>Frequência de uso da solução:</TypographyLabels>
-          <TextField
+          <Select
             value={frequencia}
-            id="frequenciaUso"
-            sx={{
-              width: "30%",
-              marginTop: 1,
-              boxShadow: "5px 5px 10px 0 #00000050",
-            }}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setFrequencia(e.target.value)
-
-              const novaInfoDemanda = {
-                ...props.informacaoProcesso,
-                frequenciaUso: e.target.value,
-              };
-              props.setInformacaoProcesso(novaInfoDemanda);
-            }}
-          />
+            onChange={onFrequenciaChange}
+          >
+            {valoresFrequencia.map((valor: any, index: number) => {
+              return (
+                <MenuItem key={index} value={valor}>{valor}</MenuItem>
+              )
+            })}
+          </Select>
         </BoxFrequencia>
       </BoxContainerGeral>
     </>
