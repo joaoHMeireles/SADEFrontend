@@ -23,8 +23,10 @@ import {
 } from "./CriacaoDemanda.styles";
 import api from "../../api/api";
 import jsPDF from "jspdf";
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
 
 import EsqueletoPDFVersaoDemanda from "../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda";
+import React from "react";
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
@@ -42,6 +44,8 @@ export default function CriacaoDemanda(props: {
 
   const [moedaReal, setMoedaReal] = useState<string[]>([]);
   const [moedaPotencial, setMoedaPotencial] = useState<string[]>([]);
+
+  const pdfExportComponent = React.useRef<PDFExport>(null);
 
   useEffect(() => {
     if (props.rascunho) {
@@ -194,17 +198,28 @@ export default function CriacaoDemanda(props: {
     const doc = new jsPDF()
     const pdf = document.getElementById("BOX") as HTMLElement
 
+    // console.log(pdf);
+    // console.log(pdfExportComponent.current);
+
+    // if (pdfExportComponent.current) {
+    //   pdfExportComponent.current.save();
+    // }
+
     doc.html(pdf)
+
     const pdfArquivo = doc.output("blob")
+
+    console.log(pdfArquivo);
+    
 
     setPDFDemanda(pdfArquivo)
   }
 
   function criarDemanda() {
-    let formData = new FormData();    
+    let formData = new FormData();
 
     if (files != undefined) {
-      for(const file of files){        
+      for (const file of files) {
         formData.append("files", file);
       }
     }
@@ -217,17 +232,17 @@ export default function CriacaoDemanda(props: {
       formData.append("pdfVersaoHistorico", pdfDemanda);
     }
 
-    api.post("/sod/demanda", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      }
-    }).then((res: any) => {
-      console.log(res);
-    }).catch((err: any) => {
-      console.log(err);
-    })
+    // api.post("/sod/demanda", formData, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   }
+    // }).then((res: any) => {
+    //   console.log(res);
+    // }).catch((err: any) => {
+    //   console.log(err);
+    // })
 
-    window.location.href = "/home";
+    // window.location.href = "/home";
   }
 
 
@@ -388,7 +403,7 @@ export default function CriacaoDemanda(props: {
               </BoxBotoesPriSec>
             </BoxContainerBotoes>
             {data != null &&
-              <EsqueletoPDFVersaoDemanda demanda={data} />
+              <EsqueletoPDFVersaoDemanda demanda={data} pdfExportComponent={pdfExportComponent}/>
             }
           </>
         )}

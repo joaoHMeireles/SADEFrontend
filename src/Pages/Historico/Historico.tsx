@@ -33,6 +33,9 @@ import {
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 
+import { PDFViewer } from "@progress/kendo-react-pdf-viewer";
+import { baixarArquivo } from "../../utils";
+
 import pdfAssets from "../../Assets/2.pdf";
 import api from "../../api/api";
 import { getValueEnum } from "../../utils";
@@ -149,7 +152,7 @@ export default function TelaHistoricos(props: {}) {
   const [tamanhoPagina, setTamanhoPagina] = useState(5);
   const [datagridHeight, setDatagridheight] = useState("44.5vh");
   const [mostrarPDF, setMostrarPDF] = useState(false);
-  const [arquivoPDF, setArquivoPDF] = useState("");
+  const [arquivoPDF, setArquivoPDF] = useState<any>();
   const [historicosFormatados, setHistoricosFormatados] = useState<any[]>([])
   const [tamanhoLista, setTamanhoLista] = useState(5)
 
@@ -255,9 +258,8 @@ export default function TelaHistoricos(props: {}) {
 
   function acaoCelula(cell: GridCellParams<number>) {
     if (cell.field == "pdfHistorico") {
-      setArquivoPDF(pdf);
-      //   setArquivoPDF(cell.row.pdfHistorico);
-      // setMostrarPDF(true);
+      setArquivoPDF(cell.row.pdfHistorico.arquivo);
+      setMostrarPDF(true);
     }
   }
 
@@ -449,7 +451,8 @@ export default function TelaHistoricos(props: {}) {
                   height: "100%",
                 }}
               >
-                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.3.122/build/pdf.worker.min.js">
+                {arquivoPDF == null ? "" : <PDFViewer data={arquivoPDF} />}
+                {/* <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.5.141/build/pdf.worker.min.js">
                   <Box
                     sx={{
                       display: "flex",
@@ -459,11 +462,11 @@ export default function TelaHistoricos(props: {}) {
                       width: "50%",
                     }}
                   >
-                    <Viewer fileUrl={pdfAssets} />
+                    <Viewer fileUrl={arquivoPDF} />
                   </Box>
-                </Worker>
+                </Worker> */}
                 <IconButton
-                  onClick={fecharPDF}
+                  onClick={() => baixarArquivo(arquivoPDF)}
                   sx={{
                     position: "fixed",
                     left: "92%",
