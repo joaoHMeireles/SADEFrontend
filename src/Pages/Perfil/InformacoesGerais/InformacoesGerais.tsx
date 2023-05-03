@@ -7,11 +7,12 @@ import api from "../../../api/api";
 
 export default function InformacoesGerais() {
   const usuario = JSON.parse(localStorage.getItem("USUARIO") as string);
-  const [fotoUsuario, setFotoUsuario] = useState();
+  const [fotoUsuario, setFotoUsuario] = useState<any>({size: 0});
 
   useEffect(() => {
     api.get("/sod/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
       .then((response) => {
+        console.log(response.data);
         setFotoUsuario(response.data);
       });
   }, []);
@@ -22,7 +23,7 @@ export default function InformacoesGerais() {
         <h2>Dados pessoais</h2>
 
         <BoxImage>
-          {fotoUsuario != null ? <img id="fotoPerfil" src={URL.createObjectURL(fotoUsuario)} alt="Foto de perfil" /> : <img id="fotoPerfil" src={fotoPerfilVazia} alt="Foto de perfil" />}
+          {fotoUsuario.size != 0 ? <img id="fotoPerfil" src={URL.createObjectURL(fotoUsuario)} alt="Foto de perfil" /> : <img id="fotoPerfil" src={fotoPerfilVazia} alt="Foto de perfil" />}
         </BoxImage>
 
         <h4>Nome</h4>
