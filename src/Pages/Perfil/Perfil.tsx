@@ -54,9 +54,9 @@ export default function Perfil() {
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Informações gerais" {...a11yProps(0)} />
 
-          <Tab label="Demandas contribuídas" {...a11yProps(1)} />
+          {/* <Tab label="Demandas contribuídas" {...a11yProps(1)} /> */}
 
-          <Tab label="Meu desempenho" {...a11yProps(2)} />
+          <Tab label="Meu desempenho" {...a11yProps(1)} />
         </Tabs>
       </Box>
 
@@ -64,11 +64,11 @@ export default function Perfil() {
         <InformacoesGerais />
       </TabPanel>
 
-      <TabPanel value={value} index={1}>
+      {/* <TabPanel value={value} index={1}>
         <DemandasContribuidas />
-      </TabPanel>
+      </TabPanel> */}
 
-      <TabPanel value={value} index={2}>
+      <TabPanel value={value} index={1}>
         <MeuDesempenho />
       </TabPanel>
     </Box>

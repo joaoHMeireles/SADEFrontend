@@ -3,7 +3,7 @@ import List from "@mui/material/List";
 import styled from "@emotion/styled";
 
 export const Container = styled(Box)({
-    alignItems: "center",
+    alignItems: "flex-start",
     display: "flex",
     height: "100%",
     justifyContent: "space-evenly",
@@ -11,16 +11,14 @@ export const Container = styled(Box)({
 });
 
 export const FirstColumn = styled(Box)({
-    backgroundColor: "#FFF",
     borderRadius: "1rem",
     boxShadow: "5px 5px 10px 0px #00000050, -5px -5px 10px 0px #00000050",
     height: "75vh",
-    margin: "2rem 0 0rem 0",
+    marginTop: "1rem",
     width: "20%"
 })
 
 export const Lista = styled(List)({
-    backgroundColor: "#FFF",
     borderRadius: "1rem",
     color: "#595959",
     height: "100%",
@@ -28,10 +26,9 @@ export const Lista = styled(List)({
 });
 
 export const SecondColumn = styled(Box)({
-    backgroundColor: "#FFF",
     borderRadius: "1rem",
     boxShadow: "5px 5px 10px 0px #00000050, -5px -5px 10px 0px #00000050",
     height: "75vh",
-    margin: "2rem 0 0rem 0",
+    marginTop: "1rem",
     width: "65%"
 });
