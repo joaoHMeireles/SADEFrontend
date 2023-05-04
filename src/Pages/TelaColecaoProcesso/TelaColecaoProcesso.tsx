@@ -63,6 +63,7 @@ import {
   TypographyTextoColecao,
   TypographyTituloDecisao,
   TypographyTituloInput,
+  BoxInputsNumeros
 } from "./TelaColecaoProcesso.styles";
 import {
   BoxCorStatus,
@@ -263,12 +264,17 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
           decisoesATA.push(propostaATA);
         }
 
+        const numeroAno = document.getElementById("numeroAno") as HTMLInputElement;
+        const numeroDG = document.getElementById("numeroDG") as HTMLInputElement;
+
         let todaInfoATA = {
           ...informacaoColecaoProcesso,
+          numeroAno: numeroAno.value,
+          numeroDG: numeroDG.value,
           propostasAta: decisoesATA
         }
 
-        const { tipo, propostasPauta, propostas, ...ataEditar } = todaInfoATA
+        const { tipo, propostasPauta, propostas, idATA, tituloReuniao, tituloReuniaoATA, pauta, arquivos, ...ataEditar } = todaInfoATA
 
         const formData = new FormData()
 
@@ -283,27 +289,35 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         }
 
 
-        // api.put("/sod/ata/" + informacaoColecaoProcesso.idATA + "/" + idUsuario, formData).then((response) => {
-        fecharAvaliacao();
+        console.log(ataEditar);
 
-        feedback = (
-          <Alert
-            onClose={() => {
-              setFeedbackAberto(false);
-            }}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            {informacaoColecaoProcesso.tipo} avaliada com sucesso
-          </Alert>
-        );
-
-        abrirFeedback(feedback);
+        // console.log(formData.get("ata"));
 
 
-        // }).catch((err) => {
-        //   console.log(err);
-        // })
+
+        api.put("/sod/ata/" + informacaoColecaoProcesso.idATA + "/" + idUsuario, formData).then((response) => {
+          console.log(response);
+
+        // fecharAvaliacao();
+
+        // feedback = (
+        //   <Alert
+        //     onClose={() => {
+        //       setFeedbackAberto(false);
+        //     }}
+        //     severity="success"
+        //     sx={{ width: "100%" }}
+        //   >
+        //     {informacaoColecaoProcesso.tipo} avaliada com sucesso
+        //   </Alert>
+        // );
+
+        // abrirFeedback(feedback);
+
+
+        }).catch((err) => {
+          console.log(err);
+        })
 
       }
 
@@ -409,15 +423,15 @@ function Header(props: {
 
   useEffect(() => {
     if (tipoColecao == "Pauta") {
-      // if (!informacaoColecaoProcesso.pertenceUmaATA) {
-      //   if (dataReuniao <= new Date()) {
+      if (!informacaoColecaoProcesso.pertenceUmaATA) {
+        if (dataReuniao <= new Date()) {
           setAcao("Informar parecer");
-      //   }
-      // }
+        }
+      }
     } else {
-      // if (!informacaoColecaoProcesso.numeroDG) {
+      if (!informacaoColecaoProcesso.numeroDG) {
         setAcao("Finalizar processo");
-      // }
+      }
     }
   }, []);
 
@@ -741,6 +755,16 @@ function Propostas(props: {
             :
             <>
               <Grid item xs={12}>
+                <BoxInputsNumeros>
+                  <Box>
+                    <TypographyTituloDecisao>Numero ano: </TypographyTituloDecisao>
+                    <TextField type="number" id="numeroAno"></TextField>
+                  </Box>
+                  <Box>
+                    <TypographyTituloDecisao>Numero DG: </TypographyTituloDecisao>
+                    <TextField type="number" id="numeroDG"></TextField>
+                  </Box>
+                </BoxInputsNumeros>
                 <InputAnexos rascunho={false} proposta={false} files={props.files} setFiles={props.setFiles} />
               </Grid>
             </>
@@ -845,7 +869,7 @@ export function Proposta(props: {
               </TypographyTexto>
             </GridPequenosAtributos>
             <Grid item>
-              <TypographyTexto variant='body1' sx={{color: "#595959"}}>
+              <TypographyTexto variant='body1' sx={{ color: "#595959" }}>
                 <b>Comentário :</b>   {props.propostaAnterior.comentario}
               </TypographyTexto>
             </Grid>
@@ -909,7 +933,7 @@ export function Proposta(props: {
         <>
           <Grid item xs={4}>
             <TypographyTituloDecisao variant="body1">
-              Número da ATA da DG:
+              Número Sequencial:
             </TypographyTituloDecisao>
             <TextField
               type="number"

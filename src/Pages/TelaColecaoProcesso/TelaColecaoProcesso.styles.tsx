@@ -1,5 +1,5 @@
 
-import { Accordion, Grid } from '@mui/material';
+import { Accordion, Grid, Box } from '@mui/material';
 import { TypographyTexto, TypographyTitulo, TypographyTituloAtributo } from '../TelaProcesso/TelaProcesso.styles';
 import { styled } from '@mui/material/styles';
 import { GridContainer } from '../../Components/ContainerProcesso/ContainerProcesso.styles';
@@ -46,4 +46,10 @@ export const GridInfoATA = styledGrid({
     "& input": {
         color: "#595959"
     }
+})
+
+export const BoxInputsNumeros = styled(Box)({
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
 })
