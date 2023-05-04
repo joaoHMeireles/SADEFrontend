@@ -15,15 +15,15 @@ export const BoxBackground = styled(Box)({
 export const Title = styled(Box)({
     fontWeight: "bold",
     marginBottom: "1rem"
-})
+});
 
 export const P = styled(Box)({
     marginBottom: "1rem"
-})
+});
 
 export const BoxImage = styled(Box)({
     alignItems: "center",
     display: "flex",
     justifyContent: "center",
     width: "100%"
-})
+});
