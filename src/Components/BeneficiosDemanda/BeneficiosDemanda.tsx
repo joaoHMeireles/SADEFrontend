@@ -173,7 +173,7 @@ export default function BeneficiosDemanda(props: {
     }
   }, [])
 
-  function onFrequenciaChange(e: any) {
+  function onFrequenciaChange(e: any) {    
     setFrequencia(e.target.value)
 
     const novaInfoDemanda = {
@@ -181,7 +181,9 @@ export default function BeneficiosDemanda(props: {
       frequenciaUso: e.target.value,
     };
 
-    props.setInformacaoProcesso(novaInfoDemanda);
+    if(props.setInformacaoProcesso || props.informacaoProcesso){
+      props.setInformacaoProcesso(novaInfoDemanda);
+    }
   }
 
 
@@ -293,6 +295,7 @@ export default function BeneficiosDemanda(props: {
         <BoxFrequencia>
           <TypographyLabels>Frequência de uso da solução:</TypographyLabels>
           <Select
+          id="frequenciaUso"
             value={frequencia}
             onChange={onFrequenciaChange}
           >

@@ -12,10 +12,12 @@ import { useState } from "react";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import { Introducao, CriarDemanda, AvaliarDemandaA, AvaliarDemandaGN, AdicionarInfoDemanda, CriarProposta, CriarPauta, InformarParecerComissao, CriarATA, InformarParecerDiretoriaGeral, IniciarWorkflow, AvaliarWorkflow } from "./Componentes/Componentes";
 
 export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: boolean }) {
   const [atividadesPrincipaisOpen, setAtividadesPrincipaisopen] = useState(false);
   const [atividadesSecundariasOpen, setAtividadesSecundariasOpen] = useState(false);
+  const [componentes, setComponentes] = useState<any>(Introducao)
 
   const atividadesPrincipaisClick = () => {
     setAtividadesPrincipaisopen(!atividadesPrincipaisOpen);
@@ -36,80 +38,81 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
       <BoxConteudo>
         <Container>
           <FirstColumn>
-          <Lista>
-            <ListItemButton>
-              <ListItemText primary="INTRODUÇÃO" />
-            </ListItemButton>
+            <Lista>
+              <ListItemButton onClick={() => { setComponentes(Introducao) }}>
+                <ListItemText primary="INTRODUÇÃO" />
+              </ListItemButton>
 
-            <ListItemButton onClick={atividadesPrincipaisClick}>
-              <ListItemText primary="ATIVIDADES PRINCIPAIS" />
-              {atividadesPrincipaisOpen ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
+              <ListItemButton onClick={atividadesPrincipaisClick}>
+                <ListItemText primary="ATIVIDADES PRINCIPAIS" />
+                {atividadesPrincipaisOpen ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
 
-            <Collapse in={atividadesPrincipaisOpen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Criar Demanda" />
-                </ListItemButton>
+              <Collapse in={atividadesPrincipaisOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { setComponentes(CriarDemanda) }}>
+                    <ListItemText primary="Criar Demanda" />
+                  </ListItemButton>
 
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Avaliar Demanda (A)" />
-                </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { setComponentes(AvaliarDemandaA) }}>
+                    <ListItemText primary="Avaliar Demanda (A)" />
+                  </ListItemButton>
 
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Avaliar Demanda (GN)" />
-                </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { setComponentes(AvaliarDemandaGN) }}>
+                    <ListItemText primary="Avaliar Demanda (GN)" />
+                  </ListItemButton>
 
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Adicionar informações na Demanda(A)" />
-                </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { setComponentes(AdicionarInfoDemanda) }}>
+                    <ListItemText primary="Adicionar informações na Demanda(A)" />
+                  </ListItemButton>
 
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Criar Proposta" />
-                </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { setComponentes(CriarProposta) }}>
+                    <ListItemText primary="Criar Proposta" />
+                  </ListItemButton>
 
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Criar Pauta" />
-                </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { setComponentes(CriarPauta) }}>
+                    <ListItemText primary="Criar Pauta" />
+                  </ListItemButton>
 
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Informar o parecer da Comissão(A)" />
-                </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { setComponentes(InformarParecerComissao) }}>
+                    <ListItemText primary="Informar o parecer da Comissão(A)" />
+                  </ListItemButton>
 
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Criar ATA" />
-                </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { setComponentes(CriarATA) }}>
+                    <ListItemText primary="Criar ATA" />
+                  </ListItemButton>
 
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Informar o parecer da Diretoria Geral" />
-                </ListItemButton>
-              </List>
-            </Collapse>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { setComponentes(InformarParecerDiretoriaGeral) }}>
+                    <ListItemText primary="Informar o parecer da Diretoria Geral" />
+                  </ListItemButton>
+                </List>
+              </Collapse>
 
-            <ListItemButton onClick={atividadesSecundariasClick}>
-              <ListItemText primary="ATIVIDADES SECUNDÁRIAS" />
-              {atividadesSecundariasOpen ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
+              <ListItemButton onClick={atividadesSecundariasClick}>
+                <ListItemText primary="ATIVIDADES SECUNDÁRIAS" />
+                {atividadesSecundariasOpen ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
 
-            <Collapse in={atividadesSecundariasOpen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Iniciar Workflow de Aprovação(A)" />
-                </ListItemButton>
+              <Collapse in={atividadesSecundariasOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { setComponentes(IniciarWorkflow) }}>
+                    <ListItemText primary="Iniciar Workflow de Aprovação(A)" />
+                  </ListItemButton>
 
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="Avaliar Workflow de Aprovação(GN/GTI)" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-          </Lista>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => { setComponentes(AvaliarWorkflow) }}>
+                    <ListItemText primary="Avaliar Workflow de Aprovação(GN/GTI)" />
+                  </ListItemButton>
+                </List>
+              </Collapse>
+            </Lista>
           </FirstColumn>
 
           <SecondColumn>
-
+            {componentes}
           </SecondColumn>
         </Container>
       </BoxConteudo>
     </Box>
   );
 }
+

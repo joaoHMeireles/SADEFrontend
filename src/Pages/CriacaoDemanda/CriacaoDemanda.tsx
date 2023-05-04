@@ -149,7 +149,7 @@ export default function CriacaoDemanda(props: {
   }
 
   function partDoisDemanda() {
-    const frequenciaUso = document.getElementById("frequenciaUso") as HTMLInputElement;
+    const frequenciaUso = document.getElementById("frequenciaUso") as HTMLInputElement;    
 
     let valorMensal;
     let descricao;
@@ -205,7 +205,7 @@ export default function CriacaoDemanda(props: {
       "tituloDemanda": data.tituloDemanda,
       "objetivo": data.objetivo,
       "situacaoAtual": data.situacaoAtual,
-      "frequenciaUso": frequenciaUso.value,
+      "frequenciaUso": frequenciaUso.innerText,
       "score": 1,
       "centroCustoDemanda": data.centroCustoDemanda,
       "beneficiosDemanda": beneficios,
