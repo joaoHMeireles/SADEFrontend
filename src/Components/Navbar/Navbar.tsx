@@ -18,18 +18,29 @@ const listaLinguas = [
 ]
 
 export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
-    const usuario = JSON.parse(localStorage.getItem("USUARIO") as string);
+    const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem("USUARIO") as string));
     const [fotoUsuario, setFotoUsuario] = useState<Blob>(new Blob);
-    
+
     const [lingua, setLingua] = useState("Português");
     const path = useLocation();
 
     useEffect(() => {
-        api.get("/sod/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
-            .then((response) => {
-                setFotoUsuario(response.data);
-            });
+        if (usuario != null) {
+            api.get("/sod/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
+                .then((response) => {
+                    setFotoUsuario(response.data);
+                });
+        }
     }, []);
+
+    useEffect(() => {
+        if (usuario != null) {
+            api.get("/sod/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
+                .then((response) => {
+                    setFotoUsuario(response.data);
+                });
+        }
+    }, [usuario]);
 
     function mudarSidebar() {
         props.setAberto(!props.aberto)
@@ -65,7 +76,7 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                             <Box sx={{ marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>
                                 <Avatar {...stringAvatar(usuario.nomeUsuario)} onClick={() => {
                                     window.location.href = "/profile";
-                                }}  src={URL.createObjectURL(fotoUsuario)} />
+                                }} src={URL.createObjectURL(fotoUsuario)} />
                             </Box>
 
                             <Box sx={{ marginLeft: "1rem" }}>

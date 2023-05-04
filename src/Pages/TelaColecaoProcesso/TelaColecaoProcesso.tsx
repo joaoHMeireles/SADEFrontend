@@ -187,7 +187,8 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
 
         const infoPauta = {
           ...informacaoColecaoProcesso,
-          propostasPauta: decisoesPauta
+          propostasPauta: decisoesPauta,
+          dataReuniaoATA: dataReuniaoCerta
         }
 
         const { propostas, tipo, tituloReuniao, pertenceUmaATA, arquivos, idPauta, ...pautaEditar } = infoPauta
@@ -208,12 +209,9 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
             pauta: response.data,
             tituloReuniaoATA: tituloReuniaoInput,
             dataReuniao: dataReuniaoCerta,
-            inicioReuniao: inicioReuniao,
-            finalReuniao: finalReuniao
+            inicioReuniao: inicioReuniao + ":" + "00",
+            finalReuniao: finalReuniao + ":" + "00"
           }
-
-          console.log(ataDTO);
-
 
           api.post("/sod/ata", ataDTO).then((response) => {
             fecharAvaliacao();
@@ -417,9 +415,9 @@ function Header(props: {
       //   }
       // }
     } else {
-      if (!informacaoColecaoProcesso.numeroDG) {
+      // if (!informacaoColecaoProcesso.numeroDG) {
         setAcao("Finalizar processo");
-      }
+      // }
     }
   }, []);
 
@@ -649,8 +647,8 @@ function Propostas(props: {
   const location = useLocation().pathname;
   const linkProposta = location + "/proposal";
   const [valorData, setValorData] = useState<Dayjs | null>(null)
-  const [inicioReuniao, setInicioReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T15:30'));
-  const [finalReuniao, setFinalReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T16:30'));
+  const [inicioReuniao, setInicioReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T13:30'));
+  const [finalReuniao, setFinalReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T14:30'));
 
   const propostas = props.listaPropostas.map((decisaoProposta: any, index: number) => {
     let propostaAnteriorEquivalente = null
@@ -847,7 +845,7 @@ export function Proposta(props: {
               </TypographyTexto>
             </GridPequenosAtributos>
             <Grid item>
-              <TypographyTexto variant='body1' >
+              <TypographyTexto variant='body1' sx={{color: "#595959"}}>
                 <b>Comentário :</b>   {props.propostaAnterior.comentario}
               </TypographyTexto>
             </Grid>
