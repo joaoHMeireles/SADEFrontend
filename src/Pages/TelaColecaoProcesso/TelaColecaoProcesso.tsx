@@ -260,8 +260,9 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
             comentario: comentario
           }
 
+          const {idDecisaoPropostaAta, ...propostaATACerta} = propostaATA
 
-          decisoesATA.push(propostaATA);
+          decisoesATA.push(propostaATACerta);
         }
 
         const numeroAno = document.getElementById("numeroAno") as HTMLInputElement;
@@ -274,7 +275,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
           propostasAta: decisoesATA
         }
 
-        const { tipo, propostasPauta, propostas, idATA, tituloReuniao, tituloReuniaoATA, pauta, arquivos, ...ataEditar } = todaInfoATA
+        const { tipo, propostasPauta, propostas, idATA, tituloReuniao, tituloReuniaoATA, pauta, arquivos, usuariosReuniaoATA, ...ataEditar } = todaInfoATA
 
         const formData = new FormData()
 
@@ -287,32 +288,25 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
             }
           }
         }
-
-
-        console.log(ataEditar);
-
-        // console.log(formData.get("ata"));
-
-
-
+        
         api.put("/sod/ata/" + informacaoColecaoProcesso.idATA + "/" + idUsuario, formData).then((response) => {
           console.log(response);
 
-        // fecharAvaliacao();
+        fecharAvaliacao();
 
-        // feedback = (
-        //   <Alert
-        //     onClose={() => {
-        //       setFeedbackAberto(false);
-        //     }}
-        //     severity="success"
-        //     sx={{ width: "100%" }}
-        //   >
-        //     {informacaoColecaoProcesso.tipo} avaliada com sucesso
-        //   </Alert>
-        // );
+        feedback = (
+          <Alert
+            onClose={() => {
+              setFeedbackAberto(false);
+            }}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            {informacaoColecaoProcesso.tipo} avaliada com sucesso
+          </Alert>
+        );
 
-        // abrirFeedback(feedback);
+        abrirFeedback(feedback);
 
 
         }).catch((err) => {
