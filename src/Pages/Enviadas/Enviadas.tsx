@@ -17,9 +17,10 @@ export default function Enviadas(props: {
   const [grid, setGrid] = useState(true);
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
   const [listaComponents, setListaComponents] = useState<any[]>([])
+  const idUsuario = localStorage.getItem("IDUSUARIO")
 
   useEffect(() => {
-    api.get("/sod/demanda/rascunho/true").then((response: any) => {
+    api.get("/sod/demanda/usuario/" + idUsuario).then((response: any) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
         demanda.tipo = TipoComponenteProcesso.Demanda
@@ -45,7 +46,7 @@ export default function Enviadas(props: {
           <CardsProcesso
             listaComponents={listaComponents}
             grid={grid}
-            rascunho={true}
+            rascunho={false}
             proposta={false}
             propostaSelecionada={0}
             setPropostaSelecionada={setPropostaSelecionada}

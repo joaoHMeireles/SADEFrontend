@@ -27,14 +27,16 @@ import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
 
 import EsqueletoPDFVersaoDemanda from "../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda";
 import React from "react";
+import { useLocationChange } from "../../utils";
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
 }) {
+  const idUsuario = localStorage.getItem("IDUSUARIO");
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
-  const [data, setData] = useState<any>()
+  const [data, setData] = useState<any>({usuario:{idUsuario: idUsuario}})
   const [files, setFiles] = useState<any>([]);
   const [pdfDemanda, setPDFDemanda] = useState<any>();
 
@@ -84,6 +86,30 @@ export default function CriacaoDemanda(props: {
     criarDemanda()
   }, [pdfDemanda])
 
+  useLocationChange(() => {
+    let temInformacao = true//false
+
+    // for(let atributo in data){
+    //   if(data[atributo] != null){
+    //    temInformacao = true
+    //    break
+    //   }
+    // }
+
+    //testar criação de rascunho
+    if(temInformacao){
+      console.log("mudou");
+      
+      // const formData = new FormData()
+
+      // formData.append("demanda", data)
+
+      // api.post("/sod/demanda/rascunho", formData).then((response) => {
+      //   console.log(response.data);
+      // })
+    }
+  })
+
   function getIdByAtributo(atributo: string) {
     const idsInputsAtributo = {
       titulo: "titulo",
@@ -108,8 +134,6 @@ export default function CriacaoDemanda(props: {
     const titulo = document.getElementById("titulo") as HTMLInputElement;
     const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
     const objetivo = document.getElementById("objetivo") as HTMLInputElement;
-
-    const idUsuario = localStorage.getItem("IDUSUARIO");
 
     let data = {
       "tituloDemanda": titulo.value,

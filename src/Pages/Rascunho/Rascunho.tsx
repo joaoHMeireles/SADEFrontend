@@ -17,9 +17,10 @@ export default function Rascunho(props: {
   const [grid, setGrid] = useState(true);
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
   const [listaComponents, setListaComponents] = useState<any[]>([])
+  const idUsuario = localStorage.getItem("IDUSUARIO")
 
   useEffect(() => {
-    api.get("/sod/demanda/rascunho/true").then((response) => {
+    api.get("/sod/demanda/usuario/" + idUsuario +"/rascunho/").then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
         demanda.tipo = TipoComponenteProcesso.Demanda

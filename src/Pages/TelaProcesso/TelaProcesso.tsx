@@ -429,6 +429,7 @@ export function Header(props: {
 
     function criarNovaProposta() {
         localStorage.setItem("DEMANDACRIARPROPOSTA", processo.idDemanda)
+        localStorage.setItem("DEMANDASELECIONADA",  JSON.stringify(processo))
 
         location.href = "/createproposal"
     } //feito
