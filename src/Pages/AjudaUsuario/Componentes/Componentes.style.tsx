@@ -22,8 +22,9 @@ export const P = styled(Box)({
 });
 
 export const BoxImage = styled(Box)({
-    alignItems: "center",
+    alignItems: "flex-start",
     display: "flex",
+    height: "auto",
     justifyContent: "center",
     width: "100%"
 });

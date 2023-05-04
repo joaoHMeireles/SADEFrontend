@@ -12,7 +12,7 @@ import { useState } from "react";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { Introducao, CriarDemanda, AvaliarDemandaA, AvaliarDemandaGN, AdicionarInfoDemanda, CriarProposta, CriarPauta, InformarParecerComissao, CriarATA, InformarParecerDiretoriaGeral, IniciarWorkflow, AvaliarWorkflow } from "./Componentes";
+import { Introducao, CriarDemanda, AvaliarDemandaA, AvaliarDemandaGN, AdicionarInfoDemanda, CriarProposta, CriarPauta, InformarParecerComissao, CriarATA, InformarParecerDiretoriaGeral, IniciarWorkflow, AvaliarWorkflow } from "./Componentes/Componentes";
 
 export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: boolean }) {
   const [atividadesPrincipaisOpen, setAtividadesPrincipaisopen] = useState(false);
