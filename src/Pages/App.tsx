@@ -32,6 +32,7 @@ import { useLocationChange } from "../utils";
 import AjudaUsuario from "./AjudaUsuario/AjudaUsuario";
 
 import { WebSocketService } from "../api/websocketservice.jsx";
+import RascunhoObserver from "../Components/RascunhoObserver/RascunhoObserver";
 
 
 export default function App() {
@@ -289,6 +290,7 @@ export default function App() {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <WebSocketService>
         <BrowserRouter>
+        <RascunhoObserver />
           <ThemeProvider theme={MainTheme}>
             <Navbar aberto={sidebarAberta} setAberto={setSidebarAberta} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />
             <Box sx={{ marginLeft: sidebarAberta ? `${tamanhoSideBar}px` : 0, display: "flex" }} >

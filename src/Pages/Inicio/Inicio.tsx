@@ -34,12 +34,19 @@ export default function Inicio(props: {
     } else {
       setTemComponente(false)
     }
+
+
+    //para resetar os parâmetros da criação de rascunhos quando for criar demanda
+    setTimeout(() => {
+      localStorage.setItem("DEMANDACADASTRADA", "false")
+      localStorage.setItem("OBJETODEMANDACRIADA", "null")
+    }, 500)
   }, [props.listaComponents])
 
   useEffect(() => {
-    if(!temComponente){
+    if (!temComponente) {
       const inputPesquisa = document.getElementById("input-pesquisa") as HTMLInputElement
-      if(inputPesquisa.value != ""){
+      if (inputPesquisa.value != "") {
         setImagemSemNada(semResultado)
         setTextoSemNada("Nenhuma demanda encontrada")
       } else {

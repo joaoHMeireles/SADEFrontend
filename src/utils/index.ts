@@ -1,6 +1,6 @@
 
 import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusTarefaHistorico } from '../constants/enuns';
 import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
@@ -145,7 +145,16 @@ export function getIconeArquivo(nomeAnexo: string) {
  */
 export function useLocationChange(action: any) {
     const newLocation = useLocation()
-    useEffect(() => { action(newLocation) }, [newLocation])
+    const [previousLocation, setPreviousLocation] = useState({
+        to: newLocation,
+        from: newLocation
+    });
+
+    useEffect(() => {
+        setPreviousLocation((previous: any) => ({ to: newLocation, from: previous.to }))
+    }, [newLocation]);
+
+    useEffect(() => { action(previousLocation.to, previousLocation.from) }, [previousLocation])
 }
 
 //criar função pra pegar as cores dos status dos históricos

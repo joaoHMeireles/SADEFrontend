@@ -39,6 +39,14 @@ const moedas = [
   },
 ];
 
+const valoresFrequencia = [
+  "DIARIAMENTE",
+  "SEMANALMENTE",
+  "MENSALMENTE"
+]
+
+let atualizarObjetos: any = null
+
 export default function BeneficiosDemanda(props: {
   rascunho: boolean;
   proposta: boolean;
@@ -55,16 +63,13 @@ export default function BeneficiosDemanda(props: {
   valor?: number
   informacaoProcesso?: any
   setInformacaoProcesso?: any
+  partDoisDemanda: Function
 }) {
   const [frequencia, setFrequencia] = useState("DIARIAMENTE");
   const [beneficiosReaisLista, setBeneficiosReaisLista] = useState<any[]>([]);
   const [beneficiosPotenciaisLista, setBeneficiosPotenciaisLista] = useState<any[]>([]);
   const [beneficiosQualitativosLista, setBeneficiosQualitativosLista] = useState<any[]>([]);
-  const valoresFrequencia = [
-    "DIARIAMENTE",
-    "SEMANALMENTE",
-    "MENSALMENTE"
-  ]
+  atualizarObjetos = props.partDoisDemanda
 
   let numeroBeneficiosPotenciais = 0;
   let numeroBeneficiosReais = 0;
@@ -87,55 +92,61 @@ export default function BeneficiosDemanda(props: {
           setBeneficiosPotenciaisLista(beneficiosBancoPotenciais)
           setBeneficiosQualitativosLista(beneficiosBancoQualitativos)
 
-          for (let i = 0; i < props.numeroBeneficiosReais; i++) {
+          if (props.numeroBeneficiosReais) {
+            for (let i = 0; i < props.numeroBeneficiosReais; i++) {
 
-            const beneficioRealValorMensal = document.getElementById("valorMensalReal" + i) as HTMLInputElement;
-            if (beneficioRealValorMensal && beneficiosBancoReais[i]) {
-              beneficioRealValorMensal.value = beneficiosBancoReais[i].valor;
-            }
+              const beneficioRealValorMensal = document.getElementById("valorMensalReal" + i) as HTMLInputElement;
+              if (beneficioRealValorMensal && beneficiosBancoReais[i]) {
+                beneficioRealValorMensal.value = beneficiosBancoReais[i].valor;
+              }
 
-            const beneficioRealDescricaoReal = document.getElementById("descricaoReal" + i) as HTMLInputElement;
-            if (beneficioRealDescricaoReal && beneficiosBancoReais[i]) {
-              beneficioRealDescricaoReal.value = beneficiosBancoReais[i].descricao
-            }
+              const beneficioRealDescricaoReal = document.getElementById("descricaoReal" + i) as HTMLInputElement;
+              if (beneficioRealDescricaoReal && beneficiosBancoReais[i]) {
+                beneficioRealDescricaoReal.value = beneficiosBancoReais[i].descricao
+              }
 
-            // if (moedaReal && setMoedaReal) {
-            if (beneficiosBancoReais[i]) {
-              // moedaReal.push(beneficiosBancoReais[i].moeda);
-              // setMoedaReal(beneficiosBancoReais[i].moeda);
+              // if (moedaReal && setMoedaReal) {
+              if (beneficiosBancoReais[i]) {
+                // moedaReal.push(beneficiosBancoReais[i].moeda);
+                // setMoedaReal(beneficiosBancoReais[i].moeda);
+              }
+              // }
             }
-            // }
           }
 
-          for (let i = 0; i < props.numeroBeneficiosPotenciais; i++) {
+          if (props.numeroBeneficiosPotenciais) {
+            for (let i = 0; i < props.numeroBeneficiosPotenciais; i++) {
 
-            const beneficioPotencialValorMensal = document.getElementById("valorMensalPotencial" + i) as HTMLInputElement;
-            if (beneficioPotencialValorMensal && beneficiosBancoPotenciais[i]) {
-              beneficioPotencialValorMensal.value = beneficiosBancoPotenciais[i].valor;
+              const beneficioPotencialValorMensal = document.getElementById("valorMensalPotencial" + i) as HTMLInputElement;
+              if (beneficioPotencialValorMensal && beneficiosBancoPotenciais[i]) {
+                beneficioPotencialValorMensal.value = beneficiosBancoPotenciais[i].valor;
+              }
+
+              const beneficioPotencialDescricaoPotencial = document.getElementById("descricaoPotencial" + i) as HTMLInputElement;
+              if (beneficioPotencialDescricaoPotencial && beneficiosBancoPotenciais[i]) {
+                beneficioPotencialDescricaoPotencial.value = beneficiosBancoPotenciais[i].descricao
+              }
+
+              // if (moedaPotencial && setMoedaPotencial) {
+              if (beneficiosBancoPotenciais[i]) {
+                // moedaPotencial.push(beneficiosBancoPotenciais[i].moeda);
+                // setMoedaPotencial(beneficiosBancoPotenciais[i].moeda);
+              }
+              // }
+
             }
-
-            const beneficioPotencialDescricaoPotencial = document.getElementById("descricaoPotencial" + i) as HTMLInputElement;
-            if (beneficioPotencialDescricaoPotencial && beneficiosBancoPotenciais[i]) {
-              beneficioPotencialDescricaoPotencial.value = beneficiosBancoPotenciais[i].descricao
-            }
-
-            // if (moedaPotencial && setMoedaPotencial) {
-            if (beneficiosBancoPotenciais[i]) {
-              // moedaPotencial.push(beneficiosBancoPotenciais[i].moeda);
-              // setMoedaPotencial(beneficiosBancoPotenciais[i].moeda);
-            }
-            // }
-
           }
 
-          for (let i = 0; i < props.numeroBeneficiosQualitativos; i++) {
+          if (props.numeroBeneficiosQualitativos) {
+            for (let i = 0; i < props.numeroBeneficiosQualitativos; i++) {
 
-            const beneficioQualitativoDescricao = document.getElementById("beneficiosQualitativos" + i) as HTMLInputElement;
+              const beneficioQualitativoDescricao = document.getElementById("beneficiosQualitativos" + i) as HTMLInputElement;
 
-            if (beneficioQualitativoDescricao && beneficiosBancoQualitativos[i]) {
-              beneficioQualitativoDescricao.value = beneficiosBancoQualitativos[i].descricao;
+              if (beneficioQualitativoDescricao && beneficiosBancoQualitativos[i]) {
+                beneficioQualitativoDescricao.value = beneficiosBancoQualitativos[i].descricao;
+              }
+
             }
-
           }
         }
       }
@@ -186,7 +197,6 @@ export default function BeneficiosDemanda(props: {
     }
   }
 
-
   return (
     <>
       <BoxContainerGeral>
@@ -202,25 +212,33 @@ export default function BeneficiosDemanda(props: {
           setMoedaReal={props.setMoedaReal}
         />
         <BoxIcones>
-          {props.numeroBeneficiosReais > 1 ? (
-            <RemoveRoundedIcon
-              sx={{
-                fontSize: "2rem",
-                marginRight: 3,
-                cursor: "pointer",
-                color: "#595959",
-              }}
-              onClick={() => {
-                props.setNumeroBeneficiosReais(props.numeroBeneficiosReais - 1);
-              }}
-            />
-          ) : (
-            ""
-          )}
+          {props.numeroBeneficiosReais &&
+            <>
+              {props.numeroBeneficiosReais > 1 ? (
+                <RemoveRoundedIcon
+                  sx={{
+                    fontSize: "2rem",
+                    marginRight: 3,
+                    cursor: "pointer",
+                    color: "#595959",
+                  }}
+                  onClick={() => {
+                    if (props.setNumeroBeneficiosReais && props.numeroBeneficiosReais) {
+                      props.setNumeroBeneficiosReais(props.numeroBeneficiosReais - 1);
+                    }
+                  }}
+                />
+              ) : (
+                ""
+              )}
+            </>
+          }
           <AddRoundedIcon
             sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
             onClick={() => {
-              props.setNumeroBeneficiosReais(props.numeroBeneficiosReais + 1);
+              if (props.setNumeroBeneficiosReais && props.numeroBeneficiosReais) {
+                props.setNumeroBeneficiosReais(props.numeroBeneficiosReais + 1);
+              }
             }}
           />
         </BoxIcones>
@@ -236,25 +254,34 @@ export default function BeneficiosDemanda(props: {
           setMoedaPotencial={props.setMoedaPotencial}
         />
         <BoxIcones>
-          {props.numeroBeneficiosPotenciais > 1 ? (
-            <RemoveRoundedIcon
-              sx={{
-                fontSize: "2rem",
-                marginRight: 3,
-                cursor: "pointer",
-                color: "#595959",
-              }}
-              onClick={() => {
-                props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais - 1);
-              }}
-            />
-          ) : (
-            ""
-          )}
+          {props.numeroBeneficiosPotenciais &&
+            <>
+              {props.numeroBeneficiosPotenciais > 1 ? (
+                <RemoveRoundedIcon
+                  sx={{
+                    fontSize: "2rem",
+                    marginRight: 3,
+                    cursor: "pointer",
+                    color: "#595959",
+                  }}
+                  onClick={() => {
+                    if (props.setNumeroBeneficiosPotenciais && props.numeroBeneficiosPotenciais) {
+                      props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais - 1);
+                    }
+                  }}
+                />
+              ) : (
+                ""
+              )}
+            </>
+          }
+
           <AddRoundedIcon
             sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
             onClick={() => {
-              props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais + 1);
+              if (props.setNumeroBeneficiosPotenciais && props.numeroBeneficiosPotenciais) {
+                props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais + 1);
+              }
             }}
           />
         </BoxIcones>
@@ -268,28 +295,34 @@ export default function BeneficiosDemanda(props: {
           beneficiosQualitativosLista={beneficiosQualitativosLista}
         />
         <BoxIcones>
-          {props.numeroBeneficiosQualitativos > 1 ? (
-            <RemoveRoundedIcon
-              sx={{
-                fontSize: "2rem",
-                marginRight: 3,
-                cursor: "pointer",
-                color: "#595959",
-              }}
-              onClick={() => {
-                props.setNumeroBeneficiosQualitativos(
-                  props.numeroBeneficiosQualitativos - 1
-                );
-              }}
-            />
-          ) : (
-            ""
-          )}
+          {props.numeroBeneficiosQualitativos &&
+            <>
+              {props.numeroBeneficiosQualitativos > 1 ? (
+                <RemoveRoundedIcon
+                  sx={{
+                    fontSize: "2rem",
+                    marginRight: 3,
+                    cursor: "pointer",
+                    color: "#595959",
+                  }}
+                  onClick={() => {
+                    if (props.setNumeroBeneficiosQualitativos && props.numeroBeneficiosQualitativos) {
+                      props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos - 1);
+                    }
+                  }}
+                />
+              ) : (
+                ""
+              )}
+            </>
+          }
+
           <AddRoundedIcon
             sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
             onClick={() => {
-              props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos + 1);
-            }}
+              if (props.setNumeroBeneficiosQualitativos && props.numeroBeneficiosQualitativos) {
+                props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos + 1);
+              }            }}
           />
         </BoxIcones>
         <BoxFrequencia>
@@ -312,7 +345,7 @@ export default function BeneficiosDemanda(props: {
 }
 
 function BeneficiosReais(props: {
-  numeroBeneficios: number,
+  numeroBeneficios: number | undefined,
   informacaoProcesso: any,
   setInformacaoProcesso: any,
   beneficiosReaisLista: any,
@@ -321,20 +354,22 @@ function BeneficiosReais(props: {
 }) {
   let beneficios: JSX.Element[] = [];
 
-  for (let i = 0; i < props.numeroBeneficios; i++) {
-    if (props.beneficiosReaisLista[i]) {
-      beneficios.push(<BeneficioReal index={i}
-        informacaoProcesso={props.informacaoProcesso}
-        setInformacaoProcesso={props.setInformacaoProcesso}
-        moedaBeneficio={props.beneficiosReaisLista[i].moeda}
-        idBeneficioReal={props.beneficiosReaisLista[i].idBeneficio} />);
-    } else {
-      beneficios.push(<BeneficioReal index={i}
-        informacaoProcesso={props.informacaoProcesso}
-        setInformacaoProcesso={props.setInformacaoProcesso}
-        moedaReal={props.moedaReal}
-        setMoedaReal={props.setMoedaReal}
-      />);
+  if (props.numeroBeneficios) {
+    for (let i = 0; i < props.numeroBeneficios; i++) {
+      if (props.beneficiosReaisLista[i]) {
+        beneficios.push(<BeneficioReal index={i}
+          informacaoProcesso={props.informacaoProcesso}
+          setInformacaoProcesso={props.setInformacaoProcesso}
+          moedaBeneficio={props.beneficiosReaisLista[i].moeda}
+          idBeneficioReal={props.beneficiosReaisLista[i].idBeneficio} />);
+      } else {
+        beneficios.push(<BeneficioReal index={i}
+          informacaoProcesso={props.informacaoProcesso}
+          setInformacaoProcesso={props.setInformacaoProcesso}
+          moedaReal={props.moedaReal}
+          setMoedaReal={props.setMoedaReal}
+        />);
+      }
     }
   }
 
@@ -342,7 +377,7 @@ function BeneficiosReais(props: {
 }
 
 function BeneficiosPotenciais(props: {
-  numeroBeneficios: number,
+  numeroBeneficios: number | undefined,
   informacaoProcesso: any,
   setInformacaoProcesso: any,
   beneficiosPotenciasLista: any,
@@ -351,43 +386,60 @@ function BeneficiosPotenciais(props: {
 }) {
   let beneficios: JSX.Element[] = [];
 
-  for (let i = 0; i < props.numeroBeneficios; i++) {
-    if (props.beneficiosPotenciasLista[i]) {
-      beneficios.push(<BeneficioPotencial index={i}
-        informacaoProcesso={props.informacaoProcesso}
-        setInformacaoProcesso={props.setInformacaoProcesso}
-        moedaBeneficio={props.beneficiosPotenciasLista[i].moeda}
-        idBeneficioPotencial={props.beneficiosPotenciasLista[i].idBeneficio} />);
-    } else {
-      beneficios.push(<BeneficioPotencial index={i}
-        informacaoProcesso={props.informacaoProcesso}
-        setInformacaoProcesso={props.setInformacaoProcesso}
-        moedaPotencial={props.moedaPotencial}
-        setMoedaReal={props.setMoedaPotencial} />);
+  if (props.numeroBeneficios) {
+    for (let i = 0; i < props.numeroBeneficios; i++) {
+      if (props.beneficiosPotenciasLista[i]) {
+        beneficios.push(<BeneficioPotencial index={i}
+          informacaoProcesso={props.informacaoProcesso}
+          setInformacaoProcesso={props.setInformacaoProcesso}
+          moedaBeneficio={props.beneficiosPotenciasLista[i].moeda}
+          idBeneficioPotencial={props.beneficiosPotenciasLista[i].idBeneficio} />);
+      } else {
+        beneficios.push(<BeneficioPotencial index={i}
+          informacaoProcesso={props.informacaoProcesso}
+          setInformacaoProcesso={props.setInformacaoProcesso}
+          moedaPotencial={props.moedaPotencial}
+          setMoedaPotencial={props.setMoedaPotencial} />);
+      }
     }
   }
 
   return <>{beneficios}</>;
 }
 
-function BeneficiosQualitativos(props: { numeroBeneficios: number, informacaoProcesso: any, setInformacaoProcesso: any, beneficiosQualitativosLista: any }) {
+function BeneficiosQualitativos(props: {
+  numeroBeneficios: number | undefined,
+  informacaoProcesso: any,
+  setInformacaoProcesso: any,
+  beneficiosQualitativosLista: any
+}) {
   let beneficios: JSX.Element[] = [];
 
-  for (let i = 0; i < props.numeroBeneficios; i++) {
-    if (props.beneficiosQualitativosLista[i]) {
-      beneficios.push(<BeneficioQualitativo index={i} informacaoProcesso={props.informacaoProcesso}
-        setInformacaoProcesso={props.setInformacaoProcesso} idBeneficioQualitativo={props.beneficiosQualitativosLista[i].idBeneficio} />);
+  if (props.numeroBeneficios) {
+    for (let i = 0; i < props.numeroBeneficios; i++) {
+      if (props.beneficiosQualitativosLista[i]) {
+        beneficios.push(<BeneficioQualitativo index={i} informacaoProcesso={props.informacaoProcesso}
+          setInformacaoProcesso={props.setInformacaoProcesso} idBeneficioQualitativo={props.beneficiosQualitativosLista[i].idBeneficio} />);
 
-    } else {
-      beneficios.push(<BeneficioQualitativo index={i} informacaoProcesso={props.informacaoProcesso}
-        setInformacaoProcesso={props.setInformacaoProcesso} />);
+      } else {
+        beneficios.push(<BeneficioQualitativo index={i} informacaoProcesso={props.informacaoProcesso}
+          setInformacaoProcesso={props.setInformacaoProcesso} />);
+      }
     }
   }
 
   return <>{beneficios}</>;
 }
 
-function BeneficioReal(props: { index: number, informacaoProcesso: any, setInformacaoProcesso: any, moedaBeneficio?: any, idBeneficioReal?: any, moedaReal: any, setMoedaReal: any }) {
+function BeneficioReal(props: {
+  index: number,
+  informacaoProcesso: any,
+  setInformacaoProcesso: any,
+  moedaBeneficio?: any,
+  idBeneficioReal?: any,
+  moedaReal?: any,
+  setMoedaReal?: any
+}) {
   const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioReal)
 
   return (
@@ -474,9 +526,16 @@ function BeneficioReal(props: { index: number, informacaoProcesso: any, setInfor
   );
 }
 
-function BeneficioPotencial(props: { index: number, informacaoProcesso: any, setInformacaoProcesso: any, moedaBeneficio?: any, idBeneficioPotencial?: any, moedaPotencial: any, setMoedaPotencial: any }) {
+function BeneficioPotencial(props: {
+  index: number,
+  informacaoProcesso: any,
+  setInformacaoProcesso: any,
+  moedaBeneficio?: any,
+  idBeneficioPotencial?: any,
+  moedaPotencial?: any,
+  setMoedaPotencial?: any
+}) {
   const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioPotencial)
-
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -662,5 +721,10 @@ function atualizarBeneficiosDemanda(
 
   if (novaInfoDemanda) {
     setInformacaoProcesso(novaInfoDemanda);
+  }
+
+  //testar isso
+  if(atualizarObjetos != null){
+    atualizarObjetos()
   }
 }

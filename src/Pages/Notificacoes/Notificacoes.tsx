@@ -41,7 +41,6 @@ export default function Notificacoes() {
       }).catch(err => {
         console.log(err);
       })
-    console.log("entrahdsahbdahd");
 
   }, [])
 

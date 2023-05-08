@@ -25,6 +25,7 @@ export default function InformacaoGeral(props: {
   setCentroCusto?: React.Dispatch<React.SetStateAction<Object[]>>
   informacaoProcesso?: any
   setInformacaoProcesso?: React.Dispatch<React.SetStateAction<any>>
+  partUmDemanda: Function
 }) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
   const [paginaTooltip, setPaginaTooltip] = useState(0);
@@ -86,7 +87,7 @@ export default function InformacaoGeral(props: {
     };
     return (idsInputsAtributo as any)[atributo];
   }
- 
+  
   return (
     <>
       <BoxContainerGeralInformacaoGeral>
@@ -102,7 +103,14 @@ export default function InformacaoGeral(props: {
                 ...props.informacaoProcesso,
                 tituloDemanda: e.target.value,
               };
-              props.setInformacaoProcesso(novaInfoDemanda);
+
+              if (props.setInformacaoProcesso) {
+                props.setInformacaoProcesso(novaInfoDemanda);
+              }
+
+              if(props.partUmDemanda){
+                props.partUmDemanda()
+              }
             }}
           />
         </BoxContainerLabels>
@@ -120,7 +128,14 @@ export default function InformacaoGeral(props: {
                 ...props.informacaoProcesso,
                 situacaoAtual: e.target.value,
               };
-              props.setInformacaoProcesso(novaInfoDemanda);
+
+              if (props.setInformacaoProcesso) {
+                props.setInformacaoProcesso(novaInfoDemanda);
+              }
+
+              if(props.partUmDemanda){
+                props.partUmDemanda()
+              }
             }}
           />
         </BoxContainerLabels>
@@ -138,7 +153,14 @@ export default function InformacaoGeral(props: {
                 ...props.informacaoProcesso,
                 objetivo: e.target.value,
               };
-              props.setInformacaoProcesso(novaInfoDemanda);
+
+              if (props.setInformacaoProcesso) {
+                props.setInformacaoProcesso(novaInfoDemanda);
+              }
+
+              if(props.partUmDemanda){
+                props.partUmDemanda()
+              }
             }}
           />
         </BoxContainerLabels>
@@ -155,27 +177,30 @@ export default function InformacaoGeral(props: {
                 multiple
                 disableCloseOnSelect
                 onChange={(e, valor: any) => {
-                  let centroCustoDemanda: Object[] = []
+                  if (props.setInformacaoProcesso) {
+                    let centroCustoDemanda: Object[] = []
 
-                  for (let centroCustoSelecionado of valor) {
-                    for (let centroCustoBanco of idCentroCusto) {
-                      if (centroCustoBanco.nomeCentroCusto == centroCustoSelecionado) {
-                        centroCustoDemanda.push({ idCentroCusto: centroCustoBanco.idCentroCusto })
+                    for (let centroCustoSelecionado of valor) {
+                      for (let centroCustoBanco of idCentroCusto) {
+                        if (centroCustoBanco.nomeCentroCusto == centroCustoSelecionado) {
+                          centroCustoDemanda.push({ idCentroCusto: centroCustoBanco.idCentroCusto })
+                        }
                       }
+                    }
+
+                    if (props.setCentroCusto) {
+                      props.setCentroCusto(centroCustoDemanda)
+                    }
+
+                    const novaInfoDemanda = {
+                      ...props.informacaoProcesso,
+                      centroCustoDemanda: centroCustoDemanda,
+                    };
+                    if (novaInfoDemanda) {
+                      props.setInformacaoProcesso(novaInfoDemanda);
                     }
                   }
 
-                  if (props.setCentroCusto) {
-                    props.setCentroCusto(centroCustoDemanda)
-                  }
-
-                  const novaInfoDemanda = {
-                    ...props.informacaoProcesso,
-                    centroCustoDemanda: centroCustoDemanda,
-                  };
-                  if (novaInfoDemanda) {
-                    props.setInformacaoProcesso(novaInfoDemanda);
-                  }
                 }}
                 renderOption={(props, centroCusto, { selected }) => {
                   return (

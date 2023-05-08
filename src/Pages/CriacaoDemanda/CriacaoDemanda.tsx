@@ -86,29 +86,11 @@ export default function CriacaoDemanda(props: {
     criarDemanda()
   }, [pdfDemanda])
 
-  useLocationChange(() => {
-    let temInformacao = true//false
+  function atualizarDados(data: any){
+    setData(data);
 
-    // for(let atributo in data){
-    //   if(data[atributo] != null){
-    //    temInformacao = true
-    //    break
-    //   }
-    // }
-
-    //testar criação de rascunho
-    if(temInformacao){
-      console.log("mudou");
-      
-      // const formData = new FormData()
-
-      // formData.append("demanda", data)
-
-      // api.post("/sod/demanda/rascunho", formData).then((response) => {
-      //   console.log(response.data);
-      // })
-    }
-  })
+    localStorage.setItem("OBJETODEMANDACRIADA", JSON.stringify(data))
+  }
 
   function getIdByAtributo(atributo: string) {
     const idsInputsAtributo = {
@@ -145,7 +127,7 @@ export default function CriacaoDemanda(props: {
       }
     }
 
-    setData(data);
+    atualizarDados(data);
   }
 
   function partDoisDemanda() {
@@ -214,8 +196,7 @@ export default function CriacaoDemanda(props: {
       }
     }
 
-    setData(data2)
-
+    atualizarDados(data2)
   }
 
   function gerarPDFDemanda() {
@@ -239,6 +220,8 @@ export default function CriacaoDemanda(props: {
   }
 
   function criarDemanda() {
+    localStorage.setItem("DEMANDACADASTRADA", "true")
+
     let formData = new FormData();
 
     if (files != undefined) {
@@ -295,7 +278,7 @@ export default function CriacaoDemanda(props: {
 
         {valor == 0 && (
           <>
-            <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} />
+            <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} partUmDemanda={partUmDemanda}/>
             <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
@@ -334,6 +317,7 @@ export default function CriacaoDemanda(props: {
               setMoedaReal={setMoedaReal}
               moedaPotencial={moedaPotencial}
               setMoedaPotencial={setMoedaPotencial}
+              partDoisDemanda={partDoisDemanda}
             />
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
