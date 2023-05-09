@@ -20,15 +20,16 @@ import { BoxContainerNotificacoes } from "./Notificacoes.styles";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 
 import semNotificacao from "../../Assets/notification-bell.png"
+import { useLocation } from "react-router-dom";
 
 /**
  *
  * @returns Retorna uma lista de componentes de notificações, sendo que cada componente tem seus dados puxados de um lista estatica
  */
 export default function Notificacoes() {
-  const [notificacoes, setNotificacoes] = useState<any[]>([]);
   localStorage.setItem("PAGINATUAL", "notification");
   const idUsuario = localStorage.getItem("IDUSUARIO");
+  const [notificacoes, setNotificacoes] = useState<any[]>([]);
 
   let icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
@@ -95,6 +96,22 @@ export default function Notificacoes() {
       </Container>
     </BoxContainerNotificacoes>
   );
+}
+
+export const novaNotificacao = (response: any) => {
+  const location = useLocation()
+  console.log(location);
+
+
+  const novaNotifica = JSON.parse(response.body);
+
+  // if(location.pathname == "/notifications"){
+  // setNotificacoes((notificacoesPrevias: any) => [...notificacoesPrevias, novaNotifica])
+  //atualizar notificações mostradas
+  // } else {
+  //pesquisar propriedade MUI que adiciona isso
+  // deixar bolinha da notificação vermelha
+  // }
 }
 
 

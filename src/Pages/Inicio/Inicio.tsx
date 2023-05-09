@@ -7,6 +7,7 @@ import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import { BoxConteudo } from "../App.styles";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
+import api from "../../api/api";
 
 
 /**
@@ -27,6 +28,7 @@ export default function Inicio(props: {
   const [temComponente, setTemComponente] = useState(false)
   const [imagemSemNada, setImagemSemNada] = useState("")
   const [textoSemNada, setTextoSemNada] = useState("")
+  const [demandas, setDemandas] = useState<any[]>([]);
 
   useEffect(() => {
     if (props.listaComponents.length != 0) {
@@ -55,6 +57,18 @@ export default function Inicio(props: {
       }
     }
   })
+
+  useEffect(() => {   
+    api.get("/sod/demanda/usuario/" + localStorage.getItem("IDUSUARIO")).then((res) => {
+      console.log(res.data);
+      // setDemandas(res.data)
+      // console.log(demandas);
+    })
+
+  // for (const demanda of demandas) {
+  //   webSocketService.inscrever(`/notificacao/demanda/`, novaNotificacao)
+  // }
+  }, [])
 
   localStorage.setItem("PAGINATUAL", "home");
 
