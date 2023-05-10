@@ -65,7 +65,9 @@ export default function Notificacoes() {
     }
   }
 
-  const notificacoesElement = notificacoes.map((notificacao: NotificacaoInfo) => {
+  const notificacoesElement = notificacoes.map((notificacao: any) => {
+    console.log(notificacao);
+    
     getTipoIcone(notificacao.acao)
     return (
       <Notificacao key={notificacao.idNotificacao}
@@ -75,6 +77,9 @@ export default function Notificacoes() {
         mensagem={notificacao.descricaoNotificacao}
         notificacoes={notificacoes}
         setNotificacoes={setNotificacoes}
+        tipoNotificacao={notificacao.tipoNotificacao}
+        linkNotificacao={notificacao.linkNotificacao}
+        idComponenteLink={notificacao.idComponenteLink}
       />
     )
   })

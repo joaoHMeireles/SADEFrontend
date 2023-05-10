@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState, useContext } from "react";
 import "./Inicio.scss";
 import semDemanda from "../../Assets/empty-folder.png"
 import semResultado from "../../Assets/empty.png"
@@ -8,7 +8,6 @@ import { BoxConteudo } from "../App.styles";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import api from "../../api/api";
-
 
 /**
  * Componente da página de início
@@ -28,7 +27,7 @@ export default function Inicio(props: {
   const [temComponente, setTemComponente] = useState(false)
   const [imagemSemNada, setImagemSemNada] = useState("")
   const [textoSemNada, setTextoSemNada] = useState("")
-  const [demandas, setDemandas] = useState<any[]>([]);
+  
 
   useEffect(() => {
     if (props.listaComponents.length != 0) {
@@ -36,7 +35,6 @@ export default function Inicio(props: {
     } else {
       setTemComponente(false)
     }
-
 
     //para resetar os parâmetros da criação de rascunhos quando for criar demanda
     setTimeout(() => {
@@ -57,18 +55,6 @@ export default function Inicio(props: {
       }
     }
   })
-
-  useEffect(() => {   
-    api.get("/sod/demanda/usuario/" + localStorage.getItem("IDUSUARIO")).then((res) => {
-      console.log(res.data);
-      // setDemandas(res.data)
-      // console.log(demandas);
-    })
-
-  // for (const demanda of demandas) {
-  //   webSocketService.inscrever(`/notificacao/demanda/`, novaNotificacao)
-  // }
-  }, [])
 
   localStorage.setItem("PAGINATUAL", "home");
 
