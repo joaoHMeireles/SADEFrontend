@@ -38,6 +38,7 @@ export default function Login(props: {
     email: '',
     senha: ''
   });
+  
   const webSocketService: any = useContext(WebSocketContext)
   localStorage.setItem("PAGINATUAL", "login")
 

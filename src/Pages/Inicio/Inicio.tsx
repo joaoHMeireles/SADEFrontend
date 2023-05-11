@@ -7,7 +7,6 @@ import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import { BoxConteudo } from "../App.styles";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
-import api from "../../api/api";
 
 /**
  * Componente da página de início

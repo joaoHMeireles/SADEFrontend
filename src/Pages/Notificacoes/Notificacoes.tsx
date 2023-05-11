@@ -39,10 +39,10 @@ export default function Notificacoes() {
     api.get(`/sod/usuario/${idUsuario}`)
       .then((notificacao) => {
         setNotificacoes(notificacao.data.notificacoesUsuario)
+        atualizarNotificacoes(setNotificacoes)
       }).catch(err => {
         console.log(err);
       })
-
   }, [])
 
   function getTipoIcone(acao: string) {
@@ -67,7 +67,7 @@ export default function Notificacoes() {
 
   const notificacoesElement = notificacoes.map((notificacao: any) => {
     console.log(notificacao);
-    
+
     getTipoIcone(notificacao.acao)
     return (
       <Notificacao key={notificacao.idNotificacao}
@@ -103,6 +103,12 @@ export default function Notificacoes() {
   );
 }
 
+export const atualizarNotificacoes = (setNotificacoes?: any, novaNotifica?: any) => {
+  if (setNotificacoes && novaNotifica) {
+    setNotificacoes((notificacoesPrevias: any) => [...notificacoesPrevias, novaNotifica])
+  }
+}
+
 export const novaNotificacao = (response: any) => {
   const location = useLocation()
   console.log(location);
@@ -110,13 +116,12 @@ export const novaNotificacao = (response: any) => {
 
   const novaNotifica = JSON.parse(response.body);
 
-  // if(location.pathname == "/notifications"){
-  // setNotificacoes((notificacoesPrevias: any) => [...notificacoesPrevias, novaNotifica])
-  //atualizar notificações mostradas
-  // } else {
-  //pesquisar propriedade MUI que adiciona isso
-  // deixar bolinha da notificação vermelha
-  // }
+  if (location.pathname == "/notifications") {
+    atualizarNotificacoes(novaNotifica)
+  } else {
+    // pesquisar propriedade MUI que adiciona isso
+    // deixar bolinha da notificação vermelha
+  }
 }
 
 

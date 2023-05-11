@@ -114,7 +114,7 @@ export function Header(props: {
     const processo = props.informacaoProcesso;
     const prazoElaboracao = processo.prazoElaboracao
     const tipoProcesso = processo.tipo
-    const idAnalista = localStorage.getItem("IDPESSOALOGADA") || 3
+    const idAnalista = localStorage.getItem("IDUSUARIO") 
 
     const listaBotoes = getBotoesPagina(
         processo,

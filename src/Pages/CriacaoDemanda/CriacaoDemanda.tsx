@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
@@ -28,6 +28,8 @@ import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
 import EsqueletoPDFVersaoDemanda from "../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda";
 import React from "react";
 import { useLocationChange } from "../../utils";
+import { WebSocketContext } from "../../api/websocketservice";
+import { novaNotificacao } from "../Notificacoes/Notificacoes";
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
@@ -48,6 +50,8 @@ export default function CriacaoDemanda(props: {
   const [moedaPotencial, setMoedaPotencial] = useState<string[]>([]);
 
   const pdfExportComponent = React.useRef<PDFExport>(null);
+
+  const webSocketService: any = useContext(WebSocketContext)
 
   useEffect(() => {
     if (props.rascunho) {
@@ -243,7 +247,7 @@ export default function CriacaoDemanda(props: {
         "Content-Type": "multipart/form-data",
       }
     }).then((res: any) => {
-      console.log(res);
+      webSocketService.inscrever(`/notificacao/demanda/${res.data.idDemanda}`, novaNotificacao)
     }).catch((err: any) => {
       console.log(err);
     })
