@@ -1,6 +1,11 @@
 import "./Componentes.scss";
 import { BoxBackground, Title, P, BoxImage } from "./Componentes.style";
-import SOD from "../../../Assets/SOD.jpg";
+// Introdução
+import SOD from "../../../Assets/AjudaUsuario/Introducao/SOD.jpg";
+// Avaliar Demanda - Analista de TI
+import aprovarDemanda from "../../../Assets/AjudaUsuario/AvaliarDemandaA/aprovarDemanda.png";
+import avaliarDemanda from "../../../Assets/AjudaUsuario/AvaliarDemandaA/avaliarDemanda.png";
+import devolverDemanda from "../../../Assets/AjudaUsuario/AvaliarDemandaA/devolverDemanda.png";
 
 export const Introducao = (
     <BoxBackground>
@@ -61,9 +66,25 @@ export const AvaliarDemandaA = (
             <p>Avaliar Demanda</p>
         </Title>
 
-        <P>Avalie a demanda: Caso a ela seja devolvida, explique claramente o motivo. Isso permite que o solicitante entenda os pontos que precisam ser melhorados ou esclarecidos, para que possa refazer a demanda e entregá-la novamente. O objetivo é garantir que a demanda possa ser atendida com sucesso e dentro dos parâmetros estabelecidos.</P>
-        <P>Se a demanda for reprovada, explique porquê ela não pode ser atendida. Isso pode ocorrer por vários motivos, como falta de recursos técnicos ou financeiros, incompatibilidade com as estratégias da organização, ou simplesmente por não ser viável. O objetivo é fornecer informações claras para o solicitante, para que ele possa entender as razões da reprovação.</P>
-        <P>Finalmente, se a demanda for aprovada, classifique a demanda por tamanho, informe a BU solicitante, a(s) BU(s) beneficiada(s) e a sessão de TI responsável pela demanda.</P>
+        <P>Avalie a demanda: Você pode reprovar, devolver ou aprovar uma demanda.</P>
+        
+        <BoxImage>
+            <img id="imgs" src={avaliarDemanda} alt="Avaliar Demanda" />
+        </BoxImage>
+
+        <P>Caso a ela seja devolvida, explique claramente o motivo. Isso permite que o solicitante entenda os pontos que precisam ser melhorados ou esclarecidos, para que possa refazer a demanda e entregá-la novamente. O objetivo é garantir que a demanda possa ser atendida com sucesso e dentro dos parâmetros estabelecidos.</P>
+
+        <BoxImage>
+            <img id="imgs" src={devolverDemanda} alt="Devolver Demanda" />
+        </BoxImage>
+        
+        <P>Se a demanda for aprovada, classifique a demanda por tamanho, informe a BU solicitante, a(s) BU(s) beneficiada(s) e a sessão de TI responsável pela demanda.</P>
+
+        <BoxImage>
+            <img id="imgs" src={aprovarDemanda} alt="Aprovar Demanda" />
+        </BoxImage>
+
+        <P sx={{ color: "#fff" }}>Espaço</P>
     </BoxBackground>
 );
 
