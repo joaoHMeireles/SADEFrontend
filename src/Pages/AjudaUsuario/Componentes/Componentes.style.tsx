@@ -29,3 +29,7 @@ export const BoxImage = styled(Box)({
     marginBottom: "1rem", 
     width: "100%"
 });
+
+export const Space = styled(Box) ({
+    color: "#fff"
+});

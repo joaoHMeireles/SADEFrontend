@@ -1,11 +1,15 @@
 import "./Componentes.scss";
-import { BoxBackground, Title, P, BoxImage } from "./Componentes.style";
+import { BoxBackground, Title, P, BoxImage, Space } from "./Componentes.style";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 // Introdução
 import SOD from "../../../Assets/AjudaUsuario/Introducao/SOD.jpg";
 // Avaliar Demanda - Analista de TI
-import aprovarDemanda from "../../../Assets/AjudaUsuario/AvaliarDemandaA/aprovarDemanda.png";
-import avaliarDemanda from "../../../Assets/AjudaUsuario/AvaliarDemandaA/avaliarDemanda.png";
+import aprovarDemandaA from "../../../Assets/AjudaUsuario/AvaliarDemandaA/aprovarDemanda.png";
+import avaliarDemandaA from "../../../Assets/AjudaUsuario/AvaliarDemandaA/avaliarDemanda.png";
 import devolverDemanda from "../../../Assets/AjudaUsuario/AvaliarDemandaA/devolverDemanda.png";
+// Avaliar Demanda - Gerente de Negócio
+import avaliarDemandaGN from "../../../Assets/AjudaUsuario/AvaliarDemandaGN/avaliarDemanda.png";
+import reprovarDemanda from "../../../Assets/AjudaUsuario/AvaliarDemandaGN/reprovarDemanda.png";
 
 export const Introducao = (
     <BoxBackground>
@@ -27,7 +31,7 @@ export const CriarDemanda = (
             <p>Criar Demanda</p>
         </Title>
 
-        <P>Para criar uma demanda, acesse o tópico pela sidebar no ícone  e selecione a opção “Demanda”, preencha os inputs da página, que está dividida em três partes, sendo eles:</P>
+        <P>Para criar uma demanda, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Demanda”, preencha os inputs da página, que está dividida em três partes, sendo eles:</P>
 
         <P>
             <p>Primeira parte:</p>
@@ -67,9 +71,9 @@ export const AvaliarDemandaA = (
         </Title>
 
         <P>Avalie a demanda: Você pode reprovar, devolver ou aprovar uma demanda.</P>
-        
+
         <BoxImage>
-            <img id="imgs" src={avaliarDemanda} alt="Avaliar Demanda" />
+            <img id="imgs" src={avaliarDemandaA} alt="Avaliar Demanda" />
         </BoxImage>
 
         <P>Caso a ela seja devolvida, explique claramente o motivo. Isso permite que o solicitante entenda os pontos que precisam ser melhorados ou esclarecidos, para que possa refazer a demanda e entregá-la novamente. O objetivo é garantir que a demanda possa ser atendida com sucesso e dentro dos parâmetros estabelecidos.</P>
@@ -77,14 +81,14 @@ export const AvaliarDemandaA = (
         <BoxImage>
             <img id="imgs" src={devolverDemanda} alt="Devolver Demanda" />
         </BoxImage>
-        
+
         <P>Se a demanda for aprovada, classifique a demanda por tamanho, informe a BU solicitante, a(s) BU(s) beneficiada(s) e a sessão de TI responsável pela demanda.</P>
 
         <BoxImage>
-            <img id="imgs" src={aprovarDemanda} alt="Aprovar Demanda" />
+            <img id="imgs" src={aprovarDemandaA} alt="Aprovar Demanda" />
         </BoxImage>
 
-        <P sx={{ color: "#fff" }}>Espaço</P>
+        <Space>.</Space>
     </BoxBackground>
 );
 
@@ -94,7 +98,19 @@ export const AvaliarDemandaGN = (
             <p>Avaliar Demanda</p>
         </Title>
 
-        <P>Avalie a demanda: Se a demanda for reprovada, explique porquê ela não pode ser atendida. Caso a demanda for aprovada, ela será devolvida para o analista.</P>
+        <P>Avalie a demanda: Você pode reprovar ou aprovar uma demanda.</P>
+
+        <BoxImage>
+            <img id="imgs" src={avaliarDemandaGN} alt="Avaliar Demanda" />
+        </BoxImage>
+
+        <P>Se a demanda for reprovada, explique porquê ela não pode ser atendida. Caso a demanda for aprovada, ela será devolvida para o analista.</P>
+
+        <BoxImage>
+            <img id="imgs" src={reprovarDemanda} alt="Reprovar Demanda" />
+        </BoxImage>
+
+        <Space>.</Space>
     </BoxBackground>
 );
 
@@ -114,7 +130,7 @@ export const CriarProposta = (
             <p>Criar Proposta</p>
         </Title>
 
-        <P>Para criar uma proposta, acesse o tópico pela sidebar no ícone  e selecione a opção “Proposta”. Escolha a demanda que quer transformar em proposta podendo editar seus atributos. Posteriormente, adicione os novos atributos, sendo eles o escopo, linhas da tabela de custo, payback, o período de execução e as informações do responsável, o nome e a área que trabalha. Por fim, sendo opcional, os anexos para a proposta.</P>
+        <P>Para criar uma proposta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Proposta”. Escolha a demanda que quer transformar em proposta podendo editar seus atributos. Posteriormente, adicione os novos atributos, sendo eles o escopo, linhas da tabela de custo, payback, o período de execução e as informações do responsável, o nome e a área que trabalha. Por fim, sendo opcional, os anexos para a proposta.</P>
     </BoxBackground>
 );
 
@@ -124,7 +140,7 @@ export const CriarPauta = (
             <p>Criar Pauta</p>
         </Title>
 
-        <P>Para criar uma pauta, acesse o tópico pela sidebar no ícone  e selecione a opção “pauta”. Na próxima tela, selecione uma ou mais propostas a serem incluídas na pauta. Para isso, procure pelas propostas disponíveis na lista e clique naquelas que deseja adicionar, podendo excluí-las posteriormente.</P>
+        <P>Para criar uma pauta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “pauta”. Na próxima tela, selecione uma ou mais propostas a serem incluídas na pauta. Para isso, procure pelas propostas disponíveis na lista e clique naquelas que deseja adicionar, podendo excluí-las posteriormente.</P>
         <P>Após a seleção das propostas, escolher a comissão que participará da reunião. Para isso, deve-se clicar na opção "Comissão" e selecionar a comissão desejada;</P>
         <P>Por fim, escolha a data da reunião. Para isso, clique na opção "Data" e selecione a data desejada no calendário.</P>
     </BoxBackground>
