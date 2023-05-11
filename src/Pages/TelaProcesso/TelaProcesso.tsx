@@ -630,10 +630,11 @@ export function Header(props: {
             }
 
             api.post(`/sod/chat/${idAnalista}`, chatBody).then((response: any) => {
-                recarregarPaginaDemanda(conteudo)
+                irChat()
             }).catch((err: any) => {
                 console.log(err);
             })
+
         }
 
         props.setConteudoModal(

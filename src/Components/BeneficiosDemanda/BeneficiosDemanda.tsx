@@ -184,7 +184,7 @@ export default function BeneficiosDemanda(props: {
     }
   }, [])
 
-  function onFrequenciaChange(e: any) {    
+  function onFrequenciaChange(e: any) {
     setFrequencia(e.target.value)
 
     const novaInfoDemanda = {
@@ -192,7 +192,7 @@ export default function BeneficiosDemanda(props: {
       frequenciaUso: e.target.value,
     };
 
-    if(props.setInformacaoProcesso || props.informacaoProcesso){
+    if (props.setInformacaoProcesso || props.informacaoProcesso) {
       props.setInformacaoProcesso(novaInfoDemanda);
     }
   }
@@ -322,13 +322,14 @@ export default function BeneficiosDemanda(props: {
             onClick={() => {
               if (props.setNumeroBeneficiosQualitativos && props.numeroBeneficiosQualitativos) {
                 props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos + 1);
-              }            }}
+              }
+            }}
           />
         </BoxIcones>
         <BoxFrequencia>
           <TypographyLabels>Frequência de uso da solução:</TypographyLabels>
           <Select
-          id="frequenciaUso"
+            id="frequenciaUso"
             value={frequencia}
             onChange={onFrequenciaChange}
           >
@@ -458,16 +459,20 @@ function BeneficioReal(props: {
                 boxShadow: "5px 5px 10px 0 #00000050",
               }}
               onChange={(e: any) => {
-                atualizarBeneficiosDemanda(
-                  props.informacaoProcesso.beneficiosDemanda,
-                  idBeneficioComponente,
-                  setIdBeneficioComponente,
-                  "valor",
-                  e.target.value,
-                  props.informacaoProcesso,
-                  props.setInformacaoProcesso,
-                  "REAL"
-                )
+                if (atualizarObjetos != null) {
+                  atualizarObjetos()
+                } else {
+                  atualizarBeneficiosDemanda(
+                    props.informacaoProcesso.beneficiosDemanda,
+                    idBeneficioComponente,
+                    setIdBeneficioComponente,
+                    "valor",
+                    e.target.value,
+                    props.informacaoProcesso,
+                    props.setInformacaoProcesso,
+                    "REAL"
+                  )
+                }
               }}
             />
             <TextField
@@ -479,16 +484,20 @@ function BeneficioReal(props: {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 props.moedaReal.push(e.target.value)
                 props.setMoedaReal(props.moedaReal)
-                atualizarBeneficiosDemanda(
-                  props.informacaoProcesso.beneficiosDemanda,
-                  idBeneficioComponente,
-                  setIdBeneficioComponente,
-                  "moeda",
-                  e.target.value,
-                  props.informacaoProcesso,
-                  props.setInformacaoProcesso,
-                  "REAL"
-                )
+                if (atualizarObjetos != null) {
+                  atualizarObjetos()
+                } else {
+                  atualizarBeneficiosDemanda(
+                    props.informacaoProcesso.beneficiosDemanda,
+                    idBeneficioComponente,
+                    setIdBeneficioComponente,
+                    "moeda",
+                    e.target.value,
+                    props.informacaoProcesso,
+                    props.setInformacaoProcesso,
+                    "REAL"
+                  )
+                }
               }
               }
             >
@@ -505,16 +514,20 @@ function BeneficioReal(props: {
           <TextField
             id={`descricaoReal${props.index}`}
             onChange={(e: any) => {
-              atualizarBeneficiosDemanda(
-                props.informacaoProcesso.beneficiosDemanda,
-                idBeneficioComponente,
-                setIdBeneficioComponente,
-                "descricao",
-                e.target.value,
-                props.informacaoProcesso,
-                props.setInformacaoProcesso,
-                "REAL"
-              )
+              if (atualizarObjetos != null) {
+                atualizarObjetos()
+              } else {
+                atualizarBeneficiosDemanda(
+                  props.informacaoProcesso.beneficiosDemanda,
+                  idBeneficioComponente,
+                  setIdBeneficioComponente,
+                  "descricao",
+                  e.target.value,
+                  props.informacaoProcesso,
+                  props.setInformacaoProcesso,
+                  "REAL"
+                )
+              }
             }}
             multiline
             maxRows={Infinity}
@@ -555,16 +568,20 @@ function BeneficioPotencial(props: {
             <TextField
               id={`valorMensalPotencial${props.index}`}
               onChange={(e: any) => {
-                atualizarBeneficiosDemanda(
-                  props.informacaoProcesso.beneficiosDemanda,
-                  idBeneficioComponente,
-                  setIdBeneficioComponente,
-                  "valor",
-                  e.target.value,
-                  props.informacaoProcesso,
-                  props.setInformacaoProcesso,
-                  "POTENCIAL"
-                )
+                if (atualizarObjetos != null) {
+                  atualizarObjetos()
+                } else {
+                  atualizarBeneficiosDemanda(
+                    props.informacaoProcesso.beneficiosDemanda,
+                    idBeneficioComponente,
+                    setIdBeneficioComponente,
+                    "valor",
+                    e.target.value,
+                    props.informacaoProcesso,
+                    props.setInformacaoProcesso,
+                    "POTENCIAL"
+                  )
+                }
               }}
               sx={{
                 width: "30%",
@@ -581,16 +598,20 @@ function BeneficioPotencial(props: {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 props.moedaPotencial.push(e.target.value)
                 props.setMoedaPotencial(props.moedaPotencial)
-                atualizarBeneficiosDemanda(
-                  props.informacaoProcesso.beneficiosDemanda,
-                  idBeneficioComponente,
-                  setIdBeneficioComponente,
-                  "moeda",
-                  e.target.value,
-                  props.informacaoProcesso,
-                  props.setInformacaoProcesso,
-                  "POTENCIAL"
-                )
+                if (atualizarObjetos != null) {
+                  atualizarObjetos()
+                } else {
+                  atualizarBeneficiosDemanda(
+                    props.informacaoProcesso.beneficiosDemanda,
+                    idBeneficioComponente,
+                    setIdBeneficioComponente,
+                    "moeda",
+                    e.target.value,
+                    props.informacaoProcesso,
+                    props.setInformacaoProcesso,
+                    "POTENCIAL"
+                  )
+                }
               }
               }
             >
@@ -607,16 +628,21 @@ function BeneficioPotencial(props: {
           <TextField
             id={`descricaoPotencial${props.index}`}
             onChange={(e: any) => {
-              atualizarBeneficiosDemanda(
-                props.informacaoProcesso.beneficiosDemanda,
-                idBeneficioComponente,
-                setIdBeneficioComponente,
-                "descricao",
-                e.target.value,
-                props.informacaoProcesso,
-                props.setInformacaoProcesso,
-                "POTENCIAL"
-              )
+              if (atualizarObjetos != null) {
+                atualizarObjetos()
+              } else {
+                atualizarBeneficiosDemanda(
+                  props.informacaoProcesso.beneficiosDemanda,
+                  idBeneficioComponente,
+                  setIdBeneficioComponente,
+                  "descricao",
+                  e.target.value,
+                  props.informacaoProcesso,
+                  props.setInformacaoProcesso,
+                  "POTENCIAL"
+                )
+              }
+             
             }}
             multiline
             maxRows={Infinity}
@@ -638,16 +664,20 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
         <TextField
           id={`beneficiosQualitativos${props.index}`}
           onChange={(e: any) => {
-            atualizarBeneficiosDemanda(
-              props.informacaoProcesso.beneficiosDemanda,
-              idBeneficioComponente,
-              setIdBeneficioComponente,
-              "descricao",
-              e.target.value,
-              props.informacaoProcesso,
-              props.setInformacaoProcesso,
-              "QUALITATIVO"
-            )
+            if (atualizarObjetos != null) {
+              atualizarObjetos()
+            } else {
+              atualizarBeneficiosDemanda(
+                props.informacaoProcesso.beneficiosDemanda,
+                idBeneficioComponente,
+                setIdBeneficioComponente,
+                "descricao",
+                e.target.value,
+                props.informacaoProcesso,
+                props.setInformacaoProcesso,
+                "QUALITATIVO"
+              )
+            }
           }}
           multiline
           maxRows={Infinity}
@@ -721,10 +751,5 @@ function atualizarBeneficiosDemanda(
 
   if (novaInfoDemanda) {
     setInformacaoProcesso(novaInfoDemanda);
-  }
-
-  //testar isso
-  if(atualizarObjetos != null){
-    atualizarObjetos()
   }
 }

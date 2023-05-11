@@ -5,9 +5,6 @@ import { useLocationChange } from "../../utils";
 export default function RascunhoObserver() {
 
     useLocationChange((newLocation: Location, previousLocation: Location) => {
-        console.log("agora: ", newLocation);
-        console.log("anterior: ", previousLocation);
-
         if (previousLocation.pathname == "/createdemand") {
             const objetoDemanda = JSON.parse(localStorage.getItem("OBJETODEMANDACRIADA") as string)
 
@@ -24,13 +21,11 @@ export default function RascunhoObserver() {
                 if (temInformacao) {
                     if (localStorage.getItem("DEMANDACADASTRADA") == "false") {
                         const formData = new FormData()
-
                         objetoDemanda.rascunho = true
 
-                        formData.append("demanda", objetoDemanda)
+                        formData.append("demanda", JSON.stringify(objetoDemanda))
 
-                        console.log("VAI CADASTRAR", objetoDemanda);
-
+                        console.log(objetoDemanda);
 
                         // api.post("/sod/demanda/rascunho", formData).then((response) => {
                         //     console.log(response.data);

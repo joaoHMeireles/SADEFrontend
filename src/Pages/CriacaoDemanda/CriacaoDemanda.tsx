@@ -196,6 +196,11 @@ export default function CriacaoDemanda(props: {
       }
     }
 
+    console.log("Parte dois demanda");
+    console.log(data2);
+    
+    
+
     atualizarDados(data2)
   }
 
