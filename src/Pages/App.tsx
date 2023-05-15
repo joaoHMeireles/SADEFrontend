@@ -48,7 +48,7 @@ export default function App() {
   const tamanhoNavbar = "8.5vh"
 
   useEffect(() => {
-    api.get("/sod/demanda").then((response) => {
+    api.get("/sod/demanda/rascunho/" + false).then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
         demanda.id = demanda.idDemanda

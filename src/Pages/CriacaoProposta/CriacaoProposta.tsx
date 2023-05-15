@@ -256,7 +256,10 @@ export default function CriacaoProposta(props: {
     let dataExecucaoFimCerto = dataExecucaoFim.slice(6) + "/" + dataExecucaoFim.slice(0, 5)
     dataExecucaoFimCerto = dataExecucaoFimCerto.replaceAll("/", "-")
 
-    const { tipo, ...informacaoProcessoCerto } = informacaoProcesso
+    console.log(informacaoProcesso);
+    
+
+    const { tipo, id, ...informacaoProcessoCerto } = informacaoProcesso
 
     let proposta = {
       escopo: escopoProposta,

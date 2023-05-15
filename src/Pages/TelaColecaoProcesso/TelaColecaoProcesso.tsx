@@ -424,7 +424,9 @@ function Header(props: {
       }
     } else {
       if (!informacaoColecaoProcesso.numeroDG) {
-        setAcao("Finalizar processo");
+        if (dataReuniao <= new Date()) {
+          setAcao("Finalizar processo");
+        }
       }
     }
   }, []);
@@ -751,7 +753,7 @@ function Propostas(props: {
               <Grid item xs={12}>
                 <BoxInputsNumeros>
                   <Box>
-                    <TypographyTituloDecisao>Numero ano: </TypographyTituloDecisao>
+                    <TypographyTituloDecisao>Numero/ano: </TypographyTituloDecisao>
                     <TextField type="number" id="numeroAno"></TextField>
                   </Box>
                   <Box>
