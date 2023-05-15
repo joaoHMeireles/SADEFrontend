@@ -212,9 +212,9 @@ export default function BeneficiosDemanda(props: {
           setMoedaReal={props.setMoedaReal}
         />
         <BoxIcones>
-          {props.numeroBeneficiosReais &&
+          {props.numeroBeneficiosReais != null &&
             <>
-              {props.numeroBeneficiosReais > 1 ? (
+              {props.numeroBeneficiosReais > 0 ? (
                 <RemoveRoundedIcon
                   sx={{
                     fontSize: "2rem",
@@ -223,7 +223,7 @@ export default function BeneficiosDemanda(props: {
                     color: "#595959",
                   }}
                   onClick={() => {
-                    if (props.setNumeroBeneficiosReais && props.numeroBeneficiosReais) {
+                    if (props.setNumeroBeneficiosReais != null && props.numeroBeneficiosReais != null) {
                       props.setNumeroBeneficiosReais(props.numeroBeneficiosReais - 1);
                     }
                   }}
@@ -253,10 +253,10 @@ export default function BeneficiosDemanda(props: {
           moedaPotencial={props.moedaPotencial}
           setMoedaPotencial={props.setMoedaPotencial}
         />
-        <BoxIcones>
-          {props.numeroBeneficiosPotenciais &&
+        <BoxIcones  id="o-0-tá-aqui">
+          {props.numeroBeneficiosPotenciais != null &&
             <>
-              {props.numeroBeneficiosPotenciais > 1 ? (
+              {props.numeroBeneficiosPotenciais > 0 ? (
                 <RemoveRoundedIcon
                   sx={{
                     fontSize: "2rem",
@@ -275,11 +275,10 @@ export default function BeneficiosDemanda(props: {
               )}
             </>
           }
-
           <AddRoundedIcon
             sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
             onClick={() => {
-              if (props.setNumeroBeneficiosPotenciais && props.numeroBeneficiosPotenciais) {
+              if (props.setNumeroBeneficiosPotenciais != null && props.numeroBeneficiosPotenciais != null) {
                 props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais + 1);
               }
             }}
@@ -295,9 +294,9 @@ export default function BeneficiosDemanda(props: {
           beneficiosQualitativosLista={beneficiosQualitativosLista}
         />
         <BoxIcones>
-          {props.numeroBeneficiosQualitativos &&
+          {props.numeroBeneficiosQualitativos != null &&
             <>
-              {props.numeroBeneficiosQualitativos > 1 ? (
+              {props.numeroBeneficiosQualitativos > 0 ? (
                 <RemoveRoundedIcon
                   sx={{
                     fontSize: "2rem",
@@ -316,11 +315,10 @@ export default function BeneficiosDemanda(props: {
               )}
             </>
           }
-
           <AddRoundedIcon
             sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
             onClick={() => {
-              if (props.setNumeroBeneficiosQualitativos && props.numeroBeneficiosQualitativos) {
+              if (props.setNumeroBeneficiosQualitativos != null && props.numeroBeneficiosQualitativos != null) {
                 props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos + 1);
               }
             }}
