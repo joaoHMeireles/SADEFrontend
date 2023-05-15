@@ -116,6 +116,7 @@ export function Header(props: {
     const tipoProcesso = processo.tipo
     const idAnalista = localStorage.getItem("IDUSUARIO") 
 
+
     const listaBotoes = getBotoesPagina(
         processo,
         [
@@ -209,121 +210,201 @@ export function Header(props: {
     } //feito
 
     function aprovarDemanda() {
-        function novoModal(conteudo: JSX.Element) {
-            props.setConteudoModal(conteudo)
-        }
+        if (localStorage.getItem("TIPOUSUARIO") == "AnalistaTI" || localStorage.getItem("TIPOUSUARIO") == "GerenteTI") {
 
-        function finalizarAprovacao(conteudo: JSX.Element) {
-            const tamanhoDemanda = document.getElementById("input-tamanho")?.innerText
-            const nomeBUSolicitante = document.getElementById("input-bu-solicitante")?.innerText
-            const busBeneficiadas = document.getElementsByClassName("bu-beneficiada")
-            const sessaoTIResponsavel = document.getElementById("input-sessao-ti")?.innerText
-            const busBeneficiadasEscolhidas: any[] = []
-
-            for (const buBeneficiada of busBeneficiadas) {
-                if ((buBeneficiada.children[0] as HTMLInputElement).checked) {
-                    busBeneficiadasEscolhidas.push({ idBU: buBeneficiada.children[0].id })
-                }
+            function novoModal(conteudo: JSX.Element) {
+                props.setConteudoModal(conteudo)
             }
 
-            const formDataHistorico = new FormData()
-            formDataHistorico.append("historico", JSON.stringify(
-                {
-                    tarefa: "CLASSIFICARDEMANDA",
-                    demanda: { idDemanda: processo.idDemanda },
-                    usuario: { idUsuario: idAnalista },
-                    acaoFeitaHistoricoAnterior: "APROVARDEMANDA"
+            function finalizarAprovacao(conteudo: JSX.Element) {
+                const tamanhoDemanda = document.getElementById("input-tamanho")?.innerText
+                const nomeBUSolicitante = document.getElementById("input-bu-solicitante")?.innerText
+                const busBeneficiadas = document.getElementsByClassName("bu-beneficiada")
+                const sessaoTIResponsavel = document.getElementById("input-sessao-ti")?.innerText
+                const busBeneficiadasEscolhidas: any[] = []
+
+                for (const buBeneficiada of busBeneficiadas) {
+                    if ((buBeneficiada.children[0] as HTMLInputElement).checked) {
+                        busBeneficiadasEscolhidas.push({ idBU: buBeneficiada.children[0].id })
+                    }
                 }
-            ))
 
-            const formDataDemanda = new FormData()
-            //arrumar isso auqi
-            const bu = valoresInputBU.find(bu => bu.nomeBU == nomeBUSolicitante)
-            formDataDemanda.append("demanda", JSON.stringify(
-                {
-                    tamanho: getKeyEnum(TamanhoComponenteProcesso, tamanhoDemanda).toUpperCase(),
-                    busolicitante: { idBU: bu.idBU },
-                    busBeneficiadas: busBeneficiadasEscolhidas,
-                    secaoTIResponsavel: getKeyEnum(sessaoTI, sessaoTIResponsavel),
-                    classificando: true
-                }
-            ))
+                const formDataHistorico = new FormData()
+                formDataHistorico.append("historico", JSON.stringify(
+                    {
+                        tarefa: "CLASSIFICARDEMANDA",
+                        demanda: { idDemanda: processo.idDemanda },
+                        usuario: { idUsuario: idAnalista },
+                        acaoFeitaHistoricoAnterior: "APROVARDEMANDA"
+                    }
+                ))
 
-            // Depois que conseguir fazer o arquivo de versionamento esse get não será mais necessário 
-            api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
-                //colocar pdf
-                formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
+                const formDataDemanda = new FormData()
+                //arrumar isso auqi
+                const bu = valoresInputBU.find(bu => bu.nomeBU == nomeBUSolicitante)
+                formDataDemanda.append("demanda", JSON.stringify(
+                    {
+                        tamanho: getKeyEnum(TamanhoComponenteProcesso, tamanhoDemanda).toUpperCase(),
+                        busolicitante: { idBU: bu.idBU },
+                        busBeneficiadas: busBeneficiadasEscolhidas,
+                        secaoTIResponsavel: getKeyEnum(sessaoTI, sessaoTIResponsavel),
+                        classificando: true
+                    }
+                ))
 
-                // faz a atualização do histórico da demanda
-                api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
-                    // atualiza informações de demanda
-                    api.put(`/sod/demanda/${processo.idDemanda}/${idAnalista}`, formDataDemanda, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        }
-                    }).then(() => {
-                        recarregarPaginaDemanda(conteudo)
+                // Depois que conseguir fazer o arquivo de versionamento esse get não será mais necessário 
+                api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
+                    //colocar pdf
+                    formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
+
+                    // faz a atualização do histórico da demanda
+                    api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
+                        // atualiza informações de demanda
+                        api.put(`/sod/demanda/${processo.idDemanda}/${idAnalista}`, formDataDemanda, {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            }
+                        }).then(() => {
+                            recarregarPaginaDemanda(conteudo)
+                        }).catch((err: any) => {
+                            console.log(err);
+                        })
                     }).catch((err: any) => {
                         console.log(err);
                     })
                 }).catch((err: any) => {
                     console.log(err);
+
                 })
-            }).catch((err: any) => {
-                console.log(err);
+            }
 
-            })
+            const segundaParteAprovacao = <ModalClassificacaoDemanda abrirFeedback={finalizarAprovacao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />
+
+            props.setConteudoModal(
+                <ConteudoModalConfirmacao
+                    tituloModal='Quer aprovar essa demanda?'
+                    abrirProximoComponente={novoModal}
+                    conteudoProximoComponente={segundaParteAprovacao}
+                    descricaoModal="Caso confirme, a demanda continuará para o processo de avaliação"
+                    fecharModal={fecharModal}
+                />
+            )
+        } else {
+            const conteudoFeedback = (
+                <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                    Aprovação concluída
+                </Alert>
+            )
+
+            function finalizarAprovacao(conteudo: JSX.Element) {
+                api.get("/sod/historicoWorkflow/demanda/ultimo/" + processo.id).then((response) => {
+                    const formDataHistorico = new FormData()
+                    formDataHistorico.append("historico", JSON.stringify(
+                        {
+                            tarefa: "ADICIONARINFORMACOESDEMANDA",
+                            demanda: { idDemanda: processo.idDemanda },
+                            usuario: { idUsuario:  response.data.usuario.idUsuario},
+                            acaoFeitaHistoricoAnterior: "APROVARDEMANDA"
+                        }
+                    ))
+
+                    // faz a atualização do histórico da demanda
+                    api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
+                        recarregarPaginaDemanda(conteudo)
+                    }).catch((err: any) => {
+                        console.log(err);
+                    })
+                })
+            }
+
+            props.setConteudoModal(
+                <ConteudoModalConfirmacao
+                    tituloModal='Quer aprovar essa demanda?'
+                    abrirProximoComponente={finalizarAprovacao}
+                    conteudoProximoComponente={conteudoFeedback}
+                    descricaoModal="Caso confirme, a demanda continuará para o processo de avaliação"
+                    fecharModal={fecharModal}
+                />
+            )
         }
-
-        const segundaParteAprovacao = <ModalClassificacaoDemanda abrirFeedback={finalizarAprovacao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />
-
-        props.setConteudoModal(
-            <ConteudoModalConfirmacao
-                tituloModal='Quer aprovar essa demanda?'
-                abrirProximoComponente={novoModal}
-                conteudoProximoComponente={segundaParteAprovacao}
-                descricaoModal="Caso confirme, a demanda continuará para o processo de avaliação"
-                fecharModal={fecharModal}
-            />
-        )
 
         abrirModal()
     } //feito
 
     function reprovarDemanda() {
-        const conteudoFeedback = (
-            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
-                Reprovação concluída
-            </Alert>
-        )
+        if (localStorage.getItem("TIPOUSUARIO") == "AnalistaTI" || localStorage.getItem("TIPOUSUARIO") == "GerenteTI") {
+            const conteudoFeedback = (
+                <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                    Reprovação concluída
+                </Alert>
+            )
 
-        function finalizarReprovacao(conteudoFeedback: JSX.Element) {
-            const formDataHistorico = new FormData()
-            formDataHistorico.append("historico", JSON.stringify(
-                {
-                    acaoFeita: "REPROVARDEMANDA",
-                    demanda: { idDemanda: processo.idDemanda },
-                    usuario: { idUsuario: idAnalista },
-                    status: "CONCLUIDO"
-                }
-            ))
+            function finalizarReprovacao(conteudoFeedback: JSX.Element) {
+                const formDataHistorico = new FormData()
+                formDataHistorico.append("historico", JSON.stringify(
+                    {
+                        acaoFeita: "REPROVARDEMANDA",
+                        demanda: { idDemanda: processo.idDemanda },
+                        usuario: { idUsuario: idAnalista },
+                        status: "CONCLUIDO"
+                    }
+                ))
 
-            api.put(`/sod/historicoWorkflow/demanda/${processo.id}`, formDataHistorico).then((response: any) => {
-                recarregarPaginaDemanda(conteudoFeedback)
-            }).catch((err: any) => {
-                console.log(err);
-            })
+                api.put(`/sod/historicoWorkflow/demanda/${processo.id}`, formDataHistorico).then((response: any) => {
+                    recarregarPaginaDemanda(conteudoFeedback)
+                }).catch((err: any) => {
+                    console.log(err);
+                })
+            }
+
+            props.setConteudoModal(
+                <ConteudoModalConfirmacao
+                    tituloModal='Quer reprovar essa demanda?'
+                    abrirProximoComponente={finalizarReprovacao}
+                    conteudoProximoComponente={conteudoFeedback}
+                    descricaoModal="Caso confirme, a demanda não poderá mais ser avaliada novamente"
+                    fecharModal={fecharModal}
+                />
+            )
+        } else {
+            function finalizarReprovacao(conteudoFeedback: JSX.Element) {
+                const elementoMotivoDevolucao = document.getElementById("textareaMotivo") as HTMLInputElement
+                const formDataHistorico = new FormData()
+
+                formDataHistorico.append("historico", JSON.stringify(
+                    {
+                        acaoFeita: "REPROVARDEMANDA",
+                        demanda: { idDemanda: processo.idDemanda },
+                        usuario: { idUsuario: idAnalista },
+                        status: "CONCLUIDO",
+                        motivoDevolucao: elementoMotivoDevolucao.value
+                    }
+                ))
+
+                api.put(`/sod/historicoWorkflow/demanda/${processo.id}`, formDataHistorico).then((response: any) => {
+                    recarregarPaginaDemanda(conteudoFeedback)
+                }).catch((err: any) => {
+                    console.log(err);
+                })
+            }
+
+            function novoModal(conteudo: JSX.Element) {
+                props.setConteudoModal(conteudo)
+            }
+
+            const segundaParteAprovacao = <ModalMotivoDevolucao abrirFeedback={finalizarReprovacao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />
+
+            props.setConteudoModal(
+                <ConteudoModalConfirmacao
+                    tituloModal='Quer reprovar essa demanda?'
+                    abrirProximoComponente={novoModal}
+                    conteudoProximoComponente={segundaParteAprovacao}
+                    descricaoModal="Caso confirme, a demanda não poderá mais ser avaliada novamente"
+                    fecharModal={fecharModal}
+                />
+            )
+
         }
-
-        props.setConteudoModal(
-            <ConteudoModalConfirmacao
-                tituloModal='Quer reprovar essa demanda?'
-                abrirProximoComponente={finalizarReprovacao}
-                conteudoProximoComponente={conteudoFeedback}
-                descricaoModal="Caso confirme, a demanda não poderá mais ser avaliada novamente"
-                fecharModal={fecharModal}
-            />
-        )
 
         abrirModal()
     }// feito
@@ -429,7 +510,7 @@ export function Header(props: {
 
     function criarNovaProposta() {
         localStorage.setItem("DEMANDACRIARPROPOSTA", processo.idDemanda)
-        localStorage.setItem("DEMANDASELECIONADA",  JSON.stringify(processo))
+        localStorage.setItem("DEMANDASELECIONADA", JSON.stringify(processo))
 
         location.href = "/createproposal"
     } //feito
@@ -1503,6 +1584,7 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
     const temChat = processo.temChat
     let listaBotoes: Botao[] = []
 
+
     if (temChat) {
         listaBotoes.push({ nome: "chat", function: funcoes[0] })
     } else {
@@ -1549,7 +1631,7 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
                     }
 
                     if (tipoPessoa == "GerenteNegocio") {
-                        if (aprovadoGerente) {
+                        if (!aprovadoGerente) {
                             listaBotoes.push(reprovar, aprovar)
                         }
                     } else if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
