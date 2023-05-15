@@ -31,6 +31,8 @@ import { useLocationChange } from "../../utils";
 import { WebSocketContext } from "../../api/websocketservice";
 import { novaNotificacao } from "../Notificacoes/Notificacoes";
 
+import pdf from "../../Assets/pdf.pdf";
+
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
 }) {
@@ -38,7 +40,7 @@ export default function CriacaoDemanda(props: {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
-  const [data, setData] = useState<any>({usuario:{idUsuario: idUsuario}})
+  const [data, setData] = useState<any>({ usuario: { idUsuario: idUsuario } })
   const [files, setFiles] = useState<any>([]);
   const [pdfDemanda, setPDFDemanda] = useState<any>();
 
@@ -90,7 +92,7 @@ export default function CriacaoDemanda(props: {
     criarDemanda()
   }, [pdfDemanda])
 
-  function atualizarDados(data: any){
+  function atualizarDados(data: any) {
     setData(data);
 
     localStorage.setItem("OBJETODEMANDACRIADA", JSON.stringify(data))
@@ -135,7 +137,7 @@ export default function CriacaoDemanda(props: {
   }
 
   function partDoisDemanda() {
-    const frequenciaUso = document.getElementById("frequenciaUso") as HTMLInputElement;    
+    const frequenciaUso = document.getElementById("frequenciaUso") as HTMLInputElement;
 
     let valorMensal;
     let descricao;
@@ -202,8 +204,8 @@ export default function CriacaoDemanda(props: {
 
     console.log("Parte dois demanda");
     console.log(data2);
-    
-    
+
+
 
     atualizarDados(data2)
   }
@@ -223,8 +225,6 @@ export default function CriacaoDemanda(props: {
 
     const pdfArquivo = doc.output("blob")
 
-    console.log(pdfArquivo);
-    
     setPDFDemanda(pdfArquivo)
   }
 
@@ -244,8 +244,13 @@ export default function CriacaoDemanda(props: {
     }
 
     if (pdfDemanda != undefined) {
-      formData.append("pdfVersaoHistorico", pdfDemanda);
+      console.log(pdf);
+      
+      // formData.append("pdfVersaoHistorico", pdfDemanda);
+      formData.append("pdfVersaoHistorico", pdf);
     }
+
+    console.log(formData.get("pdfVersaoHistorico"));
 
     api.post("/sod/demanda", formData, {
       headers: {
@@ -257,7 +262,7 @@ export default function CriacaoDemanda(props: {
       console.log(err);
     })
 
-    window.location.href = "/home";
+    // window.location.href = "/home";
   }
 
 
@@ -287,7 +292,7 @@ export default function CriacaoDemanda(props: {
 
         {valor == 0 && (
           <>
-            <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} partUmDemanda={partUmDemanda}/>
+            <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} partUmDemanda={partUmDemanda} />
             <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
@@ -419,7 +424,7 @@ export default function CriacaoDemanda(props: {
               </BoxBotoesPriSec>
             </BoxContainerBotoes>
             {data != null &&
-              <EsqueletoPDFVersaoDemanda demanda={data} pdfExportComponent={pdfExportComponent}/>
+              <EsqueletoPDFVersaoDemanda demanda={data} pdfExportComponent={pdfExportComponent} />
             }
           </>
         )}

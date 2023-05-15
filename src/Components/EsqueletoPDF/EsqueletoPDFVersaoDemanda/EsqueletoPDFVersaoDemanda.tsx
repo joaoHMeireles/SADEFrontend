@@ -127,7 +127,7 @@ export default function EsqueletoPDFVersaoDemanda(props: { demanda: any, pdfExpo
 
     return (
         <Box id="BOX"
-        // sx={{ display: "none" }}
+        sx={{ display: "none" }}
         >
             <BoxConteudo>
                 {/* <div className="example-config">
