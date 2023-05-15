@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState, useContext } from "react";
 import "./Inicio.scss";
 import semDemanda from "../../Assets/empty-folder.png"
 import semResultado from "../../Assets/empty.png"
@@ -7,7 +7,6 @@ import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import { BoxConteudo } from "../App.styles";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
-
 
 /**
  * Componente da página de início
@@ -35,7 +34,7 @@ export default function Inicio(props: {
       setTemComponente(false)
     }
 
-
+    //para resetar os parâmetros da criação de rascunhos quando for criar demanda
     setTimeout(() => {
       localStorage.setItem("DEMANDACADASTRADA", "false")
       localStorage.setItem("OBJETODEMANDACRIADA", "null")

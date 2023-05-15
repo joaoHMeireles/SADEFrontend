@@ -17,6 +17,8 @@ import {
   EstilosBotao
 } from "./Login.styles";
 import { Alert, FormControl, FormHelperText, Snackbar } from "@mui/material";
+import { WebSocketContext } from "../../api/websocketservice";
+import { novaNotificacao } from "../Notificacoes/Notificacoes";
 
 /**
  * 
@@ -36,6 +38,8 @@ export default function Login(props: {
     email: '',
     senha: ''
   });
+  
+  const webSocketService: any = useContext(WebSocketContext)
   localStorage.setItem("PAGINATUAL", "login")
 
   function atualizarUsuario(event: any) {
@@ -64,7 +68,19 @@ export default function Login(props: {
       localStorage.setItem("USUARIO", JSON.stringify(dadosUserJPA.usuario))
       localStorage.setItem("IDUSUARIO", JSON.stringify(dadosUserJPA.usuario.idUsuario));
 
-      location.href = "/home";
+      return dadosUserJPA
+    }).then((res) => {
+      console.log(res);
+
+      api.get("/sod/demanda/usuario/" + localStorage.getItem("IDUSUARIO")).then((res) => {
+        for (const demanda of res.data) {
+          console.log(webSocketService);
+
+          webSocketService.inscrever(`/notificacao/demanda/${demanda.idDemanda}`, novaNotificacao)
+        }
+      }).then(() => {
+        location.href = "/home";
+      })
     }).catch((err: any) => {
       console.log(err);
       setFeedbackAberto(true)
