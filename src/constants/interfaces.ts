@@ -1,6 +1,7 @@
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso } from './enuns'
 
 export interface InterfaceComponenteProcesso {
+    proposta: any
     id: number,
     idDemanda: number,
     tituloDemanda: string,
@@ -19,5 +20,6 @@ export interface InterfaceColecaoComponenteProcesso {
     tipo: TipoColecaoComponenteProcesso,
     dataReuniao: Date,
     tituloReuniao: string,
-    propostas: any[]
+    propostas: any[],
+    idPauta?: number
 }

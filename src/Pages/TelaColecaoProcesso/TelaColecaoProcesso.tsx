@@ -29,10 +29,13 @@ import {
   ListItem,
   IconButton,
   ListItemText,
+  Tooltip,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CloseIcon from '@mui/icons-material/Close';
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import {
   BotaoPrimarioHeader,
   BotaoSecundarioHeader,
@@ -86,6 +89,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
   const [feedbackAberto, setFeedbackAberto] = useState(false);
   const [conteudoFeedback, setConteudoFeedback] = useState(<div />);
   const [files, setFiles] = useState<any[]>([])
+  const [expanded, setExpanded] = useState({ expanded: false });
   const location = useLocation().pathname;
   const idLocalStorage = localStorage.getItem(
     `${getNomeComponente(location)}ESCOLHIDA`
@@ -189,49 +193,40 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         const infoPauta = {
           ...informacaoColecaoProcesso,
           propostasPauta: decisoesPauta,
-          dataReuniaoATA: dataReuniaoCerta
+          dataReuniaoATA: expanded.expanded? dataReuniaoCerta : null
         }
 
         const { propostas, tipo, tituloReuniao, pertenceUmaATA, arquivos, idPauta, ...pautaEditar } = infoPauta
-
-        console.log(pautaEditar);
-
 
         const formDataPauta = new FormData()
 
         formDataPauta.append("pauta", JSON.stringify(pautaEditar))
 
-        console.log(pautaEditar);
-
+        if (files != null) {
+          if (files.length != 0) {
+            for (const file of files) {
+              formDataPauta.append("arquivos", file)
+            }
+          }
+        }
 
         api.put("/sod/pauta/" + idPauta + "/" + idUsuario, formDataPauta).then((response) => {
+          if (expanded.expanded) {
 
-          const ataDTO = {
-            pauta: response.data,
-            tituloReuniaoATA: tituloReuniaoInput,
-            dataReuniao: dataReuniaoCerta,
-            inicioReuniao: inicioReuniao + ":" + "00",
-            finalReuniao: finalReuniao + ":" + "00"
+            const ataDTO = {
+              pauta: response.data,
+              tituloReuniaoATA: tituloReuniaoInput,
+              dataReuniao: dataReuniaoCerta,
+              inicioReuniao: inicioReuniao + ":" + "00",
+              finalReuniao: finalReuniao + ":" + "00"
+            }
+
+            api.post("/sod/ata", ataDTO).then((response) => {
+              acaoFinalizada()
+            })
+          } else {
+            acaoFinalizada()
           }
-
-          api.post("/sod/ata", ataDTO).then((response) => {
-            fecharAvaliacao();
-
-            feedback = (
-              <Alert
-                onClose={() => {
-                  setFeedbackAberto(false);
-                }}
-                severity="success"
-                sx={{ width: "100%" }}
-              >
-                {informacaoColecaoProcesso.tipo} avaliada com sucesso
-              </Alert>
-            );
-
-            abrirFeedback(feedback);
-          })
-
         }).catch((err) => {
           console.log(err);
         })
@@ -260,7 +255,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
             comentario: comentario
           }
 
-          const {idDecisaoPropostaAta, ...propostaATACerta} = propostaATA
+          const { idDecisaoPropostaAta, ...propostaATACerta } = propostaATA
 
           decisoesATA.push(propostaATACerta);
         }
@@ -288,33 +283,14 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
             }
           }
         }
-        
+
         api.put("/sod/ata/" + informacaoColecaoProcesso.idATA + "/" + idUsuario, formData).then((response) => {
-          console.log(response);
-
-        fecharAvaliacao();
-
-        feedback = (
-          <Alert
-            onClose={() => {
-              setFeedbackAberto(false);
-            }}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            {informacaoColecaoProcesso.tipo} avaliada com sucesso
-          </Alert>
-        );
-
-        abrirFeedback(feedback);
-
-
+          acaoFinalizada()
         }).catch((err) => {
           console.log(err);
         })
 
       }
-
     } else {
       feedback = (
         <Alert
@@ -330,6 +306,24 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
 
       abrirFeedback(feedback);
     }
+  }
+
+  function acaoFinalizada() {
+    fecharAvaliacao();
+
+    let feedback = (
+      <Alert
+        onClose={() => {
+          setFeedbackAberto(false);
+        }}
+        severity="success"
+        sx={{ width: "100%" }}
+      >
+        {informacaoColecaoProcesso.tipo} avaliada com sucesso
+      </Alert>
+    );
+
+    abrirFeedback(feedback);
   }
 
   function checarRadioButtons(listaBotoes: HTMLCollectionOf<Element>) {
@@ -376,6 +370,8 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
               verificacaoInputs={verificacaoInputs}
               files={files}
               setFiles={setFiles}
+              expanded={expanded}
+              setExpanded={setExpanded}
             />
             <Snackbar
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -417,9 +413,13 @@ function Header(props: {
 
   useEffect(() => {
     if (tipoColecao == "Pauta") {
-      if (!informacaoColecaoProcesso.pertenceUmaATA) {
-        if (dataReuniao <= new Date()) {
-          setAcao("Informar parecer");
+      if (informacaoColecaoProcesso.propostas[0].statusDemandaComissao != null) {
+        setAcao("Criar ATA")
+      } else {
+        if (!informacaoColecaoProcesso.pertenceUmaATA) {
+          if (dataReuniao <= new Date()) {
+            setAcao("Informar parecer");
+          }
         }
       }
     } else {
@@ -446,14 +446,21 @@ function Header(props: {
         {acao != "" && (
           <>
             {!props.avaliandoProcesso ? (
-              <BotaoPrimario
-                variant="contained"
-                onClick={() => {
-                  props.setAvaliandoProcesso(true);
-                }}
-              >
-                {acao}
-              </BotaoPrimario>
+              <>
+                <BotaoPrimario
+                  variant="contained"
+                  onClick={() => {
+                    if (acao != "Criar ATA") {
+                      props.setAvaliandoProcesso(true);
+                    } else {
+                      localStorage.setItem("PAUTACRIARATA", JSON.stringify(informacaoColecaoProcesso))
+                      location.href = "/createata"
+                    }
+                  }}
+                >
+                  {acao}
+                </BotaoPrimario>
+              </>
             ) : (
               <BoxBotoes>
                 <BotaoPrimarioHeader
@@ -494,6 +501,8 @@ function ContainerColecaoProcesso(props: {
   verificacaoInputs: boolean[];
   files: any;
   setFiles: React.Dispatch<SetStateAction<any>>;
+  expanded: any;
+  setExpanded: React.Dispatch<SetStateAction<any>>;
 }) {
   const [modalAberto, setModalAberto] = useState(false)
   const [anexos, setAnexos] = useState([])
@@ -503,9 +512,6 @@ function ContainerColecaoProcesso(props: {
   ).toLocaleDateString();
 
   function abrirModal() {
-    console.log(props.informacaoColecaoProcesso);
-
-
     setAnexos(props.informacaoColecaoProcesso.arquivos.map((anexo: any, index: number) => {
       const IconeAnexo = getIconeArquivo(anexo.nome)
 
@@ -602,6 +608,8 @@ function ContainerColecaoProcesso(props: {
         tituloPauta={informacaoColecaoProcesso.tituloReuniao}
         files={props.files}
         setFiles={props.setFiles}
+        expanded={props.expanded}
+        setExpanded={props.setExpanded}
       />
       {informacaoColecaoProcesso.tipo == "ATA" && !props.avaliandoProcesso && (
         <GridFooter item xs={12}>
@@ -652,14 +660,15 @@ function Propostas(props: {
   tituloPauta?: string;
   files: any;
   setFiles: React.Dispatch<SetStateAction<any>>;
+  expanded: any;
+  setExpanded: React.Dispatch<SetStateAction<any>>;
 }) {
-  const eUmaPauta = props.tipoColecao == "Pauta" ? true : false;
-  const location = useLocation().pathname;
-  const linkProposta = location + "/proposal";
   const [valorData, setValorData] = useState<Dayjs | null>(null)
   const [inicioReuniao, setInicioReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T13:30'));
   const [finalReuniao, setFinalReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T14:30'));
-
+  const eUmaPauta = props.tipoColecao == "Pauta" ? true : false;
+  const location = useLocation().pathname;
+  const linkProposta = location + "/proposal";
   const propostas = props.listaPropostas.map((decisaoProposta: any, index: number) => {
     let propostaAnteriorEquivalente = null
 
@@ -685,6 +694,16 @@ function Propostas(props: {
     );
   });
 
+  function mudarAcordeon() {
+    props.setExpanded({ expanded: !props.expanded.expanded });
+  }
+
+  const adicionarIcon = (
+    <Tooltip title="Você pode já criar a ata da reunião da Direção geral">
+      <AddRoundedIcon />
+    </Tooltip>
+  )
+
   return (
     <>
       {propostas}
@@ -692,60 +711,90 @@ function Propostas(props: {
         <>
           {eUmaPauta ?
             <>
-              <Grid item xs={12}>
-                <Divider sx={{ marginBottom: "10px" }} />
-                <Typography variant="h5">
-                  Informações ATA
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container spacing={3}>
-                  <GridInfoATA item xs={12}>
-                    <TypographyTituloInput>
-                      Título da reunião
-                    </TypographyTituloInput>
-                    <TextField sx={{ width: "100%" }} id="tituloReuniao" defaultValue={props.tituloPauta} />
-                  </GridInfoATA>
-                  <GridInfoATA item xs={12}>
-                    <TypographyTituloInput>
-                      Data da reunião
-                    </TypographyTituloInput>
-                    <DatePicker
-                      value={valorData}
-                      onChange={(newValue) => {
-                        setValorData(newValue);
-                      }}
-                      renderInput={(params) => <TextField id='dataReuniao' {...params} />}
-                      disablePast
-                    />
-                  </GridInfoATA>
-                  <GridInfoATA item xs={6}>
-                    <TypographyTituloInput>
-                      Início da reunião
-                    </TypographyTituloInput>
-                    <TimePicker
-                      ampm={false}
-                      value={inicioReuniao}
-                      onChange={(newValue) => setInicioReuniao(newValue)}
-                      renderInput={(params) => {
-                        return <TextField id="inicioReuniao" {...params} />;
-                      }}
-                    />
-                  </GridInfoATA>
-                  <GridInfoATA item xs={6}>
-                    <TypographyTituloInput>
-                      Final da reunião
-                    </TypographyTituloInput>
-                    <TimePicker
-                      ampm={false}
-                      value={finalReuniao}
-                      onChange={(newValue) => setFinalReuniao(newValue)}
-                      renderInput={(params) => {
-                        return <TextField id="finalReuniao" {...params} />;
-                      }}
-                    />
-                  </GridInfoATA>
-                </Grid>
+              <Grid>
+                <AccordionProposta {...props.expanded} sx={{ border: "none", borderTop: "#ffffff" }} >
+                  <AccordionSummary
+                    onClick={mudarAcordeon}
+                    expandIcon={props.expanded.expanded ? <RemoveRoundedIcon /> : adicionarIcon}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                    sx={{ border: "none", borderTop: "#ffffff" }}
+                  >
+                    {props.expanded.expanded ?
+                      <>
+                        <Grid item xs={12}>
+                          <Typography variant="h5" sx={{ color: "#595959" }}>
+                            Informações ATA
+                          </Typography>
+                        </Grid>
+                      </>
+                      :
+                      <>
+                        <Box sx={{ fontSize: "12px", width: "99%", display: "flex", justifyContent: "end" }}>
+                          <Tooltip title="Você pode já criar a ata da reunião da Direção geral">
+                            <span>
+                              Criar ATA
+                            </span>
+                          </Tooltip>
+                        </Box>
+                      </>
+                    }
+                  </AccordionSummary>
+                  <AccordionDetails sx={{ border: "none", borderTop: "#ffffff" }} >
+                    <Grid item xs={12}>
+                      <Grid container spacing={3}>
+                        <GridInfoATA item xs={12}>
+                          <TypographyTituloInput>
+                            Título da reunião
+                          </TypographyTituloInput>
+                          <TextField sx={{ width: "100%" }} id="tituloReuniao" defaultValue={props.tituloPauta} />
+                        </GridInfoATA>
+                        <GridInfoATA item xs={12}>
+                          <TypographyTituloInput>
+                            Data da reunião
+                          </TypographyTituloInput>
+                          <DatePicker
+                            value={valorData}
+                            onChange={(newValue) => {
+                              setValorData(newValue);
+                            }}
+                            renderInput={(params) => <TextField id='dataReuniao' {...params} />}
+                            disablePast
+                          />
+                        </GridInfoATA>
+                        <GridInfoATA item xs={6}>
+                          <TypographyTituloInput>
+                            Início da reunião
+                          </TypographyTituloInput>
+                          <TimePicker
+                            ampm={false}
+                            value={inicioReuniao}
+                            onChange={(newValue) => setInicioReuniao(newValue)}
+                            renderInput={(params) => {
+                              return <TextField id="inicioReuniao" {...params} />;
+                            }}
+                          />
+                        </GridInfoATA>
+                        <GridInfoATA item xs={6}>
+                          <TypographyTituloInput>
+                            Final da reunião
+                          </TypographyTituloInput>
+                          <TimePicker
+                            ampm={false}
+                            value={finalReuniao}
+                            onChange={(newValue) => setFinalReuniao(newValue)}
+                            renderInput={(params) => {
+                              return <TextField id="finalReuniao" {...params} />;
+                            }}
+                          />
+                        </GridInfoATA>
+                        <GridInfoATA item xs={12}>
+                          <InputAnexos rascunho={false} proposta={false} files={props.files} setFiles={props.setFiles} />
+                        </GridInfoATA>
+                      </Grid>
+                    </Grid>
+                  </AccordionDetails>
+                </AccordionProposta>
               </Grid>
             </>
             :

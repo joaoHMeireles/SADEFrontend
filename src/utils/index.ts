@@ -98,6 +98,7 @@ export function getNomeRota(palavra: string) {
         createdemand: "Criar Demanda",
         createproposal: "Criar Proposta",
         createagenda: "Criar Pauta",
+        createata: "Criar Ata",
         demand: "Demanda",
         proposal: "Proposta",
         agenda: "Pauta",

@@ -14,6 +14,9 @@ export default function CardsProcesso(props: {
   setPropostas?: React.Dispatch<React.SetStateAction<Array<Object>>>;
   propostaSelecionada?: number;
   setPropostaSelecionada?: React.Dispatch<React.SetStateAction<number>>;
+  criandoATA?: boolean;
+  pautaEscolhida?: any;
+  setPautaEscolhida?: React.Dispatch<React.SetStateAction<any>>;
 }) {
   const matches = useMediaQuery("(max-width:1100px)");
   const [demandaSelecionada, setDemandaSelecionada] = useState(0)
@@ -41,6 +44,9 @@ export default function CardsProcesso(props: {
         <ComponenteColecaoProcesso
           atributosColecaoProcesso={processo}
           grid={props.grid}
+          criandoATA={props.criandoATA}
+          pautaEscolhida={props.pautaEscolhida}
+          setPautaEscolhida={props.setPautaEscolhida}
         />
       );
     }
