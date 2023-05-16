@@ -85,6 +85,10 @@ export default function CriacaoDemanda(props: {
   }, [valor]);
 
   useEffect(() => {
+    console.log(centroCusto);
+  }, [centroCusto])
+
+  useEffect(() => {
     if (pdfDemanda == null || pdfDemanda == undefined) {
       return
     }
@@ -241,14 +245,7 @@ export default function CriacaoDemanda(props: {
 
     if (data != undefined) {
       formData.append("demanda", JSON.stringify(data));
-    }
-
-    if (pdfDemanda != undefined) {
-      formData.append("pdfVersaoHistorico", pdfDemanda);
-    }
-
-    console.log(pdfDemanda);
-    
+    }    
 
     api.post("/sod/demanda", formData, {
       headers: {

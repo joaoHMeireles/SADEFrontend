@@ -230,7 +230,7 @@ export default function InformacaoGeral(props: {
                   for (let centroCustoSelecionado of valor) {
                     for (let centroCustoBanco of idCentroCusto) {
                       if (centroCustoBanco.nomeCentroCusto == centroCustoSelecionado) {
-                        centroCustoDemanda.push({ idCentroCusto: centroCustoBanco.idCentroCusto })
+                        centroCustoDemanda.push({ idCentroCusto: centroCustoBanco.idCentroCusto, nomeCentroCusto: centroCustoBanco.nomeCentroCusto })
                       }
                     }
                   }
