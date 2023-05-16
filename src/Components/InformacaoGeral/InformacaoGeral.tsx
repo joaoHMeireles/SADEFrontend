@@ -21,11 +21,12 @@ import { Box, Button, ClickAwayListener } from "@mui/material";
 
 export default function InformacaoGeral(props: {
   proposta: boolean,
+  rascunho?: boolean,
   centroCusto?: any[],
   setCentroCusto?: React.Dispatch<React.SetStateAction<Object[]>>
   informacaoProcesso?: any
   setInformacaoProcesso?: React.Dispatch<React.SetStateAction<any>>
-  partUmDemanda: Function
+  partUmDemanda?: Function
 }) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
   const [paginaTooltip, setPaginaTooltip] = useState(0);
@@ -41,9 +42,8 @@ export default function InformacaoGeral(props: {
     setOpen(true);
   };
 
-  const demandaSelecionada = JSON.parse(
-    localStorage.getItem("DEMANDASELECIONADA") as string
-  );
+  const info =  localStorage.getItem("DEMANDASELECIONADA")? localStorage.getItem("DEMANDASELECIONADA") : localStorage.getItem("RASCUNHOESCOLHIDO")
+  const demandaSelecionada = JSON.parse(info as string);
 
   useEffect(() => {
     api.get("/sod/centroCusto").then((res: any) => {
@@ -169,7 +169,7 @@ export default function InformacaoGeral(props: {
             <TypographyLabels>
               Centros de custo:
             </TypographyLabels>
-            {props.proposta ? (
+            {props.proposta || props.rascunho ? (
               <Autocomplete
                 id="centrosDeCusto"
                 defaultValue={demandaSelecionada.centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto)}

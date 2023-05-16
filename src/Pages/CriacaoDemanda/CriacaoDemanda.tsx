@@ -38,7 +38,7 @@ export default function CriacaoDemanda(props: {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
-  const [data, setData] = useState<any>({usuario:{idUsuario: idUsuario}})
+  const [data, setData] = useState<any>({ usuario: { idUsuario: idUsuario } })
   const [files, setFiles] = useState<any>([]);
   const [pdfDemanda, setPDFDemanda] = useState<any>();
 
@@ -64,18 +64,26 @@ export default function CriacaoDemanda(props: {
           const inputAtributo = document.getElementById(
             getIdByAtributo(atributo)
           ) as HTMLInputElement;
+
           if (inputAtributo) {
-            if (inputAtributo.id == "titulo") {
-              inputAtributo.value = info.titulo;
+            switch (inputAtributo.id) {
+              case 'titulo': {
+                inputAtributo.value = info.tituloDemanda;
+                break;
+              }
+              case "objetivo": {
+                inputAtributo.value = info.objetivo;
+                break;
+              }
+              case "situacaoAtual": {
+                inputAtributo.value = info.situacaoAtual;
+                break;
+              }
+              case "centrosDeCusto": {
+                // inputAtributo.value = info.centroCustoDemanda.map( (centroCusto: any) => centroCusto.nomeCentroCusto)
+              }
             }
 
-            if (inputAtributo.id == "objetivo") {
-              inputAtributo.value = info.objetivo;
-            }
-
-            if (inputAtributo.id == "situacaoAtual") {
-              inputAtributo.value = info.situacaoAtual;
-            }
           }
         }
       }
@@ -90,7 +98,7 @@ export default function CriacaoDemanda(props: {
     criarDemanda()
   }, [pdfDemanda])
 
-  function atualizarDados(data: any){
+  function atualizarDados(data: any) {
     setData(data);
 
     localStorage.setItem("OBJETODEMANDACRIADA", JSON.stringify(data))
@@ -98,11 +106,12 @@ export default function CriacaoDemanda(props: {
 
   function getIdByAtributo(atributo: string) {
     const idsInputsAtributo = {
-      titulo: "titulo",
-      centrosDeCusto: "centroDeCusto",
+      tituloDemanda: "titulo",
+      centroCustoDemanda: "centrosDeCusto",
       objetivo: "objetivo",
       situacaoAtual: "situacaoAtual",
     };
+
 
     return (idsInputsAtributo as any)[atributo];
   }
@@ -135,13 +144,17 @@ export default function CriacaoDemanda(props: {
   }
 
   function partDoisDemanda() {
-    const frequenciaUso = document.getElementById("frequenciaUso") as HTMLInputElement;    
+    if(props.rascunho){
+      return
+    }
+
+    const frequenciaUso = document.getElementById("frequenciaUso") as HTMLInputElement;
 
     let valorMensal;
     let descricao;
 
     let beneficios = [];
-
+    
     for (let i = 0; i < numeroBeneficiosReais; i++) {
       valorMensal = document.getElementById(`valorMensalReal${i}`) as HTMLInputElement;
       descricao = document.getElementById(`descricaoReal${i}`) as HTMLInputElement;
@@ -200,11 +213,6 @@ export default function CriacaoDemanda(props: {
       }
     }
 
-    console.log("Parte dois demanda");
-    console.log(data2);
-    
-    
-
     atualizarDados(data2)
   }
 
@@ -223,14 +231,12 @@ export default function CriacaoDemanda(props: {
 
     const pdfArquivo = doc.output("blob")
 
-    console.log(pdfArquivo);
-    
     setPDFDemanda(pdfArquivo)
   }
 
   function criarDemanda() {
     localStorage.setItem("DEMANDACADASTRADA", "true")
-
+    
     let formData = new FormData();
 
     if (files != undefined) {
@@ -240,22 +246,50 @@ export default function CriacaoDemanda(props: {
     }
 
     if (data != undefined) {
-      formData.append("demanda", JSON.stringify(data));
+      const {tipo,... dataCerta} = data
+      let beneficios = []
+
+      for(let beneficio of data.beneficiosDemanda){
+          const {novo,... beneficioCerto} = beneficio
+          beneficios.push(beneficioCerto)
+      }
+
+      dataCerta.beneficiosDemanda = beneficios
+      dataCerta.rascunho = false
+      dataCerta.criandoDemandaPorRascunho = true
+
+      formData.append("demanda", JSON.stringify(dataCerta));
     }
 
     if (pdfDemanda != undefined) {
       formData.append("pdfVersaoHistorico", pdfDemanda);
     }
 
-    api.post("/sod/demanda", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      }
-    }).then((res: any) => {
-      webSocketService.inscrever(`/notificacao/demanda/${res.data.idDemanda}`, novaNotificacao)
-    }).catch((err: any) => {
-      console.log(err);
-    })
+    console.log(data);
+    if (props.rascunho) {
+      const idDemanda = JSON.parse(
+        localStorage.getItem("RASCUNHOESCOLHIDO") as string
+      ).idDemanda;
+      const idUsuario = localStorage.getItem("IDUSUARIO")
+
+      api.put("/sod/demanda/" + idDemanda + "/" + idUsuario, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
+      }).catch((err: any) => {
+        console.log(err);
+      })
+    } else {
+      api.post("/sod/demanda", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
+      }).then((res: any) => {
+        webSocketService.inscrever(`/notificacao/demanda/${res.data.idDemanda}`, novaNotificacao)
+      }).catch((err: any) => {
+        console.log(err);
+      })
+    }
 
     window.location.href = "/home";
   }
@@ -287,7 +321,7 @@ export default function CriacaoDemanda(props: {
 
         {valor == 0 && (
           <>
-            <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} partUmDemanda={partUmDemanda}/>
+            <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} partUmDemanda={partUmDemanda} rascunho={props.rascunho} />
             <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
@@ -315,19 +349,33 @@ export default function CriacaoDemanda(props: {
 
         {valor == 1 && (
           <>
-            <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
-              numeroBeneficiosReais={numeroBeneficiosReais}
-              numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
-              numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
-              setNumeroBeneficiosReais={setNumeroBeneficiosReais}
-              setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
-              setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
-              moedaReal={moedaReal}
-              setMoedaReal={setMoedaReal}
-              moedaPotencial={moedaPotencial}
-              setMoedaPotencial={setMoedaPotencial}
-              partDoisDemanda={partDoisDemanda}
-            />
+            {props.rascunho ?
+              <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
+                numeroBeneficiosReais={numeroBeneficiosReais}
+                numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
+                numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
+                setNumeroBeneficiosReais={setNumeroBeneficiosReais}
+                setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
+                setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
+                informacaoProcesso={data}
+                setInformacaoProcesso={setData}
+              />
+              :
+              <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
+                numeroBeneficiosReais={numeroBeneficiosReais}
+                numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
+                numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
+                setNumeroBeneficiosReais={setNumeroBeneficiosReais}
+                setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
+                setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
+                moedaReal={moedaReal}
+                setMoedaReal={setMoedaReal}
+                moedaPotencial={moedaPotencial}
+                setMoedaPotencial={setMoedaPotencial}
+                partDoisDemanda={partDoisDemanda}
+              />
+            }
+
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
@@ -419,7 +467,7 @@ export default function CriacaoDemanda(props: {
               </BoxBotoesPriSec>
             </BoxContainerBotoes>
             {data != null &&
-              <EsqueletoPDFVersaoDemanda demanda={data} pdfExportComponent={pdfExportComponent}/>
+              <EsqueletoPDFVersaoDemanda demanda={data} pdfExportComponent={pdfExportComponent} />
             }
           </>
         )}

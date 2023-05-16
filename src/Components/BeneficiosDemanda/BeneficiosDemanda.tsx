@@ -28,15 +28,9 @@ import { Select } from "@mui/material";
 
 
 const moedas = [
-  {
-    moeda: "DOLAR",
-  },
-  {
-    moeda: "EURO",
-  },
-  {
-    moeda: "BRL",
-  },
+  "DOLAR",
+  "EURO",
+  "BRL"
 ];
 
 const valoresFrequencia = [
@@ -63,7 +57,7 @@ export default function BeneficiosDemanda(props: {
   valor?: number
   informacaoProcesso?: any
   setInformacaoProcesso?: any
-  partDoisDemanda: Function
+  partDoisDemanda?: Function
 }) {
   const [frequencia, setFrequencia] = useState("DIARIAMENTE");
   const [beneficiosReaisLista, setBeneficiosReaisLista] = useState<any[]>([]);
@@ -253,7 +247,7 @@ export default function BeneficiosDemanda(props: {
           moedaPotencial={props.moedaPotencial}
           setMoedaPotencial={props.setMoedaPotencial}
         />
-        <BoxIcones  id="o-0-tá-aqui">
+        <BoxIcones id="o-0-tá-aqui">
           {props.numeroBeneficiosPotenciais != null &&
             <>
               {props.numeroBeneficiosPotenciais > 0 ? (
@@ -440,6 +434,18 @@ function BeneficioReal(props: {
   setMoedaReal?: any
 }) {
   const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioReal)
+  const [moedaBeneficio, setMoedaBeneficio] = useState("EURO")
+
+  useEffect(() => {
+    if(props.moedaBeneficio){
+      setMoedaBeneficio(props.moedaBeneficio)
+    }
+
+    if(props.moedaReal){
+      setMoedaBeneficio(props.moedaReal)
+    }
+  })
+
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -473,15 +479,16 @@ function BeneficioReal(props: {
                 }
               }}
             />
-            <TextField
+            <Select
               id={`moedaReal${props.index}`}
               sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
-              defaultValue={props.moedaBeneficio}
-              select
-              label="Moeda"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              value={moedaBeneficio}
+              onChange={(e: any) => {
+                setMoedaBeneficio(e.target.value)
+
                 props.moedaReal.push(e.target.value)
                 props.setMoedaReal(props.moedaReal)
+
                 if (atualizarObjetos != null) {
                   atualizarObjetos()
                 } else {
@@ -500,11 +507,11 @@ function BeneficioReal(props: {
               }
             >
               {moedas.map((option: any, index: number) => (
-                <MenuItem id={`moedaReal${props.index}`} key={index} value={option.moeda}>
-                  {option.moeda}
+                <MenuItem id={`moedaRealoptions${props.index}`} key={index} value={option}>
+                  {option}
                 </MenuItem>
               ))}
-            </TextField>
+            </Select>
           </BoxInputs>
         </BoxInputsAcima>
         <BoxInputsAbaixo>
@@ -547,6 +554,18 @@ function BeneficioPotencial(props: {
   setMoedaPotencial?: any
 }) {
   const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioPotencial)
+  const [moedaBeneficio, setMoedaBeneficio] = useState("EURO")
+
+  useEffect(() => {
+    if(props.moedaBeneficio){
+      setMoedaBeneficio(props.moedaBeneficio)
+    }
+
+    if(props.moedaPotencial){
+      setMoedaBeneficio(props.moedaPotencial)
+    }
+  })
+
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -587,13 +606,11 @@ function BeneficioPotencial(props: {
                 boxShadow: "5px 5px 10px 0 #00000050",
               }}
             />
-            <TextField
+            <Select
               id={`moedaPotencial${props.index}`}
               sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
-              defaultValue={props.moedaBeneficio}
-              select
-              label="Moeda"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              value={moedaBeneficio}
+              onChange={(e: any) => {
                 props.moedaPotencial.push(e.target.value)
                 props.setMoedaPotencial(props.moedaPotencial)
                 if (atualizarObjetos != null) {
@@ -613,12 +630,12 @@ function BeneficioPotencial(props: {
               }
               }
             >
-              {moedas.map((option: any, index: number) => (
-                <MenuItem id={`moedaPotencial${props.index}`} key={index} value={option.moeda}>
-                  {option.moeda}
+              {moedas.map((moeda: any, index: number) => (
+                <MenuItem id={`moedaPotencial${props.index}`} key={index} value={moeda}>
+                  {moeda}
                 </MenuItem>
               ))}
-            </TextField>
+            </Select>
           </BoxInputs>
         </BoxInputsAcima>
         <BoxInputsAbaixo>
@@ -640,7 +657,7 @@ function BeneficioPotencial(props: {
                   "POTENCIAL"
                 )
               }
-             
+
             }}
             multiline
             maxRows={Infinity}
