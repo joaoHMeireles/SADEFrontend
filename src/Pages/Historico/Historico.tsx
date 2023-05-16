@@ -258,6 +258,8 @@ export default function TelaHistoricos(props: {}) {
 
   function acaoCelula(cell: GridCellParams<number>) {
     if (cell.field == "pdfHistorico") {
+      console.log(cell.row.pdfHistorico.arquivo);
+      
       setArquivoPDF(cell.row.pdfHistorico.arquivo);
       setMostrarPDF(true);
     }
@@ -451,20 +453,16 @@ export default function TelaHistoricos(props: {}) {
                   height: "100%",
                 }}
               >
-                {arquivoPDF == null ? "" : <PDFViewer data={arquivoPDF} />}
-                {/* <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.5.141/build/pdf.worker.min.js">
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "900px",
-                      width: "50%",
-                    }}
-                  >
-                    <Viewer fileUrl={arquivoPDF} />
+                {arquivoPDF == null ? "" :
+                  <Box sx={{
+                    width: "50vw",
+                    height: "80vh",
+                    display: "flex",
+                    justifyContent: "center"
+                  }}>
+                    <PDFViewer data={arquivoPDF} />
                   </Box>
-                </Worker> */}
+                }
                 <IconButton
                   onClick={() => baixarArquivo(arquivoPDF)}
                   sx={{

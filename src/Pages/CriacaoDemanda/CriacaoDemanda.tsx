@@ -244,13 +244,11 @@ export default function CriacaoDemanda(props: {
     }
 
     if (pdfDemanda != undefined) {
-      console.log(pdf);
-      
-      // formData.append("pdfVersaoHistorico", pdfDemanda);
-      formData.append("pdfVersaoHistorico", pdf);
+      formData.append("pdfVersaoHistorico", pdfDemanda);
     }
 
-    console.log(formData.get("pdfVersaoHistorico"));
+    console.log(pdfDemanda);
+    
 
     api.post("/sod/demanda", formData, {
       headers: {
@@ -262,14 +260,14 @@ export default function CriacaoDemanda(props: {
       console.log(err);
     })
 
-    // window.location.href = "/home";
+    window.location.href = "/home";
   }
 
 
   return (
     <BoxConteudo>
       <Breadcrumb />
-      <ContainerGeral>
+      <ContainerGeral sx={{backgroundColor: "white"}}>
         <Tabs value={valor} onChange={mudarValor}>
           {valor == 0 ? (
             <Tab icon={<LensRoundedIcon sx={{ color: "#00579d" }} />}></Tab>
