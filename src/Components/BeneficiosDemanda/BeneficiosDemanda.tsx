@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
@@ -23,11 +19,8 @@ import {
   BoxDescricaoRequeistosControle,
   BoxFrequencia,
 } from "./BeneficiosDemanda.styles";
-import SelectBox from "../SelectBox/SelectBox";
 import { Select } from "@mui/material";
-// import CurrencyInput from 'react-currency-input-field';
-// import CurrencyInput from "react-currency-input-field";
-
+import CurrencyInput from "react-currency-input-field";
 
 const moedas = [
   {
@@ -37,7 +30,7 @@ const moedas = [
     moeda: "EURO",
   },
   {
-    moeda: "BRL",
+    moeda: "REAL",
   },
 ];
 
@@ -255,7 +248,7 @@ export default function BeneficiosDemanda(props: {
           moedaPotencial={props.moedaPotencial}
           setMoedaPotencial={props.setMoedaPotencial}
         />
-        <BoxIcones  id="o-0-tá-aqui">
+        <BoxIcones id="o-0-tá-aqui">
           {props.numeroBeneficiosPotenciais != null &&
             <>
               {props.numeroBeneficiosPotenciais > 0 ? (
@@ -442,6 +435,25 @@ function BeneficioReal(props: {
   setMoedaReal?: any
 }) {
   const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioReal)
+  const [moeda, setMoeda] = useState("BRL")
+  const [configuracaoValor, setConfiguracaoValor] = useState({ locale: 'pt-BR', currency: 'BRL' })
+
+  useEffect(() => {
+    switch (moeda) {
+      case "EURO": {
+        setConfiguracaoValor({ locale: "es-ES", currency: "EUR" });
+        break;
+      };
+      case "DOLAR": {
+        setConfiguracaoValor({ locale: "en-US", currency: "USD" });
+        break;
+      };
+      default: {
+        setConfiguracaoValor({ locale: "pt-BR", currency: "BRL" });
+        break;
+      };
+    };
+  }, [moeda]);
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -450,20 +462,22 @@ function BeneficioReal(props: {
           <BoxValorMensal>
             <TypographyLabels>Valor Mensal: </TypographyLabels>
           </BoxValorMensal>
+
           <BoxInputs>
-            <TextField
+            <CurrencyInput
               id={`valorMensalReal${props.index}`}
               style={{
                 width: "30%",
                 marginRight: 5,
                 boxShadow: "5px 5px 10px 0 #00000050",
               }}
-              // decimalsLimit={2}
-              // decimalSeparator=","
-              // groupSeparator="."
-              // intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
+              decimalsLimit={2}
+              decimalSeparator=","
+              groupSeparator="."
+              intlConfig={configuracaoValor}
               onChange={(e: any) => {
                 if (atualizarObjetos != null) {
+                  console.log(e.target)
                   atualizarObjetos()
                 } else {
                   atualizarBeneficiosDemanda(
@@ -477,8 +491,8 @@ function BeneficioReal(props: {
                     "REAL"
                   )
                 }
-              }}
-            />
+              }} />
+
             <TextField
               id={`moedaReal${props.index}`}
               sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
@@ -503,8 +517,7 @@ function BeneficioReal(props: {
                   )
                 }
               }
-              }
-            >
+              }>
               {moedas.map((option: any, index: number) => (
                 <MenuItem id={`moedaReal${props.index}`} key={index} value={option.moeda}>
                   {option.moeda}
@@ -513,8 +526,10 @@ function BeneficioReal(props: {
             </TextField>
           </BoxInputs>
         </BoxInputsAcima>
+
         <BoxInputsAbaixo>
           <TypographyLabels>Descrição: </TypographyLabels>
+
           <TextField
             id={`descricaoReal${props.index}`}
             onChange={(e: any) => {
@@ -535,8 +550,8 @@ function BeneficioReal(props: {
             }}
             multiline
             maxRows={Infinity}
-            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
-          ></TextField>
+            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}>
+          </TextField>
         </BoxInputsAbaixo>
       </BoxContainerDivisorio>
     </BoxContainerGeralBeneficio>
@@ -559,16 +574,17 @@ function BeneficioPotencial(props: {
       <BoxContainerDivisorio>
         <BoxInputsAcima>
           <BoxValorMensal>
-            <TypographyLabels>Valor Mensal: </TypographyLabels>
+            <TypographyLabels>Valor Mensal:</TypographyLabels>
           </BoxValorMensal>
+
           <BoxInputs
             sx={{
               width: "100%",
               display: "flex",
               justifyContent: "start",
               alignItems: "center",
-            }}
-          >
+            }}>
+
             <TextField
               id={`valorMensalPotencial${props.index}`}
               onChange={(e: any) => {
@@ -591,8 +607,8 @@ function BeneficioPotencial(props: {
                 width: "30%",
                 marginRight: 5,
                 boxShadow: "5px 5px 10px 0 #00000050",
-              }}
-            />
+              }} />
+
             <TextField
               id={`moedaPotencial${props.index}`}
               sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
@@ -617,8 +633,7 @@ function BeneficioPotencial(props: {
                   )
                 }
               }
-              }
-            >
+              }>
               {moedas.map((option: any, index: number) => (
                 <MenuItem id={`moedaPotencial${props.index}`} key={index} value={option.moeda}>
                   {option.moeda}
@@ -627,8 +642,10 @@ function BeneficioPotencial(props: {
             </TextField>
           </BoxInputs>
         </BoxInputsAcima>
+
         <BoxInputsAbaixo>
           <TypographyLabels>Descrição: </TypographyLabels>
+
           <TextField
             id={`descricaoPotencial${props.index}`}
             onChange={(e: any) => {
@@ -646,12 +663,12 @@ function BeneficioPotencial(props: {
                   "POTENCIAL"
                 )
               }
-             
+
             }}
             multiline
             maxRows={Infinity}
-            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
-          ></TextField>
+            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}>
+          </TextField>
         </BoxInputsAbaixo>
       </BoxContainerDivisorio>
     </BoxContainerGeralBeneficio>
@@ -665,6 +682,7 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
     <BoxContainerGeralBeneficio key={props.index}>
       <BoxDescricaoRequeistosControle>
         <TypographyLabels>Descrição: </TypographyLabels>
+
         <TextField
           id={`beneficiosQualitativos${props.index}`}
           onChange={(e: any) => {
@@ -685,8 +703,8 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
           }}
           multiline
           maxRows={Infinity}
-          sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
-        ></TextField>
+          sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}>
+          </TextField>
       </BoxDescricaoRequeistosControle>
     </BoxContainerGeralBeneficio>
   );
