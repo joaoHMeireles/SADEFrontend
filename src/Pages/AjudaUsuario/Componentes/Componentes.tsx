@@ -16,6 +16,7 @@ import adicionarInfoDemandaModal from "../../../Assets/AjudaUsuario/AdicionarInf
 // Criar Proposta
 import criarPropostaIcone from "../../../Assets/AjudaUsuario/CriarProposta/criarPropostaIcone.png";
 import criarPropostaDemanda from "../../../Assets/AjudaUsuario/CriarProposta/criarPropostaDemanda.png";
+import criarPropostaFinal from "../../../Assets/AjudaUsuario/CriarProposta/criarPropostaFinal.png";
 // Criar Pauta
 // Informar o parecer da Comissão
 // Criar ATA
@@ -169,6 +170,12 @@ export const CriarProposta = (
         </BoxImage>
         
         <P>Posteriormente, adicione os novos atributos, sendo eles o escopo, linhas da tabela de custo, payback, o período de execução e as informações do responsável, o nome e a área que trabalha. Por fim, sendo opcional, os anexos para a proposta.</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarPropostaFinal} alt="Criar Proposta parte final" />
+        </BoxImage>
+
+        <Space>.</Space>
     </BoxBackground>
 );
 
