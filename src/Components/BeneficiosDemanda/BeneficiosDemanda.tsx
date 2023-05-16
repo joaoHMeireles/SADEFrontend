@@ -25,7 +25,8 @@ import {
 } from "./BeneficiosDemanda.styles";
 import SelectBox from "../SelectBox/SelectBox";
 import { Select } from "@mui/material";
-import CurrencyInput from 'react-currency-input-field';
+// import CurrencyInput from 'react-currency-input-field';
+// import CurrencyInput from "react-currency-input-field";
 
 
 const moedas = [
@@ -450,17 +451,17 @@ function BeneficioReal(props: {
             <TypographyLabels>Valor Mensal: </TypographyLabels>
           </BoxValorMensal>
           <BoxInputs>
-            <CurrencyInput
+            <TextField
               id={`valorMensalReal${props.index}`}
               style={{
                 width: "30%",
                 marginRight: 5,
                 boxShadow: "5px 5px 10px 0 #00000050",
               }}
-              decimalsLimit={2}
-              decimalSeparator=","
-              groupSeparator="."
-              intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
+              // decimalsLimit={2}
+              // decimalSeparator=","
+              // groupSeparator="."
+              // intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
               onChange={(e: any) => {
                 if (atualizarObjetos != null) {
                   atualizarObjetos()
