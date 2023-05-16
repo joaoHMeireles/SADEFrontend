@@ -18,6 +18,9 @@ import criarPropostaIcone from "../../../Assets/AjudaUsuario/CriarProposta/criar
 import criarPropostaDemanda from "../../../Assets/AjudaUsuario/CriarProposta/criarPropostaDemanda.png";
 import criarPropostaFinal from "../../../Assets/AjudaUsuario/CriarProposta/criarPropostaFinal.png";
 // Criar Pauta
+import criarPautaIcone from "../../../Assets/AjudaUsuario/CriarPauta/criarPautaIcone.png";
+import criarPautaProposta from "../../../Assets/AjudaUsuario/CriarPauta/criarPautaProposta.png";
+import criarPautaFinal from "../../../Assets/AjudaUsuario/CriarPauta/criarPautaFinal.png";
 // Informar o parecer da Comissão
 // Criar ATA
 // Informar o parecer da Diretoria Geral
@@ -158,17 +161,17 @@ export const CriarProposta = (
         </Title>
 
         <P>Para criar uma Proposta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Proposta”, depois, escolha a Demanda que quer transformar em Proposta podendo editar seus atributos.</P>
-        
+
         <BoxImage>
             <img id="imgs" src={criarPropostaIcone} alt="Criar Proposta pela sidebar" />
         </BoxImage>
-        
-        <P>Você também pode fazer esse processo já estando dentro de uma Demanda, basta clicar no botão de "Criar Proposta", este processo levará direto para a tela de edição dos atributos da Demanda</P>
-        
+
+        <P>Você também pode fazer esse processo já estando dentro de uma Demanda, basta clicar no botão de "Criar Proposta", este processo levará direto para a tela de edição dos atributos da Demanda.</P>
+
         <BoxImage>
             <img id="imgs" src={criarPropostaDemanda} alt="Criar Proposta pela Demanda" />
         </BoxImage>
-        
+
         <P>Posteriormente, adicione os novos atributos, sendo eles o escopo, linhas da tabela de custo, payback, o período de execução e as informações do responsável, o nome e a área que trabalha. Por fim, sendo opcional, os anexos para a proposta.</P>
 
         <BoxImage>
@@ -186,8 +189,22 @@ export const CriarPauta = (
         </Title>
 
         <P>Para criar uma pauta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Pauta”. Na próxima tela, selecione uma ou mais propostas a serem incluídas na pauta. Para isso, procure pelas propostas disponíveis na lista e clique naquelas que deseja adicionar, podendo excluí-las posteriormente.</P>
-        <P>Após a seleção das propostas, escolher a comissão que participará da reunião. Para isso, deve-se clicar na opção "Comissão" e selecionar a comissão desejada;</P>
-        <P>Por fim, escolha a data da reunião. Para isso, clique na opção "Data" e selecione a data desejada no calendário.</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarPautaIcone} alt="Criar Pauta pela sidebar" />
+        </BoxImage>
+
+        <P>Você também pode fazer esse processo já estando dentro de uma Proposta, basta clicar no botão de "Criar Pauta".</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarPautaProposta} alt="Criar Pauta pela Proposta" />
+        </BoxImage>
+
+        <P>Após a seleção das propostas, escolha um título para a reunião, o fórum que irá descuti-lá, a data e a hora da reunião.</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarPautaFinal} alt="Criar Pauta parte final" />
+        </BoxImage>
     </BoxBackground>
 );
 
