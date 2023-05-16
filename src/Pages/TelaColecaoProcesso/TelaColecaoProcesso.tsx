@@ -418,9 +418,9 @@ function Header(props: {
   useEffect(() => {
     if (tipoColecao == "Pauta") {
       if (!informacaoColecaoProcesso.pertenceUmaATA) {
-        if (dataReuniao <= new Date()) {
+        // if (dataReuniao <= new Date()) {
           setAcao("Informar parecer");
-        }
+        // }
       }
     } else {
       if (!informacaoColecaoProcesso.numeroDG) {
