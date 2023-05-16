@@ -1,6 +1,7 @@
 import "./Componentes.scss";
 import { BoxBackground, Title, P, BoxImage, Space } from "./Componentes.style";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+
 // Introdução
 import SOD from "../../../Assets/AjudaUsuario/Introducao/SOD.jpg";
 // Avaliar Demanda - Analista de TI ou Gerente de TI
@@ -22,6 +23,8 @@ import criarPautaIcone from "../../../Assets/AjudaUsuario/CriarPauta/criarPautaI
 import criarPautaProposta from "../../../Assets/AjudaUsuario/CriarPauta/criarPautaProposta.png";
 import criarPautaFinal from "../../../Assets/AjudaUsuario/CriarPauta/criarPautaFinal.png";
 // Informar o parecer da Comissão
+import informarParecerComissao from "../../../Assets/AjudaUsuario/InformarParecerComissao/informarParecerComissao.png";
+import informarParecerComissaoFinal from "../../../Assets/AjudaUsuario/InformarParecerComissao/informarParecerComissaoFinal.png";
 // Criar ATA
 // Informar o parecer da Diretoria Geral
 // Iniciar Workflow de Aprovação
@@ -205,6 +208,8 @@ export const CriarPauta = (
         <BoxImage>
             <img id="imgs" src={criarPautaFinal} alt="Criar Pauta parte final" />
         </BoxImage>
+
+        <Space>.</Space>
     </BoxBackground>
 );
 
@@ -214,7 +219,19 @@ export const InformarParecerComissao = (
             <p>Informar o parecer da Comissão</p>
         </Title>
 
-        <P>Para informar o parecer da comissão, escolha o status da pauta, podendo ser Cancelled, Business Case, To Do ou Assessment,, escreva os comentários necessários e escolha se vai ser uma ATA publicada ou uma ATA não publicada.</P>
+        <P>Após a Pauta passar pela reunião, será necessário informar o parecer da comissão que a discutiu. Para isso, dentro da pauta, clique no botão de "Informar parecer".</P>
+
+        <BoxImage>
+            <img id="imgs" src={informarParecerComissao} alt="Informar o parecer da Comissão" />
+        </BoxImage>
+
+        <P>Agora, escolha o status da pauta, podendo ser Cancelled, Business Case, To Do ou Assessment, escreva os comentários necessários e escolha se vai ser uma ATA publicada ou uma ATA não publicada e sendo opcional, os anexos que a comporão.</P>
+
+        <BoxImage>
+            <img id="imgs" src={informarParecerComissaoFinal} alt="Informar o parecer da Comissão parte final" />
+        </BoxImage>
+
+        <Space>.</Space>
     </BoxBackground>
 );
 
