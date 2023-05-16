@@ -26,7 +26,9 @@ import criarPautaFinal from "../../../Assets/AjudaUsuario/CriarPauta/criarPautaF
 import informarParecerComissao from "../../../Assets/AjudaUsuario/InformarParecerComissao/informarParecerComissao.png";
 import informarParecerComissaoFinal from "../../../Assets/AjudaUsuario/InformarParecerComissao/informarParecerComissaoFinal.png";
 // Criar ATA
+
 // Informar o parecer da Diretoria Geral
+
 // Iniciar Workflow de Aprovação
 import iniciarWorkflow from "../../../Assets/AjudaUsuario/IniciarWorkflow/iniciarWorkflow.png";
 // Avaliar Workflow de Aprovação
@@ -225,7 +227,7 @@ export const InformarParecerComissao = (
             <img id="imgs" src={informarParecerComissao} alt="Informar o parecer da Comissão" />
         </BoxImage>
 
-        <P>Agora, escolha o status da pauta, podendo ser Cancelled, Business Case, To Do ou Assessment, escreva os comentários necessários e escolha se vai ser uma ATA publicada ou uma ATA não publicada e sendo opcional, os anexos que a comporão.</P>
+        <P>Agora, escolha o status da pauta, podendo ser Cancelled, Business Case, To Do ou Assessment, escreva os comentários necessários e escolha se vai ser uma ATA publicada ou uma ATA não publicada e sendo opcional, os anexos que a complementarão.</P>
 
         <BoxImage>
             <img id="imgs" src={informarParecerComissaoFinal} alt="Informar o parecer da Comissão parte final" />
