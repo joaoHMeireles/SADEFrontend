@@ -663,7 +663,7 @@
   dependencies:
     "@progress/pako-esm" "^1.0.1"
 
-"@progress/kendo-data-query@^1.0.0":
+"@progress/kendo-data-query@^1.0.0", "@progress/kendo-data-query@^1.6.0":
   "integrity" "sha512-oCPDk94cuhp+NskdjBlKH3/rW2fBmQo+tVYqe3CDcuoefc35d1whYgjo5OWV1ZxPCQ8R1u3PdLgoLYLhaze0lA=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-data-query/-/kendo-data-query-1.6.0.tgz"
   "version" "1.6.0"
@@ -720,11 +720,6 @@
   "resolved" "https://registry.npmjs.org/@progress/kendo-file-saver/-/kendo-file-saver-1.1.1.tgz"
   "version" "1.1.1"
 
-"@progress/kendo-font-icons@1.4.2":
-  "integrity" "sha512-elrcqNfIDPT5fNsJK9f9aqCMsOTd1U7dGuHIasvPsfKyCj/N+iVvRy6rDfCRrGzVhAwhhwAwEzroZQHOP2vzqw=="
-  "resolved" "https://registry.npmjs.org/@progress/kendo-font-icons/-/kendo-font-icons-1.4.2.tgz"
-  "version" "1.4.2"
-
 "@progress/kendo-inputs-common@^3.1.0":
   "integrity" "sha512-lOpdICbRtrkYU+KOiNylTudFr266oTSgzdQ/H5R9cIK9CJvKXhU5Qdtq3gcx9PL/vJdPnbt3nj3YmuDn2hqp5Q=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-inputs-common/-/kendo-inputs-common-3.1.0.tgz"
@@ -757,7 +752,7 @@
   "resolved" "https://registry.npmjs.org/@progress/kendo-popup-common/-/kendo-popup-common-1.9.0.tgz"
   "version" "1.9.0"
 
-"@progress/kendo-react-animation@^5.0.0", "@progress/kendo-react-animation@^5.9.0", "@progress/kendo-react-animation@5.13.1":
+"@progress/kendo-react-animation@^5.0.0", "@progress/kendo-react-animation@^5.13.1", "@progress/kendo-react-animation@^5.9.0", "@progress/kendo-react-animation@5.13.1":
   "integrity" "sha512-93AiGk4DFoDLgn3ZXPHNrAdzcUFFEdyDEB97fz5wYkQ3dm3sdsyY0A5o/YtP2/V6VaAmCRzQpnMI2NNZ3zTGDA=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-react-animation/-/kendo-react-animation-5.13.1.tgz"
   "version" "5.13.1"
@@ -783,7 +778,7 @@
     "@progress/kendo-draggable-common" "^0.2.3"
     "prop-types" "^15.6.0"
 
-"@progress/kendo-react-data-tools@^5.9.0":
+"@progress/kendo-react-data-tools@^5.13.1", "@progress/kendo-react-data-tools@^5.9.0":
   "integrity" "sha512-fMMpOjlK8U53dVLomEvjivE+Os7ttOSpQBcogt6SrssSuhV/NXNbQ6NmX3sg1/Za8JU6hFMi05xE3Om15SkzmA=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-react-data-tools/-/kendo-react-data-tools-5.13.1.tgz"
   "version" "5.13.1"
@@ -791,7 +786,7 @@
     "@progress/kendo-react-common" "5.13.1"
     "prop-types" "^15.6.0"
 
-"@progress/kendo-react-dateinputs@^5.0.0", "@progress/kendo-react-dateinputs@^5.9.0":
+"@progress/kendo-react-dateinputs@^5.0.0", "@progress/kendo-react-dateinputs@^5.13.1", "@progress/kendo-react-dateinputs@^5.9.0":
   "integrity" "sha512-jA6obbGwSh3C9dkCh6/AsAIdAXWBAtaZe2SXUzinjVffUF9Drlc7ccNReEGLW3GRrDluDq01kjcNNyuo/qBb6w=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-react-dateinputs/-/kendo-react-dateinputs-5.13.1.tgz"
   "version" "5.13.1"
@@ -849,7 +844,7 @@
     "@progress/kendo-react-common" "5.13.1"
     "prop-types" "^15.6.0"
 
-"@progress/kendo-react-indicators@^5.9.0":
+"@progress/kendo-react-indicators@^5.13.1", "@progress/kendo-react-indicators@^5.9.0":
   "integrity" "sha512-4iRmf5hB2VBwklVp+qQg6Zz2tlz6HJl6SuWW0Ca1Z7V1xU09j8Vs1PpBmPgeq6/cAgsrZX/F5EZtyXI9S+7Ung=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-react-indicators/-/kendo-react-indicators-5.13.1.tgz"
   "version" "5.13.1"
@@ -896,7 +891,7 @@
     "@progress/kendo-react-popup" "5.13.1"
     "prop-types" "^15.6.0"
 
-"@progress/kendo-react-pdf-viewer@latest":
+"@progress/kendo-react-pdf-viewer@^5.13.1":
   "integrity" "sha512-pEyERxAemck1mP2wZDRtMDWS+YXJ8vZby4lew0DcYknxLG5oPJ7AwsstH4L4QH8YUP/jjU67tIk/m1jHjQFXaw=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-react-pdf-viewer/-/kendo-react-pdf-viewer-5.13.1.tgz"
   "version" "5.13.1"
@@ -931,7 +926,7 @@
     "@progress/kendo-react-common" "5.13.1"
     "prop-types" "^15.6.0"
 
-"@progress/kendo-react-treeview@^5.0.0", "@progress/kendo-react-treeview@^5.9.0":
+"@progress/kendo-react-treeview@^5.0.0", "@progress/kendo-react-treeview@^5.13.1", "@progress/kendo-react-treeview@^5.9.0":
   "integrity" "sha512-n//nY+3oFe5AdCuBKLKCSqJ9oHeldCk+sNEdq0+z4N2N8HxKiMbtvpbIbacR1KEYqYjVqcvIz/cw+I1jiS6QUA=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-react-treeview/-/kendo-react-treeview-5.13.1.tgz"
   "version" "5.13.1"
@@ -939,7 +934,7 @@
     "@progress/kendo-react-common" "5.13.1"
     "prop-types" "^15.6.0"
 
-"@progress/kendo-react-upload@^5.9.0":
+"@progress/kendo-react-upload@^5.13.1", "@progress/kendo-react-upload@^5.9.0":
   "integrity" "sha512-o/ut3TRuwA261qmWeV919NfKEEmryrebxeyE3p4VKdM0Rd3+q93CoAFXzF+xnjc3KyB/FOjuSDUjlO1CsrNGUw=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-react-upload/-/kendo-react-upload-5.13.1.tgz"
   "version" "5.13.1"
@@ -952,27 +947,6 @@
   "integrity" "sha512-mEMDFemkBGqDfjiXzouHTjlw75V6Lgk3RygG1ZeojzBItj/FsiwCBqv3sM72GSAKNTwkFh6YI5+zM1Kiovwh6g=="
   "resolved" "https://registry.npmjs.org/@progress/kendo-svg-icons/-/kendo-svg-icons-1.5.0.tgz"
   "version" "1.5.0"
-
-"@progress/kendo-theme-core@6.3.0":
-  "integrity" "sha512-+ZCzrURoYm5rvQqwFgqUPsAIZzE31rH0ly08w7Dn2fKTMkvlU++hWySL2622NtLRYWgpGC1wXX9rPZKro36bqg=="
-  "resolved" "https://registry.npmjs.org/@progress/kendo-theme-core/-/kendo-theme-core-6.3.0.tgz"
-  "version" "6.3.0"
-
-"@progress/kendo-theme-default@^6.3.0":
-  "integrity" "sha512-nkKI7ZwNY3MNrEfG4TobmvFn+HixeWE6FVe5FhUGo6RF0FJTA0hsnP8WPOscXJmSvfglgastOxewMr/t+3pg3g=="
-  "resolved" "https://registry.npmjs.org/@progress/kendo-theme-default/-/kendo-theme-default-6.3.0.tgz"
-  "version" "6.3.0"
-  dependencies:
-    "@progress/kendo-font-icons" "1.4.2"
-    "@progress/kendo-theme-core" "6.3.0"
-    "@progress/kendo-theme-utils" "6.3.0"
-
-"@progress/kendo-theme-utils@6.3.0":
-  "integrity" "sha512-DnB/fAdxGYDEW2Vr282qhl/a9hHwdjAgZZ+VN8mTxfSCfr7koBPBTIKGhBrBBwCRAE0f5AJgfng2pUQfO1qIFg=="
-  "resolved" "https://registry.npmjs.org/@progress/kendo-theme-utils/-/kendo-theme-utils-6.3.0.tgz"
-  "version" "6.3.0"
-  dependencies:
-    "@progress/kendo-theme-core" "6.3.0"
 
 "@progress/pako-esm@^1.0.1":
   "integrity" "sha512-O4A3b1EuE9Xe1pC3Xz9Tcn1M/CYrL71f4y/5TXeytOVTkmkzBgYW97fYP2f+54H0e0erWRaqV/kUUB/a8Uxfbw=="
@@ -5370,9 +5344,9 @@
     "is-wsl" "^1.1.0"
 
 "orderedmap@^2.0.0":
-  "integrity" "sha512-/pIFexOm6S70EPdznemIz3BQZoJ4VTFrhqzu0ACBqBgeLsLxq8e6Jim63ImIfwW/zAD1AlXpRMlOv3aghmo4dA=="
-  "resolved" "https://registry.npmjs.org/orderedmap/-/orderedmap-2.1.0.tgz"
-  "version" "2.1.0"
+  "integrity" "sha512-TvAWxi0nDe1j/rtMcWcIj94+Ffe6n7zhow33h40SKxmsmozs6dz/e+EajymfoFcHd7sxNn8yHM8839uixMOV6g=="
+  "resolved" "https://registry.npmjs.org/orderedmap/-/orderedmap-2.1.1.tgz"
+  "version" "2.1.1"
 
 "original@>=0.0.5":
   "integrity" "sha512-hyBVl6iqqUOJ8FqRe+l/gS8H+kKYjrEndd5Pm1MfBtsEKA038HkkdbAl/72EAXGyonD/PFsvmVG+EvcIpliMBg=="
@@ -6419,9 +6393,9 @@
     "fsevents" "~2.3.2"
 
 "rope-sequence@^1.3.0":
-  "integrity" "sha512-85aZYCxweiD5J8yTEbw+E6A27zSnLPNDL0WfPdw3YYodq7WjnTKo0q4dtyQ2gz23iPT8Q9CUyJtAaUNcTxRf5Q=="
-  "resolved" "https://registry.npmjs.org/rope-sequence/-/rope-sequence-1.3.3.tgz"
-  "version" "1.3.3"
+  "integrity" "sha512-UT5EDe2cu2E/6O4igUr5PSFs23nvvukicWHx6GnOPlHAiiYbzNuCRQCuiUdHJQcqKalLKlrYJnjY0ySGsXNQXQ=="
+  "resolved" "https://registry.npmjs.org/rope-sequence/-/rope-sequence-1.3.4.tgz"
+  "version" "1.3.4"
 
 "safe-buffer@^5.0.1", "safe-buffer@^5.1.0", "safe-buffer@^5.1.1", "safe-buffer@^5.1.2", "safe-buffer@>=5.1.0", "safe-buffer@~5.1.0", "safe-buffer@~5.1.1", "safe-buffer@5.1.2":
   "integrity" "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g=="
@@ -7638,9 +7612,9 @@
   "version" "1.1.2"
 
 "w3c-keyname@^2.2.0":
-  "integrity" "sha512-f+fciywl1SJEniZHD6H+kUO8gOnwIr7f4ijKA6+ZvJFjeGi1r4PDLl53Ayud9O/rk64RqgoQine0feoeOU0kXg=="
-  "resolved" "https://registry.npmjs.org/w3c-keyname/-/w3c-keyname-2.2.6.tgz"
-  "version" "2.2.6"
+  "integrity" "sha512-XB8aa62d4rrVfoZYQaYNy3fy+z4nrfy2ooea3/0BnBzXW0tSdZ+lRgjzBZhk0La0H6h8fVyYCxx/qkQcAIuvfg=="
+  "resolved" "https://registry.npmjs.org/w3c-keyname/-/w3c-keyname-2.2.7.tgz"
+  "version" "2.2.7"
 
 "watchpack-chokidar2@^2.0.1":
   "integrity" "sha512-nCFfBIPKr5Sh61s4LPpy1Wtfi0HE8isJ3d2Yb5/Ppw2P2B/3eVSEBjKfN0fmHJSK14+31KwMKmcrzs2GM4P0Ww=="
