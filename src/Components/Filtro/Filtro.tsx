@@ -2,7 +2,7 @@ import { ChangeEventHandler, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useLocationChange } from "../../utils";
 import {
-  Box, Checkbox, Collapse, Divider, FormControl, FormControlLabel, FormGroup, IconButton, InputAdornment, Radio,
+  Box, Button, Checkbox, Collapse, Divider, FormControl, FormControlLabel, FormGroup, IconButton, InputAdornment, Radio,
   RadioGroup, TextField, Toolbar
 } from "@mui/material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
@@ -168,6 +168,11 @@ export default function Filtro(props: {
               <Item itens={foruns} titulo="Fórum" tipo={2} filtrarResultados={props.filtrarResultados} />
             </>
           }
+          <Box>
+            <Button>
+              to excel
+            </Button>
+          </Box>
         </DrawerFiltro>
       }
     </>
@@ -182,7 +187,7 @@ export default function Filtro(props: {
  * @param props 
  * @returns 
  */
-function Item(props: {
+function  Item(props: {
   itens?: { id: number; nome: string }[];
   titulo: string;
   tipo: number;
