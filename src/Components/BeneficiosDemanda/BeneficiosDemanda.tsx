@@ -515,7 +515,7 @@ function BeneficioReal(props: {
               onChange={(e: any) => {
                 setMoedaBeneficio(e.target.value)
 
-                // atualizarInputValor();
+                // atualizarInputValor(); 
 
                 props.moedaReal.push(e.target.value)
                 props.setMoedaReal(props.moedaReal)
