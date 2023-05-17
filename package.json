@@ -18,18 +18,19 @@
     "@mui/styled-engine-sc": "^5.12.0",
     "@mui/x-data-grid": "^5.17.14",
     "@mui/x-date-pickers": "^5.0.9",
-    "@popperjs/core": "^2.11.6",
-    "@progress/kendo-react-pdf-viewer": "latest",
+    "@popperjs/core": "^2.11.7",
     "@progress/kendo-drawing": "^1.17.5",
     "@progress/kendo-licensing": "^1.3.0",
     "@progress/kendo-react-buttons": "^5.13.1",
     "@progress/kendo-react-dialogs": "^5.13.1",
     "@progress/kendo-react-dropdowns": "^5.13.1",
     "@progress/kendo-react-editor": "^5.13.1",
+    "@progress/kendo-react-excel-export": "^5.13.1",
     "@progress/kendo-react-inputs": "^5.13.1",
     "@progress/kendo-react-intl": "^5.13.1",
     "@progress/kendo-react-layout": "^5.13.1",
     "@progress/kendo-react-pdf": "^5.13.1",
+    "@progress/kendo-react-pdf-viewer": "latest",
     "@progress/kendo-react-popup": "^5.13.1",
     "@progress/kendo-react-progressbars": "^5.13.1",
     "@progress/kendo-svg-icons": "^1.5.0",
@@ -54,7 +55,7 @@
     "socket.io-client": "4.6.1",
     "sockjs-client": "^1.6.1",
     "stompjs": "2.3.3",
-    "styled-components": "^5.3.9"
+    "styled-components": "^5.3.10"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -66,6 +67,6 @@
     "@types/stompjs": "^2.3.5",
     "@vitejs/plugin-react": "^2.1.0",
     "typescript": "^4.6.4",
-    "vite": "^3.1.0"
+    "vite": "^4.3.3"
   }
 }

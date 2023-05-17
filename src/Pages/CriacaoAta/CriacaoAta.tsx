@@ -170,7 +170,7 @@ export default function CriacaoAta(props: {
               setPautaEscolhida={setPautaEscolhida}
             />
             :
-            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma proposta disponível no sistema"} />
+            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação "} />
           }
 
           <BotaoPrimario
