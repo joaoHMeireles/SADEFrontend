@@ -450,6 +450,16 @@ function BeneficioReal(props: {
   }, [moedaBeneficio]);
 
   useEffect(() => {
+    atualizarInputValor()
+  }, [configuracaoValor])
+
+  function atualizarInputValor(){
+    const inputValor = document.getElementById(`valorMensalReal${props.index}`) as HTMLInputElement
+    let valor = inputValor.value
+    inputValor.value = valor
+  }
+
+  useEffect(() => {
     if (props.moedaBeneficio) {
       setMoedaBeneficio(props.moedaBeneficio)
     }
@@ -457,7 +467,7 @@ function BeneficioReal(props: {
     if (props.moedaReal) {
       setMoedaBeneficio(props.moedaReal)
     }
-  })
+  }, [])
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -495,7 +505,8 @@ function BeneficioReal(props: {
                     "REAL"
                   )
                 }
-              }} />
+              }}
+              />
 
             <Select
               id={`moedaReal${props.index}`}
@@ -503,6 +514,8 @@ function BeneficioReal(props: {
               value={moedaBeneficio}
               onChange={(e: any) => {
                 setMoedaBeneficio(e.target.value)
+
+                // atualizarInputValor();
 
                 props.moedaReal.push(e.target.value)
                 props.setMoedaReal(props.moedaReal)
@@ -521,8 +534,24 @@ function BeneficioReal(props: {
                     "REAL"
                   )
                 }
-              }
-              }>
+
+                switch (moedaBeneficio) {
+                  case "EURO": {
+                    setConfiguracaoValor({ locale: "es-ES", currency: "EUR" });
+                    break;
+                  };
+                  case "DOLAR": {
+                    setConfiguracaoValor({ locale: "en-US", currency: "USD" });
+                    break;
+                  };
+                  default: {
+                    setConfiguracaoValor({ locale: "pt-BR", currency: "BRL" });
+                    break;
+                  };
+                };
+              }}
+              
+              >
               {moedas.map((option: any, index: number) => (
                 <MenuItem id={`moedaRealoptions${props.index}`} key={index} value={option}>
                   {option}
