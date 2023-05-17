@@ -123,10 +123,7 @@ export default function CriacaoAta(props: {
       }
     }
 
-    console.log(pautaCerta);
-
     api.post("/sod/ata/" + localStorage.getItem("IDUSUARIO"), formData).then((response) => {
-      console.log(response);
       location.href = "/home"
     }).catch((err) => {
       console.log(err);
@@ -173,7 +170,7 @@ export default function CriacaoAta(props: {
               setPautaEscolhida={setPautaEscolhida}
             />
             :
-            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma proposta disponível no sistema"} />
+            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação "} />
           }
 
           <BotaoPrimario

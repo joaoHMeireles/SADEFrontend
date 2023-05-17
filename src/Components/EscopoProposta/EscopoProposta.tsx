@@ -1,4 +1,4 @@
-import '@progress/kendo-theme-default/dist/default-ocean-blue.scss';
+// import '@progress/kendo-theme-default/dist/default-ocean-blue.scss';
 import TextField from "@mui/material/TextField";
 
 import InputAnexos from "../InputAnexos/InputAnexos";

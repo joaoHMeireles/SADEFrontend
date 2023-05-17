@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { BoxConteudo } from "../App.styles";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
@@ -13,6 +13,7 @@ import semDemanda from "../../Assets/empty-folder.png"
 export default function Enviadas(props: {
   filtrar: boolean;
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
+  filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }) {
   const [grid, setGrid] = useState(true);
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
@@ -41,6 +42,7 @@ export default function Enviadas(props: {
           filtrar={props.filtrar}
           grid={grid}
           setGrid={setGrid}
+          filtrarResultados={props.filtrarResultados}
         />
          {listaComponents.length != 0 ?
           <CardsProcesso

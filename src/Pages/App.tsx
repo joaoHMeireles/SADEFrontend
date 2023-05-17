@@ -317,9 +317,9 @@ export default function App() {
                     <Route path="/home/agenda/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
                     <Route path="/home/ata/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
 
-                    <Route path="/mydemands" element={<Enviadas setFiltrar={setFiltrar} filtrar={filtrar} />}></Route>
+                    <Route path="/mydemands" element={<Enviadas setFiltrar={setFiltrar} filtrar={filtrar} filtrarResultados={filtrarResultados} />}></Route>
 
-                    <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar} />}></Route>
+                    <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar} filtrarResultados={filtrarResultados} />}></Route>
                     <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true} />}></Route>
 
                     <Route path="/home/demand/history" element={<Historico />} />
