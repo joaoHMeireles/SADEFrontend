@@ -245,7 +245,7 @@ export function Header(props: {
                 formDataDemanda.append("demanda", JSON.stringify(
                     {
                         tamanho: getKeyEnum(TamanhoComponenteProcesso, tamanhoDemanda).toUpperCase(),
-                        busolicitante: { idBU: bu.idBU },
+                        busolicitante: { idBU: bu.idBU, nomeBU: bu.nomeBU },
                         busBeneficiadas: busBeneficiadasEscolhidas,
                         secaoTIResponsavel: getKeyEnum(sessaoTI, sessaoTIResponsavel),
                         classificando: true
@@ -253,9 +253,9 @@ export function Header(props: {
                 ))
 
                 // Depois que conseguir fazer o arquivo de versionamento esse get não será mais necessário 
-                api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
-                    //colocar pdf
-                    formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
+                // api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
+                //     //colocar pdf
+                //     formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
 
                     // faz a atualização do histórico da demanda
                     api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
@@ -272,10 +272,10 @@ export function Header(props: {
                     }).catch((err: any) => {
                         console.log(err);
                     })
-                }).catch((err: any) => {
-                    console.log(err);
+                // }).catch((err: any) => {
+                //     console.log(err);
 
-                })
+                // })
             }
 
             const segundaParteAprovacao = <ModalClassificacaoDemanda abrirFeedback={finalizarAprovacao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />

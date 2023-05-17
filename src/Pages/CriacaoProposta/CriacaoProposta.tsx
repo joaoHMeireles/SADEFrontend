@@ -275,13 +275,13 @@ export default function CriacaoProposta(props: {
 
     formData.append("proposta", JSON.stringify(proposta));
 
-    const doc = new jsPDF()
-    const pdf = document.getElementById("BOX") as HTMLElement
+    // const doc = new jsPDF()
+    // const pdf = document.getElementById("BOX") as HTMLElement
 
-    doc.html(pdf)
-    const pdfArquivo = doc.output("blob")
+    // doc.html(pdf)
+    // const pdfArquivo = doc.output("blob")
 
-    formData.append("pdfVersaoHistorico", pdfArquivo);
+    // formData.append("pdfVersaoHistorico", pdfArquivo);
 
     if (arquivosProposta || arquivosProposta != undefined) {
       for (const arquivo of arquivosProposta) {
