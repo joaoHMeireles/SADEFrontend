@@ -124,6 +124,9 @@ export default function ComponenteProcesso(props: {
   }, [props.propostas]);
 
   function verProcesso() {
+    if(props.rascunho){
+      return
+    }
     setProcesso()
     location.href = nomeTipoLink;
   }
@@ -193,7 +196,7 @@ function GridComponent(props: ComponentProps) {
                   </Link>
                 ) : (
                   <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                    Continuar criação
+                    Continuar 
                   </Link>
                 )}
               </GridLinkTypograpfy>
@@ -248,7 +251,7 @@ function GridComponent(props: ComponentProps) {
                   </Link>
                 ) : (
                   <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                    Continuar criação
+                    Continuar 
                   </Link>
                 )}
               </GridLinkTypograpfy>
@@ -321,7 +324,7 @@ function GridComponent(props: ComponentProps) {
                     </Link>
                   ) : (
                     <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                      Continuar criação
+                      Continuar 
                     </Link>
                   )}
                 </GridLinkTypograpfy>
@@ -366,7 +369,7 @@ function ListComponent(props: ComponentProps) {
                 </Link>
               ) : (
                 <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                  Continuar criação
+                  Continuar 
                 </Link>
               )}
             </UltimaListaTypography>
@@ -412,7 +415,7 @@ function ListComponent(props: ComponentProps) {
                 </Link>
               ) : (
                 <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                  Continuar criação
+                  Continuar 
                 </Link>
               )}
             </ListaTypography>
@@ -454,7 +457,7 @@ function ListComponent(props: ComponentProps) {
                   </Link>
                 ) : (
                   <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                    Continuar criação
+                    Continuar 
                   </Link>
                 )}
               </ListaTypography>

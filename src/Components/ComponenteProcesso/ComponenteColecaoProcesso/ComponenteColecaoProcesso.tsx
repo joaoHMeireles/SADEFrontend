@@ -4,11 +4,12 @@ import {
   InterfaceComponenteProcesso,
   InterfaceColecaoComponenteProcesso,
 } from "../../../constants/interfaces";
-import { Grid, Tooltip } from "@mui/material";
+import { Grid, Radio, Tooltip } from "@mui/material";
 import {
   BoxColecaoComponente,
   BoxGridCorProcesso,
   BoxListaCorProcesso,
+  GridBoxTituloRadio,
   GridComponenteProcesso,
   GridLinkTypograpfy,
   GridTypography,
@@ -17,12 +18,16 @@ import {
   MainPaper,
   UltimaListaTypography,
 } from "../ComponenteProcesso.styles";
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 
 export default function ComponenteColecaoProcesso(props: {
   atributosColecaoProcesso: any;
   grid: boolean;
+  criandoATA?: boolean;
+  pautaEscolhida?: any;
+  setPautaEscolhida?: React.Dispatch<React.SetStateAction<any>>;
 }) {
+  const [checado, setChecado] = useState(false)
   const componente = props.atributosColecaoProcesso;
   const paginaAtual = localStorage.getItem("PAGINATUAL");
   const listaPropostas = props.atributosColecaoProcesso.propostas;
@@ -39,6 +44,16 @@ export default function ComponenteColecaoProcesso(props: {
     tituloToolTip = "Pauta";
     nomeTipoLink = `/${paginaAtual}/agenda`;
   }
+
+  useEffect(() => {
+    if (props.pautaEscolhida) {
+      if (componente.idPauta == props.pautaEscolhida.idPauta) {
+        setChecado(true)
+      } else {
+        setChecado(false)
+      }
+    }
+  }, [props.pautaEscolhida])
 
   function verProcesso() {
     setProcesso()
@@ -63,6 +78,10 @@ export default function ComponenteColecaoProcesso(props: {
       linkComponente={nomeTipoLink}
       setProcesso={setProcesso}
       verProcesso={verProcesso}
+      criandoATA={props.criandoATA}
+      pautaEscolhida={props.pautaEscolhida}
+      setPautaEscolhida={props.setPautaEscolhida}
+      checado={checado}
     />
   ) : (
     <ListComponent
@@ -73,6 +92,10 @@ export default function ComponenteColecaoProcesso(props: {
       linkComponente={nomeTipoLink}
       setProcesso={setProcesso}
       verProcesso={verProcesso}
+      criandoATA={props.criandoATA}
+      pautaEscolhida={props.pautaEscolhida}
+      setPautaEscolhida={props.setPautaEscolhida}
+      checado={checado}
     />
   );
 
@@ -84,88 +107,187 @@ export default function ComponenteColecaoProcesso(props: {
 }
 
 function GridComponent(props: ComponentCollectionProps) {
-  console.log(props.componente);
-
 
   return (
     <>
-      <Tooltip title={props.tituloToolTip} placement="left">
-        <Grid item xs={1}>
-          <BoxGridCorProcesso sx={{ backgroundColor: props.corComponente }} />
-        </Grid>
-      </Tooltip>
-      <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
-        <GridTypography variant="h6">
-          {props.componente.tituloReuniao}
-        </GridTypography>
-        <GridTypography variant="subtitle1">
-          <span> Data: </span>{" "}
-          {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
-        </GridTypography>
-        <GridTypography variant="subtitle1">
-          <span> Propostas: </span>
-        </GridTypography>
-        <GridTypography variant="body1">
-          - {props.componente.propostas[0].proposta.demanda.tituloDemanda}
-        </GridTypography>
-        <GridTypography variant="body1" sx={{ display: "flex" }}>
-          {props.componente.propostas.length > 1 ?
-            <BoxColecaoComponente>
-              - {props.componente.propostas[1].proposta.demanda.tituloDemanda}
-            </BoxColecaoComponente>
-            :
-            <BoxColecaoComponente>
-              {""}
-            </BoxColecaoComponente>
-          }
-          <GridLinkTypograpfy variant="body2">
-            <Link to={props.linkComponente} onClick={props.setProcesso}>
-              Ver mais
-            </Link>
-          </GridLinkTypograpfy>
-        </GridTypography>
-      </GridComponenteProcesso>
+      {props.criandoATA ?
+        <>
+          <Tooltip title={props.tituloToolTip} placement="left">
+            <Grid item xs={1}>
+              <BoxGridCorProcesso
+                sx={{ backgroundColor: props.corComponente }}
+              />
+            </Grid>
+          </Tooltip>
+          <GridComponenteProcesso item xs={11}
+            onClick={() => {
+              if (props.setPautaEscolhida) {
+                props.setPautaEscolhida(props.componente)
+              }
+            }}>
+            <GridBoxTituloRadio>
+              <GridTypography variant="h6">
+                {props.componente.tituloReuniao}
+              </GridTypography>
+              <Radio
+                checked={props.checado}
+              />
+            </GridBoxTituloRadio>
+            <GridTypography variant="subtitle1">
+              <span> Data: </span>{" "}
+              {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
+            </GridTypography>
+            <GridTypography variant="subtitle1">
+              <span> Propostas: </span>
+            </GridTypography>
+            <GridTypography variant="body1">
+              - {props.componente.propostas[0].proposta.demanda.tituloDemanda}
+            </GridTypography>
+            <GridTypography variant="body1" sx={{ display: "flex" }}>
+              {props.componente.propostas.length > 1 ?
+                <BoxColecaoComponente>
+                  - {props.componente.propostas[1].proposta.demanda.tituloDemanda}
+                </BoxColecaoComponente>
+                :
+                <BoxColecaoComponente>
+                  {""}
+                </BoxColecaoComponente>
+              }
+              <GridLinkTypograpfy variant="body2">
+                <Link to={props.linkComponente} onClick={props.setProcesso}>
+                  Ver mais
+                </Link>
+              </GridLinkTypograpfy>
+            </GridTypography>
+          </GridComponenteProcesso>
+        </>
+        :
+        <>
+          <Tooltip title={props.tituloToolTip} placement="left">
+            <Grid item xs={1}>
+              <BoxGridCorProcesso sx={{ backgroundColor: props.corComponente }} />
+            </Grid>
+          </Tooltip>
+          <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
+            <GridTypography variant="h6">
+              {props.componente.tituloReuniao}
+            </GridTypography>
+            <GridTypography variant="subtitle1">
+              <span> Data: </span>{" "}
+              {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
+            </GridTypography>
+            <GridTypography variant="subtitle1">
+              <span> Propostas: </span>
+            </GridTypography>
+            <GridTypography variant="body1">
+              - {props.componente.propostas[0].proposta.demanda.tituloDemanda}
+            </GridTypography>
+            <GridTypography variant="body1" sx={{ display: "flex" }}>
+              {props.componente.propostas.length > 1 ?
+                <BoxColecaoComponente>
+                  - {props.componente.propostas[1].proposta.demanda.tituloDemanda}
+                </BoxColecaoComponente>
+                :
+                <BoxColecaoComponente>
+                  {""}
+                </BoxColecaoComponente>
+              }
+              <GridLinkTypograpfy variant="body2">
+                <Link to={props.linkComponente} onClick={props.setProcesso}>
+                  Ver mais
+                </Link>
+              </GridLinkTypograpfy>
+            </GridTypography>
+          </GridComponenteProcesso>
+        </>
+      }
+
     </>
   );
 }
 
 function ListComponent(props: ComponentCollectionProps) {
   const propostas = props.listaPropostas.map((e, index) => {
+    console.log(e);
+
+
     if (index >= 2) {
       return null;
     }
+
     return (
       <ListaTypography variant="subtitle2" sx={{ maxWidth: "8vw" }}>
-        {"- " + e.tituloDemanda}
+        {"- " + e.proposta.demanda.tituloDemanda}
       </ListaTypography>
     );
   });
 
   return (
     <>
-      <Tooltip title={props.tituloToolTip} placement="left">
-        <Grid item xs={0.3}>
-          <BoxListaCorProcesso sx={{ backgroundColor: props.corComponente }} />
-        </Grid>
-      </Tooltip>
-      <ListaComponenteProcesso item xs={11.7} onClick={props.verProcesso}>
-        <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
-          {props.componente.id} - {props.componente.tituloReuniao}
-        </ListaTypography>
-        <ListaTypography variant="subtitle2" sx={{ minWidth: "14.3vw" }}>
-          <span> Data: </span>{" "}
-          {props.componente.dataReuniao.toLocaleDateString()}
-        </ListaTypography>
-        <ListaTypography variant="subtitle2" sx={{ maxWidth: "8vw" }}>
-          <span> Propostas: </span>
-        </ListaTypography>
-        {propostas}
-        <UltimaListaTypography variant="body2" sx={{ maxWidth: "8.5vw" }}>
-          <Link to={props.linkComponente} onClick={props.setProcesso}>
-            Ver mais
-          </Link>
-        </UltimaListaTypography>
-      </ListaComponenteProcesso>
+      {props.criandoATA ?
+        <>
+          <Tooltip title={props.tituloToolTip} placement="left">
+            <Grid item xs={0.3}>
+              <BoxListaCorProcesso
+                sx={{ backgroundColor: props.corComponente }}
+              />
+            </Grid>
+          </Tooltip>
+          <ListaComponenteProcesso item xs={11.7}
+            onClick={() => {
+              if (props.setPautaEscolhida) {
+                props.setPautaEscolhida(props.componente)
+              }
+            }}
+          >
+            <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
+              {props.componente.id} - {props.componente.tituloReuniao}
+            </ListaTypography>
+            <ListaTypography variant="subtitle2" sx={{ minWidth: "14.3vw" }}>
+              <span> Data: </span>{" "}
+              {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
+            </ListaTypography>
+            <ListaTypography variant="subtitle2" sx={{ maxWidth: "8vw" }}>
+              <span> Propostas: </span>
+            </ListaTypography>
+            {propostas}
+            <ListaTypography variant="subtitle2">
+              {/* <Link to={props.linkComponente} onClick={props.setProcesso}>
+                Ver mais
+              </Link> */}
+            </ListaTypography>
+            <UltimaListaTypography variant="body2" sx={{ maxWidth: "8.5vw" }}>
+              <Radio checked={props.checado} />
+            </UltimaListaTypography>
+          </ListaComponenteProcesso>
+        </>
+        :
+        <>
+          <Tooltip title={props.tituloToolTip} placement="left">
+            <Grid item xs={0.3}>
+              <BoxListaCorProcesso sx={{ backgroundColor: props.corComponente }} />
+            </Grid>
+          </Tooltip>
+          <ListaComponenteProcesso item xs={11.7} onClick={props.verProcesso}>
+            <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
+              {props.componente.id} - {props.componente.tituloReuniao}
+            </ListaTypography>
+            <ListaTypography variant="subtitle2" sx={{ minWidth: "14.3vw" }}>
+              <span> Data: </span>{" "}
+              {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
+            </ListaTypography>
+            <ListaTypography variant="subtitle2" sx={{ maxWidth: "8vw" }}>
+              <span> Propostas: </span>
+            </ListaTypography>
+            {propostas}
+            <UltimaListaTypography variant="body2" sx={{ maxWidth: "8.5vw" }}>
+              <Link to={props.linkComponente} onClick={props.setProcesso}>
+                Ver mais
+              </Link>
+            </UltimaListaTypography>
+          </ListaComponenteProcesso>
+        </>
+      }
     </>
   );
 }
@@ -181,4 +303,8 @@ interface ComponentCollectionProps {
   linkComponente: string;
   setProcesso: MouseEventHandler<HTMLAnchorElement>;
   verProcesso: MouseEventHandler<HTMLDivElement>;
+  criandoATA?: boolean;
+  pautaEscolhida?: any;
+  setPautaEscolhida?: React.Dispatch<React.SetStateAction<any>>;
+  checado: boolean;
 }

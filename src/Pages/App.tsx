@@ -23,6 +23,7 @@ import Historico from "./Historico/Historico";
 import CriacaoProposta from "./CriacaoProposta/CriacaoProposta";
 import Rascunho from "./Rascunho/Rascunho";
 import CriacaoPauta from "./CriacaoPauta/CriacaoPauta";
+import CriacaoAta from "./CriacaoAta/CriacaoAta";
 import VisualizarCriacaoPDF from "./VisualizarCriacaoPDF/VisualizarCriacaoPDF";
 import Enviadas from "./Enviadas/Enviadas";
 import api from "../api/api";
@@ -33,6 +34,7 @@ import AjudaUsuario from "./AjudaUsuario/AjudaUsuario";
 
 import { WebSocketService } from "../api/websocketservice.jsx";
 import RascunhoObserver from "../Components/RascunhoObserver/RascunhoObserver";
+
 
 
 export default function App() {
@@ -306,6 +308,7 @@ export default function App() {
                     <Route path="/createdemand" element={<CriacaoDemanda rascunho={false} />} />
                     <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar} filtrarResultados={filtrarResultados}/>} />
                     <Route path="/createagenda" element={<CriacaoPauta setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} />} />
+                    <Route path="/createata" element={<CriacaoAta setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} />} />
 
                     <Route path="/home/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
                     <Route path="/mydemands/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />

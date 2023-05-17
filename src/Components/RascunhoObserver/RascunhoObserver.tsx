@@ -25,11 +25,7 @@ export default function RascunhoObserver() {
 
                         formData.append("demanda", JSON.stringify(objetoDemanda))
 
-                        console.log(objetoDemanda);
-
-                        api.post("/sod/demanda/rascunho", formData).then((response) => {
-                            console.log(response.data);
-                        })
+                        api.post("/sod/demanda/rascunho", formData)
                     }
                 }
             }

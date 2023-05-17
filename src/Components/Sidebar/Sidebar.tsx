@@ -59,6 +59,11 @@ const lista = [
         id: 3,
         nome: "Pauta",
         rota: "createagenda"
+      },
+      {
+        id: 4,
+        nome: "Ata",
+        rota: "createata"
       }
     ]
   },
