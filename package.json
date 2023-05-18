@@ -68,7 +68,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.0.1",
     "@types/js-cookie": "^3.0.3",
-    "@types/node": "^20.1.7",
+    "@types/node": "^20.2.1",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "@types/react-text-mask": "^5.4.11",
@@ -78,6 +78,6 @@
     "react-text-mask": "^5.5.0",
     "text-mask-addons": "^3.8.0",
     "typescript": "^5.0.4",
-    "vite": "^4.3.7"
+    "vite": "^4.3.8"
   }
 }

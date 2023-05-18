@@ -155,6 +155,14 @@ export default function Filtro(props: {
     }
   }
 
+
+  const _export = useRef(null);
+  const exportExport = () => {
+    if (_export.current !== null) {
+      (_export.current as any).save(props.listaComponents);
+    }
+  };
+
   return (
     <>
       {location.pathname != "/" &&

@@ -232,7 +232,7 @@ export default function TelaHistoricos(props: {}) {
     setMostrarPDF(false);
   }
 
-  function pegarClassesCelulas(cell: GridCellParams<number>) {
+  function pegarClassesCelulas(cell: GridCellParams<any>) {
     const nomeColuna = cell.field;
 
     if (nomeColuna === "dataConclusao" || nomeColuna === "horarioConclusao") {
@@ -256,7 +256,7 @@ export default function TelaHistoricos(props: {}) {
     return "celula-grid";
   }
 
-  function acaoCelula(cell: GridCellParams<number>) {
+  function acaoCelula(cell: GridCellParams<any>) {
     if (cell.field == "pdfHistorico") {
       console.log(cell.row.pdfHistorico.arquivo);
       
@@ -426,7 +426,7 @@ export default function TelaHistoricos(props: {}) {
                   columns={colunas}
                   components={{ Toolbar: CustomGridToolbar }}
                   getCellClassName={pegarClassesCelulas}
-                  getRowClassName={(cell) =>
+                  getRowClassName={(cell: any) =>
                     cell.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
                   }
                   onCellClick={acaoCelula}
