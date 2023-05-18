@@ -20,13 +20,19 @@ import Paper from '@mui/material/Paper';
 
 
 export default function EsqueletoPDFVersaoDemanda(props: { demanda: any, pdfExportComponent: any }) {
-    // const pdfCompoente = useRef<PDFExport>(null)
+    const pdfComponente = useRef<PDFExport>(null)
+    let pdfContent
 
-    // const exportPDFWithComponent = async () => {
-    //     if (pdfCompoente.current) {
-    //         pdfCompoente.current.save();
-    //     }
-    // };
+    const exportPDFWithComponent = async () => {
+        // console.log(pdfCompoente.current.getPDF());
+
+        if (pdfComponente.current) {
+
+            const element: any = pdfComponente.current
+
+            element.save();
+        }
+    };
 
     const Demanda = (props: { demanda: any }) => {
         return (
@@ -126,18 +132,17 @@ export default function EsqueletoPDFVersaoDemanda(props: { demanda: any, pdfExpo
     }
 
     return (
-        <Box id="BOX"
-        // sx={{ display: "none" }}
+        <Box id="BOX" sx={{ position: "absolute", left: "-1000px", top: 0 }}
         >
             <BoxConteudo>
-                {/* <div className="example-config">
+                <div className="example-config">
                     <button
                         onClick={exportPDFWithComponent}
                     >
                         Export to PDF with component
                     </button>
-                </div> */}
-                <PDFExport forcePageBreak=".break" paperSize="A4" pageTemplate={PageTemplate} margin="2cm" ref={props.pdfExportComponent}>
+                </div>
+                <PDFExport forcePageBreak=".break" paperSize="A4" pageTemplate={PageTemplate} margin="2cm" ref={pdfComponente}>
                     <BoxTitulo>
                         <TypographyTituloATA variant="h6">{props.demanda.tituloDemanda}</TypographyTituloATA>
                     </BoxTitulo>

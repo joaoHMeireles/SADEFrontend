@@ -31,6 +31,8 @@ import { useLocationChange } from "../../utils";
 import { WebSocketContext } from "../../api/websocketservice";
 import { novaNotificacao } from "../Notificacoes/Notificacoes";
 
+import pdf from "../../Assets/pdf.pdf";
+
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
 }) {
@@ -91,6 +93,10 @@ export default function CriacaoDemanda(props: {
   }, [valor]);
 
   useEffect(() => {
+    console.log(centroCusto);
+  }, [centroCusto])
+
+  useEffect(() => {
     if (pdfDemanda == null || pdfDemanda == undefined) {
       return
     }
@@ -144,17 +150,16 @@ export default function CriacaoDemanda(props: {
   }
 
   function partDoisDemanda() {
-    if(props.rascunho){
+    if (props.rascunho) {
       return
     }
-
     const frequenciaUso = document.getElementById("frequenciaUso") as HTMLInputElement;
 
     let valorMensal;
     let descricao;
 
     let beneficios = [];
-    
+
     for (let i = 0; i < numeroBeneficiosReais; i++) {
       valorMensal = document.getElementById(`valorMensalReal${i}`) as HTMLInputElement;
       descricao = document.getElementById(`descricaoReal${i}`) as HTMLInputElement;
@@ -212,7 +217,8 @@ export default function CriacaoDemanda(props: {
         "idUsuario": data.usuario.idUsuario
       }
     }
-
+    console.log("Parte dois demanda");
+    console.log(data2);
     atualizarDados(data2)
   }
 
@@ -236,7 +242,7 @@ export default function CriacaoDemanda(props: {
 
   function criarDemanda() {
     localStorage.setItem("DEMANDACADASTRADA", "true")
-    
+
     let formData = new FormData();
 
     if (files != undefined) {
@@ -246,12 +252,12 @@ export default function CriacaoDemanda(props: {
     }
 
     if (data != undefined) {
-      const {tipo,... dataCerta} = data
+      const { tipo, ...dataCerta } = data
       let beneficios = []
 
-      for(let beneficio of data.beneficiosDemanda){
-          const {novo,... beneficioCerto} = beneficio
-          beneficios.push(beneficioCerto)
+      for (let beneficio of data.beneficiosDemanda) {
+        const { novo, ...beneficioCerto } = beneficio
+        beneficios.push(beneficioCerto)
       }
 
       dataCerta.beneficiosDemanda = beneficios
@@ -261,9 +267,9 @@ export default function CriacaoDemanda(props: {
       formData.append("demanda", JSON.stringify(dataCerta));
     }
 
-    if (pdfDemanda != undefined) {
-      formData.append("pdfVersaoHistorico", pdfDemanda);
-    }
+    // if (pdfDemanda != undefined) {
+    //   formData.append("pdfVersaoHistorico", pdfDemanda);
+    // }
 
     console.log(data);
     if (props.rascunho) {
@@ -298,7 +304,7 @@ export default function CriacaoDemanda(props: {
   return (
     <BoxConteudo>
       <Breadcrumb />
-      <ContainerGeral>
+      <ContainerGeral sx={{ backgroundColor: "white" }}>
         <Tabs value={valor} onChange={mudarValor}>
           {valor == 0 ? (
             <Tab icon={<LensRoundedIcon sx={{ color: "#00579d" }} />}></Tab>

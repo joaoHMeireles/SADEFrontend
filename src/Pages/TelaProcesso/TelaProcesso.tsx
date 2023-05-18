@@ -38,7 +38,7 @@ import ResultadoVazio from '../../Components/ResultadoVazio/ResultadoVazio';
 
 const valoresInputBU: any[] = [
     { idBU: 1, nomeBU: 'Motores Industrial' },
-    { idBU: 2, nomeBU: ' Motores Comercial' },
+    { idBU: 2, nomeBU: 'Motores Comercial' },
     { idBU: 3, nomeBU: 'Energia' },
     { idBU: 4, nomeBU: 'Automação' },
     { idBU: 5, nomeBU: 'Digital e Sistemas' },
@@ -62,6 +62,9 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
     const location = useLocation().pathname
     const processoLocalStorage = localStorage.getItem(`${getNomeComponente(location)}ESCOLHIDA`)
     const informacaoProcesso = JSON.parse(processoLocalStorage != null ? processoLocalStorage : "");
+
+    console.log(informacaoProcesso);
+    
 
     return (
         <>
@@ -242,10 +245,18 @@ export function Header(props: {
                 const formDataDemanda = new FormData()
                 //arrumar isso auqi
                 const bu = valoresInputBU.find(bu => bu.nomeBU == nomeBUSolicitante)
+
+                // console.log(nomeBUSolicitante);
+                
+                // console.log("bu ta aqui");
+                
+                // console.log(bu);
+                
+
                 formDataDemanda.append("demanda", JSON.stringify(
                     {
                         tamanho: getKeyEnum(TamanhoComponenteProcesso, tamanhoDemanda).toUpperCase(),
-                        busolicitante: { idBU: bu.idBU },
+                        busolicitante: { idBU: bu.idBU, nomeBU: bu.nomeBU },
                         busBeneficiadas: busBeneficiadasEscolhidas,
                         secaoTIResponsavel: getKeyEnum(sessaoTI, sessaoTIResponsavel),
                         classificando: true
@@ -253,9 +264,9 @@ export function Header(props: {
                 ))
 
                 // Depois que conseguir fazer o arquivo de versionamento esse get não será mais necessário 
-                api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
-                    //colocar pdf
-                    formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
+                // api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
+                //     //colocar pdf
+                //     formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
 
                     // faz a atualização do histórico da demanda
                     api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
@@ -272,10 +283,10 @@ export function Header(props: {
                     }).catch((err: any) => {
                         console.log(err);
                     })
-                }).catch((err: any) => {
-                    console.log(err);
+                // }).catch((err: any) => {
+                //     console.log(err);
 
-                })
+                // })
             }
 
             const segundaParteAprovacao = <ModalClassificacaoDemanda abrirFeedback={finalizarAprovacao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />
@@ -753,7 +764,7 @@ function ModalClassificacaoDemanda(props: Modal) {
     const [tamanhoDemanda, setTamanhoDemanda] = useState("Médio")
     const [BUSolicitante, setBUSolicitante] = useState("Energia")
     const [sessaoTIescolhida, setSessaoTI] = useState("AAS")
-    const valoresInputTamanho = ["Muito pequeno", "Pequeno", "Médio", "Grande", "Muito grande"]
+    const valoresInputTamanho = ["Muito Pequeno", "Pequeno", "Médio", "Grande", "Muito Grande"]
     const keysSessaoTI = Object.keys(sessaoTI)
     const valoresSessaoTI = Object.values(sessaoTI)
     const nomesBU = valoresInputBU.map((bu) => {

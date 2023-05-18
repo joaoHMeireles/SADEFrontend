@@ -77,7 +77,7 @@ import Bandeira from "../../Components/Bandeira/Bandeira";
 import CardProposta from "../../Components/CardProposta/CardProposta";
 import dayjs, { Dayjs } from "dayjs";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
-import { StatusComponenteProcesso } from "../../constants/enuns";
+import { StatusComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
 import api from "../../api/api";
 import imagemSemNada from "../../Assets/empty-folder.png"
 
@@ -1089,6 +1089,14 @@ export function Proposta(props: {
   }
 
   function setProposta(proposta: any) {
+    
+    for (let atributo in proposta.demanda) {
+      proposta[atributo] = proposta.demanda[atributo]
+    }
+
+    proposta.tipo = TipoComponenteProcesso.Proposta
+    proposta.id = proposta.idProposta
+    
     localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta));
   }
 
