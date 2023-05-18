@@ -245,7 +245,7 @@ export default function CriacaoPauta(props: {
                     onChange={(newValue) => {
                       setValorData(newValue);
                     }}
-                    renderInput={(params) => <TextField id='dataReuniaoEscolhida' {...params} />}
+                    renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -256,7 +256,7 @@ export default function CriacaoPauta(props: {
                     ampm={false}
                     value={inicioReuniao}
                     onChange={(newValue) => setInicioReuniao(newValue)}
-                    renderInput={(params) => {
+                    renderInput={(params: any) => {
                       return <TextField id="horarioInicioReuniao" {...params} />;
                     }}
                   />
@@ -269,7 +269,7 @@ export default function CriacaoPauta(props: {
                     ampm={false}
                     value={finalReuniao}
                     onChange={(newValue) => setFinalReuniao(newValue)}
-                    renderInput={(params) => {
+                    renderInput={(params: any) => {
                       return <TextField id="horarioFinalReuniao" {...params} />;
                     }}
                   />

@@ -262,7 +262,9 @@ export default function CriacaoDemanda(props: {
 
       dataCerta.beneficiosDemanda = beneficios
       dataCerta.rascunho = false
-      dataCerta.criandoDemandaPorRascunho = true
+      if(props.rascunho){
+        dataCerta.criandoDemandaPorRascunho = true
+      }
 
       formData.append("demanda", JSON.stringify(dataCerta));
     }
