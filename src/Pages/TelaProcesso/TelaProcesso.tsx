@@ -42,7 +42,7 @@ const valoresInputBU: any[] = [
     { idBU: 3, nomeBU: 'Energia' },
     { idBU: 4, nomeBU: 'Automação' },
     { idBU: 5, nomeBU: 'Digital e Sistemas' },
-    { idBU: 6, nomeBU: ' Drives e Controls' },
+    { idBU: 6, nomeBU: ' Drives e Controles' },
     { idBU: 7, nomeBU: 'Tintas' },
     { idBU: 8, nomeBU: 'Transmissão e Distribuição' }
 ]
@@ -1646,7 +1646,7 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
                             listaBotoes.push(reprovar, aprovar)
                         }
                     } else if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
-                        if (!aprovadoGerente) {
+                        if (aprovadoGerente) {
                             if (!linkJira) {
                                 const adicionarInfo = { nome: "adicionarInfo", function: funcoes[5] }
 
