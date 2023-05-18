@@ -1066,10 +1066,10 @@
   "resolved" "https://registry.npmjs.org/@types/minimist/-/minimist-1.2.2.tgz"
   "version" "1.2.2"
 
-"@types/node@*", "@types/node@^20.1.7", "@types/node@>= 14":
-  "integrity" "sha512-WCuw/o4GSwDGMoonES8rcvwsig77dGCMbZDrZr2x4ZZiNW4P/gcoZXe/0twgtobcTkmg9TuKflxYL/DuwDyJzg=="
-  "resolved" "https://registry.npmjs.org/@types/node/-/node-20.1.7.tgz"
-  "version" "20.1.7"
+"@types/node@*", "@types/node@^20.2.1", "@types/node@>= 14":
+  "integrity" "sha512-DqJociPbZP1lbZ5SQPk4oag6W7AyaGMO6gSfRwq3PWl4PXTwJpRQJhDq4W0kzrg3w6tJ1SwlvGZ5uKFHY13LIg=="
+  "resolved" "https://registry.npmjs.org/@types/node/-/node-20.2.1.tgz"
+  "version" "20.2.1"
 
 "@types/normalize-package-data@^2.4.0":
   "integrity" "sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw=="
@@ -7535,10 +7535,10 @@
     "string_decoder" "^1.1.1"
     "util-deprecate" "^1.0.1"
 
-"vite@^4.2.0", "vite@^4.3.7":
-  "integrity" "sha512-MTIFpbIm9v7Hh5b0wSBgkcWzSBz7SAa6K/cBTwS4kUiQJfQLFlZZRJRQgqunCVzhTPCk674tW+0Qaqh3Q00dBg=="
-  "resolved" "https://registry.npmjs.org/vite/-/vite-4.3.7.tgz"
-  "version" "4.3.7"
+"vite@^4.2.0", "vite@^4.3.8":
+  "integrity" "sha512-uYB8PwN7hbMrf4j1xzGDk/lqjsZvCDbt/JC5dyfxc19Pg8kRm14LinK/uq+HSLNswZEoKmweGdtpbnxRtrAXiQ=="
+  "resolved" "https://registry.npmjs.org/vite/-/vite-4.3.8.tgz"
+  "version" "4.3.8"
   dependencies:
     "esbuild" "^0.17.5"
     "postcss" "^8.4.23"
