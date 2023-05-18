@@ -223,6 +223,10 @@ export default function CriacaoPauta(props: {
                     value={comissaoEscolhida}
                     inputProps={{ id: "comissaoEscolhida" }}
                     onChange={(e: any) => {
+                      console.log(comissoes);
+                      console.log(e);
+                      
+
                       const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
                       setComissaoEscolhida(novaComissaoEscolhida);
                     }}

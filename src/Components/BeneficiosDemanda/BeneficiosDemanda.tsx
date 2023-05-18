@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import TextField from "@mui/material/TextField";
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField'
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import {
@@ -23,14 +19,15 @@ import {
   BoxDescricaoRequeistosControle,
   BoxFrequencia,
 } from "./BeneficiosDemanda.styles";
-import SelectBox from "../SelectBox/SelectBox";
-import { Select } from "@mui/material";
-
+import { Select } from '@mui/material'
+import CurrencyDolar from "../CurrencyInputs/CurrencyDolar";
+import CurrencyEuro from "../CurrencyInputs/CurrencyEuro";
+import CurrencyReal from "../CurrencyInputs/CurrencyReal";
 
 const moedas = [
   "DOLAR",
   "EURO",
-  "BRL"
+  "REAL"
 ];
 
 const valoresFrequencia = [
@@ -434,18 +431,43 @@ function BeneficioReal(props: {
   setMoedaReal?: any
 }) {
   const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioReal)
-  const [moedaBeneficio, setMoedaBeneficio] = useState("EURO")
+  const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[1])
+  const [currencyInput, setCurrencyInput] = useState(0)
+  const [ valueInput, setValueInput ] = useState();
 
   useEffect(() => {
-    if(props.moedaBeneficio){
+    switch (moedaBeneficio) {
+      case "REAL": {
+        setCurrencyInput(0);
+        break;
+      }
+      case "DOLAR": {
+        setCurrencyInput(1);
+        break;
+      };
+      case "EURO": {
+        setCurrencyInput(2);
+        break;
+      };
+      default: {
+        setCurrencyInput(0);
+        break;
+      };
+    };
+  }, [moedaBeneficio]);
+
+  useEffect(() => {
+  }, [currencyInput])
+
+  useEffect(() => {
+    if (props.moedaBeneficio) {
       setMoedaBeneficio(props.moedaBeneficio)
     }
 
-    if(props.moedaReal){
+    if (props.moedaReal) {
       setMoedaBeneficio(props.moedaReal)
     }
-  })
-
+  }, [])
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -454,31 +476,101 @@ function BeneficioReal(props: {
           <BoxValorMensal>
             <TypographyLabels>Valor Mensal: </TypographyLabels>
           </BoxValorMensal>
+
           <BoxInputs>
-            <TextField
-              id={`valorMensalReal${props.index}`}
-              sx={{
-                width: "30%",
-                marginRight: 5,
-                boxShadow: "5px 5px 10px 0 #00000050",
-              }}
-              onChange={(e: any) => {
-                if (atualizarObjetos != null) {
-                  atualizarObjetos()
-                } else {
-                  atualizarBeneficiosDemanda(
-                    props.informacaoProcesso.beneficiosDemanda,
-                    idBeneficioComponente,
-                    setIdBeneficioComponente,
-                    "valor",
-                    e.target.value,
-                    props.informacaoProcesso,
-                    props.setInformacaoProcesso,
-                    "REAL"
-                  )
-                }
-              }}
-            />
+            {currencyInput == 0 ?
+              <CurrencyReal
+                id={`valorMensalReal${props.index}`}
+                style={{
+                  width: "30%",
+                  marginRight: 5,
+                  boxShadow: "5px 5px 10px 0 #00000050",
+                }}
+                value={valueInput}
+                onChange={(e: any) => {
+                  if (atualizarObjetos != null) {
+                    console.log(e.target)
+                    setValueInput(e.target.value)
+                    atualizarObjetos()
+                  } else {
+                    atualizarBeneficiosDemanda(
+                      props.informacaoProcesso.beneficiosDemanda,
+                      idBeneficioComponente,
+                      setIdBeneficioComponente,
+                      "valor",
+                      e.target.value,
+                      props.informacaoProcesso,
+                      props.setInformacaoProcesso,
+                      "REAL"
+                    )
+                  }
+                }}
+                placeholder="R$ 0, 00"
+                type="text"
+              />
+              :
+              currencyInput == 1 ?
+              <CurrencyDolar
+                id={`valorMensalReal${props.index}`}
+                style={{
+                  width: "30%",
+                  marginRight: 5,
+                  boxShadow: "5px 5px 10px 0 #00000050",
+                }}
+                value={valueInput}
+                onChange={(e: any) => {
+                  if (atualizarObjetos != null) {
+                    console.log(e.target)
+                    setValueInput(e.target.value)
+                    atualizarObjetos()
+                  } else {
+                    atualizarBeneficiosDemanda(
+                      props.informacaoProcesso.beneficiosDemanda,
+                      idBeneficioComponente,
+                      setIdBeneficioComponente,
+                      "valor",
+                      e.target.value,
+                      props.informacaoProcesso,
+                      props.setInformacaoProcesso,
+                      "REAL"
+                    )
+                  }
+                }}
+                placeholder="$ 0,00"
+                type="text"
+              />
+              :
+              <CurrencyEuro
+                id={`valorMensalReal${props.index}`}
+                style={{
+                  width: "30%",
+                  marginRight: 5,
+                  boxShadow: "5px 5px 10px 0 #00000050",
+                }}
+                value={valueInput}
+                onChange={(e: any) => {
+                  if (atualizarObjetos != null) {
+                    console.log(e.target)
+                    setValueInput(e.target.value)
+                    atualizarObjetos()
+                  } else {
+                    atualizarBeneficiosDemanda(
+                      props.informacaoProcesso.beneficiosDemanda,
+                      idBeneficioComponente,
+                      setIdBeneficioComponente,
+                      "valor",
+                      e.target.value,
+                      props.informacaoProcesso,
+                      props.setInformacaoProcesso,
+                      "REAL"
+                    )
+                  }
+                }}
+                placeholder="0,00 €"
+                type="text"
+              />
+            }
+
             <Select
               id={`moedaReal${props.index}`}
               sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
@@ -503,9 +595,7 @@ function BeneficioReal(props: {
                     "REAL"
                   )
                 }
-              }
-              }
-            >
+              }}>
               {moedas.map((option: any, index: number) => (
                 <MenuItem id={`moedaRealoptions${props.index}`} key={index} value={option}>
                   {option}
@@ -514,8 +604,10 @@ function BeneficioReal(props: {
             </Select>
           </BoxInputs>
         </BoxInputsAcima>
+
         <BoxInputsAbaixo>
           <TypographyLabels>Descrição: </TypographyLabels>
+
           <TextField
             id={`descricaoReal${props.index}`}
             onChange={(e: any) => {
@@ -536,8 +628,8 @@ function BeneficioReal(props: {
             }}
             multiline
             maxRows={Infinity}
-            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
-          ></TextField>
+            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}>
+          </TextField>
         </BoxInputsAbaixo>
       </BoxContainerDivisorio>
     </BoxContainerGeralBeneficio>
@@ -557,11 +649,11 @@ function BeneficioPotencial(props: {
   const [moedaBeneficio, setMoedaBeneficio] = useState("EURO")
 
   useEffect(() => {
-    if(props.moedaBeneficio){
+    if (props.moedaBeneficio) {
       setMoedaBeneficio(props.moedaBeneficio)
     }
 
-    if(props.moedaPotencial){
+    if (props.moedaPotencial) {
       setMoedaBeneficio(props.moedaPotencial)
     }
   })
@@ -572,16 +664,17 @@ function BeneficioPotencial(props: {
       <BoxContainerDivisorio>
         <BoxInputsAcima>
           <BoxValorMensal>
-            <TypographyLabels>Valor Mensal: </TypographyLabels>
+            <TypographyLabels>Valor Mensal:</TypographyLabels>
           </BoxValorMensal>
+
           <BoxInputs
             sx={{
               width: "100%",
               display: "flex",
               justifyContent: "start",
               alignItems: "center",
-            }}
-          >
+            }}>
+
             <TextField
               id={`valorMensalPotencial${props.index}`}
               onChange={(e: any) => {
@@ -604,8 +697,8 @@ function BeneficioPotencial(props: {
                 width: "30%",
                 marginRight: 5,
                 boxShadow: "5px 5px 10px 0 #00000050",
-              }}
-            />
+              }} />
+
             <Select
               id={`moedaPotencial${props.index}`}
               sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
@@ -627,9 +720,7 @@ function BeneficioPotencial(props: {
                     "POTENCIAL"
                   )
                 }
-              }
-              }
-            >
+              }}>
               {moedas.map((moeda: any, index: number) => (
                 <MenuItem id={`moedaPotencial${props.index}`} key={index} value={moeda}>
                   {moeda}
@@ -638,8 +729,10 @@ function BeneficioPotencial(props: {
             </Select>
           </BoxInputs>
         </BoxInputsAcima>
+
         <BoxInputsAbaixo>
           <TypographyLabels>Descrição: </TypographyLabels>
+
           <TextField
             id={`descricaoPotencial${props.index}`}
             onChange={(e: any) => {
@@ -661,8 +754,8 @@ function BeneficioPotencial(props: {
             }}
             multiline
             maxRows={Infinity}
-            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
-          ></TextField>
+            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}>
+          </TextField>
         </BoxInputsAbaixo>
       </BoxContainerDivisorio>
     </BoxContainerGeralBeneficio>
@@ -676,6 +769,7 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
     <BoxContainerGeralBeneficio key={props.index}>
       <BoxDescricaoRequeistosControle>
         <TypographyLabels>Descrição: </TypographyLabels>
+
         <TextField
           id={`beneficiosQualitativos${props.index}`}
           onChange={(e: any) => {
@@ -696,8 +790,8 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
           }}
           multiline
           maxRows={Infinity}
-          sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}
-        ></TextField>
+          sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}>
+        </TextField>
       </BoxDescricaoRequeistosControle>
     </BoxContainerGeralBeneficio>
   );

@@ -300,7 +300,7 @@ export default function CriacaoProposta(props: {
       console.log(res);
     })
 
-    window.location.href = "/home"
+    // window.location.href = "/home"
   }
 
   return (

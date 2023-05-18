@@ -1,15 +1,38 @@
 import "./Componentes.scss";
 import { BoxBackground, Title, P, BoxImage, Space } from "./Componentes.style";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+
 // Introdução
 import SOD from "../../../Assets/AjudaUsuario/Introducao/SOD.jpg";
-// Avaliar Demanda - Analista de TI
+// Avaliar Demanda - Analista de TI ou Gerente de TI
 import aprovarDemandaA from "../../../Assets/AjudaUsuario/AvaliarDemandaA/aprovarDemanda.png";
 import avaliarDemandaA from "../../../Assets/AjudaUsuario/AvaliarDemandaA/avaliarDemanda.png";
 import devolverDemanda from "../../../Assets/AjudaUsuario/AvaliarDemandaA/devolverDemanda.png";
-// Avaliar Demanda - Gerente de Negócio
+// Avaliar Demanda - Gerente de Negócio ou Gerente de TI
 import avaliarDemandaGN from "../../../Assets/AjudaUsuario/AvaliarDemandaGN/avaliarDemanda.png";
 import reprovarDemanda from "../../../Assets/AjudaUsuario/AvaliarDemandaGN/reprovarDemanda.png";
+// Adicionar informações na Demanda
+import adicionarInfoDemanda from "../../../Assets/AjudaUsuario/AdicionarInfoDemanda/adicionarInfoDemanda.png";
+import adicionarInfoDemandaModal from "../../../Assets/AjudaUsuario/AdicionarInfoDemanda/adicionarInfoDemandaModal.png";
+// Criar Proposta
+import criarPropostaIcone from "../../../Assets/AjudaUsuario/CriarProposta/criarPropostaIcone.png";
+import criarPropostaDemanda from "../../../Assets/AjudaUsuario/CriarProposta/criarPropostaDemanda.png";
+import criarPropostaFinal from "../../../Assets/AjudaUsuario/CriarProposta/criarPropostaFinal.png";
+// Criar Pauta
+import criarPautaIcone from "../../../Assets/AjudaUsuario/CriarPauta/criarPautaIcone.png";
+import criarPautaProposta from "../../../Assets/AjudaUsuario/CriarPauta/criarPautaProposta.png";
+import criarPautaFinal from "../../../Assets/AjudaUsuario/CriarPauta/criarPautaFinal.png";
+// Informar o parecer da Comissão
+import informarParecerComissao from "../../../Assets/AjudaUsuario/InformarParecerComissao/informarParecerComissao.png";
+import informarParecerComissaoFinal from "../../../Assets/AjudaUsuario/InformarParecerComissao/informarParecerComissaoFinal.png";
+// Criar ATA
+
+// Informar o parecer da Diretoria Geral
+
+// Iniciar Workflow de Aprovação
+import iniciarWorkflow from "../../../Assets/AjudaUsuario/IniciarWorkflow/iniciarWorkflow.png";
+// Avaliar Workflow de Aprovação
+
 
 export const Introducao = (
     <BoxBackground>
@@ -120,7 +143,19 @@ export const AdicionarInfoDemanda = (
             <p>Adicionar informações na Demanda</p>
         </Title>
 
-        <P>Após a demanda ser aprovada pelo Gerente de Negócio, complemente a demanda com as informações de prazo de elaboração da proposta, código PPM e o link para o JIRA;</P>
+        <P>Após a demanda ser aprovada pelo Gerente de Negócio ela será devolvida para o Analista que a aprovou. Abra a demanda e clique no botão "Adicionar informações".</P>
+
+        <BoxImage>
+            <img id="imgs" src={adicionarInfoDemanda} alt="Adicionar informações da Demanda" />
+        </BoxImage>
+
+        <P> Abrirá um modal para complementar a demanda com as informações de prazo de elaboração da proposta, código PPM e o link para o JIRA;</P>
+
+        <BoxImage>
+            <img id="imgs" src={adicionarInfoDemandaModal} alt="Adicionar informações da Demanda (modal)" />
+        </BoxImage>
+
+        <Space>.</Space>
     </BoxBackground>
 );
 
@@ -130,7 +165,25 @@ export const CriarProposta = (
             <p>Criar Proposta</p>
         </Title>
 
-        <P>Para criar uma proposta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Proposta”. Escolha a demanda que quer transformar em proposta podendo editar seus atributos. Posteriormente, adicione os novos atributos, sendo eles o escopo, linhas da tabela de custo, payback, o período de execução e as informações do responsável, o nome e a área que trabalha. Por fim, sendo opcional, os anexos para a proposta.</P>
+        <P>Para criar uma Proposta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Proposta”, depois, escolha a Demanda que quer transformar em Proposta podendo editar seus atributos.</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarPropostaIcone} alt="Criar Proposta pela sidebar" />
+        </BoxImage>
+
+        <P>Você também pode fazer esse processo já estando dentro de uma Demanda, basta clicar no botão de "Criar Proposta", este processo levará direto para a tela de edição dos atributos da Demanda.</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarPropostaDemanda} alt="Criar Proposta pela Demanda" />
+        </BoxImage>
+
+        <P>Posteriormente, adicione os novos atributos, sendo eles o escopo, linhas da tabela de custo, payback, o período de execução e as informações do responsável, o nome e a área que trabalha. Por fim, sendo opcional, os anexos para a proposta.</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarPropostaFinal} alt="Criar Proposta parte final" />
+        </BoxImage>
+
+        <Space>.</Space>
     </BoxBackground>
 );
 
@@ -140,9 +193,25 @@ export const CriarPauta = (
             <p>Criar Pauta</p>
         </Title>
 
-        <P>Para criar uma pauta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “pauta”. Na próxima tela, selecione uma ou mais propostas a serem incluídas na pauta. Para isso, procure pelas propostas disponíveis na lista e clique naquelas que deseja adicionar, podendo excluí-las posteriormente.</P>
-        <P>Após a seleção das propostas, escolher a comissão que participará da reunião. Para isso, deve-se clicar na opção "Comissão" e selecionar a comissão desejada;</P>
-        <P>Por fim, escolha a data da reunião. Para isso, clique na opção "Data" e selecione a data desejada no calendário.</P>
+        <P>Para criar uma pauta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Pauta”. Na próxima tela, selecione uma ou mais propostas a serem incluídas na pauta. Para isso, procure pelas propostas disponíveis na lista e clique naquelas que deseja adicionar, podendo excluí-las posteriormente.</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarPautaIcone} alt="Criar Pauta pela sidebar" />
+        </BoxImage>
+
+        <P>Você também pode fazer esse processo já estando dentro de uma Proposta, basta clicar no botão de "Criar Pauta".</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarPautaProposta} alt="Criar Pauta pela Proposta" />
+        </BoxImage>
+
+        <P>Após a seleção das propostas, escolha um título para a reunião, o fórum que irá descuti-lá, a data e a hora da reunião.</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarPautaFinal} alt="Criar Pauta parte final" />
+        </BoxImage>
+
+        <Space>.</Space>
     </BoxBackground>
 );
 
@@ -152,7 +221,19 @@ export const InformarParecerComissao = (
             <p>Informar o parecer da Comissão</p>
         </Title>
 
-        <P>Para informar o parecer da comissão, escolha o status da pauta, podendo ser Cancelled, Business Case, To Do ou Assessment,, escreva os comentários necessários e escolha se vai ser uma ATA publicada ou uma ATA não publicada.</P>
+        <P>Após a Pauta passar pela reunião, será necessário informar o parecer da comissão que a discutiu. Para isso, dentro da pauta, clique no botão de "Informar parecer".</P>
+
+        <BoxImage>
+            <img id="imgs" src={informarParecerComissao} alt="Informar o parecer da Comissão" />
+        </BoxImage>
+
+        <P>Agora, escolha o status da pauta, podendo ser Cancelled, Business Case, To Do ou Assessment, escreva os comentários necessários e escolha se vai ser uma ATA publicada ou uma ATA não publicada e sendo opcional, os anexos que a complementarão.</P>
+
+        <BoxImage>
+            <img id="imgs" src={informarParecerComissaoFinal} alt="Informar o parecer da Comissão parte final" />
+        </BoxImage>
+
+        <Space>.</Space>
     </BoxBackground>
 );
 
@@ -182,7 +263,13 @@ export const IniciarWorkflow = (
             <p>Iniciar Workflow de Aprovação</p>
         </Title>
 
-        <P>Dentro de uma proposta, aperte o botão de criar um workflow de aprovação. Quando o Workflow de Aprovação é aprovado pelos Gerentes de Negócio e de TI, a proposta automaticamente torna-se uma pauta aprovada (não passará pela reunião com a comissão).</P>
+        <P>Dentro de uma proposta, aperte o botão de criar um workflow de aprovação.</P>
+
+        <BoxImage>
+            <img id="imgs" src={iniciarWorkflow} alt="Iniciar Workflow de Aprovação" />
+        </BoxImage>
+
+        <P>Quando o Workflow de Aprovação é aprovado pelos Gerentes de Negócio e de TI, a proposta automaticamente torna-se uma pauta aprovada (não passará pela reunião com a comissão).</P>
     </BoxBackground>
 );
 

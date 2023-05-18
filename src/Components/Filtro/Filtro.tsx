@@ -1,6 +1,5 @@
-import { ChangeEventHandler, useEffect, useRef, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ExcelExport, ExcelExportColumn } from '@progress/kendo-react-excel-export';
 import { useLocationChange } from "../../utils";
 import {
   Box, Checkbox, Collapse, Divider, FormControl, FormControlLabel, FormGroup, IconButton, InputAdornment, Radio,
@@ -18,7 +17,6 @@ export default function Filtro(props: {
   setAberto: React.Dispatch<React.SetStateAction<boolean>>;
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   filtrarResultados: Function
-  listaComponents: any[]
 }) {
   //listas base para os itens do filtros
   const tiposDeComponentes = [
@@ -122,13 +120,6 @@ export default function Filtro(props: {
   const [drawerWidth, setDrawerWidth] = useState("0px");
   const location = useLocation()
   const tipoFiltrado = localStorage.getItem(`VALORFILTROTipo`)
-  const excelColumns = []
-
-  for(let atributo in props.listaComponents[0]){
-    excelColumns.push(
-      <ExcelExportColumn field={atributo} />
-    )
-  }
 
   useEffect(() => {
     if (props.aberto) {
@@ -146,13 +137,6 @@ export default function Filtro(props: {
 
     props.setAberto(false)
   })
-
-  const _export = useRef(null);
-  const exportExport = () => {
-    if (_export.current !== null) {
-      (_export.current as any).save(props.listaComponents);
-    }
-  };
 
 
   return (
@@ -328,7 +312,7 @@ function OpcoesCheck(props: OptionInterface) {
 
 function OpcaoInput(props: { filtrarResultados: Function }) {
   return (
-    <TextField id="input-pesquisa-ppm" variant="standard"
+    <TextField id="input-pesquisa-ppm" variant="standard" 
       InputProps={{
         sx: {
           color: "#595959"
