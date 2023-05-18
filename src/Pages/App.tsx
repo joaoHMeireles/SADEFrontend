@@ -348,7 +348,7 @@ export default function App() {
                   </Routes>
                 </ThemeProvider>
               </MainBox>
-              <Filter aberto={filtrar} setAberto={setFiltrar} setSidebar={setSidebarAberta} filtrarResultados={filtrarResultados} />
+              <Filter aberto={filtrar} setAberto={setFiltrar} setSidebar={setSidebarAberta} filtrarResultados={filtrarResultados} listaComponents={listaComponents}/>
             </Box>
           </ThemeProvider>
         </BrowserRouter>
