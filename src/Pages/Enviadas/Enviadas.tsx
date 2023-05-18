@@ -21,7 +21,7 @@ export default function Enviadas(props: {
   const idUsuario = localStorage.getItem("IDUSUARIO")
 
   useEffect(() => {
-    api.get("/sod/demanda/usuario/" + idUsuario).then((response: any) => {
+    api.get("/sod/demanda/usuario/" + idUsuario + "/rascunho").then((response: any) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
         demanda.tipo = TipoComponenteProcesso.Demanda

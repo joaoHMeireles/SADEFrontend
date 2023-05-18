@@ -19,7 +19,7 @@ import {
   BoxDescricaoRequeistosControle,
   BoxFrequencia,
 } from "./BeneficiosDemanda.styles";
-import { Select } from '@mui/material'
+import { FilledInput, FormControl, InputAdornment, InputLabel, OutlinedInput, Select } from '@mui/material'
 import CurrencyDolar from "../CurrencyInputs/CurrencyDolar";
 import CurrencyEuro from "../CurrencyInputs/CurrencyEuro";
 import CurrencyReal from "../CurrencyInputs/CurrencyReal";
@@ -430,10 +430,10 @@ function BeneficioReal(props: {
   moedaReal?: any,
   setMoedaReal?: any
 }) {
-  const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioReal)
-  const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[1])
-  const [currencyInput, setCurrencyInput] = useState(0)
-  const [ valueInput, setValueInput ] = useState();
+  const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioReal);
+  const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[2]);
+  const [currencyInput, setCurrencyInput] = useState(0);
+  const [valueInput, setValueInput] = useState<any>("");
 
   useEffect(() => {
     switch (moedaBeneficio) {
@@ -449,15 +449,8 @@ function BeneficioReal(props: {
         setCurrencyInput(2);
         break;
       };
-      default: {
-        setCurrencyInput(0);
-        break;
-      };
     };
   }, [moedaBeneficio]);
-
-  useEffect(() => {
-  }, [currencyInput])
 
   useEffect(() => {
     if (props.moedaBeneficio) {
@@ -467,7 +460,7 @@ function BeneficioReal(props: {
     if (props.moedaReal) {
       setMoedaBeneficio(props.moedaReal)
     }
-  }, [])
+  }, []);
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -479,18 +472,14 @@ function BeneficioReal(props: {
 
           <BoxInputs>
             {currencyInput == 0 ?
-              <CurrencyReal
+              <FormControl
+                variant="outlined"
+                sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
                 id={`valorMensalReal${props.index}`}
-                style={{
-                  width: "30%",
-                  marginRight: 5,
-                  boxShadow: "5px 5px 10px 0 #00000050",
-                }}
-                value={valueInput}
                 onChange={(e: any) => {
+                  setValueInput(e.target.value);
+
                   if (atualizarObjetos != null) {
-                    console.log(e.target)
-                    setValueInput(e.target.value)
                     atualizarObjetos()
                   } else {
                     atualizarBeneficiosDemanda(
@@ -505,70 +494,62 @@ function BeneficioReal(props: {
                     )
                   }
                 }}
-                placeholder="R$ 0, 00"
-                type="text"
-              />
+              >
+                <OutlinedInput id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
+              </FormControl>
               :
               currencyInput == 1 ?
-              <CurrencyDolar
-                id={`valorMensalReal${props.index}`}
-                style={{
-                  width: "30%",
-                  marginRight: 5,
-                  boxShadow: "5px 5px 10px 0 #00000050",
-                }}
-                value={valueInput}
-                onChange={(e: any) => {
-                  if (atualizarObjetos != null) {
-                    console.log(e.target)
-                    setValueInput(e.target.value)
-                    atualizarObjetos()
-                  } else {
-                    atualizarBeneficiosDemanda(
-                      props.informacaoProcesso.beneficiosDemanda,
-                      idBeneficioComponente,
-                      setIdBeneficioComponente,
-                      "valor",
-                      e.target.value,
-                      props.informacaoProcesso,
-                      props.setInformacaoProcesso,
-                      "REAL"
-                    )
-                  }
-                }}
-                placeholder="$ 0,00"
-                type="text"
-              />
-              :
-              <CurrencyEuro
-                id={`valorMensalReal${props.index}`}
-                style={{
-                  width: "30%",
-                  marginRight: 5,
-                  boxShadow: "5px 5px 10px 0 #00000050",
-                }}
-                value={valueInput}
-                onChange={(e: any) => {
-                  if (atualizarObjetos != null) {
-                    console.log(e.target)
-                    setValueInput(e.target.value)
-                    atualizarObjetos()
-                  } else {
-                    atualizarBeneficiosDemanda(
-                      props.informacaoProcesso.beneficiosDemanda,
-                      idBeneficioComponente,
-                      setIdBeneficioComponente,
-                      "valor",
-                      e.target.value,
-                      props.informacaoProcesso,
-                      props.setInformacaoProcesso,
-                      "REAL"
-                    )
-                  }
-                }}
-                placeholder="0,00 €"
-                type="text"
-              />
+                <FormControl
+                  variant="outlined"
+                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "1rem" }}
+                  id={`valorMensalReal${props.index}`}
+                  onChange={(e: any) => {
+                    setValueInput(e.target.value);
+
+                    if (atualizarObjetos != null) {
+                      atualizarObjetos()
+                    } else {
+                      atualizarBeneficiosDemanda(
+                        props.informacaoProcesso.beneficiosDemanda,
+                        idBeneficioComponente,
+                        setIdBeneficioComponente,
+                        "valor",
+                        e.target.value,
+                        props.informacaoProcesso,
+                        props.setInformacaoProcesso,
+                        "REAL"
+                      )
+                    }
+                  }}
+                >
+                  <OutlinedInput id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">$</InputAdornment>} />
+                </FormControl>
+                :
+                <FormControl
+                  variant="outlined"
+                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "1rem" }}
+                  id={`valorMensalReal${props.index}`}
+                  onChange={(e: any) => {
+                    setValueInput(e.target.value);
+
+                    if (atualizarObjetos != null) {
+                      atualizarObjetos()
+                    } else {
+                      atualizarBeneficiosDemanda(
+                        props.informacaoProcesso.beneficiosDemanda,
+                        idBeneficioComponente,
+                        setIdBeneficioComponente,
+                        "valor",
+                        e.target.value,
+                        props.informacaoProcesso,
+                        props.setInformacaoProcesso,
+                        "REAL"
+                      )
+                    }
+                  }}
+                >
+                  <OutlinedInput id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">€</InputAdornment>} />
+                </FormControl>
             }
 
             <Select
@@ -597,7 +578,7 @@ function BeneficioReal(props: {
                 }
               }}>
               {moedas.map((option: any, index: number) => (
-                <MenuItem id={`moedaRealoptions${props.index}`} key={index} value={option}>
+                <MenuItem id={`moedaRealoptions${props.index}`} key={index} value={option} >
                   {option}
                 </MenuItem>
               ))}
@@ -632,7 +613,7 @@ function BeneficioReal(props: {
           </TextField>
         </BoxInputsAbaixo>
       </BoxContainerDivisorio>
-    </BoxContainerGeralBeneficio>
+    </BoxContainerGeralBeneficio >
   );
 }
 
@@ -645,8 +626,27 @@ function BeneficioPotencial(props: {
   moedaPotencial?: any,
   setMoedaPotencial?: any
 }) {
-  const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioPotencial)
-  const [moedaBeneficio, setMoedaBeneficio] = useState("EURO")
+  const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioPotencial);
+  const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[2]);
+  const [currencyInput, setCurrencyInput] = useState(0);
+  const [valueInput, setValueInput] = useState<any>("");
+
+  useEffect(() => {
+    switch (moedaBeneficio) {
+      case "REAL": {
+        setCurrencyInput(0);
+        break;
+      }
+      case "DOLAR": {
+        setCurrencyInput(1);
+        break;
+      };
+      case "EURO": {
+        setCurrencyInput(2);
+        break;
+      };
+    };
+  }, [moedaBeneficio]);
 
   useEffect(() => {
     if (props.moedaBeneficio) {
@@ -656,8 +656,7 @@ function BeneficioPotencial(props: {
     if (props.moedaPotencial) {
       setMoedaBeneficio(props.moedaPotencial)
     }
-  })
-
+  });
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -667,45 +666,98 @@ function BeneficioPotencial(props: {
             <TypographyLabels>Valor Mensal:</TypographyLabels>
           </BoxValorMensal>
 
-          <BoxInputs
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "start",
-              alignItems: "center",
-            }}>
+          <BoxInputs>
+            {currencyInput == 0 ?
+              <FormControl
+                variant="outlined"
+                sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
+                id={`valorMensalPotencial${props.index}`}
+                onChange={(e: any) => {
+                  setValueInput(e.target.value);
 
-            <TextField
-              id={`valorMensalPotencial${props.index}`}
-              onChange={(e: any) => {
-                if (atualizarObjetos != null) {
-                  atualizarObjetos()
-                } else {
-                  atualizarBeneficiosDemanda(
-                    props.informacaoProcesso.beneficiosDemanda,
-                    idBeneficioComponente,
-                    setIdBeneficioComponente,
-                    "valor",
-                    e.target.value,
-                    props.informacaoProcesso,
-                    props.setInformacaoProcesso,
-                    "POTENCIAL"
-                  )
-                }
-              }}
-              sx={{
-                width: "30%",
-                marginRight: 5,
-                boxShadow: "5px 5px 10px 0 #00000050",
-              }} />
+                  if (atualizarObjetos != null) {
+                    atualizarObjetos()
+                  } else {
+                    atualizarBeneficiosDemanda(
+                      props.informacaoProcesso.beneficiosDemanda,
+                      idBeneficioComponente,
+                      setIdBeneficioComponente,
+                      "valor",
+                      e.target.value,
+                      props.informacaoProcesso,
+                      props.setInformacaoProcesso,
+                      "POTENCIAL"
+                    )
+                  }
+                }}
+              >
+                <OutlinedInput id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
+              </FormControl>
+              :
+              currencyInput == 1 ?
+                <FormControl
+                  variant="outlined"
+                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
+                  id={`valorMensalPotencial${props.index}`}
+                  onChange={(e: any) => {
+                    setValueInput(e.target.value);
+
+                    if (atualizarObjetos != null) {
+                      atualizarObjetos()
+                    } else {
+                      atualizarBeneficiosDemanda(
+                        props.informacaoProcesso.beneficiosDemanda,
+                        idBeneficioComponente,
+                        setIdBeneficioComponente,
+                        "valor",
+                        e.target.value,
+                        props.informacaoProcesso,
+                        props.setInformacaoProcesso,
+                        "POTENCIAL"
+                      )
+                    }
+                  }}
+                >
+                  <OutlinedInput id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">$</InputAdornment>} />
+                </FormControl>
+                :
+                <FormControl
+                  variant="outlined"
+                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
+                  id={`valorMensalPotencial${props.index}`}
+                  onChange={(e: any) => {
+                    setValueInput(e.target.value);
+
+                    if (atualizarObjetos != null) {
+                      atualizarObjetos()
+                    } else {
+                      atualizarBeneficiosDemanda(
+                        props.informacaoProcesso.beneficiosDemanda,
+                        idBeneficioComponente,
+                        setIdBeneficioComponente,
+                        "valor",
+                        e.target.value,
+                        props.informacaoProcesso,
+                        props.setInformacaoProcesso,
+                        "POTENCIAL"
+                      )
+                    }
+                  }}
+                >
+                  <OutlinedInput id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">€</InputAdornment>} />
+                </FormControl>
+            }
 
             <Select
               id={`moedaPotencial${props.index}`}
               sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
               value={moedaBeneficio}
               onChange={(e: any) => {
+                setMoedaBeneficio(e.target.value)
+
                 props.moedaPotencial.push(e.target.value)
                 props.setMoedaPotencial(props.moedaPotencial)
+
                 if (atualizarObjetos != null) {
                   atualizarObjetos()
                 } else {
