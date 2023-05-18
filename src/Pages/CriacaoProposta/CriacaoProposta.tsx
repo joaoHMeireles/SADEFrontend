@@ -143,7 +143,7 @@ export default function CriacaoProposta(props: {
       setListaComponents(listaDemandas);
     }).catch((err) => {
       console.log(err);
-    })
+    })    
   }, [])
 
   useEffect(() => {
@@ -300,7 +300,7 @@ export default function CriacaoProposta(props: {
       console.log(res);
     })
 
-    // window.location.href = "/home"
+    window.location.href = "/home"
   }
 
   return (

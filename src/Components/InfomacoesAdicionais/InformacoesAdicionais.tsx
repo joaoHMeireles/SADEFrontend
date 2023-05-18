@@ -41,11 +41,11 @@ export default function InfomacoesAdicionais(props: {
 }) {
 
     const tamanhos = [
-        "MUITO PEQUENO",
+        "MUITOPEQUENO",
         "PEQUENO",
         "MEDIO",
         "GRANDE",
-        "MUITO GRANDE",
+        "MUITOGRANDE",
     ]
 
     const sessoesTI = [
@@ -82,7 +82,7 @@ export default function InfomacoesAdicionais(props: {
                 props.valorBUsBeneficadas.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
             }
 
-            props.setValorBUsBeneficadas(props.valorBUsBeneficadas)
+            props.setValorBUsBeneficadas(props.valorBUsBeneficadas)            
 
             if (props.informacaoProcesso.tamanho) {
                 props.setValorTamanho(props.informacaoProcesso.tamanho);
@@ -112,6 +112,11 @@ export default function InfomacoesAdicionais(props: {
         }
     }, [])
 
+    useEffect(() => {
+        console.log(props.valorTamanho);
+        
+    }, [props.valorTamanho])
+
 
     return (
         <>
@@ -126,8 +131,9 @@ export default function InfomacoesAdicionais(props: {
                         <TypographyPadrao>Tamanho: </TypographyPadrao>
                         <SelectPadrao
                             id="tamanhos"
+                            defaultValue={props.valorTamanho}
                             value={props.valorTamanho}
-                            onChange={(e: SelectChangeEvent) => {
+                            onChange={(e: any) => {
                                 props.setValorTamanho(e.target.value as string)
 
                                 const novaInfoDemanda = {
@@ -170,7 +176,7 @@ export default function InfomacoesAdicionais(props: {
                         <SelectPadrao
                             id="busolicitante"
                             value={props.valorBUSolicitante}
-                            onChange={(e: SelectChangeEvent) => {
+                            onChange={(e: any) => {
                                 props.setValorBUSolicitante(e.target.value as string)
 
                                 let idBu;
@@ -308,7 +314,7 @@ export default function InfomacoesAdicionais(props: {
                         <SelectPadrao
                             id="sessaoTI"
                             value={props.valorSessaoTI}
-                            onChange={(e: SelectChangeEvent) => {
+                            onChange={(e: any) => {
                                 const sessaoTI = {
                                     nome: e.target.value,
                                     abreviacao: props.informacaoProcesso.secaoTIResponsavel
