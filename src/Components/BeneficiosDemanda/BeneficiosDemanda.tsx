@@ -505,7 +505,7 @@ function BeneficioReal(props: {
                     )
                   }
                 }}
-                placeholder="R$ 0,00"
+                placeholder="R$ 0, 00"
                 type="text"
               />
               :
