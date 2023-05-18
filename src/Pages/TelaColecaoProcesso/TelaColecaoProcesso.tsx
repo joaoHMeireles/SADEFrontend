@@ -158,13 +158,15 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
 
     if (checarPreenchimento(novaVerificacaoInputs)) {
       if (informacaoColecaoProcesso.tipo != "ATA") {
+        console.log("entrou");
+
+        console.log(document.getElementById("dataReuniao"));
+
+
         const decisoesPauta: any[] = []
-        const tituloReuniaoInput = (document.getElementById("tituloReuniao") as HTMLInputElement).value
-        const dataReuniao = (document.getElementById("dataReuniao") as HTMLInputElement).value
-        const inicioReuniao = (document.getElementById("inicioReuniao") as HTMLInputElement).value
-        const finalReuniao = (document.getElementById("finalReuniao") as HTMLInputElement).value
-        let dataReuniaoCerta = dataReuniao.slice(6) + "/" + dataReuniao.slice(0, 5)
-        dataReuniaoCerta = dataReuniaoCerta.replaceAll("/", "-")
+        // console.log(dataReuniao);
+        // console.log(dataReuniaoCerta);
+
 
         for (let i = 0; i < informacaoColecaoProcesso.propostas.length; i++) {
           const botoesStatusDemanda = document.getElementsByClassName(`radioButtonStatus${i}`)
@@ -179,6 +181,12 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
             }
           }
 
+          statusEscolhido = statusEscolhido.replace(" ", "")
+          statusEscolhido = statusEscolhido.replace("d", "D")
+
+          console.log("status escolhido: " + statusEscolhido);
+          
+
           let propostaPauta = {
             idDecisaoPropostaPauta: informacaoColecaoProcesso.propostas[i].idDecisaoPropostaPauta,
             statusDemandaComissao: getKeyEnum(StatusComponenteProcesso, statusEscolhido),
@@ -192,8 +200,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
 
         const infoPauta = {
           ...informacaoColecaoProcesso,
-          propostasPauta: decisoesPauta,
-          dataReuniaoATA: expanded.expanded? dataReuniaoCerta : null
+          propostasPauta: decisoesPauta
         }
 
         const { propostas, tipo, tituloReuniao, pertenceUmaATA, arquivos, idPauta, ...pautaEditar } = infoPauta
@@ -210,9 +217,18 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
           }
         }
 
+        console.log(pautaEditar);
+        
+
         api.put("/sod/pauta/" + idPauta + "/" + idUsuario, formDataPauta).then((response) => {
           if (expanded.expanded) {
-
+            const tituloReuniaoInput = (document.getElementById("tituloReuniao") as HTMLInputElement).value
+            const dataReuniao = (document.getElementById("dataReuniao") as HTMLInputElement).value
+            const inicioReuniao = (document.getElementById("inicioReuniao") as HTMLInputElement).value
+            const finalReuniao = (document.getElementById("finalReuniao") as HTMLInputElement).value
+            let dataReuniaoCerta = dataReuniao.slice(6) + "/" + dataReuniao.slice(0, 5)
+            dataReuniaoCerta = dataReuniaoCerta.replaceAll("/", "-")
+    
             const ataDTO = {
               pauta: response.data,
               tituloReuniaoATA: tituloReuniaoInput,
@@ -413,15 +429,15 @@ function Header(props: {
 
   useEffect(() => {
     if (tipoColecao == "Pauta") {
-      if (informacaoColecaoProcesso.propostas[0].statusDemandaComissao != null) {
-        setAcao("Criar ATA")
-      } else {
-        if (!informacaoColecaoProcesso.pertenceUmaATA) {
-          if (dataReuniao <= new Date()) {
-            setAcao("Informar parecer");
-          }
-        }
-      }
+      // if (informacaoColecaoProcesso.propostas[0].statusDemandaComissao != null) {
+      //   setAcao("Criar ATA")
+      // } else {
+      //   if (!informacaoColecaoProcesso.pertenceUmaATA) {
+      //     if (dataReuniao <= new Date()) {
+      setAcao("Informar parecer");
+      //     }
+      //   }
+      // }
     } else {
       if (!informacaoColecaoProcesso.numeroDG) {
         if (dataReuniao <= new Date()) {
@@ -758,7 +774,7 @@ function Propostas(props: {
                             onChange={(newValue) => {
                               setValorData(newValue);
                             }}
-                            renderInput={(params) => <TextField id='dataReuniao' {...params} />}
+                            renderInput={(params: any) => <TextField id='dataReuniao' {...params} />}
                             disablePast
                           />
                         </GridInfoATA>
@@ -770,7 +786,7 @@ function Propostas(props: {
                             ampm={false}
                             value={inicioReuniao}
                             onChange={(newValue) => setInicioReuniao(newValue)}
-                            renderInput={(params) => {
+                            renderInput={(params: any) => {
                               return <TextField id="inicioReuniao" {...params} />;
                             }}
                           />
@@ -783,7 +799,7 @@ function Propostas(props: {
                             ampm={false}
                             value={finalReuniao}
                             onChange={(newValue) => setFinalReuniao(newValue)}
-                            renderInput={(params) => {
+                            renderInput={(params: any) => {
                               return <TextField id="finalReuniao" {...params} />;
                             }}
                           />
@@ -1089,14 +1105,14 @@ export function Proposta(props: {
   }
 
   function setProposta(proposta: any) {
-    
+
     for (let atributo in proposta.demanda) {
       proposta[atributo] = proposta.demanda[atributo]
     }
 
     proposta.tipo = TipoComponenteProcesso.Proposta
     proposta.id = proposta.idProposta
-    
+
     localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta));
   }
 
