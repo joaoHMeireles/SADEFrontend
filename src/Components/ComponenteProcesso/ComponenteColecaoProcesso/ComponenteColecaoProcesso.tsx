@@ -105,9 +105,13 @@ function GridComponent(props: ComponentCollectionProps) {
         <GridTypography variant="subtitle1">
           <span> Propostas: </span>
         </GridTypography>
-        <GridTypography variant="body1">
-          - {props.componente.propostas[0].proposta.demanda.tituloDemanda}
-        </GridTypography>
+        {props.componente.propostas.length > 0 ?
+          <GridTypography variant="body1">
+            - {props.componente.propostas[0].proposta.demanda.tituloDemanda}
+          </GridTypography>
+          :
+          ""
+        }
         <GridTypography variant="body1" sx={{ display: "flex" }}>
           {props.componente.propostas.length > 1 ?
             <BoxColecaoComponente>
