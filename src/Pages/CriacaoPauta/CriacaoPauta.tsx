@@ -242,7 +242,7 @@ export default function CriacaoPauta(props: {
                   </TypographyTituloInput>
                   <DatePicker
                     value={valorData}
-                    onChange={(newValue) => {
+                    onChange={(newValue: any) => {
                       setValorData(newValue);
                     }}
                     renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />}
@@ -255,7 +255,7 @@ export default function CriacaoPauta(props: {
                   <TimePicker
                     ampm={false}
                     value={inicioReuniao}
-                    onChange={(newValue) => setInicioReuniao(newValue)}
+                    onChange={(newValue: any) => setInicioReuniao(newValue)}
                     renderInput={(params: any) => {
                       return <TextField id="horarioInicioReuniao" {...params} />;
                     }}
@@ -268,7 +268,7 @@ export default function CriacaoPauta(props: {
                   <TimePicker
                     ampm={false}
                     value={finalReuniao}
-                    onChange={(newValue) => setFinalReuniao(newValue)}
+                    onChange={(newValue: any) => setFinalReuniao(newValue)}
                     renderInput={(params: any) => {
                       return <TextField id="horarioFinalReuniao" {...params} />;
                     }}
