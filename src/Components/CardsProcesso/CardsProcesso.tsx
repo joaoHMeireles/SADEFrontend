@@ -10,6 +10,7 @@ export default function CardsProcesso(props: {
   rascunho?: boolean;
   proposta?: boolean;
   pauta?: boolean;
+  temDemandaDevolvida?: boolean;
   propostas?: any[];
   setPropostas?: React.Dispatch<React.SetStateAction<Array<Object>>>;
   propostaSelecionada?: number;
@@ -32,6 +33,7 @@ export default function CardsProcesso(props: {
           proposta={props.proposta}
           pauta={props.pauta}
           propostas={props.propostas}
+          temDemandaDevolvida={props.temDemandaDevolvida}
           setPropostas={props.setPropostas}
           propostaSelecionada={props.propostaSelecionada}
           setPropostaSelecionada={props.setPropostaSelecionada}

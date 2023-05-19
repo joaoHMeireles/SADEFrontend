@@ -26,21 +26,13 @@ export default function InformacaoGeral(props: {
   setCentroCusto?: React.Dispatch<React.SetStateAction<Object[]>>
   informacaoProcesso?: any
   setInformacaoProcesso?: React.Dispatch<React.SetStateAction<any>>
-  partUmDemanda?: Function
+  partUmDemanda?: Function;
+  editarDemanda?: boolean;
 }) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
   const [paginaTooltip, setPaginaTooltip] = useState(0);
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
   const [idCentroCusto, setIdCentroCusto] = useState<any[]>([]);
-  const [open, setOpen] = useState(false);
-
-  const handleTooltipClose = () => {
-    setOpen(false);
-  };
-
-  const handleTooltipOpen = () => {
-    setOpen(true);
-  };
 
   const info =  localStorage.getItem("DEMANDASELECIONADA")? localStorage.getItem("DEMANDASELECIONADA") : localStorage.getItem("RASCUNHOESCOLHIDO")
   const demandaSelecionada = JSON.parse(info as string);
@@ -56,7 +48,7 @@ export default function InformacaoGeral(props: {
   }, [])
 
   useEffect(() => {
-    if (props.proposta) {
+    if (props.proposta || props.editarDemanda) {
       for (let atributo in demandaSelecionada) {
         if ((demandaSelecionada as any)[atributo]) {
           const inputAtributo = document.getElementById(
@@ -169,7 +161,7 @@ export default function InformacaoGeral(props: {
             <TypographyLabels>
               Centros de custo:
             </TypographyLabels>
-            {props.proposta || props.rascunho ? (
+            {props.proposta || props.rascunho || props.editarDemanda ? (
               <Autocomplete
                 id="centrosDeCusto"
                 defaultValue={demandaSelecionada.centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto)}

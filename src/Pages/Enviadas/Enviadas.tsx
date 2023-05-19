@@ -21,12 +21,18 @@ export default function Enviadas(props: {
   const idUsuario = localStorage.getItem("IDUSUARIO")
 
   useEffect(() => {
-    api.get("/sod/demanda/usuario/" + idUsuario).then((response: any) => {
+    api.get("/sod/demanda/devolvidas/usuario/" + idUsuario).then((response: any) => {
       let listaDemandas: any[] = []
+
       for (let demanda of response.data) {
+        // console.log(demanda);
+        
+        demanda.id = demanda.idDemanda
         demanda.tipo = TipoComponenteProcesso.Demanda
+
         listaDemandas.push(demanda)
       }
+
       setListaComponents(listaDemandas);
     }).catch((err: any) => {
       console.log(err);
@@ -44,13 +50,13 @@ export default function Enviadas(props: {
           setGrid={setGrid}
           filtrarResultados={props.filtrarResultados}
         />
-         {listaComponents.length != 0 ?
+        {listaComponents.length != 0 ?
           <CardsProcesso
             listaComponents={listaComponents}
             grid={grid}
             rascunho={false}
             proposta={false}
-            propostaSelecionada={0}
+            temDemandaDevolvida={true}
             setPropostaSelecionada={setPropostaSelecionada}
           />
           :

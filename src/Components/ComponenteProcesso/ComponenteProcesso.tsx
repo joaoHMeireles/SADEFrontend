@@ -2,9 +2,10 @@ import { MouseEventHandler, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { TipoComponenteProcesso } from "../../constants/enuns";
 import { InterfaceComponenteProcesso } from "../../constants/interfaces";
-import { Box, Grid, Tooltip } from "@mui/material";
+import { Box, Grid, IconButton, Tooltip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
+import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import {
   BoxColecaoComponente,
   BoxGridCorProcesso,
@@ -19,7 +20,7 @@ import {
   UltimaListaTypography,
 } from "./ComponenteProcesso.styles";
 import { GlobalStyles } from "@mui/styled-engine";
-import { getNomeStatus} from "../../utils";
+import { getNomeStatus } from "../../utils";
 
 export default function ComponenteProcesso(props: {
   grid: boolean;
@@ -27,6 +28,7 @@ export default function ComponenteProcesso(props: {
   rascunho?: boolean;
   proposta?: boolean;
   pauta?: boolean;
+  temDemandaDevolvida?: boolean;
   demandaSelecionada: number;
   setDemandaSelecionada: React.Dispatch<React.SetStateAction<number>>
   propostas?: any[];
@@ -41,7 +43,7 @@ export default function ComponenteProcesso(props: {
     tituloToolTip,
     nomeTipoLink = "";
 
-  const [isChecked, setIsChecked] = useState(componente.escolhidaCriacao? true: false);
+  const [isChecked, setIsChecked] = useState(componente.escolhidaCriacao ? true : false);
 
   if (componente.tipo == TipoComponenteProcesso.Demanda) {
     corComponente = "#00579d";
@@ -63,6 +65,7 @@ export default function ComponenteProcesso(props: {
       rascunho={props.rascunho}
       proposta={props.proposta}
       pauta={props.pauta}
+      temDemandaDevolvida={props.temDemandaDevolvida}
       propostas={props.propostas}
       setPropostas={props.setPropostas}
       demandaSelecionada={props.demandaSelecionada}
@@ -83,6 +86,7 @@ export default function ComponenteProcesso(props: {
       rascunho={props.rascunho}
       proposta={props.proposta}
       pauta={props.pauta}
+      temDemandaDevolvida={props.temDemandaDevolvida}
       propostas={props.propostas}
       setPropostas={props.setPropostas}
       demandaSelecionada={props.demandaSelecionada}
@@ -124,7 +128,7 @@ export default function ComponenteProcesso(props: {
   }, [props.propostas]);
 
   function verProcesso() {
-    if(props.rascunho){
+    if (props.rascunho || (componente.devolvida && props.temDemandaDevolvida)) {
       return
     }
     setProcesso()
@@ -136,6 +140,12 @@ export default function ComponenteProcesso(props: {
       localStorage.setItem("RASCUNHOESCOLHIDO", JSON.stringify(componente));
       return;
     }
+
+    if (props.temDemandaDevolvida && componente.devolvida) {
+      localStorage.setItem("DEMANDASELECIONADA", JSON.stringify(componente))
+      return
+    }
+
     const tipoComponente = componente.tipo.toUpperCase();
     localStorage.setItem(
       `${tipoComponente}ESCOLHIDA`,
@@ -161,6 +171,8 @@ export default function ComponenteProcesso(props: {
 
 function GridComponent(props: ComponentProps) {
 
+  //<WarningRoundedIcon sx={{color: "#00579d"}}/>
+
   return (
     <>
       {!props.proposta && !props.pauta ? (
@@ -173,9 +185,22 @@ function GridComponent(props: ComponentProps) {
             </Grid>
           </Tooltip>
           <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
-            <GridTypography variant="h6">
-              {props.componente.tituloDemanda}
-            </GridTypography>
+            {(props.temDemandaDevolvida && props.componente.devolvida) ?
+              <>
+                <GridBoxTituloRadio>
+                  <GridTypography variant="h6">
+                    {props.componente.tituloDemanda}
+                  </GridTypography>
+                  <WarningRoundedIcon sx={{marginRight: "1.6vw", color: "#00579d"}}/>
+                </GridBoxTituloRadio>
+              </>
+              :
+              <>
+                <GridTypography variant="h6">
+                  {props.componente.tituloDemanda}
+                </GridTypography>
+              </>
+            }
             <GridTypography variant="subtitle1">
               <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
             </GridTypography>
@@ -190,15 +215,24 @@ function GridComponent(props: ComponentProps) {
                 <span>Frequencia de uso:</span> {props.componente.frequenciaUso}
               </BoxColecaoComponente>
               <GridLinkTypograpfy variant="body2">
-                {!props.rascunho ? (
-                  <Link to={props.linkComponente} onClick={props.setProcesso}>
-                    Ver mais
+                {props.temDemandaDevolvida && props.componente.devolvida ?
+                  <Link to={"/editdemand"} onClick={props.setProcesso}>
+                    Editar
                   </Link>
-                ) : (
-                  <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                    Continuar 
-                  </Link>
-                )}
+                  :
+                  <>
+                    {!props.rascunho ? (
+                      <Link to={props.linkComponente} onClick={props.setProcesso}>
+                        Ver mais
+                      </Link>
+                    ) : (
+                      <Link to={"/continuedemand"} onClick={props.setProcesso}>
+                        Continuar
+                      </Link>
+                    )
+                    }
+                  </>
+                }
               </GridLinkTypograpfy>
             </GridTypography>
           </GridComponenteProcesso>
@@ -251,7 +285,7 @@ function GridComponent(props: ComponentProps) {
                   </Link>
                 ) : (
                   <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                    Continuar 
+                    Continuar
                   </Link>
                 )}
               </GridLinkTypograpfy>
@@ -324,7 +358,7 @@ function GridComponent(props: ComponentProps) {
                     </Link>
                   ) : (
                     <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                      Continuar 
+                      Continuar
                     </Link>
                   )}
                 </GridLinkTypograpfy>
@@ -363,15 +397,23 @@ function ListComponent(props: ComponentProps) {
               <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
             </ListaTypography>
             <UltimaListaTypography variant="body2" sx={{ maxWidth: "10vw" }}>
-              {!props.rascunho ? (
-                <Link to={props.linkComponente} onClick={props.setProcesso}>
-                  Ver mais
+              {props.temDemandaDevolvida && props.componente.devolvida ?
+                <Link to={"/editdemand"} onClick={props.setProcesso}>
+                  Editar
                 </Link>
-              ) : (
-                <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                  Continuar 
-                </Link>
-              )}
+                :
+                <>
+                  {!props.rascunho ? (
+                    <Link to={props.linkComponente} onClick={props.setProcesso}>
+                      Ver mais
+                    </Link>
+                  ) : (
+                    <Link to={"/continuedemand"} onClick={props.setProcesso}>
+                      Continuar
+                    </Link>
+                  )}
+                </>
+              }
             </UltimaListaTypography>
           </ListaComponenteProcesso>
         </>
@@ -415,7 +457,7 @@ function ListComponent(props: ComponentProps) {
                 </Link>
               ) : (
                 <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                  Continuar 
+                  Continuar
                 </Link>
               )}
             </ListaTypography>
@@ -457,7 +499,7 @@ function ListComponent(props: ComponentProps) {
                   </Link>
                 ) : (
                   <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                    Continuar 
+                    Continuar
                   </Link>
                 )}
               </ListaTypography>
@@ -515,6 +557,7 @@ interface ComponentProps {
   rascunho?: boolean;
   proposta?: boolean;
   pauta?: boolean;
+  temDemandaDevolvida?: boolean;
   propostas?: any[];
   setPropostas?: React.Dispatch<React.SetStateAction<Array<any>>>;
   demandaSelecionada?: number;

@@ -13,6 +13,7 @@ export interface InterfaceComponenteProcesso {
     tipo: TipoComponenteProcesso,
     link?: String,
     escolhidaCriacao?: boolean
+    devolvida?: boolean
 }
 
 export interface InterfaceColecaoComponenteProcesso {

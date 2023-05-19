@@ -321,6 +321,7 @@ export default function App() {
 
                     <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar} filtrarResultados={filtrarResultados} />}></Route>
                     <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true} />}></Route>
+                    <Route path="/editdemand" element={<CriacaoDemanda rascunho={false} editarDemanda={true}/>}></Route>
 
                     <Route path="/home/demand/history" element={<Historico />} />
                     <Route path="/mydemands/demand/history" element={<Historico />} />
