@@ -25,8 +25,6 @@ export default function Enviadas(props: {
       let listaDemandas: any[] = []
 
       for (let demanda of response.data) {
-        // console.log(demanda);
-        
         demanda.id = demanda.idDemanda
         demanda.tipo = TipoComponenteProcesso.Demanda
 

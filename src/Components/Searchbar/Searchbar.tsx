@@ -45,7 +45,8 @@ export default function Searchbar(props: {
             <ContainerGrid container spacing={2}>
                 <Grid item xs={10}>
                     <SearchTextField onChange={props.filtrarResultados} id='input-pesquisa' InputProps={{
-                        startAdornment: lupaAdornment, endAdornment: filtroAdorment,
+                        startAdornment: lupaAdornment, 
+                        endAdornment: filtroAdorment,
                         placeholder: "Pesquisar por Título ou Solicitante"
                     }} />
                 </Grid>

@@ -1,4 +1,4 @@
-import { Box, Grid, useMediaQuery } from "@mui/material";
+import { Box, Grid, Skeleton, useMediaQuery } from "@mui/material";
 import { BoxContainer } from "../../Pages/App.styles";
 import ComponenteProcesso from "../ComponenteProcesso/ComponenteProcesso";
 import ComponenteColecaoProcesso from "../ComponenteProcesso/ComponenteColecaoProcesso/ComponenteColecaoProcesso";
@@ -64,6 +64,9 @@ export default function CardsProcesso(props: {
     <BoxContainer>
       <Box sx={{ width: "90%" }}>
         <Grid container spacing={2}>
+          {/* <Grid item xs={4}>
+            <Skeleton variant="rounded" width={"90%"} height={"100%"} />
+          </Grid> */}
           {componentesProcessos}
         </Grid>
       </Box>
