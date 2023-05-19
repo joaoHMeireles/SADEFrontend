@@ -453,11 +453,11 @@ function BeneficioReal(props: {
   }, [moedaBeneficio]);
 
   useEffect(() => {
-    if (props.moedaBeneficio) {
+    if (props.moedaBeneficio != null) {
       setMoedaBeneficio(props.moedaBeneficio)
     }
 
-    if (props.moedaReal) {
+    if (props.moedaReal.length != 0) {
       setMoedaBeneficio(props.moedaReal)
     }
   }, []);
@@ -475,7 +475,6 @@ function BeneficioReal(props: {
               <FormControl
                 variant="outlined"
                 sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
-                id={`valorMensalReal${props.index}`}
                 onChange={(e: any) => {
                   setValueInput(e.target.value);
 
@@ -495,14 +494,13 @@ function BeneficioReal(props: {
                   }
                 }}
               >
-                <OutlinedInput id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
+                <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
               </FormControl>
               :
               currencyInput == 1 ?
                 <FormControl
                   variant="outlined"
                   sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "1rem" }}
-                  id={`valorMensalReal${props.index}`}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -522,13 +520,12 @@ function BeneficioReal(props: {
                     }
                   }}
                 >
-                  <OutlinedInput id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">$</InputAdornment>} />
+                  <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
                 </FormControl>
                 :
                 <FormControl
                   variant="outlined"
                   sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "1rem" }}
-                  id={`valorMensalReal${props.index}`}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -548,7 +545,7 @@ function BeneficioReal(props: {
                     }
                   }}
                 >
-                  <OutlinedInput id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">€</InputAdornment>} />
+                  <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">€</InputAdornment>} />
                 </FormControl>
             }
 
@@ -649,11 +646,11 @@ function BeneficioPotencial(props: {
   }, [moedaBeneficio]);
 
   useEffect(() => {
-    if (props.moedaBeneficio) {
+    if (props.moedaBeneficio != null) {
       setMoedaBeneficio(props.moedaBeneficio)
     }
 
-    if (props.moedaPotencial) {
+    if (props.moedaPotencial.length != 0) {
       setMoedaBeneficio(props.moedaPotencial)
     }
   });
@@ -671,9 +668,11 @@ function BeneficioPotencial(props: {
               <FormControl
                 variant="outlined"
                 sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
-                id={`valorMensalPotencial${props.index}`}
                 onChange={(e: any) => {
                   setValueInput(e.target.value);
+                  console.log(">>>> log: ", e.target.value);
+                  console.log(atualizarObjetos);
+                  
 
                   if (atualizarObjetos != null) {
                     atualizarObjetos()
@@ -691,14 +690,13 @@ function BeneficioPotencial(props: {
                   }
                 }}
               >
-                <OutlinedInput id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
+                <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
               </FormControl>
               :
               currencyInput == 1 ?
                 <FormControl
                   variant="outlined"
                   sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
-                  id={`valorMensalPotencial${props.index}`}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -718,13 +716,12 @@ function BeneficioPotencial(props: {
                     }
                   }}
                 >
-                  <OutlinedInput id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">$</InputAdornment>} />
+                  <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
                 </FormControl>
                 :
                 <FormControl
                   variant="outlined"
                   sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
-                  id={`valorMensalPotencial${props.index}`}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -744,7 +741,7 @@ function BeneficioPotencial(props: {
                     }
                   }}
                 >
-                  <OutlinedInput id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">€</InputAdornment>} />
+                  <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">€</InputAdornment>} />
                 </FormControl>
             }
 

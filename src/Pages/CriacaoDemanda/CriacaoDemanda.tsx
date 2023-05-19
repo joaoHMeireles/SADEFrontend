@@ -48,8 +48,8 @@ export default function CriacaoDemanda(props: {
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
 
-  const [moedaReal, setMoedaReal] = useState<string[]>([]);
-  const [moedaPotencial, setMoedaPotencial] = useState<string[]>([]);
+  const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
+  const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
 
   const pdfExportComponent = React.useRef<PDFExport>(null);
 
@@ -159,6 +159,7 @@ export default function CriacaoDemanda(props: {
     let descricao;
 
     let beneficios = [];
+    
 
     for (let i = 0; i < numeroBeneficiosReais; i++) {
       valorMensal = document.getElementById(`valorMensalReal${i}`) as HTMLInputElement;
@@ -170,6 +171,9 @@ export default function CriacaoDemanda(props: {
         "moeda": moedaReal[i],
         "valor": valorMensal.value
       }
+
+      console.log(beneficioReal);
+      
 
       if (numeroBeneficiosReais > 0 && valorMensal.value && moedaReal && descricao.value) {
         beneficios.push(beneficioReal);
@@ -217,8 +221,6 @@ export default function CriacaoDemanda(props: {
         "idUsuario": data.usuario.idUsuario
       }
     }
-    console.log("Parte dois demanda");
-    console.log(data2);
     atualizarDados(data2)
   }
 
@@ -262,7 +264,9 @@ export default function CriacaoDemanda(props: {
 
       dataCerta.beneficiosDemanda = beneficios
       dataCerta.rascunho = false
-      dataCerta.criandoDemandaPorRascunho = true
+      if (props.rascunho) {
+        dataCerta.criandoDemandaPorRascunho = true
+      }
 
       formData.append("demanda", JSON.stringify(dataCerta));
     }
