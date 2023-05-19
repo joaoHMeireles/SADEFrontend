@@ -68,7 +68,7 @@ export default function BeneficiosDemanda(props: {
       if ((props.informacaoProcesso as any)[atributo]) {
         if (atributo == "frequenciaUso") {
           setFrequencia(props.informacaoProcesso[atributo]);
-        };
+        }
 
         if (atributo == "beneficiosDemanda") {
           let beneficiosBancoReais = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "REAL");
@@ -86,13 +86,13 @@ export default function BeneficiosDemanda(props: {
 
               if (beneficioRealValorMensal && beneficiosBancoReais[i]) {
                 beneficioRealValorMensal.value = beneficiosBancoReais[i].valor;
-              };
+              }
 
               if (beneficioRealDescricaoReal && beneficiosBancoReais[i]) {
                 beneficioRealDescricaoReal.value = beneficiosBancoReais[i].descricao;
-              };
-            };
-          };
+              }
+            }
+          }
 
           if (props.numeroBeneficiosPotenciais) {
             for (let i = 0; i < props.numeroBeneficiosPotenciais; i++) {
@@ -101,13 +101,13 @@ export default function BeneficiosDemanda(props: {
 
               if (beneficioPotencialValorMensal && beneficiosBancoPotenciais[i]) {
                 beneficioPotencialValorMensal.value = beneficiosBancoPotenciais[i].valor;
-              };
+              }
 
               if (beneficioPotencialDescricaoPotencial && beneficiosBancoPotenciais[i]) {
                 beneficioPotencialDescricaoPotencial.value = beneficiosBancoPotenciais[i].descricao;
-              };
-            };
-          };
+              }
+            }
+          }
 
           if (props.numeroBeneficiosQualitativos) {
             for (let i = 0; i < props.numeroBeneficiosQualitativos; i++) {
@@ -115,12 +115,12 @@ export default function BeneficiosDemanda(props: {
 
               if (beneficioQualitativoDescricao && beneficiosBancoQualitativos[i]) {
                 beneficioQualitativoDescricao.value = beneficiosBancoQualitativos[i].descricao;
-              };
-            };
-          };
-        };
-      };
-    };
+              }
+            }
+          }
+        }
+      }
+    }
   }, [
     props.numeroBeneficiosReais,
     props.numeroBeneficiosPotenciais,
@@ -136,7 +136,7 @@ export default function BeneficiosDemanda(props: {
         info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
       } else if (props.proposta) {
         info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string);
-      };
+      }
 
       props.setInformacaoProcesso(info);
 
@@ -144,14 +144,14 @@ export default function BeneficiosDemanda(props: {
         numeroBeneficiosPotenciais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL").length;
         numeroBeneficiosReais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "REAL").length;
         numeroBeneficiosQualitativos = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO").length;
-      };
+      }
 
       if (props.setNumeroBeneficiosQualitativos && props.setNumeroBeneficiosReais && props.setNumeroBeneficiosPotenciais) {
         props.setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos);
         props.setNumeroBeneficiosReais(numeroBeneficiosReais);
         props.setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais);
-      };
-    };
+      }
+    }
   }, []);
 
   function onFrequenciaChange(e: any) {
@@ -165,7 +165,7 @@ export default function BeneficiosDemanda(props: {
     if (props.setInformacaoProcesso || props.informacaoProcesso) {
       props.setInformacaoProcesso(novaInfoDemanda);
     };
-  };
+  }
 
   return (
     <>
@@ -309,7 +309,7 @@ export default function BeneficiosDemanda(props: {
         </BoxFrequencia>
       </BoxContainerGeral>
     </>
-  );
+  )
 }
 
 function BeneficiosReais(props: {
@@ -339,9 +339,9 @@ function BeneficiosReais(props: {
           setInformacaoProcesso={props.setInformacaoProcesso}
           moedaReal={props.moedaReal}
           setMoedaReal={props.setMoedaReal} />);
-      };
-    };
-  };
+      }
+    }
+  }
 
   return <>{beneficios}</>;
 }
@@ -371,9 +371,9 @@ function BeneficiosPotenciais(props: {
           setInformacaoProcesso={props.setInformacaoProcesso}
           moedaPotencial={props.moedaPotencial}
           setMoedaPotencial={props.setMoedaPotencial} />);
-      };
-    };
-  };
+      }
+    }
+  }
 
   return <>{beneficios}</>;
 }
@@ -394,9 +394,9 @@ function BeneficiosQualitativos(props: {
       } else {
         beneficios.push(<BeneficioQualitativo index={i} informacaoProcesso={props.informacaoProcesso}
           setInformacaoProcesso={props.setInformacaoProcesso} />);
-      };
-    };
-  };
+      }
+    }
+  }
 
   return <>{beneficios}</>;
 }
@@ -425,24 +425,24 @@ function BeneficioReal(props: {
       case "DOLAR": {
         setCurrencyInput(1);
         break;
-      };
+      }
       case "EURO": {
         setCurrencyInput(2);
         break;
-      };
-    };
+      }
+    }
   }, [moedaBeneficio]);
 
   useEffect(() => {
     if (props.moedaBeneficio != null) {
       setMoedaBeneficio(props.moedaBeneficio);
-    };
+    }
 
     if (props.moedaReal != null) {
       if (props.moedaReal.length != 0) {
         setMoedaBeneficio(props.moedaReal);
-      };
-    };
+      }
+    }
   }, []);
 
   return (
@@ -462,7 +462,7 @@ function BeneficioReal(props: {
                   setValueInput(e.target.value);
 
                   if (atualizarObjetos != null) {
-                    atualizarObjetos()
+                    atualizarObjetos();
                   } else {
                     atualizarBeneficiosDemanda(
                       props.informacaoProcesso.beneficiosDemanda,
@@ -473,7 +473,7 @@ function BeneficioReal(props: {
                       props.informacaoProcesso,
                       props.setInformacaoProcesso,
                       "REAL"
-                    )
+                    );
                   }
                 }}>
                 <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
@@ -487,7 +487,7 @@ function BeneficioReal(props: {
                     setValueInput(e.target.value);
 
                     if (atualizarObjetos != null) {
-                      atualizarObjetos()
+                      atualizarObjetos();
                     } else {
                       atualizarBeneficiosDemanda(
                         props.informacaoProcesso.beneficiosDemanda,
@@ -498,7 +498,7 @@ function BeneficioReal(props: {
                         props.informacaoProcesso,
                         props.setInformacaoProcesso,
                         "REAL"
-                      )
+                      );
                     }
                   }}>
                   <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
@@ -511,7 +511,7 @@ function BeneficioReal(props: {
                     setValueInput(e.target.value);
 
                     if (atualizarObjetos != null) {
-                      atualizarObjetos()
+                      atualizarObjetos();
                     } else {
                       atualizarBeneficiosDemanda(
                         props.informacaoProcesso.beneficiosDemanda,
@@ -522,12 +522,12 @@ function BeneficioReal(props: {
                         props.informacaoProcesso,
                         props.setInformacaoProcesso,
                         "REAL"
-                      )
+                      );
                     }
                   }}>
                   <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">€</InputAdornment>} />
                 </FormControl>
-            };
+            }
 
             <Select
               id={`moedaReal${props.index}`}
@@ -552,7 +552,7 @@ function BeneficioReal(props: {
                     props.setInformacaoProcesso,
                     "REAL"
                   );
-                };
+                }
               }}>
               {moedas.map((option: any, index: number) => (
                 <MenuItem id={`moedaRealoptions${props.index}`} key={index} value={option} >
@@ -582,7 +582,7 @@ function BeneficioReal(props: {
                   props.setInformacaoProcesso,
                   "REAL"
                 );
-              };
+              }
             }}
             multiline
             maxRows={Infinity}
@@ -614,28 +614,28 @@ function BeneficioPotencial(props: {
       case "REAL": {
         setCurrencyInput(0);
         break;
-      };
+      }
       case "DOLAR": {
         setCurrencyInput(1);
         break;
-      };
+      }
       case "EURO": {
         setCurrencyInput(2);
         break;
-      };
-    };
+      }
+    }
   }, [moedaBeneficio]);
 
   useEffect(() => {
     if (props.moedaBeneficio != null) {
       setMoedaBeneficio(props.moedaBeneficio);
-    };
+    }
 
     if (props.moedaPotencial != null) {
       if (props.moedaPotencial.length != 0) {
         setMoedaBeneficio(props.moedaPotencial);
-      };
-    };
+      }
+    }
   });
 
   return (
@@ -653,8 +653,6 @@ function BeneficioPotencial(props: {
                 sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
                 onChange={(e: any) => {
                   setValueInput(e.target.value);
-                  console.log(">>>> log: ", e.target.value);
-                  console.log(atualizarObjetos);
 
                   if (atualizarObjetos != null) {
                     atualizarObjetos();
@@ -669,7 +667,7 @@ function BeneficioPotencial(props: {
                       props.setInformacaoProcesso,
                       "POTENCIAL"
                     );
-                  };
+                  }
                 }}>
                 <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
               </FormControl>
@@ -693,7 +691,7 @@ function BeneficioPotencial(props: {
                         props.informacaoProcesso,
                         props.setInformacaoProcesso,
                         "POTENCIAL"
-                      )
+                      );
                     }
                   }}>
                   <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
@@ -717,7 +715,7 @@ function BeneficioPotencial(props: {
                         props.informacaoProcesso,
                         props.setInformacaoProcesso,
                         "POTENCIAL"
-                      )
+                      );
                     }
                   }}>
                   <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">€</InputAdornment>} />
@@ -729,13 +727,13 @@ function BeneficioPotencial(props: {
               sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
               value={moedaBeneficio}
               onChange={(e: any) => {
-                setMoedaBeneficio(e.target.value)
+                setMoedaBeneficio(e.target.value);
 
-                props.moedaPotencial.push(e.target.value)
-                props.setMoedaPotencial(props.moedaPotencial)
+                props.moedaPotencial.push(e.target.value);
+                props.setMoedaPotencial(props.moedaPotencial);
 
                 if (atualizarObjetos != null) {
-                  atualizarObjetos()
+                  atualizarObjetos();
                 } else {
                   atualizarBeneficiosDemanda(
                     props.informacaoProcesso.beneficiosDemanda,
@@ -746,7 +744,7 @@ function BeneficioPotencial(props: {
                     props.informacaoProcesso,
                     props.setInformacaoProcesso,
                     "POTENCIAL"
-                  )
+                  );
                 }
               }}>
               {moedas.map((moeda: any, index: number) => (
@@ -765,7 +763,7 @@ function BeneficioPotencial(props: {
             id={`descricaoPotencial${props.index}`}
             onChange={(e: any) => {
               if (atualizarObjetos != null) {
-                atualizarObjetos()
+                atualizarObjetos();
               } else {
                 atualizarBeneficiosDemanda(
                   props.informacaoProcesso.beneficiosDemanda,
@@ -776,7 +774,7 @@ function BeneficioPotencial(props: {
                   props.informacaoProcesso,
                   props.setInformacaoProcesso,
                   "POTENCIAL"
-                )
+                );
               }
             }}
             multiline
@@ -801,7 +799,7 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
           id={`beneficiosQualitativos${props.index}`}
           onChange={(e: any) => {
             if (atualizarObjetos != null) {
-              atualizarObjetos()
+              atualizarObjetos();
             } else {
               atualizarBeneficiosDemanda(
                 props.informacaoProcesso.beneficiosDemanda,
@@ -812,7 +810,7 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
                 props.informacaoProcesso,
                 props.setInformacaoProcesso,
                 "QUALITATIVO"
-              )
+              );
             }
           }}
           multiline
@@ -834,7 +832,7 @@ function atualizarBeneficiosDemanda(
   setInformacaoProcesso: React.Dispatch<React.SetStateAction<any>>,
   tipoBeneficio: string
 ) {
-  const beneficioComponente = atualizacaoBeneficiosDemanda.find((beneficio: any) => beneficio.idBeneficio == idBeneficioComponente)
+  const beneficioComponente = atualizacaoBeneficiosDemanda.find((beneficio: any) => beneficio.idBeneficio == idBeneficioComponente);
   let newBeneficio: {
     idBeneficio?: number,
     descricao?: string,
@@ -842,26 +840,26 @@ function atualizarBeneficiosDemanda(
     tipoBeneficio?: string,
     valor?: number,
     novo?: boolean
-  }
+  };
 
   if (beneficioComponente == null) {
-    let idNovoBeneficio = -1
+    let idNovoBeneficio = -1;
 
     if (atualizacaoBeneficiosDemanda.length == 0) {
-      idNovoBeneficio = 1
+      idNovoBeneficio = 1;
     } else {
-      idNovoBeneficio = atualizacaoBeneficiosDemanda[atualizacaoBeneficiosDemanda.length - 1].idBeneficio + 1
+      idNovoBeneficio = atualizacaoBeneficiosDemanda[atualizacaoBeneficiosDemanda.length - 1].idBeneficio + 1;
     }
 
-    setIdBeneficioComponente(idNovoBeneficio)
+    setIdBeneficioComponente(idNovoBeneficio);
 
     newBeneficio = {
       idBeneficio: idNovoBeneficio,
       [nomeAtributo]: Number.parseInt(valorInput),
       novo: true
-    }
+    };
 
-    atualizacaoBeneficiosDemanda.push(newBeneficio)
+    atualizacaoBeneficiosDemanda.push(newBeneficio);
   } else {
     newBeneficio = {
       ...beneficioComponente,
@@ -869,15 +867,15 @@ function atualizarBeneficiosDemanda(
       tipoBeneficio: tipoBeneficio
     }
 
-    let index = -1
+    let index = -1;
 
     for (let i = 0; i < atualizacaoBeneficiosDemanda.length; i++) {
       if (atualizacaoBeneficiosDemanda[i].idBeneficio == idBeneficioComponente) {
-        index = i
+        index = i;
       }
     }
 
-    atualizacaoBeneficiosDemanda[index] = newBeneficio
+    atualizacaoBeneficiosDemanda[index] = newBeneficio;
   }
 
   const novaInfoDemanda = {
