@@ -164,7 +164,7 @@ export default function BeneficiosDemanda(props: {
 
     if (props.setInformacaoProcesso || props.informacaoProcesso) {
       props.setInformacaoProcesso(novaInfoDemanda);
-    };
+    }
   }
 
   return (
@@ -196,11 +196,11 @@ export default function BeneficiosDemanda(props: {
                   onClick={() => {
                     if (props.setNumeroBeneficiosReais != null && props.numeroBeneficiosReais != null) {
                       props.setNumeroBeneficiosReais(props.numeroBeneficiosReais - 1);
-                    };
+                    }
                   }} />
               ) : (
                 ""
-              )};
+              )}
             </>
           }
           <AddRoundedIcon
@@ -208,7 +208,7 @@ export default function BeneficiosDemanda(props: {
             onClick={() => {
               if (props.setNumeroBeneficiosReais && props.numeroBeneficiosReais) {
                 props.setNumeroBeneficiosReais(props.numeroBeneficiosReais + 1);
-              };
+              }
             }} />
         </BoxIcones>
 
@@ -237,11 +237,11 @@ export default function BeneficiosDemanda(props: {
                   onClick={() => {
                     if (props.setNumeroBeneficiosPotenciais && props.numeroBeneficiosPotenciais) {
                       props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais - 1);
-                    };
+                    }
                   }} />
               ) : (
                 ""
-              )};
+              )}
             </>
           }
           <AddRoundedIcon
@@ -249,7 +249,7 @@ export default function BeneficiosDemanda(props: {
             onClick={() => {
               if (props.setNumeroBeneficiosPotenciais != null && props.numeroBeneficiosPotenciais != null) {
                 props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais + 1);
-              };
+              }
             }} />
         </BoxIcones>
 
@@ -277,19 +277,19 @@ export default function BeneficiosDemanda(props: {
                   onClick={() => {
                     if (props.setNumeroBeneficiosQualitativos && props.numeroBeneficiosQualitativos) {
                       props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos - 1);
-                    };
+                    }
                   }} />
               ) : (
                 ""
-              )};
+              )}
             </>
-          };
+          }
           <AddRoundedIcon
             sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
             onClick={() => {
               if (props.setNumeroBeneficiosQualitativos != null && props.numeroBeneficiosQualitativos != null) {
                 props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos + 1);
-              };
+              }
             }} />
         </BoxIcones>
 
@@ -304,7 +304,7 @@ export default function BeneficiosDemanda(props: {
               return (
                 <MenuItem key={index} value={valor}>{valor}</MenuItem>
               );
-            })};
+            })}
           </Select>
         </BoxFrequencia>
       </BoxContainerGeral>
@@ -343,7 +343,7 @@ function BeneficiosReais(props: {
     }
   }
 
-  return <>{beneficios}</>;
+  return <>{beneficios}</>
 }
 
 function BeneficiosPotenciais(props: {
@@ -398,7 +398,7 @@ function BeneficiosQualitativos(props: {
     }
   }
 
-  return <>{beneficios}</>;
+  return <>{beneficios}</>
 }
 
 function BeneficioReal(props: {
