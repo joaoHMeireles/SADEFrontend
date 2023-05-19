@@ -252,7 +252,7 @@ export default function CriacaoPauta(props: {
                       onChange={(newValue) => {
                         setValorData(newValue);
                       }}
-                      renderInput={(params) => <TextField id='dataReuniaoEscolhida' {...params} />}
+                      renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />}
                     />
                   </Box>
                 </Grid>

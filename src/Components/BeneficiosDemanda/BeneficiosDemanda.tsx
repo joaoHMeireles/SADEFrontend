@@ -344,12 +344,17 @@ function BeneficiosReais(props: {
 }) {
   let beneficios: JSX.Element[] = [];
 
+
+
   if (props.numeroBeneficios) {
     for (let i = 0; i < props.numeroBeneficios; i++) {
+      console.log(props.beneficiosReaisLista[i]);
+      
       if (props.beneficiosReaisLista[i]) {
         beneficios.push(<BeneficioReal index={i}
           informacaoProcesso={props.informacaoProcesso}
           setInformacaoProcesso={props.setInformacaoProcesso}
+          valorBeneficio={props.beneficiosReaisLista[i].valor}
           moedaBeneficio={props.beneficiosReaisLista[i].moeda}
           idBeneficioReal={props.beneficiosReaisLista[i].idBeneficio} />);
       } else {
@@ -425,6 +430,7 @@ function BeneficioReal(props: {
   index: number,
   informacaoProcesso: any,
   setInformacaoProcesso: any,
+  valorBeneficio?: number,
   moedaBeneficio?: any,
   idBeneficioReal?: any,
   moedaReal?: any,
@@ -433,7 +439,8 @@ function BeneficioReal(props: {
   const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioReal);
   const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[2]);
   const [currencyInput, setCurrencyInput] = useState(0);
-  const [valueInput, setValueInput] = useState<any>("");
+  const [valueInput, setValueInput] = useState<any>(props.valorBeneficio? props.valorBeneficio : "");
+  
 
   useEffect(() => {
     switch (moedaBeneficio) {
@@ -457,8 +464,11 @@ function BeneficioReal(props: {
       setMoedaBeneficio(props.moedaBeneficio)
     }
 
-    if (props.moedaReal.length != 0) {
-      setMoedaBeneficio(props.moedaReal)
+    if (props.moedaReal != null) {
+      if (props.moedaReal.length != 0) {
+        setMoedaBeneficio(props.moedaReal)
+      }
+
     }
   }, []);
 
@@ -650,8 +660,10 @@ function BeneficioPotencial(props: {
       setMoedaBeneficio(props.moedaBeneficio)
     }
 
-    if (props.moedaPotencial.length != 0) {
-      setMoedaBeneficio(props.moedaPotencial)
+    if (props.moedaPotencial != null) {
+      if (props.moedaPotencial.length != 0) {
+        setMoedaBeneficio(props.moedaPotencial)
+      }
     }
   });
 
@@ -672,7 +684,7 @@ function BeneficioPotencial(props: {
                   setValueInput(e.target.value);
                   console.log(">>>> log: ", e.target.value);
                   console.log(atualizarObjetos);
-                  
+
 
                   if (atualizarObjetos != null) {
                     atualizarObjetos()
