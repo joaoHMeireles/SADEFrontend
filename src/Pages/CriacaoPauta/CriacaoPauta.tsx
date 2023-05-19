@@ -219,14 +219,12 @@ export default function CriacaoPauta(props: {
                   </TypographyTituloInput>
                   <Select
                     sx={{ width: "auto" }}
-                    defaultValue={"Comitê de TI"}
+                    // defaultValue={"Comitê de TI"}
                     value={comissaoEscolhida}
                     inputProps={{ id: "comissaoEscolhida" }}
                     onChange={(e: any) => {
                       console.log(comissoes);
                       console.log(e);
-                      
-
                       const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
                       setComissaoEscolhida(novaComissaoEscolhida);
                     }}
