@@ -159,7 +159,7 @@ export default function CriacaoDemanda(props: {
     let descricao;
 
     let beneficios = [];
-    
+
 
     for (let i = 0; i < numeroBeneficiosReais; i++) {
       valorMensal = document.getElementById(`valorMensalReal${i}`) as HTMLInputElement;
@@ -173,7 +173,7 @@ export default function CriacaoDemanda(props: {
       }
 
       console.log(beneficioReal);
-      
+
 
       if (numeroBeneficiosReais > 0 && valorMensal.value && moedaReal && descricao.value) {
         beneficios.push(beneficioReal);

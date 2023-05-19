@@ -259,7 +259,7 @@ export default function TelaHistoricos(props: {}) {
   function acaoCelula(cell: GridCellParams<any>) {
     if (cell.field == "pdfHistorico") {
       console.log(cell.row.pdfHistorico.arquivo);
-      
+
       setArquivoPDF(cell.row.pdfHistorico.arquivo);
       setMostrarPDF(true);
     }
@@ -460,6 +460,9 @@ export default function TelaHistoricos(props: {}) {
                     display: "flex",
                     justifyContent: "center"
                   }}>
+                    {/* <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+                      <Viewer fileUrl={arquivoPDF} />
+                    </Worker> */}
                     <PDFViewer data={arquivoPDF} />
                   </Box>
                 }
