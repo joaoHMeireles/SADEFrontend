@@ -25,13 +25,13 @@ const moedas = [
   "DOLAR",
   "EURO",
   "REAL"
-];
+]
 
 const valoresFrequencia = [
   "DIARIAMENTE",
   "SEMANALMENTE",
   "MENSALMENTE"
-];
+]
 
 let atualizarObjetos: any = null;
 
@@ -310,7 +310,7 @@ export default function BeneficiosDemanda(props: {
       </BoxContainerGeral>
     </>
   );
-};
+}
 
 function BeneficiosReais(props: {
   numeroBeneficios: number | undefined,
@@ -344,7 +344,7 @@ function BeneficiosReais(props: {
   };
 
   return <>{beneficios}</>;
-};
+}
 
 function BeneficiosPotenciais(props: {
   numeroBeneficios: number | undefined,
@@ -376,7 +376,7 @@ function BeneficiosPotenciais(props: {
   };
 
   return <>{beneficios}</>;
-};
+}
 
 function BeneficiosQualitativos(props: {
   numeroBeneficios: number | undefined,
@@ -399,7 +399,7 @@ function BeneficiosQualitativos(props: {
   };
 
   return <>{beneficios}</>;
-};
+}
 
 function BeneficioReal(props: {
   index: number,
@@ -592,7 +592,7 @@ function BeneficioReal(props: {
       </BoxContainerDivisorio>
     </BoxContainerGeralBeneficio >
   );
-};
+}
 
 function BeneficioPotencial(props: {
   index: number,
