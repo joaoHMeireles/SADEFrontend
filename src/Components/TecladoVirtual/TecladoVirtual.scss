@@ -1,0 +1,27 @@
+.simple-keyboard {
+    background-color: #00579d;
+}
+
+.simple-keyboard.hg-theme-default.myTheme {
+    border: 5px solid #00579d;
+    border-radius: 10px;
+}
+
+.simple-keyboard.hg-layout-default {
+
+    .hg-button{
+        background-color: white;
+        color: blakc;
+
+        .hg-red {
+            background: rgb(255, 0, 0, 0.7);
+            color: white;
+        }
+
+        .hg-highlight {
+            box-shadow: 0px 0px 40px 5px rgba(255, 255, 0, 0.5);
+            z-index: 1;
+        }
+
+    }
+}

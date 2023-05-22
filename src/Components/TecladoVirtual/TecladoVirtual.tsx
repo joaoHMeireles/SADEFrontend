@@ -1,15 +1,17 @@
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
+import { Box } from '@mui/material';
+import "./TecladoVirtual.scss";
 import Keyboard from 'react-simple-keyboard';
+import Draggable from 'react-draggable';
 import 'react-simple-keyboard/build/css/index.css';
 import layout from "simple-keyboard-layouts/build/layouts/brazilian";
 
 
 export default function TecladoVirtual(props: {
     valorInput: string;
-    setValorInput: React.Dispatch<SetStateAction<string>>
+    setValorInput: React.Dispatch<SetStateAction<string>>;
 }) {
     const [layoutName, setLayoutName] = useState("default")
-
 
     const onChange = (input: string) => {
         props.setValorInput(input);
@@ -30,38 +32,28 @@ export default function TecladoVirtual(props: {
         setLayoutName(previousLayoutName === "default" ? "shift" : "default");
     };
 
-    // const onChangeInput = (event: any) => {
-    //     const input = event.target.value;
-    //     props.setValorInput(input);
-
-    //     // keyboard.props.setValorInput(input);
-    // };
-
     return (
-        <Keyboard
-            // keyboardRef={r => (keyboard = r)}
-            layout={layout.layout}
-            layoutName={layoutName}
-            onChange={onChange}
-            onKeyPress={onKeyPress}
-        />
+        <Draggable>
+            <Box sx={{cursor: "move", position: "absolute", bottom: "0px", left: "24vw", width: "50vw", backgroundColor: "rgb(255,255,255, 0.9)", padding: "1.5rem", borderRadius: "5px" }}>
+                <Keyboard
+                    layout={layout.layout}
+                    layoutName={layoutName}
+                    onChange={onChange}
+                    onKeyPress={onKeyPress}
+                    theme={"hg-theme-default hg-layout-default myTheme"}
+                    buttonTheme={[
+                        {
+                            class: "hg-red",
+                            buttons: "Q W E R T Y q w e r t y"
+                        },
+                        {
+                            class: "hg-highlight",
+                            buttons: "Q q"
+                        }
+                    ]}
+                />
+            </Box>
+        </Draggable>
+
     );
-    // const onChange = (input: any) => {
-    //     console.log("Input changed", input);
-    // }
-
-    // const onKeyPress = (button: any) => {
-    //     console.log("Button pressed", button);
-    // }
-
-
-    // return (
-    //     <>
-    //         <Keyboard
-    //             onChange={onChange}
-    //             onKeyPress={onKeyPress}
-    //             layout={layout.layout}
-    //         />
-    //     </>
-    // )
 }

@@ -296,8 +296,8 @@ export default function App() {
     <>
       <VLibras forceOnload={true} />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <WebSocketService>
-          <BrowserRouter>
+        <BrowserRouter>
+          <WebSocketService>
             <RascunhoObserver />
             <ThemeProvider theme={MainTheme}>
               <Navbar aberto={sidebarAberta} setAberto={setSidebarAberta} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />
@@ -358,8 +358,8 @@ export default function App() {
                 <Filter aberto={filtrar} setAberto={setFiltrar} setSidebar={setSidebarAberta} filtrarResultados={filtrarResultados} listaComponents={listaComponents} />
               </Box>
             </ThemeProvider>
-          </BrowserRouter>
-        </WebSocketService>
+          </WebSocketService>
+        </BrowserRouter>
       </LocalizationProvider >
     </>
   );
