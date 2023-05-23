@@ -78,9 +78,9 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(2);
                   }}>
                     {cor == 2 ?
-                      <ListItemText primary="Avaliar Demanda (A)" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Avaliar Demanda" sx={{ color: "#00579d", fontWeight: "bold" }} />
                       :
-                      <ListItemText primary="Avaliar Demanda (A)" />}
+                      <ListItemText primary="Avaliar Demanda" />}
                   </ListItemButton>
 
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
@@ -88,9 +88,9 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(3);
                   }}>
                     {cor == 3 ?
-                      <ListItemText primary="Avaliar Demanda (GN)" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Avaliar Demanda" sx={{ color: "#00579d", fontWeight: "bold" }} />
                       :
-                      <ListItemText primary="Avaliar Demanda (GN)" />}
+                      <ListItemText primary="Avaliar Demanda" />}
                   </ListItemButton>
 
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
@@ -98,9 +98,9 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(4);
                   }}>
                     {cor == 4 ?
-                      <ListItemText primary="Adicionar informações na Demanda(A)" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Adicionar informações na Demanda" sx={{ color: "#00579d", fontWeight: "bold" }} />
                       :
-                      <ListItemText primary="Adicionar informações na Demanda(A)" />}
+                      <ListItemText primary="Adicionar informações na Demanda" />}
                   </ListItemButton>
 
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
@@ -128,9 +128,9 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(7);
                   }}>
                     {cor == 7 ?
-                      <ListItemText primary="Informar o parecer da Comissão(A)" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Informar o parecer da Comissão" sx={{ color: "#00579d", fontWeight: "bold" }} />
                       :
-                      <ListItemText primary="Informar o parecer da Comissão(A)" />}
+                      <ListItemText primary="Informar o parecer da Comissão" />}
                   </ListItemButton>
 
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
@@ -167,9 +167,9 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(10)
                   }}>
                     {cor == 10 ?
-                      <ListItemText primary="Iniciar Workflow de Aprovação(A)" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Iniciar Workflow de Aprovação" sx={{ color: "#00579d", fontWeight: "bold" }} />
                       :
-                      <ListItemText primary="Iniciar Workflow de Aprovação(A)" />}
+                      <ListItemText primary="Iniciar Workflow de Aprovação" />}
                   </ListItemButton>
 
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
@@ -177,9 +177,9 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(11);
                   }}>
                     {cor == 11 ?
-                      <ListItemText primary="Avaliar Workflow de Aprovação(GN/GTI)" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Avaliar Workflow de Aprovação" sx={{ color: "#00579d", fontWeight: "bold" }} />
                       :
-                      <ListItemText primary="Avaliar Workflow de Aprovação(GN/GTI)" />}
+                      <ListItemText primary="Avaliar Workflow de Aprovação" />}
                   </ListItemButton>
                 </List>
               </Collapse>
