@@ -4,7 +4,7 @@ import { BoxCorStatus } from "../ContainerProcesso/ContainerProcesso.styles";
 
 export default function CardProposta(props: { cor: string; children: any }) {
   return (
-    <GridProposta container sx={{ width: "50vw" }}>
+    <GridProposta container>
       <Grid item xs={0.2}>
         <BoxCorStatus sx={{ backgroundColor: props.cor }}></BoxCorStatus>
       </Grid>

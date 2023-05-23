@@ -71,6 +71,7 @@ export default function CriacaoPauta(props: {
           proposta.escolhidaCriacao = true
         }
 
+        proposta.id = proposta.idProposta
         proposta.tipo = TipoComponenteProcesso.Proposta
         listaPropostas.push(proposta)
       }
@@ -298,7 +299,7 @@ export default function CriacaoPauta(props: {
               <>
                 <BoxGeral key={proposta.id}>
                   <BoxProposta>
-                    <CardProposta cor="#6AACDA">
+                    <CardProposta sx={{ width: "50vw" }} cor="#6AACDA">
                       <BoxConteudoProposta>
                         <BoxTituloProposta>{proposta.tituloDemanda}</BoxTituloProposta>
                         <BoxIconeLink>

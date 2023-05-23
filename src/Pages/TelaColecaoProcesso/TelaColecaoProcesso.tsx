@@ -160,7 +160,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
       if (informacaoColecaoProcesso.tipo != "ATA") {
         console.log("entrou");
 
-        console.log(document.getElementById("dataReuniao"));
+        // console.log(document.getElementById("dataReuniao"));
 
 
         const decisoesPauta: any[] = []
@@ -221,6 +221,9 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         
 
         api.put("/sod/pauta/" + idPauta + "/" + idUsuario, formDataPauta).then((response) => {
+          console.log(response);
+          
+
           if (expanded.expanded) {
             const tituloReuniaoInput = (document.getElementById("tituloReuniao") as HTMLInputElement).value
             const dataReuniao = (document.getElementById("dataReuniao") as HTMLInputElement).value
@@ -237,7 +240,10 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
               finalReuniao: finalReuniao + ":" + "00"
             }
 
-            api.post("/sod/ata", ataDTO).then((response) => {
+            api.post("/sod/ata", ataDTO).then((responseATA) => {
+              
+              console.log(responseATA);
+              
               acaoFinalizada()
             })
           } else {
@@ -301,6 +307,8 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         }
 
         api.put("/sod/ata/" + informacaoColecaoProcesso.idATA + "/" + idUsuario, formData).then((response) => {
+          console.log(response);
+          
           acaoFinalizada()
         }).catch((err) => {
           console.log(err);
