@@ -133,6 +133,7 @@ export default function ComponenteProcesso(props: {
     if (isChecked) {
       card?.classList.add("selecionado")
       const componentePaginaPauta = componente;
+      
       componentePaginaPauta.link = nomeTipoLink;
 
       props.propostas?.push(componente);
