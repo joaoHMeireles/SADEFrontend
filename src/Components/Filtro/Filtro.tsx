@@ -6,7 +6,6 @@ import {
   Box, Checkbox, Collapse, Divider, FormControl, FormControlLabel, FormGroup, IconButton, InputAdornment, Radio,
   RadioGroup, TextField, Toolbar, Button
 } from "@mui/material";
-import { ExcelExport, ExcelExportColumn } from '@progress/kendo-react-excel-export';
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
@@ -118,7 +117,7 @@ export default function Filtro(props: {
 
   for (let atributo in props.listaComponents[0]) {
     excelColumns.push(
-      <ExcelExportColumn field={atributo} />
+      <ExcelExportColumn field={atributo} key={atributo} />
     )
   }
   
@@ -159,15 +158,6 @@ export default function Filtro(props: {
 
     props.setAberto(false)
   })
-
-
-
-  const _export = useRef(null);
-  const exportExport = () => {
-    if (_export.current !== null) {
-      (_export.current as any).save(props.listaComponents);
-    }
-  };
 
   return (
     <>

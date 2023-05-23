@@ -110,7 +110,7 @@ export default function EscopoProposta(props: {
                 onChange={(e: any) => {
                   props.setPeriodoExecucaoInicio(e.$d);
                 }}
-                renderInput={(params) => <TextField id='periodoExecucaoInicio' {...params} />}
+                renderInput={(params: any) => <TextField id='periodoExecucaoInicio' {...params} />}
               />
             </LocalizationProvider>
           </BoxPaybackExe>
@@ -122,7 +122,7 @@ export default function EscopoProposta(props: {
                 onChange={(e: any) => {
                   props.setPeriodoExecucaoFim(e.$d);
                 }}
-                renderInput={(params) => <TextField id='periodoExecucaoFim' {...params} />}
+                renderInput={(params: any) => <TextField id='periodoExecucaoFim' {...params} />}
               />
             </LocalizationProvider>
           </BoxPaybackExe>
