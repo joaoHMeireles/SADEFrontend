@@ -12,6 +12,7 @@ import {
   TypographyMensagem,
   TypographyTitulo,
 } from "./Notificacao.styles";
+import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
 
 /**
  *
@@ -42,9 +43,12 @@ export default function Notificacao(props: {
     }
   }
 
-  function redirecionar(){
-    if(props.tipoNotificacao == "DEMANDA"){
+  function redirecionar() {
+    if (props.tipoNotificacao == "DEMANDA") {
       api.get("/sod/demanda/" + props.idComponenteLink).then((response) => {
+        response.data.id = response.data.idDemanda
+        response.data.tipo = TipoComponenteProcesso.Demanda
+
         localStorage.setItem(
           `DEMANDAESCOLHIDA`,
           JSON.stringify(response.data)
@@ -52,11 +56,38 @@ export default function Notificacao(props: {
 
         location.href = props.linkNotificacao
       })
-    } else if (props.tipoNotificacao == "PROPOSTA"){
-      api.get("/proposta/" + props.idComponenteLink).then((response) => {
+    } else if (props.tipoNotificacao == "PROPOSTA") {
+      api.get("/sod/proposta/" + props.idComponenteLink).then((response) => {
+        const proposta = response.data        
+
+        for (let atributo in proposta.demanda) {
+          console.log(atributo);
+          
+          proposta[atributo] = proposta.demanda[atributo]
+        }
+
+        proposta.tipo = TipoComponenteProcesso.Proposta
+        proposta.id = proposta.idProposta
+
         localStorage.setItem(
           `PROPOSTAESCOLHIDA`,
-          JSON.stringify(response.data)
+          JSON.stringify(proposta)
+        );
+
+        location.href = props.linkNotificacao
+      })
+    } else if (props.tipoNotificacao == "PAUTA") {
+      api.get("/sod/pauta/" + props.idComponenteLink).then((response) => {
+        let pauta = response.data
+        pauta.propostas = pauta.propostasPauta
+        pauta.propostasPauta = null
+        pauta.tituloReuniao = pauta.tituloReuniaoPauta
+
+        pauta.tipo = TipoColecaoComponenteProcesso.Pauta
+
+        localStorage.setItem(
+          `PAUTAESCOLHIDA`,
+          JSON.stringify(pauta)
         );
 
         location.href = props.linkNotificacao

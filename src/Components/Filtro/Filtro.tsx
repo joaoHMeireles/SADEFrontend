@@ -6,6 +6,7 @@ import {
   Box, Checkbox, Collapse, Divider, FormControl, FormControlLabel, FormGroup, IconButton, InputAdornment, Radio,
   RadioGroup, TextField, Toolbar, Button
 } from "@mui/material";
+import { ExcelExport, ExcelExportColumn } from '@progress/kendo-react-excel-export';
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
@@ -20,8 +21,8 @@ export default function Filtro(props: {
   aberto: boolean;
   setAberto: React.Dispatch<React.SetStateAction<boolean>>;
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
-  filtrarResultados: Function;
-  listaComponents: any[];
+  filtrarResultados: Function
+  listaComponents: any[]
 }) {
   //listas base para os itens do filtros
   const [drawerWidth, setDrawerWidth] = useState("0px");
@@ -141,6 +142,7 @@ export default function Filtro(props: {
     })
   })
 
+
   useEffect(() => {
     if (props.aberto) {
       setDrawerWidth("240px");
@@ -158,6 +160,14 @@ export default function Filtro(props: {
     props.setAberto(false)
   })
 
+
+
+  const _export = useRef(null);
+  const exportExport = () => {
+    if (_export.current !== null) {
+      (_export.current as any).save(props.listaComponents);
+    }
+  };
 
   return (
     <>
@@ -338,7 +348,7 @@ function OpcoesCheck(props: OptionInterface) {
 
 function OpcaoInput(props: { filtrarResultados: Function }) {
   return (
-    <TextField id="input-pesquisa-ppm" variant="standard" 
+    <TextField id="input-pesquisa-ppm" variant="standard"
       InputProps={{
         sx: {
           color: "#595959"

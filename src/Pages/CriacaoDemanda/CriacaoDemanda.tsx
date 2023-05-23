@@ -263,7 +263,7 @@ export default function CriacaoDemanda(props: {
 
       dataCerta.beneficiosDemanda = beneficios
       dataCerta.rascunho = false
-
+      
       if (props.rascunho) {
         dataCerta.criandoDemandaPorRascunho = true
       }

@@ -219,14 +219,12 @@ export default function CriacaoPauta(props: {
                   </TypographyTituloInput>
                   <Select
                     sx={{ width: "auto" }}
-                    defaultValue={"Comitê de TI"}
+                    // defaultValue={"Comitê de TI"}
                     value={comissaoEscolhida}
                     inputProps={{ id: "comissaoEscolhida" }}
                     onChange={(e: any) => {
                       console.log(comissoes);
                       console.log(e);
-                      
-
                       const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
                       setComissaoEscolhida(novaComissaoEscolhida);
                     }}
@@ -242,10 +240,10 @@ export default function CriacaoPauta(props: {
                   </TypographyTituloInput>
                   <DatePicker
                     value={valorData}
-                    onChange={(newValue) => {
+                    onChange={(newValue: any) => {
                       setValorData(newValue);
                     }}
-                    renderInput={(params) => <TextField id='dataReuniaoEscolhida' {...params} />}
+                    renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -255,8 +253,8 @@ export default function CriacaoPauta(props: {
                   <TimePicker
                     ampm={false}
                     value={inicioReuniao}
-                    onChange={(newValue) => setInicioReuniao(newValue)}
-                    renderInput={(params) => {
+                    onChange={(newValue: any) => setInicioReuniao(newValue)}
+                    renderInput={(params: any) => {
                       return <TextField id="horarioInicioReuniao" {...params} />;
                     }}
                   />
@@ -268,8 +266,8 @@ export default function CriacaoPauta(props: {
                   <TimePicker
                     ampm={false}
                     value={finalReuniao}
-                    onChange={(newValue) => setFinalReuniao(newValue)}
-                    renderInput={(params) => {
+                    onChange={(newValue: any) => setFinalReuniao(newValue)}
+                    renderInput={(params: any) => {
                       return <TextField id="horarioFinalReuniao" {...params} />;
                     }}
                   />
