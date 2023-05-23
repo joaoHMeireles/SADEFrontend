@@ -18,7 +18,7 @@ import { Box } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { MainBox } from "./App.styles";
+import { BoxDraggable, MainBox } from "./App.styles";
 import { MainTheme, ContentTheme } from "../Themes";
 import Historico from "./Historico/Historico";
 import CriacaoProposta from "./CriacaoProposta/CriacaoProposta";
@@ -35,6 +35,7 @@ import AjudaUsuario from "./AjudaUsuario/AjudaUsuario";
 
 import { WebSocketService } from "../api/websocketservice.jsx";
 import RascunhoObserver from "../Components/RascunhoObserver/RascunhoObserver";
+import Draggable from "react-draggable";
 
 
 

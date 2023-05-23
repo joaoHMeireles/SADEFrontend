@@ -5,6 +5,7 @@ import Keyboard from 'react-simple-keyboard';
 import Draggable from 'react-draggable';
 import 'react-simple-keyboard/build/css/index.css';
 import layout from "simple-keyboard-layouts/build/layouts/brazilian";
+import { BoxDraggable } from '../../Pages/App.styles';
 
 
 export default function TecladoVirtual(props: {
@@ -34,7 +35,7 @@ export default function TecladoVirtual(props: {
 
     return (
         <Draggable>
-            <Box sx={{cursor: "move", position: "absolute", bottom: "0px", left: "24vw", width: "50vw", backgroundColor: "rgb(255,255,255, 0.9)", padding: "1.5rem", borderRadius: "5px" }}>
+            <BoxDraggable>
                 <Keyboard
                     layout={layout.layout}
                     layoutName={layoutName}
@@ -52,7 +53,7 @@ export default function TecladoVirtual(props: {
                         }
                     ]}
                 />
-            </Box>
+            </BoxDraggable>
         </Draggable>
 
     );
