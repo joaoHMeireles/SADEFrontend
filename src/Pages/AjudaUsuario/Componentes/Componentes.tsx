@@ -31,11 +31,11 @@ import criarATAIconeFinal from "../../../Assets/AjudaUsuario/CriarATA/criarATAIc
 import criarATAPauta from "../../../Assets/AjudaUsuario/CriarATA/criarATAPauta.png"
 import criarATAPautaFinal from "../../../Assets/AjudaUsuario/CriarATA/criarATAPautaFinal.png"
 // Informar o parecer da Diretoria Geral
-
+import informarParecerDiretoriaGeral from "../../../Assets/AjudaUsuario/InformarParecerDiretoriaGeral/informarParecerDiretoriaGeral.png";
+import informarParecerDiretoriaGeralFinal from "../../../Assets/AjudaUsuario/InformarParecerDiretoriaGeral/informarParecerDiretoriaGeralFinal.png";
 // Iniciar Workflow de Aprovação
 import iniciarWorkflow from "../../../Assets/AjudaUsuario/IniciarWorkflow/iniciarWorkflow.png";
 // Avaliar Workflow de Aprovação
-
 
 
 export const Introducao = (
@@ -270,9 +270,9 @@ export const CriarATA = (
         <BoxImage>
             <img id="imgs" src={criarATAPautaFinal} alt="Criar Ata pela Pauta parte final" />
         </BoxImage>
-        
+
         <P>Se você apertar no ícone <RemoveRoundedIcon /> e enviar o parecer da Comissão, a Ata será excluída e você só poderá repetir esse processo seguindo os passos de criar a Ata pela sidebar</P>
-    
+
         <Space>.</Space>
     </BoxBackground>
 );
@@ -283,7 +283,19 @@ export const InformarParecerDiretoriaGeral = (
             <p>Informar o parecer da Diretoria Geral</p>
         </Title>
 
-        <P>Para informar o parecer da comissão, escolha o status da ATA, podendo ser Cancelled, Business Case, To Do ou Assessment, informe o número da ATA da DG, anexe os arquivos sendo opcional e escreva os comentários necessários.</P>
+        <P>Para informar o parecer da Diretoria Geral, entre dentro da ATA que desejas informar o parecer, depois, clique no botão de "Finalizar Processo".</P>
+
+        <BoxImage>
+            <img id="imgs" src={informarParecerDiretoriaGeral} alt="Informar o parecer da DiretoriaGeral" />
+        </BoxImage>
+
+        <P>Escolha o status da ATA, podendo ser Cancelled, Business Case, To Do ou Assessment, informe o número da ATA da DG, anexe os arquivos sendo opcional e escreva os comentários necessários.</P>
+
+        <BoxImage>
+            <img id="imgs" src={informarParecerDiretoriaGeralFinal} alt="Informar o parecer da DiretoriaGera parte final" />
+        </BoxImage>
+
+        <Space>.</Space>
     </BoxBackground>
 );
 
