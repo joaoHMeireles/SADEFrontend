@@ -92,6 +92,22 @@ export default function Notificacao(props: {
 
         location.href = props.linkNotificacao
       })
+    } else if (props.tipoNotificacao == "ATA") {
+      api.get("/sod/ata/" + props.idComponenteLink).then((response) => {
+        let ata = response.data
+        ata.propostas = ata.propostasAta
+        ata.propostasPauta = ata.pauta.propostasPauta
+        ata.tituloReuniao = ata.tituloReuniaoATA
+
+        ata.tipo = TipoColecaoComponenteProcesso.ATA
+
+        localStorage.setItem(
+          `ATAESCOLHIDA`,
+          JSON.stringify(ata)
+        );
+
+        location.href = props.linkNotificacao
+      })
     }
 
   }

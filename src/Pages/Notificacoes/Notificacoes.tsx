@@ -63,13 +63,14 @@ export default function Notificacoes() {
         icone = AccessTimeRoundedIcon;
       } else if (acao == "AVALIARDEMANDA") {
         icone = CheckBoxRoundedIcon;
-        ;
+      } else if (acao == "VIROUATA") {
+        icone = CheckBoxRoundedIcon;
       }
     }
   }
 
   const notificacoesElement = notificacoes.map((notificacao: any) => {
-    // console.log(notificacao);
+    console.log(notificacao);
 
     getTipoIcone(notificacao.acao)
     return (

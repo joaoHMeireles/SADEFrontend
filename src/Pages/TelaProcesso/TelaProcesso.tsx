@@ -64,7 +64,7 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
     const informacaoProcesso = JSON.parse(processoLocalStorage != null ? processoLocalStorage : "");
 
     console.log(informacaoProcesso);
-    
+
 
     return (
         <>
@@ -117,7 +117,7 @@ export function Header(props: {
     const processo = props.informacaoProcesso;
     const prazoElaboracao = processo.prazoElaboracao
     const tipoProcesso = processo.tipo
-    const idAnalista = localStorage.getItem("IDUSUARIO") 
+    const idAnalista = localStorage.getItem("IDUSUARIO")
 
 
     const listaBotoes = getBotoesPagina(
@@ -195,6 +195,11 @@ export function Header(props: {
         } else {
             api.get(`/sod/proposta/${processo.id}`).then((response: any) => {
                 const proposta = response.data
+
+                for (let atributo in proposta.demanda) {
+                    proposta[atributo] = proposta.demanda[atributo]
+                }
+
                 proposta.tipo = TipoComponenteProcesso.Proposta
                 proposta.id = proposta.idProposta
                 localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta))
@@ -247,11 +252,11 @@ export function Header(props: {
                 const bu = valoresInputBU.find(bu => bu.nomeBU == nomeBUSolicitante)
 
                 // console.log(nomeBUSolicitante);
-                
+
                 // console.log("bu ta aqui");
-                
+
                 // console.log(bu);
-                
+
 
                 formDataDemanda.append("demanda", JSON.stringify(
                     {
@@ -268,21 +273,21 @@ export function Header(props: {
                 //     //colocar pdf
                 //     formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
 
-                    // faz a atualização do histórico da demanda
-                    api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
-                        // atualiza informações de demanda
-                        api.put(`/sod/demanda/${processo.idDemanda}/${idAnalista}`, formDataDemanda, {
-                            headers: {
-                                "Content-Type": "multipart/form-data",
-                            }
-                        }).then(() => {
-                            recarregarPaginaDemanda(conteudo)
-                        }).catch((err: any) => {
-                            console.log(err);
-                        })
+                // faz a atualização do histórico da demanda
+                api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
+                    // atualiza informações de demanda
+                    api.put(`/sod/demanda/${processo.idDemanda}/${idAnalista}`, formDataDemanda, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        }
+                    }).then(() => {
+                        recarregarPaginaDemanda(conteudo)
                     }).catch((err: any) => {
                         console.log(err);
                     })
+                }).catch((err: any) => {
+                    console.log(err);
+                })
                 // }).catch((err: any) => {
                 //     console.log(err);
 
@@ -314,7 +319,7 @@ export function Header(props: {
                         {
                             tarefa: "ADICIONARINFORMACOESDEMANDA",
                             demanda: { idDemanda: processo.idDemanda },
-                            usuario: { idUsuario:  response.data.usuario.idUsuario},
+                            usuario: { idUsuario: response.data.usuario.idUsuario },
                             acaoFeitaHistoricoAnterior: "APROVARDEMANDA"
                         }
                     ))
@@ -535,21 +540,31 @@ export function Header(props: {
         )
 
         function iniciarWorkflowAprovacao(conteudo: JSX.Element) {
-            const formDataHistorico = new FormData()
-            formDataHistorico.append("historico", JSON.stringify(
-                {
-                    tarefa: "AVALIARWORKFLOW",
-                    demanda: { idDemanda: processo.id },
-                    usuario: { idUsuario: gerenteSolicitante.idUsuario },
-                    acaoFeitaHistoricoAnterior: "INICIARWORKFLOW"
-                }
-            ))
+            const formData = new FormData()
+            
+            formData.append("proposta", JSON.stringify({
+                emWorkflow: true
+            }))
 
-            api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response: any) => {
+            // formDataHistorico.append("historico", JSON.stringify(
+            //     {
+            //         tarefa: "AVALIARWORKFLOW",
+            //         demanda: { idDemanda: processo.id },
+            //         usuario: { idUsuario: gerenteSolicitante.idUsuario },
+            //         acaoFeitaHistoricoAnterior: "INICIARWORKFLOW"
+            //     }
+            // ))
+
+            api.put(`/sod/proposta/${processo.id}/${idAnalista}`, formData).then((res) => {
                 recarregarPaginaDemanda(conteudo)
-            }).catch((err: any) => {
+            }).catch((err) => {
                 console.log(err);
             })
+            // api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response: any) => {
+            //     recarregarPaginaDemanda(conteudo)
+            // }).catch((err: any) => {
+            //     console.log(err);
+            // })
         }
 
         props.setConteudoModal(
@@ -1587,7 +1602,7 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
     const tamanho = processo.tamanho
     const linkJira = processo.linkJira
     const prazoElaboracao = processo.prazoElaboracao
-    const estaEmWorkflow = processo.workflowIniciado
+    const estaEmWorkflow = processo.emWorkflow
     const aprovadoWorkflow = processo.aprovadoWorkflow
     const workflowDeadline = processo.prazoWorkflow
     const estaEmProposta = processo.pertenceUmaProposta

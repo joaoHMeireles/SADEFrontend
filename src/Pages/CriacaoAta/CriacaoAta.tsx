@@ -70,12 +70,12 @@ export default function CriacaoAta(props: {
         pauta.propostasPauta = null
         pauta.tituloReuniao = pauta.tituloReuniaoPauta
         pauta.tipo = TipoColecaoComponenteProcesso.Pauta
-
-        if (pauta.idPauta == pautaEscolhida.idPauta) {
-          setPautaEscolhida(pauta)
-          setValor(1)
+        if (pautaEscolhida != null) {
+          if (pauta.idPauta == pautaEscolhida.idPauta) {
+            setPautaEscolhida(pauta)
+            setValor(1)
+          }
         }
-
         listaPautas.push(pauta)
       }
 
