@@ -71,6 +71,7 @@ export default function CriacaoPauta(props: {
           proposta.escolhidaCriacao = true
         }
 
+        proposta.id = proposta.idProposta
         proposta.tipo = TipoComponenteProcesso.Proposta
         listaPropostas.push(proposta)
       }
@@ -205,26 +206,30 @@ export default function CriacaoPauta(props: {
       {valor == 1 && (
         <>
           <BoxInputsDataComissao>
-            <Box sx={{ width: "75%", display: "flex" }}>
+            <Box sx={{ width: "50vw", display: "flex", justifyContent: "center" }}>
               <Grid container spacing={1}>
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{ alignItems: "flex-start", display: "flex", flexDirection: "column" }}>
                   <TypographyTituloInput>
                     Título da reunião
                   </TypographyTituloInput>
-                  <TextField sx={{ width: "100%" }} id="tituloReuniao" />
+
+                  <TextField sx={{ width: "50vw" }} id="tituloReuniao" />
                 </Grid>
+
                 <Grid item xs={6}>
                   <TypographyTituloInput>
                     Fórum da reunião
                   </TypographyTituloInput>
+
                   <Select
-                    sx={{ width: "auto" }}
-                    // defaultValue={"Comitê de TI"}
+                    sx={{ width: "15vw" }}
+                    defaultValue={"Comitê de TI"}
                     value={comissaoEscolhida}
                     inputProps={{ id: "comissaoEscolhida" }}
                     onChange={(e: any) => {
                       console.log(comissoes);
                       console.log(e);
+
                       const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
                       setComissaoEscolhida(novaComissaoEscolhida);
                     }}
@@ -234,43 +239,59 @@ export default function CriacaoPauta(props: {
                     })}
                   </Select>
                 </Grid>
-                <Grid item xs={6}>
-                  <TypographyTituloInput>
-                    Data da Reunião
-                  </TypographyTituloInput>
-                  <DatePicker
-                    value={valorData}
-                    onChange={(newValue: any) => {
-                      setValorData(newValue);
-                    }}
-                    renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />}
-                  />
+
+                <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+                  <Box>
+                    <TypographyTituloInput>
+                      Data da Reunião
+                    </TypographyTituloInput>
+
+                    <DatePicker
+                      InputProps={{ sx: { width: "15vw" } }}
+                      value={valorData}
+                      onChange={(newValue) => {
+                        setValorData(newValue);
+                      }}
+                      renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />}
+                    />
+                  </Box>
                 </Grid>
+
                 <Grid item xs={6}>
                   <TypographyTituloInput>
                     Início da reunião
                   </TypographyTituloInput>
-                  <TimePicker
-                    ampm={false}
-                    value={inicioReuniao}
-                    onChange={(newValue: any) => setInicioReuniao(newValue)}
-                    renderInput={(params: any) => {
-                      return <TextField id="horarioInicioReuniao" {...params} />;
-                    }}
-                  />
+
+
+                  <Box sx={{ height: "auto", width: "60vw" }}>
+                    <TimePicker
+                      InputProps={{ sx: { width: "15vw" } }}
+                      ampm={false}
+                      value={inicioReuniao}
+                      onChange={(newValue) => setInicioReuniao(newValue)}
+                      renderInput={(params) => {
+                        return <TextField id="horarioInicioReuniao" {...params} />;
+                      }}
+                    />
+                  </Box>
                 </Grid>
-                <Grid item xs={6}>
-                  <TypographyTituloInput>
-                    Final da reunião
-                  </TypographyTituloInput>
-                  <TimePicker
-                    ampm={false}
-                    value={finalReuniao}
-                    onChange={(newValue: any) => setFinalReuniao(newValue)}
-                    renderInput={(params: any) => {
-                      return <TextField id="horarioFinalReuniao" {...params} />;
-                    }}
-                  />
+
+                <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+                  <Box>
+                    <TypographyTituloInput>
+                      Final da reunião
+                    </TypographyTituloInput>
+
+                    <TimePicker
+                      InputProps={{ sx: { width: "15vw" } }}
+                      ampm={false}
+                      value={finalReuniao}
+                      onChange={(newValue) => setFinalReuniao(newValue)}
+                      renderInput={(params) => {
+                        return <TextField id="horarioFinalReuniao" {...params} />;
+                      }}
+                    />
+                  </Box>
                 </Grid>
               </Grid>
             </Box>
@@ -280,25 +301,27 @@ export default function CriacaoPauta(props: {
               <>
                 <BoxGeral key={proposta.id}>
                   <BoxProposta>
-                    <CardProposta cor="#6AACDA">
-                      <BoxConteudoProposta>
-                        <BoxTituloProposta>{proposta.tituloDemanda}</BoxTituloProposta>
-                        <BoxIconeLink>
-                          <DeleteIcon
-                            sx={{
-                              "&:hover": {
-                                cursor: "pointer",
-                              },
-                            }}
-                            className={`${proposta.id}`}
-                            onClick={() => removerProposta(proposta.id)}
-                          />
-                          <TypographyVermais variant="body2">
-                            <Link to={proposta.link} onClick={() => { atualizarPropostaEscolhida(proposta) }}>Ver mais</Link>
-                          </TypographyVermais>
-                        </BoxIconeLink>
-                      </BoxConteudoProposta>
-                    </CardProposta>
+                    <Box sx={{ display: "flex", height: "auto", justifyContent: "center", width: "50vw" }}>
+                      <CardProposta cor="#6AACDA">
+                        <BoxConteudoProposta>
+                          <BoxTituloProposta>{proposta.tituloDemanda}</BoxTituloProposta>
+                          <BoxIconeLink>
+                            <DeleteIcon
+                              sx={{
+                                "&:hover": {
+                                  cursor: "pointer",
+                                },
+                              }}
+                              className={`${proposta.id}`}
+                              onClick={() => removerProposta(proposta.id)}
+                            />
+                            <TypographyVermais variant="body2">
+                              <Link to={proposta.link} onClick={() => { atualizarPropostaEscolhida(proposta) }}>Ver mais</Link>
+                            </TypographyVermais>
+                          </BoxIconeLink>
+                        </BoxConteudoProposta>
+                      </CardProposta>
+                    </Box>
                   </BoxProposta>
                 </BoxGeral>
               </>
@@ -318,6 +341,7 @@ export default function CriacaoPauta(props: {
             >
               Voltar
             </BotaoSecundario>
+
             <BotaoPrimario
               sx={{ width: "10%", minWidth: "auto", height: "3rem" }}
               variant="contained"

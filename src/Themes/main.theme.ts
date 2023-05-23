@@ -32,6 +32,15 @@ export const MainTheme = createTheme({
           minHeight: "7vh"
         }
       }
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          ":hover": {
+            border: "none"
+          }
+        }
+      }
     }
   }
 })

@@ -1,7 +1,7 @@
 import "./Componentes.scss";
 import { BoxBackground, Title, P, BoxImage, Space } from "./Componentes.style";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-
+import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded"
 // Introdução
 import SOD from "../../../Assets/AjudaUsuario/Introducao/SOD.jpg";
 // Avaliar Demanda - Analista de TI ou Gerente de TI
@@ -26,12 +26,16 @@ import criarPautaFinal from "../../../Assets/AjudaUsuario/CriarPauta/criarPautaF
 import informarParecerComissao from "../../../Assets/AjudaUsuario/InformarParecerComissao/informarParecerComissao.png";
 import informarParecerComissaoFinal from "../../../Assets/AjudaUsuario/InformarParecerComissao/informarParecerComissaoFinal.png";
 // Criar ATA
-
+import criarATAIcone from "../../../Assets/AjudaUsuario/CriarATA/criarATAIcone.png"
+import criarATAIconeFinal from "../../../Assets/AjudaUsuario/CriarATA/criarATAIconeFinal.png"
+import criarATAPauta from "../../../Assets/AjudaUsuario/CriarATA/criarATAPauta.png"
+import criarATAPautaFinal from "../../../Assets/AjudaUsuario/CriarATA/criarATAPautaFinal.png"
 // Informar o parecer da Diretoria Geral
 
 // Iniciar Workflow de Aprovação
 import iniciarWorkflow from "../../../Assets/AjudaUsuario/IniciarWorkflow/iniciarWorkflow.png";
 // Avaliar Workflow de Aprovação
+
 
 
 export const Introducao = (
@@ -165,7 +169,7 @@ export const CriarProposta = (
             <p>Criar Proposta</p>
         </Title>
 
-        <P>Para criar uma Proposta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Proposta”, depois, escolha a Demanda que quer transformar em Proposta podendo editar seus atributos.</P>
+        <P>Para criar uma Proposta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Proposta”. Depois, escolha a Demanda que quer adicionar na Proposta, podendo editar seus atributos.</P>
 
         <BoxImage>
             <img id="imgs" src={criarPropostaIcone} alt="Criar Proposta pela sidebar" />
@@ -193,7 +197,7 @@ export const CriarPauta = (
             <p>Criar Pauta</p>
         </Title>
 
-        <P>Para criar uma pauta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Pauta”. Na próxima tela, selecione uma ou mais propostas a serem incluídas na pauta. Para isso, procure pelas propostas disponíveis na lista e clique naquelas que deseja adicionar, podendo excluí-las posteriormente.</P>
+        <P>Para criar uma pauta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Pauta”. Na próxima tela, selecione uma ou mais propostas a serem incluídas na pauta. Para isso, procure pelas propostas disponíveis na lista e clique naquelas que deseja adicionar</P>
 
         <BoxImage>
             <img id="imgs" src={criarPautaIcone} alt="Criar Pauta pela sidebar" />
@@ -243,7 +247,33 @@ export const CriarATA = (
             <p>Criar ATA</p>
         </Title>
 
-        <P>A ATA será criada automaticamente após a pauta que a sucede ser discutida na reunião com a comissão. Posteriormente, como ATA, será discutida na reunião com a Diretoria Geral.</P>
+        <P>Para criar uma Ata, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção "Ata". Depois, escolha a Pauta que quer transformar em Ata.</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarATAIcone} alt="Criar Ata pela sidebar" />
+        </BoxImage>
+
+        <P>Posteriormente, você irá à uma página para preencher as informações da Ata que será discutida na reunião da Diretoria Geral.</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarATAIconeFinal} alt="Criar Ata pela sidebar parte final" />
+        </BoxImage>
+
+        <P>Você também pode fazer esse processo já estando dentro de uma Pauta, mas ela não pode ter o parecer da Comissão já informado. Basta clicar no botão de "Informar o parecer", embaixo das infomações da Pauta, com isso abrirá campos para preencher as informações sobre a Ata.</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarATAPauta} alt="Criar Ata pela Pauta" />
+        </BoxImage>
+
+        <P>Será aberto os mesmos campos sobre a Ata para serem preenchidos</P>
+
+        <BoxImage>
+            <img id="imgs" src={criarATAPautaFinal} alt="Criar Ata pela Pauta parte final" />
+        </BoxImage>
+        
+        <P>Se você apertar no ícone <RemoveRoundedIcon /> e enviar o parecer da Comissão, a Ata será excluída e você só poderá repetir esse processo seguindo os passos de criar a Ata pela sidebar</P>
+    
+        <Space>.</Space>
     </BoxBackground>
 );
 

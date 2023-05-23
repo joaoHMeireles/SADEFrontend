@@ -75,6 +75,7 @@ export default function ComponenteProcesso(props: {
       verProcesso={verProcesso}
       isChecked={isChecked}
       setIsChecked={setIsChecked}
+      mudarIsChecked={mudarIsChecked}
     />
   ) : (
     <ListComponent
@@ -96,6 +97,7 @@ export default function ComponenteProcesso(props: {
       verProcesso={verProcesso}
       isChecked={isChecked}
       setIsChecked={setIsChecked}
+      mudarIsChecked={mudarIsChecked}
     />
   );
 
@@ -126,6 +128,31 @@ export default function ComponenteProcesso(props: {
       }
     }
   }, [props.propostas]);
+  
+  useEffect(() => {
+    const card = document.getElementsByClassName(
+      `card-proposta${componente.id}`
+    )[0];
+    
+    if (isChecked) {
+      card?.classList.add("selecionado")
+      const componentePaginaPauta = componente;
+      
+      componentePaginaPauta.link = nomeTipoLink;
+
+      props.propostas?.push(componente);
+    } else {
+      card?.classList.remove("selecionado")
+
+      if (props.setPropostas) {
+        props.setPropostas((propostas: any) => {
+          return propostas.filter(
+            (proposta: any) => proposta.id !== componente.id
+          );
+        });
+      }
+    }
+  }, [isChecked])
 
   function verProcesso() {
     if (props.rascunho || (componente.devolvida && props.temDemandaDevolvida)) {
@@ -153,6 +180,12 @@ export default function ComponenteProcesso(props: {
     );
   }
 
+  function mudarIsChecked() {
+    if (setIsChecked != null && isChecked != null) {
+      setIsChecked(!isChecked)
+    }
+  }
+
   return (
     <>
       <GlobalStyles
@@ -162,7 +195,7 @@ export default function ComponenteProcesso(props: {
           },
         }}
       />
-      <MainPaper key={componente.id} id={componente.idDemanda}>
+      <MainPaper key={componente.id} id={componente.idDemanda} className={`card-proposta${componente.id}`} >
         <Grid container>{processElement}</Grid>
       </MainPaper>
     </>
@@ -302,7 +335,7 @@ function GridComponent(props: ComponentProps) {
                 />
               </Grid>
             </Tooltip>
-            <GridComponenteProcesso item xs={11}>
+            <GridComponenteProcesso item xs={11} onClick={props.mudarIsChecked}>
               <GridBoxTituloRadio>
                 <GridTypography variant="h6">
                   {props.componente.tituloDemanda}
@@ -310,32 +343,6 @@ function GridComponent(props: ComponentProps) {
                 <Checkbox
                   id="checkbox"
                   checked={props.isChecked}
-                  onChange={(e) => {
-                    if (props.setIsChecked) {
-                      props.setIsChecked(e.target.checked);
-                    }
-                  }}
-                  onClick={(e: any) => {
-                    const card = document.getElementById(
-                      `${props.componente.id}`
-                    );
-                    card?.classList.toggle("selecionado");
-
-                    if (e.target.checked) {
-                      const componentePaginaPauta = props.componente;
-                      componentePaginaPauta.link = props.linkComponente;
-
-                      props.propostas?.push(props.componente);
-                    } else {
-                      if (props.setPropostas) {
-                        props.setPropostas((propostas) => {
-                          return propostas.filter(
-                            (proposta) => proposta.id !== props.componente.id
-                          );
-                        });
-                      }
-                    }
-                  }}
                 />
               </GridBoxTituloRadio>
               <GridTypography variant="subtitle1">
@@ -479,7 +486,7 @@ function ListComponent(props: ComponentProps) {
                 />
               </Grid>
             </Tooltip>
-            <ListaComponenteProcesso item xs={11.7}>
+            <ListaComponenteProcesso item xs={11.7} onClick={props.mudarIsChecked}>
               <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
                 {props.componente.id} - {props.componente.tituloDemanda}
               </ListaTypography>
@@ -507,32 +514,6 @@ function ListComponent(props: ComponentProps) {
                 <Checkbox
                   id="checkbox"
                   checked={props.isChecked}
-                  onChange={(e) => {
-                    if (props.setIsChecked) {
-                      props.setIsChecked(e.target.checked);
-                    }
-                  }}
-                  onClick={(e: any) => {
-                    const card = document.getElementById(
-                      `${props.componente.id}`
-                    );
-                    card?.classList.toggle("selecionado");
-
-                    if (e.target.checked) {
-                      const componentePaginaPauta = props.componente;
-                      componentePaginaPauta.link = props.linkComponente;
-
-                      props.propostas?.push(props.componente);
-                    } else {
-                      if (props.setPropostas) {
-                        props.setPropostas((propostas) => {
-                          return propostas.filter(
-                            (proposta) => proposta.id !== props.componente.id
-                          );
-                        });
-                      }
-                    }
-                  }}
                 />
               </UltimaListaTypography>
             </ListaComponenteProcesso>
@@ -567,4 +548,5 @@ interface ComponentProps {
   verProcesso: MouseEventHandler<HTMLDivElement>;
   isChecked?: boolean;
   setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
+  mudarIsChecked: MouseEventHandler<HTMLDivElement>
 }

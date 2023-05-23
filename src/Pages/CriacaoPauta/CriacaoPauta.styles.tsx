@@ -53,7 +53,6 @@ export const TypographyVermais = styledTypography({
 export const BoxInputsDataComissao = styledBox({
   alignItems: "center",
   display: "flex",
-  // flexDirection: "column",
   justifyContent: "center",
   marginTop: 40,
   height: "100%",

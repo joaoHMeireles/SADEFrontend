@@ -20,8 +20,8 @@ export default function Filtro(props: {
   aberto: boolean;
   setAberto: React.Dispatch<React.SetStateAction<boolean>>;
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
-  filtrarResultados: Function
-  listaComponents: any[]
+  filtrarResultados: Function;
+  listaComponents: any[];
 }) {
   //listas base para os itens do filtros
   const [drawerWidth, setDrawerWidth] = useState("0px");
@@ -140,7 +140,6 @@ export default function Filtro(props: {
       setForuns(forunsNovos)
     })
   })
-
 
   useEffect(() => {
     if (props.aberto) {
@@ -338,7 +337,7 @@ function OpcoesCheck(props: OptionInterface) {
 
 function OpcaoInput(props: { filtrarResultados: Function }) {
   return (
-    <TextField id="input-pesquisa-ppm" variant="standard"
+    <TextField id="input-pesquisa-ppm" variant="standard" 
       InputProps={{
         sx: {
           color: "#595959"

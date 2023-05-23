@@ -22,6 +22,7 @@ export default function Enviadas(props: {
 
   useEffect(() => {
     api.get("/sod/demanda/devolvidas/usuario/" + idUsuario).then((response: any) => {
+
       let listaDemandas: any[] = []
 
       for (let demanda of response.data) {

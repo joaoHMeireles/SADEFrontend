@@ -344,6 +344,7 @@ export default function App() {
                       <Route path="/home/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
                       <Route path="/home/agenda/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
                       <Route path="/home/ata/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
+                      <Route path="/createata/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
 
                       <Route path="/profile" element={<Perfil />} />
 

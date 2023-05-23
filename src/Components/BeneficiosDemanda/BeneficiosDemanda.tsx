@@ -19,16 +19,13 @@ import {
   BoxDescricaoRequeistosControle,
   BoxFrequencia,
 } from "./BeneficiosDemanda.styles";
-import { Select } from '@mui/material'
-import CurrencyDolar from "../CurrencyInputs/CurrencyDolar";
-import CurrencyEuro from "../CurrencyInputs/CurrencyEuro";
-import CurrencyReal from "../CurrencyInputs/CurrencyReal";
+import { FormControl, InputAdornment, InputLabel, OutlinedInput, Select } from '@mui/material';
 
 const moedas = [
   "DOLAR",
   "EURO",
   "REAL"
-];
+]
 
 const valoresFrequencia = [
   "DIARIAMENTE",
@@ -36,38 +33,37 @@ const valoresFrequencia = [
   "MENSALMENTE"
 ]
 
-let atualizarObjetos: any = null
+let atualizarObjetos: any = null;
 
 export default function BeneficiosDemanda(props: {
   rascunho: boolean;
   proposta: boolean;
-  numeroBeneficiosReais?: number
-  numeroBeneficiosPotenciais?: number
-  numeroBeneficiosQualitativos?: number
-  setNumeroBeneficiosReais?: React.Dispatch<React.SetStateAction<number>>
-  setNumeroBeneficiosPotenciais?: React.Dispatch<React.SetStateAction<number>>
-  setNumeroBeneficiosQualitativos?: React.Dispatch<React.SetStateAction<number>>
-  moedaReal?: any
-  setMoedaReal?: any
-  moedaPotencial?: any
-  setMoedaPotencial?: any
-  valor?: number
-  informacaoProcesso?: any
-  setInformacaoProcesso?: any
-  partDoisDemanda?: Function
+  numeroBeneficiosReais?: number;
+  numeroBeneficiosPotenciais?: number;
+  numeroBeneficiosQualitativos?: number;
+  setNumeroBeneficiosReais?: React.Dispatch<React.SetStateAction<number>>;
+  setNumeroBeneficiosPotenciais?: React.Dispatch<React.SetStateAction<number>>;
+  setNumeroBeneficiosQualitativos?: React.Dispatch<React.SetStateAction<number>>;
+  moedaReal?: any;
+  setMoedaReal?: any;
+  moedaPotencial?: any;
+  setMoedaPotencial?: any;
+  valor?: number;
+  informacaoProcesso?: any;
+  setInformacaoProcesso?: any;
+  partDoisDemanda?: Function;
 }) {
   const [frequencia, setFrequencia] = useState("DIARIAMENTE");
   const [beneficiosReaisLista, setBeneficiosReaisLista] = useState<any[]>([]);
   const [beneficiosPotenciaisLista, setBeneficiosPotenciaisLista] = useState<any[]>([]);
   const [beneficiosQualitativosLista, setBeneficiosQualitativosLista] = useState<any[]>([]);
-  atualizarObjetos = props.partDoisDemanda
+  atualizarObjetos = props.partDoisDemanda;
 
   let numeroBeneficiosPotenciais = 0;
   let numeroBeneficiosReais = 0;
   let numeroBeneficiosQualitativos = 0;
 
   useEffect(() => {
-
     for (let atributo in props.informacaoProcesso) {
       if ((props.informacaoProcesso as any)[atributo]) {
         if (atributo == "frequenciaUso") {
@@ -75,68 +71,51 @@ export default function BeneficiosDemanda(props: {
         }
 
         if (atributo == "beneficiosDemanda") {
-          let beneficiosBancoReais = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "REAL")
-          let beneficiosBancoPotenciais = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL")
-          let beneficiosBancoQualitativos = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO")
+          let beneficiosBancoReais = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "REAL");
+          let beneficiosBancoPotenciais = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL");
+          let beneficiosBancoQualitativos = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO");
 
-          setBeneficiosReaisLista(beneficiosBancoReais)
-          setBeneficiosPotenciaisLista(beneficiosBancoPotenciais)
-          setBeneficiosQualitativosLista(beneficiosBancoQualitativos)
+          setBeneficiosReaisLista(beneficiosBancoReais);
+          setBeneficiosPotenciaisLista(beneficiosBancoPotenciais);
+          setBeneficiosQualitativosLista(beneficiosBancoQualitativos);
 
           if (props.numeroBeneficiosReais) {
             for (let i = 0; i < props.numeroBeneficiosReais; i++) {
-
               const beneficioRealValorMensal = document.getElementById("valorMensalReal" + i) as HTMLInputElement;
+              const beneficioRealDescricaoReal = document.getElementById("descricaoReal" + i) as HTMLInputElement;
+
               if (beneficioRealValorMensal && beneficiosBancoReais[i]) {
                 beneficioRealValorMensal.value = beneficiosBancoReais[i].valor;
               }
 
-              const beneficioRealDescricaoReal = document.getElementById("descricaoReal" + i) as HTMLInputElement;
               if (beneficioRealDescricaoReal && beneficiosBancoReais[i]) {
-                beneficioRealDescricaoReal.value = beneficiosBancoReais[i].descricao
+                beneficioRealDescricaoReal.value = beneficiosBancoReais[i].descricao;
               }
-
-              // if (moedaReal && setMoedaReal) {
-              if (beneficiosBancoReais[i]) {
-                // moedaReal.push(beneficiosBancoReais[i].moeda);
-                // setMoedaReal(beneficiosBancoReais[i].moeda);
-              }
-              // }
             }
           }
 
           if (props.numeroBeneficiosPotenciais) {
             for (let i = 0; i < props.numeroBeneficiosPotenciais; i++) {
-
               const beneficioPotencialValorMensal = document.getElementById("valorMensalPotencial" + i) as HTMLInputElement;
+              const beneficioPotencialDescricaoPotencial = document.getElementById("descricaoPotencial" + i) as HTMLInputElement;
+
               if (beneficioPotencialValorMensal && beneficiosBancoPotenciais[i]) {
                 beneficioPotencialValorMensal.value = beneficiosBancoPotenciais[i].valor;
               }
 
-              const beneficioPotencialDescricaoPotencial = document.getElementById("descricaoPotencial" + i) as HTMLInputElement;
               if (beneficioPotencialDescricaoPotencial && beneficiosBancoPotenciais[i]) {
-                beneficioPotencialDescricaoPotencial.value = beneficiosBancoPotenciais[i].descricao
+                beneficioPotencialDescricaoPotencial.value = beneficiosBancoPotenciais[i].descricao;
               }
-
-              // if (moedaPotencial && setMoedaPotencial) {
-              if (beneficiosBancoPotenciais[i]) {
-                // moedaPotencial.push(beneficiosBancoPotenciais[i].moeda);
-                // setMoedaPotencial(beneficiosBancoPotenciais[i].moeda);
-              }
-              // }
-
             }
           }
 
           if (props.numeroBeneficiosQualitativos) {
             for (let i = 0; i < props.numeroBeneficiosQualitativos; i++) {
-
               const beneficioQualitativoDescricao = document.getElementById("beneficiosQualitativos" + i) as HTMLInputElement;
 
               if (beneficioQualitativoDescricao && beneficiosBancoQualitativos[i]) {
                 beneficioQualitativoDescricao.value = beneficiosBancoQualitativos[i].descricao;
               }
-
             }
           }
         }
@@ -151,20 +130,20 @@ export default function BeneficiosDemanda(props: {
 
   useEffect(() => {
     if (props.rascunho || props.proposta) {
-      let info
+      let info;
 
       if (props.rascunho) {
-        info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string)
+        info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
       } else if (props.proposta) {
-        info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string)
+        info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string);
       }
 
       props.setInformacaoProcesso(info);
 
       if (info) {
-        numeroBeneficiosPotenciais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL").length
-        numeroBeneficiosReais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "REAL").length
-        numeroBeneficiosQualitativos = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO").length
+        numeroBeneficiosPotenciais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL").length;
+        numeroBeneficiosReais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "REAL").length;
+        numeroBeneficiosQualitativos = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO").length;
       }
 
       if (props.setNumeroBeneficiosQualitativos && props.setNumeroBeneficiosReais && props.setNumeroBeneficiosPotenciais) {
@@ -173,10 +152,10 @@ export default function BeneficiosDemanda(props: {
         props.setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais);
       }
     }
-  }, [])
+  }, []);
 
   function onFrequenciaChange(e: any) {
-    setFrequencia(e.target.value)
+    setFrequencia(e.target.value);
 
     const novaInfoDemanda = {
       ...props.informacaoProcesso,
@@ -194,14 +173,15 @@ export default function BeneficiosDemanda(props: {
         <BoxTitulos>
           <TypographyTitulos>Benefício Real</TypographyTitulos>
         </BoxTitulos>
+
         <BeneficiosReais
           numeroBeneficios={props.numeroBeneficiosReais}
           informacaoProcesso={props.informacaoProcesso}
           setInformacaoProcesso={props.setInformacaoProcesso}
           beneficiosReaisLista={beneficiosReaisLista}
           moedaReal={props.moedaReal}
-          setMoedaReal={props.setMoedaReal}
-        />
+          setMoedaReal={props.setMoedaReal} />
+
         <BoxIcones>
           {props.numeroBeneficiosReais != null &&
             <>
@@ -217,8 +197,7 @@ export default function BeneficiosDemanda(props: {
                     if (props.setNumeroBeneficiosReais != null && props.numeroBeneficiosReais != null) {
                       props.setNumeroBeneficiosReais(props.numeroBeneficiosReais - 1);
                     }
-                  }}
-                />
+                  }} />
               ) : (
                 ""
               )}
@@ -230,20 +209,20 @@ export default function BeneficiosDemanda(props: {
               if (props.setNumeroBeneficiosReais && props.numeroBeneficiosReais) {
                 props.setNumeroBeneficiosReais(props.numeroBeneficiosReais + 1);
               }
-            }}
-          />
+            }} />
         </BoxIcones>
+
         <BoxTitulos>
           <TypographyTitulos>Benefício Potencial</TypographyTitulos>
         </BoxTitulos>
+
         <BeneficiosPotenciais
           numeroBeneficios={props.numeroBeneficiosPotenciais}
           informacaoProcesso={props.informacaoProcesso}
           setInformacaoProcesso={props.setInformacaoProcesso}
           beneficiosPotenciasLista={beneficiosPotenciaisLista}
           moedaPotencial={props.moedaPotencial}
-          setMoedaPotencial={props.setMoedaPotencial}
-        />
+          setMoedaPotencial={props.setMoedaPotencial} />
         <BoxIcones id="o-0-tá-aqui">
           {props.numeroBeneficiosPotenciais != null &&
             <>
@@ -259,8 +238,7 @@ export default function BeneficiosDemanda(props: {
                     if (props.setNumeroBeneficiosPotenciais && props.numeroBeneficiosPotenciais) {
                       props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais - 1);
                     }
-                  }}
-                />
+                  }} />
               ) : (
                 ""
               )}
@@ -272,18 +250,19 @@ export default function BeneficiosDemanda(props: {
               if (props.setNumeroBeneficiosPotenciais != null && props.numeroBeneficiosPotenciais != null) {
                 props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais + 1);
               }
-            }}
-          />
+            }} />
         </BoxIcones>
+
         <BoxTitulos>
           <TypographyTitulos>Benefício Qualitativo</TypographyTitulos>
         </BoxTitulos>
+
         <BeneficiosQualitativos
           numeroBeneficios={props.numeroBeneficiosQualitativos}
           informacaoProcesso={props.informacaoProcesso}
           setInformacaoProcesso={props.setInformacaoProcesso}
-          beneficiosQualitativosLista={beneficiosQualitativosLista}
-        />
+          beneficiosQualitativosLista={beneficiosQualitativosLista} />
+
         <BoxIcones>
           {props.numeroBeneficiosQualitativos != null &&
             <>
@@ -299,8 +278,7 @@ export default function BeneficiosDemanda(props: {
                     if (props.setNumeroBeneficiosQualitativos && props.numeroBeneficiosQualitativos) {
                       props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos - 1);
                     }
-                  }}
-                />
+                  }} />
               ) : (
                 ""
               )}
@@ -312,26 +290,26 @@ export default function BeneficiosDemanda(props: {
               if (props.setNumeroBeneficiosQualitativos != null && props.numeroBeneficiosQualitativos != null) {
                 props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos + 1);
               }
-            }}
-          />
+            }} />
         </BoxIcones>
+
         <BoxFrequencia>
           <TypographyLabels>Frequência de uso da solução:</TypographyLabels>
+
           <Select
             id="frequenciaUso"
             value={frequencia}
-            onChange={onFrequenciaChange}
-          >
+            onChange={onFrequenciaChange}>
             {valoresFrequencia.map((valor: any, index: number) => {
               return (
                 <MenuItem key={index} value={valor}>{valor}</MenuItem>
-              )
+              );
             })}
           </Select>
         </BoxFrequencia>
       </BoxContainerGeral>
     </>
-  );
+  )
 }
 
 function BeneficiosReais(props: {
@@ -346,10 +324,13 @@ function BeneficiosReais(props: {
 
   if (props.numeroBeneficios) {
     for (let i = 0; i < props.numeroBeneficios; i++) {
+      console.log(props.beneficiosReaisLista[i]);
+
       if (props.beneficiosReaisLista[i]) {
         beneficios.push(<BeneficioReal index={i}
           informacaoProcesso={props.informacaoProcesso}
           setInformacaoProcesso={props.setInformacaoProcesso}
+          valorBeneficio={props.beneficiosReaisLista[i].valor}
           moedaBeneficio={props.beneficiosReaisLista[i].moeda}
           idBeneficioReal={props.beneficiosReaisLista[i].idBeneficio} />);
       } else {
@@ -357,13 +338,12 @@ function BeneficiosReais(props: {
           informacaoProcesso={props.informacaoProcesso}
           setInformacaoProcesso={props.setInformacaoProcesso}
           moedaReal={props.moedaReal}
-          setMoedaReal={props.setMoedaReal}
-        />);
+          setMoedaReal={props.setMoedaReal} />);
       }
     }
   }
 
-  return <>{beneficios}</>;
+  return <>{beneficios}</>
 }
 
 function BeneficiosPotenciais(props: {
@@ -382,6 +362,7 @@ function BeneficiosPotenciais(props: {
         beneficios.push(<BeneficioPotencial index={i}
           informacaoProcesso={props.informacaoProcesso}
           setInformacaoProcesso={props.setInformacaoProcesso}
+          valorBeneficio={props.beneficiosPotenciasLista[i].valor}
           moedaBeneficio={props.beneficiosPotenciasLista[i].moeda}
           idBeneficioPotencial={props.beneficiosPotenciasLista[i].idBeneficio} />);
       } else {
@@ -410,7 +391,6 @@ function BeneficiosQualitativos(props: {
       if (props.beneficiosQualitativosLista[i]) {
         beneficios.push(<BeneficioQualitativo index={i} informacaoProcesso={props.informacaoProcesso}
           setInformacaoProcesso={props.setInformacaoProcesso} idBeneficioQualitativo={props.beneficiosQualitativosLista[i].idBeneficio} />);
-
       } else {
         beneficios.push(<BeneficioQualitativo index={i} informacaoProcesso={props.informacaoProcesso}
           setInformacaoProcesso={props.setInformacaoProcesso} />);
@@ -418,22 +398,23 @@ function BeneficiosQualitativos(props: {
     }
   }
 
-  return <>{beneficios}</>;
+  return <>{beneficios}</>
 }
 
 function BeneficioReal(props: {
   index: number,
   informacaoProcesso: any,
   setInformacaoProcesso: any,
+  valorBeneficio?: number,
   moedaBeneficio?: any,
   idBeneficioReal?: any,
   moedaReal?: any,
   setMoedaReal?: any
 }) {
-  const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioReal)
-  const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[1])
-  const [currencyInput, setCurrencyInput] = useState(0)
-  const [ valueInput, setValueInput ] = useState();
+  const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioReal);
+  const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[2]);
+  const [currencyInput, setCurrencyInput] = useState(0);
+  const [valueInput, setValueInput] = useState<any>(props.valorBeneficio ? props.valorBeneficio : "");
 
   useEffect(() => {
     switch (moedaBeneficio) {
@@ -444,30 +425,25 @@ function BeneficioReal(props: {
       case "DOLAR": {
         setCurrencyInput(1);
         break;
-      };
+      }
       case "EURO": {
         setCurrencyInput(2);
         break;
-      };
-      default: {
-        setCurrencyInput(0);
-        break;
-      };
-    };
+      }
+    }
   }, [moedaBeneficio]);
 
   useEffect(() => {
-  }, [currencyInput])
-
-  useEffect(() => {
-    if (props.moedaBeneficio) {
-      setMoedaBeneficio(props.moedaBeneficio)
+    if (props.moedaBeneficio != null) {
+      setMoedaBeneficio(props.moedaBeneficio);
     }
 
-    if (props.moedaReal) {
-      setMoedaBeneficio(props.moedaReal)
+    if (props.moedaReal != null) {
+      if (props.moedaReal.length != 0) {
+        setMoedaBeneficio(props.moedaReal);
+      }
     }
-  }, [])
+  }, []);
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -479,19 +455,14 @@ function BeneficioReal(props: {
 
           <BoxInputs>
             {currencyInput == 0 ?
-              <CurrencyReal
-                id={`valorMensalReal${props.index}`}
-                style={{
-                  width: "30%",
-                  marginRight: 5,
-                  boxShadow: "5px 5px 10px 0 #00000050",
-                }}
-                value={valueInput}
+              <FormControl
+                variant="outlined"
+                sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
                 onChange={(e: any) => {
+                  setValueInput(e.target.value);
+
                   if (atualizarObjetos != null) {
-                    console.log(e.target)
-                    setValueInput(e.target.value)
-                    atualizarObjetos()
+                    atualizarObjetos();
                   } else {
                     atualizarBeneficiosDemanda(
                       props.informacaoProcesso.beneficiosDemanda,
@@ -502,73 +473,60 @@ function BeneficioReal(props: {
                       props.informacaoProcesso,
                       props.setInformacaoProcesso,
                       "REAL"
-                    )
+                    );
                   }
-                }}
-                placeholder="R$ 0, 00"
-                type="text"
-              />
+                }}>
+                <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
+              </FormControl>
               :
               currencyInput == 1 ?
-              <CurrencyDolar
-                id={`valorMensalReal${props.index}`}
-                style={{
-                  width: "30%",
-                  marginRight: 5,
-                  boxShadow: "5px 5px 10px 0 #00000050",
-                }}
-                value={valueInput}
-                onChange={(e: any) => {
-                  if (atualizarObjetos != null) {
-                    console.log(e.target)
-                    setValueInput(e.target.value)
-                    atualizarObjetos()
-                  } else {
-                    atualizarBeneficiosDemanda(
-                      props.informacaoProcesso.beneficiosDemanda,
-                      idBeneficioComponente,
-                      setIdBeneficioComponente,
-                      "valor",
-                      e.target.value,
-                      props.informacaoProcesso,
-                      props.setInformacaoProcesso,
-                      "REAL"
-                    )
-                  }
-                }}
-                placeholder="$ 0,00"
-                type="text"
-              />
-              :
-              <CurrencyEuro
-                id={`valorMensalReal${props.index}`}
-                style={{
-                  width: "30%",
-                  marginRight: 5,
-                  boxShadow: "5px 5px 10px 0 #00000050",
-                }}
-                value={valueInput}
-                onChange={(e: any) => {
-                  if (atualizarObjetos != null) {
-                    console.log(e.target)
-                    setValueInput(e.target.value)
-                    atualizarObjetos()
-                  } else {
-                    atualizarBeneficiosDemanda(
-                      props.informacaoProcesso.beneficiosDemanda,
-                      idBeneficioComponente,
-                      setIdBeneficioComponente,
-                      "valor",
-                      e.target.value,
-                      props.informacaoProcesso,
-                      props.setInformacaoProcesso,
-                      "REAL"
-                    )
-                  }
-                }}
-                placeholder="0,00 €"
-                type="text"
-              />
+                <FormControl
+                  variant="outlined"
+                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "1rem" }}
+                  onChange={(e: any) => {
+                    setValueInput(e.target.value);
+
+                    if (atualizarObjetos != null) {
+                      atualizarObjetos();
+                    } else {
+                      atualizarBeneficiosDemanda(
+                        props.informacaoProcesso.beneficiosDemanda,
+                        idBeneficioComponente,
+                        setIdBeneficioComponente,
+                        "valor",
+                        e.target.value,
+                        props.informacaoProcesso,
+                        props.setInformacaoProcesso,
+                        "REAL"
+                      );
+                    }
+                  }}>
+                  <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
+                </FormControl>
+                :
+                <FormControl
+                  variant="outlined"
+                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "1rem" }}
+                  onChange={(e: any) => {
+                    setValueInput(e.target.value);
+
+                    if (atualizarObjetos != null) {
+                      atualizarObjetos();
+                    } else {
+                      atualizarBeneficiosDemanda(
+                        props.informacaoProcesso.beneficiosDemanda,
+                        idBeneficioComponente,
+                        setIdBeneficioComponente,
+                        "valor",
+                        e.target.value,
+                        props.informacaoProcesso,
+                        props.setInformacaoProcesso,
+                        "REAL"
+                      );
+                    }
+                  }}>
+                  <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">€</InputAdornment>} />
+                </FormControl>
             }
 
             <Select
@@ -576,13 +534,13 @@ function BeneficioReal(props: {
               sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
               value={moedaBeneficio}
               onChange={(e: any) => {
-                setMoedaBeneficio(e.target.value)
+                setMoedaBeneficio(e.target.value);
 
-                props.moedaReal.push(e.target.value)
-                props.setMoedaReal(props.moedaReal)
+                props.moedaReal.push(e.target.value);
+                props.setMoedaReal(props.moedaReal);
 
                 if (atualizarObjetos != null) {
-                  atualizarObjetos()
+                  atualizarObjetos();
                 } else {
                   atualizarBeneficiosDemanda(
                     props.informacaoProcesso.beneficiosDemanda,
@@ -593,11 +551,11 @@ function BeneficioReal(props: {
                     props.informacaoProcesso,
                     props.setInformacaoProcesso,
                     "REAL"
-                  )
+                  );
                 }
               }}>
               {moedas.map((option: any, index: number) => (
-                <MenuItem id={`moedaRealoptions${props.index}`} key={index} value={option}>
+                <MenuItem id={`moedaRealoptions${props.index}`} key={index} value={option} >
                   {option}
                 </MenuItem>
               ))}
@@ -612,7 +570,7 @@ function BeneficioReal(props: {
             id={`descricaoReal${props.index}`}
             onChange={(e: any) => {
               if (atualizarObjetos != null) {
-                atualizarObjetos()
+                atualizarObjetos();
               } else {
                 atualizarBeneficiosDemanda(
                   props.informacaoProcesso.beneficiosDemanda,
@@ -623,7 +581,7 @@ function BeneficioReal(props: {
                   props.informacaoProcesso,
                   props.setInformacaoProcesso,
                   "REAL"
-                )
+                );
               }
             }}
             multiline
@@ -632,7 +590,7 @@ function BeneficioReal(props: {
           </TextField>
         </BoxInputsAbaixo>
       </BoxContainerDivisorio>
-    </BoxContainerGeralBeneficio>
+    </BoxContainerGeralBeneficio >
   );
 }
 
@@ -640,24 +598,45 @@ function BeneficioPotencial(props: {
   index: number,
   informacaoProcesso: any,
   setInformacaoProcesso: any,
+  valorBeneficio?: number,
   moedaBeneficio?: any,
   idBeneficioPotencial?: any,
   moedaPotencial?: any,
   setMoedaPotencial?: any
 }) {
-  const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioPotencial)
-  const [moedaBeneficio, setMoedaBeneficio] = useState("EURO")
+  const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioPotencial);
+  const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[2]);
+  const [currencyInput, setCurrencyInput] = useState(0);
+  const [valueInput, setValueInput] = useState<any>(props.valorBeneficio ? props.valorBeneficio : "");
 
   useEffect(() => {
-    if (props.moedaBeneficio) {
-      setMoedaBeneficio(props.moedaBeneficio)
+    switch (moedaBeneficio) {
+      case "REAL": {
+        setCurrencyInput(0);
+        break;
+      }
+      case "DOLAR": {
+        setCurrencyInput(1);
+        break;
+      }
+      case "EURO": {
+        setCurrencyInput(2);
+        break;
+      }
+    }
+  }, [moedaBeneficio]);
+
+  useEffect(() => {
+    if (props.moedaBeneficio != null) {
+      setMoedaBeneficio(props.moedaBeneficio);
     }
 
-    if (props.moedaPotencial) {
-      setMoedaBeneficio(props.moedaPotencial)
+    if (props.moedaPotencial != null) {
+      if (props.moedaPotencial.length != 0) {
+        setMoedaBeneficio(props.moedaPotencial);
+      }
     }
-  })
-
+  });
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
@@ -667,47 +646,94 @@ function BeneficioPotencial(props: {
             <TypographyLabels>Valor Mensal:</TypographyLabels>
           </BoxValorMensal>
 
-          <BoxInputs
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "start",
-              alignItems: "center",
-            }}>
+          <BoxInputs>
+            {currencyInput == 0 ?
+              <FormControl
+                variant="outlined"
+                sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
+                onChange={(e: any) => {
+                  setValueInput(e.target.value);
 
-            <TextField
-              id={`valorMensalPotencial${props.index}`}
-              onChange={(e: any) => {
-                if (atualizarObjetos != null) {
-                  atualizarObjetos()
-                } else {
-                  atualizarBeneficiosDemanda(
-                    props.informacaoProcesso.beneficiosDemanda,
-                    idBeneficioComponente,
-                    setIdBeneficioComponente,
-                    "valor",
-                    e.target.value,
-                    props.informacaoProcesso,
-                    props.setInformacaoProcesso,
-                    "POTENCIAL"
-                  )
-                }
-              }}
-              sx={{
-                width: "30%",
-                marginRight: 5,
-                boxShadow: "5px 5px 10px 0 #00000050",
-              }} />
+                  if (atualizarObjetos != null) {
+                    atualizarObjetos();
+                  } else {
+                    atualizarBeneficiosDemanda(
+                      props.informacaoProcesso.beneficiosDemanda,
+                      idBeneficioComponente,
+                      setIdBeneficioComponente,
+                      "valor",
+                      e.target.value,
+                      props.informacaoProcesso,
+                      props.setInformacaoProcesso,
+                      "POTENCIAL"
+                    );
+                  }
+                }}>
+                <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
+              </FormControl>
+              :
+              currencyInput == 1 ?
+                <FormControl
+                  variant="outlined"
+                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
+                  onChange={(e: any) => {
+                    setValueInput(e.target.value);
+
+                    if (atualizarObjetos != null) {
+                      atualizarObjetos()
+                    } else {
+                      atualizarBeneficiosDemanda(
+                        props.informacaoProcesso.beneficiosDemanda,
+                        idBeneficioComponente,
+                        setIdBeneficioComponente,
+                        "valor",
+                        e.target.value,
+                        props.informacaoProcesso,
+                        props.setInformacaoProcesso,
+                        "POTENCIAL"
+                      );
+                    }
+                  }}>
+                  <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
+                </FormControl>
+                :
+                <FormControl
+                  variant="outlined"
+                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
+                  onChange={(e: any) => {
+                    setValueInput(e.target.value);
+
+                    if (atualizarObjetos != null) {
+                      atualizarObjetos()
+                    } else {
+                      atualizarBeneficiosDemanda(
+                        props.informacaoProcesso.beneficiosDemanda,
+                        idBeneficioComponente,
+                        setIdBeneficioComponente,
+                        "valor",
+                        e.target.value,
+                        props.informacaoProcesso,
+                        props.setInformacaoProcesso,
+                        "POTENCIAL"
+                      );
+                    }
+                  }}>
+                  <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">€</InputAdornment>} />
+                </FormControl>
+            }
 
             <Select
               id={`moedaPotencial${props.index}`}
               sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
               value={moedaBeneficio}
               onChange={(e: any) => {
-                props.moedaPotencial.push(e.target.value)
-                props.setMoedaPotencial(props.moedaPotencial)
+                setMoedaBeneficio(e.target.value);
+
+                props.moedaPotencial.push(e.target.value);
+                props.setMoedaPotencial(props.moedaPotencial);
+
                 if (atualizarObjetos != null) {
-                  atualizarObjetos()
+                  atualizarObjetos();
                 } else {
                   atualizarBeneficiosDemanda(
                     props.informacaoProcesso.beneficiosDemanda,
@@ -718,7 +744,7 @@ function BeneficioPotencial(props: {
                     props.informacaoProcesso,
                     props.setInformacaoProcesso,
                     "POTENCIAL"
-                  )
+                  );
                 }
               }}>
               {moedas.map((moeda: any, index: number) => (
@@ -737,7 +763,7 @@ function BeneficioPotencial(props: {
             id={`descricaoPotencial${props.index}`}
             onChange={(e: any) => {
               if (atualizarObjetos != null) {
-                atualizarObjetos()
+                atualizarObjetos();
               } else {
                 atualizarBeneficiosDemanda(
                   props.informacaoProcesso.beneficiosDemanda,
@@ -748,9 +774,8 @@ function BeneficioPotencial(props: {
                   props.informacaoProcesso,
                   props.setInformacaoProcesso,
                   "POTENCIAL"
-                )
+                );
               }
-
             }}
             multiline
             maxRows={Infinity}
@@ -759,7 +784,7 @@ function BeneficioPotencial(props: {
         </BoxInputsAbaixo>
       </BoxContainerDivisorio>
     </BoxContainerGeralBeneficio>
-  );
+  )
 }
 
 function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, setInformacaoProcesso: any, idBeneficioQualitativo?: any }) {
@@ -774,7 +799,7 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
           id={`beneficiosQualitativos${props.index}`}
           onChange={(e: any) => {
             if (atualizarObjetos != null) {
-              atualizarObjetos()
+              atualizarObjetos();
             } else {
               atualizarBeneficiosDemanda(
                 props.informacaoProcesso.beneficiosDemanda,
@@ -785,7 +810,7 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
                 props.informacaoProcesso,
                 props.setInformacaoProcesso,
                 "QUALITATIVO"
-              )
+              );
             }
           }}
           multiline
@@ -807,7 +832,7 @@ function atualizarBeneficiosDemanda(
   setInformacaoProcesso: React.Dispatch<React.SetStateAction<any>>,
   tipoBeneficio: string
 ) {
-  const beneficioComponente = atualizacaoBeneficiosDemanda.find((beneficio: any) => beneficio.idBeneficio == idBeneficioComponente)
+  const beneficioComponente = atualizacaoBeneficiosDemanda.find((beneficio: any) => beneficio.idBeneficio == idBeneficioComponente);
   let newBeneficio: {
     idBeneficio?: number,
     descricao?: string,
@@ -815,26 +840,26 @@ function atualizarBeneficiosDemanda(
     tipoBeneficio?: string,
     valor?: number,
     novo?: boolean
-  }
+  };
 
   if (beneficioComponente == null) {
-    let idNovoBeneficio = -1
+    let idNovoBeneficio = -1;
 
     if (atualizacaoBeneficiosDemanda.length == 0) {
-      idNovoBeneficio = 1
+      idNovoBeneficio = 1;
     } else {
-      idNovoBeneficio = atualizacaoBeneficiosDemanda[atualizacaoBeneficiosDemanda.length - 1].idBeneficio + 1
+      idNovoBeneficio = atualizacaoBeneficiosDemanda[atualizacaoBeneficiosDemanda.length - 1].idBeneficio + 1;
     }
 
-    setIdBeneficioComponente(idNovoBeneficio)
+    setIdBeneficioComponente(idNovoBeneficio);
 
     newBeneficio = {
       idBeneficio: idNovoBeneficio,
       [nomeAtributo]: Number.parseInt(valorInput),
       novo: true
-    }
+    };
 
-    atualizacaoBeneficiosDemanda.push(newBeneficio)
+    atualizacaoBeneficiosDemanda.push(newBeneficio);
   } else {
     newBeneficio = {
       ...beneficioComponente,
@@ -842,15 +867,15 @@ function atualizarBeneficiosDemanda(
       tipoBeneficio: tipoBeneficio
     }
 
-    let index = -1
+    let index = -1;
 
     for (let i = 0; i < atualizacaoBeneficiosDemanda.length; i++) {
       if (atualizacaoBeneficiosDemanda[i].idBeneficio == idBeneficioComponente) {
-        index = i
+        index = i;
       }
     }
 
-    atualizacaoBeneficiosDemanda[index] = newBeneficio
+    atualizacaoBeneficiosDemanda[index] = newBeneficio;
   }
 
   const novaInfoDemanda = {
