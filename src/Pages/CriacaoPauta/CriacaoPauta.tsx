@@ -208,7 +208,7 @@ export default function CriacaoPauta(props: {
           <BoxInputsDataComissao>
             <Box sx={{ width: "50vw", display: "flex", justifyContent: "center" }}>
               <Grid container spacing={1}>
-                <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
+                <Grid item xs={12} sx={{ alignItems: "flex-start", display: "flex", flexDirection: "column" }}>
                   <TypographyTituloInput>
                     Título da reunião
                   </TypographyTituloInput>
@@ -248,7 +248,7 @@ export default function CriacaoPauta(props: {
                     </TypographyTituloInput>
 
                     <DatePicker
-                      sx={{ width: "15vw" }}
+                      InputProps={{ sx: { width: "15vw" } }}
                       value={valorData}
                       onChange={(newValue) => {
                         setValorData(newValue);
@@ -263,15 +263,17 @@ export default function CriacaoPauta(props: {
                     Início da reunião
                   </TypographyTituloInput>
 
-                  <TimePicker
-                    sx={{ width: "15vw" }}
-                    ampm={false}
-                    value={inicioReuniao}
-                    onChange={(newValue) => setInicioReuniao(newValue)}
-                    renderInput={(params) => {
-                      return <TextField id="horarioInicioReuniao" {...params} />;
-                    }}
-                  />
+                  <Box sx={{ height: "auto", width: "60vw" }}>
+                    <TimePicker
+                      InputProps={{ sx: { width: "15vw" } }}
+                      ampm={false}
+                      value={inicioReuniao}
+                      onChange={(newValue) => setInicioReuniao(newValue)}
+                      renderInput={(params) => {
+                        return <TextField id="horarioInicioReuniao" {...params} />;
+                      }}
+                    />
+                  </Box>
                 </Grid>
 
                 <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
@@ -281,7 +283,7 @@ export default function CriacaoPauta(props: {
                     </TypographyTituloInput>
 
                     <TimePicker
-                      sx={{ width: "15vw" }}
+                      InputProps={{ sx: { width: "15vw" } }}
                       ampm={false}
                       value={finalReuniao}
                       onChange={(newValue) => setFinalReuniao(newValue)}
@@ -299,25 +301,27 @@ export default function CriacaoPauta(props: {
               <>
                 <BoxGeral key={proposta.id}>
                   <BoxProposta>
-                    <CardProposta sx={{ width: "50vw" }} cor="#6AACDA">
-                      <BoxConteudoProposta>
-                        <BoxTituloProposta>{proposta.tituloDemanda}</BoxTituloProposta>
-                        <BoxIconeLink>
-                          <DeleteIcon
-                            sx={{
-                              "&:hover": {
-                                cursor: "pointer",
-                              },
-                            }}
-                            className={`${proposta.id}`}
-                            onClick={() => removerProposta(proposta.id)}
-                          />
-                          <TypographyVermais variant="body2">
-                            <Link to={proposta.link} onClick={() => { atualizarPropostaEscolhida(proposta) }}>Ver mais</Link>
-                          </TypographyVermais>
-                        </BoxIconeLink>
-                      </BoxConteudoProposta>
-                    </CardProposta>
+                    <Box sx={{ display: "flex", height: "auto", justifyContent: "center", width: "50vw" }}>
+                      <CardProposta cor="#6AACDA">
+                        <BoxConteudoProposta>
+                          <BoxTituloProposta>{proposta.tituloDemanda}</BoxTituloProposta>
+                          <BoxIconeLink>
+                            <DeleteIcon
+                              sx={{
+                                "&:hover": {
+                                  cursor: "pointer",
+                                },
+                              }}
+                              className={`${proposta.id}`}
+                              onClick={() => removerProposta(proposta.id)}
+                            />
+                            <TypographyVermais variant="body2">
+                              <Link to={proposta.link} onClick={() => { atualizarPropostaEscolhida(proposta) }}>Ver mais</Link>
+                            </TypographyVermais>
+                          </BoxIconeLink>
+                        </BoxConteudoProposta>
+                      </CardProposta>
+                    </Box>
                   </BoxProposta>
                 </BoxGeral>
               </>
