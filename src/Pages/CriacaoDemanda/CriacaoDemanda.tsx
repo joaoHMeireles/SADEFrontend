@@ -35,6 +35,7 @@ import pdf from "../../Assets/pdf.pdf";
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
+  editarDemanda?: boolean;
 }) {
   const idUsuario = localStorage.getItem("IDUSUARIO");
   const [segundo, setSegundo] = useState(false);
@@ -48,19 +49,21 @@ export default function CriacaoDemanda(props: {
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
 
-  const [moedaReal, setMoedaReal] = useState<string[]>([]);
-  const [moedaPotencial, setMoedaPotencial] = useState<string[]>([]);
+  const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
+  const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
 
   const pdfExportComponent = React.useRef<PDFExport>(null);
 
   const webSocketService: any = useContext(WebSocketContext)
 
   useEffect(() => {
-    if (props.rascunho) {
-      const info = JSON.parse(
-        localStorage.getItem("RASCUNHOESCOLHIDO") as string
-      );
+    const info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
+      localStorage.getItem("DEMANDASELECIONADA") as string
+      :
+      localStorage.getItem("RASCUNHOESCOLHIDO") as string
+    );
 
+    if (props.rascunho) {
       for (let atributo in info) {
         if ((info as any)[atributo]) {
           const inputAtributo = document.getElementById(
@@ -89,12 +92,10 @@ export default function CriacaoDemanda(props: {
           }
         }
       }
+    } else if (props.editarDemanda) {
+      setData(info)
     }
   }, [valor]);
-
-  useEffect(() => {
-    console.log(centroCusto);
-  }, [centroCusto])
 
   useEffect(() => {
     if (pdfDemanda == null || pdfDemanda == undefined) {
@@ -160,6 +161,7 @@ export default function CriacaoDemanda(props: {
 
     let beneficios = [];
 
+
     for (let i = 0; i < numeroBeneficiosReais; i++) {
       valorMensal = document.getElementById(`valorMensalReal${i}`) as HTMLInputElement;
       descricao = document.getElementById(`descricaoReal${i}`) as HTMLInputElement;
@@ -170,6 +172,9 @@ export default function CriacaoDemanda(props: {
         "moeda": moedaReal[i],
         "valor": valorMensal.value
       }
+
+      console.log(beneficioReal);
+
 
       if (numeroBeneficiosReais > 0 && valorMensal.value && moedaReal && descricao.value) {
         beneficios.push(beneficioReal);
@@ -217,8 +222,7 @@ export default function CriacaoDemanda(props: {
         "idUsuario": data.usuario.idUsuario
       }
     }
-    console.log("Parte dois demanda");
-    console.log(data2);
+
     atualizarDados(data2)
   }
 
@@ -243,6 +247,7 @@ export default function CriacaoDemanda(props: {
   function criarDemanda() {
     localStorage.setItem("DEMANDACADASTRADA", "true")
 
+    let idDemandaEditar = -1
     let formData = new FormData();
 
     if (files != undefined) {
@@ -252,7 +257,7 @@ export default function CriacaoDemanda(props: {
     }
 
     if (data != undefined) {
-      const { tipo, ...dataCerta } = data
+      let { tipo, ...dataCerta } = data
       let beneficios = []
 
       for (let beneficio of data.beneficiosDemanda) {
@@ -262,23 +267,29 @@ export default function CriacaoDemanda(props: {
 
       dataCerta.beneficiosDemanda = beneficios
       dataCerta.rascunho = false
-      if(props.rascunho){
+
+      if (props.rascunho) {
         dataCerta.criandoDemandaPorRascunho = true
+      }
+
+      if (props.editarDemanda) {
+        const { id,...dadosCorretosDemandaEditar } = dataCerta
+
+        idDemandaEditar = id
+
+        dataCerta = dadosCorretosDemandaEditar
+        dataCerta.editandoDemanda = true
+        dataCerta.devolvida = false
       }
 
       formData.append("demanda", JSON.stringify(dataCerta));
     }
-
-    // if (pdfDemanda != undefined) {
-    //   formData.append("pdfVersaoHistorico", pdfDemanda);
-    // }
 
     console.log(data);
     if (props.rascunho) {
       const idDemanda = JSON.parse(
         localStorage.getItem("RASCUNHOESCOLHIDO") as string
       ).idDemanda;
-      const idUsuario = localStorage.getItem("IDUSUARIO")
 
       api.put("/sod/demanda/" + idDemanda + "/" + idUsuario, formData, {
         headers: {
@@ -287,7 +298,22 @@ export default function CriacaoDemanda(props: {
       }).catch((err: any) => {
         console.log(err);
       })
+
+    } else if (props.editarDemanda){
+
+      api.put("/sod/demanda/" + idDemandaEditar + "/" + idUsuario, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
+      }).then((response) => {
+        console.log(response);
+        
+      }).catch((err: any) => {
+        console.log(err);
+      })
+
     } else {
+
       api.post("/sod/demanda", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -297,9 +323,10 @@ export default function CriacaoDemanda(props: {
       }).catch((err: any) => {
         console.log(err);
       })
+
     }
 
-    window.location.href = "/home";
+    // window.location.href = "/home";
   }
 
 
@@ -329,7 +356,7 @@ export default function CriacaoDemanda(props: {
 
         {valor == 0 && (
           <>
-            <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} partUmDemanda={partUmDemanda} rascunho={props.rascunho} />
+            <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} partUmDemanda={partUmDemanda} rascunho={props.rascunho} editarDemanda={props.editarDemanda} />
             <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
@@ -357,7 +384,7 @@ export default function CriacaoDemanda(props: {
 
         {valor == 1 && (
           <>
-            {props.rascunho ?
+            {props.rascunho || props.editarDemanda ?
               <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
                 numeroBeneficiosReais={numeroBeneficiosReais}
                 numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}

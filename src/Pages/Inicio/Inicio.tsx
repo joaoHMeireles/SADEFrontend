@@ -19,6 +19,7 @@ export default function Inicio(props: {
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
   listaComponents: any[];
   filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  //carregou?: boolean
 }) {
   // const listaComponentesLocalStorage = localStorage.getItem("LISTACOMPONENTS") != null ? JSON.parse(localStorage.getItem("LISTACOMPONENTS") as string) : []
   const [grid, setGrid] = useState(true);
@@ -26,6 +27,7 @@ export default function Inicio(props: {
   const [temComponente, setTemComponente] = useState(false)
   const [imagemSemNada, setImagemSemNada] = useState("")
   const [textoSemNada, setTextoSemNada] = useState("")
+  //carregou
 
   useEffect(() => {
     if (props.listaComponents.length != 0) {
@@ -66,6 +68,13 @@ export default function Inicio(props: {
         setGrid={setGrid}
         filtrarResultados={props.filtrarResultados}
       />
+      {/*props.carregou ?
+        <>
+          //componente sinal carregandinho
+        </>
+      :
+
+      */}
       {temComponente ?
         <CardsProcesso
           listaComponents={props.listaComponents}

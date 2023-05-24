@@ -18,7 +18,6 @@ import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
-import LegendToggleRoundedIcon from "@mui/icons-material/LegendToggleRounded";
 
 import {
   BoxContainerTabela,
@@ -38,15 +37,20 @@ export default function TabelaCustoCriacao(props: {
   centroCustoEscolhidas: Object[]
   setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<Object[]>>
 }) {
-  const [quantidadeTabela, setQuantidadeTabela] = useState(1);
+  const [quantidadeTabela, setQuantidadeTabela] = useState(2);
   const [tabelas, setTabelas] = useState<JSX.Element[]>([])
+  const tituloTabelas = [
+    "Despesas",
+    "Investimentos",
+    "Recursos"
+  ]
 
   useEffect(() => {
     const newTabelas = []
 
     for (let i = 0; i < quantidadeTabela; i++) {
       newTabelas.push(<Tabela tabela={i} quantidadeTabela={quantidadeTabela} centroCusto={props.centroCusto} centroCustoEscolhidas={props.centroCustoEscolhidas}
-        setCentroCustoEscolhidas={props.setCentroCustoEscolhidas} />)
+        setCentroCustoEscolhidas={props.setCentroCustoEscolhidas} tituloTabela={tituloTabelas[i]} />)
     }
 
     setTabelas(newTabelas)
@@ -56,33 +60,36 @@ export default function TabelaCustoCriacao(props: {
     <>
       {tabelas}
       <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-        {quantidadeTabela > 1 &&
+        {quantidadeTabela > 2 &&
           <Tooltip
-            title="Remover Tabela">
+            title="Remover Tabela de Recursos">
             <RemoveRoundedIcon
               sx={{ color: "#595959", cursor: "pointer", marginRight: 3 }}
               onClick={() => setQuantidadeTabela(quantidadeTabela - 1)}
             />
           </Tooltip>
         }
-        <Tooltip
-          title="Adicionar Tabela">
-          <AddRoundedIcon
-            sx={{ color: "#595959", cursor: "pointer" }}
-            onClick={() => setQuantidadeTabela(quantidadeTabela + 1)}
-          />
-        </Tooltip>
+        {quantidadeTabela < 3 &&
+          <Tooltip
+            title="Adicionar Tabela de recursos">
+            <AddRoundedIcon
+              sx={{ color: "#595959", cursor: "pointer" }}
+              onClick={() => setQuantidadeTabela(quantidadeTabela + 1)}
+            />
+          </Tooltip>
+        }
       </Box>
     </>
   );
 }
 
 function Tabela(props: {
-  tabela: number
-  quantidadeTabela: number
-  centroCusto: any
-  centroCustoEscolhidas: Object[]
-  setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<Object[]>>
+  tabela: number;
+  quantidadeTabela: number;
+  centroCusto: any;
+  centroCustoEscolhidas: Object[];
+  setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<Object[]>>;
+  tituloTabela: string;
 }) {
   const [quantidadeLinha, setQuantidadeLinha] = useState(1);
   const [esforcoTotal, setEsforcoTotal] = useState(0)
@@ -135,7 +142,7 @@ function Tabela(props: {
         if (centroCustoSelecionada == centroCusto.nomeCentroCusto) {
           const valorPorcetagem = document.getElementById(`chipCentroCusto${centroCusto.idCentroCusto}`) as HTMLButtonElement;
           console.log(valorPorcetagem);
-          
+
 
           let porcentagemNumero = valorPorcetagem.innerText.slice(0, valorPorcetagem.innerText.length - 1);
 
@@ -183,9 +190,8 @@ function Tabela(props: {
           <Table>
             <TableHead>
               <TableRowEstilizada>
-                <TableCellEstilzada align="center">
-                  <TextField id={`tituloTabela${props.tabela}`} placeholder="Titulo tabela"
-                    sx={{ width: "100%", input: { color: "#595959", borderColor: "#FFF", backgroundColor: "#FFF", borderRadius: "5px" } }}></TextField>
+                <TableCellEstilzada align="center" id={`tituloTabela${props.tabela}`}>
+                  {props.tituloTabela}
                 </TableCellEstilzada>
                 <TableCellEstilzada align="center">
                   Esforço (h)
@@ -220,7 +226,7 @@ function Tabela(props: {
         </BoxIconsAddMinus>
       </BoxContainerTabela>
       <Box>
-        <TypographyStyled>Centro de Custo:</TypographyStyled>
+        <TypographyStyled>Centro de Custo para {props.tituloTabela}:</TypographyStyled>
         <Autocomplete
           id={`centroCusto${props.tabela}`}
           sx={{ boxShadow: "5px 5px 10px 0 #00000050", marginBottom: 2 }}

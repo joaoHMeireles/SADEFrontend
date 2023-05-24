@@ -160,7 +160,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
       if (informacaoColecaoProcesso.tipo != "ATA") {
         console.log("entrou");
 
-        console.log(document.getElementById("dataReuniao"));
+        // console.log(document.getElementById("dataReuniao"));
 
 
         const decisoesPauta: any[] = []
@@ -185,7 +185,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
           statusEscolhido = statusEscolhido.replace("d", "D")
 
           console.log("status escolhido: " + statusEscolhido);
-          
+
 
           let propostaPauta = {
             idDecisaoPropostaPauta: informacaoColecaoProcesso.propostas[i].idDecisaoPropostaPauta,
@@ -218,9 +218,12 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         }
 
         console.log(pautaEditar);
-        
+
 
         api.put("/sod/pauta/" + idPauta + "/" + idUsuario, formDataPauta).then((response) => {
+          console.log(response);
+
+
           if (expanded.expanded) {
             const tituloReuniaoInput = (document.getElementById("tituloReuniao") as HTMLInputElement).value
             const dataReuniao = (document.getElementById("dataReuniao") as HTMLInputElement).value
@@ -228,7 +231,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
             const finalReuniao = (document.getElementById("finalReuniao") as HTMLInputElement).value
             let dataReuniaoCerta = dataReuniao.slice(6) + "/" + dataReuniao.slice(0, 5)
             dataReuniaoCerta = dataReuniaoCerta.replaceAll("/", "-")
-    
+
             const ataDTO = {
               pauta: response.data,
               tituloReuniaoATA: tituloReuniaoInput,
@@ -237,7 +240,10 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
               finalReuniao: finalReuniao + ":" + "00"
             }
 
-            api.post("/sod/ata", ataDTO).then((response) => {
+            api.post("/sod/ata", ataDTO).then((responseATA) => {
+
+              console.log(responseATA);
+
               acaoFinalizada()
             })
           } else {
@@ -301,6 +307,8 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         }
 
         api.put("/sod/ata/" + informacaoColecaoProcesso.idATA + "/" + idUsuario, formData).then((response) => {
+          console.log(response);
+
           acaoFinalizada()
         }).catch((err) => {
           console.log(err);
@@ -429,15 +437,15 @@ function Header(props: {
 
   useEffect(() => {
     if (tipoColecao == "Pauta") {
-      // if (informacaoColecaoProcesso.propostas[0].statusDemandaComissao != null) {
-      //   setAcao("Criar ATA")
-      // } else {
-      //   if (!informacaoColecaoProcesso.pertenceUmaATA) {
-      //     if (dataReuniao <= new Date()) {
-      setAcao("Informar parecer");
-      //     }
-      //   }
-      // }
+      if (informacaoColecaoProcesso.propostas[0].statusDemandaComissao != null) {
+        setAcao("Criar ATA")
+      } else {
+        if (!informacaoColecaoProcesso.pertenceUmaATA) {
+          if (dataReuniao <= new Date()) {
+            setAcao("Informar parecer");
+          }
+        }
+      }
     } else {
       // if (!informacaoColecaoProcesso.numeroDG) {
       //   if (dataReuniao <= new Date()) {

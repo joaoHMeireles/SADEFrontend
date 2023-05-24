@@ -1112,7 +1112,7 @@ function ModalAdiconarInformações(props: Modal) {
                                 onChange={(newValue) => {
                                     setValorData(newValue);
                                 }}
-                                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} {...erroObjectPrazo} />}
+                                renderInput={(params: any) => <TextField id='inputDataInformacoes' {...params} {...erroObjectPrazo} />}
                             />
                         </LocalizationProvider>
                     </BoxAtributoInfoModal2>

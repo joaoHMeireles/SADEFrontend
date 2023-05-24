@@ -80,49 +80,6 @@ export default function CriacaoProposta(props: {
 
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>();
 
-  const [propostaPDF, setPropostaPDF] = useState<any>(
-    {
-      escopo: "escopoProposta",
-      periodoExecucaoInicio: "12/04/2023",
-      periodoExecucaoFim: "14/04/2023",
-      payback: 4,
-      demanda: informacaoProcesso,
-      responsaveisNegocio: [{ idUsuario: 1, nomeUsuario: "Diego" }],
-      tabelasCustoProposta: [{
-        tituloTabela: "Despesas iniciais",
-        quantidadeTotal: 90,
-        valorTotal: 960,
-        licenca: false,
-        centrosCustoPagantes: [
-          {
-            centroCusto: {
-              idCentroCusto: 3
-            },
-            porcentagemDespesa: 0.4
-          },
-          {
-            centroCusto: {
-              idCentroCusto: 1
-            },
-            porcentagemDespesa: 0.6
-          }
-        ],
-        linhasTabela: [
-          {
-            nomeRecurso: "trabalho",
-            quantidade: 40,
-            valorQuantidade: 9
-          },
-          {
-            nomeRecurso: "trabalho2",
-            quantidade: 50,
-            valorQuantidade: 12
-          }
-        ]
-      }]
-    }
-  );
-
   useEffect(() => {
     const idDemandaCriacao = localStorage.getItem("DEMANDACRIARPROPOSTA")
 
@@ -160,15 +117,6 @@ export default function CriacaoProposta(props: {
     api.get("/sod/centroCusto").then((res) => setCentroCusto(res.data))
   }, [])
 
-  useEffect(() => {
-    const novaPropostaPDF = {
-      ...propostaPDF,
-      demanda: informacaoProcesso
-    }
-
-    setPropostaPDF(novaPropostaPDF)
-  }, [informacaoProcesso])
-
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
     if (newValue == 2) {
@@ -190,7 +138,7 @@ export default function CriacaoProposta(props: {
       let quantidadeTotal: number = 0;
       let linhaTabela;
 
-      const tituloTabela = (document.getElementById(`tituloTabela${i}`) as HTMLInputElement).value;
+      const tituloTabela = (document.getElementById(`tituloTabela${i}`) as HTMLInputElement).innerText;
 
       for (let j = 0; j < listaLinhasTabela.length; j++) {
 
@@ -271,20 +219,10 @@ export default function CriacaoProposta(props: {
       tabelasCustoProposta: listaTabelasCustoProposta
     }
 
-    setPropostaPDF(proposta);
-
     let formData = new FormData()
     let idUsuario = localStorage.getItem("IDUSUARIO");
 
     formData.append("proposta", JSON.stringify(proposta));
-
-    // const doc = new jsPDF()
-    // const pdf = document.getElementById("BOX") as HTMLElement
-
-    // doc.html(pdf)
-    // const pdfArquivo = doc.output("blob")
-
-    // formData.append("pdfVersaoHistorico", pdfArquivo);
 
     if (arquivosProposta || arquivosProposta != undefined) {
       for (const arquivo of arquivosProposta) {
@@ -481,7 +419,6 @@ export default function CriacaoProposta(props: {
                 </BotaoPrimario>
               </BoxBotoesPriSec>
             </BoxContainerBotoes>
-            <EsqueletoPDFProposta proposta={propostaPDF} />
           </>
         )}
       </ContainerGeral>

@@ -151,7 +151,6 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
   );
 }
 
-
 /**
  * Item padrão do menu principal
  * 

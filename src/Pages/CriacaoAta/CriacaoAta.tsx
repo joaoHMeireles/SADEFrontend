@@ -63,14 +63,16 @@ export default function CriacaoAta(props: {
   useEffect(() => {
     const pautaEscolhida = JSON.parse(localStorage.getItem("PAUTACRIARATA") as string)
 
-    api.get(`/sod/pauta/criarATA`).then((response) => {
+    ///criarATA
+    api.get(`/sod/pauta`).then((response) => {
       let listaPautas: any[] = []
       for (let pauta of response.data) {
         pauta.propostas = pauta.propostasPauta
         pauta.propostasPauta = null
         pauta.tituloReuniao = pauta.tituloReuniaoPauta
         pauta.tipo = TipoColecaoComponenteProcesso.Pauta
-        if (pautaEscolhida != null) {
+
+        if (pautaEscolhida != null && pautaEscolhida != undefined) {
           if (pauta.idPauta == pautaEscolhida.idPauta) {
             setPautaEscolhida(pauta)
             setValor(1)

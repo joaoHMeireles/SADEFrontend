@@ -108,6 +108,7 @@ export function getNomeRota(palavra: string) {
         draft: "Rascunho",
         mydrafts: "Meus rascunhos",
         continuedemand: "Criar Demanda",
+        editdemand:"Editar Demanda",
         chats: "Chats",
         chat: "Chat",
         history: "Histórico",

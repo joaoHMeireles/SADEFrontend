@@ -1,26 +1,31 @@
 import { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useLocationChange } from "../../utils";
+import { ExcelExport, ExcelExportColumn } from '@progress/kendo-react-excel-export';
 import {
   Box, Checkbox, Collapse, Divider, FormControl, FormControlLabel, FormGroup, IconButton, InputAdornment, Radio,
   RadioGroup, TextField, Toolbar, Button
 } from "@mui/material";
-import { ExcelExport, ExcelExportColumn } from '@progress/kendo-react-excel-export';
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import { BoxItemHeader, DrawerFiltro, TypographyItemHeader } from "./Filtro.styles";
+import TableViewRoundedIcon from '@mui/icons-material/TableViewRounded';
+import { BoxItemHeader, DrawerFiltro, TypographyItemHeader, BoxBotaoExcel } from "./Filtro.styles";
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
+import { BotaoPrimario } from "../../Pages/App.styles";
+import api from "../../api/api";
 
 
 export default function Filtro(props: {
   aberto: boolean;
   setAberto: React.Dispatch<React.SetStateAction<boolean>>;
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
-  filtrarResultados: Function
-  listaComponents: any[]
+  filtrarResultados: Function;
+  listaComponents: any[];
 }) {
   //listas base para os itens do filtros
+  const [drawerWidth, setDrawerWidth] = useState("0px");
+  const [foruns, setForuns] = useState<any[]>([])
   const tiposDeComponentes = [
     {
       id: 1,
@@ -39,20 +44,6 @@ export default function Filtro(props: {
       nome: "ATA"
     },
   ];
-  const foruns = [
-    {
-      id: 1,
-      nome: "Fórum 1"
-    },
-    {
-      id: 2,
-      nome: "Fórum 2"
-    },
-    {
-      id: 3,
-      nome: "Fórum 3"
-    }
-  ]
   const departamentos = [
     {
       id: 1,
@@ -119,7 +110,6 @@ export default function Filtro(props: {
       nome: "A fazer",
     },
   ];
-  const [drawerWidth, setDrawerWidth] = useState("0px");
   const location = useLocation()
   const tipoFiltrado = localStorage.getItem(`VALORFILTROTipo`)
 
@@ -127,9 +117,29 @@ export default function Filtro(props: {
 
   for (let atributo in props.listaComponents[0]) {
     excelColumns.push(
-      <ExcelExportColumn field={atributo} />
+      <ExcelExportColumn field={atributo} key={atributo} />
     )
   }
+  
+  const _export = useRef(null);
+  const exportExport = () => {
+    if (_export.current !== null) {
+      (_export.current as any).save(props.listaComponents);
+    }
+  };
+
+  useEffect(() => {
+    api.get("/sod/forum").then((response) => {
+      const forunsNovos = []
+
+      for(let forum of response.data){
+        forum.nome = forum.nomeForum
+        forunsNovos.push(forum)
+      }
+
+      setForuns(forunsNovos)
+    })
+  })
 
   useEffect(() => {
     if (props.aberto) {
@@ -147,15 +157,6 @@ export default function Filtro(props: {
 
     props.setAberto(false)
   })
-
-
-
-  const _export = useRef(null);
-  const exportExport = () => {
-    if (_export.current !== null) {
-      (_export.current as any).save(props.listaComponents);
-    }
-  };
 
   return (
     <>
@@ -186,9 +187,15 @@ export default function Filtro(props: {
               <Item itens={foruns} titulo="Fórum" tipo={2} filtrarResultados={props.filtrarResultados} />
             </>
           }
-          <Button onClick={exportExport}>
-            TESTE EXPORT
-          </Button>
+          <Box sx={{ padding: "8px" }}>
+            <BoxItemHeader>
+              <BoxBotaoExcel>
+                <BotaoPrimario variant="contained" startIcon={<TableViewRoundedIcon />} onClick={exportExport}>
+                  Excel
+                </BotaoPrimario>
+              </BoxBotaoExcel>
+            </BoxItemHeader>
+          </Box>
           <ExcelExport ref={_export} data={props.listaComponents}>
             {excelColumns}
           </ExcelExport>
@@ -330,7 +337,7 @@ function OpcoesCheck(props: OptionInterface) {
 
 function OpcaoInput(props: { filtrarResultados: Function }) {
   return (
-    <TextField id="input-pesquisa-ppm" variant="standard"
+    <TextField id="input-pesquisa-ppm" variant="standard" 
       InputProps={{
         sx: {
           color: "#595959"
