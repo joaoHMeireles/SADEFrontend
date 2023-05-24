@@ -141,9 +141,6 @@ function Tabela(props: {
       for (let centroCusto of props.centroCusto) {
         if (centroCustoSelecionada == centroCusto.nomeCentroCusto) {
           const valorPorcetagem = document.getElementById(`chipCentroCusto${centroCusto.idCentroCusto}`) as HTMLButtonElement;
-          console.log(valorPorcetagem);
-
-
           let porcentagemNumero = valorPorcetagem.innerText.slice(0, valorPorcetagem.innerText.length - 1);
 
           listaCentroCustoTabela.push({ idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto, tabela: props.tabela, porcentagem: porcentagemNumero })
@@ -251,10 +248,10 @@ function Tabela(props: {
           }}
           renderTags={(elementos: any) => {
             const elementosRenderizados = elementos.map((nome: string, index: number) => {
+              let centroDeCustoChip = props.centroCusto.find((centroDeCusto: any) => centroDeCusto.nomeCentroCusto == nome)
 
-              return <ChipAutocompleteCentroCusto id={`chipCentroCusto${index + 1}`} nome={nome} mudarPorcentagem={mudarPorcentagem} />
+              return <ChipAutocompleteCentroCusto id={`chipCentroCusto${centroDeCustoChip.idCentroCusto}`} nome={nome} mudarPorcentagem={mudarPorcentagem} />
             })
-
 
             return elementosRenderizados
           }}
@@ -270,9 +267,7 @@ function ChipAutocompleteCentroCusto(props: { id: any, nome: string, mudarPorcen
   const [porcentagem, setPorcentagem] = useState(100)
 
   function atualizarPorcentagem() {
-
     props.mudarPorcentagem(porcentagem, setPorcentagem)
-
   }
 
   return (

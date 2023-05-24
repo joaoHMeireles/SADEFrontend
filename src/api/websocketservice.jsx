@@ -13,7 +13,6 @@ export const WebSocketService = ({ children }) => {
     const [stompClient, setStompClient] = useState(null);
 
     useEffect(() => {
-        console.log(stompClient);
         if (stompClient == null) {
             conectar()
         } else {
@@ -26,6 +25,22 @@ export const WebSocketService = ({ children }) => {
                     localStorage.setItem("INSCRITONASDEMANDAS", "true")
                 })
             }
+            // if (localStorage.getItem("INSCRITONASNOTIFICACOES") != "true") {
+            //     const idUsuario = localStorage.getItem("IDUSUARIO")
+
+            //     api.get("/sod/usuario/" + idUsuario + "/chat").then((response) => {
+            //       for (let chat of response.data) {
+            //         const acaoNovaMensagemChat = (responseMensagem) => {
+            //           const mensagemRecebida = JSON.parse(responseMensagem.body);
+            //           chat.mensagens.push(mensagemRecebida)
+            //         }
+            
+            //         inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagemChat)
+
+            //         localStorage.setItem("INSCRITONASNOTIFICACOES", "true")
+            //       }
+            //     })
+            // }
         }
     }, [stompClient])
 

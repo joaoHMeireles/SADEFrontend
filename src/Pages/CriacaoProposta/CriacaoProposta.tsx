@@ -204,9 +204,6 @@ export default function CriacaoProposta(props: {
     let dataExecucaoFimCerto = dataExecucaoFim.slice(6) + "/" + dataExecucaoFim.slice(0, 5)
     dataExecucaoFimCerto = dataExecucaoFimCerto.replaceAll("/", "-")
 
-    console.log(informacaoProcesso);
-    
-
     const { tipo, id, ...informacaoProcessoCerto } = informacaoProcesso
 
     let proposta = {
@@ -218,6 +215,9 @@ export default function CriacaoProposta(props: {
       responsaveisNegocio: usuariosResponsaveis,
       tabelasCustoProposta: listaTabelasCustoProposta
     }
+    
+    console.log(proposta);
+    
 
     let formData = new FormData()
     let idUsuario = localStorage.getItem("IDUSUARIO");

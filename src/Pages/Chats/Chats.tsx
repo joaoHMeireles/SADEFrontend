@@ -15,7 +15,6 @@ import {
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semChats from "../../Assets/leaf.png"
 import { WebSocketContext } from "../../api/websocketservice.jsx";
-import Cookies from "js-cookie";
 import api from "../../api/api";
 import { useLocationChange } from "../../utils";
 
@@ -31,11 +30,14 @@ export default function Chats(props: { aberto: boolean }) {
 
   const [listaChats, setListaChats] = useState<any[]>([])
   const [componenteChats, setComponenteChats] = useState<any>()
-  const [listaMensagem, setListaMensagem] = useState<any[]>([]);
-  const [chatEscolhido, setChatEscolhido] = useState<any>()
-  const [inscricao, setInscricao] = useState(null)
-
+  const [chatEscolhido, setChatEscolhido] = useState<any>({ mensagens: [] })
   const webSocketService: any = useContext(WebSocketContext)
+  const acaoNovaMensagem = (response: any) => {
+    const mensagemRecebida = JSON.parse(response.body);
+
+    const chatAtual = listaChats.find((chat: any) => chat.idChat == chatEscolhido.idChat)
+    chatAtual.mensagens.push(mensagemRecebida)
+  }
 
   //fazer só puxar os chats da pessoa
   useEffect(() => {
@@ -50,31 +52,21 @@ export default function Chats(props: { aberto: boolean }) {
 
   useEffect(() => {
     atualizarComponentes()
+
+    // for(let chat of listaChats){
+    //   webSocketService.inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagem)
+    // }
+
     setChatEscolhido(listaChats[0])
   }, [listaChats])
 
   useEffect(() => {
-    if (chatEscolhido) {
-      setListaMensagem(chatEscolhido.mensagens)
-    }
-  }, [chatEscolhido])
-
-  useEffect(() => {
-    if (chatEscolhido) {
-      const acaoNovaMensagem = (response: any) => {
-        const mensagemRecebida = JSON.parse(response.body);
-
-        setListaMensagem((mensagensPrevias) => [...mensagensPrevias, mensagemRecebida])
-      }
-
-      if (webSocketService.stompClient && !inscricao) {
-        setInscricao(webSocketService.inscrever(`/demanda/${chatEscolhido.idChat}/chat`, acaoNovaMensagem))
-      }
+    for(let chat of listaChats){
+      webSocketService.inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagem)
     }
 
     atualizarComponentes()
-
-  }, [listaMensagem, webSocketService.stompClient])
+  }, [webSocketService.stompClient])
 
   useLocationChange(() => {
     webSocketService.desconectar()
@@ -84,25 +76,29 @@ export default function Chats(props: { aberto: boolean }) {
     setChatEscolhido(listaChats.find(chat => chat.idChat == parseInt(e.target.id)))
   }
 
-  function atualizarComponentes(){
+  function atualizarComponentes() {
     const componenteChatsNovo = listaChats.map((chat) => {
       if (chat.usuariosChat) {
-        console.log(chat);
-        
-        const ultimaMensagem = listaMensagem[listaMensagem.length - 1]
-        console.log(ultimaMensagem);
-        
+        let ultimaMensagem: any = null
+
+        if (chat.mensagens.length > 0) {
+          ultimaMensagem = chat.mensagens[chat.mensagens.length - 1]
+        }
 
         const usuario = chat.usuariosChat.find((usuario: any) => {
-          if(ultimaMensagem){
-            if(usuario.idUsuario == ultimaMensagem.usuario.idUsuario){
+          if (ultimaMensagem) {
+            if (usuario.idUsuario == ultimaMensagem.usuario.idUsuario) {
               return usuario;
             }
           }
         })
 
         return (
-          <Chat id={chat.idChat} titulo={chat.demanda.tituloDemanda} pessoa={(usuario?.nomeUsuario != undefined ? usuario.nomeUsuario : "")} mensagem={ultimaMensagem ? ultimaMensagem.mensagem : ""} verChat={verChat} />
+          <Chat
+            id={chat.idChat}
+            titulo={chat.demanda.tituloDemanda}
+            pessoa={(usuario?.nomeUsuario != undefined ? usuario.nomeUsuario : "")}
+            mensagem={ultimaMensagem ? ultimaMensagem.mensagem : ""} verChat={verChat} />
         )
       }
     })
@@ -123,7 +119,7 @@ export default function Chats(props: { aberto: boolean }) {
                 </LadoEsquerdoChat>
               </LadoEsquerdoGeralChats>
               <LadoDireitoGeralChats>
-                <ConversaChat chatEscolhido={chatEscolhido} listaMensagens={listaMensagem} enviar={webSocketService.enviar} />
+                <ConversaChat chatEscolhido={chatEscolhido} enviar={webSocketService.enviar} />
               </LadoDireitoGeralChats>
             </>
             :
@@ -135,7 +131,7 @@ export default function Chats(props: { aberto: boolean }) {
   );
 }
 
-function ConversaChat(props: { listaMensagens: any[], chatEscolhido: any, enviar: Function }) {
+function ConversaChat(props: { chatEscolhido: any, enviar: Function }) {
   const [mensagem, setMensagem] = useState<any>({
     chat: {
       idChat: 1
@@ -149,20 +145,28 @@ function ConversaChat(props: { listaMensagens: any[], chatEscolhido: any, enviar
   const [elementoMensagens, setElementoMensagens] = useState<any>()
 
   useEffect(() => {
-    if(props.listaMensagens.length == 0){
+    if (props.chatEscolhido != null) {
+      if (props.chatEscolhido.mensagens != null) {
+        if (props.chatEscolhido.mensagens.length == 0) {
+          return
+        }
+      } else {
+        return
+      }
+    } else {
       return
     }
 
-    const componenteMensagensNovo = props.listaMensagens.map((mensagem: any) => {
+    const componenteMensagensNovo = props.chatEscolhido.mensagens.map((mensagem: any) => {
       const usuario = props.chatEscolhido.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
-   
+
       return (
         <Mensagens mensagem={mensagem.mensagem} usuario={usuario} />
       )
     })
 
     setElementoMensagens(componenteMensagensNovo)
-  }, [props.listaMensagens])
+  }, [props.chatEscolhido])
 
   function setDefaultMensagem() {
     let mensagemPadrao: any = {
@@ -211,7 +215,7 @@ function ConversaChat(props: { listaMensagens: any[], chatEscolhido: any, enviar
       </LadoDiretoChat>
       <BoxBarraPesquisa>
         <AttachmentRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
-        <BarraPesquisa onChange={atualizarMensagem} id="input-mensagem"/>
+        <BarraPesquisa onChange={atualizarMensagem} id="input-mensagem" />
         <SendRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} onClick={enviarMensagem} />
       </BoxBarraPesquisa>
     </>

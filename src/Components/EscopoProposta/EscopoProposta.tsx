@@ -67,9 +67,6 @@ export default function EscopoProposta(props: {
     })
   }, [])
 
-  console.log(EditorTools);
-
-
   return (
     <>
       <BoxContainerGeral>

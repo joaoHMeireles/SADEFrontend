@@ -6,6 +6,7 @@ import { Box, Grid, IconButton, Tooltip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import {
   BoxColecaoComponente,
   BoxGridCorProcesso,
@@ -21,6 +22,7 @@ import {
 } from "./ComponenteProcesso.styles";
 import { GlobalStyles } from "@mui/styled-engine";
 import { getNomeStatus } from "../../utils";
+import api from "../../api/api";
 
 export default function ComponenteProcesso(props: {
   grid: boolean;
@@ -76,6 +78,7 @@ export default function ComponenteProcesso(props: {
       isChecked={isChecked}
       setIsChecked={setIsChecked}
       mudarIsChecked={mudarIsChecked}
+      deletarRascunho={deletarRascunho}
     />
   ) : (
     <ListComponent
@@ -98,6 +101,7 @@ export default function ComponenteProcesso(props: {
       isChecked={isChecked}
       setIsChecked={setIsChecked}
       mudarIsChecked={mudarIsChecked}
+      deletarRascunho={deletarRascunho}
     />
   );
 
@@ -128,16 +132,16 @@ export default function ComponenteProcesso(props: {
       }
     }
   }, [props.propostas]);
-  
+
   useEffect(() => {
     const card = document.getElementsByClassName(
       `card-proposta${componente.id}`
     )[0];
-    
+
     if (isChecked) {
       card?.classList.add("selecionado")
       const componentePaginaPauta = componente;
-      
+
       componentePaginaPauta.link = nomeTipoLink;
 
       props.propostas?.push(componente);
@@ -186,6 +190,17 @@ export default function ComponenteProcesso(props: {
     }
   }
 
+  function deletarRascunho() {
+    console.log("cancelar rascunho");
+    api.delete("/sod/demanda/" + componente.idDemanda).then((response) => {
+      console.log(response);
+      location.reload()
+
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
   return (
     <>
       <GlobalStyles
@@ -204,8 +219,6 @@ export default function ComponenteProcesso(props: {
 
 function GridComponent(props: ComponentProps) {
 
-  //<WarningRoundedIcon sx={{color: "#00579d"}}/>
-
   return (
     <>
       {!props.proposta && !props.pauta ? (
@@ -219,19 +232,30 @@ function GridComponent(props: ComponentProps) {
           </Tooltip>
           <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
             {(props.temDemandaDevolvida && props.componente.devolvida) ?
-              <>
-                <GridBoxTituloRadio>
-                  <GridTypography variant="h6">
-                    {props.componente.tituloDemanda}
-                  </GridTypography>
-                  <WarningRoundedIcon sx={{marginRight: "1.6vw", color: "#00579d"}}/>
-                </GridBoxTituloRadio>
-              </>
-              :
-              <>
+              <GridBoxTituloRadio>
                 <GridTypography variant="h6">
                   {props.componente.tituloDemanda}
                 </GridTypography>
+                <WarningRoundedIcon sx={{ marginRight: "1.6vw", color: "#00579d" }} />
+              </GridBoxTituloRadio>
+              :
+              <>
+                {!props.rascunho ?
+                  <GridTypography variant="h6">
+                    {props.componente.tituloDemanda}
+                  </GridTypography>
+                  :
+                  <GridBoxTituloRadio>
+                    <GridTypography variant="h6">
+                      {props.componente.tituloDemanda}
+                    </GridTypography>
+                    <Box>
+                      <IconButton onClick={props.deletarRascunho}>
+                        <DeleteRoundedIcon />
+                      </IconButton>
+                    </Box>
+                  </GridBoxTituloRadio>
+                }
               </>
             }
             <GridTypography variant="subtitle1">
@@ -548,5 +572,6 @@ interface ComponentProps {
   verProcesso: MouseEventHandler<HTMLDivElement>;
   isChecked?: boolean;
   setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
-  mudarIsChecked: MouseEventHandler<HTMLDivElement>
+  mudarIsChecked: MouseEventHandler<HTMLDivElement>;
+  deletarRascunho: any
 }
