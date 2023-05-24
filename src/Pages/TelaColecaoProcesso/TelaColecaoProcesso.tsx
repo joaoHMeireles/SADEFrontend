@@ -447,11 +447,11 @@ function Header(props: {
         }
       }
     } else {
-      if (!informacaoColecaoProcesso.numeroDG) {
-        if (dataReuniao <= new Date()) {
+      // if (!informacaoColecaoProcesso.numeroDG) {
+      //   if (dataReuniao <= new Date()) {
           setAcao("Finalizar processo");
-        }
-      }
+      //   }
+      // }
     }
   }, []);
 
@@ -538,7 +538,8 @@ function ContainerColecaoProcesso(props: {
   function abrirModal() {
     setAnexos(props.informacaoColecaoProcesso.arquivos.map((anexo: any, index: number) => {
       const IconeAnexo = getIconeArquivo(anexo.nome)
-
+      console.log(anexo);
+      
       return (
         <ListItem key={index}
           secondaryAction={

@@ -78,7 +78,6 @@ export default function CriacaoAta(props: {
             setValor(1)
           }
         }
-
         listaPautas.push(pauta)
       }
 
