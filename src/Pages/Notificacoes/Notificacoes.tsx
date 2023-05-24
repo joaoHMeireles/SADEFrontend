@@ -45,7 +45,7 @@ export default function Notificacoes() {
       })
   }, [])
 
-  function getTipoIcone(acao: string) {
+  function getTipoIcone(acao: string) {    
     for (let i = 0; i < notificacoes.length; i++) {
       if (acao == "DEMANDAAPROVADA") {
         icone = CheckBoxRoundedIcon;
@@ -61,12 +61,15 @@ export default function Notificacoes() {
         icone = NewReleasesRoundedIcon;
       } else if (acao == "PRAZOELABORACAO") {
         icone = AccessTimeRoundedIcon;
+      } else if (acao == "AVALIARDEMANDA") {
+        icone = CheckBoxRoundedIcon;
+        ;
       }
     }
   }
 
   const notificacoesElement = notificacoes.map((notificacao: any) => {
-    console.log(notificacao);
+    // console.log(notificacao);
 
     getTipoIcone(notificacao.acao)
     return (

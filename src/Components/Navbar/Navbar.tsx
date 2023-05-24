@@ -54,41 +54,43 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
     return (
         <>
             {path.pathname != "/" &&
-                <NavBar position="fixed" sx={{ height: props.tamanhoNavbar }}>
-                    <Toolbar>
-                        <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={mudarSidebar}>
-                            <DehazeRoundedIcon />
-                        </IconButton>
+                <>
+                    <NavBar position="fixed" sx={{ height: props.tamanhoNavbar }}>
+                        <Toolbar>
+                            <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={mudarSidebar}>
+                                <DehazeRoundedIcon />
+                            </IconButton>
 
-                        <Box sx={{ flexGrow: 1 }}>
-                            <img src={logo} alt="" />
-                        </Box>
-
-                        <Box sx={{ display: "flex" }}>
-                            <TextFieldLinguas select value={lingua} onChange={mudarLingua} variant="standard">
-                                {listaLinguas.map((option) => (
-                                    <MenuItem key={option} value={option}>
-                                        {option}
-                                    </MenuItem>
-                                ))}
-                            </TextFieldLinguas>
-
-                            <Box sx={{ marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>
-                                <Avatar {...stringAvatar(usuario.nomeUsuario)} onClick={() => {
-                                    window.location.href = "/profile";
-                                }} src={URL.createObjectURL(fotoUsuario)} />
+                            <Box sx={{ flexGrow: 1 }}>
+                                <img src={logo} alt="" />
                             </Box>
 
-                            <Box sx={{ marginLeft: "1rem" }}>
-                                <Tooltip title="Ajuda ao usuário">
-                                    <IconButton onClick={() => { window.location.href = "/userhelp"; }}>
-                                        <HelpOutlineIcon sx={{ color: "#fff" }} />
-                                    </IconButton>
-                                </Tooltip>
+                            <Box sx={{ display: "flex" }}>
+                                <TextFieldLinguas select value={lingua} onChange={mudarLingua} variant="standard">
+                                    {listaLinguas.map((option) => (
+                                        <MenuItem key={option} value={option}>
+                                            {option}
+                                        </MenuItem>
+                                    ))}
+                                </TextFieldLinguas>
+
+                                <Box sx={{ marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>
+                                    <Avatar {...stringAvatar(usuario.nomeUsuario)} onClick={() => {
+                                        window.location.href = "/profile";
+                                    }} src={URL.createObjectURL(fotoUsuario)} />
+                                </Box>
+
+                                <Box sx={{ marginLeft: "1rem" }}>
+                                    <Tooltip title="Ajuda ao usuário">
+                                        <IconButton onClick={() => { window.location.href = "/userhelp"; }}>
+                                            <HelpOutlineIcon sx={{ color: "#fff" }} />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Box>
                             </Box>
-                        </Box>
-                    </Toolbar>
-                </NavBar>
+                        </Toolbar>
+                    </NavBar>
+                </>
             }
         </>
     )

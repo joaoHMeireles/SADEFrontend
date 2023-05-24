@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'; 
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
@@ -10,8 +10,8 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 import api from "../../api/api";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers"; 
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"; 
 import { Dayjs } from "dayjs";
 
 import {
@@ -112,12 +112,6 @@ export default function InfomacoesAdicionais(props: {
         }
     }, [])
 
-    useEffect(() => {
-        console.log(props.valorTamanho);
-        
-    }, [props.valorTamanho])
-
-
     return (
         <>
             <BoxGeral>
@@ -165,7 +159,7 @@ export default function InfomacoesAdicionais(props: {
                                     };
                                     props.setInformacaoProcesso(novaInfoDemanda);
                                 }}
-                                renderInput={(params) => <TextField id='inputDataInformacoes' {...params} />}
+                                renderInput={(params: any) => <TextField id='inputDataInformacoes' {...params} />}
                             />
                         </LocalizationProvider>
                     </Box>

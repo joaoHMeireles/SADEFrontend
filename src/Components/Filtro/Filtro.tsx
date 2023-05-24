@@ -117,7 +117,7 @@ export default function Filtro(props: {
 
   for (let atributo in props.listaComponents[0]) {
     excelColumns.push(
-      <ExcelExportColumn field={atributo} />
+      <ExcelExportColumn field={atributo} key={atributo} />
     )
   }
   
@@ -157,7 +157,6 @@ export default function Filtro(props: {
 
     props.setAberto(false)
   })
-
 
   return (
     <>

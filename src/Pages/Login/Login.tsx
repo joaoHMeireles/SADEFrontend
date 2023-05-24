@@ -70,17 +70,9 @@ export default function Login(props: {
 
       return dadosUserJPA
     }).then((res) => {
-      console.log(res);
+      webSocketService.conectar()
 
-      api.get("/sod/demanda/usuario/" + localStorage.getItem("IDUSUARIO")).then((res) => {
-        for (const demanda of res.data) {
-          console.log(webSocketService);
-
-          webSocketService.inscrever(`/notificacao/demanda/${demanda.idDemanda}`, novaNotificacao)
-        }
-      }).then(() => {
-        location.href = "/home";
-      })
+      location.href = "/home"
     }).catch((err: any) => {
       console.log(err);
       setFeedbackAberto(true)

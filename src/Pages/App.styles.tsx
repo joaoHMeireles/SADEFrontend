@@ -3,10 +3,10 @@ const styledBox = styled(Box);
 const styledButton = styled(Button);
 
 export const BoxContainer = styledBox({
-    width: "100%", 
-    height: "100%", 
-    display: "flex", 
-    justifyContent: "center", 
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
     alignItems: "center"
 })
 
@@ -21,31 +21,42 @@ export const BoxConteudo = styledBox({
 
 export const BotaoPrimario = styledButton({
     backgroundColor: "#00579d",
-    '&:hover': { 
-        backgroundColor: "#003c6d", 
-        transition: 'ease-in-out', 
+    '&:hover': {
+        backgroundColor: "#003c6d",
+        transition: 'ease-in-out',
         transitionDuration: "0.7s"
     }
 })
 
 export const BotaoSecundario = styledButton({
     borderColor: "#00579d80",
-    color: '#00579d',  
-    '&:hover': { 
-        backgroundColor: "#00579d20", 
+    color: '#00579d',
+    '&:hover': {
+        backgroundColor: "#00579d20",
         border: "1px solid #00579d80",
-        transition: 'ease-in-out', 
+        transition: 'ease-in-out',
         transitionDuration: "0.7s"
     }
 })
 
 export const BotaoTerciario = styledButton({
     borderColor: "#59595980",
-    color: '#595959',  
-    '&:hover': { 
-        backgroundColor: "#59595920", 
+    color: '#595959',
+    '&:hover': {
+        backgroundColor: "#59595920",
         border: "1px solid #59595980",
-        transition: 'ease-in-out', 
+        transition: 'ease-in-out',
         transitionDuration: "0.7s"
     }
+})
+
+export const BoxDraggable = styledBox({
+    backgroundColor: "rgb(255,255,255, 0.9)",
+    borderRadius: "5px",
+    bottom: "0px",
+    cursor: "move",
+    left: "24vw",
+    padding: "1.5rem",
+    position: "absolute",  
+    width: "50vw"
 })

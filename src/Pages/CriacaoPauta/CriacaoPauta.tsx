@@ -228,7 +228,6 @@ export default function CriacaoPauta(props: {
                       console.log(comissoes);
                       console.log(e);
 
-
                       const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
                       setComissaoEscolhida(novaComissaoEscolhida);
                     }}
@@ -260,6 +259,7 @@ export default function CriacaoPauta(props: {
                   <TypographyTituloInput>
                     Início da reunião
                   </TypographyTituloInput>
+
 
                   <Box sx={{ height: "auto", width: "60vw" }}>
                     <TimePicker
