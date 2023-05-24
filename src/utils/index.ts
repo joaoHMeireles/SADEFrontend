@@ -1,4 +1,3 @@
-
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { StatusTarefaHistorico } from '../constants/enuns';
@@ -217,9 +216,13 @@ export function getKeyEnum(enumerador: Object, valor: any) {
 
 export function baixarArquivo(anexo: any) {
     const url = window.URL.createObjectURL(new Blob([anexo.arquivo]));
+    console.log(url);
+    
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', anexo.nome);
+    link.setAttribute('download', `${anexo.nome}.pdf`);
+    console.log(link);
+    
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
