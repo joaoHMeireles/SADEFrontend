@@ -32,36 +32,33 @@ export default function Chats(props: { aberto: boolean }) {
   const [componenteChats, setComponenteChats] = useState<any>()
   const [chatEscolhido, setChatEscolhido] = useState<any>({ mensagens: [] })
   const webSocketService: any = useContext(WebSocketContext)
-  const acaoNovaMensagem = (response: any) => {
-    const mensagemRecebida = JSON.parse(response.body);
-
-    const chatAtual = listaChats.find((chat: any) => chat.idChat == chatEscolhido.idChat)
-    chatAtual.mensagens.push(mensagemRecebida)
-  }
+  let requisitouChats = false
 
   //fazer só puxar os chats da pessoa
   useEffect(() => {
     const idUsuario = localStorage.getItem("IDUSUARIO")
 
-    api.get("/sod/usuario/" + idUsuario + "/chat").then((response) => {
-      setListaChats(response.data)
-    }).catch((err) => {
-      console.log(err);
-    })
+    if (listaChats.length == 0 && !requisitouChats) {
+      api.get("/sod/usuario/" + idUsuario + "/chat").then((response) => {
+        setListaChats(response.data)
+      }).catch((err) => {
+        console.log(err);
+      })
+      requisitouChats = true
+    }
   }, []);
 
   useEffect(() => {
     atualizarComponentes()
-
-    // for(let chat of listaChats){
-    //   webSocketService.inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagem)
-    // }
-
     setChatEscolhido(listaChats[0])
   }, [listaChats])
 
   useEffect(() => {
-    for(let chat of listaChats){
+    if(webSocketService.stompClient == null){
+      return
+    }
+    
+    for (let chat of listaChats) {
       webSocketService.inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagem)
     }
 
@@ -72,8 +69,30 @@ export default function Chats(props: { aberto: boolean }) {
     webSocketService.desconectar()
   })
 
+  function acaoNovaMensagem(response: any) {
+    const body = JSON.parse(response.body)
+    const mensagemRecebida = body[0];
+
+    console.log(body);
+    console.log(chatEscolhido);
+
+    const indexChat = listaChats.findIndex((chat: any) => chat.idChat == body[1])
+    const chatNovaMensagem = listaChats[indexChat]
+
+    chatNovaMensagem.mensagens.push(mensagemRecebida)
+    listaChats[indexChat] = chatNovaMensagem
+
+    if (body[1] == chatEscolhido.idChat) {
+      setChatEscolhido(chatNovaMensagem)
+    }
+
+    atualizarComponentes()
+  }
+
   function verChat(e: any) {
-    setChatEscolhido(listaChats.find(chat => chat.idChat == parseInt(e.target.id)))
+    const chatAtual = listaChats.find(chat => chat.idChat == parseInt(e.target.id))
+
+    setChatEscolhido(chatAtual)
   }
 
   function atualizarComponentes() {

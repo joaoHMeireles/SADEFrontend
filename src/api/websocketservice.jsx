@@ -25,22 +25,6 @@ export const WebSocketService = ({ children }) => {
                     localStorage.setItem("INSCRITONASDEMANDAS", "true")
                 })
             }
-            // if (localStorage.getItem("INSCRITONASNOTIFICACOES") != "true") {
-            //     const idUsuario = localStorage.getItem("IDUSUARIO")
-
-            //     api.get("/sod/usuario/" + idUsuario + "/chat").then((response) => {
-            //       for (let chat of response.data) {
-            //         const acaoNovaMensagemChat = (responseMensagem) => {
-            //           const mensagemRecebida = JSON.parse(responseMensagem.body);
-            //           chat.mensagens.push(mensagemRecebida)
-            //         }
-            
-            //         inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagemChat)
-
-            //         localStorage.setItem("INSCRITONASNOTIFICACOES", "true")
-            //       }
-            //     })
-            // }
         }
     }, [stompClient])
 
@@ -48,10 +32,6 @@ export const WebSocketService = ({ children }) => {
         const socket = new sockjs("http://localhost:8443/sod/websocket");
 
         const stomp = Stomp.over(socket);
-
-        console.log("stomp:");
-        console.log(stomp);
-
         stomp.connect({}, () => {
             setStompClient(stomp)
         }, (erro) => {
@@ -80,6 +60,7 @@ export const WebSocketService = ({ children }) => {
 
     const inscrever = (caminho, acao) => {
         if (!stompClient.subscriptions[caminho]) {
+            console.log("subescreveu: " + caminho);
             return stompClient.subscribe(caminho, acao);
         }
     }
