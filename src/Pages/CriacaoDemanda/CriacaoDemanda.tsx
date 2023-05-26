@@ -326,7 +326,7 @@ export default function CriacaoDemanda(props: {
 
     }
 
-    // window.location.href = "/home";
+    window.location.href = "/home";
   }
 
 

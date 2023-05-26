@@ -21,6 +21,7 @@ import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 
 import semNotificacao from "../../Assets/notification-bell.png"
 import { useLocation } from "react-router-dom";
+// import Popover from "@mui/material/Popover";
 
 /**
  *
@@ -45,7 +46,7 @@ export default function Notificacoes() {
       })
   }, [])
 
-  function getTipoIcone(acao: string) {    
+  function getTipoIcone(acao: string) {
     for (let i = 0; i < notificacoes.length; i++) {
       if (acao == "DEMANDAAPROVADA") {
         icone = CheckBoxRoundedIcon;
@@ -123,6 +124,18 @@ export const novaNotificacao = (response: any) => {
   if (location.pathname == "/notifications") {
     atualizarNotificacoes(novaNotifica)
   } else {
+    // <Popover
+    //   anchorOrigin={{
+    //     vertical: 'top',
+    //     horizontal: 'right',
+    //   }}
+    //   transformOrigin={{
+    //     vertical: 'top',
+    //     horizontal: 'left',
+    //   }}
+    // >
+    //   The content of the Popover.
+    // </Popover>
     // pesquisar propriedade MUI que adiciona isso
     // deixar bolinha da notificação vermelha
   }
