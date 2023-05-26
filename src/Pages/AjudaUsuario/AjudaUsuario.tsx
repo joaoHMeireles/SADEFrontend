@@ -51,7 +51,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                 setCor(0);
               }}>
                 {cor == 0 ?
-                  <ListItemText primary="INTRODUÇÃO" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                  <ListItemText primary="INTRODUÇÃO" sx={{ color: "#00579d" }} />
                   :
                   <ListItemText primary="INTRODUÇÃO" />}
               </ListItemButton>
@@ -68,7 +68,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(1);
                   }}>
                     {cor == 1 ?
-                      <ListItemText primary="Criar Demanda" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Criar Demanda" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Criar Demanda" />}
                   </ListItemButton>
@@ -78,7 +78,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(2);
                   }}>
                     {cor == 2 ?
-                      <ListItemText primary="Avaliar Demanda" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Avaliar Demanda" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Avaliar Demanda" />}
                   </ListItemButton>
@@ -88,7 +88,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(3);
                   }}>
                     {cor == 3 ?
-                      <ListItemText primary="Avaliar Demanda" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Avaliar Demanda" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Avaliar Demanda" />}
                   </ListItemButton>
@@ -98,7 +98,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(4);
                   }}>
                     {cor == 4 ?
-                      <ListItemText primary="Adicionar informações na Demanda" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Adicionar informações na Demanda" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Adicionar informações na Demanda" />}
                   </ListItemButton>
@@ -108,7 +108,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(5);
                   }}>
                     {cor == 5 ?
-                      <ListItemText primary="Criar Proposta" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Criar Proposta" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Criar Proposta" />}
                   </ListItemButton>
@@ -118,7 +118,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(6);
                   }}>
                     {cor == 6 ?
-                      <ListItemText primary="Criar Pauta" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Criar Pauta" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Criar Pauta" />}
                   </ListItemButton>
@@ -128,7 +128,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(7);
                   }}>
                     {cor == 7 ?
-                      <ListItemText primary="Informar o parecer da Comissão" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Informar o parecer da Comissão" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Informar o parecer da Comissão" />}
                   </ListItemButton>
@@ -138,7 +138,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(8);
                   }}>
                     {cor == 8 ?
-                      <ListItemText primary="Criar ATA" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Criar ATA" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Criar ATA" />}
                   </ListItemButton>
@@ -148,7 +148,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(9);
                   }}>
                     {cor == 9 ?
-                      <ListItemText primary="Informar o parecer da Diretoria Geral" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Informar o parecer da Diretoria Geral" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Informar o parecer da Diretoria Geral" />}
                   </ListItemButton>
@@ -167,7 +167,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(10)
                   }}>
                     {cor == 10 ?
-                      <ListItemText primary="Iniciar Workflow de Aprovação" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Iniciar Workflow de Aprovação" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Iniciar Workflow de Aprovação" />}
                   </ListItemButton>
@@ -177,7 +177,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(11);
                   }}>
                     {cor == 11 ?
-                      <ListItemText primary="Avaliar Workflow de Aprovação" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Avaliar Workflow de Aprovação" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Avaliar Workflow de Aprovação" />}
                   </ListItemButton>

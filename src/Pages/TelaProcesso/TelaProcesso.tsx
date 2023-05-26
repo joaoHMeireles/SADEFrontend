@@ -1582,7 +1582,7 @@ function Footer(props: {
             <Grid item xs={8} />
             <GridItemFooter item xs={3.5} >
                 {props.link ?
-                    <a href={props.link}>Ver projeto Jira</a>
+                    <a href={props.link} target='_blank'>Ver projeto Jira</a>
                     :
                     <div></div>
                 }
@@ -1618,6 +1618,9 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
             listaBotoes.push({ nome: "chat", function: funcoes[11] })
         }
     }
+    const workflow = { nome: "workflow", function: funcoes[10] }
+
+    listaBotoes.push(workflow)
 
 
     /**
@@ -1729,6 +1732,8 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
                 }
             }
         }
+
+        
     }
 
     return listaBotoes

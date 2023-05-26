@@ -36,7 +36,8 @@ import informarParecerDiretoriaGeralFinal from "../../../Assets/AjudaUsuario/Inf
 // Iniciar Workflow de Aprovação
 import iniciarWorkflow from "../../../Assets/AjudaUsuario/IniciarWorkflow/iniciarWorkflow.png";
 // Avaliar Workflow de Aprovação
-
+import avaliarWorkflow from "../../../Assets/AjudaUsuario/AvaliarWorkflow/avaliarWorkflow.png"
+import avaliarWorkflowFinal from "../../../Assets/AjudaUsuario/AvaliarWorkflow/avaliarWorkflowFinal.png"
 
 export const Introducao = (
     <BoxBackground>
@@ -321,6 +322,18 @@ export const AvaliarWorkflow = (
             <p>Avaliar Workflow de Aprovação</p>
         </Title>
 
-        <P>Dentro de uma proposta, quando um Workflow for iniciado pelo Analista, o ícone de Workflow para os Gerentes de Negócio e de TI vai exibir uma notificação. Clique para abrir um modal onde poderás aprovar ou reprovar.</P>
+        <P>Dentro de uma proposta, quando um Workflow for iniciado pelo Analista, o ícone de Workflow para os Gerentes de Negócio e de TI vai exibir uma notificação.</P>
+
+        <BoxImage>
+            <img id="imgs" src={avaliarWorkflow} alt="Avaliar Workflow de Aprovação" />
+        </BoxImage>
+
+        <P>Clique para abrir um modal onde poderás aprovar ou reprovar.</P>
+
+        <BoxImage>
+            <img id="imgs" src={avaliarWorkflowFinal} alt="Avaliar Workflow de Aprovação parte final" />
+        </BoxImage>
+
+        <Space>.</Space>
     </BoxBackground>
 );
