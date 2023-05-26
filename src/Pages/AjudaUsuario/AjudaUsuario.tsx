@@ -15,19 +15,12 @@ import ListItemText from '@mui/material/ListItemText';
 import { Introducao, CriarDemanda, AvaliarDemandaA, AvaliarDemandaGN, AdicionarInfoDemanda, CriarProposta, CriarPauta, InformarParecerComissao, CriarATA, InformarParecerDiretoriaGeral, IniciarWorkflow, AvaliarWorkflow } from "./Componentes/Componentes";
 
 export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: boolean }) {
-  const [atividadesPrincipaisOpen, setAtividadesPrincipaisopen] = useState(false);
-  const [atividadesSecundariasOpen, setAtividadesSecundariasOpen] = useState(false);
+  const [ processosPrincipaisOpen,  setProcessosPrincipaisOpen] = useState(false);
   const [componentes, setComponentes] = useState<any>(Introducao);
   const [cor, setCor] = useState(0);
 
-  const usuarioLogado = localStorage.getItem("TIPOUSUARIO");
-
   const atividadesPrincipaisClick = () => {
-    setAtividadesPrincipaisopen(!atividadesPrincipaisOpen);
-  };
-
-  const atividadesSecundariasClick = () => {
-    setAtividadesSecundariasOpen(!atividadesSecundariasOpen);
+     setProcessosPrincipaisOpen(! processosPrincipaisOpen);
   };
 
   useEffect(() => {
@@ -57,11 +50,11 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
               </ListItemButton>
 
               <ListItemButton onClick={atividadesPrincipaisClick}>
-                <ListItemText primary="ATIVIDADES PRINCIPAIS" />
-                {atividadesPrincipaisOpen ? <ExpandLess /> : <ExpandMore />}
+                <ListItemText primary="PROCESSOS PRINCIPAIS" />
+                { processosPrincipaisOpen ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
 
-              <Collapse in={atividadesPrincipaisOpen} timeout="auto" unmountOnExit>
+              <Collapse in={ processosPrincipaisOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
                     setComponentes(CriarDemanda);
@@ -152,16 +145,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                       :
                       <ListItemText primary="Informar o parecer da Diretoria Geral" />}
                   </ListItemButton>
-                </List>
-              </Collapse>
 
-              <ListItemButton onClick={atividadesSecundariasClick}>
-                <ListItemText primary="ATIVIDADES SECUNDÁRIAS" />
-                {atividadesSecundariasOpen ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-
-              <Collapse in={atividadesSecundariasOpen} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
                     setComponentes(IniciarWorkflow);
                     setCor(10)
