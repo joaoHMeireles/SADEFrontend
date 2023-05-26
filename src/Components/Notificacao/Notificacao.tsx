@@ -58,11 +58,11 @@ export default function Notificacao(props: {
       })
     } else if (props.tipoNotificacao == "PROPOSTA") {
       api.get("/sod/proposta/" + props.idComponenteLink).then((response) => {
-        const proposta = response.data        
+        const proposta = response.data
 
         for (let atributo in proposta.demanda) {
           console.log(atributo);
-          
+
           proposta[atributo] = proposta.demanda[atributo]
         }
 
@@ -113,8 +113,8 @@ export default function Notificacao(props: {
   }
 
   return (
-    <BoxNotificacao onClick={redirecionar}>
-      <NotificacaoLadoEsquerdo>
+    <BoxNotificacao>
+      <NotificacaoLadoEsquerdo onClick={redirecionar}>
         <NotificacaoBoxIcone>
           <props.Icone sx={{ color: "#595959" }}></props.Icone>
         </NotificacaoBoxIcone>
@@ -132,13 +132,14 @@ export default function Notificacao(props: {
       <NotificacaoLadoDireito>
         <DeleteRoundedIcon
           sx={{ color: "#595959", cursor: "pointer" }}
-        // onClick={() => {
-        //   api.put(`/sod/usuario/deletarNotificacao`, bodyNotificacaoDTO).then((res) => {
-        //     props.setNotificacoes(res.data.notificacoesUsuario)
-        //   }).catch((err) => {
-        //     console.log(err);
-        //   });
-        // }}
+          onClick={() => {
+            console.log(bodyNotificacaoDTO);
+            api.delete(`/sod/notificacao/${bodyNotificacaoDTO.notificacao.idNotificacao}/${bodyNotificacaoDTO.usuario.idUsuario}`).then((res) => {
+              props.setNotificacoes(res.data)
+            }).catch((err) => {
+              console.log(err);
+            });
+          }}
         />
       </NotificacaoLadoDireito>
     </BoxNotificacao>
