@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { createContext } from "react";
 import { useState } from "react"
-import { useLocation } from "react-router-dom";
 import sockjs from "sockjs-client/dist/sockjs"
 import api from "./api"
 import { novaNotificacao } from "../Pages/Notificacoes/Notificacoes";
