@@ -21,7 +21,7 @@ import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 
 import semNotificacao from "../../Assets/notification-bell.png"
 import { useLocation } from "react-router-dom";
-// import Popover from "@mui/material/Popover";
+import Popover from "@mui/material/Popover";
 
 /**
  *
@@ -71,8 +71,6 @@ export default function Notificacoes() {
   }
 
   const notificacoesElement = notificacoes.map((notificacao: any) => {
-    console.log(notificacao);
-
     getTipoIcone(notificacao.acao)
     return (
       <Notificacao key={notificacao.idNotificacao}
@@ -114,31 +112,23 @@ export const atualizarNotificacoes = (setNotificacoes?: any, novaNotifica?: any)
   }
 }
 
-export const novaNotificacao = (response: any) => {
+export const novaNotificacao = (response: any) => {  
   const location = useLocation()
-  console.log(location);
-
 
   const novaNotifica = JSON.parse(response.body);
 
   if (location.pathname == "/notifications") {
     atualizarNotificacoes(novaNotifica)
-  } else {
-    // <Popover
-    //   anchorOrigin={{
-    //     vertical: 'top',
-    //     horizontal: 'right',
-    //   }}
-    //   transformOrigin={{
-    //     vertical: 'top',
-    //     horizontal: 'left',
-    //   }}
-    // >
-    //   The content of the Popover.
-    // </Popover>
+  } else {    
+    semAtualizarNotificacao(novaNotifica)
+
     // pesquisar propriedade MUI que adiciona isso
     // deixar bolinha da notificação vermelha
   }
+}
+
+function semAtualizarNotificacao(notificacao: any){
+  console.log("Notificacao: " + notificacao);
 }
 
 

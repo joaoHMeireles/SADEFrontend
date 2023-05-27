@@ -38,7 +38,7 @@ export default function Login(props: {
     email: '',
     senha: ''
   });
-  
+
   const webSocketService: any = useContext(WebSocketContext)
   localStorage.setItem("PAGINATUAL", "login")
 
@@ -71,7 +71,6 @@ export default function Login(props: {
       return dadosUserJPA
     }).then((res) => {
       webSocketService.conectar()
-
       location.href = "/home"
     }).catch((err: any) => {
       console.log(err);
