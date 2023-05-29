@@ -12,7 +12,7 @@ export const ContainerGeralLogin = stylesBox({
     display: "flex",
     justifyContent: "space-between",
     height: "100%",
-    width: "100%",
+    width: "100%"
 })
 
 export const BoxLogoWEG = stylesBox({
@@ -28,6 +28,7 @@ export const ContainerLogin = stylesBox({
     display: "flex",
     justifyContent: "center",
     width: "50%",
+    // backgroundColor: "white"
 })
 
 export const ContainerBackgroundLogin = stylesBox({

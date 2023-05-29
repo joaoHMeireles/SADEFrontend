@@ -295,7 +295,7 @@ export default function App() {
 
   return (
     <>
-      <VLibras forceOnload={true} />
+      <VLibras forceOnload={true}/>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <BrowserRouter>
           <WebSocketService>

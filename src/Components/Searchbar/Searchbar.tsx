@@ -1,9 +1,12 @@
+import 'regenerator-runtime/runtime'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { Grid, IconButton, InputAdornment } from '@mui/material';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import KeyboardRoundedIcon from '@mui/icons-material/KeyboardRounded';
+import MicRoundedIcon from '@mui/icons-material/MicRounded';
 import { BoxContainerInput, ContainerGrid, SearchTextField, GridIconButton } from './Search.styles';
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import TecladoVirtual from '../TecladoVirtual/TecladoVirtual';
@@ -21,7 +24,7 @@ export default function Searchbar(props: {
 }) {
     const [valorInput, setValorInput] = useState("")
     const [usandoTecladoVirtual, setUsandoTecladoVirtural] = useState(false)
-
+    const { transcript, listening, resetTranscript } = useSpeechRecognition();
     const startAdornment = (
         <InputAdornment position='start'>
             <SearchRoundedIcon />
@@ -30,8 +33,11 @@ export default function Searchbar(props: {
 
     const endAdornment = (
         <InputAdornment position='end'>
+            <IconButton onClick={toggleReconhecimentoVoz}>
+                <MicRoundedIcon sx={{ color: (listening ? "#00579d" : "") }} />
+            </IconButton>
             <IconButton onClick={toggleTecladoVirtual}>
-                <KeyboardRoundedIcon sx={{ color: (usandoTecladoVirtual ? "#00579d" : "") }}/>
+                <KeyboardRoundedIcon sx={{ color: (usandoTecladoVirtual ? "#00579d" : "") }} />
             </IconButton>
             <IconButton aria-label="filter" onClick={filtrar}>
                 <TuneRoundedIcon sx={{ color: (props.filtrar ? "#00579d" : "") }} />
@@ -44,6 +50,15 @@ export default function Searchbar(props: {
         props.filtrarResultados(inputPesquisa)
     }, [valorInput])
 
+    useEffect(() => {
+        if(listening){
+            setValorInput(transcript)
+        } else {
+            setValorInput("")
+            resetTranscript()
+        }
+    }, [transcript, listening])
+
     function filtrar() {
         props.setFiltrar(!props.filtrar)
     }
@@ -54,6 +69,15 @@ export default function Searchbar(props: {
 
     function toggleTecladoVirtual() {
         setUsandoTecladoVirtural(!usandoTecladoVirtual)
+    }
+
+    function toggleReconhecimentoVoz() {
+        if(listening){
+            SpeechRecognition.stopListening()
+            resetTranscript()
+        } else {
+            SpeechRecognition.startListening({ continuous: true, language: 'pt-br' })
+        }
     }
 
     function atualizarInput(element: any) {
@@ -80,7 +104,7 @@ export default function Searchbar(props: {
                     </GridIconButton>
                 </Grid>
                 {usandoTecladoVirtual &&
-                    <TecladoVirtual setValorInput={setValorInput} valorInput={valorInput}/>
+                    <TecladoVirtual setValorInput={setValorInput} valorInput={valorInput} />
                 }
             </ContainerGrid>
         </BoxContainerInput>
