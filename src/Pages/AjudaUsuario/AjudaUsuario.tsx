@@ -24,8 +24,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
   };
 
   useEffect(() => {
-    console.log(cor)
-  }, [cor])
+  }, [cor]);
 
   return (
     <Box>
@@ -178,4 +177,3 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
     </Box>
   );
 }
-
