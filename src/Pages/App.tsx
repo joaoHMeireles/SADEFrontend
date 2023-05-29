@@ -53,7 +53,7 @@ export default function App() {
   //carregou
 
   useEffect(() => {
-    api.get("/sod/demanda/rascunho/" + false).then((response) => {
+    api.get("/sade/demanda/rascunho/" + false).then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
         demanda.id = demanda.idDemanda
@@ -69,7 +69,7 @@ export default function App() {
     })
 
 
-    api.get("/sod/proposta").then((response: any) => {
+    api.get("/sade/proposta").then((response: any) => {
       let listaPropostas: any[] = []
       for (let proposta of response.data) {
 
@@ -88,7 +88,7 @@ export default function App() {
     })
 
 
-    api.get("/sod/pauta").then((response) => {
+    api.get("/sade/pauta").then((response) => {
       let listaPautas: any[] = []
       for (let pauta of response.data) {
         pauta.propostas = pauta.propostasPauta
@@ -104,7 +104,7 @@ export default function App() {
       console.log(err);
     })
 
-    api.get("/sod/ata").then((response) => {
+    api.get("/sade/ata").then((response) => {
       let listaATAs: any[] = []
       for (let ata of response.data) {
         ata.propostas = ata.propostasAta

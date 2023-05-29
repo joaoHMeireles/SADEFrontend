@@ -41,7 +41,7 @@ export default function Chats(props: { aberto: boolean }) {
   useEffect(() => {
     const idUsuario = localStorage.getItem("IDUSUARIO")
 
-    api.get("/sod/usuario/" + idUsuario + "/chat").then((response) => {
+    api.get("/sade/usuario/" + idUsuario + "/chat").then((response) => {
       setListaChats(response.data)
     }).catch((err) => {
       console.log(err);
@@ -198,7 +198,7 @@ function ConversaChat(props: { listaMensagens: any[], chatEscolhido: any, enviar
   function enviarMensagem(e: any) {
     e.preventDefault()
 
-    props.enviar("/sod/demanda/" + props.chatEscolhido.idChat, mensagem)
+    props.enviar("/sade/demanda/" + props.chatEscolhido.idChat, mensagem)
 
     setDefaultMensagem()
   }

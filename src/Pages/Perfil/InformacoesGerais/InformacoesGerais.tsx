@@ -10,7 +10,7 @@ export default function InformacoesGerais() {
   const [fotoUsuario, setFotoUsuario] = useState<any>({size: 0});
 
   useEffect(() => {
-    api.get("/sod/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
+    api.get("/sade/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
       .then((response) => {
         console.log(response.data);
         setFotoUsuario(response.data);

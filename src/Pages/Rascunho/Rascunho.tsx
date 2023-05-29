@@ -21,7 +21,7 @@ export default function Rascunho(props: {
   const idUsuario = localStorage.getItem("IDUSUARIO")
 
   useEffect(() => {
-    api.get("/sod/demanda/usuario/" + idUsuario +"/rascunho/").then((response) => {
+    api.get("/sade/demanda/usuario/" + idUsuario +"/rascunho/").then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
         demanda.tipo = TipoComponenteProcesso.Demanda

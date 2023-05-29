@@ -58,7 +58,7 @@ export default function CriacaoPauta(props: {
   useEffect(() => {
     const idPropostaEscolhida = localStorage.getItem("PROPOSTACRIARPAUTA")
 
-    api.get(`/sod/proposta/pauta/${false}`).then((response) => {
+    api.get(`/sade/proposta/pauta/${false}`).then((response) => {
       let listaPropostas: any[] = []
       for (let proposta of response.data) {
         for (let atributo in proposta.demanda) {
@@ -80,7 +80,7 @@ export default function CriacaoPauta(props: {
       console.log(err);
     })
 
-    api.get('/sod/forum').then((response) => {
+    api.get('/sade/forum').then((response) => {
       setComissoes(response.data)
     }).catch((err) => {
       console.log(err);
@@ -131,7 +131,7 @@ export default function CriacaoPauta(props: {
 
     console.log(pauta);
 
-    api.post("/sod/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then((response) => {
+    api.post("/sade/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then((response) => {
       console.log(response.data);
 
       location.href = "/home"

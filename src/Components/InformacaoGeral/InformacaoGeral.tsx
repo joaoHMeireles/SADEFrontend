@@ -38,7 +38,7 @@ export default function InformacaoGeral(props: {
   const demandaSelecionada = JSON.parse(info as string);
 
   useEffect(() => {
-    api.get("/sod/centroCusto").then((res: any) => {
+    api.get("/sade/centroCusto").then((res: any) => {
       const listaCentroCusto = res.data.map((centroCusto: any) => centroCusto.nomeCentroCusto)
       setIdCentroCusto(res.data)
       setCentroCusto(listaCentroCusto)

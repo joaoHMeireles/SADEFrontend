@@ -291,7 +291,7 @@ export default function CriacaoDemanda(props: {
         localStorage.getItem("RASCUNHOESCOLHIDO") as string
       ).idDemanda;
 
-      api.put("/sod/demanda/" + idDemanda + "/" + idUsuario, formData, {
+      api.put("/sade/demanda/" + idDemanda + "/" + idUsuario, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }
@@ -301,7 +301,7 @@ export default function CriacaoDemanda(props: {
 
     } else if (props.editarDemanda){
 
-      api.put("/sod/demanda/" + idDemandaEditar + "/" + idUsuario, formData, {
+      api.put("/sade/demanda/" + idDemandaEditar + "/" + idUsuario, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }
@@ -314,7 +314,7 @@ export default function CriacaoDemanda(props: {
 
     } else {
 
-      api.post("/sod/demanda", formData, {
+      api.post("/sade/demanda", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }

@@ -62,7 +62,7 @@ export default function Login(props: {
       withCredentials: true,
     };
 
-    api.post(`/sod/login/auth`, user, config).then((response: any) => {
+    api.post(`/sade/login/auth`, user, config).then((response: any) => {
       const dadosUserJPA = response.data
       localStorage.setItem("TIPOUSUARIO", dadosUserJPA.authorities[0].authority);
       localStorage.setItem("USUARIO", JSON.stringify(dadosUserJPA.usuario))
@@ -110,10 +110,10 @@ export default function Login(props: {
             <ContainerBackgroundLogin>
               <ContainerTituloTexto >
                 <TypographyTitulo variant="h5">
-                  Bem vindo ao SOD
+                  Bem vindo ao SADE
                 </TypographyTitulo>
                 <TypographyTexto variant="body2">
-                  Sistema Sustentável de Organização de Demandas de TI
+                  Sistema Acessível de Administração de Demandas de TI
                 </TypographyTexto>
               </ContainerTituloTexto>
               <ContainerInputsLogin>

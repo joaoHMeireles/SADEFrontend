@@ -83,7 +83,7 @@ export default function CriacaoProposta(props: {
   useEffect(() => {
     const idDemandaCriacao = localStorage.getItem("DEMANDACRIARPROPOSTA")
 
-    api.get(`/sod/demanda/proposta/${false}`).then((response) => {
+    api.get(`/sade/demanda/proposta/${false}`).then((response) => {
       let listaDemandas: any[] = []
 
       for (let demanda of response.data) {
@@ -114,7 +114,7 @@ export default function CriacaoProposta(props: {
   })
 
   useEffect(() => {
-    api.get("/sod/centroCusto").then((res) => setCentroCusto(res.data))
+    api.get("/sade/centroCusto").then((res) => setCentroCusto(res.data))
   }, [])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
@@ -230,7 +230,7 @@ export default function CriacaoProposta(props: {
       }
     }
 
-    api.post(`/sod/proposta/${idUsuario}`, formData, {
+    api.post(`/sade/proposta/${idUsuario}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       }

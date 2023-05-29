@@ -36,7 +36,7 @@ export default function Notificacoes() {
   };
 
   useEffect(() => {
-    api.get(`/sod/usuario/${idUsuario}`)
+    api.get(`/sade/usuario/${idUsuario}`)
       .then((notificacao) => {
         setNotificacoes(notificacao.data.notificacoesUsuario)
         atualizarNotificacoes(setNotificacoes)
