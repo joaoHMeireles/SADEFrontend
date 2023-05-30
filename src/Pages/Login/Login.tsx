@@ -45,8 +45,6 @@ export default function Login(props: {
   localStorage.setItem("PAGINATUAL", "login");
 
   function atualizarUsuario(event: any) {
-    console.log(event);
-    
     setUser({
       ...user, [event.target.name]: event.target.value
     });
@@ -56,6 +54,8 @@ export default function Login(props: {
     console.log("Entrou no handleLogin");
 
     e.preventDefault();
+    console.log(user);
+    
 
     if ((user.email == '' || user.email == null) || (user.senha == '' || user.senha == null)) {
       setInvalido(true);
@@ -134,7 +134,7 @@ export default function Login(props: {
 
             <BoxInputs>
               <FormControl>
-                <TextField sx={{ marginBottom: "2rem", width: "20vw" }} onChange={atualizarUsuario}
+                <TextField sx={{ marginBottom: "2rem", width: "20vw" }} name="email" onChange={atualizarUsuario}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -142,7 +142,7 @@ export default function Login(props: {
                       </InputAdornment>)
                   }} variant="outlined" placeholder="Email" />
 
-                <TextField sx={{ marginBottom: "0.5rem", width: "20vw" }} type={tipo} onChange={atualizarUsuario}
+                <TextField sx={{ marginBottom: "0.5rem", width: "20vw" }} name="senha" type={tipo} onChange={atualizarUsuario}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
