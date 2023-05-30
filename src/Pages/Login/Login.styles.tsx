@@ -1,145 +1,70 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 
-const stylesBox = styled(Box);
-const stylesTypography = styled(Typography);
-const stylesTextField = styled(TextField);
+const styledBox = styled(Box);
 
-export const ContainerGeralLogin = stylesBox({
-    display: "flex",
-    justifyContent: "space-between",
-    height: "100%",
-    width: "100%"
-})
-
-export const BoxLogoWEG = stylesBox({
-    alignItems: "flex-start",
-    display: "flex",
-    justifyContent: "start",
-    padding: 48,
-    width: "50%",
-})
-
-export const ContainerLogin = stylesBox({
+export const BoxLogin = styledBox({
     alignItems: "center",
     display: "flex",
+    height: "100vh",
     justifyContent: "center",
-    width: "50%",
-    // backgroundColor: "white"
-})
+    width: "100vw"
+});
 
-export const ContainerBackgroundLogin = stylesBox({
+export const BoxImage = styledBox({
+    height: "100vh",
+    width: "65vw"
+});
+
+export const Column = styledBox({
     alignItems: "center",
-    background: "rgba(255, 255, 255, 0.25)",
-    borderRadius: "5px",
+    display: "flex",
+    height: "100vh",
+    justifyContent: "center",
+    padding: "1rem",
+    width: "35vw"
+});
+
+export const Container = styledBox({
+    alignItems: "center",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-around",
+    justifyContent: "center",
     height: "auto",
-    maxHeight: "75%",
-    minHeight: "50%",
-    maxWidth: "70%",
-    minWidth: "60%",
-    width: "60%",
-})
+    width: "100%"
+});
 
-export const ContainerTituloTexto = stylesBox({
+export const BoxLogos = styledBox({
     alignItems: "center",
-    color: "#FFF",
     display: "flex",
-    flexDirection: "column",
+    height: "auto",
     justifyContent: "center",
-    height: "20%",
-    maxHeight: "20%",
-    maxWidth: "100%",
-    minHeight: "15%",
-    minWidth: "80%",
-    width: "100%",
-    // background: "#000"
-})
+    marginBottom: "2rem",
+    width: "auto"
+});
 
-export const TypographyTitulo = stylesTypography({
-    color: "#FFF",
-    fontSize: "40px",
-    marginBottom: 20,
-    marginTop: 80,
-})
-
-export const TypographyTexto = stylesTypography({
-    color: "#FFF",
-})
-
-export const ContainerInputsLogin = stylesBox({
+export const BoxTexts = styledBox({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
+    height: "auto",
     justifyContent: "center",
-    height: "60%",
-    margin: "80px 0",
-    maxHeight: "60%",
-    maxWidth: "100%",
-    minHeight: "50%",
-    minWidth: "80%",
-    width: "100%",
-})
+    width: "auto"
+});
 
-export const InputEmail = stylesTextField({
-    background: "#FFF",
-    borderRadius: "5px",
-    marginBottom: 40,
-    maxWidth: "100%",
-    minWidth: "80%",
-    width: "auto",
-})
-
-export const InputSenha = stylesTextField({
-    color: "#FFF",
-    background: "#FFF",
-    borderRadius: "5px",
-    maxWidth: "100%",
-    minWidth: "80%",
-    width: "auto",
-})
-
-export const BoxEsqueceuSenha = stylesBox({
-    alignContent: "center",
-    color: "#FFF",
+export const BoxInputs = styledBox({
     display: "flex",
-    justifyContent: "start",
-    marginTop: 20,
-    maxWidth: "100%",
-    minWidth: "80%",
-    width: "auto",
-})
+    flexDirection: "column",
+    height: "auto",
+    marginBottom: "4rem",
+    marginTop: "4rem",
+    width: "auto"
+});
 
-export const TextoEsqueceuSenha = stylesTypography({
-    cursor: "pointer",
-    textDecoration: "underline"
-})
-
-export const ContainerBotaoLogin = stylesBox({
+export const BoxRememberMe = styledBox({
     alignItems: "center",
     display: "flex",
-    justifyContent: "center",
-    height: "20%",
-    maxHeight: "20%",
-    maxWidth: "100%",
-    minHeight: "10%",
-    minWidth: "80%",
-    width: "100%",
-})
-
-export const EstilosBotao = styled(Button)({
-    backgroundColor: "#00579D",
-    color: "#fffffff",
-    height: "30%",
-    marginBottom: 80,
-    maxWidth: "100%",
-    minWidth: "40%",
-    padding: 12,
-    textDecoration: "none",
-    width: "auto",
-})
+    height: "auto",
+    justifyContent: "flex-start",
+    width: "100%"
+});

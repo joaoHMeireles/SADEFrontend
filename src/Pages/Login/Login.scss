@@ -1,16 +1,33 @@
-#login {
-  background-image: url("../../Assets/telaLoginWEG.png");
+@import "../../variables.scss";
+
+#backgroundLogin {
+  background-color: $azul-weg;
+  background-image: url("../../Assets/backgroundLogin.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100vh;
-  width: 100vw;
+  height: "100vh";
+  width: "65vw";
 }
 
-.imagemLogo {
-  height: 80px;
-  width: 100px;
+#wegLogo {
+  height: auto;
+  margin-right: 1rem;
+  width: 6vh;
 }
 
-.textoBotao {
-  color: #ffffff;
+#sadeLogo {
+  height: 6vh;
+  margin-left: 1rem;
+  width: auto;
+}
+
+#title {
+  color: $azul-weg;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+#text {
+  color: $cinza-escuro;
 }

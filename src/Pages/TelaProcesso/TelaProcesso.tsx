@@ -33,7 +33,7 @@ import {
 import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
 import api, { pegarAnalistaTIResponsavel, pegarGerenteSolicitante, pegarGerenteTISolicitante, pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
 import { TypographyTituloDecisao } from '../TelaColecaoProcesso/TelaColecaoProcesso.styles';
-import imagemSemNada from "../../Assets/empty-folder.png"
+import imagemSemNada from "../../Assets/emptyFolder.png"
 import ResultadoVazio from '../../Components/ResultadoVazio/ResultadoVazio';
 
 const valoresInputBU: any[] = [

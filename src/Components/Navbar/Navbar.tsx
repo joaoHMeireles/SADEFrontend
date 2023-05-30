@@ -8,7 +8,7 @@ import { NavBar, /*BoxTextField,*/ TextFieldLinguas } from "./Navbar.styles";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
 import api from '../../api/api';
-import SADE from "../../Assets/SADE.png";
+import SADE from "../../Assets/sade.png";
 
 const listaLinguas = [
     "Português",
