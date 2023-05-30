@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, useContext, useEffect, useState } from "react";
 
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
@@ -42,6 +42,7 @@ import { Dayjs } from "dayjs";
 import dayjs from 'dayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
+import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 
 export default function CriacaoAta(props: {
   filtrar: boolean;
@@ -49,6 +50,7 @@ export default function CriacaoAta(props: {
   listaComponents: any[];
   filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [valor, setValor] = useState(0);
   const [grid, setGrid] = useState(true);
   const [pautaEscolhida, setPautaEscolhida] = useState<any>();
@@ -63,7 +65,6 @@ export default function CriacaoAta(props: {
   useEffect(() => {
     const pautaEscolhida = JSON.parse(localStorage.getItem("PAUTACRIARATA") as string)
 
-    ///criarATA
     api.get(`/sod/pauta`).then((response) => {
       let listaPautas: any[] = []
       for (let pauta of response.data) {
@@ -184,7 +185,8 @@ export default function CriacaoAta(props: {
             }}
             variant="contained"
             endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
-            onClick={() => {
+            onClick={(e: any) => {
+              lerTexto(e)
               setValor(1);
             }}
           >

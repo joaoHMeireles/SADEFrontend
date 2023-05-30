@@ -77,6 +77,7 @@ export default function ComponenteProcesso(props: {
       setIsChecked={setIsChecked}
       mudarIsChecked={mudarIsChecked}
       deletarRascunho={deletarRascunho}
+      lerTexto={lerTexto}
     />
   ) : (
     <ListComponent
@@ -100,6 +101,7 @@ export default function ComponenteProcesso(props: {
       setIsChecked={setIsChecked}
       mudarIsChecked={mudarIsChecked}
       deletarRascunho={deletarRascunho}
+      lerTexto={lerTexto}
     />
   );
 
@@ -193,7 +195,9 @@ export default function ComponenteProcesso(props: {
     }
   }
 
-  function mudarIsChecked() {
+  function mudarIsChecked(event: any) {
+    lerTexto(event)
+
     if (setIsChecked != null && isChecked != null) {
       setIsChecked(!isChecked)
     }
@@ -227,7 +231,6 @@ export default function ComponenteProcesso(props: {
 }
 
 function GridComponent(props: ComponentProps) {
-  const { lerTexto } = useContext(TextReaderContext) as any
 
   return (
     <>
@@ -315,7 +318,7 @@ function GridComponent(props: ComponentProps) {
           </Tooltip>
           <GridComponenteProcesso item xs={11}
             onClick={(event: any) => {
-              lerTexto(event)
+              props.lerTexto(event)
               if (props.setDemandaSelecionada && props.setPropostaSelecionado) {
                 props.setDemandaSelecionada(props.componente.idDemanda)
                 props.setPropostaSelecionado(props.componente.idDemanda);
@@ -469,7 +472,9 @@ function ListComponent(props: ComponentProps) {
             </Grid>
           </Tooltip>
           <ListaComponenteProcesso item xs={11.7}
-            onClick={() => {
+            onClick={(event: any) => {
+              props.lerTexto(event)
+
               if (props.setDemandaSelecionada && props.setPropostaSelecionado) {
                 props.setDemandaSelecionada(props.componente.idDemanda)
                 props.setPropostaSelecionado(props.componente.idDemanda);
@@ -585,4 +590,5 @@ interface ComponentProps {
   setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
   mudarIsChecked: MouseEventHandler<HTMLDivElement>;
   deletarRascunho: any;
+  lerTexto: MouseEventHandler<HTMLElement>;
 }
