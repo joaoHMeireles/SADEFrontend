@@ -33,14 +33,14 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
         }
     }, []);
 
-    useEffect(() => {
-        if (usuario != null) {
-            api.get("/sod/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
-                .then((response) => {
-                    setFotoUsuario(response.data);
-                });
-        }
-    }, [usuario]);
+    // useEffect(() => {
+    //     if (usuario != null) {
+    //         api.get("/sod/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
+    //             .then((response) => {
+    //                 setFotoUsuario(response.data);
+    //             });
+    //     }
+    // }, [usuario]);
 
     function mudarSidebar() {
         props.setAberto(!props.aberto)

@@ -139,7 +139,7 @@ export default function Filtro(props: {
 
       setForuns(forunsNovos)
     })
-  })
+  }, [])
 
   useEffect(() => {
     if (props.aberto) {

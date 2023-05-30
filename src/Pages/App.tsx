@@ -66,14 +66,16 @@ export default function App() {
       setListaDemandas(listaDemandas);
     }).catch((err) => {
       console.log(err);
-    }).finally(() => {
-      //setCarregou(true)
     })
+    //     .finally(() => {
+    //   //setCarregou(true)
+    // })
 
 
     console.log("passou get 1")
 
     api.get("/sod/proposta").then((response: any) => {
+      console.log("Entrou")
       let listaPropostas: any[] = []
       for (let proposta of response.data) {
 
