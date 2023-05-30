@@ -1,4 +1,5 @@
-import { MouseEventHandler, useEffect, useState } from "react";
+import { MouseEventHandler, useContext, useEffect, useState } from "react";
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 import { Link } from "react-router-dom";
 import { TipoComponenteProcesso } from "../../constants/enuns";
 import { InterfaceComponenteProcesso } from "../../constants/interfaces";
@@ -38,14 +39,11 @@ export default function ComponenteProcesso(props: {
   propostaSelecionada?: number;
   setPropostaSelecionada?: React.Dispatch<React.SetStateAction<number>>;
 }) {
+  const [isChecked, setIsChecked] = useState(props.atributosProcesso.escolhidaCriacao ? true : false);
+  const { lerTexto, leituraDeSiteAtiva } = useContext(TextReaderContext) as any
   const componente = props.atributosProcesso;
-
   const paginaAtual = localStorage.getItem("PAGINATUAL");
-  let corComponente,
-    tituloToolTip,
-    nomeTipoLink = "";
-
-  const [isChecked, setIsChecked] = useState(componente.escolhidaCriacao ? true : false);
+  let corComponente, tituloToolTip, nomeTipoLink = "";
 
   if (componente.tipo == TipoComponenteProcesso.Demanda) {
     corComponente = "#00579d";
@@ -158,15 +156,22 @@ export default function ComponenteProcesso(props: {
     }
   }, [isChecked])
 
-  function verProcesso() {
-    if (props.rascunho || (componente.devolvida && props.temDemandaDevolvida)) {
+  function verProcesso(event: any) {
+    if(leituraDeSiteAtiva){
+      lerTexto(event)
+    }
+
+     if (props.rascunho || (componente.devolvida && props.temDemandaDevolvida)) {
       return
     }
-    setProcesso()
-    location.href = nomeTipoLink;
+
+     if(!leituraDeSiteAtiva) {
+      setProcesso(event)
+      location.href = nomeTipoLink;
+    }
   }
 
-  function setProcesso() {
+  function setProcesso(event: any) {
     if (props.rascunho) {
       localStorage.setItem("RASCUNHOESCOLHIDO", JSON.stringify(componente));
       return;
@@ -182,6 +187,10 @@ export default function ComponenteProcesso(props: {
       `${tipoComponente}ESCOLHIDA`,
       JSON.stringify(componente)
     );
+
+    if(leituraDeSiteAtiva){
+      lerTexto(event)
+    }
   }
 
   function mudarIsChecked() {
@@ -259,17 +268,17 @@ function GridComponent(props: ComponentProps) {
               </>
             }
             <GridTypography variant="subtitle1">
-              <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
+              Solicitante: {props.componente.usuario.nomeUsuario}
             </GridTypography>
             <GridTypography variant="subtitle1">
-              <span>Score:</span> {props.componente.score}
+              Score: {props.componente.score}
             </GridTypography>
             <GridTypography variant="subtitle1">
-              <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
+              Status: {getNomeStatus(props.componente.statusDemanda)}
             </GridTypography>
             <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
               <BoxColecaoComponente>
-                <span>Frequencia de uso:</span> {props.componente.frequenciaUso}
+                Frequencia de uso: {props.componente.frequenciaUso}
               </BoxColecaoComponente>
               <GridLinkTypograpfy variant="body2">
                 {props.temDemandaDevolvida && props.componente.devolvida ?
@@ -573,5 +582,5 @@ interface ComponentProps {
   isChecked?: boolean;
   setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
   mudarIsChecked: MouseEventHandler<HTMLDivElement>;
-  deletarRascunho: any
+  deletarRascunho: any;
 }

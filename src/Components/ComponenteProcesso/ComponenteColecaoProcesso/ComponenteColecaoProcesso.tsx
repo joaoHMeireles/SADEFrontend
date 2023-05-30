@@ -18,7 +18,8 @@ import {
   MainPaper,
   UltimaListaTypography,
 } from "../ComponenteProcesso.styles";
-import { MouseEventHandler, useEffect, useState } from "react";
+import { MouseEventHandler, useContext, useEffect, useState } from "react";
+import { TextReaderContext } from "../../TextReaderContext/TextReaderContext";
 
 export default function ComponenteColecaoProcesso(props: {
   atributosColecaoProcesso: any;
@@ -27,6 +28,7 @@ export default function ComponenteColecaoProcesso(props: {
   pautaEscolhida?: any;
   setPautaEscolhida?: React.Dispatch<React.SetStateAction<any>>;
 }) {
+  const { lerTexto, leituraDeSiteAtiva } = useContext(TextReaderContext) as any
   const [checado, setChecado] = useState(false)
   const componente = props.atributosColecaoProcesso;
   const paginaAtual = localStorage.getItem("PAGINATUAL");
@@ -55,9 +57,13 @@ export default function ComponenteColecaoProcesso(props: {
     }
   }, [props.pautaEscolhida])
 
-  function verProcesso() {
-    setProcesso()
-    location.href = nomeTipoLink;
+  function verProcesso(event: any) {
+    if(leituraDeSiteAtiva){
+      lerTexto(event)
+    } else {
+      setProcesso()
+      location.href = nomeTipoLink;
+    }
   }
 
   function setProcesso() {

@@ -51,7 +51,7 @@ export default function Searchbar(props: {
     }, [valorInput])
 
     useEffect(() => {
-        if(listening){
+        if (listening) {
             setValorInput(transcript)
         } else {
             setValorInput("")
@@ -72,7 +72,7 @@ export default function Searchbar(props: {
     }
 
     function toggleReconhecimentoVoz() {
-        if(listening){
+        if (listening) {
             SpeechRecognition.stopListening()
             resetTranscript()
         } else {

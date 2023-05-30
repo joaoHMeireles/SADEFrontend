@@ -27,7 +27,6 @@ export default function Inicio(props: {
   const [temComponente, setTemComponente] = useState(false)
   const [imagemSemNada, setImagemSemNada] = useState("")
   const [textoSemNada, setTextoSemNada] = useState("")
-  //carregou
 
   useEffect(() => {
     if (props.listaComponents.length != 0) {

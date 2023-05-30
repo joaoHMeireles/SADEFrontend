@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import TextField from "@mui/material/TextField";
 import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
@@ -18,6 +18,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { Box, Button, ClickAwayListener } from "@mui/material";
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 
 export default function InformacaoGeral(props: {
   proposta: boolean,
@@ -30,11 +31,12 @@ export default function InformacaoGeral(props: {
   editarDemanda?: boolean;
 }) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [paginaTooltip, setPaginaTooltip] = useState(0);
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
   const [idCentroCusto, setIdCentroCusto] = useState<any[]>([]);
 
-  const info =  localStorage.getItem("DEMANDASELECIONADA")? localStorage.getItem("DEMANDASELECIONADA") : localStorage.getItem("RASCUNHOESCOLHIDO")
+  const info = localStorage.getItem("DEMANDASELECIONADA") ? localStorage.getItem("DEMANDASELECIONADA") : localStorage.getItem("RASCUNHOESCOLHIDO")
   const demandaSelecionada = JSON.parse(info as string);
 
   useEffect(() => {
@@ -79,12 +81,12 @@ export default function InformacaoGeral(props: {
     };
     return (idsInputsAtributo as any)[atributo];
   }
-  
+
   return (
     <>
       <BoxContainerGeralInformacaoGeral>
         <BoxContainerLabels>
-          <TypographyLabels>
+          <TypographyLabels onClick={lerTexto}>
             Título:
           </TypographyLabels>
           <TextField
@@ -100,14 +102,14 @@ export default function InformacaoGeral(props: {
                 props.setInformacaoProcesso(novaInfoDemanda);
               }
 
-              if(props.partUmDemanda){
+              if (props.partUmDemanda) {
                 props.partUmDemanda()
               }
             }}
           />
         </BoxContainerLabels>
         <BoxContainerLabels>
-          <TypographyLabels>
+          <TypographyLabels onClick={lerTexto}>
             Problema a ser resolvido (situação atual):
           </TypographyLabels>
           <TextField
@@ -125,14 +127,14 @@ export default function InformacaoGeral(props: {
                 props.setInformacaoProcesso(novaInfoDemanda);
               }
 
-              if(props.partUmDemanda){
+              if (props.partUmDemanda) {
                 props.partUmDemanda()
               }
             }}
           />
         </BoxContainerLabels>
         <BoxContainerLabels>
-          <TypographyLabels>
+          <TypographyLabels onClick={lerTexto}>
             Proposta / Solicitação de proposta:
           </TypographyLabels>
           <TextField
@@ -150,7 +152,7 @@ export default function InformacaoGeral(props: {
                 props.setInformacaoProcesso(novaInfoDemanda);
               }
 
-              if(props.partUmDemanda){
+              if (props.partUmDemanda) {
                 props.partUmDemanda()
               }
             }}
@@ -158,7 +160,7 @@ export default function InformacaoGeral(props: {
         </BoxContainerLabels>
         <BoxContainerLabels>
           <BoxContainerCentroCusto>
-            <TypographyLabels>
+            <TypographyLabels onClick={lerTexto}>
               Centros de custo:
             </TypographyLabels>
             {props.proposta || props.rascunho || props.editarDemanda ? (
@@ -196,7 +198,7 @@ export default function InformacaoGeral(props: {
                 }}
                 renderOption={(props, centroCusto, { selected }) => {
                   return (
-                    <li {...props} id="listaCentroCusto">
+                    <li {...props} id="listaCentroCusto" >
                       <Checkbox
                         id="checkbox"
                         icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
@@ -204,12 +206,14 @@ export default function InformacaoGeral(props: {
                         style={{ marginRight: 8 }}
                         checked={selected}
                       />
-                      {centroCusto}
+                      <span onClick={lerTexto}>
+                        {centroCusto}
+                      </span>
                     </li>
                   );
                 }}
                 options={centroCusto}
-                renderInput={(params) => <TextField {...params} />}
+                renderInput={(params) => <TextField {...params} onClick={lerTexto} />}
               />) : (
               <Autocomplete
                 id="centrosDeCusto"
@@ -241,14 +245,15 @@ export default function InformacaoGeral(props: {
                         style={{ marginRight: 8 }}
                         checked={selected}
                       />
-                      {centroCusto}
+                      <span onClick={lerTexto}>
+                        {centroCusto}
+                      </span>
                     </li>
                   );
                 }}
                 options={centroCusto}
-                renderInput={(params) => <TextField {...params} />}
+                renderInput={(params) => <TextField {...params} onClick={lerTexto} />}
               />)}
-
           </BoxContainerCentroCusto>
         </BoxContainerLabels>
       </BoxContainerGeralInformacaoGeral>

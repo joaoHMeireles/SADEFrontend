@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { createContext } from "react";
 import { useState } from "react"
-import sockjs from "sockjs-client/dist/sockjs"
+import sockjs from "sockjs-client/dist/sockjs.js"
 import api from "./api"
 import { novaNotificacao } from "../Pages/Notificacoes/Notificacoes";
 import * as Stomp from "stompjs";
 
-export const WebSocketContext = createContext(null)
+export const WebSocketContext: any = createContext(null)
 
-export const WebSocketService = ({ children }) => {
-    const [stompClient, setStompClient] = useState(null);
+export const WebSocketService = ({ children }: {children: any}) => {
+    const [stompClient, setStompClient] = useState<any>(null);
 
     useEffect(() => {
         if (stompClient == null) {
@@ -49,7 +49,7 @@ export const WebSocketService = ({ children }) => {
         }
     }
 
-    const enviar = (destino, mensagem) => {
+    const enviar = (destino: string, mensagem: any) => {
         if (stompClient) {
             stompClient.send(destino, {}, JSON.stringify(mensagem));
         } else {
@@ -57,7 +57,7 @@ export const WebSocketService = ({ children }) => {
         }
     }
 
-    const inscrever = (caminho, acao) => {
+    const inscrever = (caminho: string, acao: Function) => {
         if (!stompClient.subscriptions[caminho]) {
             console.log("subescreveu: " + caminho);
             return stompClient.subscribe(caminho, acao);
