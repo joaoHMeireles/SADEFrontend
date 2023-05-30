@@ -1,6 +1,6 @@
 import { ChangeEventHandler, useEffect, useState, useContext } from "react";
 import "./Inicio.scss";
-import semDemanda from "../../Assets/empty-folder.png"
+import semDemanda from "../../Assets/emptyFolder.png"
 import semResultado from "../../Assets/empty.png"
 import Searchbar from "../../Components/Searchbar/Searchbar";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";

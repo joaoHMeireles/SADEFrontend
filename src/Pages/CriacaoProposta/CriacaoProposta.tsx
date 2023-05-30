@@ -39,7 +39,7 @@ import api from "../../api/api";
 import { Dayjs } from "dayjs";
 import { useLocationChange } from "../../utils";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
-import semDemanda from "../../Assets/empty-folder.png"
+import semDemanda from "../../Assets/emptyFolder.png"
 import jsPDF from "jspdf";
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 
