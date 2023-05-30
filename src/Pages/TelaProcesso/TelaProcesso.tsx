@@ -72,7 +72,7 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
         if (location.search) {
             let idProposta = location.search.replace("?", "")
 
-            api.get("/sod/proposta/" + idProposta).then((res) => {
+            api.get("/sade/proposta/" + idProposta).then((res) => {
                 const proposta = res.data
 
                 for (let atributo in proposta.demanda) {
@@ -1652,9 +1652,6 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
             listaBotoes.push({ nome: "chat", function: funcoes[11] })
         }
     }
-    const workflow = { nome: "workflow", function: funcoes[10] }
-
-    listaBotoes.push(workflow)
 
 
     /**
