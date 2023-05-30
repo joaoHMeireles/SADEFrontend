@@ -227,6 +227,7 @@ export default function ComponenteProcesso(props: {
 }
 
 function GridComponent(props: ComponentProps) {
+  const { lerTexto } = useContext(TextReaderContext) as any
 
   return (
     <>
@@ -313,7 +314,8 @@ function GridComponent(props: ComponentProps) {
             </Grid>
           </Tooltip>
           <GridComponenteProcesso item xs={11}
-            onClick={() => {
+            onClick={(event: any) => {
+              lerTexto(event)
               if (props.setDemandaSelecionada && props.setPropostaSelecionado) {
                 props.setDemandaSelecionada(props.componente.idDemanda)
                 props.setPropostaSelecionado(props.componente.idDemanda);

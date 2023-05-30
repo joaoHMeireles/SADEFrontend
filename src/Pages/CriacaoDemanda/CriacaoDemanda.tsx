@@ -175,9 +175,6 @@ export default function CriacaoDemanda(props: {
         "valor": valorMensal.value
       }
 
-      console.log(beneficioReal);
-
-
       if (numeroBeneficiosReais > 0 && valorMensal.value && moedaReal && descricao.value) {
         beneficios.push(beneficioReal);
       }
@@ -287,7 +284,6 @@ export default function CriacaoDemanda(props: {
       formData.append("demanda", JSON.stringify(dataCerta));
     }
 
-    console.log(data);
     if (props.rascunho) {
       const idDemanda = JSON.parse(
         localStorage.getItem("RASCUNHOESCOLHIDO") as string
@@ -328,7 +324,7 @@ export default function CriacaoDemanda(props: {
 
     }
 
-    // window.location.href = "/home";
+    window.location.href = "/home";
   }
 
 

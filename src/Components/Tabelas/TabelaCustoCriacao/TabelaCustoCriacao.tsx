@@ -1,4 +1,4 @@
-import { useState, useEffect, SetStateAction } from "react";
+import { useState, useEffect, SetStateAction, useContext } from "react";
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Typography from "@mui/material/Typography";
@@ -31,6 +31,7 @@ import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import { Button, Chip } from "@mui/material";
 import { TypographyStyled } from "../../EscopoProposta/EscopoProposta.styles";
+import { TextReaderContext } from "../../TextReaderContext/TextReaderContext";
 
 export default function TabelaCustoCriacao(props: {
   centroCusto: any
@@ -91,6 +92,7 @@ function Tabela(props: {
   setCentroCustoEscolhidas: React.Dispatch<React.SetStateAction<Object[]>>;
   tituloTabela: string;
 }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [quantidadeLinha, setQuantidadeLinha] = useState(1);
   const [esforcoTotal, setEsforcoTotal] = useState(0)
   const [valorTotal, setValorTotal] = useState(0)
@@ -187,13 +189,13 @@ function Tabela(props: {
           <Table>
             <TableHead>
               <TableRowEstilizada>
-                <TableCellEstilzada align="center" id={`tituloTabela${props.tabela}`}>
+                <TableCellEstilzada align="center" id={`tituloTabela${props.tabela}`} onClick={lerTexto}>
                   {props.tituloTabela}
                 </TableCellEstilzada>
-                <TableCellEstilzada align="center">
+                <TableCellEstilzada align="center" onClick={lerTexto}>
                   Esforço (h)
                 </TableCellEstilzada>
-                <TableCellEstilzada align="center">
+                <TableCellEstilzada align="center" onClick={lerTexto}>
                   Valor Hora
                 </TableCellEstilzada>
               </TableRowEstilizada>
@@ -223,7 +225,7 @@ function Tabela(props: {
         </BoxIconsAddMinus>
       </BoxContainerTabela>
       <Box>
-        <TypographyStyled>Centro de Custo para {props.tituloTabela}:</TypographyStyled>
+        <TypographyStyled onClick={lerTexto}>Centro de Custo para {props.tituloTabela}:</TypographyStyled>
         <Autocomplete
           id={`centroCusto${props.tabela}`}
           sx={{ boxShadow: "5px 5px 10px 0 #00000050", marginBottom: 2 }}
@@ -242,7 +244,7 @@ function Tabela(props: {
                   style={{ marginRight: 8 }}
                   checked={selected}
                 />
-                {cc}
+                <span onClick={lerTexto}> {cc} </span>
               </li>
             );
           }}
@@ -264,15 +266,17 @@ function Tabela(props: {
 }
 
 function ChipAutocompleteCentroCusto(props: { id: any, nome: string, mudarPorcentagem: Function }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [porcentagem, setPorcentagem] = useState(100)
 
-  function atualizarPorcentagem() {
+  function atualizarPorcentagem(e: any) {
+    lerTexto(e)
     props.mudarPorcentagem(porcentagem, setPorcentagem)
   }
 
   return (
     <Box sx={{ marginRight: 2 }}>
-      <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#59595930 solid 1px" }} label={props.nome} />
+      <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#59595930 solid 1px" }} label={props.nome} onClick={lerTexto}/>
       <Button id={props.id} sx={{ backgroundColor: "rgba(0,0,0,0.08)", height: "32px", borderRadius: "0 16px 16px 0" }} onClick={atualizarPorcentagem}>{porcentagem} %</Button>
     </Box>
   )

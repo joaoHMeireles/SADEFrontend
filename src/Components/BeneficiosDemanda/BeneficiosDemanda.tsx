@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField'
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
@@ -20,6 +20,7 @@ import {
   BoxFrequencia,
 } from "./BeneficiosDemanda.styles";
 import { FormControl, InputAdornment, InputLabel, OutlinedInput, Select } from '@mui/material';
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 
 const moedas = [
   "DOLAR",
@@ -53,6 +54,7 @@ export default function BeneficiosDemanda(props: {
   setInformacaoProcesso?: any;
   partDoisDemanda?: Function;
 }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [frequencia, setFrequencia] = useState("DIARIAMENTE");
   const [beneficiosReaisLista, setBeneficiosReaisLista] = useState<any[]>([]);
   const [beneficiosPotenciaisLista, setBeneficiosPotenciaisLista] = useState<any[]>([]);
@@ -171,7 +173,7 @@ export default function BeneficiosDemanda(props: {
     <>
       <BoxContainerGeral>
         <BoxTitulos>
-          <TypographyTitulos>Benefício Real</TypographyTitulos>
+          <TypographyTitulos onClick={lerTexto}>Benefício Real</TypographyTitulos>
         </BoxTitulos>
 
         <BeneficiosReais
@@ -213,7 +215,7 @@ export default function BeneficiosDemanda(props: {
         </BoxIcones>
 
         <BoxTitulos>
-          <TypographyTitulos>Benefício Potencial</TypographyTitulos>
+          <TypographyTitulos onClick={lerTexto}>Benefício Potencial</TypographyTitulos>
         </BoxTitulos>
 
         <BeneficiosPotenciais
@@ -254,7 +256,7 @@ export default function BeneficiosDemanda(props: {
         </BoxIcones>
 
         <BoxTitulos>
-          <TypographyTitulos>Benefício Qualitativo</TypographyTitulos>
+          <TypographyTitulos onClick={lerTexto}>Benefício Qualitativo</TypographyTitulos>
         </BoxTitulos>
 
         <BeneficiosQualitativos
@@ -294,7 +296,7 @@ export default function BeneficiosDemanda(props: {
         </BoxIcones>
 
         <BoxFrequencia>
-          <TypographyLabels>Frequência de uso da solução:</TypographyLabels>
+          <TypographyLabels onClick={lerTexto}>Frequência de uso da solução:</TypographyLabels>
 
           <Select
             id="frequenciaUso"
@@ -302,7 +304,7 @@ export default function BeneficiosDemanda(props: {
             onChange={onFrequenciaChange}>
             {valoresFrequencia.map((valor: any, index: number) => {
               return (
-                <MenuItem key={index} value={valor}>{valor}</MenuItem>
+                <MenuItem key={index} value={valor} onClick={lerTexto}>{valor}</MenuItem>
               );
             })}
           </Select>
@@ -324,8 +326,6 @@ function BeneficiosReais(props: {
 
   if (props.numeroBeneficios) {
     for (let i = 0; i < props.numeroBeneficios; i++) {
-      console.log(props.beneficiosReaisLista[i]);
-
       if (props.beneficiosReaisLista[i]) {
         beneficios.push(<BeneficioReal index={i}
           informacaoProcesso={props.informacaoProcesso}
@@ -411,6 +411,7 @@ function BeneficioReal(props: {
   moedaReal?: any,
   setMoedaReal?: any
 }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioReal);
   const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[2]);
   const [currencyInput, setCurrencyInput] = useState(0);
@@ -450,7 +451,7 @@ function BeneficioReal(props: {
       <BoxContainerDivisorio>
         <BoxInputsAcima>
           <BoxValorMensal>
-            <TypographyLabels>Valor Mensal: </TypographyLabels>
+            <TypographyLabels onClick={lerTexto}>Valor Mensal: </TypographyLabels>
           </BoxValorMensal>
 
           <BoxInputs>
@@ -555,7 +556,7 @@ function BeneficioReal(props: {
                 }
               }}>
               {moedas.map((option: any, index: number) => (
-                <MenuItem id={`moedaRealoptions${props.index}`} key={index} value={option} >
+                <MenuItem id={`moedaRealoptions${props.index}`} key={index} value={option} onClick={lerTexto}>
                   {option}
                 </MenuItem>
               ))}
@@ -564,7 +565,7 @@ function BeneficioReal(props: {
         </BoxInputsAcima>
 
         <BoxInputsAbaixo>
-          <TypographyLabels>Descrição: </TypographyLabels>
+          <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
 
           <TextField
             id={`descricaoReal${props.index}`}
@@ -604,6 +605,7 @@ function BeneficioPotencial(props: {
   moedaPotencial?: any,
   setMoedaPotencial?: any
 }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioPotencial);
   const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[2]);
   const [currencyInput, setCurrencyInput] = useState(0);
@@ -643,7 +645,7 @@ function BeneficioPotencial(props: {
       <BoxContainerDivisorio>
         <BoxInputsAcima>
           <BoxValorMensal>
-            <TypographyLabels>Valor Mensal:</TypographyLabels>
+            <TypographyLabels onClick={lerTexto}>Valor Mensal:</TypographyLabels>
           </BoxValorMensal>
 
           <BoxInputs>
@@ -748,7 +750,7 @@ function BeneficioPotencial(props: {
                 }
               }}>
               {moedas.map((moeda: any, index: number) => (
-                <MenuItem id={`moedaPotencial${props.index}`} key={index} value={moeda}>
+                <MenuItem id={`moedaPotencial${props.index}`} key={index} value={moeda} onClick={lerTexto}>
                   {moeda}
                 </MenuItem>
               ))}
@@ -757,7 +759,7 @@ function BeneficioPotencial(props: {
         </BoxInputsAcima>
 
         <BoxInputsAbaixo>
-          <TypographyLabels>Descrição: </TypographyLabels>
+          <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
 
           <TextField
             id={`descricaoPotencial${props.index}`}
@@ -788,12 +790,13 @@ function BeneficioPotencial(props: {
 }
 
 function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, setInformacaoProcesso: any, idBeneficioQualitativo?: any }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficioQualitativo)
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
       <BoxDescricaoRequeistosControle>
-        <TypographyLabels>Descrição: </TypographyLabels>
+        <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
 
         <TextField
           id={`beneficiosQualitativos${props.index}`}
