@@ -1,7 +1,7 @@
 import { SetStateAction, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import './Sidebar.scss'
-import { Drawer, Toolbar, Box, Icon, List, ListItemText, Collapse, Grid } from "@mui/material";
+import { Drawer, Toolbar, Box, Icon, List, ListItemText, Collapse, Grid, Badge } from "@mui/material";
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
@@ -117,7 +117,7 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
     drawerWidth = props.tamanho
   })
 
-  function deslogar(){
+  function deslogar() {
     api.get("/logout")
     localStorage.clear()
   }
@@ -176,16 +176,37 @@ function MenuItem(props: { index: number, item: { id: number, nome: string, rota
         <Grid container>
           <Grid item xs={0.3} sx={{ backgroundColor: (selecionado ? "#00579d" : "inherit"), borderRadius: "0 5px 5px 0" }} />
           <Grid item xs={11.7}>
-            <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center', "& .MuiSvgIcon-root": { color: (selecionado ? "#00579d" : "inherit") } }} selected={selecionado}>
-              <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
-                {props.item.icone}
-              </SidebarListItemIcon>
-              <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
-            </SidebarListItemButton>
+            {props.item.nome == "Notificações" ?
+              props.aberto ? (
+                <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center', "& .MuiSvgIcon-root": { color: (selecionado ? "#00579d" : "inherit") } }} selected={selecionado}>
+                  <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
+                    <Badge variant="dot" color="primary">
+                      {props.item.icone}
+                    </Badge>
+                  </SidebarListItemIcon>
+                  <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
+                </SidebarListItemButton>
+              ) : (
+                <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center', "& .MuiSvgIcon-root": { color: (selecionado ? "#00579d" : "inherit") } }} selected={selecionado}>
+                  <Badge variant="dot" color="primary">
+                    <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
+                      {props.item.icone}
+                    </SidebarListItemIcon>
+                  </Badge>
+                  <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
+                </SidebarListItemButton>
+              ) : (
+                <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center', "& .MuiSvgIcon-root": { color: (selecionado ? "#00579d" : "inherit") } }} selected={selecionado}>
+                  <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
+                    {props.item.icone}
+                  </SidebarListItemIcon>
+                  <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
+                </SidebarListItemButton>
+              )}
           </Grid>
         </Grid>
       </SidebarListItem>
-    </Link>
+    </Link >
   )
 }
 

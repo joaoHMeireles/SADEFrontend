@@ -27,11 +27,13 @@ import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
 
 import EsqueletoPDFVersaoDemanda from "../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda";
 import React from "react";
-import { useLocationChange } from "../../utils";
+import {getNomeComponente, useLocationChange} from "../../utils";
 import { WebSocketContext } from "../../api/websocketservice";
 import { novaNotificacao } from "../Notificacoes/Notificacoes";
 
 import pdf from "../../Assets/pdf.pdf";
+import {TipoComponenteProcesso} from "../../constants/enuns";
+import {useLocation} from "react-router-dom";
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
@@ -52,16 +54,31 @@ export default function CriacaoDemanda(props: {
   const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
   const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
 
+  const location = useLocation();
+
   const pdfExportComponent = React.useRef<PDFExport>(null);
 
   const webSocketService: any = useContext(WebSocketContext)
 
   useEffect(() => {
-    const info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
-      localStorage.getItem("DEMANDASELECIONADA") as string
-      :
-      localStorage.getItem("RASCUNHOESCOLHIDO") as string
-    );
+    let info: any = null
+
+    console.log("Location:  " + location)
+
+    if(location.search){
+      let idDemanda = location.search.replace("?", "");
+
+      api.get("/sod/demanda/" + idDemanda).then((response) => {
+        info = response.data
+      })
+    } else {
+      info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
+          localStorage.getItem("DEMANDASELECIONADA") as string
+          :
+          localStorage.getItem("RASCUNHOESCOLHIDO") as string
+      );
+    }
+
 
     if (props.rascunho) {
       for (let atributo in info) {
@@ -326,7 +343,7 @@ export default function CriacaoDemanda(props: {
 
     }
 
-    // window.location.href = "/home";
+    window.location.href = "/home";
   }
 
 

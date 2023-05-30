@@ -59,11 +59,45 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
     const [conteudoModal, setConteudoModal] = useState(<div />)
     const [feedbackAberto, setFeedbackAberto] = useState(false)
     const [conteudoFeedback, setConteudoFeedback] = useState(<div />)
-    const location = useLocation().pathname
-    const processoLocalStorage = localStorage.getItem(`${getNomeComponente(location)}ESCOLHIDA`)
-    const informacaoProcesso = JSON.parse(processoLocalStorage != null ? processoLocalStorage : "");
+    const [informacaoProcesso, setInformacaoProcesso] = useState({
+        usuario: {
+            nomeUsuario: "",
+            departamento: ""
+        },
+        beneficiosDemanda: []
+    });
+    const location = useLocation()
 
-    console.log(informacaoProcesso);
+    useEffect(() => {
+        if (location.search) {
+            let idProposta = location.search.replace("?", "")
+
+            api.get("/sod/proposta/" + idProposta).then((res) => {
+                const proposta = res.data
+
+                for (let atributo in proposta.demanda) {
+                    console.log(atributo);
+
+                    proposta[atributo] = proposta.demanda[atributo]
+                }
+
+                proposta.tipo = TipoComponenteProcesso.Proposta
+                proposta.id = proposta.idProposta
+
+                console.log(proposta);
+
+
+                setInformacaoProcesso(proposta)
+
+                localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta))
+            })
+        } else {
+            const processoLocalStorage = localStorage.getItem(`${getNomeComponente(location.pathname)}ESCOLHIDA`)
+            if (processoLocalStorage != null) {
+                setInformacaoProcesso(JSON.parse(processoLocalStorage))
+            }
+        }
+    }, [])
 
 
     return (
@@ -541,7 +575,7 @@ export function Header(props: {
 
         function iniciarWorkflowAprovacao(conteudo: JSX.Element) {
             const formData = new FormData()
-            
+
             formData.append("proposta", JSON.stringify({
                 emWorkflow: true
             }))
