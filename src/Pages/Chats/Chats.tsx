@@ -38,16 +38,11 @@ export default function Chats(props: { aberto: boolean }) {
   useEffect(() => {
     const idUsuario = localStorage.getItem("IDUSUARIO")
     if (listaChats.length == 0 && !requisitouChats) {
-      api.get("/sod/usuario/" + idUsuario + "/chat").then((response) => {
+      api.get("/sade/usuario/" + idUsuario + "/chat").then((response) => {
         setListaChats(response.data)
-        
-        setChatEscolhido(response.data[0])
-
-        atualizarTela()
       }).catch((err) => {
         console.log(err);
       })
-      requisitouChats = true
     }
   }, []);
 
@@ -68,16 +63,16 @@ export default function Chats(props: { aberto: boolean }) {
 
         const indexChat = listaChats.findIndex((chatAcharIndex: any) => chatAcharIndex.idChat == infoMensagem[1])
         const chatNovaMensagem = listaChats[indexChat]
-    
+
         chatNovaMensagem.mensagens.push(mensagemRecebida)
         listaChats[indexChat] = chatNovaMensagem
 
         console.log(infoMensagem[1] == chat.idChat);
-        
+
         // número do chat da mensagem
         if (infoMensagem[1] == chat.idChat) {
           console.log(chatNovaMensagem);
-          
+
           setChatEscolhido(chatNovaMensagem)
           atualizarMensagensNovaMensagem()
         }
@@ -97,15 +92,15 @@ export default function Chats(props: { aberto: boolean }) {
         } else {
           return
         }
-    
+
         const componenteMensagensNovo = chat.mensagens.map((mensagem: any) => {
           const usuario = chat.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
-    
+
           return (
             <Mensagens mensagem={mensagem.mensagem} usuario={usuario} />
           )
         })
-    
+
         setElementoMensagens(componenteMensagensNovo)
       }
 
@@ -254,7 +249,7 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
   function enviarMensagem(e: any) {
     e.preventDefault()
 
-    props.enviar("/sod/demanda/" + props.chatEscolhido.idChat, mensagem)
+    props.enviar("/sade/demanda/" + props.chatEscolhido.idChat, mensagem)
 
     setDefaultMensagem()
   }

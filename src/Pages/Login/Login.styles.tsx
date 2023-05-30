@@ -89,7 +89,6 @@ export const ContainerInputsLogin = stylesBox({
 export const InputEmail = stylesTextField({
     background: "#FFF",
     borderRadius: "5px",
-    boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)",
     marginBottom: 40,
     maxWidth: "100%",
     minWidth: "80%",
@@ -100,7 +99,6 @@ export const InputSenha = stylesTextField({
     color: "#FFF",
     background: "#FFF",
     borderRadius: "5px",
-    boxShadow: "0px 5px 10px 0px rgba(0, 0, 0, 0.5)",
     maxWidth: "100%",
     minWidth: "80%",
     width: "auto",

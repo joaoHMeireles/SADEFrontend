@@ -61,7 +61,7 @@ export default function Login(props: {
       withCredentials: true,
     };
 
-    api.post(`/sod/login/auth`, user, config).then((response: any) => {
+    api.post(`/sade/login/auth`, user, config).then((response: any) => {
       const dadosUserJPA = response.data
       localStorage.setItem("TIPOUSUARIO", dadosUserJPA.authorities[0].authority);
       localStorage.setItem("USUARIO", JSON.stringify(dadosUserJPA.usuario))
@@ -70,7 +70,6 @@ export default function Login(props: {
       return dadosUserJPA
     }).then((res) => {
       webSocketService.conectar()
-
       location.href = "/home"
     }).catch((err: any) => {
       console.log(err);
@@ -108,11 +107,11 @@ export default function Login(props: {
           <ContainerLogin className="text">
             <ContainerBackgroundLogin>
               <ContainerTituloTexto >
-                <TypographyTitulo variant="h5" onClick={lerTexto}>
-                  Bem vindo ao SOD
+                <TypographyTitulo variant="h5">
+                  Bem vindo ao SADE
                 </TypographyTitulo>
-                <TypographyTexto variant="body2" onClick={lerTexto}>
-                  Sistema Sustentável de Organização de Demandas de TI
+                <TypographyTexto variant="body2">
+                  Sistema Acessível de Administração de Demandas de TI
                 </TypographyTexto>
               </ContainerTituloTexto>
               <ContainerInputsLogin>

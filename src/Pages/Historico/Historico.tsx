@@ -176,7 +176,7 @@ export default function TelaHistoricos(props: {}) {
   useEffect(() => {
     mudarTamanhoDatagrid(5);
 
-    api.get("/sod/historicoWorkflow/demanda/" + informacaoProcesso.id).then((response) => {
+    api.get("/sade/historicoWorkflow/demanda/" + informacaoProcesso.id).then((response) => {
       const lista: Historico[] = []
 
       for (let historico of response.data) {

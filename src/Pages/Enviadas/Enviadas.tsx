@@ -21,7 +21,7 @@ export default function Enviadas(props: {
   const idUsuario = localStorage.getItem("IDUSUARIO")
 
   useEffect(() => {
-    api.get("/sod/demanda/devolvidas/usuario/" + idUsuario).then((response: any) => {
+    api.get("/sade/demanda/devolvidas/usuario/" + idUsuario).then((response: any) => {
 
       let listaDemandas: any[] = []
 

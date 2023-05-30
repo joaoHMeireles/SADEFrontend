@@ -63,7 +63,7 @@ export default function EscopoProposta(props: {
   const [usuarios, setUsuarios] = useState<any[]>([])
 
   useEffect(() => {
-    api.get("/sod/usuario").then((res) => {
+    api.get("/sade/usuario").then((res) => {
       setUsuarios(res.data)
     })
   }, [])

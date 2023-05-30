@@ -3,7 +3,7 @@ import { BoxBackground, Title, P, BoxImage, Space } from "./Componentes.style";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded"
 // Introdução
-import SOD from "../../../Assets/AjudaUsuario/Introducao/SOD.jpg";
+import SADE from "../../../Assets/AjudaUsuario/Introducao/SADE.png";
 // Avaliar Demanda - Analista de TI ou Gerente de TI
 import aprovarDemandaA from "../../../Assets/AjudaUsuario/AvaliarDemandaA/aprovarDemanda.png";
 import avaliarDemandaA from "../../../Assets/AjudaUsuario/AvaliarDemandaA/avaliarDemanda.png";
@@ -36,7 +36,10 @@ import informarParecerDiretoriaGeralFinal from "../../../Assets/AjudaUsuario/Inf
 // Iniciar Workflow de Aprovação
 import iniciarWorkflow from "../../../Assets/AjudaUsuario/IniciarWorkflow/iniciarWorkflow.png";
 // Avaliar Workflow de Aprovação
+import avaliarWorkflow from "../../../Assets/AjudaUsuario/AvaliarWorkflow/avaliarWorkflow.png"
+import avaliarWorkflowFinal from "../../../Assets/AjudaUsuario/AvaliarWorkflow/avaliarWorkflowFinal.png"
 
+const usuarioLogado = localStorage.getItem("TIPOUSUARIO");
 
 export const Introducao = (
     <BoxBackground>
@@ -44,10 +47,10 @@ export const Introducao = (
             <p>INTRODUÇÃO</p>
         </Title>
 
-        <P>A Aplicação Web SOD, é uma plataforma que permite aos colaboradores WEG criar, consultar, classificar e avaliar demandas, além de outras atividades. Este manual tem como objetivo ajudar os usuários a navegar e utilizar o site de forma eficiente e eficaz.</P>
+        <P>A Aplicação Web SADE, é uma plataforma que permite aos colaboradores WEG criar, consultar, classificar e avaliar demandas, além de outras atividades. Este manual tem como objetivo ajudar os usuários a navegar e utilizar o site de forma eficiente e eficaz.</P>
 
         <BoxImage>
-            <img id="imgSod" src={SOD} alt="Imagem SOD" />
+            <img id="imgSade" src={SADE} alt="Logo - SADE" />
         </BoxImage>
     </BoxBackground>
 );
@@ -93,234 +96,306 @@ export const CriarDemanda = (
 
 export const AvaliarDemandaA = (
     <BoxBackground>
-        <Title>
-            <p>Avaliar Demanda</p>
-        </Title>
+        {usuarioLogado == "AnalistaTI" || usuarioLogado == "GerenteTI" ?
+            <>
+                <Title>
+                    <p>Avaliar Demanda</p>
+                </Title>
 
-        <P>Avalie a demanda: Você pode reprovar, devolver ou aprovar uma demanda.</P>
+                <P>Avalie a demanda: Você pode reprovar, devolver ou aprovar uma demanda.</P>
 
-        <BoxImage>
-            <img id="imgs" src={avaliarDemandaA} alt="Avaliar Demanda" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={avaliarDemandaA} alt="Avaliar Demanda" />
+                </BoxImage>
 
-        <P>Caso a ela seja devolvida, explique claramente o motivo. Isso permite que o solicitante entenda os pontos que precisam ser melhorados ou esclarecidos, para que possa refazer a demanda e entregá-la novamente. O objetivo é garantir que a demanda possa ser atendida com sucesso e dentro dos parâmetros estabelecidos.</P>
+                <P>Caso a ela seja devolvida, explique claramente o motivo. Isso permite que o solicitante entenda os pontos que precisam ser melhorados ou esclarecidos, para que possa refazer a demanda e entregá-la novamente. O objetivo é garantir que a demanda possa ser atendida com sucesso e dentro dos parâmetros estabelecidos.</P>
 
-        <BoxImage>
-            <img id="imgs" src={devolverDemanda} alt="Devolver Demanda" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={devolverDemanda} alt="Devolver Demanda" />
+                </BoxImage>
 
-        <P>Se a demanda for aprovada, classifique a demanda por tamanho, informe a BU solicitante, a(s) BU(s) beneficiada(s) e a sessão de TI responsável pela demanda.</P>
+                <P>Se a demanda for aprovada, classifique a demanda por tamanho, informe a BU solicitante, a(s) BU(s) beneficiada(s) e a sessão de TI responsável pela demanda.</P>
 
-        <BoxImage>
-            <img id="imgs" src={aprovarDemandaA} alt="Aprovar Demanda" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={aprovarDemandaA} alt="Aprovar Demanda" />
+                </BoxImage>
 
-        <Space>.</Space>
+                <Space>.</Space>
+            </>
+            :
+            <>
+            </>}
     </BoxBackground>
 );
 
 export const AvaliarDemandaGN = (
     <BoxBackground>
-        <Title>
-            <p>Avaliar Demanda</p>
-        </Title>
+        {usuarioLogado == "GerenteNegocio" || usuarioLogado == "GerenteTI" ?
+            <>
+                <Title>
+                    <p>Avaliar Demanda</p>
+                </Title>
 
-        <P>Avalie a demanda: Você pode reprovar ou aprovar uma demanda.</P>
+                <P>Avalie a demanda: Você pode reprovar ou aprovar uma demanda.</P>
 
-        <BoxImage>
-            <img id="imgs" src={avaliarDemandaGN} alt="Avaliar Demanda" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={avaliarDemandaGN} alt="Avaliar Demanda" />
+                </BoxImage>
 
-        <P>Se a demanda for reprovada, explique porquê ela não pode ser atendida. Caso a demanda for aprovada, ela será devolvida para o analista.</P>
+                <P>Se a demanda for reprovada, explique porquê ela não pode ser atendida. Caso a demanda for aprovada, ela será devolvida para o analista.</P>
 
-        <BoxImage>
-            <img id="imgs" src={reprovarDemanda} alt="Reprovar Demanda" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={reprovarDemanda} alt="Reprovar Demanda" />
+                </BoxImage>
 
-        <Space>.</Space>
-    </BoxBackground>
+                <Space>.</Space>
+            </>
+            :
+            <>
+            </>}
+    </BoxBackground >
 );
 
 export const AdicionarInfoDemanda = (
     <BoxBackground>
-        <Title>
-            <p>Adicionar informações na Demanda</p>
-        </Title>
+        {usuarioLogado == "AnalistaTI" || usuarioLogado == "GerenteTI" ?
+            <>
+                <Title>
+                    <p>Adicionar informações na Demanda</p>
+                </Title>
 
-        <P>Após a demanda ser aprovada pelo Gerente de Negócio ela será devolvida para o Analista que a aprovou. Abra a demanda e clique no botão "Adicionar informações".</P>
+                <P>Após a demanda ser aprovada pelo Gerente de Negócio ela será devolvida para o Analista que a aprovou. Abra a demanda e clique no botão "Adicionar informações".</P>
 
-        <BoxImage>
-            <img id="imgs" src={adicionarInfoDemanda} alt="Adicionar informações da Demanda" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={adicionarInfoDemanda} alt="Adicionar informações da Demanda" />
+                </BoxImage>
 
-        <P> Abrirá um modal para complementar a demanda com as informações de prazo de elaboração da proposta, código PPM e o link para o JIRA;</P>
+                <P> Abrirá um modal para complementar a demanda com as informações de prazo de elaboração da proposta, código PPM e o link para o JIRA;</P>
 
-        <BoxImage>
-            <img id="imgs" src={adicionarInfoDemandaModal} alt="Adicionar informações da Demanda (modal)" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={adicionarInfoDemandaModal} alt="Adicionar informações da Demanda (modal)" />
+                </BoxImage>
 
-        <Space>.</Space>
+                <Space>.</Space>
+            </>
+            :
+            <>
+            </>}
     </BoxBackground>
 );
 
 export const CriarProposta = (
     <BoxBackground>
-        <Title>
-            <p>Criar Proposta</p>
-        </Title>
+        {usuarioLogado == "AnalistaTI" || usuarioLogado == "GerenteTI" ?
+            <>
+                <Title>
+                    <p>Criar Proposta</p>
+                </Title>
 
-        <P>Para criar uma Proposta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Proposta”. Depois, escolha a Demanda que quer adicionar na Proposta, podendo editar seus atributos.</P>
+                <P>Para criar uma Proposta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Proposta”. Depois, escolha a Demanda que quer adicionar na Proposta, podendo editar seus atributos.</P>
 
-        <BoxImage>
-            <img id="imgs" src={criarPropostaIcone} alt="Criar Proposta pela sidebar" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={criarPropostaIcone} alt="Criar Proposta pela sidebar" />
+                </BoxImage>
 
-        <P>Você também pode fazer esse processo já estando dentro de uma Demanda, basta clicar no botão de "Criar Proposta", este processo levará direto para a tela de edição dos atributos da Demanda.</P>
+                <P>Você também pode fazer esse processo já estando dentro de uma Demanda, basta clicar no botão de "Criar Proposta", este processo levará direto para a tela de edição dos atributos da Demanda.</P>
 
-        <BoxImage>
-            <img id="imgs" src={criarPropostaDemanda} alt="Criar Proposta pela Demanda" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={criarPropostaDemanda} alt="Criar Proposta pela Demanda" />
+                </BoxImage>
 
-        <P>Posteriormente, adicione os novos atributos, sendo eles o escopo, linhas da tabela de custo, payback, o período de execução e as informações do responsável, o nome e a área que trabalha. Por fim, sendo opcional, os anexos para a proposta.</P>
+                <P>Posteriormente, adicione os novos atributos, sendo eles o escopo, linhas da tabela de custo, payback, o período de execução e as informações do responsável, o nome e a área que trabalha. Por fim, sendo opcional, os anexos para a proposta.</P>
 
-        <BoxImage>
-            <img id="imgs" src={criarPropostaFinal} alt="Criar Proposta parte final" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={criarPropostaFinal} alt="Criar Proposta parte final" />
+                </BoxImage>
 
-        <Space>.</Space>
+                <Space>.</Space>
+            </>
+            :
+            <>
+            </>}
     </BoxBackground>
 );
 
 export const CriarPauta = (
     <BoxBackground>
-        <Title>
-            <p>Criar Pauta</p>
-        </Title>
+        {usuarioLogado == "AnalistaTI" || usuarioLogado == "GerenteTI" ?
+            <>
+                <Title>
+                    <p>Criar Pauta</p>
+                </Title>
 
-        <P>Para criar uma pauta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Pauta”. Na próxima tela, selecione uma ou mais propostas a serem incluídas na pauta. Para isso, procure pelas propostas disponíveis na lista e clique naquelas que deseja adicionar</P>
+                <P>Para criar uma pauta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Pauta”. Na próxima tela, selecione uma ou mais propostas a serem incluídas na pauta. Para isso, procure pelas propostas disponíveis na lista e clique naquelas que deseja adicionar</P>
 
-        <BoxImage>
-            <img id="imgs" src={criarPautaIcone} alt="Criar Pauta pela sidebar" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={criarPautaIcone} alt="Criar Pauta pela sidebar" />
+                </BoxImage>
 
-        <P>Você também pode fazer esse processo já estando dentro de uma Proposta, basta clicar no botão de "Criar Pauta".</P>
+                <P>Você também pode fazer esse processo já estando dentro de uma Proposta, basta clicar no botão de "Criar Pauta".</P>
 
-        <BoxImage>
-            <img id="imgs" src={criarPautaProposta} alt="Criar Pauta pela Proposta" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={criarPautaProposta} alt="Criar Pauta pela Proposta" />
+                </BoxImage>
 
-        <P>Após a seleção das propostas, escolha um título para a reunião, o fórum que irá descuti-lá, a data e a hora da reunião.</P>
+                <P>Após a seleção das propostas, escolha um título para a reunião, o fórum que irá descuti-lá, a data e a hora da reunião.</P>
 
-        <BoxImage>
-            <img id="imgs" src={criarPautaFinal} alt="Criar Pauta parte final" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={criarPautaFinal} alt="Criar Pauta parte final" />
+                </BoxImage>
 
-        <Space>.</Space>
+                <Space>.</Space>
+            </>
+            :
+            <>
+            </>}
     </BoxBackground>
 );
 
 export const InformarParecerComissao = (
     <BoxBackground>
-        <Title>
-            <p>Informar o parecer da Comissão</p>
-        </Title>
+        {usuarioLogado == "AnalistaTI" || usuarioLogado == "GerenteTI" ?
+            <>
+                <Title>
+                    <p>Informar o parecer da Comissão</p>
+                </Title>
 
-        <P>Após a Pauta passar pela reunião, será necessário informar o parecer da comissão que a discutiu. Para isso, dentro da pauta, clique no botão de "Informar parecer".</P>
+                <P>Após a Pauta passar pela reunião, será necessário informar o parecer da comissão que a discutiu. Para isso, dentro da pauta, clique no botão de "Informar parecer".</P>
 
-        <BoxImage>
-            <img id="imgs" src={informarParecerComissao} alt="Informar o parecer da Comissão" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={informarParecerComissao} alt="Informar o parecer da Comissão" />
+                </BoxImage>
 
-        <P>Agora, escolha o status da pauta, podendo ser Cancelled, Business Case, To Do ou Assessment, escreva os comentários necessários e escolha se vai ser uma ATA publicada ou uma ATA não publicada e sendo opcional, os anexos que a complementarão.</P>
+                <P>Agora, escolha o status da pauta, podendo ser Cancelled, Business Case, To Do ou Assessment, escreva os comentários necessários e escolha se vai ser uma ATA publicada ou uma ATA não publicada e sendo opcional, os anexos que a complementarão.</P>
 
-        <BoxImage>
-            <img id="imgs" src={informarParecerComissaoFinal} alt="Informar o parecer da Comissão parte final" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={informarParecerComissaoFinal} alt="Informar o parecer da Comissão parte final" />
+                </BoxImage>
 
-        <Space>.</Space>
+                <Space>.</Space>
+            </>
+            :
+            <>
+            </>}
     </BoxBackground>
 );
 
 export const CriarATA = (
     <BoxBackground>
-        <Title>
-            <p>Criar ATA</p>
-        </Title>
+        {usuarioLogado == "AnalistaTI" || usuarioLogado == "GerenteTI" ?
+            <>
+                <Title>
+                    <p>Criar ATA</p>
+                </Title>
 
-        <P>Para criar uma Ata, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção "Ata". Depois, escolha a Pauta que quer transformar em Ata.</P>
+                <P>Para criar uma Ata, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção "Ata". Depois, escolha a Pauta que quer transformar em Ata.</P>
 
-        <BoxImage>
-            <img id="imgs" src={criarATAIcone} alt="Criar Ata pela sidebar" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={criarATAIcone} alt="Criar Ata pela sidebar" />
+                </BoxImage>
 
-        <P>Posteriormente, você irá à uma página para preencher as informações da Ata que será discutida na reunião da Diretoria Geral.</P>
+                <P>Posteriormente, você irá à uma página para preencher as informações da Ata que será discutida na reunião da Diretoria Geral.</P>
 
-        <BoxImage>
-            <img id="imgs" src={criarATAIconeFinal} alt="Criar Ata pela sidebar parte final" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={criarATAIconeFinal} alt="Criar Ata pela sidebar parte final" />
+                </BoxImage>
 
-        <P>Você também pode fazer esse processo já estando dentro de uma Pauta, mas ela não pode ter o parecer da Comissão já informado. Basta clicar no botão de "Informar o parecer", embaixo das infomações da Pauta, com isso abrirá campos para preencher as informações sobre a Ata.</P>
+                <P>Você também pode fazer esse processo já estando dentro de uma Pauta, mas ela não pode ter o parecer da Comissão já informado. Basta clicar no botão de "Informar o parecer", embaixo das infomações da Pauta, com isso abrirá campos para preencher as informações sobre a Ata.</P>
 
-        <BoxImage>
-            <img id="imgs" src={criarATAPauta} alt="Criar Ata pela Pauta" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={criarATAPauta} alt="Criar Ata pela Pauta" />
+                </BoxImage>
 
-        <P>Será aberto os mesmos campos sobre a Ata para serem preenchidos</P>
+                <P>Será aberto os mesmos campos sobre a Ata para serem preenchidos</P>
 
-        <BoxImage>
-            <img id="imgs" src={criarATAPautaFinal} alt="Criar Ata pela Pauta parte final" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={criarATAPautaFinal} alt="Criar Ata pela Pauta parte final" />
+                </BoxImage>
 
-        <P>Se você apertar no ícone <RemoveRoundedIcon /> e enviar o parecer da Comissão, a Ata será excluída e você só poderá repetir esse processo seguindo os passos de criar a Ata pela sidebar</P>
+                <P>Se você apertar no ícone <RemoveRoundedIcon /> e enviar o parecer da Comissão, a Ata será excluída e você só poderá repetir esse processo seguindo os passos de criar a Ata pela sidebar</P>
 
-        <Space>.</Space>
+                <Space>.</Space>
+            </>
+            :
+            <>
+            </>}
     </BoxBackground>
 );
 
 export const InformarParecerDiretoriaGeral = (
     <BoxBackground>
-        <Title>
-            <p>Informar o parecer da Diretoria Geral</p>
-        </Title>
+        {usuarioLogado == "AnalistaTI" || usuarioLogado == "GerenteTI" ?
+            <>
+                <Title>
+                    <p>Informar o parecer da Diretoria Geral</p>
+                </Title>
 
-        <P>Para informar o parecer da Diretoria Geral, entre dentro da ATA que desejas informar o parecer, depois, clique no botão de "Finalizar Processo".</P>
+                <P>Para informar o parecer da Diretoria Geral, entre dentro da ATA que desejas informar o parecer, depois, clique no botão de "Finalizar Processo".</P>
 
-        <BoxImage>
-            <img id="imgs" src={informarParecerDiretoriaGeral} alt="Informar o parecer da DiretoriaGeral" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={informarParecerDiretoriaGeral} alt="Informar o parecer da DiretoriaGeral" />
+                </BoxImage>
 
-        <P>Escolha o status da ATA, podendo ser Cancelled, Business Case, To Do ou Assessment, informe o número da ATA da DG, anexe os arquivos sendo opcional e escreva os comentários necessários.</P>
+                <P>Escolha o status da ATA, podendo ser Cancelled, Business Case, To Do ou Assessment, informe o número da ATA da DG, anexe os arquivos sendo opcional e escreva os comentários necessários.</P>
 
-        <BoxImage>
-            <img id="imgs" src={informarParecerDiretoriaGeralFinal} alt="Informar o parecer da DiretoriaGera parte final" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={informarParecerDiretoriaGeralFinal} alt="Informar o parecer da DiretoriaGera parte final" />
+                </BoxImage>
 
-        <Space>.</Space>
+                <Space>.</Space>
+            </>
+            :
+            <>
+            </>}
     </BoxBackground>
 );
 
 export const IniciarWorkflow = (
     <BoxBackground>
-        <Title>
-            <p>Iniciar Workflow de Aprovação</p>
-        </Title>
+        {usuarioLogado == "AnalistaTI" || usuarioLogado == "GerenteTI" ?
+            <>
+                <Title>
+                    <p>Iniciar Workflow de Aprovação</p>
+                </Title>
 
-        <P>Dentro de uma proposta, aperte o botão de criar um workflow de aprovação.</P>
+                <P>Dentro de uma proposta, aperte o botão de criar um workflow de aprovação.</P>
 
-        <BoxImage>
-            <img id="imgs" src={iniciarWorkflow} alt="Iniciar Workflow de Aprovação" />
-        </BoxImage>
+                <BoxImage>
+                    <img id="imgs" src={iniciarWorkflow} alt="Iniciar Workflow de Aprovação" />
+                </BoxImage>
 
-        <P>Quando o Workflow de Aprovação é aprovado pelos Gerentes de Negócio e de TI, a proposta automaticamente torna-se uma pauta aprovada (não passará pela reunião com a comissão).</P>
+                <P>Quando o Workflow de Aprovação é aprovado pelos Gerentes de Negócio e de TI, a proposta automaticamente torna-se uma pauta aprovada (não passará pela reunião com a comissão).</P>
+            </>
+            :
+            <>
+            </>}
     </BoxBackground>
 );
 
 export const AvaliarWorkflow = (
     <BoxBackground>
-        <Title>
-            <p>Avaliar Workflow de Aprovação</p>
-        </Title>
+        {usuarioLogado == "AnalistaTI" || usuarioLogado == "GerenteTI" ?
+            <>
+                <Title>
+                    <p>Avaliar Workflow de Aprovação</p>
+                </Title>
 
-        <P>Dentro de uma proposta, quando um Workflow for iniciado pelo Analista, o ícone de Workflow para os Gerentes de Negócio e de TI vai exibir uma notificação. Clique para abrir um modal onde poderás aprovar ou reprovar.</P>
+                <P>Dentro de uma proposta, quando um Workflow for iniciado pelo Analista, o ícone de Workflow para os Gerentes de Negócio e de TI vai exibir uma notificação.</P>
+
+                <BoxImage>
+                    <img id="imgs" src={avaliarWorkflow} alt="Avaliar Workflow de Aprovação" />
+                </BoxImage>
+
+                <P>Clique para abrir um modal onde poderás aprovar ou reprovar.</P>
+
+                <BoxImage>
+                    <img id="imgs" src={avaliarWorkflowFinal} alt="Avaliar Workflow de Aprovação parte final" />
+                </BoxImage>
+
+                <Space>.</Space>
+            </>
+            :
+            <>
+            </>}
     </BoxBackground>
 );

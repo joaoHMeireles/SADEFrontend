@@ -65,7 +65,9 @@ export default function CriacaoAta(props: {
   useEffect(() => {
     const pautaEscolhida = JSON.parse(localStorage.getItem("PAUTACRIARATA") as string)
 
-    api.get(`/sod/pauta`).then((response) => {
+
+    ///criarATA
+    api.get(`/sade/pauta`).then((response) => {
       let listaPautas: any[] = []
       for (let pauta of response.data) {
         pauta.propostas = pauta.propostasPauta
@@ -126,7 +128,7 @@ export default function CriacaoAta(props: {
       }
     }
 
-    api.post("/sod/ata/" + localStorage.getItem("IDUSUARIO"), formData).then((response) => {
+    api.post("/sade/ata/" + localStorage.getItem("IDUSUARIO"), formData).then((response) => {
       location.href = "/home"
     }).catch((err) => {
       console.log(err);

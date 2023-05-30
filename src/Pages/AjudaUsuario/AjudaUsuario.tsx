@@ -15,24 +15,16 @@ import ListItemText from '@mui/material/ListItemText';
 import { Introducao, CriarDemanda, AvaliarDemandaA, AvaliarDemandaGN, AdicionarInfoDemanda, CriarProposta, CriarPauta, InformarParecerComissao, CriarATA, InformarParecerDiretoriaGeral, IniciarWorkflow, AvaliarWorkflow } from "./Componentes/Componentes";
 
 export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: boolean }) {
-  const [atividadesPrincipaisOpen, setAtividadesPrincipaisopen] = useState(false);
-  const [atividadesSecundariasOpen, setAtividadesSecundariasOpen] = useState(false);
+  const [ processosPrincipaisOpen,  setProcessosPrincipaisOpen] = useState(false);
   const [componentes, setComponentes] = useState<any>(Introducao);
   const [cor, setCor] = useState(0);
 
-  const usuarioLogado = localStorage.getItem("TIPOUSUARIO");
-
   const atividadesPrincipaisClick = () => {
-    setAtividadesPrincipaisopen(!atividadesPrincipaisOpen);
-  };
-
-  const atividadesSecundariasClick = () => {
-    setAtividadesSecundariasOpen(!atividadesSecundariasOpen);
+     setProcessosPrincipaisOpen(! processosPrincipaisOpen);
   };
 
   useEffect(() => {
-    console.log(cor)
-  }, [cor])
+  }, [cor]);
 
   return (
     <Box>
@@ -51,24 +43,24 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                 setCor(0);
               }}>
                 {cor == 0 ?
-                  <ListItemText primary="INTRODUÇÃO" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                  <ListItemText primary="INTRODUÇÃO" sx={{ color: "#00579d" }} />
                   :
                   <ListItemText primary="INTRODUÇÃO" />}
               </ListItemButton>
 
               <ListItemButton onClick={atividadesPrincipaisClick}>
-                <ListItemText primary="ATIVIDADES PRINCIPAIS" />
-                {atividadesPrincipaisOpen ? <ExpandLess /> : <ExpandMore />}
+                <ListItemText primary="PROCESSOS PRINCIPAIS" />
+                { processosPrincipaisOpen ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
 
-              <Collapse in={atividadesPrincipaisOpen} timeout="auto" unmountOnExit>
+              <Collapse in={ processosPrincipaisOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
                     setComponentes(CriarDemanda);
                     setCor(1);
                   }}>
                     {cor == 1 ?
-                      <ListItemText primary="Criar Demanda" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Criar Demanda" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Criar Demanda" />}
                   </ListItemButton>
@@ -78,7 +70,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(2);
                   }}>
                     {cor == 2 ?
-                      <ListItemText primary="Avaliar Demanda" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Avaliar Demanda" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Avaliar Demanda" />}
                   </ListItemButton>
@@ -88,7 +80,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(3);
                   }}>
                     {cor == 3 ?
-                      <ListItemText primary="Avaliar Demanda" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Avaliar Demanda" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Avaliar Demanda" />}
                   </ListItemButton>
@@ -98,7 +90,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(4);
                   }}>
                     {cor == 4 ?
-                      <ListItemText primary="Adicionar informações na Demanda" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Adicionar informações na Demanda" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Adicionar informações na Demanda" />}
                   </ListItemButton>
@@ -108,7 +100,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(5);
                   }}>
                     {cor == 5 ?
-                      <ListItemText primary="Criar Proposta" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Criar Proposta" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Criar Proposta" />}
                   </ListItemButton>
@@ -118,7 +110,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(6);
                   }}>
                     {cor == 6 ?
-                      <ListItemText primary="Criar Pauta" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Criar Pauta" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Criar Pauta" />}
                   </ListItemButton>
@@ -128,7 +120,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(7);
                   }}>
                     {cor == 7 ?
-                      <ListItemText primary="Informar o parecer da Comissão" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Informar o parecer da Comissão" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Informar o parecer da Comissão" />}
                   </ListItemButton>
@@ -138,7 +130,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(8);
                   }}>
                     {cor == 8 ?
-                      <ListItemText primary="Criar ATA" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Criar ATA" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Criar ATA" />}
                   </ListItemButton>
@@ -148,26 +140,17 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(9);
                   }}>
                     {cor == 9 ?
-                      <ListItemText primary="Informar o parecer da Diretoria Geral" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Informar o parecer da Diretoria Geral" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Informar o parecer da Diretoria Geral" />}
                   </ListItemButton>
-                </List>
-              </Collapse>
 
-              <ListItemButton onClick={atividadesSecundariasClick}>
-                <ListItemText primary="ATIVIDADES SECUNDÁRIAS" />
-                {atividadesSecundariasOpen ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-
-              <Collapse in={atividadesSecundariasOpen} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
                     setComponentes(IniciarWorkflow);
                     setCor(10)
                   }}>
                     {cor == 10 ?
-                      <ListItemText primary="Iniciar Workflow de Aprovação" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Iniciar Workflow de Aprovação" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Iniciar Workflow de Aprovação" />}
                   </ListItemButton>
@@ -177,7 +160,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                     setCor(11);
                   }}>
                     {cor == 11 ?
-                      <ListItemText primary="Avaliar Workflow de Aprovação" sx={{ color: "#00579d", fontWeight: "bold" }} />
+                      <ListItemText primary="Avaliar Workflow de Aprovação" sx={{ color: "#00579d" }} />
                       :
                       <ListItemText primary="Avaliar Workflow de Aprovação" />}
                   </ListItemButton>
@@ -194,4 +177,3 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
     </Box>
   );
 }
-

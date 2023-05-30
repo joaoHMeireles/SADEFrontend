@@ -25,7 +25,7 @@ export default function RascunhoObserver() {
 
                         formData.append("demanda", JSON.stringify(objetoDemanda))
 
-                        api.post("/sod/demanda/rascunho", formData)
+                        api.post("/sade/demanda/rascunho", formData)
                     }
                 }
             }

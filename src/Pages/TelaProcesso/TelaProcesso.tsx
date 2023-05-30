@@ -59,11 +59,45 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
     const [conteudoModal, setConteudoModal] = useState(<div />)
     const [feedbackAberto, setFeedbackAberto] = useState(false)
     const [conteudoFeedback, setConteudoFeedback] = useState(<div />)
-    const location = useLocation().pathname
-    const processoLocalStorage = localStorage.getItem(`${getNomeComponente(location)}ESCOLHIDA`)
-    const informacaoProcesso = JSON.parse(processoLocalStorage != null ? processoLocalStorage : "");
+    const [informacaoProcesso, setInformacaoProcesso] = useState({
+        usuario: {
+            nomeUsuario: "",
+            departamento: ""
+        },
+        beneficiosDemanda: []
+    });
+    const location = useLocation()
 
-    console.log(informacaoProcesso);
+    useEffect(() => {
+        if (location.search) {
+            let idProposta = location.search.replace("?", "")
+
+            api.get("/sod/proposta/" + idProposta).then((res) => {
+                const proposta = res.data
+
+                for (let atributo in proposta.demanda) {
+                    console.log(atributo);
+
+                    proposta[atributo] = proposta.demanda[atributo]
+                }
+
+                proposta.tipo = TipoComponenteProcesso.Proposta
+                proposta.id = proposta.idProposta
+
+                console.log(proposta);
+
+
+                setInformacaoProcesso(proposta)
+
+                localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta))
+            })
+        } else {
+            const processoLocalStorage = localStorage.getItem(`${getNomeComponente(location.pathname)}ESCOLHIDA`)
+            if (processoLocalStorage != null) {
+                setInformacaoProcesso(JSON.parse(processoLocalStorage))
+            }
+        }
+    }, [])
 
 
     return (
@@ -182,7 +216,7 @@ export function Header(props: {
 
     function recarregarPaginaDemanda(conteudo: JSX.Element) {
         if (processo.tipo == TipoComponenteProcesso.Demanda) {
-            api.get(`/sod/demanda/${processo.id}`).then((response: any) => {
+            api.get(`/sade/demanda/${processo.id}`).then((response: any) => {
                 const demanda = response.data
                 demanda.tipo = TipoComponenteProcesso.Demanda
                 demanda.id = demanda.idDemanda
@@ -193,7 +227,7 @@ export function Header(props: {
                 console.log(err);
             })
         } else {
-            api.get(`/sod/proposta/${processo.id}`).then((response: any) => {
+            api.get(`/sade/proposta/${processo.id}`).then((response: any) => {
                 const proposta = response.data
 
                 for (let atributo in proposta.demanda) {
@@ -269,14 +303,14 @@ export function Header(props: {
                 ))
 
                 // Depois que conseguir fazer o arquivo de versionamento esse get não será mais necessário 
-                // api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
+                // api.get(`/sade/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
                 //     //colocar pdf
                 //     formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
 
                 // faz a atualização do histórico da demanda
-                api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
+                api.post(`/sade/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
                     // atualiza informações de demanda
-                    api.put(`/sod/demanda/${processo.idDemanda}/${idAnalista}`, formDataDemanda, {
+                    api.put(`/sade/demanda/${processo.idDemanda}/${idAnalista}`, formDataDemanda, {
                         headers: {
                             "Content-Type": "multipart/form-data",
                         }
@@ -313,7 +347,7 @@ export function Header(props: {
             )
 
             function finalizarAprovacao(conteudo: JSX.Element) {
-                api.get("/sod/historicoWorkflow/demanda/ultimo/" + processo.id).then((response) => {
+                api.get("/sade/historicoWorkflow/demanda/ultimo/" + processo.id).then((response) => {
                     const formDataHistorico = new FormData()
                     formDataHistorico.append("historico", JSON.stringify(
                         {
@@ -325,7 +359,7 @@ export function Header(props: {
                     ))
 
                     // faz a atualização do histórico da demanda
-                    api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
+                    api.post(`/sade/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
                         recarregarPaginaDemanda(conteudo)
                     }).catch((err: any) => {
                         console.log(err);
@@ -366,7 +400,7 @@ export function Header(props: {
                     }
                 ))
 
-                api.put(`/sod/historicoWorkflow/demanda/${processo.id}`, formDataHistorico).then((response: any) => {
+                api.put(`/sade/historicoWorkflow/demanda/${processo.id}`, formDataHistorico).then((response: any) => {
                     recarregarPaginaDemanda(conteudoFeedback)
                 }).catch((err: any) => {
                     console.log(err);
@@ -397,7 +431,7 @@ export function Header(props: {
                     }
                 ))
 
-                api.put(`/sod/historicoWorkflow/demanda/${processo.id}`, formDataHistorico).then((response: any) => {
+                api.put(`/sade/historicoWorkflow/demanda/${processo.id}`, formDataHistorico).then((response: any) => {
                     recarregarPaginaDemanda(conteudoFeedback)
                 }).catch((err: any) => {
                     console.log(err);
@@ -440,7 +474,7 @@ export function Header(props: {
                 }
             ))
 
-            api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response: any) => {
+            api.post(`/sade/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response: any) => {
                 recarregarPaginaDemanda(conteudoFeedback)
             }).catch((err: any) => {
                 console.log(err);
@@ -495,14 +529,14 @@ export function Header(props: {
 
 
             // Depois que conseguir fazer o arquivo de versionamento esse get não será mais necessário 
-            api.get(`/sod/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
+            api.get(`/sade/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
                 //colocar pdf
                 formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
 
                 // faz a atualização do histórico da demanda
-                api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
+                api.post(`/sade/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
                     // atualiza informações de demanda
-                    api.put(`/sod/demanda/${processo.idDemanda}/${idAnalista}`, formDataDemanda, {
+                    api.put(`/sade/demanda/${processo.idDemanda}/${idAnalista}`, formDataDemanda, {
                         headers: {
                             "Content-Type": "multipart/form-data",
                         }
@@ -541,7 +575,7 @@ export function Header(props: {
 
         function iniciarWorkflowAprovacao(conteudo: JSX.Element) {
             const formData = new FormData()
-            
+
             formData.append("proposta", JSON.stringify({
                 emWorkflow: true
             }))
@@ -555,12 +589,12 @@ export function Header(props: {
             //     }
             // ))
 
-            api.put(`/sod/proposta/${processo.id}/${idAnalista}`, formData).then((res) => {
+            api.put(`/sade/proposta/${processo.id}/${idAnalista}`, formData).then((res) => {
                 recarregarPaginaDemanda(conteudo)
             }).catch((err) => {
                 console.log(err);
             })
-            // api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response: any) => {
+            // api.post(`/sade/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response: any) => {
             //     recarregarPaginaDemanda(conteudo)
             // }).catch((err: any) => {
             //     console.log(err);
@@ -581,7 +615,7 @@ export function Header(props: {
     } //feito
 
     function verDemandaProposta() {
-        api.get(`/sod/demanda/${processo.idProposta}`).then((response: any) => {
+        api.get(`/sade/demanda/${processo.idProposta}`).then((response: any) => {
             const demanda = response.data
             demanda.tipo = TipoComponenteProcesso.Demanda
 
@@ -635,7 +669,7 @@ export function Header(props: {
                 ))
             }
 
-            api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response) => {
+            api.post(`/sade/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response) => {
                 console.log(response.data);
                 recarregarPaginaDemanda(conteudoFeedback)
             }).catch((err) => {
@@ -667,7 +701,7 @@ export function Header(props: {
                 ))
             }
 
-            api.post(`/sod/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response) => {
+            api.post(`/sade/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response) => {
                 console.log(response.data);
                 recarregarPaginaDemanda(conteudoFeedback)
             }).catch((err) => {
@@ -736,7 +770,7 @@ export function Header(props: {
                 demanda: { idDemanda: processo.id }
             }
 
-            api.post(`/sod/chat/${idAnalista}`, chatBody).then((response: any) => {
+            api.post(`/sade/chat/${idAnalista}`, chatBody).then((response: any) => {
                 irChat()
             }).catch((err: any) => {
                 console.log(err);
@@ -1582,7 +1616,7 @@ function Footer(props: {
             <Grid item xs={8} />
             <GridItemFooter item xs={3.5} >
                 {props.link ?
-                    <a href={props.link}>Ver projeto Jira</a>
+                    <a href={props.link} target='_blank'>Ver projeto Jira</a>
                     :
                     <div></div>
                 }
@@ -1618,6 +1652,9 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
             listaBotoes.push({ nome: "chat", function: funcoes[11] })
         }
     }
+    const workflow = { nome: "workflow", function: funcoes[10] }
+
+    listaBotoes.push(workflow)
 
 
     /**
@@ -1729,6 +1766,8 @@ function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonEle
                 }
             }
         }
+
+        
     }
 
     return listaBotoes

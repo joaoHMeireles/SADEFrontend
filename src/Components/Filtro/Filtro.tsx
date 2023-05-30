@@ -132,7 +132,7 @@ export default function Filtro(props: {
   };
 
   useEffect(() => {
-    api.get("/sod/forum").then((response) => {
+    api.get("/sade/forum").then((response) => {
       const forunsNovos = []
 
       for(let forum of response.data){

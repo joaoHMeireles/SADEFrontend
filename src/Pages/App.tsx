@@ -53,7 +53,7 @@ export default function App() {
   //carregou
 
   useEffect(() => {
-    api.get("/sod/demanda/rascunho/" + false).then((response) => {
+    api.get("/sade/demanda/rascunho/" + false).then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
         demanda.id = demanda.idDemanda
@@ -61,15 +61,18 @@ export default function App() {
         listaDemandas.push(demanda)
       }
 
+      console.log("Lista demandas --> " + listaDemandas)
+
       setListaDemandas(listaDemandas);
     }).catch((err) => {
       console.log(err);
-    }).finally(() => {
-      //setCarregou(true)
     })
+    //     .finally(() => {
+    //   //setCarregou(true)
+    // })
 
 
-    api.get("/sod/proposta").then((response: any) => {
+    api.get("/sade/proposta").then((response: any) => {
       let listaPropostas: any[] = []
       for (let proposta of response.data) {
 
@@ -78,17 +81,20 @@ export default function App() {
         }
 
         proposta.tipo = TipoComponenteProcesso.Proposta
+
         proposta.id = proposta.idProposta
         listaPropostas.push(proposta)
       }
+      console.log("Lista de Propostas --> " + listaPropostas)
 
       setListaPropostas(listaPropostas);
     }).catch((err: any) => {
       console.log(err);
     })
 
+    console.log("passou get 2")
 
-    api.get("/sod/pauta").then((response) => {
+    api.get("/sade/pauta").then((response) => {
       let listaPautas: any[] = []
       for (let pauta of response.data) {
         pauta.propostas = pauta.propostasPauta
@@ -99,12 +105,14 @@ export default function App() {
         listaPautas.push(pauta)
       }
 
+      console.log("Lista Pautas --> " + listaPautas)
+
       setListaPautas(listaPautas);
     }).catch((err) => {
       console.log(err);
     })
 
-    api.get("/sod/ata").then((response) => {
+    api.get("/sade/ata").then((response) => {
       let listaATAs: any[] = []
       for (let ata of response.data) {
         ata.propostas = ata.propostasAta
@@ -114,6 +122,8 @@ export default function App() {
         ata.tipo = TipoColecaoComponenteProcesso.ATA
         listaATAs.push(ata)
       }
+
+      console.log("Lista de ATAs --> " + listaATAs)
 
       setListaATAs(listaATAs);
     }).catch((err) => {

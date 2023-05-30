@@ -16,7 +16,7 @@ export const WebSocketService = ({ children }: {children: any}) => {
             conectar()
         } else {
             if (localStorage.getItem("INSCRITONASDEMANDAS") != "true") {
-                api.get("/sod/demanda/usuario/" + localStorage.getItem("IDUSUARIO")).then((res) => {
+                api.get("/sade/demanda/usuario/" + localStorage.getItem("IDUSUARIO")).then((res) => {
                     for (const demanda of res.data) {
                         inscrever(`/notificacao/demanda/${demanda.idDemanda}`, novaNotificacao)
                     }
@@ -28,7 +28,7 @@ export const WebSocketService = ({ children }: {children: any}) => {
     }, [stompClient])
 
     const conectar = () => {
-        const socket = new sockjs("http://localhost:8443/sod/websocket");
+        const socket = new sockjs("http://localhost:8443/sade/websocket");
 
         const stomp = Stomp.over(socket);
         stomp.connect({}, () => {

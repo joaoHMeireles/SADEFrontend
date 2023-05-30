@@ -67,7 +67,7 @@ export default function InfomacoesAdicionais(props: {
     const [objetoBus, setObjetoBus] = useState<any[]>([])
 
     useEffect(() => {
-        api.get("/sod/bu").then((res) => {
+        api.get("/sade/bu").then((res) => {
 
             const listaBus = res.data.map((bu: any) => bu.nomeBU)
 
