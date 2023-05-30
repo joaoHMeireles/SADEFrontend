@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 import logo from "../../assets/wegLogo.png";
 import "./Login.scss";
 import api from "../../api/api";
@@ -18,7 +18,6 @@ import {
 } from "./Login.styles";
 import { Alert, FormControl, FormHelperText, Snackbar } from "@mui/material";
 import { WebSocketContext } from "../../api/websocketservice";
-import { novaNotificacao } from "../Notificacoes/Notificacoes";
 
 /**
  * 
@@ -38,7 +37,7 @@ export default function Login(props: {
     email: '',
     senha: ''
   });
-
+  const { lerTexto} = useContext(TextReaderContext) as any
   const webSocketService: any = useContext(WebSocketContext)
   localStorage.setItem("PAGINATUAL", "login")
 
@@ -123,6 +122,7 @@ export default function Login(props: {
                     onChange={atualizarUsuario}
                     InputProps={{
                       startAdornment: <AccountCircle sx={{ color: "#595959", paddingRight: 1 }} />,
+                      // onClick: lerTexto
                     }}
                   />
                   <InputSenha type={tipo} id="inputSenha"
@@ -130,6 +130,7 @@ export default function Login(props: {
                     name="senha"
                     onChange={atualizarUsuario}
                     InputProps={{
+                      // onClick: lerTexto,
                       startAdornment: <LockRoundedIcon sx={{ color: "#595959", paddingRight: 1 }} />,
                       endAdornment: (tipo == "text" ? <VisibilityOffRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} /> : <RemoveRedEyeRoundedIcon onClick={mostrarSenha} sx={{ color: "#595959", cursor: "pointer" }} />)
                     }}
@@ -139,7 +140,7 @@ export default function Login(props: {
                   </FormHelperText>
                 </FormControl>
                 <BoxEsqueceuSenha>
-                  <TextoEsqueceuSenha variant="body2">
+                  <TextoEsqueceuSenha variant="body2" onClick={lerTexto}>
                     Esqueci minha senha
                   </TextoEsqueceuSenha>
                 </BoxEsqueceuSenha>
@@ -148,6 +149,7 @@ export default function Login(props: {
                 <EstilosBotao
                   variant="contained"
                   startIcon={<InputRoundedIcon />}
+                  onClick={lerTexto}
                 >
                   Entrar
                 </EstilosBotao>

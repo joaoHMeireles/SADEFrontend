@@ -34,11 +34,13 @@ import { novaNotificacao } from "../Notificacoes/Notificacoes";
 import pdf from "../../Assets/pdf.pdf";
 import {TipoComponenteProcesso} from "../../constants/enuns";
 import {useLocation} from "react-router-dom";
+import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
   editarDemanda?: boolean;
 }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const idUsuario = localStorage.getItem("IDUSUARIO");
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
@@ -190,9 +192,6 @@ export default function CriacaoDemanda(props: {
         "valor": valorMensal.value
       }
 
-      console.log(beneficioReal);
-
-
       if (numeroBeneficiosReais > 0 && valorMensal.value && moedaReal && descricao.value) {
         beneficios.push(beneficioReal);
       }
@@ -302,7 +301,6 @@ export default function CriacaoDemanda(props: {
       formData.append("demanda", JSON.stringify(dataCerta));
     }
 
-    console.log(data);
     if (props.rascunho) {
       const idDemanda = JSON.parse(
         localStorage.getItem("RASCUNHOESCOLHIDO") as string
@@ -378,7 +376,8 @@ export default function CriacaoDemanda(props: {
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
                 variant="outlined"
-                onClick={() => {
+                onClick={(e) => {
+                  lerTexto(e)
                   window.location.href = "/home";
                 }}
               >
@@ -388,7 +387,8 @@ export default function CriacaoDemanda(props: {
                 sx={{ width: "15%", height: "3rem" }}
                 variant="contained"
                 endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
-                onClick={() => {
+                onClick={(e) => {
+                  lerTexto(e)
                   setValor(1);
                   partUmDemanda();
                 }}
@@ -433,7 +433,8 @@ export default function CriacaoDemanda(props: {
                 <BotaoTerciario
                   sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="outlined"
-                  onClick={() => {
+                  onClick={(e) => {
+                    lerTexto(e)
                     window.location.href = "/home";
                   }}
                 >
@@ -442,7 +443,8 @@ export default function CriacaoDemanda(props: {
               </BoxBotaoTerciario>
               <BoxBotoesPriSec>
                 <BotaoSecundario
-                  onClick={() => {
+                  onClick={(e) => {
+                    lerTexto(e)
                     setValor(valor - 1);
                   }}
                   sx={{
@@ -462,7 +464,8 @@ export default function CriacaoDemanda(props: {
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
-                  onClick={() => {
+                  onClick={(e) => {
+                    lerTexto(e)
                     setValor(2);
                     setSegundo(true);
                     partDoisDemanda();
@@ -483,8 +486,9 @@ export default function CriacaoDemanda(props: {
                 <BotaoTerciario
                   sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="outlined"
-                  onClick={() => {
+                  onClick={(e) => {
                     window.location.href = "/home";
+                    lerTexto(e)
                   }}
                 >
                   Cancelar
@@ -492,7 +496,8 @@ export default function CriacaoDemanda(props: {
               </BoxBotaoTerciario>
               <BoxBotoesPriSec>
                 <BotaoSecundario
-                  onClick={() => {
+                  onClick={(e) => {
+                    lerTexto(e)
                     setValor(1);
                   }}
                   sx={{
@@ -512,7 +517,10 @@ export default function CriacaoDemanda(props: {
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
-                  onClick={() => gerarPDFDemanda()}
+                  onClick={(e) => {
+                    lerTexto(e)
+                    gerarPDFDemanda()
+                  }}
                 >
                   Enviar
                 </BotaoPrimario>

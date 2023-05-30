@@ -1,4 +1,5 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 import { Link, useLocation } from "react-router-dom";
 import './Sidebar.scss'
 import { Drawer, Toolbar, Box, Icon, List, ListItemText, Collapse, Grid, Badge } from "@mui/material";
@@ -91,6 +92,7 @@ let drawerWidth = "240";
  * @returns 
  */
 export default function MiniDrawer(props: { aberto: boolean, tamanho: string, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<SetStateAction<boolean>> }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const location = useLocation()
   const cargoUser = localStorage.getItem("TIPOUSUARIO")
   const itensMenu = lista.map((rota, index) => {
@@ -99,7 +101,7 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
       const rotaArrumada = {
         id: rota.id,
         nome: rota.nome + " demanda",
-        rota: rota.children[0].rota,
+        rota: rota.children ? (rota.children.length != 0 ? (rota.children[0].rota) : "") : "",
         icone: rota.icone
       }
 
@@ -140,7 +142,7 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
                   </Icon>
                 </Box>
                 {props.aberto &&
-                  `Sair`
+                  <span onClick={lerTexto}>Sair</span>
                 }
               </Link>
             </Box>
@@ -158,6 +160,7 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
  * @returns 
  */
 function MenuItem(props: { index: number, item: { id: number, nome: string, rota: string, icone: JSX.Element }, aberto: boolean }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [selecionado, setSelecionado] = useState(false)
   const location = useLocation()
 
@@ -217,11 +220,12 @@ function MenuItem(props: { index: number, item: { id: number, nome: string, rota
  * @returns 
  */
 function DropMenuItem(props: { index: number, item: { id: number, nome: string, icone: JSX.Element, children: { id: number, nome: string, rota: string, }[] }, aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<SetStateAction<boolean>> }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [componenteAberto, setComponenteAberto] = useState(false);
   const [itensSelecionados, setItensSelecionados] = useState(false)
   const location = useLocation()
 
-  const rotasSecundarias = props.item.children.map((rotaSecundaria, index) => {
+  const rotasSecundarias = props.item.children.map((rotaSecundaria) => {
     const selecionado = location.pathname.slice(1) == rotaSecundaria.rota
 
     if (!itensSelecionados) {
@@ -237,7 +241,7 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
           <SidebarTypography>
             <Link to={rotaSecundaria.rota} >
               <SidebarListItemButton sx={{ pl: 4 }} selected={selecionado} >
-                <ListItemText primary={rotaSecundaria.nome} />
+                <ListItemText primary={rotaSecundaria.nome} onClick={lerTexto}/>
               </SidebarListItemButton>
             </Link>
           </SidebarTypography>
@@ -289,7 +293,7 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
             <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
               {props.item.icone}
             </SidebarListItemIcon>
-            <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
+            <ListItemText onClick={lerTexto} primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
             {props.aberto &&
               <>
                 {!componenteAberto ?
