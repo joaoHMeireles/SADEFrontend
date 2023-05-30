@@ -95,8 +95,8 @@ export default function CriacaoAta(props: {
     setValor(newValue);
   }
 
-
-  function criarATA() {
+  function criarATA(event: any) {
+    lerTexto(event)
     const tituloReuniaoATA = (document.getElementById("tituloReuniao") as HTMLInputElement).value
     const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
     const horarioInicioReuniao = (document.getElementById("horarioInicioReuniao") as HTMLInputElement).value
@@ -175,7 +175,7 @@ export default function CriacaoAta(props: {
               setPautaEscolhida={setPautaEscolhida}
             />
             :
-            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação "} />
+            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação"} />
           }
 
           <BotaoPrimario
@@ -202,13 +202,13 @@ export default function CriacaoAta(props: {
             <Box sx={{ width: "75%", display: "flex" }}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <TypographyTituloInput>
+                  <TypographyTituloInput onClick={lerTexto}>
                     Título da reunião
                   </TypographyTituloInput>
                   <TextField sx={{ width: "100%" }} id="tituloReuniao" />
                 </Grid>
                 <Grid item xs={12}>
-                  <TypographyTituloInput>
+                  <TypographyTituloInput onClick={lerTexto}>
                     Data da Reunião
                   </TypographyTituloInput>
                   <DatePicker
@@ -220,7 +220,7 @@ export default function CriacaoAta(props: {
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <TypographyTituloInput>
+                  <TypographyTituloInput onClick={lerTexto}>
                     Início da reunião
                   </TypographyTituloInput>
                   <TimePicker
@@ -233,7 +233,7 @@ export default function CriacaoAta(props: {
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <TypographyTituloInput>
+                  <TypographyTituloInput onClick={lerTexto}>
                     Final da reunião
                   </TypographyTituloInput>
                   <TimePicker
@@ -251,7 +251,10 @@ export default function CriacaoAta(props: {
           </BoxInputsDataComissao>
           <BoxBotoes>
             <BotaoSecundario
-              onClick={() => setValor(0)}
+              onClick={(e: any) => {
+                lerTexto(e)
+                setValor(0)
+              }}
               sx={{
                 width: "10%",
                 minWidth: "auto",

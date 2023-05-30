@@ -21,7 +21,6 @@ import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 
 import semNotificacao from "../../Assets/notification-bell.png"
 import { useLocation } from "react-router-dom";
-import Popover from "@mui/material/Popover";
 
 /**
  *
@@ -139,7 +138,6 @@ interface TipoNotificacao {
   ATA: string
   CHAT: string
 }
-
 
 interface NotificacaoInfo {
   idNotificacao: number

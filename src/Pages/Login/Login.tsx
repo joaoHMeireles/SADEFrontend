@@ -37,7 +37,7 @@ export default function Login(props: {
     email: '',
     senha: ''
   });
-  const { lerTexto} = useContext(TextReaderContext) as any
+  const { lerTexto } = useContext(TextReaderContext) as any
   const webSocketService: any = useContext(WebSocketContext)
   localStorage.setItem("PAGINATUAL", "login")
 

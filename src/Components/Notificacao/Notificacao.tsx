@@ -13,6 +13,8 @@ import {
   TypographyTitulo,
 } from "./Notificacao.styles";
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
+import { useContext } from "react";
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 
 /**
  *
@@ -32,6 +34,7 @@ export default function Notificacao(props: {
   linkNotificacao: any;
   idComponenteLink: any;
 }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const idUsuario = localStorage.getItem("IDUSUARIO") as string;
 
   const bodyNotificacaoDTO: any = {
@@ -120,10 +123,10 @@ export default function Notificacao(props: {
         </NotificacaoBoxIcone>
         <Box>
           <Box>
-            <TypographyTitulo variant="h6">{props.titulo}</TypographyTitulo>
+            <TypographyTitulo variant="h6" onClick={lerTexto}>{props.titulo}</TypographyTitulo>
           </Box>
           <Box>
-            <TypographyMensagem variant="caption">
+            <TypographyMensagem variant="caption" onClick={lerTexto}>
               {props.mensagem}
             </TypographyMensagem>
           </Box>
