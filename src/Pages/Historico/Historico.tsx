@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Persona,
@@ -30,124 +30,18 @@ import {
   GridToolbarFilterButtonEstilizado,
 } from "./Historico.styles";
 
-import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 
 import { PDFViewer } from "@progress/kendo-react-pdf-viewer";
 import { baixarArquivo } from "../../utils";
 
-import pdfAssets from "../../Assets/2.pdf";
 import api from "../../api/api";
 import { getValueEnum } from "../../utils";
+import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 
-
-const colunas: GridColDef[] = [
-  {
-    field: "tarefa",
-    headerClassName: "titulo-tabela",
-    headerName: "Tarefa requisitada",
-    width: 155,
-    renderCell: (params: any) => {
-      return (
-        <Tooltip title={params.row.tarefa}>
-          <span className="table-cell-trucate">{params.row.tarefa}</span>
-        </Tooltip>
-      );
-    },
-  },
-  {
-    field: "nomeUsuario",
-    headerClassName: "titulo-tabela",
-    headerName: "Usuário responsável",
-    width: 165,
-    renderCell: (params: any) => {
-      return (
-        <Tooltip
-          title={params.row.nomeUsuario + ": " + params.row.cargoUsuario}
-        >
-          <span className="table-cell-trucate">{params.row.nomeUsuario}</span>
-        </Tooltip>
-      );
-    },
-  },
-  {
-    field: "dataRecebimento",
-    headerClassName: "titulo-tabela",
-    headerName: "Data recebida",
-    width: 120,
-  },
-  {
-    field: "dataPrazoExecucao",
-    headerClassName: "titulo-tabela",
-    headerName: "Data prazo",
-    width: 100,
-  },
-  {
-    field: "status",
-    headerClassName: "titulo-tabela",
-    headerName: "Status atual",
-    width: 110,
-    renderCell: (params: any) => {
-
-      return (
-        <Tooltip title={params.row.status}>
-          <span className="table-cell-trucate">{params.row.status}</span>
-        </Tooltip>
-      );
-    },
-  },
-  {
-    field: "tarefaExecutada",
-    headerClassName: "titulo-tabela",
-    headerName: "Tarefa executada",
-    width: 155,
-    renderCell: (params: any) => {
-
-      return (
-        <Tooltip title={params.row.tarefaExecutada}>
-          <span className="table-cell-trucate">
-            {params.row.tarefaExecutada}
-          </span>
-        </Tooltip>
-      );
-    },
-  },
-  {
-    field: "dataConclusao",
-    headerClassName: "titulo-tabela",
-    headerName: "Data conclusão",
-    width: 130,
-  },
-  {
-    field: "pdfHistorico",
-    headerClassName: "titulo-tabela ultima",
-    headerName: "PDF",
-    width: 60,
-    disableColumnMenu: true,
-    renderCell: (params: any) => {
-      return (
-        // <Link to={"/visualizarCriacaoPDF"}>
-        <>
-          {params.row.pdfHistorico != null ?
-            <Tooltip title="Ver pdf">
-              <PictureAsPdfRoundedIcon
-                sx={{ color: "#595959", "&:hover": { color: "#00579d" } }}
-              />
-            </Tooltip>
-            :
-            <div>
-              -
-            </div>
-          }
-        </>
-
-        // </Link>
-      );
-    },
-  },
-];
 
 export default function TelaHistoricos(props: {}) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [historicosDemanda, setHistoricosDemanda] = useState<any[]>([])
   const [tamanhoPagina, setTamanhoPagina] = useState(5);
   const [datagridHeight, setDatagridheight] = useState("44.5vh");
@@ -155,23 +49,128 @@ export default function TelaHistoricos(props: {}) {
   const [arquivoPDF, setArquivoPDF] = useState<any>();
   const [historicosFormatados, setHistoricosFormatados] = useState<any[]>([])
   const [tamanhoLista, setTamanhoLista] = useState(5)
-
-  const pdf =
-    "https://www.caceres.mt.gov.br/fotos_institucional_downloads/2.pdf";
-
+  const pdf = "https://www.caceres.mt.gov.br/fotos_institucional_downloads/2.pdf";
   const location = useLocation();
   const inicioDaPalavra = location.pathname.length - 14;
   const finalDaPalavra = inicioDaPalavra + 6;
-  const eUmaDemanda =
-    location.pathname.slice(inicioDaPalavra, finalDaPalavra) == "demand";
-
+  const eUmaDemanda = location.pathname.slice(inicioDaPalavra, finalDaPalavra) == "demand";
   const informacaoProcessoCru = (localStorage.getItem(
     eUmaDemanda ? "DEMANDAESCOLHIDA" : "PROPOSTAESCOLHIDA"
   ) as string);
-
-  const informacaoProcesso = JSON.parse(
-    informacaoProcessoCru != null ? informacaoProcessoCru : ""
-  );
+  const informacaoProcesso = JSON.parse(informacaoProcessoCru != null ? informacaoProcessoCru : "");
+  const colunas: GridColDef[] = [
+    {
+      field: "tarefa",
+      headerClassName: "titulo-tabela",
+      headerName: "Tarefa requisitada",
+      width: 155,
+      renderHeader: renderHeader,
+      renderCell: (params: any) => {
+        return (
+          <Tooltip title={params.row.tarefa}>
+            <span className="table-cell-trucate">{params.row.tarefa}</span>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      field: "nomeUsuario",
+      headerClassName: "titulo-tabela",
+      headerName: "Usuário responsável",
+      width: 165,
+      renderHeader: renderHeader,
+      renderCell: (params: any) => {
+        return (
+          <Tooltip
+            title={params.row.nomeUsuario + ": " + params.row.cargoUsuario}
+          >
+            <span className="table-cell-trucate">{params.row.nomeUsuario}</span>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      field: "dataRecebimento",
+      headerClassName: "titulo-tabela",
+      headerName: "Data recebida",
+      width: 120,
+      renderHeader: renderHeader,
+    },
+    {
+      field: "dataPrazoExecucao",
+      headerClassName: "titulo-tabela",
+      headerName: "Data prazo",
+      width: 100,
+      renderHeader: renderHeader,
+    },
+    {
+      field: "status",
+      headerClassName: "titulo-tabela",
+      headerName: "Status atual",
+      width: 110,
+      renderHeader: renderHeader,
+      renderCell: (params: any) => {
+  
+        return (
+          <Tooltip title={params.row.status}>
+            <span className="table-cell-trucate">{params.row.status}</span>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      field: "tarefaExecutada",
+      headerClassName: "titulo-tabela",
+      headerName: "Tarefa executada",
+      width: 155,
+      renderHeader: renderHeader,
+      renderCell: (params: any) => {
+  
+        return (
+          <Tooltip title={params.row.tarefaExecutada}>
+            <span className="table-cell-trucate">
+              {params.row.tarefaExecutada}
+            </span>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      field: "dataConclusao",
+      headerClassName: "titulo-tabela",
+      headerName: "Data conclusão",
+      width: 130,
+      renderHeader: renderHeader,
+    },
+    {
+      field: "pdfHistorico",
+      headerClassName: "titulo-tabela ultima",
+      headerName: "PDF",
+      width: 60,
+      disableColumnMenu: true,
+      renderHeader: renderHeader,
+      renderCell: (params: any) => {
+        return (
+          // <Link to={"/visualizarCriacaoPDF"}>
+          <>
+            {params.row.pdfHistorico != null ?
+              <Tooltip title="Ver pdf">
+                <PictureAsPdfRoundedIcon
+                  sx={{ color: "#595959", "&:hover": { color: "#00579d" } }}
+                />
+              </Tooltip>
+              :
+              <div>
+                -
+              </div>
+            }
+          </>
+  
+          // </Link>
+        );
+      },
+    },
+  ];
 
   useEffect(() => {
     mudarTamanhoDatagrid(5);
@@ -262,6 +261,13 @@ export default function TelaHistoricos(props: {}) {
 
       setArquivoPDF(cell.row.pdfHistorico.arquivo);
       setMostrarPDF(true);
+    } else {
+      const e = {
+        target: {
+          innerText: cell.formattedValue
+        }
+      }
+      lerTexto(e)
     }
   }
 
@@ -297,6 +303,10 @@ export default function TelaHistoricos(props: {}) {
     } else {
       mudarTamanhoDatagrid(tamanhoPagina);
     }
+  }
+
+  function renderHeader(info: any){
+    return  <Box className="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle" onClick={lerTexto}> {info.colDef.headerName}</Box>
   }
 
   return (
@@ -415,7 +425,10 @@ export default function TelaHistoricos(props: {}) {
           },
         }}
       />
-      <Header />
+      <BoxHeader sx={{ paddingTop: "22px" }}>
+        <Breadcrumb />
+      </BoxHeader>
+      <Toolbar />
       <BoxConteudo>
         <BoxContainer>
           <Container>
@@ -460,9 +473,6 @@ export default function TelaHistoricos(props: {}) {
                     display: "flex",
                     justifyContent: "center"
                   }}>
-                    {/* <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-                      <Viewer fileUrl={arquivoPDF} />
-                    </Worker> */}
                     <PDFViewer data={arquivoPDF} />
                   </Box>
                 }
@@ -493,17 +503,6 @@ export default function TelaHistoricos(props: {}) {
           </Container>
         </BoxContainer>
       </BoxConteudo>
-    </>
-  );
-}
-
-function Header() {
-  return (
-    <>
-      <BoxHeader sx={{ paddingTop: "22px" }}>
-        <Breadcrumb />
-      </BoxHeader>
-      <Toolbar />
     </>
   );
 }

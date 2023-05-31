@@ -17,7 +17,7 @@ export default function TabelasCusto(props: { tabelasCusto: any[] }) {
             return (
                 <TableRowEstilizada key={indexLinha}>
                     <TableCellEstilzada align='center' onClick={lerTexto}>{linha.nomeRecurso}</TableCellEstilzada>
-                    <TableCellEstilzada align='center' onClick={lerTexto}>{linha.quantidade}{!tabela.isLicenca ? "h" : ""} </TableCellEstilzada>
+                    <TableCellEstilzada align='center' onClick={lerTexto}>{linha.quantidade}{!tabela.licenca ? "h" : ""} </TableCellEstilzada>
                     <TableCellEstilzada align='center' onClick={lerTexto}>R$ {linha.valorQuantidade}</TableCellEstilzada>
                     <TableCellEstilzada align='center' onClick={lerTexto}>R$ {total}</TableCellEstilzada>
                 </TableRowEstilizada>
@@ -41,7 +41,7 @@ export default function TabelasCusto(props: { tabelasCusto: any[] }) {
                         <TableHead >
                             <TableRow >
                                 <TableCellEstilzada align='center' onClick={lerTexto}>{tabela.tituloTabela}</TableCellEstilzada>
-                                <TableCellEstilzada align='center' onClick={lerTexto}>{!tabela.isLicenca ? "Esforço" : "Licenças"}</TableCellEstilzada>
+                                <TableCellEstilzada align='center' onClick={lerTexto}>{!tabela.licenca ? "Esforço" : "Licenças"}</TableCellEstilzada>
                                 <TableCellEstilzada align='center' onClick={lerTexto}>Valor </TableCellEstilzada>
                                 <TableCellEstilzada align='center' onClick={lerTexto}>Total</TableCellEstilzada>
                             </TableRow>
