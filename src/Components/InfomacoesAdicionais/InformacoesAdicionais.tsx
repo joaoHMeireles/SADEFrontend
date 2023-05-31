@@ -218,7 +218,7 @@ export default function InfomacoesAdicionais(props: {
                     {props.informacaoProcesso.busBeneficiadas ?
                         <Autocomplete
                             id="BU"
-                            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+                            sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
                             multiple
                             disableCloseOnSelect
                             defaultValue={props.informacaoProcesso.busBeneficiadas.map((bus: any) => bus.nomeBU)}
@@ -261,7 +261,7 @@ export default function InfomacoesAdicionais(props: {
                         /> :
                         <Autocomplete
                             id="BU"
-                            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+                            sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
                             multiple
                             disableCloseOnSelect
                             onChange={(e, valor: any) => {

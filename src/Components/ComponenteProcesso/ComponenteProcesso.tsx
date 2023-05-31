@@ -56,7 +56,7 @@ export default function ComponenteProcesso(props: {
   }
 
   const processElement = props.grid ? (
-    <GridComponent
+    <GridComponent 
       componente={componente}
       corComponente={corComponente}
       tituloToolTip={tituloToolTip}
@@ -159,15 +159,15 @@ export default function ComponenteProcesso(props: {
   }, [isChecked])
 
   function verProcesso(event: any) {
-    if(leituraDeSiteAtiva){
+    if (leituraDeSiteAtiva) {
       lerTexto(event)
     }
 
-     if (props.rascunho || (componente.devolvida && props.temDemandaDevolvida)) {
+    if (props.rascunho || (componente.devolvida && props.temDemandaDevolvida)) {
       return
     }
 
-     if(!leituraDeSiteAtiva) {
+    if (!leituraDeSiteAtiva) {
       setProcesso(event)
       location.href = nomeTipoLink;
     }
@@ -190,7 +190,7 @@ export default function ComponenteProcesso(props: {
       JSON.stringify(componente)
     );
 
-    if(leituraDeSiteAtiva){
+    if (leituraDeSiteAtiva) {
       lerTexto(event)
     }
   }
@@ -430,7 +430,7 @@ function ListComponent(props: ComponentProps) {
           </Tooltip>
           <ListaComponenteProcesso item xs={11.7} onClick={props.verProcesso}>
             <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
-              {props.componente.id} - {props.componente.tituloDemanda}
+              {props.componente.tituloDemanda}
             </ListaTypography>
             <ListaTypography variant="subtitle2">
               <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}

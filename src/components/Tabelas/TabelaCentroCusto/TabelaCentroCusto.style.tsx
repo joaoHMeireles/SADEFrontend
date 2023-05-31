@@ -11,7 +11,7 @@ export const BoxTabelaCusto = styledBox({
 })
 
 export const BoxContainerCentroCusto = styledBox({
-    boxShadow: "5px 5px 10px 0 #00000050",
+    boxShadow: "5px 5px 10px 0 #00000025",
     width: "25%"
 })
 

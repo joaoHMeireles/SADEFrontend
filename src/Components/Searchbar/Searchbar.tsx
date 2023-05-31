@@ -1,13 +1,13 @@
 import 'regenerator-runtime/runtime'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { Grid, IconButton, InputAdornment } from '@mui/material';
+import { Box, Grid, IconButton, InputAdornment } from '@mui/material';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import KeyboardRoundedIcon from '@mui/icons-material/KeyboardRounded';
 import MicRoundedIcon from '@mui/icons-material/MicRounded';
-import { BoxContainerInput, ContainerGrid, SearchTextField, GridIconButton } from './Search.styles';
+import { BoxContainerInput, SearchTextField } from './Search.styles';
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import TecladoVirtual from '../TecladoVirtual/TecladoVirtual';
 
@@ -86,27 +86,22 @@ export default function Searchbar(props: {
 
     return (
         <BoxContainerInput>
-            <ContainerGrid container spacing={2}>
-                <Grid item xs={10}>
-                    <SearchTextField value={valorInput} onChange={atualizarInput} id='input-pesquisa' InputProps={{
-                        startAdornment: startAdornment,
-                        endAdornment: endAdornment,
-                        placeholder: "Pesquisar por Título ou Solicitante"
-                    }} />
-                </Grid>
-                <Grid item xs={2}>
-                    <GridIconButton aria-label="grid" onClick={toggleGrid}>
-                        {!props.grid ?
-                            <GridViewRoundedIcon sx={{ color: (!props.grid ? "#00579d" : "") }} />
-                            :
-                            <ViewListRoundedIcon sx={{ color: (props.grid ? "#00579d" : "") }} />
-                        }
-                    </GridIconButton>
-                </Grid>
-                {usandoTecladoVirtual &&
-                    <TecladoVirtual setValorInput={setValorInput} valorInput={valorInput} />
+            <SearchTextField value={valorInput} onChange={atualizarInput} id='input-pesquisa' InputProps={{
+                startAdornment: startAdornment,
+                endAdornment: endAdornment,
+                placeholder: "Pesquisar por Título ou Solicitante"
+            }} />
+
+            <IconButton sx={{ marginLeft: "1rem" }} onClick={toggleGrid}>
+                {!props.grid ?
+                    <GridViewRoundedIcon sx={{ color: "#00579d" }} />
+                    :
+                    <ViewListRoundedIcon sx={{ color: "#00579d" }} />
                 }
-            </ContainerGrid>
+            </IconButton>
+
+            {usandoTecladoVirtual &&
+                <TecladoVirtual setValorInput={setValorInput} valorInput={valorInput} />}
         </BoxContainerInput>
     )
 }

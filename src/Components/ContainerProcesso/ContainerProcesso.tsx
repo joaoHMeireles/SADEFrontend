@@ -15,7 +15,7 @@ export default function ContainerProcesso(props: { informacaoProcesso: any, chil
         <BoxConteudo >
             <GridContainer container>
                 <Grid item xs={0.2}>
-                    <BoxCorStatus sx={{ backgroundColor: getCorStatus(informacaoProcesso?.statusDemanda) }} ></BoxCorStatus>
+                    <BoxCorStatus sx={{ backgroundColor: getCorStatus(informacaoProcesso?.statusDemanda) }} />
                 </Grid>
                 <GridInformacao item xs={11.8}>
                     <>

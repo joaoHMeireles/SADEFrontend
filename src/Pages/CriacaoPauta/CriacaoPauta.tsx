@@ -32,7 +32,7 @@ import {
 } from "../../constants/enuns";
 import api from "../../api/api";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
-import semDemanda from "../../Assets/empty-folder.png"
+import semDemanda from "../../Assets/emptyFolder.png"
 import { GridInfoATA, TypographyTituloInput } from "../TelaColecaoProcesso/TelaColecaoProcesso.styles";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";

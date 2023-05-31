@@ -3,7 +3,7 @@ import { BoxBackground, Title, P, BoxImage, Space } from "./Componentes.style";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded"
 // Introdução
-import SADE from "../../../Assets/AjudaUsuario/Introducao/SADE.png";
+import SADE from "../../../Assets/AjudaUsuario/Introducao/sade.png";
 // Avaliar Demanda - Analista de TI ou Gerente de TI
 import aprovarDemandaA from "../../../Assets/AjudaUsuario/AvaliarDemandaA/aprovarDemanda.png";
 import avaliarDemandaA from "../../../Assets/AjudaUsuario/AvaliarDemandaA/avaliarDemanda.png";

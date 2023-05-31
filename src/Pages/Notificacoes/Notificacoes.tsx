@@ -19,7 +19,7 @@ import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { BoxContainerNotificacoes } from "./Notificacoes.styles";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 
-import semNotificacao from "../../Assets/notification-bell.png"
+import semNotificacao from "../../Assets/notificationBell.png"
 import { useLocation } from "react-router-dom";
 
 /**
