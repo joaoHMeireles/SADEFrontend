@@ -51,8 +51,6 @@ export default function Login(props: {
   }
 
   const handleLogin = async (e: any) => {
-    console.log("Entrou no handleLogin");
-
     e.preventDefault();
     console.log(user);
     

@@ -86,27 +86,22 @@ export default function Searchbar(props: {
 
     return (
         <BoxContainerInput>
-            <ContainerGrid container spacing={2}>
-                <Grid item xs={10}>
-                    <SearchTextField value={valorInput} onChange={atualizarInput} id='input-pesquisa' InputProps={{
-                        startAdornment: startAdornment,
-                        endAdornment: endAdornment,
-                        placeholder: "Pesquisar por Título ou Solicitante"
-                    }} />
-                </Grid>
-                <Grid item xs={2}>
-                    <GridIconButton aria-label="grid" onClick={toggleGrid}>
-                        {!props.grid ?
-                            <GridViewRoundedIcon sx={{ color: (!props.grid ? "#00579d" : "") }} />
-                            :
-                            <ViewListRoundedIcon sx={{ color: (props.grid ? "#00579d" : "") }} />
-                        }
-                    </GridIconButton>
-                </Grid>
-                {usandoTecladoVirtual &&
-                    <TecladoVirtual setValorInput={setValorInput} valorInput={valorInput} />
+            <SearchTextField value={valorInput} onChange={atualizarInput} id='input-pesquisa' InputProps={{
+                startAdornment: startAdornment,
+                endAdornment: endAdornment,
+                placeholder: "Pesquisar por Título ou Solicitante"
+            }} />
+
+            <GridIconButton aria-label="grid" sx={{ marginLeft: "1rem" }} onClick={toggleGrid}>
+                {!props.grid ?
+                    <GridViewRoundedIcon sx={{ color: (!props.grid ? "#00579d" : "") }} />
+                    :
+                    <ViewListRoundedIcon sx={{ color: (props.grid ? "#00579d" : "") }} />
                 }
-            </ContainerGrid>
+            </GridIconButton>
+
+            {usandoTecladoVirtual &&
+                <TecladoVirtual setValorInput={setValorInput} valorInput={valorInput} />}
         </BoxContainerInput>
     )
 }
