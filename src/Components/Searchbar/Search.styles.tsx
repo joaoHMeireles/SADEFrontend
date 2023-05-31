@@ -12,7 +12,7 @@ export const BoxContainerInput = styled(Box)({
 })
 
 export const SearchTextField = styled(TextField)({
-    width: "48vw",
+    width: "50vw",
     ":focus": {
         borderColor: "#00579d"
     },
@@ -30,6 +30,6 @@ export const ContainerGrid = styled(Grid)({
 })
 
 export const GridIconButton = styled(IconButton)({
-    margin: "none",
-    padding: "none"
+    
+
 })
