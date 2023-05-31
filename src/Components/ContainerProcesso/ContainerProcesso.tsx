@@ -3,9 +3,12 @@ import { BoxConteudo } from "../../Pages/App.styles";
 import { getCorStatus, getCorTipo } from "../../utils";
 import Bandeira from "../Bandeira/Bandeira";
 import { BoxCorStatus, GridContainer, GridContainerHeader, GridInformacao, GridTitulo } from "./ContainerProcesso.styles";
+import { useContext } from "react";
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 
 
 export default function ContainerProcesso(props: { informacaoProcesso: any, children: any}) {
+    const { lerTexto } = useContext(TextReaderContext) as any
     const informacaoProcesso = props.informacaoProcesso
 
     return (
@@ -18,7 +21,7 @@ export default function ContainerProcesso(props: { informacaoProcesso: any, chil
                     <>
                         <GridContainerHeader container>
                             <GridTitulo item xs={10} >
-                                <Typography variant='h4'>
+                                <Typography variant='h4' onClick={lerTexto}>
                                     {informacaoProcesso?.tituloDemanda}
                                 </Typography>
                             </GridTitulo>

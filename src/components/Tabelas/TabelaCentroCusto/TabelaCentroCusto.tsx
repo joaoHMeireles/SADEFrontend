@@ -1,8 +1,11 @@
 import { TableBody, TableHead, TableRow, Typography } from "@mui/material"
 import { BoxContainerTabela, TableCellEstilzada, TableContainerEstilizado, TableRowEstilizada } from "../Tabelas.style"
 import { BoxCentroCusto, BoxContainerCentroCusto, BoxTabelaCusto, BoxTitulosCentroCusto } from "./TabelaCentroCusto.style"
+import { useContext } from "react"
+import { TextReaderContext } from "../../TextReaderContext/TextReaderContext"
 
 export default function TabelasCusto(props: { tabelasCusto: any[] }) {
+    const { lerTexto } = useContext(TextReaderContext) as any
     const elementosTabelaCusto = props.tabelasCusto.map((tabela: any, index: number) => {
         let tempoTotal = 0, valorTotal = 0
 
@@ -13,10 +16,10 @@ export default function TabelasCusto(props: { tabelasCusto: any[] }) {
 
             return (
                 <TableRowEstilizada key={indexLinha}>
-                    <TableCellEstilzada align='center'>{linha.nomeRecurso}</TableCellEstilzada>
-                    <TableCellEstilzada align='center'>{linha.quantidade}{!tabela.isLicenca ? "h" : ""} </TableCellEstilzada>
-                    <TableCellEstilzada align='center'>R$ {linha.valorQuantidade}</TableCellEstilzada>
-                    <TableCellEstilzada align='center'>R$ {total}</TableCellEstilzada>
+                    <TableCellEstilzada align='center' onClick={lerTexto}>{linha.nomeRecurso}</TableCellEstilzada>
+                    <TableCellEstilzada align='center' onClick={lerTexto}>{linha.quantidade}{!tabela.isLicenca ? "h" : ""} </TableCellEstilzada>
+                    <TableCellEstilzada align='center' onClick={lerTexto}>R$ {linha.valorQuantidade}</TableCellEstilzada>
+                    <TableCellEstilzada align='center' onClick={lerTexto}>R$ {total}</TableCellEstilzada>
                 </TableRowEstilizada>
             )
         })
@@ -25,7 +28,7 @@ export default function TabelasCusto(props: { tabelasCusto: any[] }) {
             const porcentagem = centroDeCusto.porcentagemDespesa * 100
 
             return (
-                <Typography key={indexcentroCusto} variant="body1" sx={{ color: "#595959" }}>
+                <Typography key={indexcentroCusto} variant="body1" sx={{ color: "#595959" }} onClick={lerTexto}>
                     {centroDeCusto.centroCusto.nomeCentroCusto} - {porcentagem}%
                 </Typography>
             )
@@ -37,25 +40,25 @@ export default function TabelasCusto(props: { tabelasCusto: any[] }) {
                     <TableContainerEstilizado sx={{ width: "auto" }}>
                         <TableHead >
                             <TableRow >
-                                <TableCellEstilzada align='center'>{tabela.tituloTabela}</TableCellEstilzada>
-                                <TableCellEstilzada align='center'>{!tabela.isLicenca ? "Esforço" : "Licenças"}</TableCellEstilzada>
-                                <TableCellEstilzada align='center'>Valor </TableCellEstilzada>
-                                <TableCellEstilzada align='center'>Total</TableCellEstilzada>
+                                <TableCellEstilzada align='center' onClick={lerTexto}>{tabela.tituloTabela}</TableCellEstilzada>
+                                <TableCellEstilzada align='center' onClick={lerTexto}>{!tabela.isLicenca ? "Esforço" : "Licenças"}</TableCellEstilzada>
+                                <TableCellEstilzada align='center' onClick={lerTexto}>Valor </TableCellEstilzada>
+                                <TableCellEstilzada align='center' onClick={lerTexto}>Total</TableCellEstilzada>
                             </TableRow>
                         </TableHead>
                         <TableBody >
                             {linhasTabela}
                             <TableRowEstilizada>
-                                <TableCellEstilzada align='center'> <b>Total {tabela.tituloTabela}</b></TableCellEstilzada>
-                                <TableCellEstilzada align='center'> <b>{tempoTotal}{!tabela.isLicenca ? "h" : ""}</b></TableCellEstilzada>
-                                <TableCellEstilzada align='center'> </TableCellEstilzada>
-                                <TableCellEstilzada align='center'> <b>R$ {valorTotal}</b></TableCellEstilzada>
+                                <TableCellEstilzada align='center' onClick={lerTexto}> <b>Total {tabela.tituloTabela}</b></TableCellEstilzada>
+                                <TableCellEstilzada align='center' onClick={lerTexto}> <b>{tempoTotal}{!tabela.isLicenca ? "h" : ""}</b></TableCellEstilzada>
+                                <TableCellEstilzada align='center' onClick={lerTexto}> </TableCellEstilzada>
+                                <TableCellEstilzada align='center' onClick={lerTexto}> <b>R$ {valorTotal}</b></TableCellEstilzada>
                             </TableRowEstilizada>
                         </TableBody>
                     </TableContainerEstilizado>
                 </BoxContainerTabela>
                 <BoxContainerCentroCusto>
-                    <BoxTitulosCentroCusto>
+                    <BoxTitulosCentroCusto onClick={lerTexto}>
                         Centros de Custo
                     </BoxTitulosCentroCusto>
                     <BoxCentroCusto>

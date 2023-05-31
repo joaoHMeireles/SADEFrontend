@@ -1,9 +1,9 @@
 import React, { useState, useEffect, MouseEventHandler, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import api, { pegarAnalistaTIResponsavel, pegarGerenteSolicitante, pegarGerenteTISolicitante, pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
-import { 
-    getNomeComponente, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum, getValueEnum, 
-    baixarArquivo, getBotoesPagina, getNomeAtributo 
+import {
+    getNomeComponente, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum, getValueEnum,
+    baixarArquivo, getBotoesPagina, getNomeAtributo
 } from '../../utils';
 import { sessaoTI, StatusComponenteProcesso, TamanhoComponenteProcesso, TipoComponenteProcesso } from '../../constants/enuns';
 import { TextReaderContext } from '../../Components/TextReaderContext/TextReaderContext';
@@ -18,7 +18,7 @@ import TabelaBeneficios from "../../Components/Tabelas/TabelaBeneficios/TabelaBe
 import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
 import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
-    Alert, Box, Container, Dialog, Divider, Grid, IconButton, List, ListItem, ListItemIcon, 
+    Alert, Box, Container, Dialog, Divider, Grid, IconButton, List, ListItem, ListItemIcon,
     ListItemText, Snackbar, Typography
 } from '@mui/material';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
@@ -32,6 +32,7 @@ import {
 } from './TelaProcesso.styles';
 import imagemSemNada from "../../Assets/empty-folder.png"
 import ResultadoVazio from '../../Components/ResultadoVazio/ResultadoVazio';
+import TopicoAtributos from '../../Components/TopicoAtributos/TopicoAtributos';
 
 
 const valoresInputBU: any[] = [
@@ -44,7 +45,6 @@ const valoresInputBU: any[] = [
     { idBU: 7, nomeBU: 'Tintas' },
     { idBU: 8, nomeBU: 'Transmissão e Distribuição' }
 ]
-let lerTexto: MouseEventHandler<HTMLElement>
 
 /**
  * Componente principal das páginas de proposta de demanda sendo dinâmico conforme
@@ -54,8 +54,6 @@ let lerTexto: MouseEventHandler<HTMLElement>
  * @returns 
  */
 export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }) {
-    let { lerTextoFunction } = useContext(TextReaderContext) as any
-    lerTexto = lerTextoFunction
     const [modalAberto, setModalAberto] = useState(false)
     const [conteudoModal, setConteudoModal] = useState(<div />)
     const [feedbackAberto, setFeedbackAberto] = useState(false)
@@ -107,7 +105,14 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
             <BoxConteudo >
                 <BoxContainer>
                     <Container >
-                        <ContainerProcessoPrincipal informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
+                        <ContainerProcesso informacaoProcesso={informacaoProcesso}>
+                            <Divider />
+                            <Contextualizacao processo={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
+                            <Divider />
+                            <InfoGeral processo={informacaoProcesso} />
+                            <Divider />
+                            <InfoComercial processo={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
+                        </ContainerProcesso >
                         <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { minWidth: "35vw" } }}>
                             {conteudoModal}
                         </Dialog>
@@ -126,14 +131,14 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
     )
 }
 
-// /**
-//  * Componente para o header da página que controlará os botões que aparecerão
-//  * de acordo com o status atual daquele processo, informações do processo
-//  * e a pessoa tualmente logada
-//  * 
-//  * @param props 
-//  * @returns 
-//  */
+/**
+ * Componente para o header da página que controlará os botões que aparecerão
+ * de acordo com o status atual daquele processo, informações do processo
+ * e a pessoa tualmente logada
+ * 
+ * @param props 
+ * @returns 
+ */
 export function Header(props: {
     informacaoProcesso: any,
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
@@ -142,6 +147,7 @@ export function Header(props: {
     setConteudoFeedback: React.Dispatch<React.SetStateAction<JSX.Element>>,
     sidebarAberta: boolean
 }) {
+    const { lerTexto } = useContext(TextReaderContext) as any
     const [tempoExcedido, setTempoExcedido] = useState(false)
     const [aprovadoGerente, setAprovadoGerente] = useState(false)
     const [ultimoHistorico, setUltimoHistorico] = useState<any>({})
@@ -809,272 +815,12 @@ export function Header(props: {
     )
 }
 
-
-/**
- * Container principal para todas as informações de uma proposta/demanda
- * 
- * @param props 
- * @returns 
- */
-function ContainerProcessoPrincipal(props: {
-    informacaoProcesso: any,
-    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
-    setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
-}) {
-    const informacaoProcesso = props.informacaoProcesso
-
-    return (
-        <ContainerProcesso informacaoProcesso={informacaoProcesso}>
-            <Divider />
-            <Contextualizacao processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
-            <Divider />
-            <InfoGeral processo={informacaoProcesso} />
-            <Divider />
-            <InfoComercial processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
-        </ContainerProcesso >
-    )
-}
-
-
-/**
- * Componente dinâmico das informações gerais de um processo
- * 
- * @param props 
- * @returns 
- */
-function InfoGeral(props: { processo: any }) {
-    const processo = props.processo
-
-    const atributosPequenos = {
-        numero: (processo.idDemanda ? processo.idDemanda : processo.idProposta),
-        status: processo.statusDemanda,
-        solicitante: processo.usuario.nomeUsuario,
-        departamento: processo.usuario.departamento,
-        //num sei oq é iso
-        // gerenteResponsavel: processo.gerenteResponsavel,
-        frequenciaDeUso: processo.frequenciaUso,
-        tamanho: getValueEnum(TamanhoComponenteProcesso, processo.tamanho),
-        sessaoTIResponsavel: getValueEnum(sessaoTI, processo.secaoTIResponsavel),
-        BUSolicitante: processo.busolicitante ? processo.busolicitante.nomeBU : null,
-        payback: processo.payback,
-        prazoElaboracao: processo.prazoElaboracao ? new Date(processo.prazoElaboracao) : null,
-        codigoPPM: processo.codigoPPM
-    }
-
-    const atributosGrandes = {
-        centrosDeCusto: processo.centroCustoDemanda,
-        BUsBeneficiadas: processo.busBeneficiadas,
-        periodoDeExecucao: processo.periodoExecucao,
-        responsaveis: processo.responsaveis
-    }
-
-    const gridAtributosPequenos = []
-    let chaveComponente = 0
-
-    for (let atributo in atributosPequenos) {
-        chaveComponente++
-        const nomeAtributo = getNomeAtributo(atributo)
-        let valorAtributo = (atributosPequenos as any)[atributo]
-
-        if (!valorAtributo) {
-            continue
-        }
-
-        if (typeof valorAtributo === typeof new Date()) {
-            valorAtributo = valorAtributo.toLocaleDateString()
-        }
-
-        gridAtributosPequenos.push(
-            <GridPequenosAtributos key={chaveComponente} item xs={6}>
-                <TypographyTituloAtributo variant='body1' onClick={lerTexto}>
-                    {nomeAtributo}
-                </TypographyTituloAtributo>
-                <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }} onClick={lerTexto}>
-                    {valorAtributo}
-                </TypographyTexto>
-            </GridPequenosAtributos>
-        )
-    }
-
-    const gridAtributosGrandes = []
-    chaveComponente = 0
-
-    for (let atributo in atributosGrandes) {
-        chaveComponente++
-        const nomeAtributo = getNomeAtributo(atributo)
-        let valorAtributo = (atributosGrandes as any)[atributo]
-
-        if (!valorAtributo) {
-            continue
-        } else if (valorAtributo.length == 0) {
-            continue
-        }
-
-        // let datasPeriodoExecucao = []
-
-        // for(let periodo of processo.periodoExecucao){
-        //     datasPeriodoExecucao.push(new Date(periodo))
-        // }
-
-        gridAtributosGrandes.push(
-            <Grid key={chaveComponente} item xs={6} >
-                <TypographyTituloAtributo variant='body1' onClick={lerTexto}>
-                    {nomeAtributo}
-                </TypographyTituloAtributo>
-                <AtributeList valorAtributo={valorAtributo} />
-            </Grid>
-        )
-    }
-
-    const beneficiosQualitativos = getBeneficiosPorTipo(processo.beneficiosDemanda, "QUALITATIVO")
-
-    const componenteBeneficiosQualitativos = beneficiosQualitativos.map((beneficio: any, index: number) => {
-        return (
-            <ListItem key={index} sx={{ textAlign: "justify" }} onClick={lerTexto}>
-                <ListItemIcon>
-                    <CircleIconPonto />
-                </ListItemIcon>
-                {beneficio.descricao}
-            </ListItem>
-        )
-    })
-
-
-    return (
-        <Grid container sx={{ marginY: "20px" }}>
-            <TypographyTitulo variant='h5' onClick={lerTexto}>
-                Informações Gerais
-            </TypographyTitulo>
-            <Grid item xs={12} sx={{ marginBottom: "8px" }}>
-                <Grid container spacing={1}>
-                    {gridAtributosPequenos}
-                </Grid>
-            </Grid >
-            <Grid item xs={12}>
-                <Grid container spacing={1}>
-                    {gridAtributosGrandes}
-                </Grid>
-            </Grid >
-            {componenteBeneficiosQualitativos.length != 0 &&
-                <Grid item>
-                    <TypographyTexto variant='body1' onClick={lerTexto}>
-                        <b>{getNomeAtributo("beneficiosQualitativos")}</b>
-                    </TypographyTexto>
-                    <List>
-                        {componenteBeneficiosQualitativos}
-                    </List>
-                </Grid>
-            }
-        </Grid >
-    )
-}
-
-
-//passar isso pra uma outra pasta
-/**
- * Componente dos atributos em lista das informações gerais
- * 
- * @param props 
- * @returns 
- */
-function AtributeList(props: { valorAtributo: [] }) {
-    let contadorPeriodoExecucao = 0
-    const valores = props.valorAtributo.map((valor: any, index) => {
-        //ver condição para data
-        // if (typeof valor === typeof new Date()) {
-        //     contadorPeriodoExecucao++
-        //     const valorData: Date = valor
-        //     return (
-        //         <ListItem key={index} onClick={lerTexto}>
-        //             <ListItemIcon>
-        //                 <CircleIconPonto />
-        //             </ListItemIcon>
-        //             {contadorPeriodoExecucao == 1 ? "Início: " : "Fim: "}
-        //             {valorData.toLocaleDateString()}
-        //         </ListItem>
-        //     )
-        // }
-
-        const nomeMostrar = valor.nomeCentroCusto ? valor.nomeCentroCusto : valor.nomeBU
-
-        return (
-            <ListItem key={index} onClick={lerTexto}>
-                <ListItemIcon>
-                    <CircleIconPonto />
-                </ListItemIcon>
-                {nomeMostrar}
-            </ListItem>
-        )
-    })
-
-
-    return (
-        <List>
-            {valores}
-        </List>
-    )
-}
-
-/**
- * Componente dinâmico das informações comerciais de um processo
- * 
- * @param props 
- * @returns 
- */
-function InfoComercial(props: {
-    processo: any,
-    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
-    setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
-}) {
-    const link = props.processo.linkJira
-    const atributos = {
-        beneficiosReais: getBeneficiosPorTipo(props.processo.beneficiosDemanda, "REAL"),
-        beneficiosPotenciais: getBeneficiosPorTipo(props.processo.beneficiosDemanda, "POTENCIAL"),
-        tabelasCusto: props.processo.tabelasCustoProposta
-    }
-    let elementosTabelaCusto
-
-
-    if (atributos.beneficiosReais.length == 0 && atributos.beneficiosPotenciais.length == 0 && atributos.tabelasCusto == null) {
-        return <></>
-    }
-
-    if (atributos.tabelasCusto) {
-        elementosTabelaCusto = <TabelasCusto tabelasCusto={atributos.tabelasCusto} />
-    }
-
-    return (
-        <>
-            <Box sx={{ marginY: "20px" }}>
-                <TypographyTitulo variant='h5' onClick={lerTexto}>
-                    Informações Comerciais
-                </TypographyTitulo>
-                {atributos.beneficiosReais.length != 0 &&
-                    <TabelaBeneficios title='Benefícios reais' atributos={atributos.beneficiosReais} />
-                }
-                {atributos.beneficiosPotenciais.length != 0 &&
-                    <TabelaBeneficios title='Benefícios potenciais' atributos={atributos.beneficiosPotenciais} />
-                }
-                {atributos.tabelasCusto &&
-                    <BoxTabela>
-                        <TypographyTitulo variant='subtitle1' onClick={lerTexto}>
-                            Tabelas de custo
-                        </TypographyTitulo>
-                        {elementosTabelaCusto}
-                    </BoxTabela>
-                }
-            </Box >
-            <Footer link={link} tipo={props.processo.tipo} anexos={props.processo.arquivosDemanda} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
-        </>
-    )
-
-}
-
 function Contextualizacao(props: {
     processo: any,
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
     setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
 }) {
+    const { lerTexto } = useContext(TextReaderContext) as any
     const atributos = {
         objetivo: props.processo.objetivo,
         situacaoAtual: props.processo.situacaoAtual,
@@ -1122,6 +868,193 @@ function Contextualizacao(props: {
     )
 }
 
+/**
+ * Componente dinâmico das informações gerais de um processo
+ * 
+ * @param props 
+ * @returns 
+ */
+function InfoGeral(props: { processo: any }) {
+    const { lerTexto } = useContext(TextReaderContext) as any
+    const processo = props.processo
+    const atributosPequenos = {
+        numero: (processo.idDemanda ? processo.idDemanda : processo.idProposta),
+        status: processo.statusDemanda,
+        solicitante: processo.usuario.nomeUsuario,
+        departamento: processo.usuario.departamento,
+        //num sei oq é iso
+        // gerenteResponsavel: processo.gerenteResponsavel,
+        frequenciaDeUso: processo.frequenciaUso,
+        tamanho: getValueEnum(TamanhoComponenteProcesso, processo.tamanho),
+        sessaoTIResponsavel: getValueEnum(sessaoTI, processo.secaoTIResponsavel),
+        BUSolicitante: processo.busolicitante ? processo.busolicitante.nomeBU : null,
+        payback: processo.payback,
+        prazoElaboracao: processo.prazoElaboracao ? new Date(processo.prazoElaboracao) : null,
+        codigoPPM: processo.codigoPPM
+    }
+    const atributosGrandes = {
+        centrosDeCusto: processo.centroCustoDemanda,
+        BUsBeneficiadas: processo.busBeneficiadas,
+        periodoDeExecucao: processo.periodoExecucao,
+        responsaveis: processo.responsaveis
+    }
+    const beneficiosQualitativos = getBeneficiosPorTipo(processo.beneficiosDemanda, "QUALITATIVO")
+    const componenteBeneficiosQualitativos = beneficiosQualitativos.map((beneficio: any, index: number) => {
+        return (
+            <ListItem key={index} sx={{ textAlign: "justify" }} onClick={lerTexto}>
+                <ListItemIcon>
+                    <CircleIconPonto />
+                </ListItemIcon>
+                {beneficio.descricao}
+            </ListItem>
+        )
+    })
+    const gridAtributosPequenos = []
+    const gridAtributosGrandes = []
+    let chaveComponente = 0
+
+
+    for (let atributo in atributosPequenos) {
+        chaveComponente++
+        const nomeAtributo = getNomeAtributo(atributo)
+        let valorAtributo = (atributosPequenos as any)[atributo]
+
+        if (!valorAtributo) {
+            continue
+        }
+
+        if (typeof valorAtributo === typeof new Date()) {
+            valorAtributo = valorAtributo.toLocaleDateString()
+        }
+
+        gridAtributosPequenos.push(
+            <GridPequenosAtributos key={chaveComponente} item xs={6}>
+                <TypographyTituloAtributo variant='body1' onClick={lerTexto}>
+                    {nomeAtributo}
+                </TypographyTituloAtributo>
+                <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }} onClick={lerTexto}>
+                    {valorAtributo}
+                </TypographyTexto>
+            </GridPequenosAtributos>
+        )
+    }
+
+    chaveComponente = 0
+
+    for (let atributo in atributosGrandes) {
+        chaveComponente++
+        const nomeAtributo = getNomeAtributo(atributo)
+        let valorAtributo = (atributosGrandes as any)[atributo]
+
+        if (!valorAtributo) {
+            continue
+        } else if (valorAtributo.length == 0) {
+            continue
+        }
+
+        // let datasPeriodoExecucao = []
+
+        // for(let periodo of processo.periodoExecucao){
+        //     datasPeriodoExecucao.push(new Date(periodo))
+        // }
+
+        gridAtributosGrandes.push(
+            <Grid key={chaveComponente} item xs={6} >
+                <TypographyTituloAtributo variant='body1' onClick={lerTexto}>
+                    {nomeAtributo}
+                </TypographyTituloAtributo>
+                <TopicoAtributos valorAtributo={valorAtributo} />
+            </Grid>
+        )
+    }
+
+
+    return (
+        <Grid container sx={{ marginY: "20px" }}>
+            <TypographyTitulo variant='h5' onClick={lerTexto}>
+                Informações Gerais
+            </TypographyTitulo>
+            <Grid item xs={12} sx={{ marginBottom: "8px" }}>
+                <Grid container spacing={1}>
+                    {gridAtributosPequenos}
+                </Grid>
+            </Grid >
+            <Grid item xs={12}>
+                <Grid container spacing={1}>
+                    {gridAtributosGrandes}
+                </Grid>
+            </Grid >
+            {componenteBeneficiosQualitativos.length != 0 &&
+                <Grid item>
+                    <TypographyTexto variant='body1' onClick={lerTexto}>
+                        <b>{getNomeAtributo("beneficiosQualitativos")}</b>
+                    </TypographyTexto>
+                    <List>
+                        {componenteBeneficiosQualitativos}
+                    </List>
+                </Grid>
+            }
+        </Grid >
+    )
+}
+
+/**
+ * Componente dinâmico das informações comerciais de um processo
+ * 
+ * @param props 
+ * @returns 
+ */
+function InfoComercial(props: {
+    processo: any,
+    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
+    setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
+}) {
+    const { lerTexto } = useContext(TextReaderContext) as any
+    const link = props.processo.linkJira
+    const atributos = {
+        beneficiosReais: getBeneficiosPorTipo(props.processo.beneficiosDemanda, "REAL"),
+        beneficiosPotenciais: getBeneficiosPorTipo(props.processo.beneficiosDemanda, "POTENCIAL"),
+        tabelasCusto: props.processo.tabelasCustoProposta
+    }
+    let elementosTabelaCusto
+
+
+    if (atributos.beneficiosReais.length == 0 && atributos.beneficiosPotenciais.length == 0 && atributos.tabelasCusto == null) {
+        return <></>
+    }
+
+    if (atributos.tabelasCusto) {
+        elementosTabelaCusto = <TabelasCusto tabelasCusto={atributos.tabelasCusto} />
+    }
+
+    return (
+        <>
+            <Box sx={{ marginY: "20px" }}>
+                <TypographyTitulo variant='h5' onClick={lerTexto}>
+                    Informações Comerciais
+                </TypographyTitulo>
+                {atributos.beneficiosReais.length != 0 &&
+                    <TabelaBeneficios title='Benefícios reais' atributos={atributos.beneficiosReais} />
+                }
+                {atributos.beneficiosPotenciais.length != 0 &&
+                    <TabelaBeneficios title='Benefícios potenciais' atributos={atributos.beneficiosPotenciais} />
+                }
+                {atributos.tabelasCusto &&
+                    <BoxTabela>
+                        <TypographyTitulo variant='subtitle1' onClick={lerTexto}>
+                            Tabelas de custo
+                        </TypographyTitulo>
+                        {elementosTabelaCusto}
+                    </BoxTabela>
+                }
+            </Box >
+            <Footer link={link} tipo={props.processo.tipo} anexos={props.processo.arquivosDemanda} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
+        </>
+    )
+
+}
+
+
 function Footer(props: {
     link: string,
     tipo: TipoComponenteProcesso,
@@ -1129,7 +1062,7 @@ function Footer(props: {
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
     setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
 }) {
-
+    const { lerTexto } = useContext(TextReaderContext) as any
 
     function mostrarAnexos() {
         const anexos = props.anexos.map((anexo: any, index: number) => {
@@ -1188,7 +1121,7 @@ function Footer(props: {
                     :
                     <div></div>
                 }
-                <BotaoTerciario variant='outlined' onClick={(e: any) => {lerTexto(e); mostrarAnexos()}}> 
+                <BotaoTerciario variant='outlined' onClick={(e: any) => { lerTexto(e); mostrarAnexos() }}>
                     Ver anexos
                 </BotaoTerciario>
             </GridItemFooter>
