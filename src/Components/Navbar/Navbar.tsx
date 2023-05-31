@@ -8,7 +8,7 @@ import { NavBar, /*BoxTextField,*/ TextFieldLinguas } from "./Navbar.styles";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
 import api from '../../api/api';
-import SADE from "../../Assets/sade.png";
+import sadeLogo from "../../Assets/sadeLogoBranca.png";
 
 const listaLinguas = [
     "Português",
@@ -54,7 +54,7 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                             </IconButton>
 
                             <Box sx={{ flexGrow: 1}}>
-                                <img id="imgLogoNav" src={SADE} alt="Logo SADE" />
+                                <img id="imgLogoNav" src={sadeLogo} alt="Logo SADE" />
                             </Box>
 
                             <Box sx={{ display: "flex" }}>

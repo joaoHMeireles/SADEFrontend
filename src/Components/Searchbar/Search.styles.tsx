@@ -7,13 +7,12 @@ import styled from "@emotion/styled"
 export const BoxContainerInput = styled(Box)({
     flexGrow: 1,
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginBottom: "2rem",
 })
 
 export const SearchTextField = styled(TextField)({
-    width: "100%",
-    height: "60%",
-    paddingTop: "7.5px",
+    width: "48vw",
     ":focus": {
         borderColor: "#00579d"
     },
@@ -23,10 +22,14 @@ export const SearchTextField = styled(TextField)({
 })
 
 export const ContainerGrid = styled(Grid)({
+    alignItems: "center",
+    display: "flex",
     height: "100%",
-    width: "48vw"
+    // justifyContent: "center",
+    width: "auto"
 })
 
 export const GridIconButton = styled(IconButton)({
-    marginTop: "6px"
+    margin: "none",
+    padding: "none"
 })

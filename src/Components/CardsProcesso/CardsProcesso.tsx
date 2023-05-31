@@ -54,7 +54,7 @@ export default function CardsProcesso(props: {
     }
 
     return (
-      <Grid key={index} item xs={props.grid ? (!matches ? 4 : 6) : 12}>
+      <Grid key={index} item xs={props.grid ? (!matches ? 4 : 6) : 12} sx={{ marginBottom: props.grid ? "2rem" : "1rem" }}>
         <BoxContainer>{componente}</BoxContainer>
       </Grid>
     );
@@ -63,7 +63,7 @@ export default function CardsProcesso(props: {
   return (
     <BoxContainer>
       <Box sx={{ width: "90%" }}>
-        <Grid container spacing={2}>
+        <Grid container>
           {/* <Grid item xs={4}>
             <Skeleton variant="rounded" width={"90%"} height={"100%"} />
           </Grid> */}
