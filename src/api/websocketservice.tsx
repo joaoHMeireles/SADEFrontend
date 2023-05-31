@@ -15,6 +15,8 @@ export const WebSocketService = ({ children }: {children: any}) => {
         if (stompClient == null) {
             conectar()
         } else {
+            const idUsuario = localStorage.getItem("IDUSUARIO")
+
             if (localStorage.getItem("INSCRITONASDEMANDAS") != "true") {
                 api.get("/sade/demanda/usuario/" + localStorage.getItem("IDUSUARIO")).then((res) => {
                     for (const demanda of res.data) {
@@ -24,6 +26,73 @@ export const WebSocketService = ({ children }: {children: any}) => {
                     localStorage.setItem("INSCRITONASDEMANDAS", "true")
                 })
             }
+
+            // if (localStorage.getItem("INSCRITONOSCHATS") != "true") {
+            //     api.get("/sade/usuario/" + idUsuario + "/chat").then((response) => {
+            //         const listaChats = response.data
+            //
+            //         for (let chat of listaChats) {
+            //             function acaoNovaMensagem(response: any) {
+            //                 const infoMensagem = JSON.parse(response.body)
+            //                 //infoMensagem[0] = objeto da mensagem
+            //                 const mensagemRecebida = infoMensagem[0];
+            //
+            //                 const indexChat = listaChats.findIndex((chatAcharIndex: any) => chatAcharIndex.idChat == infoMensagem[1])
+            //                 const chatNovaMensagem = listaChats[indexChat]
+            //
+            //                 chatNovaMensagem.mensagens.push(mensagemRecebida)
+            //                 listaChats[indexChat] = chatNovaMensagem
+            //
+            //                 // infoMensagem[1] = id do chat da mensagem
+            //                 if (infoMensagem[1] == chat.idChat) {
+            //                     console.log(chatNovaMensagem);
+            //
+            //                     setChatEscolhido(chatNovaMensagem)
+            //                     atualizarMensagensNovaMensagem()
+            //                 }
+            //
+            //                 atualizarComponentes()
+            //
+            //                 console.log("jfsdfnhsdlsdjknfsjkdfnfsdffnsdkfjsdfjksd")
+            //
+            //                 if(localStorage.getItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`) == "false" && localStorage.getItem("PAGINATUAL") != "chat"){
+            //                     //api.post("/sod/notificacao/chat").then((res) => {
+            //                     // console.log(res)
+            //                     // localstorage.setItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`, "true")
+            //                     // })
+            //                 }
+            //             }
+            //
+            //             function atualizarMensagensNovaMensagem() {
+            //                 if (chat != null) {
+            //                     if (chat.mensagens != null) {
+            //                         if (chat.mensagens.length == 0) {
+            //                             return
+            //                         }
+            //                     } else {
+            //                         return
+            //                     }
+            //                 } else {
+            //                     return
+            //                 }
+            //
+            //                 const componenteMensagensNovo = chat.mensagens.map((mensagem: any) => {
+            //                     const usuario = chat.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
+            //
+            //                     return (
+            //                         <Mensagens mensagem={mensagem.mensagem} usuario={usuario} />
+            //                     )
+            //                 })
+            //
+            //                 setElementoMensagens(componenteMensagensNovo)
+            //             }
+            //
+            //             inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagem)
+            //         }
+            //
+            //         localStorage.setItem("INSCRITONOSCHATS", "true")
+            //     })
+            // }
         }
     }, [stompClient])
 

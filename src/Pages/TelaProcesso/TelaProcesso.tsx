@@ -30,7 +30,7 @@ import {
     TypographyTitulo, TypographyTituloAtributo, BoxConteudoModal, TypographyTituloModal, BoxTituloModal,
     BoxBotoesModal
 } from './TelaProcesso.styles';
-import imagemSemNada from "../../Assets/empty-folder.png"
+import imagemSemNada from "../../Assets/emptyFolder.png"
 import ResultadoVazio from '../../Components/ResultadoVazio/ResultadoVazio';
 import TopicoAtributos from '../../Components/TopicoAtributos/TopicoAtributos';
 

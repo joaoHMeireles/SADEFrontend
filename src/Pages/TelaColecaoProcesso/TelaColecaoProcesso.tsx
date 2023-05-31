@@ -74,7 +74,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import { StatusComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
 import api from "../../api/api";
-import imagemSemNada from "../../Assets/empty-folder.png"
+import imagemSemNada from "../../Assets/emptyFolder.png"
 import { BotaoPrimarioHeader, BotaoSecundarioHeader, BoxBotoes } from "../../Components/ButtonsHeader/ButtonsHeader.styles";
 
 

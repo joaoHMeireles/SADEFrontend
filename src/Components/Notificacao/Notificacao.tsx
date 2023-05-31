@@ -11,9 +11,9 @@ import {
     TypographyTitulo,
 } from "./Notificacao.styles";
 
-import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
-import { useContext } from "react";
-import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
+import {TipoColecaoComponenteProcesso, TipoComponenteProcesso} from "../../constants/enuns";
+import {useContext} from "react";
+import {TextReaderContext} from "../TextReaderContext/TextReaderContext";
 
 
 /**
@@ -32,8 +32,8 @@ export default function Notificacao(props: {
     linkNotificacao: any;
     idComponenteLink: any;
 }) {
-  const { lerTexto, leituraDeSiteAtiva  } = useContext(TextReaderContext) as any
-  const idUsuario = localStorage.getItem("IDUSUARIO") as string;
+    const {lerTexto, leituraDeSiteAtiva} = useContext(TextReaderContext) as any
+    const idUsuario = localStorage.getItem("IDUSUARIO") as string;
 
     const bodyNotificacaoDTO: any = {
         notificacao: {
@@ -45,19 +45,19 @@ export default function Notificacao(props: {
     }
 
 
-  function redirecionar(e: any) {
-    if(leituraDeSiteAtiva){
-      lerTexto(e)
-      if(!(e.target.localName == "div")){
-        return
-      }
-    }
+    function redirecionar(e: any) {
+        if (leituraDeSiteAtiva) {
+            lerTexto(e)
+            if (!(e.target.localName == "div")) {
+                return
+            }
+        }
 
 
-    if (props.tipoNotificacao == "DEMANDA") {
-      api.get("/sade/demanda/" + props.idComponenteLink).then((response) => {
-        response.data.id = response.data.idDemanda
-        response.data.tipo = TipoComponenteProcesso.Demanda
+        if (props.tipoNotificacao == "DEMANDA") {
+            api.get("/sade/demanda/" + props.idComponenteLink).then((response) => {
+                response.data.id = response.data.idDemanda
+                response.data.tipo = TipoComponenteProcesso.Demanda
                 localStorage.setItem(
                     `DEMANDASELECIONADA`,
                     JSON.stringify(response.data)
@@ -117,40 +117,42 @@ export default function Notificacao(props: {
 
                 location.href = props.linkNotificacao
             })
-        }
+        } else if (props.tipoNotificacao == "CHAT") {
 
+            location.href = props.linkNotificacao
+        }
     }
 
-  return (
-    <BoxNotificacao onClick={redirecionar}>
-      <NotificacaoLadoEsquerdo>
-        <NotificacaoBoxIcone>
-          <props.Icone sx={{ color: "#595959" }}></props.Icone>
-        </NotificacaoBoxIcone>
-        <Box>
-          <Box>
-            <TypographyTitulo variant="h6" onClick={lerTexto}>{props.titulo}</TypographyTitulo>
-          </Box>
-          <Box>
-            <TypographyMensagem variant="caption"  onClick={lerTexto}>
-              {props.mensagem}
-            </TypographyMensagem>
-          </Box>
-        </Box>
-      </NotificacaoLadoEsquerdo>
-      <NotificacaoLadoDireito>
-        <DeleteRoundedIcon
-          sx={{ color: "#595959", cursor: "pointer" }}
-          onClick={() => {
-            console.log(bodyNotificacaoDTO);
-            api.delete(`/sade/notificacao/${bodyNotificacaoDTO.notificacao.idNotificacao}/${bodyNotificacaoDTO.usuario.idUsuario}`).then((res) => {
-              props.setNotificacoes(res.data)
-            }).catch((err) => {
-              console.log(err);
-            });
-          }}
-        />
-      </NotificacaoLadoDireito>
-    </BoxNotificacao>
-  )
+    return (
+        <BoxNotificacao onClick={redirecionar}>
+            <NotificacaoLadoEsquerdo>
+                <NotificacaoBoxIcone>
+                    <props.Icone sx={{color: "#595959"}}></props.Icone>
+                </NotificacaoBoxIcone>
+                <Box>
+                    <Box>
+                        <TypographyTitulo variant="h6" onClick={lerTexto}>{props.titulo}</TypographyTitulo>
+                    </Box>
+                    <Box>
+                        <TypographyMensagem variant="caption" onClick={lerTexto}>
+                            {props.mensagem}
+                        </TypographyMensagem>
+                    </Box>
+                </Box>
+            </NotificacaoLadoEsquerdo>
+            <NotificacaoLadoDireito>
+                <DeleteRoundedIcon
+                    sx={{color: "#595959", cursor: "pointer"}}
+                    onClick={() => {
+                        console.log(bodyNotificacaoDTO);
+                        api.delete(`/sade/notificacao/${bodyNotificacaoDTO.notificacao.idNotificacao}/${bodyNotificacaoDTO.usuario.idUsuario}`).then((res) => {
+                            props.setNotificacoes(res.data)
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                    }}
+                />
+            </NotificacaoLadoDireito>
+        </BoxNotificacao>
+    )
 }
