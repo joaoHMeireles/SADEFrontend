@@ -10,7 +10,7 @@ const styledBox = styled(Box);
 
 export const TableContainerEstilizado = styled(TableContainer)({
   borderRadius: "5px",
-  boxShadow: "5px 5px 10px 0 #00000050",
+  boxShadow: "5px 5px 10px 0 #00000025",
 });
 
 export const TableCellEstilzada = styled(TableCell)(({ theme: Theme }) => ({
@@ -40,6 +40,6 @@ export const BoxContainerTabela = styledBox({
   flexDirection: "column",
   width: "auto",
   borderRadius: "5px",
-  boxShadow: "5px 5px 10px 0 #00000050",
+  boxShadow: "5px 5px 10px 0 #00000025",
   marginBottom: 24
 });

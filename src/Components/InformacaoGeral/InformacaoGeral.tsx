@@ -91,7 +91,7 @@ export default function InformacaoGeral(props: {
           </TypographyLabels>
           <TextField
             id="titulo"
-            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+            sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
             onChange={(e: any) => {
               const novaInfoDemanda = {
                 ...props.informacaoProcesso,
@@ -114,7 +114,7 @@ export default function InformacaoGeral(props: {
           </TypographyLabels>
           <TextField
             id="situacaoAtual"
-            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+            sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
             multiline
             maxRows={Infinity}
             onChange={(e: any) => {
@@ -139,7 +139,7 @@ export default function InformacaoGeral(props: {
           </TypographyLabels>
           <TextField
             id="objetivo"
-            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+            sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
             multiline
             maxRows={Infinity}
             onChange={(e: any) => {
@@ -167,7 +167,7 @@ export default function InformacaoGeral(props: {
               <Autocomplete
                 id="centrosDeCusto"
                 defaultValue={demandaSelecionada.centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto)}
-                sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+                sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
                 multiple
                 disableCloseOnSelect
                 onChange={(e, valor: any) => {
@@ -217,7 +217,7 @@ export default function InformacaoGeral(props: {
               />) : (
               <Autocomplete
                 id="centrosDeCusto"
-                sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+                sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
                 multiple
                 disableCloseOnSelect
                 onChange={(e, valor: any) => {

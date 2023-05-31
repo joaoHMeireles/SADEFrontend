@@ -84,7 +84,7 @@ export default function EscopoProposta(props: {
             contentStyle={{
               height: 320,
               width: "100%", 
-              boxShadow: "5px 5px 10px 0 #00000050",
+              boxShadow: "5px 5px 10px 0 #00000025",
               borderRadius: "5px",
               fontFamily: "'Roboto','Helvetica','Arial', sans-serif"
             }}
@@ -134,7 +134,7 @@ export default function EscopoProposta(props: {
               onChange={(e: any) => {
                 props.setPayback(e.target.value)
               }}
-              sx={{ width: "66%", boxShadow: "5px 5px 10px 0 #00000050" }}
+              sx={{ width: "66%", boxShadow: "5px 5px 10px 0 #00000025" }}
             ></TextField>
           </BoxPaybackExe>
         </BoxPaybackExecucao>
@@ -143,7 +143,7 @@ export default function EscopoProposta(props: {
             <TypographyStyled onClick={lerTexto}>Nome dos responsáveis: </TypographyStyled>
             <Autocomplete
               id="nomeResponsavel"
-              sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+              sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
               multiple
               disableCloseOnSelect
               onChange={(e: any, valor: any) => {

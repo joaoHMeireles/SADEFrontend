@@ -458,7 +458,7 @@ function BeneficioReal(props: {
             {currencyInput == 0 ?
               <FormControl
                 variant="outlined"
-                sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
+                sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000025", display: "flex", m: "1", marginRight: "2rem" }}
                 onChange={(e: any) => {
                   setValueInput(e.target.value);
 
@@ -483,7 +483,7 @@ function BeneficioReal(props: {
               currencyInput == 1 ?
                 <FormControl
                   variant="outlined"
-                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "1rem" }}
+                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000025", display: "flex", m: "1", marginRight: "1rem" }}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -507,7 +507,7 @@ function BeneficioReal(props: {
                 :
                 <FormControl
                   variant="outlined"
-                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "1rem" }}
+                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000025", display: "flex", m: "1", marginRight: "1rem" }}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -532,7 +532,7 @@ function BeneficioReal(props: {
 
             <Select
               id={`moedaReal${props.index}`}
-              sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
+              sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000025" }}
               value={moedaBeneficio}
               onChange={(e: any) => {
                 setMoedaBeneficio(e.target.value);
@@ -587,7 +587,7 @@ function BeneficioReal(props: {
             }}
             multiline
             maxRows={Infinity}
-            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}>
+            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000025" }}>
           </TextField>
         </BoxInputsAbaixo>
       </BoxContainerDivisorio>
@@ -652,7 +652,7 @@ function BeneficioPotencial(props: {
             {currencyInput == 0 ?
               <FormControl
                 variant="outlined"
-                sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
+                sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000025", display: "flex", m: "1", marginRight: "2rem" }}
                 onChange={(e: any) => {
                   setValueInput(e.target.value);
 
@@ -677,7 +677,7 @@ function BeneficioPotencial(props: {
               currencyInput == 1 ?
                 <FormControl
                   variant="outlined"
-                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
+                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000025", display: "flex", m: "1", marginRight: "2rem" }}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -701,7 +701,7 @@ function BeneficioPotencial(props: {
                 :
                 <FormControl
                   variant="outlined"
-                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000050", display: "flex", m: "1", marginRight: "2rem" }}
+                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000025", display: "flex", m: "1", marginRight: "2rem" }}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -726,7 +726,7 @@ function BeneficioPotencial(props: {
 
             <Select
               id={`moedaPotencial${props.index}`}
-              sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000050" }}
+              sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000025" }}
               value={moedaBeneficio}
               onChange={(e: any) => {
                 setMoedaBeneficio(e.target.value);
@@ -781,7 +781,7 @@ function BeneficioPotencial(props: {
             }}
             multiline
             maxRows={Infinity}
-            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}>
+            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000025" }}>
           </TextField>
         </BoxInputsAbaixo>
       </BoxContainerDivisorio>
@@ -818,7 +818,7 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
           }}
           multiline
           maxRows={Infinity}
-          sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}>
+          sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000025" }}>
         </TextField>
       </BoxDescricaoRequeistosControle>
     </BoxContainerGeralBeneficio>

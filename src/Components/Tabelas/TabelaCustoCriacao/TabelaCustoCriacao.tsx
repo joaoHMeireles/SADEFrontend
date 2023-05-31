@@ -228,7 +228,7 @@ function Tabela(props: {
         <TypographyStyled onClick={lerTexto}>Centro de Custo para {props.tituloTabela}:</TypographyStyled>
         <Autocomplete
           id={`centroCusto${props.tabela}`}
-          sx={{ boxShadow: "5px 5px 10px 0 #00000050", marginBottom: 2 }}
+          sx={{ boxShadow: "5px 5px 10px 0 #00000025", marginBottom: 2 }}
           multiple
           disableCloseOnSelect
           onChange={(e, valor: any) => {

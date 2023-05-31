@@ -12,7 +12,7 @@ export const Container = styled(Box)({
 
 export const FirstColumn = styled(Box)({
     borderRadius: "1rem",
-    boxShadow: "5px 5px 10px 0px #00000050, -5px -5px 10px 0px #00000050",
+    boxShadow: "5px 5px 10px 0px #00000025",
     height: "75vh",
     marginTop: "1rem",
     width: "20%"
@@ -27,7 +27,7 @@ export const Lista = styled(List)({
 
 export const SecondColumn = styled(Box)({
     borderRadius: "1rem 0.9rem 0.9rem 1rem",
-    boxShadow: "5px 5px 10px 0px #00000050, -5px -5px 10px 0px #00000050",
+    boxShadow: "5px 5px 10px 0px #00000025",
     height: "75vh",
     marginTop: "1rem",
     overflow: "inherit",
