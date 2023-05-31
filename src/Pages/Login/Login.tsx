@@ -36,13 +36,15 @@ export default function Login(props: {
   tamanhoNavbar: string;
 }) {
   const [tipo, setTipo] = useState("password");
-  const [feedbackAberto, setFeedbackAberto] = useState(false);
-  const [invalido, setInvalido] = useState(false);
-  const [user, setUser] = useState({ email: '', senha: '' });
-  const { lerTexto } = useContext(TextReaderContext) as any;
-  const webSocketService: any = useContext(WebSocketContext);
-
-  localStorage.setItem("PAGINATUAL", "login");
+  const [feedbackAberto, setFeedbackAberto] = useState(false)
+  const [invalido, setInvalido] = useState(false)
+  const [user, setUser] = useState({
+    email: '',
+    senha: ''
+  });
+  const { lerTexto } = useContext(TextReaderContext) as any
+  const webSocketService: any = useContext(WebSocketContext)
+  localStorage.setItem("PAGINATUAL", "login")
 
   function atualizarUsuario(event: any) {
     setUser({

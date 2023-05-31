@@ -137,7 +137,6 @@ interface TipoNotificacao {
     CHAT: string
 }
 
-
 interface NotificacaoInfo {
     idNotificacao: number
     tituloNotificacao: string

@@ -65,10 +65,6 @@ export default function App() {
     }).catch((err) => {
       console.log(err);
     })
-    //     .finally(() => {
-    //   //setCarregou(true)
-    // })
-
 
     api.get("/sade/proposta").then((response: any) => {
       let listaPropostas: any[] = []
@@ -99,8 +95,6 @@ export default function App() {
         pauta.tipo = TipoColecaoComponenteProcesso.Pauta
         listaPautas.push(pauta)
       }
-
-
       setListaPautas(listaPautas);
     }).catch((err) => {
       console.log(err);

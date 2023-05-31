@@ -58,12 +58,10 @@ export default function ComponenteColecaoProcesso(props: {
   }, [props.pautaEscolhida])
 
   function verProcesso(event: any) {
-    if(leituraDeSiteAtiva){
-      lerTexto(event)
-    } else {
-      setProcesso()
-      location.href = nomeTipoLink;
-    }
+    lerTexto(event)
+    setProcesso()
+    location.href = nomeTipoLink;
+
   }
 
   function setProcesso() {
@@ -88,6 +86,7 @@ export default function ComponenteColecaoProcesso(props: {
       pautaEscolhida={props.pautaEscolhida}
       setPautaEscolhida={props.setPautaEscolhida}
       checado={checado}
+      lerTexto={lerTexto}
     />
   ) : (
     <ListComponent
@@ -102,6 +101,7 @@ export default function ComponenteColecaoProcesso(props: {
       pautaEscolhida={props.pautaEscolhida}
       setPautaEscolhida={props.setPautaEscolhida}
       checado={checado}
+      lerTexto={lerTexto}
     />
   );
 
@@ -126,7 +126,9 @@ function GridComponent(props: ComponentCollectionProps) {
             </Grid>
           </Tooltip>
           <GridComponenteProcesso item xs={11}
-            onClick={() => {
+            onClick={(e: any) => {
+              props.lerTexto(e)
+
               if (props.setPautaEscolhida) {
                 props.setPautaEscolhida(props.componente)
               }
@@ -151,7 +153,7 @@ function GridComponent(props: ComponentCollectionProps) {
             </GridTypography>
             <GridTypography variant="body1" sx={{ display: "flex" }}>
               {props.componente.propostas.length > 1 ?
-                <BoxColecaoComponente>
+                <BoxColecaoComponente onClick={props.lerTexto}>
                   - {props.componente.propostas[1].proposta.demanda.tituloDemanda}
                 </BoxColecaoComponente>
                 :
@@ -218,15 +220,12 @@ function GridComponent(props: ComponentCollectionProps) {
 
 function ListComponent(props: ComponentCollectionProps) {
   const propostas = props.listaPropostas.map((e, index) => {
-    console.log(e);
-
-
     if (index >= 2) {
       return null;
     }
 
     return (
-      <ListaTypography variant="subtitle2" sx={{ maxWidth: "8vw" }}>
+      <ListaTypography variant="subtitle2" sx={{ maxWidth: "8vw" }} onClick={props.lerTexto}>
         {"- " + e.proposta.demanda.tituloDemanda}
       </ListaTypography>
     );
@@ -244,7 +243,8 @@ function ListComponent(props: ComponentCollectionProps) {
             </Grid>
           </Tooltip>
           <ListaComponenteProcesso item xs={11.7}
-            onClick={() => {
+            onClick={(e: any) => {
+              props.lerTexto(e)
               if (props.setPautaEscolhida) {
                 props.setPautaEscolhida(props.componente)
               }
@@ -317,4 +317,5 @@ interface ComponentCollectionProps {
   pautaEscolhida?: any;
   setPautaEscolhida?: React.Dispatch<React.SetStateAction<any>>;
   checado: boolean;
+  lerTexto: MouseEventHandler<HTMLElement>;
 }

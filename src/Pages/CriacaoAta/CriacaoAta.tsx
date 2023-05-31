@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, useContext, useEffect, useState } from "react";
 
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
@@ -42,6 +42,7 @@ import { Dayjs } from "dayjs";
 import dayjs from 'dayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
+import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 
 export default function CriacaoAta(props: {
   filtrar: boolean;
@@ -49,6 +50,7 @@ export default function CriacaoAta(props: {
   listaComponents: any[];
   filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [valor, setValor] = useState(0);
   const [grid, setGrid] = useState(true);
   const [pautaEscolhida, setPautaEscolhida] = useState<any>();
@@ -62,6 +64,7 @@ export default function CriacaoAta(props: {
 
   useEffect(() => {
     const pautaEscolhida = JSON.parse(localStorage.getItem("PAUTACRIARATA") as string)
+
 
     ///criarATA
     api.get(`/sade/pauta`).then((response) => {
@@ -92,8 +95,8 @@ export default function CriacaoAta(props: {
     setValor(newValue);
   }
 
-
-  function criarATA() {
+  function criarATA(event: any) {
+    lerTexto(event)
     const tituloReuniaoATA = (document.getElementById("tituloReuniao") as HTMLInputElement).value
     const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
     const horarioInicioReuniao = (document.getElementById("horarioInicioReuniao") as HTMLInputElement).value
@@ -172,7 +175,7 @@ export default function CriacaoAta(props: {
               setPautaEscolhida={setPautaEscolhida}
             />
             :
-            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação "} />
+            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação"} />
           }
 
           <BotaoPrimario
@@ -184,7 +187,8 @@ export default function CriacaoAta(props: {
             }}
             variant="contained"
             endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
-            onClick={() => {
+            onClick={(e: any) => {
+              lerTexto(e)
               setValor(1);
             }}
           >
@@ -198,13 +202,13 @@ export default function CriacaoAta(props: {
             <Box sx={{ width: "75%", display: "flex" }}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <TypographyTituloInput>
+                  <TypographyTituloInput onClick={lerTexto}>
                     Título da reunião
                   </TypographyTituloInput>
                   <TextField sx={{ width: "100%" }} id="tituloReuniao" />
                 </Grid>
                 <Grid item xs={12}>
-                  <TypographyTituloInput>
+                  <TypographyTituloInput onClick={lerTexto}>
                     Data da Reunião
                   </TypographyTituloInput>
                   <DatePicker
@@ -216,7 +220,7 @@ export default function CriacaoAta(props: {
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <TypographyTituloInput>
+                  <TypographyTituloInput onClick={lerTexto}>
                     Início da reunião
                   </TypographyTituloInput>
                   <TimePicker
@@ -229,7 +233,7 @@ export default function CriacaoAta(props: {
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <TypographyTituloInput>
+                  <TypographyTituloInput onClick={lerTexto}>
                     Final da reunião
                   </TypographyTituloInput>
                   <TimePicker
@@ -247,7 +251,10 @@ export default function CriacaoAta(props: {
           </BoxInputsDataComissao>
           <BoxBotoes>
             <BotaoSecundario
-              onClick={() => setValor(0)}
+              onClick={(e: any) => {
+                lerTexto(e)
+                setValor(0)
+              }}
               sx={{
                 width: "10%",
                 minWidth: "auto",

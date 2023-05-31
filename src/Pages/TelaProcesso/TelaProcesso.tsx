@@ -1,40 +1,39 @@
-import React, { useState, useEffect, MouseEventHandler, SetStateAction, ChangeEvent } from 'react';
+import React, { useState, useEffect, MouseEventHandler, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getNomeComponente, urlValida, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum, getValueEnum, baixarArquivo } from '../../utils';
-import { Dayjs } from 'dayjs';
-import { sessaoTI, StatusComponenteProcesso, TamanhoComponenteProcesso, TarefaExecucao, TipoComponenteProcesso } from '../../constants/enuns';
+import api, { pegarAnalistaTIResponsavel, pegarGerenteSolicitante, pegarGerenteTISolicitante, pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
+import {
+    getNomeComponente, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum, getValueEnum,
+    baixarArquivo, getBotoesPagina, getNomeAtributo
+} from '../../utils';
+import { sessaoTI, StatusComponenteProcesso, TamanhoComponenteProcesso, TipoComponenteProcesso } from '../../constants/enuns';
+import { TextReaderContext } from '../../Components/TextReaderContext/TextReaderContext';
+import ModalClassificacaoDemanda from '../../Components/Modais/ModalClassificacaoDemanda/ModalClassificacaoDemanda';
+import ModalMotivoDevolucao from '../../Components/Modais/ModalMotivoDevolucao/ModalMotivoDevolucao';
+import ModalAdiconarInformacoes from '../../Components/Modais/ModalAdicionarInformacoes/ModalAdicionarInformacoes';
+import ButtonsHeader from '../../Components/ButtonsHeader/ButtonsHeader';
+import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
 import Breadcrumb from '../../Components/Breadcrumb/Breadcrumb';
 import Toolbar from '../../Components/Toolbar/Toolbar';
-import SelectBox from '../../Components/SelectBox/SelectBox'
 import TabelaBeneficios from "../../Components/Tabelas/TabelaBeneficios/TabelaBeneficios";
 import TabelasCusto from '../../Components/Tabelas/TabelaCentroCusto/TabelaCentroCusto';
 import ConteudoModalConfirmacao from '../../Components/ConteudoModalConfirmacao/ConteudoModalConfirmacao';
 import {
-    Alert, Badge, Box, Checkbox, Container, Dialog, Divider, FormControl, FormControlLabel, FormGroup, FormHelperText,
-    Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Radio, RadioGroup, SelectChangeEvent, Snackbar, TextField, Typography
+    Alert, Box, Container, Dialog, Divider, Grid, IconButton, List, ListItem, ListItemIcon,
+    ListItemText, Snackbar, Typography
 } from '@mui/material';
-import ChatBubbleRounded from '@mui/icons-material/ChatBubbleRounded';
-import HistoryRoundedIcon from '@mui/icons-material/HistoryRounded';
-import LanRoundedIcon from '@mui/icons-material/LanRounded';
-import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import CloseIcon from '@mui/icons-material/Close';
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker, LocalizationProvider, MuiPickersAdapterContext } from '@mui/x-date-pickers';
 import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles"
 import {
-    BotaoIcone, BotaoPrimarioHeader, BotaoSecundarioHeader, BotaoTerciarioHeader, BoxAviso, BoxBotoes, BoxHeader, BoxTabela, CircleIconPonto,
-    GridItemFooter, GridPequenosAtributos, TypographyTexto,
+    BoxAviso, BoxHeader, BoxTabela, CircleIconPonto, GridItemFooter, GridPequenosAtributos, TypographyTexto,
     TypographyTitulo, TypographyTituloAtributo, BoxConteudoModal, TypographyTituloModal, BoxTituloModal,
-    BoxBotoesModal, BoxInfoModal, BoxAtributosInfoModal, BoxAtributoInfoModal, BoxBUsBeneficiadas, BoxSessaoTI,
-    BoxAtributoInfoModal2, TypographyTituloAtributoModal, TextFieldURL
+    BoxBotoesModal
 } from './TelaProcesso.styles';
-import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
-import api, { pegarAnalistaTIResponsavel, pegarGerenteSolicitante, pegarGerenteTISolicitante, pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
-import { TypographyTituloDecisao } from '../TelaColecaoProcesso/TelaColecaoProcesso.styles';
-import imagemSemNada from "../../Assets/emptyFolder.png"
+import imagemSemNada from "../../Assets/empty-folder.png"
 import ResultadoVazio from '../../Components/ResultadoVazio/ResultadoVazio';
+import TopicoAtributos from '../../Components/TopicoAtributos/TopicoAtributos';
+
 
 const valoresInputBU: any[] = [
     { idBU: 1, nomeBU: 'Motores Industrial' },
@@ -72,7 +71,7 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
         if (location.search) {
             let idProposta = location.search.replace("?", "")
 
-            api.get("/sade/proposta/" + idProposta).then((res) => {
+            api.get("/sod/proposta/" + idProposta).then((res) => {
                 const proposta = res.data
 
                 for (let atributo in proposta.demanda) {
@@ -106,7 +105,14 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
             <BoxConteudo >
                 <BoxContainer>
                     <Container >
-                        <ContainerProcessoPrincipal informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
+                        <ContainerProcesso informacaoProcesso={informacaoProcesso}>
+                            <Divider />
+                            <Contextualizacao processo={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
+                            <Divider />
+                            <InfoGeral processo={informacaoProcesso} />
+                            <Divider />
+                            <InfoComercial processo={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
+                        </ContainerProcesso >
                         <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { minWidth: "35vw" } }}>
                             {conteudoModal}
                         </Dialog>
@@ -125,14 +131,14 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
     )
 }
 
-// /**
-//  * Componente para o header da página que controlará os botões que aparecerão
-//  * de acordo com o status atual daquele processo, informações do processo
-//  * e a pessoa tualmente logada
-//  * 
-//  * @param props 
-//  * @returns 
-//  */
+/**
+ * Componente para o header da página que controlará os botões que aparecerão
+ * de acordo com o status atual daquele processo, informações do processo
+ * e a pessoa tualmente logada
+ * 
+ * @param props 
+ * @returns 
+ */
 export function Header(props: {
     informacaoProcesso: any,
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
@@ -141,6 +147,7 @@ export function Header(props: {
     setConteudoFeedback: React.Dispatch<React.SetStateAction<JSX.Element>>,
     sidebarAberta: boolean
 }) {
+    const { lerTexto } = useContext(TextReaderContext) as any
     const [tempoExcedido, setTempoExcedido] = useState(false)
     const [aprovadoGerente, setAprovadoGerente] = useState(false)
     const [ultimoHistorico, setUltimoHistorico] = useState<any>({})
@@ -553,7 +560,7 @@ export function Header(props: {
             })
         }
 
-        props.setConteudoModal(<ModalAdiconarInformações abrirFeedback={finalizarAdicaoDeInformacoes} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
+        props.setConteudoModal(<ModalAdiconarInformacoes abrirFeedback={finalizarAdicaoDeInformacoes} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />)
 
         abrirModal()
     } // feito
@@ -799,7 +806,7 @@ export function Header(props: {
             </BoxHeader>
             <Toolbar />
             {tempoExcedido &&
-                <BoxAviso>
+                <BoxAviso onClick={lerTexto}>
                     <WarningRoundedIcon />
                     Tempo excedido!
                 </BoxAviso>
@@ -808,463 +815,58 @@ export function Header(props: {
     )
 }
 
-function ModalClassificacaoDemanda(props: Modal) {
-    const [BUsBeneficiadasErro, setBUsBeneficiadasErro] = useState({ html: { error: false }, helperText: "" })
-    const [tamanhoDemanda, setTamanhoDemanda] = useState("Médio")
-    const [BUSolicitante, setBUSolicitante] = useState("Energia")
-    const [sessaoTIescolhida, setSessaoTI] = useState("AAS")
-    const valoresInputTamanho = ["Muito Pequeno", "Pequeno", "Médio", "Grande", "Muito Grande"]
-    const keysSessaoTI = Object.keys(sessaoTI)
-    const valoresSessaoTI = Object.values(sessaoTI)
-    const nomesBU = valoresInputBU.map((bu) => {
-        return bu.nomeBU
-    })
-
-    const BUsbeneficiadas = valoresInputBU.map((bu: any, index: number) => {
-
-        if (index + 1 == valoresInputBU.length) {
-            return (
-                <Grid key={index} item xs={6}>
-                    <FormControl {...BUsBeneficiadasErro.html} variant="standard">
-                        <FormControlLabel control={<Checkbox id={bu.idBU + ""} className="bu-beneficiada" />} label={bu.nomeBU} className="buBeneficiada" />
-                        <FormHelperText>{BUsBeneficiadasErro.helperText}</FormHelperText>
-                    </FormControl>
-                </Grid>
-            )
-        }
-
-        return (
-            <Grid key={index} item xs={6}>
-                <FormControlLabel control={<Checkbox id={bu.idBU + ""} className="bu-beneficiada" />} label={bu.nomeBU} className="buBeneficiada" />
-            </Grid>
-        )
-    })
-
-    const conteudoFeedbackFinalizacao = (
-        <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
-            Aprovação concluída
-        </Alert>
-    )
-
-
-    function selecionarTamanho(event: SelectChangeEvent) {
-        setTamanhoDemanda(event.target.value)
-    }
-
-    function selecionarBU(event: SelectChangeEvent) {
-        setBUSolicitante(event.target.value)
-    }
-
-    function selecionarSessaoTI(event: SelectChangeEvent) {
-        setSessaoTI(event.target.value)
-    }
-
-    function finalizarAcao() {
-        const BUsBeneficiadas = document.getElementsByClassName("buBeneficiada")
-        let contador = 0
-
-        for (let buBeneficiada of BUsBeneficiadas) {
-            if (!(buBeneficiada.children[0].children[0] as HTMLInputElement).checked) {
-                contador++
-            }
-        }
-
-        if (contador == 8) {
-            setBUsBeneficiadasErro({
-                html: { error: true },
-                helperText: "Nenhuma BU selecionada"
-            })
-            return
-        }
-
-        props.abrirFeedback(conteudoFeedbackFinalizacao)
-    }
-
-    return (
-        <BoxConteudoModal>
-            <BoxTituloModal >
-                <TypographyTituloModal variant='h5' >
-                    Processo de aprovação
-                </TypographyTituloModal>
-                <IconButton onClick={props.fecharModal}>
-                    <CloseIcon />
-                </IconButton>
-            </BoxTituloModal>
-            <BoxInfoModal>
-                <BoxAtributosInfoModal >
-                    <BoxAtributoInfoModal>
-                        <TypographyTituloAtributo variant='body1'>
-                            Tamanho:
-                        </TypographyTituloAtributo>
-                        <SelectBox listaLabelValores={valoresInputTamanho} listaValores={valoresInputTamanho} mudarValor={selecionarTamanho} valorInicial={tamanhoDemanda} chave="input-tamanho" />
-                    </BoxAtributoInfoModal>
-                    <BoxAtributoInfoModal>
-                        <TypographyTituloAtributo variant='body1'>
-                            BU Solicitante:
-                        </TypographyTituloAtributo>
-                        <SelectBox listaLabelValores={nomesBU} listaValores={nomesBU} mudarValor={selecionarBU} valorInicial={BUSolicitante} chave="input-bu-solicitante" />
-                    </BoxAtributoInfoModal>
-                </BoxAtributosInfoModal>
-                <BoxBUsBeneficiadas>
-                    <TypographyTituloAtributo variant='body1'>
-                        BUs beneficiadas:
-                    </TypographyTituloAtributo>
-                    <FormGroup>
-                        <Grid container>
-                            {BUsbeneficiadas}
-                        </Grid>
-                    </FormGroup>
-                </BoxBUsBeneficiadas >
-                <BoxSessaoTI>
-                    <TypographyTituloAtributo variant='body1'>
-                        Sessão TI responsável:
-                    </TypographyTituloAtributo>
-                    <SelectBox listaLabelValores={valoresSessaoTI} listaValores={keysSessaoTI} mudarValor={selecionarSessaoTI} valorInicial={sessaoTIescolhida} maxWidth="none" chave="input-sessao-ti" />
-                </BoxSessaoTI>
-            </BoxInfoModal>
-            <BoxBotoesModal>
-                <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
-                    Cancelar
-                </BotaoSecundario>
-                <BotaoPrimario onClick={finalizarAcao} variant="contained" sx={{ marginLeft: "20px" }}>
-                    Enviar
-                </BotaoPrimario>
-            </BoxBotoesModal>
-            {/* <EsqueletoPDFVersaoDemanda demanda={data} /> */}
-        </BoxConteudoModal>
-    )
-}
-
-function ModalMotivoDevolucao(props: Modal) {
-    const [erroMotivoDevolucao, setErroMotivoDevolucao] = useState({ error: false, helperText: "" })
-    const conteudoFeedback = (
-        <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
-            Motivo da devolução enviado
-        </Alert>
-    )
-
-    function finalizarAcao() {
-        const textarea = (document.getElementById("textareaMotivo") as HTMLInputElement).value
-
-        if (textarea == "") {
-            setErroMotivoDevolucao({
-                error: true,
-                helperText: "Motivo não informado"
-            })
-            return
-        } else {
-            setErroMotivoDevolucao({
-                error: false,
-                helperText: ""
-            })
-        }
-
-        props.abrirFeedback(conteudoFeedback)
-    }
-
-    return (
-        <BoxConteudoModal>
-            <BoxTituloModal >
-                <TypographyTituloModal variant='h5' >
-                    Informe o motivo da devolução
-                </TypographyTituloModal>
-                <IconButton onClick={props.fecharModal}>
-                    <CloseIcon />
-                </IconButton>
-            </BoxTituloModal>
-            <TextField
-                id='textareaMotivo'
-                placeholder='Informe o motivo'
-                multiline
-                rows={7}
-                sx={{ marginBottom: "30px" }}
-                {...erroMotivoDevolucao}
-            />
-            <BoxBotoesModal>
-                <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
-                    Cancelar
-                </BotaoSecundario>
-                <BotaoPrimario onClick={finalizarAcao} variant="contained" sx={{ marginLeft: "20px" }}>
-                    Enviar
-                </BotaoPrimario>
-            </BoxBotoesModal>
-        </BoxConteudoModal>
-    )
-}
-
-function ModalAdiconarInformações(props: Modal) {
-    const [valorData, setValorData] = useState<Dayjs | null>(null)
-    const [erroObjectPrazo, setErroObjectPrazo] = useState({ error: false, helperText: "" })
-    const [erroObjectCodigoPPM, setErroObjectCodigoPPM] = useState({ error: false, helperText: "" })
-    const [erroObjectLink, setErroObjectLink] = useState({ error: false, helperText: "" })
-    const conteudoFeedback = (
-        <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
-            Informações adicionadas
-        </Alert>
-    )
-
-    function checarValor(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        const valor = Number.parseInt(e.target.value)
-        if (valor < 0) {
-            e.target.value = 0 + ""
-        }
-    }
-
-    function finalizarAcao() {
-        const inputPrazoElaboracao = (document.getElementById("inputDataInformacoes") as HTMLInputElement).value
-        const inputCodigPPM = (document.getElementById("inputCodigoPPM") as HTMLInputElement).value
-        const inputLinkJira = (document.getElementById("inputLinkJira") as HTMLInputElement).value
-
-        if (inputPrazoElaboracao == "" || inputCodigPPM == "" || inputLinkJira == "") {
-            if (inputPrazoElaboracao == "") {
-                setErroObjectPrazo({
-                    error: true,
-                    helperText: "Data não informada"
-                })
-            } else {
-                setErroObjectPrazo({
-                    error: false,
-                    helperText: ""
-                })
-            }
-
-            if (inputCodigPPM == "") {
-                setErroObjectCodigoPPM({
-                    error: true,
-                    helperText: "Código não informado"
-                })
-            } else {
-                setErroObjectCodigoPPM({
-                    error: false,
-                    helperText: ""
-                })
-            }
-
-            if (inputLinkJira == "") {
-                setErroObjectLink({
-                    error: true,
-                    helperText: "Link não informado"
-                })
-            } else {
-                setErroObjectLink({
-                    error: false,
-                    helperText: ""
-                })
-            }
-
-            return
-        } else {
-            setErroObjectPrazo({
-                error: false,
-                helperText: ""
-            })
-
-            setErroObjectCodigoPPM({
-                error: false,
-                helperText: ""
-            })
-
-            setErroObjectLink({
-                error: false,
-                helperText: ""
-            })
-        }
-
-        if (!urlValida(inputLinkJira)) {
-            setErroObjectLink({
-                error: true,
-                helperText: "Texto informado não é um link"
-            })
-
-            return
-        } else {
-            setErroObjectLink({
-                error: false,
-                helperText: ""
-            })
-        }
-
-        if (!inputLinkJira.includes("jira")) {
-            setErroObjectLink({
-                error: true,
-                helperText: "Link informado é inválido"
-            })
-
-            return
-        } else {
-            setErroObjectLink({
-                error: false,
-                helperText: ""
-            })
-        }
-
-        props.abrirFeedback(conteudoFeedback)
-    }
-
-    return (
-        <BoxConteudoModal>
-            <BoxTituloModal >
-                <TypographyTituloModal variant='h5' >
-                    Informações
-                </TypographyTituloModal>
-                <IconButton onClick={props.fecharModal}>
-                    <CloseIcon />
-                </IconButton>
-            </BoxTituloModal>
-            <BoxInfoModal>
-                <BoxAtributosInfoModal >
-                    <BoxAtributoInfoModal2 sx={{ width: "60%" }}>
-                        <TypographyTituloDecisao variant="body1">
-                            Status escolhido:
-                        </TypographyTituloDecisao>
-                        <FormControl error sx={{ display: "flex", flexDirection: "row" }}>
-                            <RadioGroup sx={{ display: "flex", flexDirection: "row" }}>
-                                <FormControlLabel
-                                    className='radio-status'
-                                    value="Assesment"
-                                    control={<Radio sx={{ "&.Mui-checked": { color: "#595959" } }} />}
-                                    label="Assesment"
-                                />
-                                <FormControlLabel
-                                    className='radio-status'
-                                    value="Business Case"
-                                    control={<Radio sx={{ "&.Mui-checked": { color: "#FFD600" } }} />}
-                                    label="Business Case"
-                                />
-                            </RadioGroup>
-                        </FormControl>
-                    </BoxAtributoInfoModal2>
-                </BoxAtributosInfoModal>
-                <BoxAtributosInfoModal >
-                    <BoxAtributoInfoModal2 sx={{ width: "50%" }}>
-                        <TypographyTituloAtributoModal variant='body1'>
-                            Prazo de elaboração:
-                        </TypographyTituloAtributoModal>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker
-                                value={valorData}
-                                onChange={(newValue) => {
-                                    setValorData(newValue);
-                                }}
-                                renderInput={(params: any) => <TextField id='inputDataInformacoes' {...params} {...erroObjectPrazo} />}
-                            />
-                        </LocalizationProvider>
-                    </BoxAtributoInfoModal2>
-                    <BoxAtributoInfoModal2>
-                        <TypographyTituloAtributoModal variant='body1'>
-                            Código PPM:
-                        </TypographyTituloAtributoModal>
-                        <TextField type='number' id='inputCodigoPPM' onChange={checarValor} {...erroObjectCodigoPPM} />
-                    </BoxAtributoInfoModal2>
-                </BoxAtributosInfoModal>
-                <Box sx={{ width: "100%" }}>
-                    <TypographyTituloAtributoModal variant='body1'>
-                        Link Jira:
-                    </TypographyTituloAtributoModal>
-                    <TextFieldURL placeholder='https://exemplo.com' type={'url'} id="inputLinkJira" {...erroObjectLink} />
-                </Box>
-            </BoxInfoModal>
-            <BoxBotoesModal>
-                <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
-                    Cancelar
-                </BotaoSecundario>
-                <BotaoPrimario onClick={finalizarAcao} variant="contained" sx={{ marginLeft: "20px" }}>
-                    Enviar
-                </BotaoPrimario>
-            </BoxBotoesModal>
-        </BoxConteudoModal>
-    )
-}
-
-function ButtonsHeader(props: { listaBotoes: Botao[] }) {
-    let contagemBotoesAcoes = 0
-    let botoes = []
-
-    for (let i = props.listaBotoes.length - 1; i >= 0; i--) {
-        const componenteBotao = props.listaBotoes[i]
-        const botao = componenteBotao.nome
-        const nomeBotao = getTituloBotao(botao)
-
-        if (botao == "chat" || botao == "historico" || botao.includes("workflow")) {
-            const iconeBotao = getBotao(botao)
-
-            if (botao.includes("!")) {
-                botoes.push(
-                    <BotaoIcone key={i} onClick={componenteBotao.function}>
-                        <Badge badgeContent={<ErrorRoundedIcon fontSize='small' sx={{ color: "#FAD271" }} />}>
-                            {iconeBotao}
-                        </Badge>
-                    </BotaoIcone>
-                )
-                continue
-            }
-
-            botoes.push(
-                <BotaoIcone key={i} onClick={componenteBotao.function}>
-                    {iconeBotao}
-                </BotaoIcone>
-            )
-        } else {
-            contagemBotoesAcoes++
-            switch (contagemBotoesAcoes) {
-                case 1:
-                    botoes.push(
-                        <BotaoPrimarioHeader variant='contained' key={i} onClick={componenteBotao.function}>
-                            {nomeBotao}
-                        </BotaoPrimarioHeader>
-                    )
-                    break
-                case 2:
-                    botoes.push(
-                        <BotaoSecundarioHeader variant='outlined' key={i} onClick={componenteBotao.function}>
-                            {nomeBotao}
-                        </BotaoSecundarioHeader>
-                    )
-                    break
-                case 3:
-                    botoes.push(
-                        <BotaoTerciarioHeader variant='outlined' key={i} onClick={componenteBotao.function}>
-                            {nomeBotao}
-                        </BotaoTerciarioHeader>
-                    )
-                    break
-            }
-        }
-
-    }
-
-    return (
-        <BoxBotoes>
-            {botoes}
-        </BoxBotoes>
-    )
-}
-
-/**
- * Container principal para todas as informações de uma proposta/demanda
- * 
- * @param props 
- * @returns 
- */
-function ContainerProcessoPrincipal(props: {
-    informacaoProcesso: any,
+function Contextualizacao(props: {
+    processo: any,
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
     setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
 }) {
-    const informacaoProcesso = props.informacaoProcesso
+    const { lerTexto } = useContext(TextReaderContext) as any
+    const atributos = {
+        objetivo: props.processo.objetivo,
+        situacaoAtual: props.processo.situacaoAtual,
+        escopo: props.processo.escopo,
+        motivoDevolucao: props.processo.motivoDevolucao
+    }
+    let contextos = []
+    let chaveComponentes = 0
+
+    for (let atributo in atributos) {
+        let valor = (atributos as any)[atributo];
+
+        if (!valor) {
+            continue
+        }
+        chaveComponentes++
+
+        if (atributo == "motivoDevolucao") {
+            contextos.push(
+                <Grid item xs={12} sx={{ marginBottom: "20px" }} key={chaveComponentes}>
+                    <TypographyTexto variant='body1' onClick={lerTexto}>
+                        <b>{getNomeAtributo(atributo)}</b> {valor} <b> - {props.processo.pessoaDevolucao}</b>
+                    </TypographyTexto>
+                </Grid>
+            )
+            continue
+        }
+
+        contextos.push(
+            <Grid item xs={12} sx={{ marginBottom: "20px" }} key={chaveComponentes}>
+                <TypographyTexto variant='body1' onClick={lerTexto}>
+                    <b>{getNomeAtributo(atributo)}</b> {valor}
+                </TypographyTexto>
+            </Grid>
+        )
+    }
 
     return (
-        <ContainerProcesso informacaoProcesso={informacaoProcesso}>
-            <Divider />
-            <Contextualizacao processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
-            <Divider />
-            <InfoGeral processo={informacaoProcesso} />
-            <Divider />
-            <InfoComercial processo={informacaoProcesso} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} />
-        </ContainerProcesso >
+        <Grid container sx={{ marginY: "20px" }}>
+            <TypographyTitulo variant='h5' onClick={lerTexto}>
+                Contextualização
+            </TypographyTitulo>
+            {contextos}
+        </Grid>
     )
 }
-
 
 /**
  * Componente dinâmico das informações gerais de um processo
@@ -1273,8 +875,8 @@ function ContainerProcessoPrincipal(props: {
  * @returns 
  */
 function InfoGeral(props: { processo: any }) {
+    const { lerTexto } = useContext(TextReaderContext) as any
     const processo = props.processo
-
     const atributosPequenos = {
         numero: (processo.idDemanda ? processo.idDemanda : processo.idProposta),
         status: processo.statusDemanda,
@@ -1290,16 +892,27 @@ function InfoGeral(props: { processo: any }) {
         prazoElaboracao: processo.prazoElaboracao ? new Date(processo.prazoElaboracao) : null,
         codigoPPM: processo.codigoPPM
     }
-
     const atributosGrandes = {
         centrosDeCusto: processo.centroCustoDemanda,
         BUsBeneficiadas: processo.busBeneficiadas,
         periodoDeExecucao: processo.periodoExecucao,
         responsaveis: processo.responsaveis
     }
-
+    const beneficiosQualitativos = getBeneficiosPorTipo(processo.beneficiosDemanda, "QUALITATIVO")
+    const componenteBeneficiosQualitativos = beneficiosQualitativos.map((beneficio: any, index: number) => {
+        return (
+            <ListItem key={index} sx={{ textAlign: "justify" }} onClick={lerTexto}>
+                <ListItemIcon>
+                    <CircleIconPonto />
+                </ListItemIcon>
+                {beneficio.descricao}
+            </ListItem>
+        )
+    })
     const gridAtributosPequenos = []
+    const gridAtributosGrandes = []
     let chaveComponente = 0
+
 
     for (let atributo in atributosPequenos) {
         chaveComponente++
@@ -1316,17 +929,16 @@ function InfoGeral(props: { processo: any }) {
 
         gridAtributosPequenos.push(
             <GridPequenosAtributos key={chaveComponente} item xs={6}>
-                <TypographyTituloAtributo variant='body1'>
+                <TypographyTituloAtributo variant='body1' onClick={lerTexto}>
                     {nomeAtributo}
                 </TypographyTituloAtributo>
-                <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+                <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }} onClick={lerTexto}>
                     {valorAtributo}
                 </TypographyTexto>
             </GridPequenosAtributos>
         )
     }
 
-    const gridAtributosGrandes = []
     chaveComponente = 0
 
     for (let atributo in atributosGrandes) {
@@ -1348,31 +960,18 @@ function InfoGeral(props: { processo: any }) {
 
         gridAtributosGrandes.push(
             <Grid key={chaveComponente} item xs={6} >
-                <TypographyTituloAtributo variant='body1'>
+                <TypographyTituloAtributo variant='body1' onClick={lerTexto}>
                     {nomeAtributo}
                 </TypographyTituloAtributo>
-                <AtributeList valorAtributo={valorAtributo} />
+                <TopicoAtributos valorAtributo={valorAtributo} />
             </Grid>
         )
     }
 
-    const beneficiosQualitativos = getBeneficiosPorTipo(processo.beneficiosDemanda, "QUALITATIVO")
-
-    const componenteBeneficiosQualitativos = beneficiosQualitativos.map((beneficio: any, index: number) => {
-        return (
-            <ListItem key={index} sx={{ textAlign: "justify" }}>
-                <ListItemIcon>
-                    <CircleIconPonto />
-                </ListItemIcon>
-                {beneficio.descricao}
-            </ListItem>
-        )
-    })
-
 
     return (
         <Grid container sx={{ marginY: "20px" }}>
-            <TypographyTitulo variant='h5'>
+            <TypographyTitulo variant='h5' onClick={lerTexto}>
                 Informações Gerais
             </TypographyTitulo>
             <Grid item xs={12} sx={{ marginBottom: "8px" }}>
@@ -1387,7 +986,7 @@ function InfoGeral(props: { processo: any }) {
             </Grid >
             {componenteBeneficiosQualitativos.length != 0 &&
                 <Grid item>
-                    <TypographyTexto variant='body1' >
+                    <TypographyTexto variant='body1' onClick={lerTexto}>
                         <b>{getNomeAtributo("beneficiosQualitativos")}</b>
                     </TypographyTexto>
                     <List>
@@ -1396,51 +995,6 @@ function InfoGeral(props: { processo: any }) {
                 </Grid>
             }
         </Grid >
-    )
-}
-
-
-/**
- * Componente dos atributos em lista das informações gerais
- * 
- * @param props 
- * @returns 
- */
-function AtributeList(props: { valorAtributo: [] }) {
-    let contadorPeriodoExecucao = 0
-    const valores = props.valorAtributo.map((valor: any, index) => {
-        //ver condição para data
-        // if (typeof valor === typeof new Date()) {
-        //     contadorPeriodoExecucao++
-        //     const valorData: Date = valor
-        //     return (
-        //         <ListItem key={index}>
-        //             <ListItemIcon>
-        //                 <CircleIconPonto />
-        //             </ListItemIcon>
-        //             {contadorPeriodoExecucao == 1 ? "Início: " : "Fim: "}
-        //             {valorData.toLocaleDateString()}
-        //         </ListItem>
-        //     )
-        // }
-
-        const nomeMostrar = valor.nomeCentroCusto ? valor.nomeCentroCusto : valor.nomeBU
-
-        return (
-            <ListItem key={index}>
-                <ListItemIcon>
-                    <CircleIconPonto />
-                </ListItemIcon>
-                {nomeMostrar}
-            </ListItem>
-        )
-    })
-
-
-    return (
-        <List>
-            {valores}
-        </List>
     )
 }
 
@@ -1455,19 +1009,19 @@ function InfoComercial(props: {
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
     setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
 }) {
+    const { lerTexto } = useContext(TextReaderContext) as any
     const link = props.processo.linkJira
     const atributos = {
         beneficiosReais: getBeneficiosPorTipo(props.processo.beneficiosDemanda, "REAL"),
         beneficiosPotenciais: getBeneficiosPorTipo(props.processo.beneficiosDemanda, "POTENCIAL"),
         tabelasCusto: props.processo.tabelasCustoProposta
     }
+    let elementosTabelaCusto
+
 
     if (atributos.beneficiosReais.length == 0 && atributos.beneficiosPotenciais.length == 0 && atributos.tabelasCusto == null) {
         return <></>
     }
-
-
-    let elementosTabelaCusto
 
     if (atributos.tabelasCusto) {
         elementosTabelaCusto = <TabelasCusto tabelasCusto={atributos.tabelasCusto} />
@@ -1476,7 +1030,7 @@ function InfoComercial(props: {
     return (
         <>
             <Box sx={{ marginY: "20px" }}>
-                <TypographyTitulo variant='h5'>
+                <TypographyTitulo variant='h5' onClick={lerTexto}>
                     Informações Comerciais
                 </TypographyTitulo>
                 {atributos.beneficiosReais.length != 0 &&
@@ -1487,7 +1041,7 @@ function InfoComercial(props: {
                 }
                 {atributos.tabelasCusto &&
                     <BoxTabela>
-                        <TypographyTitulo variant='subtitle1'>
+                        <TypographyTitulo variant='subtitle1' onClick={lerTexto}>
                             Tabelas de custo
                         </TypographyTitulo>
                         {elementosTabelaCusto}
@@ -1500,60 +1054,6 @@ function InfoComercial(props: {
 
 }
 
-function Contextualizacao(props: {
-    processo: any,
-    setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
-    setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
-}) {
-    const atributos = {
-        objetivo: props.processo.objetivo,
-        situacaoAtual: props.processo.situacaoAtual,
-        escopo: props.processo.escopo,
-        motivoDevolucao: props.processo.motivoDevolucao
-    }
-    const link = props.processo.linkJira
-    let contextos = []
-    let chaveComponentes = 0
-
-    for (let atributo in atributos) {
-        let valor = (atributos as any)[atributo];
-
-        if (!valor) {
-            continue
-        }
-        chaveComponentes++
-
-        if (atributo == "motivoDevolucao") {
-            contextos.push(
-                <Grid item xs={12} sx={{ marginBottom: "20px" }} key={chaveComponentes}>
-                    <TypographyTexto variant='body1' >
-                        <b>{getNomeAtributo(atributo)}</b> {valor} <b> - {props.processo.pessoaDevolucao}</b>
-                    </TypographyTexto>
-                </Grid>
-            )
-            continue
-        }
-
-        contextos.push(
-            <Grid item xs={12} sx={{ marginBottom: "20px" }} key={chaveComponentes}>
-                <TypographyTexto variant='body1' >
-                    <b>{getNomeAtributo(atributo)}</b> {valor}
-                </TypographyTexto>
-            </Grid>
-        )
-    }
-
-    return (
-        <Grid container sx={{ marginY: "20px" }}>
-            <TypographyTitulo variant='h5'>
-                Contextualização
-            </TypographyTitulo>
-            {contextos}
-            {/* <Footer link={link} tipo={props.processo.tipo} anexos={props.processo.arquivosDemanda} setModalAberto={props.setModalAberto} setConteudoModal={props.setConteudoModal} /> */}
-        </Grid>
-    )
-}
-
 
 function Footer(props: {
     link: string,
@@ -1562,7 +1062,7 @@ function Footer(props: {
     setModalAberto: React.Dispatch<React.SetStateAction<boolean>>,
     setConteudoModal: React.Dispatch<React.SetStateAction<JSX.Element>>
 }) {
-
+    const { lerTexto } = useContext(TextReaderContext) as any
 
     function mostrarAnexos() {
         const anexos = props.anexos.map((anexo: any, index: number) => {
@@ -1579,6 +1079,7 @@ function Footer(props: {
                         <IconeAnexo />
                     </ListItemIcon>
                     <ListItemText
+                        onClick={lerTexto}
                         primary={anexo.nome}
                         secondary={`Anexado por ${anexo.insersor.nomeUsuario}`}
                     />
@@ -1590,7 +1091,7 @@ function Footer(props: {
             <>
                 <BoxConteudoModal>
                     <BoxTituloModal >
-                        <TypographyTituloModal variant='h5' >
+                        <TypographyTituloModal variant='h5' onClick={lerTexto}>
                             Anexos da {props.tipo.toLowerCase()}
                         </TypographyTituloModal>
                         <IconButton onClick={() => { props.setModalAberto(false) }}>
@@ -1616,229 +1117,14 @@ function Footer(props: {
             <Grid item xs={8} />
             <GridItemFooter item xs={3.5} >
                 {props.link ?
-                    <a href={props.link} target='_blank'>Ver projeto Jira</a>
+                    <a href={props.link} target='_blank' onClick={lerTexto}>Ver projeto Jira</a>
                     :
                     <div></div>
                 }
-                <BotaoTerciario variant='outlined' onClick={mostrarAnexos}>
+                <BotaoTerciario variant='outlined' onClick={(e: any) => { lerTexto(e); mostrarAnexos() }}>
                     Ver anexos
                 </BotaoTerciario>
             </GridItemFooter>
         </Grid>
     )
-}
-
-
-function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonElement>[], aprovadoGerente: boolean, ultimoHistorico: any) {
-    const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
-    const tipoProcesso = processo.tipo
-    const statusProcesso = processo.statusDemanda
-    const tamanho = processo.tamanho
-    const linkJira = processo.linkJira
-    const prazoElaboracao = processo.prazoElaboracao
-    const estaEmWorkflow = processo.emWorkflow
-    const aprovadoWorkflow = processo.aprovadoWorkflow
-    const workflowDeadline = processo.prazoWorkflow
-    const estaEmProposta = processo.pertenceUmaProposta
-    const estaEmPauta = processo.estaEmPauta
-    const temChat = processo.temChat
-    let listaBotoes: Botao[] = []
-
-
-    if (temChat) {
-        listaBotoes.push({ nome: "chat", function: funcoes[0] })
-    } else {
-        if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
-            listaBotoes.push({ nome: "chat", function: funcoes[11] })
-        }
-    }
-
-
-    /**
-     *  1º chat, reprovar, devolver, aprovar (Analista de TI, demanda)
-        2º chat, histórico, reprovar aprovar (Gerente de negócio, demanda)
-        3º chat, histórico, adicionar informações (Analista de TI, demanda)
-        4º chat, histórico, criar proposta (Analista de TI, demanda)
-        5º chat, histórico, criar proposta sinalização da atraso (Analista de TI, demanda)
-        6º chat, histórico, iniciar workflow, ver demanda, criar pauta (Analista de TI, proposta)
-        7º chat, histórico, ver demanda (Gerente de negócio, proposta)
-        8º chat, histórico, workflow, ver demanda (Gerente de negócio, proposta)
-        9º chat, histórico, workflow (notificaçãozinha que ta atrasado), ver demanda (Gerente de negócio, proposta)
-        10º chat, histórico, workflow, ver demanda, criar pauta (Gerente de TI, proposta)
-        11º chat, histórico, workflow (notificaçãozinha que ta atrasado), ver demanda, criar pauta (Gerente de TI, proposta)
-     */
-    if (tipoProcesso == "Demanda") {
-        const aprovar = { nome: "aprovar", function: funcoes[1] }
-        const reprovar = { nome: "reprovar", function: funcoes[2] }
-        const historico = { nome: "historico", function: funcoes[4] }
-
-        if (estaEmProposta && (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI")) {
-            listaBotoes.push(historico)
-        } else {
-            if (statusProcesso == "CANCELED" || ultimoHistorico.tarefa == "REENVIARDEMANDA" && (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI")) {
-                listaBotoes.push(historico)
-            } else {
-
-                if (!tamanho) {
-                    if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
-                        const devolver = { nome: "devolver", function: funcoes[3] }
-
-                        listaBotoes.push(reprovar, devolver, aprovar)
-                    }
-                } else {
-                    if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
-                        listaBotoes.push(historico)
-                    }
-
-                    if (tipoPessoa == "GerenteNegocio") {
-                        if (!aprovadoGerente) {
-                            listaBotoes.push(reprovar, aprovar)
-                        }
-                    } else if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
-                        if (aprovadoGerente) {
-                            if (!linkJira) {
-                                const adicionarInfo = { nome: "adicionarInfo", function: funcoes[5] }
-
-                                listaBotoes.push(adicionarInfo)
-                            } else {
-                                let criarProposta: Botao = { nome: " ", function: funcoes[6] }
-                                if (prazoElaboracao < new Date()) {
-                                    criarProposta.nome = "criarProposta!"
-                                } else {
-                                    criarProposta.nome = "criarProposta"
-                                }
-                                listaBotoes.push(criarProposta)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    } else {
-        const historico = { nome: "historico", function: funcoes[4] }
-        const verDemanda = { nome: "verDemanda", function: funcoes[8] }
-        const criarPauta = { nome: "criarPauta", function: funcoes[9] }
-
-        if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
-            listaBotoes.push(historico)
-        }
-
-        if (estaEmPauta) {
-            listaBotoes.push(verDemanda)
-        } else {
-            if (!estaEmWorkflow) {
-                if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
-                    const iniciarWorkflow = { nome: "iniciarworkflow", function: funcoes[7] }
-                    listaBotoes.push(iniciarWorkflow, verDemanda)
-
-                    if (!estaEmPauta) {
-                        listaBotoes.push(criarPauta)
-                    }
-                } else if (tipoPessoa == "GerenteNegocio") {
-                    listaBotoes.push(verDemanda)
-                }
-            } else {
-                if (aprovadoWorkflow) {
-                    listaBotoes.push(verDemanda)
-                    if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
-                        if (!estaEmPauta) {
-                            listaBotoes.push(criarPauta)
-                        }
-                    }
-                } else {
-                    if (workflowDeadline < new Date()) {
-                        if (tipoPessoa == "GerenteTI" || tipoPessoa == "GerenteNegocio") {
-                            const workflow = { nome: "workflow!", function: funcoes[10] }
-
-                            listaBotoes.push(workflow)
-                        }
-                    } else {
-                        if (tipoPessoa == "GerenteTI" || tipoPessoa == "GerenteNegocio") {
-                            const workflow = { nome: "workflow", function: funcoes[10] }
-
-                            listaBotoes.push(workflow)
-                        }
-                    }
-                    listaBotoes.push(verDemanda)
-                }
-            }
-        }
-
-        
-    }
-
-    return listaBotoes
-}
-
-/**
- * Função que retorna o Título formatado de acordo com o atributo de um processo 
- * que receber
- * 
- * @param nomeAtributo 
- * @returns 
- */
-function getNomeAtributo(nomeAtributo: any) {
-    const nomesAtributos = {
-        numero: "Número do processo:",
-        status: "Status:",
-        solicitante: "Solicitante:",
-        departamento: "Departamento:",
-        gerenteResponsavel: "Gerente responsável:",
-        frequenciaDeUso: "Frequência de uso:",
-        tamanho: "Tamanho:",
-        sessaoTIResponsavel: "Sessão de TI Responsável:",
-        BUSolicitante: "BU Solicitante:",
-        prazoElaboracao: "Prazo de elaboração:",
-        codigoPPM: "Código PPM:",
-        centrosDeCusto: "Centros de custo:",
-        beneficiosQualitativos: "Benefícios qualitativos:",
-        BUsBeneficiadas: "BUs beneficiadas:",
-        payback: "Payback:",
-        periodoDeExecucao: "Período de execução:",
-        responsaveis: "Responsáveis:",
-        objetivo: "Objetivos:",
-        situacaoAtual: "Situação atual:",
-        escopo: "Escopo:",
-        motivoDevolucao: "Motivo Devolução"
-    }
-
-    if (nomeAtributo != undefined) {
-        return (nomesAtributos as any)[nomeAtributo]
-    }
-}
-
-function getBotao(botao: string) {
-    if (botao == "chat") {
-        return <ChatBubbleRounded />
-    } else if (botao == "historico") {
-        return <HistoryRoundedIcon />
-    } else {
-        return <LanRoundedIcon />
-    }
-}
-
-function getTituloBotao(botao: string) {
-    const nomeBotao = botao.replace("!", "")
-    const titulos = {
-        reprovar: "Reprovar",
-        devolver: "Devolver",
-        aprovar: "Aprovar",
-        adicionarInfo: "Adicionar informações",
-        criarProposta: "Criar proposta",
-        verDemanda: "Ver demanda",
-        criarPauta: "Criar pauta"
-    }
-
-    return (titulos as any)[nomeBotao]
-}
-
-interface Modal {
-    fecharModal: MouseEventHandler<HTMLButtonElement>,
-    abrirFeedback: Function,
-    setFeedbackAberto: React.Dispatch<SetStateAction<boolean>>
-}
-
-interface Botao {
-    nome: string,
-    function: MouseEventHandler<HTMLButtonElement>
 }

@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode, useContext } from "react";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 
 /**
  * componente que renderiza um select box padrão. A propriedade lable é opcional. A propriedade listaLabelValores
@@ -9,15 +10,16 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@m
  * @returns 
  */
 export default function SelectBox(props: { label?: string, valorInicial: any, mudarValor: ((event: SelectChangeEvent<any>, child: ReactNode) => void) | undefined, listaValores: any[], listaLabelValores: any[], chave: string, maxWidth?: string }) {
+    const { lerTexto } = useContext(TextReaderContext) as any
     const itens = props.listaValores.map((valor: any, index: number) => {
         return (
-            <MenuItem key={index} value={valor}>{props.listaLabelValores[index]}</MenuItem>
+            <MenuItem key={index} value={valor} onClick={lerTexto}>{props.listaLabelValores[index]}</MenuItem>
         )
     })
 
     return (
         <FormControl sx={{ maxWidth: (props.maxWidth ? props.maxWidth : "180px"), marginLeft: "20px" }}>
-            <InputLabel>{props.label}</InputLabel>
+            <InputLabel onClick={lerTexto}>{props.label}</InputLabel>
             <Select
                 id={props.chave}
                 value={props.valorInicial}

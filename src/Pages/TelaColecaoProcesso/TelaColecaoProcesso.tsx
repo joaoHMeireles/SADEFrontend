@@ -37,9 +37,6 @@ import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import {
-  BotaoPrimarioHeader,
-  BotaoSecundarioHeader,
-  BoxBotoes,
   BoxConteudoModal,
   BoxHeader,
   BoxTituloModal,
@@ -62,14 +59,12 @@ import {
   GridContainerColecao,
   GridFooter,
   GridInfoATA,
-  GridProposta,
   TypographyTextoColecao,
   TypographyTituloDecisao,
   TypographyTituloInput,
   BoxInputsNumeros
 } from "./TelaColecaoProcesso.styles";
 import {
-  BoxCorStatus,
   GridContainerHeader,
   GridTitulo,
 } from "../../Components/ContainerProcesso/ContainerProcesso.styles";
@@ -79,7 +74,8 @@ import dayjs, { Dayjs } from "dayjs";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import { StatusComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
 import api from "../../api/api";
-import imagemSemNada from "../../Assets/emptyFolder.png"
+import imagemSemNada from "../../Assets/empty-folder.png"
+import { BotaoPrimarioHeader, BotaoSecundarioHeader, BoxBotoes } from "../../Components/ButtonsHeader/ButtonsHeader.styles";
 
 
 

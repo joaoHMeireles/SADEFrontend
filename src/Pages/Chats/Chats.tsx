@@ -48,6 +48,8 @@ export default function Chats(props: { aberto: boolean }) {
 
   useEffect(() => {
     atualizarTela()
+
+    localStorage.setItem(`NOVAMENSAGEMCHAT${chatEscolhido.idChat}NOTIFICADA`, "false")
   }, [chatEscolhido])
 
   useEffect(() => {
@@ -58,7 +60,7 @@ export default function Chats(props: { aberto: boolean }) {
     for (let chat of listaChats) {
       function acaoNovaMensagem(response: any) {
         const infoMensagem = JSON.parse(response.body)
-        //objeto da mensagem
+        //infoMensagem[0] = objeto da mensagem
         const mensagemRecebida = infoMensagem[0];
 
         const indexChat = listaChats.findIndex((chatAcharIndex: any) => chatAcharIndex.idChat == infoMensagem[1])
@@ -67,9 +69,7 @@ export default function Chats(props: { aberto: boolean }) {
         chatNovaMensagem.mensagens.push(mensagemRecebida)
         listaChats[indexChat] = chatNovaMensagem
 
-        console.log(infoMensagem[1] == chat.idChat);
-
-        // número do chat da mensagem
+        // infoMensagem[1] = id do chat da mensagem
         if (infoMensagem[1] == chat.idChat) {
           console.log(chatNovaMensagem);
 
@@ -78,6 +78,13 @@ export default function Chats(props: { aberto: boolean }) {
         }
 
         atualizarComponentes()
+
+
+        if(localStorage.getItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`) == "false" && localStorage.getItem("PAGINATUAL") != "chat"){
+          //api.sdfjdsjf.then(() => {
+          // localstorage.setItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`, "true") 
+          // })
+        }
       }
 
       function atualizarMensagensNovaMensagem() {

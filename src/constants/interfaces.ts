@@ -1,3 +1,4 @@
+import { MouseEventHandler, SetStateAction } from 'react'
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso, StatusComponenteProcesso, TamanhoComponenteProcesso } from './enuns'
 
 export interface InterfaceComponenteProcesso {
@@ -23,4 +24,15 @@ export interface InterfaceColecaoComponenteProcesso {
     tituloReuniao: string,
     propostas: any[],
     idPauta?: number
+}
+
+export interface Modal {
+    fecharModal: MouseEventHandler<HTMLButtonElement>,
+    abrirFeedback: Function,
+    setFeedbackAberto: React.Dispatch<SetStateAction<boolean>>
+}
+
+export interface Botao {
+    nome: string,
+    function: MouseEventHandler<HTMLButtonElement>
 }
