@@ -47,6 +47,10 @@ export default function InformacoesGerais() {
         <h4 onClick={lerTexto}>Setor</h4>
 
         <p onClick={lerTexto}>{usuario.setor}</p>
+
+        <h4 onClick={lerTexto}>Cargo</h4>
+
+        <p onClick={lerTexto}>{usuario.cargo}</p>
       </SecondContainer>
     </BoxBackground>
   );
