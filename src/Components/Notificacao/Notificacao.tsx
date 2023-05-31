@@ -23,7 +23,7 @@ export default function Notificacao(props: {
     titulo: any;
     mensagem: any;
     notificacoes: any[];
-    setNotificacoes: React.Dispatch<React.SetStateAction<Array<Object>>>;
+    setNotificacoes: any;
     tipoNotificacao: any;
     linkNotificacao: any;
     idComponenteLink: any;
