@@ -1,4 +1,4 @@
-import React, { useState, useEffect, MouseEventHandler, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import api, { pegarAnalistaTIResponsavel, pegarGerenteSolicitante, pegarGerenteTISolicitante, pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
 import {
@@ -30,9 +30,6 @@ import {
     TypographyTitulo, TypographyTituloAtributo, BoxConteudoModal, TypographyTituloModal, BoxTituloModal,
     BoxBotoesModal
 } from './TelaProcesso.styles';
-import ContainerProcesso from '../../Components/ContainerProcesso/ContainerProcesso';
-import api, { pegarAnalistaTIResponsavel, pegarGerenteSolicitante, pegarGerenteTISolicitante, pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
-import { TypographyTituloDecisao } from '../TelaColecaoProcesso/TelaColecaoProcesso.styles';
 import imagemSemNada from "../../Assets/emptyFolder.png"
 
 import ResultadoVazio from '../../Components/ResultadoVazio/ResultadoVazio';
