@@ -15,6 +15,7 @@ import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import LanRoundedIcon from '@mui/icons-material/LanRounded';
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import DrawRoundedIcon from '@mui/icons-material/DrawRounded';
+import TimerOffRoundedIcon from '@mui/icons-material/TimerOffRounded';
 
 import {OverridableComponent} from "@mui/material/OverridableComponent";
 import {BoxContainerNotificacoes} from "./Notificacoes.styles";
@@ -61,14 +62,16 @@ export default function Notificacoes() {
                 icone = GroupsRoundedIcon;
             } else if (acao == "STATUSDEMANDA") {
                 icone = NewReleasesRoundedIcon;
-            } else if (acao == "PRAZOELABORACAO") {
-                icone = AccessTimeRoundedIcon;
+            // } else if (acao == "PRAZOELABORACAOPROPOSTA") {
+                //     icone = AccessTimeRoundedIcon;
             } else if (acao == "AVALIARDEMANDA") {
                 icone = CheckBoxRoundedIcon;
             } else if (acao == "VIROUATA") {
                 icone = CheckBoxRoundedIcon;
-            } else if(acao == "RASCUNHO"){
+            } else if (acao == "RASCUNHO") {
                 icone = DrawRoundedIcon;
+            } else if (acao == "PRAZOELABORACAOPROPOSTA") {
+                icone = TimerOffRoundedIcon
             }
         }
     }
@@ -76,17 +79,17 @@ export default function Notificacoes() {
     const notificacoesElement = notificacoes.map((notificacao: any, index: number) => {
         getTipoIcone(notificacao.acao)
         return (
-          <Notificacao key={index}
-            idNotificacao={notificacao.idNotificacao}
-            Icone={icone}
-            titulo={notificacao.tituloNotificacao}
-            mensagem={notificacao.descricaoNotificacao}
-            notificacoes={notificacoes}
-            setNotificacoes={setNotificacoes}
-            tipoNotificacao={notificacao.tipoNotificacao}
-            linkNotificacao={notificacao.linkNotificacao}
-            idComponenteLink={notificacao.idComponenteLink}
-          />
+            <Notificacao key={index}
+                         idNotificacao={notificacao.idNotificacao}
+                         Icone={icone}
+                         titulo={notificacao.tituloNotificacao}
+                         mensagem={notificacao.descricaoNotificacao}
+                         notificacoes={notificacoes}
+                         setNotificacoes={setNotificacoes}
+                         tipoNotificacao={notificacao.tipoNotificacao}
+                         linkNotificacao={notificacao.linkNotificacao}
+                         idComponenteLink={notificacao.idComponenteLink}
+            />
         )
     })
 

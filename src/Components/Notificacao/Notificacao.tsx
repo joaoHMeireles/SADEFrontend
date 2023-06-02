@@ -59,10 +59,12 @@ export default function Notificacao(props: {
                 response.data.id = response.data.idDemanda
                 response.data.tipo = TipoComponenteProcesso.Demanda
                 localStorage.setItem(
-                    `DEMANDASELECIONADA`,
+                    `DEMANDAESCOLHIDA`,
                     JSON.stringify(response.data)
                 );
 
+                console.log(response.data)
+                console.log(props.linkNotificacao)
                 location.href = props.linkNotificacao
             })
         } else if (props.tipoNotificacao == "PROPOSTA") {

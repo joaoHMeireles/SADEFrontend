@@ -188,10 +188,16 @@ export default function CriacaoDemanda(props: {
 
         let beneficios = [];
 
+        // console.log("numeroBeneficiosReais ==> " + numeroBeneficiosReais)
+        // console.log("numeroBeneficiosPotenciais ==> " + numeroBeneficiosPotenciais)
+        // console.log("numeroBeneficiosQualitativos ==> " + numeroBeneficiosQualitativos)
 
         for (let i = 0; i < numeroBeneficiosReais; i++) {
             valorMensal = document.getElementById(`valorMensalReal${i}`) as HTMLInputElement;
             descricao = document.getElementById(`descricaoReal${i}`) as HTMLInputElement;
+
+            // console.log("Moeda real ==> " + moedaReal)
+            console.log("Moeda real ==> " + moedaReal[i])
 
             let beneficioReal = {
                 "tipoBeneficio": "REAL",
@@ -284,6 +290,9 @@ export default function CriacaoDemanda(props: {
             let {tipo, ...dataCerta} = data
             let beneficios = []
 
+            console.log("Data: ==> ", data)
+            console.log("Data certa ==> ", dataCerta)
+
             for (let beneficio of data.beneficiosDemanda) {
                 const {novo, ...beneficioCerto} = beneficio
                 beneficios.push(beneficioCerto)
@@ -337,19 +346,19 @@ export default function CriacaoDemanda(props: {
 
         } else {
 
-            api.post("/sade/demanda", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                }
-            }).then((res: any) => {
-                webSocketService.inscrever(`/notificacao/demanda/${res.data.idDemanda}`, novaNotificacao)
-            }).catch((err: any) => {
-                console.log(err);
-            })
+            // api.post("/sade/demanda", formData, {
+            //     headers: {
+            //         "Content-Type": "multipart/form-data",
+            //     }
+            // }).then((res: any) => {
+            //     webSocketService.inscrever(`/notificacao/demanda/${res.data.idDemanda}`, novaNotificacao)
+            // }).catch((err: any) => {
+            //     console.log(err);
+            // })
 
         }
 
-        window.location.href = "/home";
+        // window.location.href = "/home";
     }
 
 
@@ -476,8 +485,8 @@ export default function CriacaoDemanda(props: {
                                     }
                                     onClick={(e) => {
                                         lerTexto(e)
-                                        setValor(2);
-                                        setSegundo(true);
+                                        // setValor(2);
+                                        // setSegundo(true);
                                         partDoisDemanda();
                                     }}
                                 >

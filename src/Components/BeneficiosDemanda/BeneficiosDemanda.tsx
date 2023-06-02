@@ -537,6 +537,9 @@ function BeneficioReal(props: {
               onChange={(e: any) => {
                 setMoedaBeneficio(e.target.value);
 
+                console.log("e ==> " , e.target.value)
+                console.log("props.moeda ==> " + props.moedaReal)
+
                 props.moedaReal.push(e.target.value);
                 props.setMoedaReal(props.moedaReal);
 
