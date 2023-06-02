@@ -18,7 +18,7 @@ export const BoxContainerCentroCusto = styledBox({
 export const BoxTitulosCentroCusto = styledBox({
     alignItems: "center",
     backgroundColor: "#00579d",
-    borderRadius: "4px 4px 0 0",
+    borderRadius: "5px 5px 0 0",
     boxSizing: 'border-box',
     color: "#ffffff",
     display: 'flex',

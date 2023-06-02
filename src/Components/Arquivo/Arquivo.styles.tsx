@@ -8,7 +8,7 @@ const styledTypography = styled(Typography);
 export const BoxTypographyFiles = styledBox({
   alignItems: "center",
   border: "1px solid #595959",
-  borderRadius: "4px",
+  borderRadius: "5px",
   display: "flex",
   height: "100%",
   justifyContent: "center",

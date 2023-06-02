@@ -276,8 +276,8 @@ function ChipAutocompleteCentroCusto(props: { id: any, nome: string, mudarPorcen
 
   return (
     <Box sx={{ marginRight: 2 }}>
-      <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#59595930 solid 1px" }} label={props.nome} onClick={lerTexto}/>
-      <Button id={props.id} sx={{ backgroundColor: "rgba(0,0,0,0.08)", height: "32px", borderRadius: "0 16px 16px 0" }} onClick={atualizarPorcentagem}>{porcentagem} %</Button>
+      <Chip sx={{ borderRadius: "20px 0 0 20px", borderRight: "#59595930 solid 1px" }} label={props.nome} onClick={lerTexto}/>
+      <Button id={props.id} sx={{ backgroundColor: "rgba(0,0,0,0.08)", height: "32px", borderRadius: "0 20px 20px 0" }} onClick={atualizarPorcentagem}>{porcentagem} %</Button>
     </Box>
   )
 }

@@ -14,6 +14,7 @@ import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import LanRoundedIcon from '@mui/icons-material/LanRounded';
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
+import DrawRoundedIcon from '@mui/icons-material/DrawRounded';
 
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { BoxContainerNotificacoes } from "./Notificacoes.styles";
@@ -21,7 +22,6 @@ import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 
 import semNotificacao from "../../Assets/notificationBell.png"
 import { useLocation } from "react-router-dom";
-import Popover from "@mui/material/Popover";
 
 /**
  *
@@ -66,7 +66,9 @@ export default function Notificacoes() {
         icone = CheckBoxRoundedIcon;
       } else if (acao == "VIROUATA") {
         icone = CheckBoxRoundedIcon;
-      }
+     } else if(acao == "RASCUNHO"){
+        icone = DrawRoundedIcon;
+    }
     }
   }
 
