@@ -10,7 +10,7 @@ const axiosEntity = axios.create({
 export default axiosEntity
 
 export async function verificarHistoricoAprovado(id: number, setAprovado: React.Dispatch<SetStateAction<boolean>>) {
-  axiosEntity.get(`${url}/sod/historicoWorkflow/aprovadaGerente/${id}`).then((response: any) => {
+  axiosEntity.get(`${url}/sade/historicoWorkflow/aprovadaGerente/${id}`).then((response: any) => {
     setAprovado(response.data)
   }).catch((err: any) => {
     console.log(err);
@@ -18,7 +18,7 @@ export async function verificarHistoricoAprovado(id: number, setAprovado: React.
 }
 
 export async function pegarUltimoHistorico(id: number, setUltimohistorico: React.Dispatch<SetStateAction<any>>) {
-  axiosEntity.get(`${url}/sod/historicoWorkflow/demanda/ultimo/${id}`).then((response: any) => {
+  axiosEntity.get(`${url}/sade/historicoWorkflow/demanda/ultimo/${id}`).then((response: any) => {
     setUltimohistorico(response.data)
   }).catch((err: any) => {
     console.log(err);
@@ -26,7 +26,7 @@ export async function pegarUltimoHistorico(id: number, setUltimohistorico: React
 }
 
 export async function pegarGerenteSolicitante(id: number, setGerenteSolicitante: React.Dispatch<SetStateAction<any>>) {
-  axiosEntity.get(`${url}/sod/usuario/gerente/usuario/${id}`).then((response: any) => {
+  axiosEntity.get(`${url}/sade/usuario/gerente/usuario/${id}`).then((response: any) => {
     setGerenteSolicitante(response.data)
   }).catch((err: any) => {
     console.log(err);
@@ -34,7 +34,7 @@ export async function pegarGerenteSolicitante(id: number, setGerenteSolicitante:
 }
 
 export async function pegarGerenteTISolicitante(id: number, setGerenteTISolicitante: React.Dispatch<SetStateAction<any>>) {
-  axiosEntity.get(`${url}/sod/usuario/gerenteTI/usuario/${id}`).then((response: any) => {
+  axiosEntity.get(`${url}/sade/usuario/gerenteTI/usuario/${id}`).then((response: any) => {
     setGerenteTISolicitante(response.data)
   }).catch((err: any) => {
     console.log(err);
@@ -42,7 +42,7 @@ export async function pegarGerenteTISolicitante(id: number, setGerenteTISolicita
 }
 
 export async function pegarAnalistaTIResponsavel(id: number, setAnalistaTIResponsavel: React.Dispatch<SetStateAction<any>>) {
-  axiosEntity.get(`${url}/sod/historicoWorkflow/analistaResponsavel/${id}`).then((response: any) => {
+  axiosEntity.get(`${url}/sade/historicoWorkflow/analistaResponsavel/${id}`).then((response: any) => {
     setAnalistaTIResponsavel(response.data)
   }).catch((err: any) => {
     console.log(err);

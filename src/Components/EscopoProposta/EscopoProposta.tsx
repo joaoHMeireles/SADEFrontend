@@ -14,7 +14,7 @@ import {
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -24,6 +24,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Checkbox from "@mui/material/Checkbox";
 
 import { Editor, EditorTools } from "@progress/kendo-react-editor";
+import { TextReaderContext } from '../TextReaderContext/TextReaderContext';
 const {
   Bold,
   Italic,
@@ -58,23 +59,20 @@ export default function EscopoProposta(props: {
   arquivosProposta: any[]
   setArquivosProposta: React.Dispatch<React.SetStateAction<any[]>>
 }) {
-
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [usuarios, setUsuarios] = useState<any[]>([])
 
   useEffect(() => {
-    api.get("/sod/usuario").then((res) => {
+    api.get("/sade/usuario").then((res) => {
       setUsuarios(res.data)
     })
   }, [])
-
-  console.log(EditorTools);
-
 
   return (
     <>
       <BoxContainerGeral>
         <BoxPadrao>
-          <TypographyStyled>Escopo: </TypographyStyled>
+          <TypographyStyled onClick={lerTexto}>Escopo: </TypographyStyled>
           <Editor
             tools={[
               [Bold, Italic, Underline],
@@ -86,7 +84,7 @@ export default function EscopoProposta(props: {
             contentStyle={{
               height: 320,
               width: "100%", 
-              boxShadow: "5px 5px 10px 0 #00000050",
+              boxShadow: "5px 5px 10px 0 #00000025",
               borderRadius: "5px",
               fontFamily: "'Roboto','Helvetica','Arial', sans-serif"
             }}
@@ -97,7 +95,7 @@ export default function EscopoProposta(props: {
           />
         </BoxPadrao>
         <BoxPadrao>
-          <TypographyStyled>Tabelas de Custo: </TypographyStyled>
+          <TypographyStyled onClick={lerTexto}>Tabelas de Custo: </TypographyStyled>
           <TabelaCustoCriacao
             centroCusto={props.centroCusto}
             centroCustoEscolhidas={props.centroCustoEscolhidas}
@@ -106,7 +104,7 @@ export default function EscopoProposta(props: {
         </BoxPadrao>
         <BoxPaybackExecucao>
           <BoxPaybackExe>
-            <TypographyStyled>Período de Execução Inicio: </TypographyStyled>
+            <TypographyStyled onClick={lerTexto}>Período de Execução Inicio: </TypographyStyled>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 value={props.periodoExecucaoInicio}
@@ -118,7 +116,7 @@ export default function EscopoProposta(props: {
             </LocalizationProvider>
           </BoxPaybackExe>
           <BoxPaybackExe>
-            <TypographyStyled>Período de execução Fim: </TypographyStyled>
+            <TypographyStyled onClick={lerTexto}>Período de execução Fim: </TypographyStyled>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 value={props.periodoExecucaoFim}
@@ -130,22 +128,22 @@ export default function EscopoProposta(props: {
             </LocalizationProvider>
           </BoxPaybackExe>
           <BoxPaybackExe>
-            <TypographyStyled>Payback: </TypographyStyled>
+            <TypographyStyled onClick={lerTexto}>Payback: </TypographyStyled>
             <TextField
               value={props.payback}
               onChange={(e: any) => {
                 props.setPayback(e.target.value)
               }}
-              sx={{ width: "66%", boxShadow: "5px 5px 10px 0 #00000050" }}
+              sx={{ width: "66%", boxShadow: "5px 5px 10px 0 #00000025" }}
             ></TextField>
           </BoxPaybackExe>
         </BoxPaybackExecucao>
         <BoxResponsavel>
           <BoxResponsaveis>
-            <TypographyStyled>Nome dos responsáveis: </TypographyStyled>
+            <TypographyStyled onClick={lerTexto}>Nome dos responsáveis: </TypographyStyled>
             <Autocomplete
               id="nomeResponsavel"
-              sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+              sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
               multiple
               disableCloseOnSelect
               onChange={(e: any, valor: any) => {
@@ -172,7 +170,7 @@ export default function EscopoProposta(props: {
                       style={{ marginRight: 8 }}
                       checked={selected}
                     />
-                    {nomeResponsavel}
+                    <span onClick={lerTexto}>{nomeResponsavel}</span>
                   </li>
                 );
               }}

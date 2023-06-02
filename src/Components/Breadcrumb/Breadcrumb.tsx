@@ -1,10 +1,13 @@
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { useLocation, Link } from "react-router-dom"
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 import Typography from "@mui/material/Typography";
 import { ArrowIcon, BoxRota, BoxBreadcrumb, IconeRota } from "./Breadcrumb.styles";
 import { getNomeRota } from "../../utils";
+import { useContext } from "react";
 
 export default function Breadcrumb() {
+    const { lerTexto } = useContext(TextReaderContext) as any
     const location = useLocation();
     const breadcrumb = pegarBreadcrumb(location)
     let linksBreadcrumb: ReactJSXElement[] = []
@@ -20,7 +23,7 @@ export default function Breadcrumb() {
         if (i == breadcrumb.length - 1) {
             linksBreadcrumb.push(
                 <BoxRota key={i} >
-                    <Typography variant="h5" sx={{ color: "#00579d" }}>
+                    <Typography variant="h5" sx={{ color: "#00579d" }} onClick={lerTexto}>
                         {breadcrumb[i].name}
                     </Typography>
                 </BoxRota>
@@ -29,7 +32,7 @@ export default function Breadcrumb() {
             linksBreadcrumb.push(
                 <BoxRota key={i} sx={{ color: "#595959" }}>
                     <Link to={rotaComponente + breadcrumb[i].path + searchComponente + breadcrumb[i].search} >
-                        <Typography component="h5" variant="h6" sx={{ color: "#595959" }}>
+                        <Typography component="h5" variant="h6" sx={{ color: "#595959" }} onClick={lerTexto}>
                             {breadcrumb[i].name}
                         </Typography>
                     </Link>

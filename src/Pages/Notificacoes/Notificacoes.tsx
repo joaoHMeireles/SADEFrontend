@@ -19,8 +19,9 @@ import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { BoxContainerNotificacoes } from "./Notificacoes.styles";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 
-import semNotificacao from "../../Assets/notification-bell.png"
+import semNotificacao from "../../Assets/notificationBell.png"
 import { useLocation } from "react-router-dom";
+import Popover from "@mui/material/Popover";
 
 /**
  *
@@ -36,7 +37,7 @@ export default function Notificacoes() {
   };
 
   useEffect(() => {
-    api.get(`/sod/usuario/${idUsuario}`)
+    api.get(`/sade/usuario/${idUsuario}`)
       .then((notificacao) => {
         setNotificacoes(notificacao.data.notificacoesUsuario)
         atualizarNotificacoes(setNotificacoes)
@@ -45,7 +46,7 @@ export default function Notificacoes() {
       })
   }, [])
 
-  function getTipoIcone(acao: string) {    
+  function getTipoIcone(acao: string) {
     for (let i = 0; i < notificacoes.length; i++) {
       if (acao == "DEMANDAAPROVADA") {
         icone = CheckBoxRoundedIcon;
@@ -70,8 +71,6 @@ export default function Notificacoes() {
   }
 
   const notificacoesElement = notificacoes.map((notificacao: any) => {
-    console.log(notificacao);
-
     getTipoIcone(notificacao.acao)
     return (
       <Notificacao key={notificacao.idNotificacao}
@@ -113,19 +112,23 @@ export const atualizarNotificacoes = (setNotificacoes?: any, novaNotifica?: any)
   }
 }
 
-export const novaNotificacao = (response: any) => {
+export const novaNotificacao = (response: any) => {  
   const location = useLocation()
-  console.log(location);
-
 
   const novaNotifica = JSON.parse(response.body);
 
   if (location.pathname == "/notifications") {
     atualizarNotificacoes(novaNotifica)
-  } else {
+  } else {    
+    semAtualizarNotificacao(novaNotifica)
+
     // pesquisar propriedade MUI que adiciona isso
     // deixar bolinha da notificação vermelha
   }
+}
+
+function semAtualizarNotificacao(notificacao: any){
+  console.log("Notificacao: " + notificacao);
 }
 
 

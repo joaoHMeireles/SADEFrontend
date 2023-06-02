@@ -8,7 +8,7 @@ import {
 } from "../../constants/enuns";
 import api from "../../api/api";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
-import semDemanda from "../../Assets/empty-folder.png"
+import semDemanda from "../../Assets/emptyFolder.png"
 
 export default function Enviadas(props: {
   filtrar: boolean;
@@ -21,7 +21,7 @@ export default function Enviadas(props: {
   const idUsuario = localStorage.getItem("IDUSUARIO")
 
   useEffect(() => {
-    api.get("/sod/demanda/devolvidas/usuario/" + idUsuario).then((response: any) => {
+    api.get("/sade/demanda/devolvidas/usuario/" + idUsuario).then((response: any) => {
 
       let listaDemandas: any[] = []
 

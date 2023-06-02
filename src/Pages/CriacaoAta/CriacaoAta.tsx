@@ -35,7 +35,7 @@ import {
 } from "../../constants/enuns";
 import api from "../../api/api";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
-import semDemanda from "../../Assets/empty-folder.png"
+import semDemanda from "../../Assets/emptyFolder.png"
 import { GridInfoATA, TypographyTituloInput } from "../TelaColecaoProcesso/TelaColecaoProcesso.styles";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
@@ -64,7 +64,7 @@ export default function CriacaoAta(props: {
     const pautaEscolhida = JSON.parse(localStorage.getItem("PAUTACRIARATA") as string)
 
     ///criarATA
-    api.get(`/sod/pauta`).then((response) => {
+    api.get(`/sade/pauta`).then((response) => {
       let listaPautas: any[] = []
       for (let pauta of response.data) {
         pauta.propostas = pauta.propostasPauta
@@ -125,7 +125,7 @@ export default function CriacaoAta(props: {
       }
     }
 
-    api.post("/sod/ata/" + localStorage.getItem("IDUSUARIO"), formData).then((response) => {
+    api.post("/sade/ata/" + localStorage.getItem("IDUSUARIO"), formData).then((response) => {
       location.href = "/home"
     }).catch((err) => {
       console.log(err);

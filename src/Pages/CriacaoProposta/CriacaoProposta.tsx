@@ -5,7 +5,7 @@ import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
 
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, useContext, useEffect, useState } from "react";
 import { BoxConteudo } from "../App.styles";
 
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
@@ -39,14 +39,16 @@ import api from "../../api/api";
 import { Dayjs } from "dayjs";
 import { useLocationChange } from "../../utils";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
-import semDemanda from "../../Assets/empty-folder.png"
+import semDemanda from "../../Assets/emptyFolder.png"
 import jsPDF from "jspdf";
+import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 
 export default function CriacaoProposta(props: {
   filtrar: boolean;
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
   filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
@@ -83,7 +85,7 @@ export default function CriacaoProposta(props: {
   useEffect(() => {
     const idDemandaCriacao = localStorage.getItem("DEMANDACRIARPROPOSTA")
 
-    api.get(`/sod/demanda/proposta/${false}`).then((response) => {
+    api.get(`/sade/demanda/proposta/${false}`).then((response) => {
       let listaDemandas: any[] = []
 
       for (let demanda of response.data) {
@@ -114,7 +116,7 @@ export default function CriacaoProposta(props: {
   })
 
   useEffect(() => {
-    api.get("/sod/centroCusto").then((res) => setCentroCusto(res.data))
+    api.get("/sade/centroCusto").then((res) => setCentroCusto(res.data))
   }, [])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
@@ -204,9 +206,6 @@ export default function CriacaoProposta(props: {
     let dataExecucaoFimCerto = dataExecucaoFim.slice(6) + "/" + dataExecucaoFim.slice(0, 5)
     dataExecucaoFimCerto = dataExecucaoFimCerto.replaceAll("/", "-")
 
-    console.log(informacaoProcesso);
-    
-
     const { tipo, id, ...informacaoProcessoCerto } = informacaoProcesso
 
     let proposta = {
@@ -218,6 +217,9 @@ export default function CriacaoProposta(props: {
       responsaveisNegocio: usuariosResponsaveis,
       tabelasCustoProposta: listaTabelasCustoProposta
     }
+    
+    console.log(proposta);
+    
 
     let formData = new FormData()
     let idUsuario = localStorage.getItem("IDUSUARIO");
@@ -230,7 +232,7 @@ export default function CriacaoProposta(props: {
       }
     }
 
-    api.post(`/sod/proposta/${idUsuario}`, formData, {
+    api.post(`/sade/proposta/${idUsuario}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       }
@@ -300,11 +302,12 @@ export default function CriacaoProposta(props: {
             }}
             variant="contained"
             endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
-            onClick={() => {
+            onClick={(e: any) => {
+              lerTexto(e)
               setValor(1);
             }}
           >
-            Proximo
+            Próximo
           </BotaoPrimario>
         </>
       )}
@@ -356,12 +359,13 @@ export default function CriacaoProposta(props: {
                 sx={{ width: "15%", height: "3rem" }}
                 variant="contained"
                 endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
-                onClick={() => {
+                onClick={(e: any) => {
+                  lerTexto(e)
                   setValor(2);
                   setSegundo(true);
                 }}
               >
-                Proximo
+                Próximo
               </BotaoPrimario>
             </BoxContainerBotoes>
           </>
@@ -384,7 +388,8 @@ export default function CriacaoProposta(props: {
                 <BotaoTerciario
                   sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="outlined"
-                  onClick={() => {
+                  onClick={(e: any) => {
+                    lerTexto(e)
                     window.location.href = "/home";
                   }}
                 >
@@ -393,7 +398,8 @@ export default function CriacaoProposta(props: {
               </BoxBotaoTerciario>
               <BoxBotoesPriSec>
                 <BotaoSecundario
-                  onClick={() => {
+                  onClick={(e: any) => {
+                    lerTexto(e)
                     setValor(1);
                   }}
                   sx={{
@@ -413,7 +419,10 @@ export default function CriacaoProposta(props: {
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
-                  onClick={() => criarProposta()}
+                  onClick={(e: any) => {
+                    lerTexto(e)
+                    criarProposta()
+                  }}
                 >
                   Enviar
                 </BotaoPrimario>

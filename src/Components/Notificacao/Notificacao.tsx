@@ -45,7 +45,7 @@ export default function Notificacao(props: {
 
   function redirecionar() {
     if (props.tipoNotificacao == "DEMANDA") {
-      api.get("/sod/demanda/" + props.idComponenteLink).then((response) => {
+      api.get("/sade/demanda/" + props.idComponenteLink).then((response) => {
         response.data.id = response.data.idDemanda
         response.data.tipo = TipoComponenteProcesso.Demanda
 
@@ -57,7 +57,7 @@ export default function Notificacao(props: {
         location.href = props.linkNotificacao
       })
     } else if (props.tipoNotificacao == "PROPOSTA") {
-      api.get("/sod/proposta/" + props.idComponenteLink).then((response) => {
+      api.get("/sade/proposta/" + props.idComponenteLink).then((response) => {
         const proposta = response.data
 
         for (let atributo in proposta.demanda) {
@@ -77,7 +77,7 @@ export default function Notificacao(props: {
         location.href = props.linkNotificacao
       })
     } else if (props.tipoNotificacao == "PAUTA") {
-      api.get("/sod/pauta/" + props.idComponenteLink).then((response) => {
+      api.get("/sade/pauta/" + props.idComponenteLink).then((response) => {
         let pauta = response.data
         pauta.propostas = pauta.propostasPauta
         pauta.propostasPauta = null
@@ -93,7 +93,7 @@ export default function Notificacao(props: {
         location.href = props.linkNotificacao
       })
     } else if (props.tipoNotificacao == "ATA") {
-      api.get("/sod/ata/" + props.idComponenteLink).then((response) => {
+      api.get("/sade/ata/" + props.idComponenteLink).then((response) => {
         let ata = response.data
         ata.propostas = ata.propostasAta
         ata.propostasPauta = ata.pauta.propostasPauta
@@ -134,7 +134,7 @@ export default function Notificacao(props: {
           sx={{ color: "#595959", cursor: "pointer" }}
           onClick={() => {
             console.log(bodyNotificacaoDTO);
-            api.delete(`/sod/notificacao/${bodyNotificacaoDTO.notificacao.idNotificacao}/${bodyNotificacaoDTO.usuario.idUsuario}`).then((res) => {
+            api.delete(`/sade/notificacao/${bodyNotificacaoDTO.notificacao.idNotificacao}/${bodyNotificacaoDTO.usuario.idUsuario}`).then((res) => {
               props.setNotificacoes(res.data)
             }).catch((err) => {
               console.log(err);

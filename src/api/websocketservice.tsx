@@ -1,24 +1,22 @@
 import { useEffect } from "react";
 import { createContext } from "react";
 import { useState } from "react"
-import { useLocation } from "react-router-dom";
-import sockjs from "sockjs-client/dist/sockjs"
+import sockjs from "sockjs-client/dist/sockjs.js"
 import api from "./api"
 import { novaNotificacao } from "../Pages/Notificacoes/Notificacoes";
 import * as Stomp from "stompjs";
 
-export const WebSocketContext = createContext(null)
+export const WebSocketContext: any = createContext(null)
 
-export const WebSocketService = ({ children }) => {
-    const [stompClient, setStompClient] = useState(null);
+export const WebSocketService = ({ children }: {children: any}) => {
+    const [stompClient, setStompClient] = useState<any>(null);
 
     useEffect(() => {
-        console.log(stompClient);
         if (stompClient == null) {
             conectar()
         } else {
             if (localStorage.getItem("INSCRITONASDEMANDAS") != "true") {
-                api.get("/sod/demanda/usuario/" + localStorage.getItem("IDUSUARIO")).then((res) => {
+                api.get("/sade/demanda/usuario/" + localStorage.getItem("IDUSUARIO")).then((res) => {
                     for (const demanda of res.data) {
                         inscrever(`/notificacao/demanda/${demanda.idDemanda}`, novaNotificacao)
                     }
@@ -30,13 +28,9 @@ export const WebSocketService = ({ children }) => {
     }, [stompClient])
 
     const conectar = () => {
-        const socket = new sockjs("http://localhost:8443/sod/websocket");
+        const socket = new sockjs("http://localhost:8443/sade/websocket");
 
         const stomp = Stomp.over(socket);
-
-        console.log("stomp:");
-        console.log(stomp);
-
         stomp.connect({}, () => {
             setStompClient(stomp)
         }, (erro) => {
@@ -55,7 +49,7 @@ export const WebSocketService = ({ children }) => {
         }
     }
 
-    const enviar = (destino, mensagem) => {
+    const enviar = (destino: string, mensagem: any) => {
         if (stompClient) {
             stompClient.send(destino, {}, JSON.stringify(mensagem));
         } else {
@@ -63,8 +57,9 @@ export const WebSocketService = ({ children }) => {
         }
     }
 
-    const inscrever = (caminho, acao) => {
+    const inscrever = (caminho: string, acao: Function) => {
         if (!stompClient.subscriptions[caminho]) {
+            console.log("subescreveu: " + caminho);
             return stompClient.subscribe(caminho, acao);
         }
     }

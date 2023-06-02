@@ -1,4 +1,5 @@
-import { MouseEventHandler, useEffect, useState } from "react";
+import { MouseEventHandler, useContext, useEffect, useState } from "react";
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 import { Link } from "react-router-dom";
 import { TipoComponenteProcesso } from "../../constants/enuns";
 import { InterfaceComponenteProcesso } from "../../constants/interfaces";
@@ -6,6 +7,7 @@ import { Box, Grid, IconButton, Tooltip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import {
   BoxColecaoComponente,
   BoxGridCorProcesso,
@@ -21,6 +23,7 @@ import {
 } from "./ComponenteProcesso.styles";
 import { GlobalStyles } from "@mui/styled-engine";
 import { getNomeStatus } from "../../utils";
+import api from "../../api/api";
 
 export default function ComponenteProcesso(props: {
   grid: boolean;
@@ -36,14 +39,11 @@ export default function ComponenteProcesso(props: {
   propostaSelecionada?: number;
   setPropostaSelecionada?: React.Dispatch<React.SetStateAction<number>>;
 }) {
+  const [isChecked, setIsChecked] = useState(props.atributosProcesso.escolhidaCriacao ? true : false);
+  const { lerTexto, leituraDeSiteAtiva } = useContext(TextReaderContext) as any
   const componente = props.atributosProcesso;
-
   const paginaAtual = localStorage.getItem("PAGINATUAL");
-  let corComponente,
-    tituloToolTip,
-    nomeTipoLink = "";
-
-  const [isChecked, setIsChecked] = useState(componente.escolhidaCriacao ? true : false);
+  let corComponente, tituloToolTip, nomeTipoLink = "";
 
   if (componente.tipo == TipoComponenteProcesso.Demanda) {
     corComponente = "#00579d";
@@ -56,7 +56,7 @@ export default function ComponenteProcesso(props: {
   }
 
   const processElement = props.grid ? (
-    <GridComponent
+    <GridComponent 
       componente={componente}
       corComponente={corComponente}
       tituloToolTip={tituloToolTip}
@@ -76,6 +76,7 @@ export default function ComponenteProcesso(props: {
       isChecked={isChecked}
       setIsChecked={setIsChecked}
       mudarIsChecked={mudarIsChecked}
+      deletarRascunho={deletarRascunho}
     />
   ) : (
     <ListComponent
@@ -98,6 +99,7 @@ export default function ComponenteProcesso(props: {
       isChecked={isChecked}
       setIsChecked={setIsChecked}
       mudarIsChecked={mudarIsChecked}
+      deletarRascunho={deletarRascunho}
     />
   );
 
@@ -128,16 +130,16 @@ export default function ComponenteProcesso(props: {
       }
     }
   }, [props.propostas]);
-  
+
   useEffect(() => {
     const card = document.getElementsByClassName(
       `card-proposta${componente.id}`
     )[0];
-    
+
     if (isChecked) {
       card?.classList.add("selecionado")
       const componentePaginaPauta = componente;
-      
+
       componentePaginaPauta.link = nomeTipoLink;
 
       props.propostas?.push(componente);
@@ -154,15 +156,22 @@ export default function ComponenteProcesso(props: {
     }
   }, [isChecked])
 
-  function verProcesso() {
+  function verProcesso(event: any) {
+    if (leituraDeSiteAtiva) {
+      lerTexto(event)
+    }
+
     if (props.rascunho || (componente.devolvida && props.temDemandaDevolvida)) {
       return
     }
-    setProcesso()
-    location.href = nomeTipoLink;
+
+    if (!leituraDeSiteAtiva) {
+      setProcesso(event)
+      location.href = nomeTipoLink;
+    }
   }
 
-  function setProcesso() {
+  function setProcesso(event: any) {
     if (props.rascunho) {
       localStorage.setItem("RASCUNHOESCOLHIDO", JSON.stringify(componente));
       return;
@@ -178,12 +187,27 @@ export default function ComponenteProcesso(props: {
       `${tipoComponente}ESCOLHIDA`,
       JSON.stringify(componente)
     );
+
+    if (leituraDeSiteAtiva) {
+      lerTexto(event)
+    }
   }
 
   function mudarIsChecked() {
     if (setIsChecked != null && isChecked != null) {
       setIsChecked(!isChecked)
     }
+  }
+
+  function deletarRascunho() {
+    console.log("cancelar rascunho");
+    api.delete("/sod/demanda/" + componente.idDemanda).then((response) => {
+      console.log(response);
+      location.reload()
+
+    }).catch((err) => {
+      console.log(err);
+    })
   }
 
   return (
@@ -203,8 +227,7 @@ export default function ComponenteProcesso(props: {
 }
 
 function GridComponent(props: ComponentProps) {
-
-  //<WarningRoundedIcon sx={{color: "#00579d"}}/>
+  const { lerTexto } = useContext(TextReaderContext) as any
 
   return (
     <>
@@ -219,33 +242,44 @@ function GridComponent(props: ComponentProps) {
           </Tooltip>
           <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
             {(props.temDemandaDevolvida && props.componente.devolvida) ?
-              <>
-                <GridBoxTituloRadio>
-                  <GridTypography variant="h6">
-                    {props.componente.tituloDemanda}
-                  </GridTypography>
-                  <WarningRoundedIcon sx={{marginRight: "1.6vw", color: "#00579d"}}/>
-                </GridBoxTituloRadio>
-              </>
-              :
-              <>
+              <GridBoxTituloRadio>
                 <GridTypography variant="h6">
                   {props.componente.tituloDemanda}
                 </GridTypography>
+                <WarningRoundedIcon sx={{ marginRight: "1.6vw", color: "#00579d" }} />
+              </GridBoxTituloRadio>
+              :
+              <>
+                {!props.rascunho ?
+                  <GridTypography variant="h6">
+                    {props.componente.tituloDemanda}
+                  </GridTypography>
+                  :
+                  <GridBoxTituloRadio>
+                    <GridTypography variant="h6">
+                      {props.componente.tituloDemanda}
+                    </GridTypography>
+                    <Box>
+                      <IconButton onClick={props.deletarRascunho}>
+                        <DeleteRoundedIcon />
+                      </IconButton>
+                    </Box>
+                  </GridBoxTituloRadio>
+                }
               </>
             }
             <GridTypography variant="subtitle1">
-              <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
+              Solicitante: {props.componente.usuario.nomeUsuario}
             </GridTypography>
             <GridTypography variant="subtitle1">
-              <span>Score:</span> {props.componente.score}
+              Score: {props.componente.score}
             </GridTypography>
             <GridTypography variant="subtitle1">
-              <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
+              Status: {getNomeStatus(props.componente.statusDemanda)}
             </GridTypography>
             <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
               <BoxColecaoComponente>
-                <span>Frequencia de uso:</span> {props.componente.frequenciaUso}
+                Frequencia de uso: {props.componente.frequenciaUso}
               </BoxColecaoComponente>
               <GridLinkTypograpfy variant="body2">
                 {props.temDemandaDevolvida && props.componente.devolvida ?
@@ -280,7 +314,8 @@ function GridComponent(props: ComponentProps) {
             </Grid>
           </Tooltip>
           <GridComponenteProcesso item xs={11}
-            onClick={() => {
+            onClick={(event: any) => {
+              lerTexto(event)
               if (props.setDemandaSelecionada && props.setPropostaSelecionado) {
                 props.setDemandaSelecionada(props.componente.idDemanda)
                 props.setPropostaSelecionado(props.componente.idDemanda);
@@ -392,7 +427,7 @@ function ListComponent(props: ComponentProps) {
           </Tooltip>
           <ListaComponenteProcesso item xs={11.7} onClick={props.verProcesso}>
             <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
-              {props.componente.id} - {props.componente.tituloDemanda}
+              {props.componente.tituloDemanda}
             </ListaTypography>
             <ListaTypography variant="subtitle2">
               <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
@@ -548,5 +583,6 @@ interface ComponentProps {
   verProcesso: MouseEventHandler<HTMLDivElement>;
   isChecked?: boolean;
   setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
-  mudarIsChecked: MouseEventHandler<HTMLDivElement>
+  mudarIsChecked: MouseEventHandler<HTMLDivElement>;
+  deletarRascunho: any;
 }

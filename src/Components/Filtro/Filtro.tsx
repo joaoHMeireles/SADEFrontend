@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useEffect, useRef, useState } from "react";
+import { ChangeEventHandler, MouseEventHandler, useContext, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useLocationChange } from "../../utils";
 import { ExcelExport, ExcelExportColumn } from '@progress/kendo-react-excel-export';
@@ -14,7 +14,92 @@ import { BoxItemHeader, DrawerFiltro, TypographyItemHeader, BoxBotaoExcel } from
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
 import { BotaoPrimario } from "../../Pages/App.styles";
 import api from "../../api/api";
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 
+const tiposDeComponentes = [
+  {
+    id: 1,
+    nome: "Demanda"
+  },
+  {
+    id: 2,
+    nome: "Proposta"
+  },
+  {
+    id: 3,
+    nome: "Pauta"
+  },
+  {
+    id: 4,
+    nome: "ATA"
+  },
+];
+const departamentos = [
+  {
+    id: 1,
+    nome: "Departamento 1"
+  },
+  {
+    id: 2,
+    nome: "Departamento 2"
+  },
+  {
+    id: 3,
+    nome: "Departamento 3"
+  },
+  {
+    id: 4,
+    nome: "Departamento 4"
+  },
+  {
+    id: 5,
+    nome: "Departamento 5"
+  }
+]
+const tamanhos = [
+  {
+    id: 1,
+    nome: "Muito pequeno"
+  },
+  {
+    id: 2,
+    nome: "Pequeno"
+  },
+  {
+    id: 3,
+    nome: "Médio"
+  },
+  {
+    id: 4,
+    nome: "Grande"
+  },
+  {
+    id: 5,
+    nome: "Muito grande"
+  },
+]
+const status = [
+  {
+    id: 1,
+    nome: "Aguardando revisão",
+  },
+  {
+    id: 2,
+    nome: "Em planejamento",
+  },
+  {
+    id: 3,
+    nome: "Em planejamento demorado",
+  },
+  {
+    id: 4,
+    nome: "Cancelado",
+  },
+  {
+    id: 5,
+    nome: "A fazer",
+  },
+];
 
 export default function Filtro(props: {
   aberto: boolean;
@@ -23,93 +108,9 @@ export default function Filtro(props: {
   filtrarResultados: Function;
   listaComponents: any[];
 }) {
-  //listas base para os itens do filtros
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [drawerWidth, setDrawerWidth] = useState("0px");
   const [foruns, setForuns] = useState<any[]>([])
-  const tiposDeComponentes = [
-    {
-      id: 1,
-      nome: "Demanda"
-    },
-    {
-      id: 2,
-      nome: "Proposta"
-    },
-    {
-      id: 3,
-      nome: "Pauta"
-    },
-    {
-      id: 4,
-      nome: "ATA"
-    },
-  ];
-  const departamentos = [
-    {
-      id: 1,
-      nome: "Departamento 1"
-    },
-    {
-      id: 2,
-      nome: "Departamento 2"
-    },
-    {
-      id: 3,
-      nome: "Departamento 3"
-    },
-    {
-      id: 4,
-      nome: "Departamento 4"
-    },
-    {
-      id: 5,
-      nome: "Departamento 5"
-    }
-  ]
-  const tamanhos = [
-    {
-      id: 1,
-      nome: "Muito pequeno"
-    },
-    {
-      id: 2,
-      nome: "Pequeno"
-    },
-    {
-      id: 3,
-      nome: "Médio"
-    },
-    {
-      id: 4,
-      nome: "Grande"
-    },
-    {
-      id: 5,
-      nome: "Muito grande"
-    },
-  ]
-  const status = [
-    {
-      id: 1,
-      nome: "Aguardando revisão",
-    },
-    {
-      id: 2,
-      nome: "Em planejamento",
-    },
-    {
-      id: 3,
-      nome: "Em planejamento demorado",
-    },
-    {
-      id: 4,
-      nome: "Cancelado",
-    },
-    {
-      id: 5,
-      nome: "A fazer",
-    },
-  ];
   const location = useLocation()
   const tipoFiltrado = localStorage.getItem(`VALORFILTROTipo`)
 
@@ -122,14 +123,16 @@ export default function Filtro(props: {
   }
   
   const _export = useRef(null);
-  const exportExport = () => {
+  const exportExport = (event: any) => {
+    lerTexto(event)
+
     if (_export.current !== null) {
       (_export.current as any).save(props.listaComponents);
     }
   };
 
   useEffect(() => {
-    api.get("/sod/forum").then((response) => {
+    api.get("/sade/forum").then((response) => {
       const forunsNovos = []
 
       for(let forum of response.data){
@@ -139,7 +142,7 @@ export default function Filtro(props: {
 
       setForuns(forunsNovos)
     })
-  })
+  }, [])
 
   useEffect(() => {
     if (props.aberto) {
@@ -173,18 +176,18 @@ export default function Filtro(props: {
           open={props.aberto}
         >
           <Toolbar variant="dense" sx={{ marginBottom: "10px" }} />
-          <Item itens={tiposDeComponentes} titulo="Tipo" tipo={1} filtrarResultados={props.filtrarResultados} />
+          <Item itens={tiposDeComponentes} titulo="Tipo" tipo={1} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto}/>
           {tipoFiltrado == "Demanda" || tipoFiltrado == "Proposta" ?
             <>
-              <Item itens={status} titulo="Status" tipo={1} filtrarResultados={props.filtrarResultados} />
-              <Item itens={tamanhos} titulo="Tamanho" tipo={2} filtrarResultados={props.filtrarResultados} />
+              <Item itens={status} titulo="Status" tipo={1} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto}/>
+              <Item itens={tamanhos} titulo="Tamanho" tipo={2} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto}/>
               {/* <Item itens={departamentos} titulo="Departamento" tipo={2} filtrarResultados={props.filtrarResultados} /> */}
-              <Item titulo="Código PPM" tipo={3} filtrarResultados={props.filtrarResultados} />
+              <Item titulo="Código PPM" tipo={3} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto}/>
             </>
             :
             <>
-              <Item titulo="Número" tipo={3} filtrarResultados={props.filtrarResultados} />
-              <Item itens={foruns} titulo="Fórum" tipo={2} filtrarResultados={props.filtrarResultados} />
+              <Item titulo="Número" tipo={3} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto}/>
+              <Item itens={foruns} titulo="Fórum" tipo={2} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto}/>
             </>
           }
           <Box sx={{ padding: "8px" }}>
@@ -218,6 +221,7 @@ function Item(props: {
   titulo: string;
   tipo: number;
   filtrarResultados: Function;
+  lerTexto: MouseEventHandler<HTMLElement>
 }) {
   const [aberto, setAberto] = useState(false);
 
@@ -228,12 +232,12 @@ function Item(props: {
   let opcao: JSX.Element = <div />;
 
   if (!props.itens) {
-    opcao = <OpcaoInput filtrarResultados={props.filtrarResultados} />;
+    opcao = <OpcaoInput filtrarResultados={props.filtrarResultados} lerTexto={props.lerTexto}/>;
   } else {
     if (props.tipo == 1) {
-      opcao = <OpcoesRadio itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados} />;
+      opcao = <OpcoesRadio itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados} lerTexto={props.lerTexto}/>;
     } else if (props.tipo == 2) {
-      opcao = <OpcoesCheck itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados} />;
+      opcao = <OpcoesCheck itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados} lerTexto={props.lerTexto}/>;
     }
   }
 
@@ -246,7 +250,7 @@ function Item(props: {
     <>
       <Box sx={{ padding: "8px" }}>
         <BoxItemHeader>
-          <TypographyItemHeader variant="subtitle1">{props.titulo}</TypographyItemHeader>
+          <TypographyItemHeader variant="subtitle1" onClick={props.lerTexto}>{props.titulo}</TypographyItemHeader>
           <IconButton onClick={mudarAberto}>
             {aberto ? <RemoveRoundedIcon /> : <AddRoundedIcon />}
           </IconButton>
@@ -270,13 +274,19 @@ function OpcoesRadio(props: OptionInterface) {
   }
 
   const opcoes = props.itens.map((e) => {
+
+    function lerTextoClique(event: any){
+      props.lerTexto(event)
+      handleClick(e.nome)
+    }
+
     return (
       <FormControlLabel
         key={e.id}
         value={e.nome}
         control={<Radio />}
         label={e.nome}
-        onClick={() => handleClick(e.nome)}
+        onClick={lerTextoClique}
         sx={{
           color: "#595959"
         }}
@@ -323,6 +333,7 @@ function OpcoesCheck(props: OptionInterface) {
         props.itens.map((e) =>
           <FormControlLabel
             key={e.id}
+            onClick={props.lerTexto}
             control={<Checkbox onClick={handleClick}
               name={e.nome} id={e.id + ""}
               defaultChecked={listaOpcoesChecadas.includes(e.nome)}
@@ -335,7 +346,7 @@ function OpcoesCheck(props: OptionInterface) {
   )
 }
 
-function OpcaoInput(props: { filtrarResultados: Function }) {
+function OpcaoInput(props: { filtrarResultados: Function, lerTexto: MouseEventHandler<HTMLElement> }) {
   return (
     <TextField id="input-pesquisa-ppm" variant="standard" 
       InputProps={{
@@ -347,6 +358,7 @@ function OpcaoInput(props: { filtrarResultados: Function }) {
             <SearchRoundedIcon />
           </InputAdornment>
         ),
+        onClick: props.lerTexto,
         onChange: props.filtrarResultados as ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
       }} />
   )
@@ -358,5 +370,6 @@ function OpcaoInput(props: { filtrarResultados: Function }) {
 interface OptionInterface {
   itens: { id: number; nome: string }[],
   titulo: string,
-  filtrarResultados: Function
+  filtrarResultados: Function,
+  lerTexto: MouseEventHandler<HTMLElement>
 }

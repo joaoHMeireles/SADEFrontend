@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Box from "@mui/material/Box";
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'; 
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
@@ -10,8 +10,8 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 import api from "../../api/api";
-import { LocalizationProvider } from "@mui/x-date-pickers"; 
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"; 
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
 
 import {
@@ -20,6 +20,7 @@ import {
 } from "./InfomacoesAdicionais.styles";
 import { getValueEnum } from "../../utils";
 import { sessaoTI } from "../../constants/enuns";
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 
 export default function InfomacoesAdicionais(props: {
     valorTamanho: string;
@@ -39,7 +40,7 @@ export default function InfomacoesAdicionais(props: {
     informacaoProcesso: any
     setInformacaoProcesso: any
 }) {
-
+    const { lerTexto } = useContext(TextReaderContext) as any
     const tamanhos = [
         "MUITOPEQUENO",
         "PEQUENO",
@@ -66,7 +67,7 @@ export default function InfomacoesAdicionais(props: {
     const [objetoBus, setObjetoBus] = useState<any[]>([])
 
     useEffect(() => {
-        api.get("/sod/bu").then((res) => {
+        api.get("/sade/bu").then((res) => {
 
             const listaBus = res.data.map((bu: any) => bu.nomeBU)
 
@@ -82,7 +83,7 @@ export default function InfomacoesAdicionais(props: {
                 props.valorBUsBeneficadas.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
             }
 
-            props.setValorBUsBeneficadas(props.valorBUsBeneficadas)            
+            props.setValorBUsBeneficadas(props.valorBUsBeneficadas)
 
             if (props.informacaoProcesso.tamanho) {
                 props.setValorTamanho(props.informacaoProcesso.tamanho);
@@ -117,12 +118,12 @@ export default function InfomacoesAdicionais(props: {
             <BoxGeral>
 
                 <BoxTitulo>
-                    <Typography variant="h6" component={"h1"} sx={{ fontSize: "20px", color: "#FFF" }}>Informações Adicionais</Typography>
+                    <Typography variant="h6" component={"h1"} sx={{ fontSize: "20px", color: "#FFF" }} onClick={lerTexto}>Informações Adicionais</Typography>
                 </BoxTitulo>
 
                 <BoxContainerInputs>
                     <BoxPadraoDireta>
-                        <TypographyPadrao>Tamanho: </TypographyPadrao>
+                        <TypographyPadrao onClick={lerTexto}>Tamanho: </TypographyPadrao>
                         <SelectPadrao
                             id="tamanhos"
                             defaultValue={props.valorTamanho}
@@ -139,14 +140,14 @@ export default function InfomacoesAdicionais(props: {
                         >
                             {tamanhos.map((tamanho: string, index: number) => {
                                 return (
-                                    <MenuItem key={index} value={tamanho}>{tamanho}</MenuItem>
+                                    <MenuItem key={index} value={tamanho} onClick={lerTexto}>{tamanho}</MenuItem>
                                 )
                             })}
 
                         </SelectPadrao>
                     </BoxPadraoDireta>
                     <Box>
-                        <TypographyPadrao>Prazo elaboração da proposta: </TypographyPadrao>
+                        <TypographyPadrao onClick={lerTexto}>Prazo elaboração da proposta: </TypographyPadrao>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                                 value={props.prazoElaboracao}
@@ -165,7 +166,7 @@ export default function InfomacoesAdicionais(props: {
                     </Box>
                     <BoxPadraoEsquerda>
                         <Box sx={{ width: "50%" }}>
-                            <TypographyPadrao>BU Solicitante: </TypographyPadrao>
+                            <TypographyPadrao onClick={lerTexto}>BU Solicitante: </TypographyPadrao>
                         </Box>
                         <SelectPadrao
                             id="busolicitante"
@@ -205,7 +206,7 @@ export default function InfomacoesAdicionais(props: {
                         >
                             {bus.map((bu: any, index: number) => {
                                 return (
-                                    <MenuItem key={index} value={bu}>{bu}</MenuItem>
+                                    <MenuItem key={index} value={bu} onClick={lerTexto}>{bu}</MenuItem>
                                 )
                             })}
                         </SelectPadrao>
@@ -213,11 +214,11 @@ export default function InfomacoesAdicionais(props: {
                 </BoxContainerInputs>
 
                 <Box sx={{ width: "100%" }}>
-                    <TypographyPadrao>BUs Beneficiadas: </TypographyPadrao>
+                    <TypographyPadrao onClick={lerTexto}>BUs Beneficiadas: </TypographyPadrao>
                     {props.informacaoProcesso.busBeneficiadas ?
                         <Autocomplete
                             id="BU"
-                            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+                            sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
                             multiple
                             disableCloseOnSelect
                             defaultValue={props.informacaoProcesso.busBeneficiadas.map((bus: any) => bus.nomeBU)}
@@ -251,7 +252,7 @@ export default function InfomacoesAdicionais(props: {
                                             style={{ marginRight: 8 }}
                                             checked={selected}
                                         />
-                                        {bu}
+                                        <span onClick={lerTexto}>{bu}</span>
                                     </li>
                                 );
                             }}
@@ -260,7 +261,7 @@ export default function InfomacoesAdicionais(props: {
                         /> :
                         <Autocomplete
                             id="BU"
-                            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
+                            sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
                             multiple
                             disableCloseOnSelect
                             onChange={(e, valor: any) => {
@@ -293,7 +294,7 @@ export default function InfomacoesAdicionais(props: {
                                             style={{ marginRight: 8 }}
                                             checked={selected}
                                         />
-                                        {bu}
+                                        <span onClick={lerTexto}>{bu}</span>
                                     </li>
                                 );
                             }}
@@ -304,7 +305,7 @@ export default function InfomacoesAdicionais(props: {
 
                 <BoxSessaoTIECodigoPPM>
                     <Box sx={{ width: "30%", marginRight: 5 }}>
-                        <TypographyPadrao>Sessão TI responsável: </TypographyPadrao>
+                        <TypographyPadrao onClick={lerTexto}>Sessão TI responsável: </TypographyPadrao>
                         <SelectPadrao
                             id="sessaoTI"
                             value={props.valorSessaoTI}
@@ -331,15 +332,16 @@ export default function InfomacoesAdicionais(props: {
                             }}>
                             {sessoesTI.map((sessao: any, index: number) => {
                                 return (
-                                    <MenuItem key={index} value={sessao.nome}>
+                                    <MenuItem key={index} value={sessao.nome} onClick={lerTexto}>
                                         {sessao.nome}
+
                                     </MenuItem>
                                 )
                             })}
                         </SelectPadrao>
                     </Box>
                     <Box sx={{ width: "30%" }}>
-                        <TypographyPadrao>Codigo PPM: </TypographyPadrao>
+                        <TypographyPadrao onClick={lerTexto}>Código PPM: </TypographyPadrao>
                         <TextField sx={{ width: "80%" }} id="codigoPPM" type="search" value={props.valorCodigoPPM} onChange={(e: any) => {
 
                             props.setValorCodigoPPM(e.target.value)
@@ -354,7 +356,7 @@ export default function InfomacoesAdicionais(props: {
                 </BoxSessaoTIECodigoPPM>
 
                 <Box sx={{ width: "100%" }}>
-                    <TypographyPadrao>Link EPIC Jira: </TypographyPadrao>
+                    <TypographyPadrao onClick={lerTexto}>Link EPIC Jira: </TypographyPadrao>
                     <TextField sx={{ width: "100%" }} id="linkJira" type="search" value={props.valorLinkJira}
                         onChange={(e: any) => {
                             props.setValorLinkJira(e.target.value)

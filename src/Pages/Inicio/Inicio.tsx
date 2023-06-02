@@ -1,6 +1,6 @@
 import { ChangeEventHandler, useEffect, useState, useContext } from "react";
 import "./Inicio.scss";
-import semDemanda from "../../Assets/empty-folder.png"
+import semDemanda from "../../Assets/emptyFolder.png"
 import semResultado from "../../Assets/empty.png"
 import Searchbar from "../../Components/Searchbar/Searchbar";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
@@ -27,7 +27,6 @@ export default function Inicio(props: {
   const [temComponente, setTemComponente] = useState(false)
   const [imagemSemNada, setImagemSemNada] = useState("")
   const [textoSemNada, setTextoSemNada] = useState("")
-  //carregou
 
   useEffect(() => {
     if (props.listaComponents.length != 0) {

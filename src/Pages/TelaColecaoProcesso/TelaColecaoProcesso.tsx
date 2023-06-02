@@ -79,7 +79,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import { StatusComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
 import api from "../../api/api";
-import imagemSemNada from "../../Assets/empty-folder.png"
+import imagemSemNada from "../../Assets/emptyFolder.png"
 
 
 
@@ -103,7 +103,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
   useEffect(() => {
     const idRequisicao = informacaoColecaoProcesso.idPauta ? informacaoColecaoProcesso.idPauta : informacaoColecaoProcesso.pauta.idPauta
 
-    api.get("/sod/pauta/arquivos/" + idRequisicao).then((response) => {
+    api.get("/sade/pauta/arquivos/" + idRequisicao).then((response) => {
       informacaoColecaoProcesso.arquivos = response.data
     }).catch((err) => {
       console.log(err);
@@ -220,7 +220,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         console.log(pautaEditar);
 
 
-        api.put("/sod/pauta/" + idPauta + "/" + idUsuario, formDataPauta).then((response) => {
+        api.put("/sade/pauta/" + idPauta + "/" + idUsuario, formDataPauta).then((response) => {
           console.log(response);
 
 
@@ -240,7 +240,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
               finalReuniao: finalReuniao + ":" + "00"
             }
 
-            api.post("/sod/ata", ataDTO).then((responseATA) => {
+            api.post("/sade/ata", ataDTO).then((responseATA) => {
 
               console.log(responseATA);
 
@@ -306,7 +306,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
           }
         }
 
-        api.put("/sod/ata/" + informacaoColecaoProcesso.idATA + "/" + idUsuario, formData).then((response) => {
+        api.put("/sade/ata/" + informacaoColecaoProcesso.idATA + "/" + idUsuario, formData).then((response) => {
           console.log(response);
 
           acaoFinalizada()

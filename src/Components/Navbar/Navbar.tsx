@@ -8,6 +8,7 @@ import { NavBar, /*BoxTextField,*/ TextFieldLinguas } from "./Navbar.styles";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
 import api from '../../api/api';
+import sadeLogo from "../../Assets/sadeLogoBranca.png";
 
 const listaLinguas = [
     "Português",
@@ -26,21 +27,12 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
 
     useEffect(() => {
         if (usuario != null) {
-            api.get("/sod/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
+            api.get("/sade/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
                 .then((response) => {
                     setFotoUsuario(response.data);
                 });
         }
     }, []);
-
-    useEffect(() => {
-        if (usuario != null) {
-            api.get("/sod/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
-                .then((response) => {
-                    setFotoUsuario(response.data);
-                });
-        }
-    }, [usuario]);
 
     function mudarSidebar() {
         props.setAberto(!props.aberto)
@@ -61,8 +53,8 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                                 <DehazeRoundedIcon />
                             </IconButton>
 
-                            <Box sx={{ flexGrow: 1 }}>
-                                <img src={logo} alt="" />
+                            <Box sx={{ flexGrow: 1}}>
+                                <img id="imgLogoNav" src={sadeLogo} alt="Logo SADE" />
                             </Box>
 
                             <Box sx={{ display: "flex" }}>
@@ -74,7 +66,7 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                                     ))}
                                 </TextFieldLinguas>
 
-                                <Box sx={{ marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>
+                                <Box sx={{ height: "100%", marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>
                                     <Avatar {...stringAvatar(usuario.nomeUsuario)} onClick={() => {
                                         window.location.href = "/profile";
                                     }} src={URL.createObjectURL(fotoUsuario)} />

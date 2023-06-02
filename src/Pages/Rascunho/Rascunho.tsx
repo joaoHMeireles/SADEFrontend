@@ -8,7 +8,7 @@ import {
 } from "../../constants/enuns";
 import api from "../../api/api";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
-import semDemanda from "../../Assets/empty-folder.png"
+import semDemanda from "../../Assets/emptyFolder.png"
 
 export default function Rascunho(props: {
   filtrar: boolean;
@@ -21,7 +21,7 @@ export default function Rascunho(props: {
   const idUsuario = localStorage.getItem("IDUSUARIO")
 
   useEffect(() => {
-    api.get("/sod/demanda/usuario/" + idUsuario +"/rascunho/").then((response) => {
+    api.get("/sade/demanda/usuario/" + idUsuario +"/rascunho/").then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
         demanda.tipo = TipoComponenteProcesso.Demanda

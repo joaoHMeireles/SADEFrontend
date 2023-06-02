@@ -6,7 +6,7 @@ const styledTypograpfy = styled(Typography);
 
 export const MainPaper = styled(Paper)({
   borderRadius: "5px",
-  boxShadow: "5px 5px 10px 0 #00000050",
+  boxShadow: "5px 5px 10px 0 #00000025",
   heigth: "90%",
   width: "90%",
 });
