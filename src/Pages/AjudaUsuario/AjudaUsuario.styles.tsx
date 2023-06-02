@@ -15,7 +15,9 @@ export const FirstColumn = styled(Box)({
     boxShadow: "5px 5px 10px 0px #00000050, -5px -5px 10px 0px #00000050",
     height: "75vh",
     marginTop: "1rem",
-    width: "20%"
+    overflow: "auto",
+    overflowY: "inherit",
+    width: "25%",
 })
 
 export const Lista = styled(List)({
