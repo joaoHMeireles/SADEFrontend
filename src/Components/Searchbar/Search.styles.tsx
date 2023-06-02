@@ -5,31 +5,20 @@ import IconButton from "@mui/material/IconButton";
 import styled from "@emotion/styled"
 
 export const BoxContainerInput = styled(Box)({
-    flexGrow: 1,
     display: "flex",
     justifyContent: "center",
     marginBottom: "2rem",
-})
+});
 
 export const SearchTextField = styled(TextField)({
+    backgroundColor: "#eee",
+    borderRadius: "10px",
+    boxShadow: "5px 5px 10px 0 #00000025",
+    "& fieldset": { border: "none" },
     width: "50vw",
-    ":focus": {
-        borderColor: "#00579d"
-    },
-    '& .MuiInputBase-root': {
-        height: "100%"
-    }
-})
+});
 
 export const ContainerGrid = styled(Grid)({
     alignItems: "center",
-    display: "flex",
-    height: "100%",
-    // justifyContent: "center",
-    width: "auto"
-})
-
-export const GridIconButton = styled(IconButton)({
-    
-
-})
+    display: "flex"
+});

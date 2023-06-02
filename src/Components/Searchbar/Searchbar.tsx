@@ -7,7 +7,7 @@ import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import KeyboardRoundedIcon from '@mui/icons-material/KeyboardRounded';
 import MicRoundedIcon from '@mui/icons-material/MicRounded';
-import { BoxContainerInput, ContainerGrid, SearchTextField, GridIconButton } from './Search.styles';
+import { BoxContainerInput, SearchTextField } from './Search.styles';
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import TecladoVirtual from '../TecladoVirtual/TecladoVirtual';
 
@@ -86,22 +86,22 @@ export default function Searchbar(props: {
 
     return (
         <BoxContainerInput>
-            <SearchTextField value={valorInput} onChange={atualizarInput} id='input-pesquisa' InputProps={{
+            <SearchTextField sx={{ border: "none" }} value={valorInput} onChange={atualizarInput} id='input-pesquisa' InputProps={{
+                disableUnderline: true,
                 startAdornment: startAdornment,
                 endAdornment: endAdornment,
                 placeholder: "Pesquisar por Título ou Solicitante"
             }} />
 
-            <GridIconButton aria-label="grid" sx={{ marginLeft: "1rem" }} onClick={toggleGrid}>
+            <IconButton sx={{ marginLeft: "1rem" }} onClick={toggleGrid}>
                 {!props.grid ?
-                    <GridViewRoundedIcon sx={{ color: (!props.grid ? "#00579d" : "") }} />
+                    <GridViewRoundedIcon sx={{ color: "#00579d" }} />
                     :
-                    <ViewListRoundedIcon sx={{ color: (props.grid ? "#00579d" : "") }} />
+                    <ViewListRoundedIcon sx={{ color: "#00579d" }} />
                 }
-            </GridIconButton>
+            </IconButton>
 
-            {usandoTecladoVirtual &&
-                <TecladoVirtual setValorInput={setValorInput} valorInput={valorInput} />}
+            {usandoTecladoVirtual && <TecladoVirtual setValorInput={setValorInput} valorInput={valorInput} />}
         </BoxContainerInput>
     )
 }

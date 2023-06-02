@@ -7,10 +7,12 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 import {
+  AutocompleteEdited,
+  BoxContainerCentroCusto,
   BoxContainerGeralInformacaoGeral,
   BoxContainerLabels,
-  TypographyLabels,
-  BoxContainerCentroCusto,
+  TextFieldEdited,
+  TypographyLabels
 } from "./InformacaoGeral.styles";
 import Checkbox from "@mui/material/Checkbox";
 import api from "../../api/api";
@@ -89,9 +91,8 @@ export default function InformacaoGeral(props: {
           <TypographyLabels onClick={lerTexto}>
             Título:
           </TypographyLabels>
-          <TextField
+          <TextFieldEdited
             id="titulo"
-            sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
             onChange={(e: any) => {
               const novaInfoDemanda = {
                 ...props.informacaoProcesso,
@@ -112,7 +113,7 @@ export default function InformacaoGeral(props: {
           <TypographyLabels onClick={lerTexto}>
             Problema a ser resolvido (situação atual):
           </TypographyLabels>
-          <TextField
+          <TextFieldEdited
             id="situacaoAtual"
             sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
             multiline
@@ -137,7 +138,7 @@ export default function InformacaoGeral(props: {
           <TypographyLabels onClick={lerTexto}>
             Proposta / Solicitação de proposta:
           </TypographyLabels>
-          <TextField
+          <TextFieldEdited
             id="objetivo"
             sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
             multiline
@@ -215,7 +216,7 @@ export default function InformacaoGeral(props: {
                 options={centroCusto}
                 renderInput={(params) => <TextField {...params} onClick={lerTexto} />}
               />) : (
-              <Autocomplete
+              <AutocompleteEdited
                 id="centrosDeCusto"
                 sx={{ boxShadow: "5px 5px 10px 0 #00000050" }}
                 multiple

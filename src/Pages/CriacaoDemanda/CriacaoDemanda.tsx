@@ -379,8 +379,7 @@ export default function CriacaoDemanda(props: {
                 onClick={(e) => {
                   lerTexto(e)
                   window.location.href = "/home";
-                }}
-              >
+                }}>
                 Cancelar
               </BotaoTerciario>
               <BotaoPrimario
