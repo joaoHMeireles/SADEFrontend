@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logo from '../../assets/wegLogo.png';
 import './Navbar.scss';
-import { Avatar, Box, IconButton, Toolbar, MenuItem } from '@mui/material';
+import { Avatar, Box, IconButton, Toolbar, MenuItem, TextField } from '@mui/material';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
-import { NavBar, /*BoxTextField,*/ TextFieldLinguas } from "./Navbar.styles";
+import { NavBar } from "./Navbar.styles";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
 import api from '../../api/api';
@@ -53,18 +53,18 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                                 <DehazeRoundedIcon />
                             </IconButton>
 
-                            <Box sx={{ flexGrow: 1}}>
+                            <Box sx={{ flexGrow: 1 }}>
                                 <img id="imgLogoNav" src={sadeLogo} alt="Logo SADE" />
                             </Box>
 
-                            <Box sx={{ display: "flex" }}>
-                                <TextFieldLinguas select value={lingua} onChange={mudarLingua} variant="standard">
+                            <Box sx={{ alignItems: "center", display: "flex" }}>
+                                <TextField sx={{ "& fieldset": { border: 'none' } }} select value={lingua} onChange={mudarLingua} variant="outlined">
                                     {listaLinguas.map((option) => (
                                         <MenuItem key={option} value={option}>
                                             {option}
                                         </MenuItem>
                                     ))}
-                                </TextFieldLinguas>
+                                </TextField>
 
                                 <Box sx={{ height: "100%", marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>
                                     <Avatar {...stringAvatar(usuario.nomeUsuario)} onClick={() => {

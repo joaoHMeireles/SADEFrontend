@@ -6,7 +6,7 @@ const styledBox = styled(Box);
 export const BoxContainerGeral = styledBox({
   alignItems: "center",
   border: "2px solid #595959",
-  borderRadius: "4px",
+  borderRadius: "5px",
   borderStyle: "dashed",
   display: "flex",
   justifyContent: "center",

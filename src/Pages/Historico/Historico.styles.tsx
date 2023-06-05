@@ -57,20 +57,20 @@ export const DataGridEstilizado = styled(DataGrid)(({ theme }) => ({
         }
     },
 
-    "& .MuiDataGrid-main ": {
-        "& .MuiDataGrid-virtualScroller": {
-            "&::-webkit-scrollbar ": {
-                width: "10px",
-                height: "10px",
-                backgroundColor: "white"
-            },
+    // "& .MuiDataGrid-main ": {
+    //     "& .MuiDataGrid-virtualScroller": {
+    //         "&::-webkit-scrollbar ": {
+    //             width: "10px",
+    //             height: "10px",
+    //             backgroundColor: "white"
+    //         },
 
-            "::-webkit-scrollbar-thumb": {
-                background: "#bababa",
-                borderRadius: "15px",
-            },
-        }
-    },
+    //         "::-webkit-scrollbar-thumb": {
+    //             background: "#bababa",
+    //             borderRadius: "15px",
+    //         },
+    //     }
+    // },
 
     [`& .${gridClasses.row}.even`]: {
         backgroundColor: theme.palette.grey[200],
