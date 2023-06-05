@@ -23,6 +23,7 @@ import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import { Alert, Button, FormControl, FormHelperText, InputAdornment, Snackbar } from "@mui/material";
 import { WebSocketContext } from "../../api/websocketservice";
 import api from "../../api/api";
+import Cookies from "js-cookie";
 
 /**
  * 
@@ -41,19 +42,8 @@ export default function Login(props: {
   const [user, setUser] = useState({ email: '', senha: '' });
   const { lerTexto } = useContext(TextReaderContext) as any;
   const webSocketService: any = useContext(WebSocketContext);
-
-  localStorage.setItem("PAGINATUAL", "login");
-
-  function atualizarUsuario(event: any) {
-    setUser({
-      ...user, [event.target.name]: event.target.value
-    });
-  }
-
   const handleLogin = async (e: any) => {
     e.preventDefault();
-    console.log(user);
-    
 
     if ((user.email == '' || user.email == null) || (user.senha == '' || user.senha == null)) {
       setInvalido(true);
@@ -67,20 +57,45 @@ export default function Login(props: {
     }
 
     api.post(`/sade/login/auth`, user, config).then((response: any) => {
-      console.log("Entrou na requisição");
-
       const dadosUserJPA = response.data;
       localStorage.setItem("TIPOUSUARIO", dadosUserJPA.authorities[0].authority);
       localStorage.setItem("USUARIO", JSON.stringify(dadosUserJPA.usuario));
       localStorage.setItem("IDUSUARIO", JSON.stringify(dadosUserJPA.usuario.idUsuario));
 
+      const inputCheckbox = document.getElementById("checkboxLembrarDeMim") as HTMLInputElement
+
+      if(inputCheckbox.checked){
+        api.post(`/sade/login/auth/cookie`, user, config)
+      }
+
       return dadosUserJPA;
-    }).then((res) => {
+    }).then(() => {
       webSocketService.conectar();
       location.href = "/home";
     }).catch((err: any) => {
       console.log(err);
       setFeedbackAberto(true);
+    });
+  }
+
+  localStorage.setItem("PAGINATUAL", "login");
+
+  // useEffect(() => {
+    
+    
+  // }, [])
+
+  /**
+ * Função para setar o filtro e o menu como fechados
+ */
+  useEffect(() => {
+    props.setAberto(false);
+    props.setFiltro(false);
+  });
+
+  function atualizarUsuario(event: any) {
+    setUser({
+      ...user, [event.target.name]: event.target.value
     });
   }
 
@@ -96,20 +111,10 @@ export default function Login(props: {
   }
 
   function onClickToDo(e: any) {
-    console.log("Entrou no onClickToDo");
     lerTexto();
     handleLogin(e);
   }
 
-  /**
- * Função para setar o filtro e o menu como fechados
- */
-  useEffect(() => {
-    props.setAberto(false);
-    props.setFiltro(false);
-  });
-
-  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
   return (
     <>
@@ -124,7 +129,7 @@ export default function Login(props: {
               <img id="sadeLogo" src={sadeLogo} alt="SADE Logo" />
             </BoxLogos>
 
-            <BoxTexts>
+            <BoxTexts >
               <p id="title">Login</p>
 
               <p id="text">Insira suas crendenciais para acessar sua conta</p>
@@ -156,7 +161,7 @@ export default function Login(props: {
               </FormControl>
 
               <BoxRememberMe>
-                <Checkbox {...label} />
+                <Checkbox id="checkboxLembrarDeMim"/>
                 <p id="text">Lembrar de mim</p>
               </BoxRememberMe>
             </BoxInputs>

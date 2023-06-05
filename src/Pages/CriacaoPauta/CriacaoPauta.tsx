@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, useContext, useEffect, useState } from "react";
 
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
@@ -38,6 +38,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
 import dayjs from 'dayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 
 export default function CriacaoPauta(props: {
   filtrar: boolean;
@@ -45,6 +46,7 @@ export default function CriacaoPauta(props: {
   listaComponents: any[];
   filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }) {
+  const { lerTexto } = useContext(TextReaderContext) as any
   const [valor, setValor] = useState(0);
   const [grid, setGrid] = useState(true);
   const [propostas, setPropostas] = useState<any[]>([]);
@@ -94,10 +96,6 @@ export default function CriacaoPauta(props: {
     }
   });
 
-  // useEffect(() => {
-  //   setComissaoEscolhida(comissoes[0])
-  // }, [comissoes])
-
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
   }
@@ -112,7 +110,9 @@ export default function CriacaoPauta(props: {
     localStorage.setItem(`PROPOSTAESCOLHIDA`, JSON.stringify(proposta));
   }
 
-  function criarPauta() {
+  function criarPauta(e: any) {
+    lerTexto(e)
+
     const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
     const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
     const horarioInicioReuniao = (document.getElementById("horarioInicioReuniao") as HTMLInputElement).value
@@ -129,9 +129,9 @@ export default function CriacaoPauta(props: {
       propostasPauta: propostas
     }
 
-    console.log(pauta);
 
     api.post("/sade/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then((response) => {
+
       console.log(response.data);
 
       location.href = "/home"
@@ -189,7 +189,8 @@ export default function CriacaoPauta(props: {
             }}
             variant="contained"
             endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
-            onClick={() => {
+            onClick={(e: any) => {
+              lerTexto(e)
               setValor(1);
               localStorage.setItem(
                 "PROPOSTASELECIONADA",
@@ -207,7 +208,7 @@ export default function CriacaoPauta(props: {
             <Box sx={{ width: "50vw", display: "flex", justifyContent: "center" }}>
               <Grid container spacing={1}>
                 <Grid item xs={12} sx={{ alignItems: "flex-start", display: "flex", flexDirection: "column" }}>
-                  <TypographyTituloInput>
+                  <TypographyTituloInput onClick={lerTexto}>
                     Título da reunião
                   </TypographyTituloInput>
 
@@ -215,7 +216,7 @@ export default function CriacaoPauta(props: {
                 </Grid>
 
                 <Grid item xs={6}>
-                  <TypographyTituloInput>
+                  <TypographyTituloInput onClick={lerTexto}>
                     Fórum da reunião
                   </TypographyTituloInput>
 
@@ -233,14 +234,14 @@ export default function CriacaoPauta(props: {
                     }}
                   >
                     {comissoes.map((comissao) => {
-                      return <MenuItem value={comissao.nomeForum} id={comissao.idForum}>{comissao.nomeForum}</MenuItem>;
+                      return <MenuItem value={comissao.nomeForum} id={comissao.idForum} onClick={lerTexto}>{comissao.nomeForum}</MenuItem>;
                     })}
                   </Select>
                 </Grid>
 
                 <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
                   <Box>
-                    <TypographyTituloInput>
+                    <TypographyTituloInput onClick={lerTexto}>
                       Data da Reunião
                     </TypographyTituloInput>
 
@@ -256,7 +257,7 @@ export default function CriacaoPauta(props: {
                 </Grid>
 
                 <Grid item xs={6}>
-                  <TypographyTituloInput>
+                  <TypographyTituloInput onClick={lerTexto}>
                     Início da reunião
                   </TypographyTituloInput>
 
@@ -276,7 +277,7 @@ export default function CriacaoPauta(props: {
 
                 <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
                   <Box>
-                    <TypographyTituloInput>
+                    <TypographyTituloInput onClick={lerTexto}>
                       Final da reunião
                     </TypographyTituloInput>
 
@@ -302,7 +303,7 @@ export default function CriacaoPauta(props: {
                     <Box sx={{ display: "flex", height: "auto", justifyContent: "center", width: "50vw" }}>
                       <CardProposta cor="#6AACDA">
                         <BoxConteudoProposta>
-                          <BoxTituloProposta>{proposta.tituloDemanda}</BoxTituloProposta>
+                          <BoxTituloProposta onClick={lerTexto}>{proposta.tituloDemanda}</BoxTituloProposta>
                           <BoxIconeLink>
                             <DeleteIcon
                               sx={{
@@ -314,7 +315,7 @@ export default function CriacaoPauta(props: {
                               onClick={() => removerProposta(proposta.id)}
                             />
                             <TypographyVermais variant="body2">
-                              <Link to={proposta.link} onClick={() => { atualizarPropostaEscolhida(proposta) }}>Ver mais</Link>
+                              <Link to={proposta.link} onClick={(e: any) => { lerTexto(e); atualizarPropostaEscolhida(proposta) }}>Ver mais</Link>
                             </TypographyVermais>
                           </BoxIconeLink>
                         </BoxConteudoProposta>
@@ -327,7 +328,10 @@ export default function CriacaoPauta(props: {
           })}
           <BoxBotoes>
             <BotaoSecundario
-              onClick={() => setValor(0)}
+              onClick={(e: any) => {
+                lerTexto(e)
+                setValor(0)
+              }}
               sx={{
                 width: "10%",
                 minWidth: "auto",

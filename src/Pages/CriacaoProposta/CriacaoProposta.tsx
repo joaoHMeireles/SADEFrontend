@@ -14,7 +14,6 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
-import EsqueletoPDFProposta from "../../Components/EsqueletoPDF/EsqueletoPDFProposta/EsqueletoPDFProposta";
 import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import InfomacoesAdicionais from "../../Components/InfomacoesAdicionais/InformacoesAdicionais";
@@ -30,9 +29,6 @@ import {
 import { BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles";
 
 import {
-  sessaoTI,
-  StatusComponenteProcesso,
-  TamanhoComponenteProcesso,
   TipoComponenteProcesso,
 } from "../../constants/enuns";
 import api from "../../api/api";
@@ -42,6 +38,7 @@ import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semDemanda from "../../Assets/emptyFolder.png"
 import jsPDF from "jspdf";
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
+
 
 export default function CriacaoProposta(props: {
   filtrar: boolean;
@@ -135,7 +132,7 @@ export default function CriacaoProposta(props: {
     for (let i = 0; i < listaTabelas.length; i++) {
       const listaLinhasTabelaCustoProposta: any[] = []
       let listaLinhasTabela = document.getElementsByClassName(`linhaTabelaCustoCriacao${i}`);
-
+      let checkboxTabelaDeLicenca = document.getElementById(`tabelaDeLicencas${i}`) as HTMLInputElement
       let valorTotal: number = 0;
       let quantidadeTotal: number = 0;
       let linhaTabela;
@@ -189,7 +186,7 @@ export default function CriacaoProposta(props: {
         tituloTabela: tituloTabela,
         quantidadeTotal: quantidadeTotal,
         valorTotal: valorTotal,
-        licenca: false,
+        licenca: checkboxTabelaDeLicenca.checked,
         centrosCustoPagantes: listaCentroCustoTabela,
         linhasTabela: listaLinhasTabelaCustoProposta
       }

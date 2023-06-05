@@ -61,16 +61,10 @@ export default function App() {
         listaDemandas.push(demanda)
       }
 
-      console.log("Lista demandas --> " + listaDemandas)
-
       setListaDemandas(listaDemandas);
     }).catch((err) => {
       console.log(err);
     })
-    //     .finally(() => {
-    //   //setCarregou(true)
-    // })
-
 
     api.get("/sade/proposta").then((response: any) => {
       let listaPropostas: any[] = []
@@ -85,14 +79,11 @@ export default function App() {
         proposta.id = proposta.idProposta
         listaPropostas.push(proposta)
       }
-      console.log("Lista de Propostas --> " + listaPropostas)
 
       setListaPropostas(listaPropostas);
     }).catch((err: any) => {
       console.log(err);
     })
-
-    console.log("passou get 2")
 
     api.get("/sade/pauta").then((response) => {
       let listaPautas: any[] = []
@@ -104,8 +95,6 @@ export default function App() {
         pauta.tipo = TipoColecaoComponenteProcesso.Pauta
         listaPautas.push(pauta)
       }
-
-      console.log("Lista Pautas --> " + listaPautas)
 
       setListaPautas(listaPautas);
     }).catch((err) => {
@@ -122,8 +111,6 @@ export default function App() {
         ata.tipo = TipoColecaoComponenteProcesso.ATA
         listaATAs.push(ata)
       }
-
-      console.log("Lista de ATAs --> " + listaATAs)
 
       setListaATAs(listaATAs);
     }).catch((err) => {

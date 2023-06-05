@@ -18,6 +18,7 @@ import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
+import FactCheckRoundedIcon from '@mui/icons-material/FactCheckRounded';
 
 import {
   BoxContainerTabela,
@@ -101,6 +102,8 @@ function Tabela(props: {
   const [centroCustoEscolhidos, setCentroCustoEscolhidos] = useState<any[]>([])
   const [atualizouPorcentagem, setAtualizouPorcentagem] = useState(false)
   const [valorCentroCustoInput, setValorCentroCustoInput] = useState([])
+  const [tabelaDeLicencas, setTabelaDeLicencas] = useState(false)
+  const [iconeInput, setIconeInput] = useState( <AccessTimeRoundedIcon sx={{ paddingRight: 1 }} />)
 
   useEffect(() => {
     const newLinhas = []
@@ -110,11 +113,20 @@ function Tabela(props: {
         index={i}
         indexTabela={props.tabela}
         atualizarValor={atualizarValor}
+        iconeInput={iconeInput}
       />)
     }
 
     setLinhas(newLinhas)
-  }, [quantidadeLinha])
+  }, [quantidadeLinha, iconeInput])
+
+  useEffect(() => {
+    if(tabelaDeLicencas){
+      setIconeInput(<FactCheckRoundedIcon sx={{ paddingRight: 1 }} /> )
+    } else {
+      setIconeInput(<AccessTimeRoundedIcon sx={{ paddingRight: 1 }} /> )
+    }
+  }, [tabelaDeLicencas])
 
   useEffect(() => {
     if (centroCustoEscolhidos.length == 0) {
@@ -182,6 +194,10 @@ function Tabela(props: {
     setPorcentagem(porcentagem - 5)
   }
 
+  function mudarTipoTabela(){
+    setTabelaDeLicencas(!tabelaDeLicencas)
+  }
+
   return (
     <>
       <BoxContainerTabela className="tabelaCustoCriacao">
@@ -193,10 +209,10 @@ function Tabela(props: {
                   {props.tituloTabela}
                 </TableCellEstilzada>
                 <TableCellEstilzada align="center" onClick={lerTexto}>
-                  Esforço (h)
+                  {tabelaDeLicencas ? "Licenças" : "Esforço (h)"}
                 </TableCellEstilzada>
                 <TableCellEstilzada align="center" onClick={lerTexto}>
-                  Valor Hora
+                {tabelaDeLicencas ? "Valor Unidade" : "Valor Hora"}
                 </TableCellEstilzada>
               </TableRowEstilizada>
             </TableHead>
@@ -224,6 +240,10 @@ function Tabela(props: {
           </Tooltip>
         </BoxIconsAddMinus>
       </BoxContainerTabela>
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "end", alignItems: "center", fontSize: "12px" }}>
+        Tabela de licenças
+        <Checkbox id={`tabelaDeLicencas${props.tabela}`}  checked={tabelaDeLicencas} onClick={mudarTipoTabela}/>
+      </Box>
       <Box>
         <TypographyStyled onClick={lerTexto}>Centro de Custo para {props.tituloTabela}:</TypographyStyled>
         <Autocomplete
@@ -276,16 +296,17 @@ function ChipAutocompleteCentroCusto(props: { id: any, nome: string, mudarPorcen
 
   return (
     <Box sx={{ marginRight: 2 }}>
-      <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#59595930 solid 1px" }} label={props.nome} onClick={lerTexto}/>
+      <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#59595930 solid 1px" }} label={props.nome} onClick={lerTexto} />
       <Button id={props.id} sx={{ backgroundColor: "rgba(0,0,0,0.08)", height: "32px", borderRadius: "0 16px 16px 0" }} onClick={atualizarPorcentagem}>{porcentagem} %</Button>
     </Box>
   )
 }
 
 function LinhaTabela(props: {
-  index: number
-  indexTabela: number
-  atualizarValor: Function
+  index: number;
+  indexTabela: number;
+  atualizarValor: Function;
+  iconeInput: any;
 }) {
   const [esforco, setEsforco] = useState(0);
   const [valorHora, setValorHora] = useState(0);
@@ -318,9 +339,7 @@ function LinhaTabela(props: {
             id={`esforco${props.indexTabela}-${props.index}`}
             sx={{ width: "100%" }}
             InputProps={{
-              startAdornment: (
-                <AccessTimeRoundedIcon sx={{ paddingRight: 1 }} />
-              ),
+              startAdornment: props.iconeInput,
             }}
           ></TextField>
         </TableCell>

@@ -13,6 +13,8 @@ import {
   TypographyTitulo,
 } from "./Notificacao.styles";
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
+import { useContext } from "react";
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 
 /**
  *
@@ -32,6 +34,7 @@ export default function Notificacao(props: {
   linkNotificacao: any;
   idComponenteLink: any;
 }) {
+  const { lerTexto, leituraDeSiteAtiva  } = useContext(TextReaderContext) as any
   const idUsuario = localStorage.getItem("IDUSUARIO") as string;
 
   const bodyNotificacaoDTO: any = {
@@ -43,7 +46,15 @@ export default function Notificacao(props: {
     }
   }
 
-  function redirecionar() {
+  function redirecionar(e: any) {
+    if(leituraDeSiteAtiva){
+      lerTexto(e)
+      if(!(e.target.localName == "div")){
+        return
+      }
+    }
+    
+
     if (props.tipoNotificacao == "DEMANDA") {
       api.get("/sade/demanda/" + props.idComponenteLink).then((response) => {
         response.data.id = response.data.idDemanda
@@ -109,21 +120,20 @@ export default function Notificacao(props: {
         location.href = props.linkNotificacao
       })
     }
-
   }
 
   return (
-    <BoxNotificacao>
-      <NotificacaoLadoEsquerdo onClick={redirecionar}>
+    <BoxNotificacao onClick={redirecionar}>
+      <NotificacaoLadoEsquerdo>
         <NotificacaoBoxIcone>
           <props.Icone sx={{ color: "#595959" }}></props.Icone>
         </NotificacaoBoxIcone>
         <Box>
           <Box>
-            <TypographyTitulo variant="h6">{props.titulo}</TypographyTitulo>
+            <TypographyTitulo variant="h6" onClick={lerTexto}>{props.titulo}</TypographyTitulo>
           </Box>
           <Box>
-            <TypographyMensagem variant="caption">
+            <TypographyMensagem variant="caption"  onClick={lerTexto}>
               {props.mensagem}
             </TypographyMensagem>
           </Box>

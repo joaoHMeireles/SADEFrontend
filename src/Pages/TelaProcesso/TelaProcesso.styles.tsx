@@ -1,6 +1,6 @@
-import { Box, Grid, IconButton, TextField, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import CircleIcon from '@mui/icons-material/Circle';
-import { BotaoPrimario, BotaoSecundario, BotaoTerciario, BoxConteudo } from '../App.styles';
+import { BoxConteudo } from '../App.styles';
 import { styled } from '@mui/material/styles';
 const styledBox = styled(Box)
 const styledGrid = styled(Grid)
@@ -16,29 +16,6 @@ export const BoxHeader = styledBox({
     top: "7.2vh",
     width: "96.5%",
     zIndex: 10
-})
-
-export const BotaoIcone = styled(IconButton)({
-    marginLeft: "1vw"
-})
-
-export const BotaoPrimarioHeader = styled(BotaoPrimario)({
-    marginLeft: "1vw"
-})
-
-export const BotaoSecundarioHeader = styled(BotaoSecundario)({
-    marginLeft: "1vw"
-})
-
-export const BotaoTerciarioHeader = styled(BotaoTerciario)({
-    marginLeft: "1vw"
-})
-
-export const BoxBotoes = styledBox({
-    display: "flex",
-    flexDirection: 'row-reverse',
-    justifyContent: "space-between",
-    width: "auto"
 })
 
 export const BoxAviso = styledBox({
@@ -130,51 +107,5 @@ export const BoxTituloModal = styledBox({
 export const BoxBotoesModal = styledBox({
     display: "flex",
     justifyContent: "flex-end",
-    width: "100%"
-})
-
-export const BoxInfoModal = styledBox({
-    display: "grid",
-    justifyContent: "center",
-    width: "100%"
-})
-
-export const BoxAtributosInfoModal = styledBox({
-    alignItems: "center",
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "20px",
-    width: "100%"
-})
-
-export const BoxAtributoInfoModal = styledBox({
-    alignItems: "center",
-    display: "flex",
-    justifyContent: "center"
-})
-
-export const BoxBUsBeneficiadas = styledBox({
-    display: "flex",
-    flexDirection: "column",
-    marginBottom: "20px"
-})
-
-export const BoxSessaoTI = styledBox({
-    alignItems: "center",
-    display: "flex",
-    marginBottom: "30px",
-})
-
-export const BoxAtributoInfoModal2 = styled(BoxAtributoInfoModal)({
-    display: "grid",
-    width: "40%"
-})
-
-export const TypographyTituloAtributoModal = styled(TypographyTituloAtributo)({
-    marginBottom: "1rem"
-})
-
-export const TextFieldURL = styled(TextField)({
-    marginBottom: "30px",
     width: "100%"
 })

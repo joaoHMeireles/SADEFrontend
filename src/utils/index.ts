@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
 import { StatusTarefaHistorico } from '../constants/enuns';
 import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
@@ -9,6 +9,7 @@ import BackupTableRoundedIcon from '@mui/icons-material/BackupTableRounded';
 import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
 import CoPresentRoundedIcon from '@mui/icons-material/CoPresentRounded'
 import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';
+import { Botao } from '../constants/interfaces';
 
 
 /**
@@ -227,4 +228,197 @@ export function baixarArquivo(anexo: any) {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+}
+
+export function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonElement>[], aprovadoGerente: boolean, ultimoHistorico: any) {
+    const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
+    const tipoProcesso = processo.tipo
+    const statusProcesso = processo.statusDemanda
+    const tamanho = processo.tamanho
+    const linkJira = processo.linkJira
+    const prazoElaboracao = processo.prazoElaboracao
+    const estaEmWorkflow = processo.emWorkflow
+    const aprovadoWorkflow = processo.aprovadoWorkflow
+    const workflowDeadline = processo.prazoWorkflow
+    const estaEmProposta = processo.pertenceUmaProposta
+    const estaEmPauta = processo.estaEmPauta
+    const temChat = processo.temChat
+    let listaBotoes: Botao[] = []
+
+
+    if (temChat) {
+        listaBotoes.push({ nome: "chat", function: funcoes[0] })
+    } else {
+        if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
+            listaBotoes.push({ nome: "chat", function: funcoes[11] })
+        }
+    }
+
+    /**
+     *  1º chat, reprovar, devolver, aprovar (Analista de TI, demanda)
+        2º chat, histórico, reprovar aprovar (Gerente de negócio, demanda)
+        3º chat, histórico, adicionar informações (Analista de TI, demanda)
+        4º chat, histórico, criar proposta (Analista de TI, demanda)
+        5º chat, histórico, criar proposta sinalização da atraso (Analista de TI, demanda)
+        6º chat, histórico, iniciar workflow, ver demanda, criar pauta (Analista de TI, proposta)
+        7º chat, histórico, ver demanda (Gerente de negócio, proposta)
+        8º chat, histórico, workflow, ver demanda (Gerente de negócio, proposta)
+        9º chat, histórico, workflow (notificaçãozinha que ta atrasado), ver demanda (Gerente de negócio, proposta)
+        10º chat, histórico, workflow, ver demanda, criar pauta (Gerente de TI, proposta)
+        11º chat, histórico, workflow (notificaçãozinha que ta atrasado), ver demanda, criar pauta (Gerente de TI, proposta)
+     */
+    if (tipoProcesso == "Demanda") {
+        const aprovar = { nome: "aprovar", function: funcoes[1] }
+        const reprovar = { nome: "reprovar", function: funcoes[2] }
+        const historico = { nome: "historico", function: funcoes[4] }
+
+        if (estaEmProposta && (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI")) {
+            listaBotoes.push(historico)
+        } else {
+            if (statusProcesso == "CANCELED" || ultimoHistorico.tarefa == "REENVIARDEMANDA" && (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI")) {
+                listaBotoes.push(historico)
+            } else {
+
+                if (!tamanho) {
+                    if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
+                        const devolver = { nome: "devolver", function: funcoes[3] }
+
+                        listaBotoes.push(reprovar, devolver, aprovar)
+                    }
+                } else {
+                    if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
+                        listaBotoes.push(historico)
+                    }
+
+                    if (tipoPessoa == "GerenteNegocio") {
+                        if (!aprovadoGerente) {
+                            listaBotoes.push(reprovar, aprovar)
+                        }
+                    } else if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
+                        if (aprovadoGerente) {
+                            if (!linkJira) {
+                                const adicionarInfo = { nome: "adicionarInfo", function: funcoes[5] }
+
+                                listaBotoes.push(adicionarInfo)
+                            } else {
+                                let criarProposta: Botao = { nome: " ", function: funcoes[6] }
+                                if (prazoElaboracao < new Date()) {
+                                    criarProposta.nome = "criarProposta!"
+                                } else {
+                                    criarProposta.nome = "criarProposta"
+                                }
+                                listaBotoes.push(criarProposta)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        const historico = { nome: "historico", function: funcoes[4] }
+        const verDemanda = { nome: "verDemanda", function: funcoes[8] }
+        const criarPauta = { nome: "criarPauta", function: funcoes[9] }
+
+        if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
+            listaBotoes.push(historico)
+        }
+
+        if (estaEmPauta) {
+            listaBotoes.push(verDemanda)
+        } else {
+            if (!estaEmWorkflow) {
+                if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
+                    const iniciarWorkflow = { nome: "iniciarworkflow", function: funcoes[7] }
+                    listaBotoes.push(iniciarWorkflow, verDemanda)
+
+                    if (!estaEmPauta) {
+                        listaBotoes.push(criarPauta)
+                    }
+                } else if (tipoPessoa == "GerenteNegocio") {
+                    listaBotoes.push(verDemanda)
+                }
+            } else {
+                if (aprovadoWorkflow) {
+                    listaBotoes.push(verDemanda)
+                    if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
+                        if (!estaEmPauta) {
+                            listaBotoes.push(criarPauta)
+                        }
+                    }
+                } else {
+                    if (workflowDeadline < new Date()) {
+                        if (tipoPessoa == "GerenteTI" || tipoPessoa == "GerenteNegocio") {
+                            const workflow = { nome: "workflow!", function: funcoes[10] }
+
+                            listaBotoes.push(workflow)
+                        }
+                    } else {
+                        if (tipoPessoa == "GerenteTI" || tipoPessoa == "GerenteNegocio") {
+                            const workflow = { nome: "workflow", function: funcoes[10] }
+
+                            listaBotoes.push(workflow)
+                        }
+                    }
+                    listaBotoes.push(verDemanda)
+                }
+            }
+        }
+
+
+    }
+
+    return listaBotoes
+}
+
+/**
+ * Função que retorna o Título formatado de acordo com o atributo de um processo 
+ * que receber
+ * 
+ * @param nomeAtributo 
+ * @returns 
+ */
+export function getNomeAtributo(nomeAtributo: any) {
+    const nomesAtributos = {
+        numero: "Número do processo:",
+        status: "Status:",
+        solicitante: "Solicitante:",
+        departamento: "Departamento:",
+        gerenteResponsavel: "Gerente responsável:",
+        frequenciaDeUso: "Frequência de uso:",
+        tamanho: "Tamanho:",
+        sessaoTIResponsavel: "Sessão de TI Responsável:",
+        BUSolicitante: "BU Solicitante:",
+        prazoElaboracao: "Prazo de elaboração:",
+        codigoPPM: "Código PPM:",
+        centrosDeCusto: "Centros de custo:",
+        beneficiosQualitativos: "Benefícios qualitativos:",
+        BUsBeneficiadas: "BUs beneficiadas:",
+        payback: "Payback:",
+        periodoDeExecucao: "Período de execução:",
+        responsaveis: "Responsáveis:",
+        objetivo: "Objetivos:",
+        situacaoAtual: "Situação atual:",
+        escopo: "Escopo:",
+        motivoDevolucao: "Motivo Devolução"
+    }
+
+    if (nomeAtributo != undefined) {
+        return (nomesAtributos as any)[nomeAtributo]
+    }
+}
+
+
+export function getTituloBotao(botao: string) {
+    const nomeBotao = botao.replace("!", "")
+    const titulos = {
+        reprovar: "Reprovar",
+        devolver: "Devolver",
+        aprovar: "Aprovar",
+        adicionarInfo: "Adicionar informações",
+        criarProposta: "Criar proposta",
+        verDemanda: "Ver demanda",
+        criarPauta: "Criar pauta"
+    }
+
+    return (titulos as any)[nomeBotao]
 }
