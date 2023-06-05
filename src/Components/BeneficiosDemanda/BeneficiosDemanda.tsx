@@ -325,8 +325,10 @@ function BeneficiosReais(props: {
   let beneficios: JSX.Element[] = [];
 
   if (props.numeroBeneficios) {
+
     for (let i = 0; i < props.numeroBeneficios; i++) {
-      if (props.beneficiosReaisLista[i]) {
+      console.log("Lista props Beneficios Reais ==> " + props.beneficiosReaisLista[i])
+      if (props.beneficiosReaisLista[i] != undefined || props.beneficiosReaisLista[i]) {
         beneficios.push(<BeneficioReal index={i}
           informacaoProcesso={props.informacaoProcesso}
           setInformacaoProcesso={props.setInformacaoProcesso}
@@ -418,6 +420,7 @@ function BeneficioReal(props: {
   const [valueInput, setValueInput] = useState<any>(props.valorBeneficio ? props.valorBeneficio : "");
 
   useEffect(() => {
+    console.log("Moeda Benenfico useEffect ==> " + moedaBeneficio)
     switch (moedaBeneficio) {
       case "REAL": {
         setCurrencyInput(0);
@@ -435,9 +438,12 @@ function BeneficioReal(props: {
   }, [moedaBeneficio]);
 
   useEffect(() => {
+    console.log("Props Moeda Beneficio ==> " + props.moedaBeneficio)
     if (props.moedaBeneficio != null) {
       setMoedaBeneficio(props.moedaBeneficio);
     }
+
+    console.log("Props Moeda Real ==> " + props.moedaReal)
 
     if (props.moedaReal != null) {
       if (props.moedaReal.length != 0) {

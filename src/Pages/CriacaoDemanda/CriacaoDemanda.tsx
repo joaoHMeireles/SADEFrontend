@@ -188,15 +188,15 @@ export default function CriacaoDemanda(props: {
 
         let beneficios = [];
 
-        // console.log("numeroBeneficiosReais ==> " + numeroBeneficiosReais)
-        // console.log("numeroBeneficiosPotenciais ==> " + numeroBeneficiosPotenciais)
+        console.log("numeroBeneficiosReais ==> " + numeroBeneficiosReais)
+        console.log("numeroBeneficiosPotenciais ==> " + numeroBeneficiosPotenciais)
         // console.log("numeroBeneficiosQualitativos ==> " + numeroBeneficiosQualitativos)
 
         for (let i = 0; i < numeroBeneficiosReais; i++) {
             valorMensal = document.getElementById(`valorMensalReal${i}`) as HTMLInputElement;
             descricao = document.getElementById(`descricaoReal${i}`) as HTMLInputElement;
 
-            // console.log("Moeda real ==> " + moedaReal)
+            console.log("Lista Moeda real ==> " + moedaReal)
             console.log("Moeda real ==> " + moedaReal[i])
 
             let beneficioReal = {
@@ -214,6 +214,10 @@ export default function CriacaoDemanda(props: {
         for (let i = 0; i < numeroBeneficiosPotenciais; i++) {
             valorMensal = document.getElementById(`valorMensalPotencial${i}`) as HTMLInputElement;
             descricao = document.getElementById(`descricaoPotencial${i}`) as HTMLInputElement;
+
+            console.log("Lista Moeda Potencial ==> " + moedaPotencial)
+
+            console.log("Moeda Potencial ==> " + moedaPotencial[i])
 
             let beneficioPotencial = {
                 "tipoBeneficio": "POTENCIAL",
