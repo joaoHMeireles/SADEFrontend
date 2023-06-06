@@ -2,6 +2,7 @@ import {useContext, useEffect, useState} from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
+import BeneficiosTeste from "../../Components/BeneficiosDemanda/BeneficiosTeste/BeneficiosTeste";
 import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -424,32 +425,34 @@ export default function CriacaoDemanda(props: {
 
                 {valor == 1 && (
                     <>
-                        {props.rascunho || props.editarDemanda ?
-                            <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
-                                               numeroBeneficiosReais={numeroBeneficiosReais}
-                                               numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
-                                               numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
-                                               setNumeroBeneficiosReais={setNumeroBeneficiosReais}
-                                               setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
-                                               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
-                                               informacaoProcesso={data}
-                                               setInformacaoProcesso={setData}
-                            />
-                            :
-                            <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
-                                               numeroBeneficiosReais={numeroBeneficiosReais}
-                                               numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
-                                               numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
-                                               setNumeroBeneficiosReais={setNumeroBeneficiosReais}
-                                               setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
-                                               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
-                                               moedaReal={moedaReal}
-                                               setMoedaReal={setMoedaReal}
-                                               moedaPotencial={moedaPotencial}
-                                               setMoedaPotencial={setMoedaPotencial}
-                                               partDoisDemanda={partDoisDemanda}
-                            />
-                        }
+
+                        <BeneficiosTeste />
+                        {/*{props.rascunho || props.editarDemanda ?*/}
+                        {/*    <BeneficiosDemanda rascunho={props.rascunho} proposta={false}*/}
+                        {/*                       numeroBeneficiosReais={numeroBeneficiosReais}*/}
+                        {/*                       numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}*/}
+                        {/*                       numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}*/}
+                        {/*                       setNumeroBeneficiosReais={setNumeroBeneficiosReais}*/}
+                        {/*                       setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}*/}
+                        {/*                       setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}*/}
+                        {/*                       informacaoProcesso={data}*/}
+                        {/*                       setInformacaoProcesso={setData}*/}
+                        {/*    />*/}
+                        {/*    :*/}
+                        {/*    <BeneficiosDemanda rascunho={props.rascunho} proposta={false}*/}
+                        {/*                       numeroBeneficiosReais={numeroBeneficiosReais}*/}
+                        {/*                       numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}*/}
+                        {/*                       numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}*/}
+                        {/*                       setNumeroBeneficiosReais={setNumeroBeneficiosReais}*/}
+                        {/*                       setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}*/}
+                        {/*                       setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}*/}
+                        {/*                       moedaReal={moedaReal}*/}
+                        {/*                       setMoedaReal={setMoedaReal}*/}
+                        {/*                       moedaPotencial={moedaPotencial}*/}
+                        {/*                       setMoedaPotencial={setMoedaPotencial}*/}
+                        {/*                       partDoisDemanda={partDoisDemanda}*/}
+                        {/*    />*/}
+                        {/*}*/}
 
                         <BoxContainerBotoes>
                             <BoxBotaoTerciario>
