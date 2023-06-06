@@ -2,32 +2,25 @@ import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import EscopoProposta from "../../Components/EscopoProposta/EscopoProposta";
 import Searchbar from "../../Components/Searchbar/Searchbar";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
-
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { ChangeEventHandler, useContext, useEffect, useState } from "react";
 import { BoxConteudo } from "../App.styles";
-
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
 import PanoramaFishEyeRoundedIcon from "@mui/icons-material/PanoramaFishEyeRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
 import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import InfomacoesAdicionais from "../../Components/InfomacoesAdicionais/InformacoesAdicionais";
-
 import { ContainerGeral, ContainerBoxTabs } from "./CriacaoProposta.styles";
-
 import {
   BoxContainerBotoes,
   BoxBotaoTerciario,
   BoxBotoesPriSec,
 } from "../CriacaoDemanda/CriacaoDemanda.styles";
-
 import { BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles";
-
 import {
   TipoComponenteProcesso,
 } from "../../constants/enuns";
@@ -37,7 +30,6 @@ import { transformArquivosToFile, useLocationChange } from "../../utils";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semDemanda from "../../Assets/emptyFolder.png"
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
-
 
 export default function CriacaoProposta(props: {
   filtrar: boolean;
@@ -265,6 +257,7 @@ export default function CriacaoProposta(props: {
   return (
     <BoxConteudo>
       <Breadcrumb />
+
       <ContainerBoxTabs>
         {valor != 0 ? (
           <Tabs value={valor} onChange={mudarValor}>
@@ -298,9 +291,7 @@ export default function CriacaoProposta(props: {
             filtrar={props.filtrar}
             grid={grid}
             setGrid={setGrid}
-            filtrarResultados={props.filtrarResultados}
-
-          />
+            filtrarResultados={props.filtrarResultados} />
           {!temComponente ?
             <>
               {conteudoCarregou &&
@@ -329,8 +320,7 @@ export default function CriacaoProposta(props: {
             onClick={(e: any) => {
               lerTexto(e)
               setValor(1);
-            }}
-          >
+            }}>
             Próximo
           </BotaoPrimario>
         </>
@@ -339,6 +329,7 @@ export default function CriacaoProposta(props: {
         {valor == 1 && (
           <>
             <InformacaoGeral proposta={true} informacaoProcesso={informacaoProcesso} setInformacaoProcesso={setInformacaoProcesso} />
+            
             <BeneficiosDemanda rascunho={false} proposta={true}
               numeroBeneficiosReais={numeroBeneficiosReais}
               numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
@@ -348,8 +339,8 @@ export default function CriacaoProposta(props: {
               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
               valor={valor}
               informacaoProcesso={informacaoProcesso}
-              setInformacaoProcesso={setInformacaoProcesso}
-            />
+              setInformacaoProcesso={setInformacaoProcesso}/>
+            
             <InfomacoesAdicionais
               valorTamanho={valorTamanho}
               setValorTamanho={setValorTamanho}
@@ -375,10 +366,10 @@ export default function CriacaoProposta(props: {
                 variant="outlined"
                 onClick={() => {
                   window.location.href = "/home";
-                }}
-              >
+                }}>
                 Cancelar
               </BotaoTerciario>
+              
               <BotaoPrimario
                 sx={{ width: "15%", height: "3rem" }}
                 variant="contained"
@@ -387,8 +378,7 @@ export default function CriacaoProposta(props: {
                   lerTexto(e)
                   setValor(2);
                   setSegundo(true);
-                }}
-              >
+                }}>
                 Próximo
               </BotaoPrimario>
             </BoxContainerBotoes>
@@ -405,8 +395,8 @@ export default function CriacaoProposta(props: {
               centroCustoEscolhidas={centroCustoEscolhidas}
               setCentroCustoEscolhidas={setCentroCustoEscolhidas}
               arquivosProposta={arquivosProposta}
-              setArquivosProposta={setArquivosProposta}
-            />
+              setArquivosProposta={setArquivosProposta}/>
+            
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
@@ -415,11 +405,11 @@ export default function CriacaoProposta(props: {
                   onClick={(e: any) => {
                     lerTexto(e)
                     window.location.href = "/home";
-                  }}
-                >
+                  }}>
                   Cancelar
                 </BotaoTerciario>
               </BoxBotaoTerciario>
+              
               <BoxBotoesPriSec>
                 <BotaoSecundario
                   onClick={(e: any) => {
@@ -433,10 +423,10 @@ export default function CriacaoProposta(props: {
                     marginRight: 3,
                   }}
                   variant="outlined"
-                  startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}
-                >
+                  startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
                   Voltar
                 </BotaoSecundario>
+                
                 <BotaoPrimario
                   sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="contained"
@@ -446,8 +436,7 @@ export default function CriacaoProposta(props: {
                   onClick={(e: any) => {
                     lerTexto(e)
                     criarProposta()
-                  }}
-                >
+                  }}>
                   Enviar
                 </BotaoPrimario>
               </BoxBotoesPriSec>
