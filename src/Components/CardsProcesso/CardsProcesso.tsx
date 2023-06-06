@@ -1,8 +1,10 @@
-import { Box, Grid, Skeleton, useMediaQuery } from "@mui/material";
+import { Box, Grid, Skeleton, Tooltip, useMediaQuery } from "@mui/material";
 import { BoxContainer } from "../../Pages/App.styles";
 import ComponenteProcesso from "../ComponenteProcesso/ComponenteProcesso";
 import ComponenteColecaoProcesso from "../ComponenteProcesso/ComponenteColecaoProcesso/ComponenteColecaoProcesso";
 import { useState } from "react";
+import { BoxColecaoComponente, BoxGridCorProcesso, GridBoxTituloRadio, GridComponenteProcesso, GridLinkTypograpfy, GridTypography, MainPaper } from "../ComponenteProcesso/ComponenteProcesso.styles";
+import { Link } from "react-router-dom";
 
 export default function CardsProcesso(props: {
   listaComponents: any[];
@@ -18,6 +20,7 @@ export default function CardsProcesso(props: {
   criandoATA?: boolean;
   pautaEscolhida?: any;
   setPautaEscolhida?: React.Dispatch<React.SetStateAction<any>>;
+  conteudoCarregou?: boolean
 }) {
   const matches = useMediaQuery("(max-width:1100px)");
   const [demandaSelecionada, setDemandaSelecionada] = useState(0)
@@ -60,14 +63,34 @@ export default function CardsProcesso(props: {
     );
   });
 
+  const componentesSkeleton = []
+
+  for (let i = 0; i < 9; i++) {
+    componentesSkeleton.push(
+      <Grid item xs={4} sx={{ marginBottom: props.grid ? "2rem" : "1rem" }}>
+        <BoxContainer>
+          <MainPaper>
+            <Skeleton variant="rectangular" sx={{borderRadius: "5px", height: "20vh"}}/>
+          </MainPaper>
+        </BoxContainer>
+      </Grid>
+
+    )
+  }
+
   return (
     <BoxContainer>
       <Box sx={{ width: "90%" }}>
         <Grid container>
-          {/* <Grid item xs={4}>
-            <Skeleton variant="rounded" width={"90%"} height={"100%"} />
-          </Grid> */}
-          {componentesProcessos}
+          {!props.conteudoCarregou ?
+            <>
+              {componentesSkeleton}
+            </>
+            :
+            <>
+              {componentesProcessos}
+            </>
+          }
         </Grid>
       </Box>
     </BoxContainer>

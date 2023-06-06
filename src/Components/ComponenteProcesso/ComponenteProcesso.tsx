@@ -205,7 +205,7 @@ export default function ComponenteProcesso(props: {
 
   function deletarRascunho() {
     console.log("cancelar rascunho");
-    api.delete("/sod/demanda/" + componente.idDemanda).then((response) => {
+    api.delete("/sade/demanda/" + componente.idDemanda).then((response) => {
       console.log(response);
       location.reload()
 

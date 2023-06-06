@@ -44,8 +44,8 @@ export default function Login(props: {
   const [user, setUser] = useState({ email: '', senha: '' });
   const { lerTexto } = useContext(TextReaderContext) as any;
   const webSocketService: any = useContext(WebSocketContext);
-  const handleLogin = async (e: any) => {
-    e.preventDefault();
+  const handleLogin = async (e?: any) => {
+    e?.preventDefault();
 
     if ((user.email == '' || user.email == null) || (user.senha == '' || user.senha == null)) {
       setInvalido(true);
@@ -60,20 +60,22 @@ export default function Login(props: {
 
     api.post(`/sade/login/auth`, user, config).then((response: any) => {
       const dadosUserJPA = response.data;
-      localStorage.setItem("TIPOUSUARIO", dadosUserJPA.authorities[0].authority);
-      localStorage.setItem("USUARIO", JSON.stringify(dadosUserJPA.usuario));
-      localStorage.setItem("IDUSUARIO", JSON.stringify(dadosUserJPA.usuario.idUsuario));
+      setarAmbienteUsuario(dadosUserJPA)
 
       const inputCheckbox = document.getElementById("checkboxLembrarDeMim") as HTMLInputElement
 
       if (inputCheckbox.checked) {
-        api.post(`/sade/login/auth/cookie`, user, config)
-      }
+        const usuarioCookie: any = user
+        usuarioCookie.stringUsuario = JSON.stringify(dadosUserJPA)
 
-      return dadosUserJPA;
-    }).then(() => {
-      webSocketService.conectar();
-      location.href = "/home";
+        api.post(`/sade/login/auth/cookie`, usuarioCookie, config).then(() => {
+          webSocketService.conectar();
+          location.href = "/home";
+        })
+      } else {
+        webSocketService.conectar();
+        location.href = "/home";
+      }
     }).catch((err: any) => {
       console.log(err);
       setFeedbackAberto(true);
@@ -82,10 +84,21 @@ export default function Login(props: {
 
   localStorage.setItem("PAGINATUAL", "login");
 
-  // useEffect(() => {
+  useEffect(() => {
+    //   //veriicar se tem o cookie do lembrar de mim e fazer o login com as informações
+    const token = Cookies.get('rjwt');
 
 
-  // }, [])
+    if (token != null) {
+      api.get(`/sade/login/cookie/${token}`).then((response) => {
+        console.log(response.data);
+        const usuarioJPA = JSON.parse(response.data.body.sub)
+        setarAmbienteUsuario(usuarioJPA)
+        location.href = "/home";
+      })
+    }
+
+  }, [])
 
   /**
  * Função para setar o filtro e o menu como fechados
@@ -94,6 +107,12 @@ export default function Login(props: {
     props.setAberto(false);
     props.setFiltro(false);
   });
+
+  function setarAmbienteUsuario(dadosUserJPA: any) {
+    localStorage.setItem("TIPOUSUARIO", dadosUserJPA.authorities[0].authority);
+    localStorage.setItem("USUARIO", JSON.stringify(dadosUserJPA.usuario));
+    localStorage.setItem("IDUSUARIO", JSON.stringify(dadosUserJPA.usuario.idUsuario));
+  }
 
   function atualizarUsuario(event: any) {
     setUser({

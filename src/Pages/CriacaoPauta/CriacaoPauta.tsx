@@ -49,6 +49,8 @@ export default function CriacaoPauta(props: {
   const { lerTexto } = useContext(TextReaderContext) as any
   const [valor, setValor] = useState(0);
   const [grid, setGrid] = useState(true);
+  const [conteudoCarregou, setConteudoCarregou] = useState(false)
+  const [temComponente, setTemComponente] = useState(true)
   const [propostas, setPropostas] = useState<any[]>([]);
   const [listaComponents, setListaComponents] = useState<any[]>([])
   const [comissoes, setComissoes] = useState<any[]>([]);
@@ -77,9 +79,10 @@ export default function CriacaoPauta(props: {
       }
 
       setListaComponents(listaPropostas);
-
     }).catch((err) => {
       console.log(err);
+    }).finally(() => {
+      setConteudoCarregou(true)
     })
 
     api.get('/sade/forum').then((response) => {
@@ -95,6 +98,14 @@ export default function CriacaoPauta(props: {
       e?.classList.add("selecionado");
     }
   });
+
+  useEffect(() => {
+    if (listaComponents.length != 0) {
+      setTemComponente(true)
+    } else {
+      setTemComponente(false)
+    }
+  }, [listaComponents])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
@@ -168,18 +179,22 @@ export default function CriacaoPauta(props: {
             setGrid={setGrid}
             filtrarResultados={props.filtrarResultados}
           />
-          {listaComponents.length != 0 ?
+          {!temComponente ?
+            <>
+              {conteudoCarregou &&
+                <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma proposta disponível no sistema"} />
+              }
+            </>
+            :
             <CardsProcesso
               listaComponents={listaComponents}
               grid={grid}
               pauta={true}
               propostas={propostas}
               setPropostas={setPropostas}
+              conteudoCarregou={conteudoCarregou}
             />
-            :
-            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma proposta disponível no sistema"} />
           }
-
           <BotaoPrimario
             sx={{
               height: "3rem",

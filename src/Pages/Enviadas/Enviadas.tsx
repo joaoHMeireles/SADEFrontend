@@ -16,6 +16,8 @@ export default function Enviadas(props: {
   filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }) {
   const [grid, setGrid] = useState(true);
+  const [conteudoCarregou, setConteudoCarregou] = useState(false)
+  const [temComponente, setTemComponente] = useState(true)
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
   const [listaComponents, setListaComponents] = useState<any[]>([])
   const idUsuario = localStorage.getItem("IDUSUARIO")
@@ -35,8 +37,18 @@ export default function Enviadas(props: {
       setListaComponents(listaDemandas);
     }).catch((err: any) => {
       console.log(err);
+    }).finally(() => {
+      setConteudoCarregou(true)
     })
   }, [])
+
+  useEffect(() => {
+    if (listaComponents.length != 0) {
+      setTemComponente(true)
+    } else {
+      setTemComponente(false)
+    }
+  }, [listaComponents])
 
   return (
     <>
@@ -49,7 +61,13 @@ export default function Enviadas(props: {
           setGrid={setGrid}
           filtrarResultados={props.filtrarResultados}
         />
-        {listaComponents.length != 0 ?
+        {!temComponente ?
+          <>
+            {conteudoCarregou &&
+              <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda sua cadastrada"} />
+            }
+          </>
+          :
           <CardsProcesso
             listaComponents={listaComponents}
             grid={grid}
@@ -57,9 +75,8 @@ export default function Enviadas(props: {
             proposta={false}
             temDemandaDevolvida={true}
             setPropostaSelecionada={setPropostaSelecionada}
+            conteudoCarregou={conteudoCarregou}
           />
-          :
-          <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda sua cadastrada"} />
         }
       </BoxConteudo>
     </>

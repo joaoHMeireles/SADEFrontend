@@ -41,6 +41,7 @@ import RascunhoObserver from "../Components/RascunhoObserver/RascunhoObserver";
 
 export default function App() {
   const [sidebarAberta, setSidebarAberta] = useState(false)
+  const [conteudoCarregou, setConteudoCarregou] = useState(false)
   const [tamanhoSideBar, setTamanhoSideBar] = useState("220")
   const [filtrar, setFiltrar] = useState(false)
   const [listaComponents, setListaComponents] = useState<any[]>(["", "", "", "", "", "", "", "", "", "", "", ""])
@@ -50,7 +51,7 @@ export default function App() {
   const [listaPautas, setListaPautas] = useState<any[]>([])
   const [listaATAs, setListaATAs] = useState<any[]>([])
   const tamanhoNavbar = "8.5vh"
-  //carregou
+
 
   useEffect(() => {
     api.get("/sade/demanda/rascunho/" + false).then((response) => {
@@ -95,7 +96,6 @@ export default function App() {
         pauta.tipo = TipoColecaoComponenteProcesso.Pauta
         listaPautas.push(pauta)
       }
-
       setListaPautas(listaPautas);
     }).catch((err) => {
       console.log(err);
@@ -308,7 +308,7 @@ export default function App() {
                     <ThemeProvider theme={ContentTheme}>
                       <Routes>
                         <Route path="/" element={<Login setAberto={setSidebarAberta} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />} />
-                        <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} />} />
+                        <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} conteudoCarregou={conteudoCarregou} setConteudoCarregou={setConteudoCarregou}/>} />
                         <Route path="/notifications" element={<Notificacoes />} />
                         <Route path="/chats" element={<Chats aberto={sidebarAberta} />}></Route>
                         <Route path="/createdemand" element={<CriacaoDemanda rascunho={false} />} />

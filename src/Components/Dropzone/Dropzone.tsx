@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import axios from "axios";
+
 
 import Typography from "@mui/material/Typography";
 
@@ -8,7 +8,7 @@ import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 
 import { BoxContainerUploadImagens, BoxTypography } from "./Dropzone.styles";
 import Arquivo from "../Arquivo/Arquivo";
-import Box from "@mui/material/Box";
+
 
 type Anexos = {
   nome: string;
@@ -23,32 +23,32 @@ export default function Dropzone(props: {
   arquivosProposta?: any[];
   setArquivosProposta?: React.Dispatch<React.SetStateAction<any[]>>;
 }) {
-  const [arquivos, setAquivos] = useState<Array<Anexos>>([]);
+  const [arquivos, setArquivos] = useState<Array<Anexos>>([]);
 
   useEffect(() => {
-    let info;
-    if (props.rascunho) {
-      info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
-    } else if (props.proposta) {
-      info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string);
-    }
+    // let info;
+    // if (props.rascunho) {
+    //   info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
+    // } else if (props.proposta) {
+    //   info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string);
+    // }
 
 
-    if (info) {
-      const novosArquivos: any = [];
+    // if (info) {
+    //   const novosArquivos: any = [];
 
-      for (const arquivos of info.arquivosDemanda) {
-        novosArquivos.push(arquivos)
-      }
+    //   for (const arquivos of info.arquivosDemanda) {
+    //     novosArquivos.push(arquivos)
+    //   }
 
-      setAquivos(novosArquivos);
-    }
+    //   setArquivos(novosArquivos);
+    // }
   }, []);
 
   const onDrop = useCallback((acceptedFiles: any) => {
     const files: [] = acceptedFiles.map((file: any) => {
       return file
-    })  
+    })
 
     if (files == undefined) {
       return
@@ -68,6 +68,7 @@ export default function Dropzone(props: {
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
 
+
   return (
     <>
       <BoxContainerUploadImagens {...getRootProps()}>
@@ -78,28 +79,34 @@ export default function Dropzone(props: {
           </Typography>
           <FileUploadRoundedIcon sx={{ color: "#595959" }} />
         </BoxTypography>
-        {props.rascunho &&
+        {/* {props.rascunho &&
           arquivos.map((e: Anexos, index: number) => {
             return <Arquivo key={index} id={index} icone={e.tipo} nome={e.nome} />;
-          })}
+          })} */}
 
-        {props.proposta &&
+        {/* {props.proposta &&
           arquivos.map((e: Anexos, index: number) => {
-            return <Arquivo key={index} id={index} icone={e.tipo} nome={e.nome} />;
+            return <Arquivo key={index} id={index} icone={e.tipo} nome={e.nome} 
+            // files={props.files} setFiles={props.setFiles}
+            />;
           })}
 
-        {props.files && props.files.map((e: any, index: number) => {
-          return (
-            <Arquivo
-              key={index}
-              id={index}
-              icone={e["type"]}
-              nome={e["name"]}
-              files={props.files}
-              setFiles={props.setFiles}
-            />
-          );
-        })}
+        {(!props.rascunho && !props.proposta) && */}
+          <>
+            {props.files && props.files.map((e: any, index: number) => {
+              return (
+                <Arquivo
+                  key={index}
+                  id={index}
+                  icone={e["type"]}
+                  nome={e["name"]}
+                  files={props.files}
+                  setFiles={props.setFiles}
+                />
+              );
+            })}
+          </>
+        {/* } */}
       </BoxContainerUploadImagens>
     </>
   );

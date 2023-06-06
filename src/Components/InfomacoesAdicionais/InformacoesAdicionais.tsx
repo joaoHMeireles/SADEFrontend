@@ -55,7 +55,6 @@ export default function InfomacoesAdicionais(props: {
         "GRANDE",
         "MUITOGRANDE",
     ]
-
     const sessoesTI = [
         { nome: "Sistemas de Tecnologias Digitais", abreviacao: "STD" },
         { nome: "Arquitetura e Governança de Dados", abreviacao: "AGD" },
@@ -69,7 +68,6 @@ export default function InfomacoesAdicionais(props: {
         { nome: "Sistemas de Engenharia", abreviacao: "SIE" },
         { nome: "Sistemas de Vendas e ECommerce", abreviacao: "SVE" }
     ]
-
     const [bus, setBus] = useState<any[]>([])
     const [objetoBus, setObjetoBus] = useState<any[]>([])
 
@@ -242,21 +240,21 @@ export default function InfomacoesAdicionais(props: {
                             onChange={(e, valor: any) => {
                                 let busBeneficiada: Object[] = []
 
-                                for (let buSelecionada of valor) {
-                                    for (let bu of objetoBus) {
-                                        if (bu.nomeBU == buSelecionada) {
-                                            busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                        for (let buSelecionada of valor) {
+                                            for (let bu of objetoBus) {
+                                                if (bu.nomeBU == buSelecionada) {
+                                                    busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                                }
+                                            }
                                         }
-                                    }
-                                }
 
-                                props.setValorBUsBeneficadas(busBeneficiada);
+                                        props.setValorBUsBeneficadas(busBeneficiada);
 
-                                const novaInfoDemanda = {
-                                    ...props.informacaoProcesso,
-                                    busBeneficiadas: busBeneficiada,
-                                };
-                                props.setInformacaoProcesso(novaInfoDemanda);
+                                        const novaInfoDemanda = {
+                                            ...props.informacaoProcesso,
+                                            busBeneficiadas: busBeneficiada,
+                                        };
+                                        props.setInformacaoProcesso(novaInfoDemanda);
 
                             }}
                             renderOption={(props, bu: any, { selected }) => {
@@ -284,21 +282,21 @@ export default function InfomacoesAdicionais(props: {
                             onChange={(e, valor: any) => {
                                 let busBeneficiada: Object[] = []
 
-                                for (let buSelecionada of valor) {
-                                    for (let bu of objetoBus) {
-                                        if (bu.nomeBU == buSelecionada) {
-                                            busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                        for (let buSelecionada of valor) {
+                                            for (let bu of objetoBus) {
+                                                if (bu.nomeBU == buSelecionada) {
+                                                    busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                                }
+                                            }
                                         }
-                                    }
-                                }
 
-                                props.setValorBUsBeneficadas(busBeneficiada);
+                                        props.setValorBUsBeneficadas(busBeneficiada);
 
-                                const novaInfoDemanda = {
-                                    ...props.informacaoProcesso,
-                                    busBeneficiadas: busBeneficiada,
-                                };
-                                props.setInformacaoProcesso(novaInfoDemanda);
+                                        const novaInfoDemanda = {
+                                            ...props.informacaoProcesso,
+                                            busBeneficiadas: busBeneficiada,
+                                        };
+                                        props.setInformacaoProcesso(novaInfoDemanda);
 
                             }}
                             renderOption={(props, bu: any, { selected }) => {
