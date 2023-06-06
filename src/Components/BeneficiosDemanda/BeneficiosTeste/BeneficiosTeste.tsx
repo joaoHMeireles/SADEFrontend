@@ -6,18 +6,17 @@ import {
     BoxTitulos, BoxValorMensal, TypographyLabels,
     TypographyTitulos
 } from "../BeneficiosDemanda.styles";
-import {useContext, useEffect} from "react";
-import {TextReaderContext} from "../../TextReaderContext/TextReaderContext";
+import { useContext, useEffect, useState } from "react";
+import { TextReaderContext } from "../../TextReaderContext/TextReaderContext";
 import TextField from "@mui/material/TextField";
-import {FormControl, InputAdornment, OutlinedInput, Select} from "@mui/material";
+import { FormControl, InputAdornment, OutlinedInput, Select } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 
 export default function BeneneficiosTeste() {
-    const {lerTexto} = useContext(TextReaderContext) as any
-
-    useEffect(() => {
-        // gerarBeneficios()
-    }, [])
+    const { lerTexto } = useContext(TextReaderContext) as any
+    const [listaBeneficios, setListaBeneficios] = useState<any[]>([]);
+    // const [listaBeneficiosPotencial, setListaBeneficiosPotencial] = useState<any[]>([]);
+    // const [listaBeneficiosQualitativos, setListaBeneficiosQualitativos] = useState<any[]>([]);
 
     return (
         <>
@@ -33,11 +32,14 @@ export default function BeneneficiosTeste() {
     )
 }
 
-function BeneficioRealPotencial(props: {tipoBeneficio: string}) {
-    const {lerTexto} = useContext(TextReaderContext) as any
+function BeneficioRealPotencial(props: { tipoBeneficio: string, listaBeneficios: any[] }) {
+    const { lerTexto } = useContext(TextReaderContext) as any
 
     return (
         <>
+            {props.tipoBeneficio == "real" ?
+                {}
+            }
             <Box>
                 <BoxContainerGeralBeneficio>
                     <BoxContainerDivisorio>
@@ -206,31 +208,23 @@ function BeneficioQualitativo(props: {}) {
     )
 }
 
-function gerarBeneficios(tipoBeneficio: string, quantidadeBeneficio: number){
-    let listaBeneficiosReais = []
-    let listaBeneficiosQualitativos = []
-
+function gerarBeneficios(listaBeneficios: any[], setListaBeneficios: any, tipoBeneficio: string, quantidadeBeneficio: number) {
     switch (tipoBeneficio) {
         case "real": {
-            for(let i = 0; i < quantidadeBeneficio; i++){
-                listaBeneficiosReais.push(<BeneficioRealPotencial tipoBeneficio={"real"}/>)
+            for (let i = 0; i < quantidadeBeneficio; i++) {
+                listaBeneficios.push(<BeneficioRealPotencial tipoBeneficio={"real"} />)
             }
-
-            return listaBeneficiosReais;
         }
         case "potencial": {
-            for(let i = 0; i < quantidadeBeneficio; i++){
-                listaBeneficiosReais.push(<BeneficioRealPotencial tipoBeneficio={"potencial"}/>)
+            for (let i = 0; i < quantidadeBeneficio; i++) {
+                listaBeneficios.push(<BeneficioRealPotencial tipoBeneficio={"potencial"} />)
             }
-
-            return listaBeneficiosReais;
         }
         case "qualitativo": {
-            for(let i = 0; i < quantidadeBeneficio; i++){
-                listaBeneficiosQualitativos.push(<BeneficioQualitativo />)
+            for (let i = 0; i < quantidadeBeneficio; i++) {
+                listaBeneficios.push(<BeneficioQualitativo />)
             }
-
-            return listaBeneficiosQualitativos;
         }
     }
+    setListaBeneficios(listaBeneficios)
 }
