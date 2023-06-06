@@ -2,14 +2,16 @@ import { useEffect, useState, useContext } from "react";
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 import "./Login.scss";
 import {
-  BoxLogin,
   BoxImage,
+  BoxInputs,
+  BoxLogin,
+  BoxLogos,
+  BoxRememberMe,
+  BoxTexts,
+  ButtonEdited,
   Column,
   Container,
-  BoxLogos,
-  BoxTexts,
-  BoxInputs,
-  BoxRememberMe
+  TextFieldEdited
 } from "./Login.styles";
 import wegLogo from "../../Assets/wegLogoAzul.png"
 import sadeLogo from "../../Assets/sadeLogoAzul.png"
@@ -64,7 +66,7 @@ export default function Login(props: {
 
       const inputCheckbox = document.getElementById("checkboxLembrarDeMim") as HTMLInputElement
 
-      if(inputCheckbox.checked){
+      if (inputCheckbox.checked) {
         api.post(`/sade/login/auth/cookie`, user, config)
       }
 
@@ -81,8 +83,8 @@ export default function Login(props: {
   localStorage.setItem("PAGINATUAL", "login");
 
   // useEffect(() => {
-    
-    
+
+
   // }, [])
 
   /**
@@ -137,7 +139,7 @@ export default function Login(props: {
 
             <BoxInputs>
               <FormControl>
-                <TextField sx={{ marginBottom: "2rem", width: "20vw" }} name="email" onChange={atualizarUsuario}
+                <TextFieldEdited sx={{ marginBottom: "2rem" }} name="email" onChange={atualizarUsuario}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -145,7 +147,7 @@ export default function Login(props: {
                       </InputAdornment>)
                   }} variant="outlined" placeholder="Email" />
 
-                <TextField sx={{ marginBottom: "0.5rem", width: "20vw" }} name="senha" type={tipo} onChange={atualizarUsuario}
+                <TextFieldEdited sx={{ marginBottom: "0.5rem" }} name="senha" type={tipo} onChange={atualizarUsuario}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -161,14 +163,14 @@ export default function Login(props: {
               </FormControl>
 
               <BoxRememberMe>
-                <Checkbox id="checkboxLembrarDeMim"/>
+                <Checkbox id="checkboxLembrarDeMim" />
                 <p id="text">Lembrar de mim</p>
               </BoxRememberMe>
             </BoxInputs>
 
-            <Button variant="contained" startIcon={<LoginRoundedIcon />} sx={{ backgroundColor: "#00579d", fontSize: "16px", padding: "1rem 2rem" }} onClick={onClickToDo}>
+            <ButtonEdited variant="contained" startIcon={<LoginRoundedIcon />} onClick={onClickToDo}>
               Entrar
-            </Button>
+            </ButtonEdited>
           </Container>
         </Column>
       </BoxLogin>
