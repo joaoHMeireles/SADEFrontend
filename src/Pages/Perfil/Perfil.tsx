@@ -1,78 +1,64 @@
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import "./Perfil.scss";
 
-import InformacoesGerais from './InformacoesGerais/InformacoesGerais';
-import DemandasContribuidas from './DemandasContribuidas/DemandasContribuidas';
-import MeuDesempenho from './MeuDesempenho/MeuDesempenho';
-import { TextReaderContext } from '../../Components/TextReaderContext/TextReaderContext';
-import { useContext, useState } from 'react';
+import fotoPerfilVazia from '../../Assets/fotoPerfilVazia.png';
+import { BoxBackground, FirstContainer, BoxImage, SecondContainer } from "./Perfil.style.tsx";
+import { useContext, useEffect, useState } from "react";
+import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
+import api from "../../api/api";
+import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
+import { Box, Toolbar } from "@mui/material";
+import { BoxHeader } from "../TelaProcesso/TelaProcesso.styles";
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
-export default function Perfil() {
+export default function InformacoesGerais(props: { aberto: boolean, sidebarAberta: boolean }) {
   const { lerTexto } = useContext(TextReaderContext) as any
-  const [value, setValue] = useState(0);
+  const usuario = JSON.parse(localStorage.getItem("USUARIO") as string);
+  const [fotoUsuario, setFotoUsuario] = useState<any>({ size: 0 });
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+  useEffect(() => {
+    api.get("/sade/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
+      .then((response) => {
+        console.log(response.data);
+        setFotoUsuario(response.data);
+      });
+  }, []);
 
   return (
-    <Box sx={{ width: '100%', marginTop: '1rem' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Informações gerais" {...a11yProps(0)} onClick={lerTexto}/>
+    <Box>
+      <BoxHeader sx={{ width: (props.sidebarAberta ? "88.35%" : "96.5%") }}>
+        <Breadcrumb />
+      </BoxHeader>
 
-          {/* <Tab label="Demandas contribuídas" {...a11yProps(1)} /> */}
+      <Toolbar />
 
-          <Tab label="Meu desempenho" {...a11yProps(1)} onClick={lerTexto}/>
-        </Tabs>
-      </Box>
+      <BoxBackground>
+        <FirstContainer>
+          <h2 onClick={lerTexto}>Dados pessoais</h2>
 
-      <TabPanel value={value} index={0}>
-        <InformacoesGerais />
-      </TabPanel>
+          <BoxImage>
+            {fotoUsuario.size != 0 ? <img id="fotoPerfil" src={URL.createObjectURL(fotoUsuario)} alt="Foto de perfil" /> : <img id="fotoPerfil" src={fotoPerfilVazia} alt="Foto de perfil" />}
+          </BoxImage>
 
-      {/* <TabPanel value={value} index={1}>
-        <DemandasContribuidas />
-      </TabPanel> */}
+          <h4 onClick={lerTexto}>Nome</h4>
 
-      <TabPanel value={value} index={1}>
-        <MeuDesempenho />
-      </TabPanel>
+          <p onClick={lerTexto}>{usuario.nomeUsuario}</p>
+
+          <h4 onClick={lerTexto}>Email</h4>
+
+          <p onClick={lerTexto}>{usuario.email}</p>
+        </FirstContainer>
+
+        <SecondContainer>
+          <h2 onClick={lerTexto}>Dados empresariais</h2>
+
+          <h4 onClick={lerTexto}>Departamento</h4>
+
+          <p onClick={lerTexto}>{usuario.departamento}</p>
+
+          <h4 onClick={lerTexto}>Setor</h4>
+
+          <p onClick={lerTexto}>{usuario.setor}</p>
+        </SecondContainer>
+      </BoxBackground>
     </Box>
   );
 }

@@ -21,6 +21,7 @@ export const BoxConteudo = styledBox({
 
 export const BotaoPrimario = styledButton({
     backgroundColor: "#00579d",
+    boxShadow: "5px 5px 10px 0 #00000025",
     '&:hover': {
         backgroundColor: "#003c6d",
         transition: 'ease-in-out',
@@ -30,6 +31,7 @@ export const BotaoPrimario = styledButton({
 
 export const BotaoSecundario = styledButton({
     borderColor: "#00579d80",
+    boxShadow: "5px 5px 10px 0 #00000025",
     color: '#00579d',
     '&:hover': {
         backgroundColor: "#00579d20",
@@ -41,6 +43,7 @@ export const BotaoSecundario = styledButton({
 
 export const BotaoTerciario = styledButton({
     borderColor: "#59595980",
+    boxShadow: "5px 5px 10px 0 #00000025",
     color: '#595959',
     '&:hover': {
         backgroundColor: "#59595920",

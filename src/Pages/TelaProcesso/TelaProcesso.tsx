@@ -35,7 +35,6 @@ import imagemSemNada from "../../Assets/emptyFolder.png"
 import ResultadoVazio from '../../Components/ResultadoVazio/ResultadoVazio';
 import TopicoAtributos from '../../Components/TopicoAtributos/TopicoAtributos';
 
-
 const valoresInputBU: any[] = [
     { idBU: 1, nomeBU: 'Motores Industrial' },
     { idBU: 2, nomeBU: 'Motores Comercial' },
@@ -1054,7 +1053,6 @@ function InfoComercial(props: {
     )
 
 }
-
 
 function Footer(props: {
     link: string,

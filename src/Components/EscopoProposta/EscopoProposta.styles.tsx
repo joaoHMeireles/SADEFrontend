@@ -45,5 +45,6 @@ export const BoxResponsaveis = styledBox({
 
 export const TypographyStyled = styledTypography({
   color: "#595959",
-  margin: "16px 0",
+  fontWeight: "bold",
+  marginBottom: 16
 });

@@ -61,16 +61,16 @@ export const CriarDemanda = (
             <p>Criar Demanda</p>
         </Title>
 
-        <P>Para criar uma demanda, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Demanda”, preencha os inputs da página, que está dividida em três partes, sendo eles:</P>
+        <P>Para criar uma Demanda, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Demanda”, preencha os inputs da página, que está dividida em três partes, sendo eles:</P>
 
         <P>
             <p>Primeira parte:</p>
 
             <ul>
-                <li id="liAjudaUsuario"><b>Título:</b> Escreva um título que descreva claramente o problema ou necessidade. O título deve ser conciso e direto ao ponto;</li>
-                <li id="liAjudaUsuario"><b>Problema a ser resolvido (situação atual):</b> Escreva uma breve explicação da situação atual, descrevendo o problema em mais detalhes. Forneça informações relevantes e quantitativas, se possível, para apoiar sua argumentação;</li>
-                <li id="liAjudaUsuario"><b>Proposta / Solicitação de proposta:</b> Proponha uma solução ou solicite uma proposta para resolver o problema. Se você já tiver uma ideia de como resolver o problema, descreva-a em detalhes. Se você não tiver uma solução, solicite propostas de soluções de outras pessoas ou organizações;</li>
-                <li id="liAjudaUsuario"><b>Centros de custo:</b> Identifique os centros de custo envolvidos na solução do problema. Isso pode incluir recursos financeiros, materiais ou humanos necessários para implementar a solução.</li>
+                <li className="liAjudaUsuario"><b>Título:</b> Escreva um título que descreva claramente o problema ou necessidade. O título deve ser conciso e direto ao ponto;</li>
+                <li className="liAjudaUsuario"><b>Problema a ser resolvido (situação atual):</b> Escreva uma breve explicação da situação atual, descrevendo o problema em mais detalhes. Forneça informações relevantes e quantitativas, se possível, para apoiar sua argumentação;</li>
+                <li className="liAjudaUsuario"><b>Proposta / Solicitação de Proposta:</b> Proponha uma solução ou solicite uma Proposta para resolver o problema. Se você já tiver uma ideia de como resolver o problema, descreva-a em detalhes. Se você não tiver uma solução, solicite propostas de soluções de outras pessoas ou organizações;</li>
+                <li className="liAjudaUsuario"><b>Centros de custo:</b> Identifique os centros de custo envolvidos na solução do problema. Isso pode incluir recursos financeiros, materiais ou humanos necessários para implementar a solução.</li>
             </ul>
         </P>
 
@@ -78,9 +78,9 @@ export const CriarDemanda = (
             <p>Segunda parte:</p>
 
             <ul>
-                <li id="liAjudaUsuario"><b>Benefícios Reais:</b> Preencha o valor mensal do benefício, a moeda em que ele será expresso e uma breve descrição do benefício real que será alcançado com a solução proposta. O benefício real refere-se a ganhos financeiros tangíveis que serão obtidos com a solução, como redução de custos, aumento de receita, etc;</li>
-                <li id="liAjudaUsuario"><b>Benefícios Potenciais:</b> Preencha o valor mensal do benefício potencial, a moeda em que ele será expresso, uma descrição detalhada do benefício que poderá ser alcançado com a solução e indique se o benefício é uma obrigação legal. O benefício potencial refere-se a ganhos que ainda não foram realizados, mas que podem ser alcançados com a solução, como aumento de produtividade, redução de riscos, etc;</li>
-                <li id="liAjudaUsuario"><b>Benefícios Qualitativos:</b> Descreva os benefícios qualitativos que a solução irá proporcionar, como melhoria da qualidade de vida dos funcionários, aumento da satisfação dos clientes, etc. Indique também a frequência de uso da solução, ou seja, com que frequência ela será utilizada para obter esses benefícios.</li>
+                <li className="liAjudaUsuario"><b>Benefícios Reais:</b> Preencha o valor mensal do benefício, a moeda em que ele será expresso e uma breve descrição do benefício real que será alcançado com a solução Proposta. O benefício real refere-se a ganhos financeiros tangíveis que serão obtidos com a solução, como redução de custos, aumento de receita, etc;</li>
+                <li className="liAjudaUsuario"><b>Benefícios Potenciais:</b> Preencha o valor mensal do benefício potencial, a moeda em que ele será expresso, uma descrição detalhada do benefício que poderá ser alcançado com a solução e indique se o benefício é uma obrigação legal. O benefício potencial refere-se a ganhos que ainda não foram realizados, mas que podem ser alcançados com a solução, como aumento de produtividade, redução de riscos, etc;</li>
+                <li className="liAjudaUsuario"><b>Benefícios Qualitativos:</b> Descreva os benefícios qualitativos que a solução irá proporcionar, como melhoria da qualidade de vida dos funcionários, aumento da satisfação dos clientes, etc. Indique também a frequência de uso da solução, ou seja, com que frequência ela será utilizada para obter esses benefícios.</li>
             </ul>
         </P>
 
@@ -88,13 +88,13 @@ export const CriarDemanda = (
             <p>Terceira parte:</p>
 
             <ul>
-                <li id="liAjudaUsuario"><b>Anexos:</b> Refere-se à possibilidade de anexar arquivos que possam complementar ou apoiar as informações apresentadas nas duas primeiras partes. Esta seção é opcional e serve para incluir qualquer informação adicional que possa ajudar a avaliar e implementar a solução proposta ; Para anexar um arquivo à demanda, basta clicar no botão "Anexar arquivo" ou arrastar o arquivo até a dropzone.</li>
+                <li className="liAjudaUsuario"><b>Anexos:</b> Refere-se à possibilidade de anexar arquivos que possam complementar ou apoiar as informações apresentadas nas duas primeiras partes. Esta seção é opcional e serve para incluir qualquer informação adicional que possa ajudar a avaliar e implementar a solução Proposta ; Para anexar um arquivo à Demanda, basta clicar no botão "Anexar arquivo" ou arrastar o arquivo até a dropzone.</li>
             </ul>
         </P>
     </BoxBackground>
 );
 
-export const AvaliarDemandaA = (
+export const AvaliarDemanda3Opcoes = (
     <BoxBackground>
         {usuarioLogado == "AnalistaTI" || usuarioLogado == "GerenteTI" ?
             <>
@@ -102,19 +102,19 @@ export const AvaliarDemandaA = (
                     <p>Avaliar Demanda</p>
                 </Title>
 
-                <P>Avalie a demanda: Você pode reprovar, devolver ou aprovar uma demanda.</P>
+                <P>Avalie a Demanda: Você pode reprovar, devolver ou aprovar uma Demanda.</P>
 
                 <BoxImage>
                     <img id="imgs" src={avaliarDemandaA} alt="Avaliar Demanda" />
                 </BoxImage>
 
-                <P>Caso a ela seja devolvida, explique claramente o motivo. Isso permite que o solicitante entenda os pontos que precisam ser melhorados ou esclarecidos, para que possa refazer a demanda e entregá-la novamente. O objetivo é garantir que a demanda possa ser atendida com sucesso e dentro dos parâmetros estabelecidos.</P>
+                <P>Caso a ela seja devolvida, explique claramente o motivo. Isso permite que o solicitante entenda os pontos que precisam ser melhorados ou esclarecidos, para que possa refazer a Demanda e entregá-la novamente. O objetivo é garantir que a Demanda possa ser atendida com sucesso e dentro dos parâmetros estabelecidos.</P>
 
                 <BoxImage>
                     <img id="imgs" src={devolverDemanda} alt="Devolver Demanda" />
                 </BoxImage>
 
-                <P>Se a demanda for aprovada, classifique a demanda por tamanho, informe a BU solicitante, a(s) BU(s) beneficiada(s) e a sessão de TI responsável pela demanda.</P>
+                <P>Se a Demanda for aprovada, classifique a Demanda por tamanho, informe a BU solicitante, a(s) BU(s) beneficiada(s) e a sessão de TI responsável pela Demanda.</P>
 
                 <BoxImage>
                     <img id="imgs" src={aprovarDemandaA} alt="Aprovar Demanda" />
@@ -124,11 +124,12 @@ export const AvaliarDemandaA = (
             </>
             :
             <>
+                <P>Nesta parte, o Analiste de TI ou o Gerente de TI responsável poderá avaliar a Demanda, podendo reprová-la, devolvê-la ou aprová-la. Sendo que quando ele devolve, ele precisa explicar o motivo para o Solicitante editá-la e entregar novamente.</P>
             </>}
     </BoxBackground>
 );
 
-export const AvaliarDemandaGN = (
+export const AvaliarDemanda2Opcoes = (
     <BoxBackground>
         {usuarioLogado == "GerenteNegocio" || usuarioLogado == "GerenteTI" ?
             <>
@@ -136,13 +137,13 @@ export const AvaliarDemandaGN = (
                     <p>Avaliar Demanda</p>
                 </Title>
 
-                <P>Avalie a demanda: Você pode reprovar ou aprovar uma demanda.</P>
+                <P>Avalie a Demanda: Você pode reprovar ou aprovar uma Demanda.</P>
 
                 <BoxImage>
                     <img id="imgs" src={avaliarDemandaGN} alt="Avaliar Demanda" />
                 </BoxImage>
 
-                <P>Se a demanda for reprovada, explique porquê ela não pode ser atendida. Caso a demanda for aprovada, ela será devolvida para o analista.</P>
+                <P>Se a Demanda for reprovada, explique porquê ela não pode ser atendida. Caso a Demanda for aprovada, ela será devolvida para o analista.</P>
 
                 <BoxImage>
                     <img id="imgs" src={reprovarDemanda} alt="Reprovar Demanda" />
@@ -152,6 +153,7 @@ export const AvaliarDemandaGN = (
             </>
             :
             <>
+                <P>Aqui, o Gerente de Negócio ou o Gerente de TI também avaliarão a Demanda. Podendo apenas reprovar ou aprovar. Caso ele a reprove, terá de explicar o motivo.</P>
             </>}
     </BoxBackground >
 );
@@ -164,13 +166,13 @@ export const AdicionarInfoDemanda = (
                     <p>Adicionar informações na Demanda</p>
                 </Title>
 
-                <P>Após a demanda ser aprovada pelo Gerente de Negócio ela será devolvida para o Analista que a aprovou. Abra a demanda e clique no botão "Adicionar informações".</P>
+                <P>Após a Demanda ser aprovada pelo Gerente de Negócio ela será devolvida para o Analista que a aprovou. Abra a Demanda e clique no botão "Adicionar informações".</P>
 
                 <BoxImage>
                     <img id="imgs" src={adicionarInfoDemanda} alt="Adicionar informações da Demanda" />
                 </BoxImage>
 
-                <P> Abrirá um modal para complementar a demanda com as informações de prazo de elaboração da proposta, código PPM e o link para o JIRA;</P>
+                <P> Abrirá um modal para complementar a Demanda com as informações de prazo de elaboração da Proposta, código PPM e o link para o JIRA;</P>
 
                 <BoxImage>
                     <img id="imgs" src={adicionarInfoDemandaModal} alt="Adicionar informações da Demanda (modal)" />
@@ -180,6 +182,7 @@ export const AdicionarInfoDemanda = (
             </>
             :
             <>
+                <P>Para esse processo, o Analista de TI ou o Gerente de TI terá que preencher algumas informações da Demanda após ela ser aprovada pelos Analistas e Gerentes. As informações são prazo de elaboração da Proposta, código PPM e o link para o JIRA.</P>
             </>}
     </BoxBackground>
 );
@@ -204,7 +207,7 @@ export const CriarProposta = (
                     <img id="imgs" src={criarPropostaDemanda} alt="Criar Proposta pela Demanda" />
                 </BoxImage>
 
-                <P>Posteriormente, adicione os novos atributos, sendo eles o escopo, linhas da tabela de custo, payback, o período de execução e as informações do responsável, o nome e a área que trabalha. Por fim, sendo opcional, os anexos para a proposta.</P>
+                <P>Posteriormente, adicione os novos atributos, sendo eles o escopo, linhas da tabela de custo, payback, o período de execução e as informações do responsável, o nome e a área que trabalha. Por fim, sendo opcional, os anexos para a Proposta.</P>
 
                 <BoxImage>
                     <img id="imgs" src={criarPropostaFinal} alt="Criar Proposta parte final" />
@@ -214,6 +217,7 @@ export const CriarProposta = (
             </>
             :
             <>
+                <P>Para criar uma Proposta, o Analista de TI ou o Gerente de TI escolherão uma Demanda para transformar em Proposta, podendo editar os atributos da mesma. E depois adicionar novos atributos, sendo eles o escopo, linhas da tabela de custo, payback, o período de execução e as informações do responsável, o nome e a área que trabalha. Por fim, sendo opcional, os anexos para a Proposta.</P>
             </>}
     </BoxBackground>
 );
@@ -226,7 +230,7 @@ export const CriarPauta = (
                     <p>Criar Pauta</p>
                 </Title>
 
-                <P>Para criar uma pauta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Pauta”. Na próxima tela, selecione uma ou mais propostas a serem incluídas na pauta. Para isso, procure pelas propostas disponíveis na lista e clique naquelas que deseja adicionar</P>
+                <P>Para criar uma Pauta, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção “Pauta”. Na próxima tela, selecione uma ou mais propostas a serem incluídas na Pauta. Para isso, procure pelas propostas disponíveis na lista e clique naquelas que deseja adicionar</P>
 
                 <BoxImage>
                     <img id="imgs" src={criarPautaIcone} alt="Criar Pauta pela sidebar" />
@@ -248,6 +252,7 @@ export const CriarPauta = (
             </>
             :
             <>
+                <P>Para criar um Pauta, o Analista de TI ou o Gerente de TI escolherão uma ou mais Propostas para colocar na Pauta, esta que será discutida em uma reunião com uma Comissão. Após selecionar a(s) Proposta(s), escolherão um título para a reunião, o fórum que irá descutir a Pauta e a data e a hora da reunião.</P>
             </>}
     </BoxBackground>
 );
@@ -260,13 +265,13 @@ export const InformarParecerComissao = (
                     <p>Informar o parecer da Comissão</p>
                 </Title>
 
-                <P>Após a Pauta passar pela reunião, será necessário informar o parecer da comissão que a discutiu. Para isso, dentro da pauta, clique no botão de "Informar parecer".</P>
+                <P>Após a Pauta passar pela reunião, será necessário informar o parecer da comissão que a discutiu. Para isso, dentro da Pauta, clique no botão de "Informar parecer".</P>
 
                 <BoxImage>
                     <img id="imgs" src={informarParecerComissao} alt="Informar o parecer da Comissão" />
                 </BoxImage>
 
-                <P>Agora, escolha o status da pauta, podendo ser Cancelled, Business Case, To Do ou Assessment, escreva os comentários necessários e escolha se vai ser uma ATA publicada ou uma ATA não publicada e sendo opcional, os anexos que a complementarão.</P>
+                <P>Agora, escolha o status da Pauta, podendo ser Cancelled, Business Case, To Do ou Assessment, escreva os comentários necessários e escolha se vai ser uma ATA publicada ou uma ATA não publicada e sendo opcional, os anexos que a complementarão.</P>
 
                 <BoxImage>
                     <img id="imgs" src={informarParecerComissaoFinal} alt="Informar o parecer da Comissão parte final" />
@@ -276,6 +281,7 @@ export const InformarParecerComissao = (
             </>
             :
             <>
+                <P>Após uma Pauta passar pela reunião, o Analista de TI ou o Gerente de TI terão que informar qual foi o parecer da Comissão que a discutiu, escolhendo o status da Pauta, podendo ser Cancelled, Business Case, To Do ou Assessment, escreva os comentários necessários e escolha se vai ser uma ATA publicada ou uma ATA não publicada e sendo opcional, os anexos que a complementarão.</P>
             </>}
     </BoxBackground>
 );
@@ -288,36 +294,37 @@ export const CriarATA = (
                     <p>Criar ATA</p>
                 </Title>
 
-                <P>Para criar uma Ata, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção "Ata". Depois, escolha a Pauta que quer transformar em Ata.</P>
+                <P>Para criar uma ATA, acesse o tópico pela sidebar no ícone <AddCircleIcon /> e selecione a opção "ATA". Depois, escolha a Pauta que quer transformar em ATA.</P>
 
                 <BoxImage>
-                    <img id="imgs" src={criarATAIcone} alt="Criar Ata pela sidebar" />
+                    <img id="imgs" src={criarATAIcone} alt="Criar ATA pela sidebar" />
                 </BoxImage>
 
-                <P>Posteriormente, você irá à uma página para preencher as informações da Ata que será discutida na reunião da Diretoria Geral.</P>
+                <P>Posteriormente, você irá à uma página para preencher as informações da ATA que será discutida na reunião da Diretoria Geral.</P>
 
                 <BoxImage>
-                    <img id="imgs" src={criarATAIconeFinal} alt="Criar Ata pela sidebar parte final" />
+                    <img id="imgs" src={criarATAIconeFinal} alt="Criar ATA pela sidebar parte final" />
                 </BoxImage>
 
-                <P>Você também pode fazer esse processo já estando dentro de uma Pauta, mas ela não pode ter o parecer da Comissão já informado. Basta clicar no botão de "Informar o parecer", embaixo das infomações da Pauta, com isso abrirá campos para preencher as informações sobre a Ata.</P>
+                <P>Você também pode fazer esse processo já estando dentro de uma Pauta, mas ela não pode ter o parecer da Comissão já informado. Basta clicar no botão de "Informar o parecer", embaixo das infomações da Pauta, com isso abrirá campos para preencher as informações sobre a ATA.</P>
 
                 <BoxImage>
-                    <img id="imgs" src={criarATAPauta} alt="Criar Ata pela Pauta" />
+                    <img id="imgs" src={criarATAPauta} alt="Criar ATA pela Pauta" />
                 </BoxImage>
 
-                <P>Será aberto os mesmos campos sobre a Ata para serem preenchidos</P>
+                <P>Será aberto os mesmos campos sobre a ATA para serem preenchidos</P>
 
                 <BoxImage>
-                    <img id="imgs" src={criarATAPautaFinal} alt="Criar Ata pela Pauta parte final" />
+                    <img id="imgs" src={criarATAPautaFinal} alt="Criar ATA pela Pauta parte final" />
                 </BoxImage>
 
-                <P>Se você apertar no ícone <RemoveRoundedIcon /> e enviar o parecer da Comissão, a Ata será excluída e você só poderá repetir esse processo seguindo os passos de criar a Ata pela sidebar</P>
+                <P>Se você apertar no ícone <RemoveRoundedIcon /> e enviar o parecer da Comissão, a ATA será excluída e você só poderá repetir esse processo seguindo os passos de criar a ATA pela sidebar</P>
 
                 <Space>.</Space>
             </>
             :
             <>
+                <P>Depois de uma Pauta passar pela reunião e ter seu parecer informado, o Analista de TI ou o Gerente de TI a colocarão dentro de uma ATA, tendo que preencher as informações da mesma.</P>
             </>}
     </BoxBackground>
 );
@@ -358,13 +365,13 @@ export const IniciarWorkflow = (
                     <p>Iniciar Workflow de Aprovação</p>
                 </Title>
 
-                <P>Dentro de uma proposta, aperte o botão de criar um workflow de aprovação.</P>
+                <P>Dentro de uma Proposta, aperte o botão de criar um workflow de aprovação.</P>
 
                 <BoxImage>
                     <img id="imgs" src={iniciarWorkflow} alt="Iniciar Workflow de Aprovação" />
                 </BoxImage>
 
-                <P>Quando o Workflow de Aprovação é aprovado pelos Gerentes de Negócio e de TI, a proposta automaticamente torna-se uma pauta aprovada (não passará pela reunião com a comissão).</P>
+                <P>Quando o Workflow de Aprovação é aprovado pelos Gerentes de Negócio e de TI, a Proposta automaticamente torna-se uma Pauta aprovada (não passará pela reunião com a comissão).</P>
             </>
             :
             <>
@@ -380,7 +387,7 @@ export const AvaliarWorkflow = (
                     <p>Avaliar Workflow de Aprovação</p>
                 </Title>
 
-                <P>Dentro de uma proposta, quando um Workflow for iniciado pelo Analista, o ícone de Workflow para os Gerentes de Negócio e de TI vai exibir uma notificação.</P>
+                <P>Dentro de uma Proposta, quando um Workflow for iniciado pelo Analista, o ícone de Workflow para os Gerentes de Negócio e de TI vai exibir uma notificação.</P>
 
                 <BoxImage>
                     <img id="imgs" src={avaliarWorkflow} alt="Avaliar Workflow de Aprovação" />
@@ -399,3 +406,15 @@ export const AvaliarWorkflow = (
             </>}
     </BoxBackground>
 );
+
+// Criar Demanda                         --> Todos
+// Avaliar Demanda                       --> Analista de TI ou Gerente de TI
+// Avaliar Demanda                       --> Gerente de Negócio ou Gerente de TI
+// Adicionar informações na Demanda      --> Analista de TI ou Gerente de TI
+// Criar Proposta                        --> Analista de TI ou Gerente de TI
+// Criar Pauta                           --> Analista de TI ou Gerente de TI
+// Informar o parecer da Comissão        --> Analista de TI ou Gerente de TI
+// Criar ATA                             --> Analista de TI ou Gerente de TI
+// Informar o parecer da Diretoria Geral --> Analista de TI ou Gerente de TI
+// Iniciar o Workflow de Aprovação       --> Analista de TI ou Gerente de TI
+// Avaliar o Workflow de Aprovação       --> Analista de TI ou Gerente de TI

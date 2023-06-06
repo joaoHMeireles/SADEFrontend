@@ -1,24 +1,19 @@
 import { useContext, useEffect, useState } from "react";
-
 import TextField from "@mui/material/TextField";
-import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
-
+import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-
+import api from "../../api/api";
 import {
+  AutocompleteEdited,
+  BoxContainerCentroCusto,
   BoxContainerGeralInformacaoGeral,
   BoxContainerLabels,
-  TypographyLabels,
-  BoxContainerCentroCusto,
+  TextFieldEdited,
+  TypographyLabels
 } from "./InformacaoGeral.styles";
-import Checkbox from "@mui/material/Checkbox";
-import api from "../../api/api";
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import { Box, Button, ClickAwayListener } from "@mui/material";
 import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
+import { Checkbox } from "@mui/material";
 
 export default function InformacaoGeral(props: {
   proposta: boolean,
@@ -32,7 +27,6 @@ export default function InformacaoGeral(props: {
 }) {
   // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
   const { lerTexto } = useContext(TextReaderContext) as any
-  const [paginaTooltip, setPaginaTooltip] = useState(0);
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
   const [idCentroCusto, setIdCentroCusto] = useState<any[]>([]);
 
@@ -89,7 +83,8 @@ export default function InformacaoGeral(props: {
           <TypographyLabels onClick={lerTexto}>
             Título:
           </TypographyLabels>
-          <TextField
+
+          <TextFieldEdited
             id="titulo"
             sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
             onChange={(e: any) => {
@@ -112,7 +107,7 @@ export default function InformacaoGeral(props: {
           <TypographyLabels onClick={lerTexto}>
             Problema a ser resolvido (situação atual):
           </TypographyLabels>
-          <TextField
+          <TextFieldEdited
             id="situacaoAtual"
             sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
             multiline
@@ -137,7 +132,7 @@ export default function InformacaoGeral(props: {
           <TypographyLabels onClick={lerTexto}>
             Proposta / Solicitação de proposta:
           </TypographyLabels>
-          <TextField
+          <TextFieldEdited
             id="objetivo"
             sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
             multiline
@@ -164,7 +159,7 @@ export default function InformacaoGeral(props: {
               Centros de custo:
             </TypographyLabels>
             {props.proposta || props.rascunho || props.editarDemanda ? (
-              <Autocomplete
+              <AutocompleteEdited
                 id="centrosDeCusto"
                 defaultValue={demandaSelecionada.centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto)}
                 sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
@@ -190,13 +185,13 @@ export default function InformacaoGeral(props: {
                       ...props.informacaoProcesso,
                       centroCustoDemanda: centroCustoDemanda,
                     };
+
                     if (novaInfoDemanda) {
                       props.setInformacaoProcesso(novaInfoDemanda);
                     }
                   }
-
                 }}
-                renderOption={(props, centroCusto, { selected }) => {
+                renderOption={(props, centroCusto: any, { selected }) => {
                   return (
                     <li {...props} id="listaCentroCusto" >
                       <Checkbox
@@ -204,8 +199,8 @@ export default function InformacaoGeral(props: {
                         icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                         checkedIcon={<CheckBoxIcon fontSize="small" />}
                         style={{ marginRight: 8 }}
-                        checked={selected}
-                      />
+                        checked={selected} />
+
                       <span onClick={lerTexto}>
                         {centroCusto}
                       </span>
@@ -213,9 +208,9 @@ export default function InformacaoGeral(props: {
                   );
                 }}
                 options={centroCusto}
-                renderInput={(params) => <TextField {...params} onClick={lerTexto} />}
-              />) : (
-              <Autocomplete
+                renderInput={(params) => <TextField {...params} onClick={lerTexto} />} />
+            ) : (
+              <AutocompleteEdited
                 id="centrosDeCusto"
                 sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
                 multiple
@@ -235,7 +230,7 @@ export default function InformacaoGeral(props: {
                     props.setCentroCusto(centroCustoDemanda)
                   }
                 }}
-                renderOption={(props, centroCusto, { selected }) => {
+                renderOption={(props, centroCusto: any, { selected }) => {
                   return (
                     <li {...props} id="listaCentroCusto">
                       <Checkbox
@@ -252,7 +247,12 @@ export default function InformacaoGeral(props: {
                   );
                 }}
                 options={centroCusto}
-                renderInput={(params) => <TextField {...params} onClick={lerTexto} />}
+                renderInput={(params) => <TextField sx={{
+                  backgroundColor: "#eee",
+                  borderRadius: "10px",
+                  boxShadow: "5px 5px 10px 0 #00000025",
+                  "& fieldset": { border: "none" }
+                }} {...params} onClick={lerTexto} />}
               />)}
           </BoxContainerCentroCusto>
         </BoxContainerLabels>

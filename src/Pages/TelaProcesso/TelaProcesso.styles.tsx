@@ -21,7 +21,7 @@ export const BoxHeader = styledBox({
 export const BoxAviso = styledBox({
     alignItems: "center",
     backgroundColor: "#FAD27190",
-    borderRadius: "30px 0 0 30px",
+    borderRadius: "40px 0 0 40px",
     display: "flex",
     justifyContent: "space-evenly",
     right: "-155px",

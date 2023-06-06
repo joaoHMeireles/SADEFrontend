@@ -9,31 +9,27 @@ import PanoramaFishEyeRoundedIcon from "@mui/icons-material/PanoramaFishEyeRound
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
 import {
   BotaoPrimario,
+  BotaoSecundario,
   BotaoTerciario,
   BoxConteudo,
-  BotaoSecundario,
 } from "../App.styles";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import {
-  ContainerGeral,
   BoxContainerBotoes,
-  BoxBotaoTerciario,
   BoxBotoesPriSec,
+  BoxBotaoTerciario,
+  ContainerGeral,
 } from "./CriacaoDemanda.styles";
 import api from "../../api/api";
 import jsPDF from "jspdf";
-import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
+import { PDFExport } from "@progress/kendo-react-pdf"
 
 import EsqueletoPDFVersaoDemanda from "../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda";
 import React from "react";
-import {getNomeComponente, useLocationChange} from "../../utils";
 import { WebSocketContext } from "../../api/websocketservice";
 import { novaNotificacao } from "../Notificacoes/Notificacoes";
-
-import pdf from "../../Assets/pdf.pdf";
-import {TipoComponenteProcesso} from "../../constants/enuns";
-import {useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 
 export default function CriacaoDemanda(props: {
@@ -67,7 +63,7 @@ export default function CriacaoDemanda(props: {
 
     console.log("Location:  " + location)
 
-    if(location.search){
+    if (location.search) {
       let idDemanda = location.search.replace("?", "");
 
       api.get("/sod/demanda/" + idDemanda).then((response) => {
@@ -75,12 +71,11 @@ export default function CriacaoDemanda(props: {
       })
     } else {
       info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
-          localStorage.getItem("DEMANDASELECIONADA") as string
-          :
-          localStorage.getItem("RASCUNHOESCOLHIDO") as string
+        localStorage.getItem("DEMANDASELECIONADA") as string
+        :
+        localStorage.getItem("RASCUNHOESCOLHIDO") as string
       );
     }
-
 
     if (props.rascunho) {
       for (let atributo in info) {
@@ -107,7 +102,6 @@ export default function CriacaoDemanda(props: {
                 // inputAtributo.value = info.centroCustoDemanda.map( (centroCusto: any) => centroCusto.nomeCentroCusto)
               }
             }
-
           }
         }
       }
@@ -126,7 +120,6 @@ export default function CriacaoDemanda(props: {
 
   function atualizarDados(data: any) {
     setData(data);
-
     localStorage.setItem("OBJETODEMANDACRIADA", JSON.stringify(data))
   }
 
@@ -289,7 +282,7 @@ export default function CriacaoDemanda(props: {
       }
 
       if (props.editarDemanda) {
-        const { id,...dadosCorretosDemandaEditar } = dataCerta
+        const { id, ...dadosCorretosDemandaEditar } = dataCerta
 
         idDemandaEditar = id
 
@@ -313,22 +306,17 @@ export default function CriacaoDemanda(props: {
       }).catch((err: any) => {
         console.log(err);
       })
-
-    } else if (props.editarDemanda){
-
+    } else if (props.editarDemanda) {
       api.put("/sade/demanda/" + idDemandaEditar + "/" + idUsuario, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }
       }).then((response) => {
         console.log(response);
-        
       }).catch((err: any) => {
         console.log(err);
       })
-
     } else {
-
       api.post("/sade/demanda", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -338,16 +326,15 @@ export default function CriacaoDemanda(props: {
       }).catch((err: any) => {
         console.log(err);
       })
-
     }
 
     window.location.href = "/home";
   }
 
-
   return (
     <BoxConteudo>
       <Breadcrumb />
+
       <ContainerGeral sx={{ backgroundColor: "white" }}>
         <Tabs value={valor} onChange={mudarValor}>
           {valor == 0 ? (
@@ -372,6 +359,7 @@ export default function CriacaoDemanda(props: {
         {valor == 0 && (
           <>
             <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} partUmDemanda={partUmDemanda} rascunho={props.rascunho} editarDemanda={props.editarDemanda} />
+
             <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
@@ -379,10 +367,10 @@ export default function CriacaoDemanda(props: {
                 onClick={(e) => {
                   lerTexto(e)
                   window.location.href = "/home";
-                }}
-              >
+                }}>
                 Cancelar
               </BotaoTerciario>
+
               <BotaoPrimario
                 sx={{ width: "15%", height: "3rem" }}
                 variant="contained"
@@ -391,8 +379,7 @@ export default function CriacaoDemanda(props: {
                   lerTexto(e)
                   setValor(1);
                   partUmDemanda();
-                }}
-              >
+                }}>
                 Proximo
               </BotaoPrimario>
             </BoxContainerBotoes>
@@ -424,8 +411,7 @@ export default function CriacaoDemanda(props: {
                 setMoedaReal={setMoedaReal}
                 moedaPotencial={moedaPotencial}
                 setMoedaPotencial={setMoedaPotencial}
-                partDoisDemanda={partDoisDemanda}
-              />
+                partDoisDemanda={partDoisDemanda} />
             }
 
             <BoxContainerBotoes>
@@ -436,11 +422,11 @@ export default function CriacaoDemanda(props: {
                   onClick={(e) => {
                     lerTexto(e)
                     window.location.href = "/home";
-                  }}
-                >
+                  }}>
                   Cancelar
                 </BotaoTerciario>
               </BoxBotaoTerciario>
+
               <BoxBotoesPriSec>
                 <BotaoSecundario
                   onClick={(e) => {
@@ -454,10 +440,10 @@ export default function CriacaoDemanda(props: {
                     marginRight: 3,
                   }}
                   variant="outlined"
-                  startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}
-                >
+                  startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
                   Voltar
                 </BotaoSecundario>
+
                 <BotaoPrimario
                   sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="contained"
@@ -469,8 +455,7 @@ export default function CriacaoDemanda(props: {
                     setValor(2);
                     setSegundo(true);
                     partDoisDemanda();
-                  }}
-                >
+                  }}>
                   Proximo
                 </BotaoPrimario>
               </BoxBotoesPriSec>
@@ -489,11 +474,11 @@ export default function CriacaoDemanda(props: {
                   onClick={(e) => {
                     window.location.href = "/home";
                     lerTexto(e)
-                  }}
-                >
+                  }}>
                   Cancelar
                 </BotaoTerciario>
               </BoxBotaoTerciario>
+
               <BoxBotoesPriSec>
                 <BotaoSecundario
                   onClick={(e) => {
@@ -507,10 +492,10 @@ export default function CriacaoDemanda(props: {
                     marginRight: 3,
                   }}
                   variant="outlined"
-                  startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}
-                >
+                  startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
                   Voltar
                 </BotaoSecundario>
+
                 <BotaoPrimario
                   sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="contained"
@@ -520,12 +505,12 @@ export default function CriacaoDemanda(props: {
                   onClick={(e) => {
                     lerTexto(e)
                     gerarPDFDemanda()
-                  }}
-                >
+                  }}>
                   Enviar
                 </BotaoPrimario>
               </BoxBotoesPriSec>
             </BoxContainerBotoes>
+
             {data != null &&
               <EsqueletoPDFVersaoDemanda demanda={data} pdfExportComponent={pdfExportComponent} />
             }
