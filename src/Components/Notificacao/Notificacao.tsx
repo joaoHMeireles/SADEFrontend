@@ -1,6 +1,6 @@
 import api from "../../api/api";
 
-import {Box} from "@mui/system";
+import { Box } from "@mui/system";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import {
     BoxNotificacao,
@@ -11,9 +11,10 @@ import {
     TypographyTitulo,
 } from "./Notificacao.styles";
 
-import {TipoColecaoComponenteProcesso, TipoComponenteProcesso} from "../../constants/enuns";
-import {useContext} from "react";
-import {TextReaderContext} from "../TextReaderContext/TextReaderContext";
+import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../../constants/enuns";
+import { useContext } from "react";
+import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
+import { Skeleton } from "@mui/material";
 
 
 /**
@@ -31,10 +32,10 @@ export default function Notificacao(props: {
     tipoNotificacao: any;
     linkNotificacao: any;
     idComponenteLink: any;
+    conteudoCarregou: boolean
 }) {
-    const {lerTexto, leituraDeSiteAtiva} = useContext(TextReaderContext) as any
+    const { lerTexto, leituraDeSiteAtiva } = useContext(TextReaderContext) as any
     const idUsuario = localStorage.getItem("IDUSUARIO") as string;
-
     const bodyNotificacaoDTO: any = {
         notificacao: {
             idNotificacao: props.idNotificacao
@@ -43,7 +44,6 @@ export default function Notificacao(props: {
             idUsuario: parseInt(idUsuario)
         }
     }
-
 
     function redirecionar(e: any) {
         if (leituraDeSiteAtiva) {
@@ -127,34 +127,42 @@ export default function Notificacao(props: {
 
     return (
         <BoxNotificacao onClick={redirecionar}>
-            <NotificacaoLadoEsquerdo>
-                <NotificacaoBoxIcone>
-                    <props.Icone sx={{color: "#595959"}}></props.Icone>
-                </NotificacaoBoxIcone>
-                <Box>
-                    <Box>
-                        <TypographyTitulo variant="h6" onClick={lerTexto}>{props.titulo}</TypographyTitulo>
-                    </Box>
-                    <Box>
-                        <TypographyMensagem variant="caption" onClick={lerTexto}>
-                            {props.mensagem}
-                        </TypographyMensagem>
-                    </Box>
-                </Box>
-            </NotificacaoLadoEsquerdo>
-            <NotificacaoLadoDireito>
-                <DeleteRoundedIcon
-                    sx={{color: "#595959", cursor: "pointer"}}
-                    onClick={() => {
-                        console.log(bodyNotificacaoDTO);
-                        api.delete(`/sade/notificacao/${bodyNotificacaoDTO.notificacao.idNotificacao}/${bodyNotificacaoDTO.usuario.idUsuario}`).then((res) => {
-                            props.setNotificacoes(res.data)
-                        }).catch((err) => {
-                            console.log(err);
-                        });
-                    }}
-                />
-            </NotificacaoLadoDireito>
+            {props.conteudoCarregou ?
+                <>
+                    <NotificacaoLadoEsquerdo>
+                        <NotificacaoBoxIcone>
+                            <props.Icone sx={{ color: "#595959" }}></props.Icone>
+                        </NotificacaoBoxIcone>
+                        <Box>
+                            <Box>
+                                <TypographyTitulo variant="h6" onClick={lerTexto}>{props.titulo}</TypographyTitulo>
+                            </Box>
+                            <Box>
+                                <TypographyMensagem variant="caption" onClick={lerTexto}>
+                                    {props.mensagem}
+                                </TypographyMensagem>
+                            </Box>
+                        </Box>
+                    </NotificacaoLadoEsquerdo>
+                    <NotificacaoLadoDireito>
+                        <DeleteRoundedIcon
+                            sx={{ color: "#595959", cursor: "pointer" }}
+                            onClick={() => {
+                                console.log(bodyNotificacaoDTO);
+                                api.delete(`/sade/notificacao/${bodyNotificacaoDTO.notificacao.idNotificacao}/${bodyNotificacaoDTO.usuario.idUsuario}`).then((res) => {
+                                    props.setNotificacoes(res.data)
+                                }).catch((err) => {
+                                    console.log(err);
+                                });
+                            }}
+                        />
+                    </NotificacaoLadoDireito>
+                </>
+                :
+                <>
+                    <Skeleton variant="rectangular" sx={{width: "100%", height: "6vh"}}/>
+                </>
+            }
         </BoxNotificacao>
     )
 }

@@ -1,11 +1,11 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import api from "../../api/api";
 
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Notificacao from "../../Components/Notificacao/Notificacao";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import {SvgIconTypeMap} from "@mui/material/SvgIcon";
+import { SvgIconTypeMap } from "@mui/material/SvgIcon";
 
 import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import EditNotificationsRoundedIcon from "@mui/icons-material/EditNotificationsRounded";
@@ -17,12 +17,12 @@ import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import DrawRoundedIcon from '@mui/icons-material/DrawRounded';
 import TimerOffRoundedIcon from '@mui/icons-material/TimerOffRounded';
 
-import {OverridableComponent} from "@mui/material/OverridableComponent";
-import {BoxContainerNotificacoes} from "./Notificacoes.styles";
+import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { BoxContainerNotificacoes } from "./Notificacoes.styles";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 
 import semNotificacao from "../../Assets/notificationBell.png"
-import {useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 /**
  *
@@ -32,21 +32,32 @@ export default function Notificacoes() {
     localStorage.setItem("PAGINATUAL", "notification");
     const idUsuario = localStorage.getItem("IDUSUARIO");
     const [notificacoes, setNotificacoes] = useState<any[]>([]);
+    const [conteudoCarregou, setConteudoCarregou] = useState(false)
+    const [temComponente, setTemComponente] = useState(true)
 
     let icone: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
         muiName: string;
     };
 
     useEffect(() => {
-        api.get(`/sade/usuario/${idUsuario}`)
-            .then((notificacao) => {
-                setNotificacoes(notificacao.data.notificacoesUsuario)
-                console.log("Notificacao DATA ==> ", notificacao.data)
-                // atualizarNotificacoes(setNotificacoes)
-            }).catch(err => {
+        api.get(`/sade/usuario/${idUsuario}`).then((notificacao) => {
+            setNotificacoes(notificacao.data.notificacoesUsuario)
+            // atualizarNotificacoes(setNotificacoes)
+        }).catch(err => {
             console.log(err);
         })
+        .finally(() => {
+            setConteudoCarregou(true)
+        })
     }, [])
+
+    useEffect(() => {
+        if(notificacoes.length != 0){
+            setTemComponente(true)
+        } else {
+            setTemComponente(false)
+        }
+    }, [notificacoes])
 
     function getTipoIcone(acao: string) {
         for (let i = 0; i < notificacoes.length; i++) {
@@ -62,7 +73,7 @@ export default function Notificacoes() {
                 icone = GroupsRoundedIcon;
             } else if (acao == "STATUSDEMANDA") {
                 icone = NewReleasesRoundedIcon;
-            // } else if (acao == "PRAZOELABORACAOPROPOSTA") {
+                // } else if (acao == "PRAZOELABORACAOPROPOSTA") {
                 //     icone = AccessTimeRoundedIcon;
             } else if (acao == "AVALIARDEMANDA") {
                 icone = CheckBoxRoundedIcon;
@@ -80,15 +91,16 @@ export default function Notificacoes() {
         getTipoIcone(notificacao.acao)
         return (
             <Notificacao key={index}
-                         idNotificacao={notificacao.idNotificacao}
-                         Icone={icone}
-                         titulo={notificacao.tituloNotificacao}
-                         mensagem={notificacao.descricaoNotificacao}
-                         notificacoes={notificacoes}
-                         setNotificacoes={setNotificacoes}
-                         tipoNotificacao={notificacao.tipoNotificacao}
-                         linkNotificacao={notificacao.linkNotificacao}
-                         idComponenteLink={notificacao.idComponenteLink}
+                idNotificacao={notificacao.idNotificacao}
+                Icone={icone}
+                titulo={notificacao.tituloNotificacao}
+                mensagem={notificacao.descricaoNotificacao}
+                notificacoes={notificacoes}
+                setNotificacoes={setNotificacoes}
+                tipoNotificacao={notificacao.tipoNotificacao}
+                linkNotificacao={notificacao.linkNotificacao}
+                idComponenteLink={notificacao.idComponenteLink}
+                conteudoCarregou={conteudoCarregou}
             />
         )
     })
@@ -96,15 +108,19 @@ export default function Notificacoes() {
 
     return (
         <BoxContainerNotificacoes>
-            <Breadcrumb/>
+            <Breadcrumb />
             <Container>
                 <Box>
-                    {notificacoesElement.length != 0 ?
+                    {!temComponente ?
+                        <>
+                            {conteudoCarregou &&
+                                <ResultadoVazio imagem={semNotificacao} legenda={"Nenhuma notificação presente"} />
+                            }
+                        </>
+                        :
                         <>
                             {notificacoesElement}
                         </>
-                        :
-                        <ResultadoVazio imagem={semNotificacao} legenda={"Nenhuma notificação presente"}/>
                     }
                 </Box>
             </Container>
