@@ -17,8 +17,12 @@ export default function Arquivo(props: { id: number, icone: string; nome: string
       </TypographyUploadFiles>
       <Box>
         <ClearRoundedIcon sx={{ cursor: "pointer", color: "#595959" }} onClick={() => {
-          props.files.splice(props.id, 1)
-          props.setFiles(props.files)
+          if(props.files != null){
+            props.files.splice(props.id, 1)
+            props.setFiles(props.files)
+          } else {
+            console.log(props.files);
+          }
         }} />
       </Box>
     </BoxTypographyFiles>

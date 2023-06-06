@@ -53,6 +53,8 @@ export default function CriacaoAta(props: {
   const { lerTexto } = useContext(TextReaderContext) as any
   const [valor, setValor] = useState(0);
   const [grid, setGrid] = useState(true);
+  const [conteudoCarregou, setConteudoCarregou] = useState(false)
+  const [temComponente, setTemComponente] = useState(true)
   const [pautaEscolhida, setPautaEscolhida] = useState<any>();
   const [listaComponents, setListaComponents] = useState<any[]>([])
   const [valorData, setValorData] = useState<Dayjs | null>(null)
@@ -65,8 +67,6 @@ export default function CriacaoAta(props: {
   useEffect(() => {
     const pautaEscolhida = JSON.parse(localStorage.getItem("PAUTACRIARATA") as string)
 
-
-    ///criarATA
     api.get(`/sade/pauta`).then((response) => {
       let listaPautas: any[] = []
       for (let pauta of response.data) {
@@ -88,8 +88,19 @@ export default function CriacaoAta(props: {
 
     }).catch((err) => {
       console.log(err);
+    }).finally(() => {
+        setConteudoCarregou(true)
     })
+
   }, [])
+
+  useEffect(() => {
+    if (listaComponents.length != 0) {
+      setTemComponente(true)
+    } else {
+      setTemComponente(false)
+    }
+  }, [listaComponents])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
@@ -166,18 +177,22 @@ export default function CriacaoAta(props: {
             setGrid={setGrid}
             filtrarResultados={props.filtrarResultados}
           />
-          {listaComponents.length != 0 ?
+          {!temComponente ?
+            <>
+              {conteudoCarregou &&
+                  <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação"} />
+              }
+            </>
+            :
             <CardsProcesso
               listaComponents={listaComponents}
               grid={grid}
               criandoATA={true}
               pautaEscolhida={pautaEscolhida}
               setPautaEscolhida={setPautaEscolhida}
+              conteudoCarregou={conteudoCarregou}
             />
-            :
-            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação"} />
           }
-
           <BotaoPrimario
             sx={{
               height: "3rem",

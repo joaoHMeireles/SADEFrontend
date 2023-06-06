@@ -109,7 +109,7 @@ export function getNomeRota(palavra: string) {
         draft: "Rascunho",
         mydrafts: "Meus rascunhos",
         continuedemand: "Criar Demanda",
-        editdemand:"Editar Demanda",
+        editdemand: "Editar Demanda",
         chats: "Chats",
         chat: "Chat",
         history: "Histórico",
@@ -219,12 +219,12 @@ export function getKeyEnum(enumerador: Object, valor: any) {
 export function baixarArquivo(anexo: any) {
     const url = window.URL.createObjectURL(new Blob([anexo.arquivo]));
     console.log(url);
-    
+
     const link = document.createElement('a');
     link.href = url;
     link.setAttribute('download', `${anexo.nome}.pdf`);
     console.log(link);
-    
+
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -421,4 +421,19 @@ export function getTituloBotao(botao: string) {
     }
 
     return (titulos as any)[nomeBotao]
+}
+
+export function arquivoDemandaToFile(arquivo: any) {
+    return new File([arquivo.arquivo], arquivo.nome, { type: arquivo.tipo })
+}
+
+export function transformArquivosToFile(arquivos: any) {
+    const listaArquivos = []
+    for (let arquivo of arquivos) {
+        const fileArquivo = arquivoDemandaToFile(arquivo)
+
+        listaArquivos.push(fileArquivo)
+    }
+
+    return listaArquivos
 }

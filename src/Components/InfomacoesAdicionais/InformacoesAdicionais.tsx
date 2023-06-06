@@ -48,7 +48,6 @@ export default function InfomacoesAdicionais(props: {
         "GRANDE",
         "MUITOGRANDE",
     ]
-
     const sessoesTI = [
         { nome: "Sistemas de Tecnologias Digitais", abreviacao: "STD" },
         { nome: "Arquitetura e Governança de Dados", abreviacao: "AGD" },
@@ -62,7 +61,6 @@ export default function InfomacoesAdicionais(props: {
         { nome: "Sistemas de Engenharia", abreviacao: "SIE" },
         { nome: "Sistemas de Vendas e ECommerce", abreviacao: "SVE" }
     ]
-
     const [bus, setBus] = useState<any[]>([])
     const [objetoBus, setObjetoBus] = useState<any[]>([])
 
@@ -215,92 +213,97 @@ export default function InfomacoesAdicionais(props: {
 
                 <Box sx={{ width: "100%" }}>
                     <TypographyPadrao onClick={lerTexto}>BUs Beneficiadas: </TypographyPadrao>
-                    {props.informacaoProcesso.busBeneficiadas ?
-                        <Autocomplete
-                            id="BU"
-                            sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
-                            multiple
-                            disableCloseOnSelect
-                            defaultValue={props.informacaoProcesso.busBeneficiadas.map((bus: any) => bus.nomeBU)}
-                            onChange={(e, valor: any) => {
-                                let busBeneficiada: Object[] = []
+                    {props.informacaoProcesso &&
+                        <>
+                            {props.informacaoProcesso.busBeneficiadas ?
+                                <Autocomplete
+                                    id="BU"
+                                    sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
+                                    multiple
+                                    disableCloseOnSelect
+                                    defaultValue={props.informacaoProcesso.busBeneficiadas.map((bus: any) => bus.nomeBU)}
+                                    onChange={(e, valor: any) => {
+                                        let busBeneficiada: Object[] = []
 
-                                for (let buSelecionada of valor) {
-                                    for (let bu of objetoBus) {
-                                        if (bu.nomeBU == buSelecionada) {
-                                            busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                        for (let buSelecionada of valor) {
+                                            for (let bu of objetoBus) {
+                                                if (bu.nomeBU == buSelecionada) {
+                                                    busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                                }
+                                            }
                                         }
-                                    }
-                                }
 
-                                props.setValorBUsBeneficadas(busBeneficiada);
+                                        props.setValorBUsBeneficadas(busBeneficiada);
 
-                                const novaInfoDemanda = {
-                                    ...props.informacaoProcesso,
-                                    busBeneficiadas: busBeneficiada,
-                                };
-                                props.setInformacaoProcesso(novaInfoDemanda);
+                                        const novaInfoDemanda = {
+                                            ...props.informacaoProcesso,
+                                            busBeneficiadas: busBeneficiada,
+                                        };
+                                        props.setInformacaoProcesso(novaInfoDemanda);
 
-                            }}
-                            renderOption={(props, bu, { selected }) => {
-                                return (
-                                    <li {...props} id="listaBU">
-                                        <Checkbox
-                                            id="checkbox"
-                                            icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                                            checkedIcon={<CheckBoxIcon fontSize="small" />}
-                                            style={{ marginRight: 8 }}
-                                            checked={selected}
-                                        />
-                                        <span onClick={lerTexto}>{bu}</span>
-                                    </li>
-                                );
-                            }}
-                            options={bus}
-                            renderInput={(params) => <TextField {...params} />}
-                        /> :
-                        <Autocomplete
-                            id="BU"
-                            sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
-                            multiple
-                            disableCloseOnSelect
-                            onChange={(e, valor: any) => {
-                                let busBeneficiada: Object[] = []
+                                    }}
+                                    renderOption={(props, bu, { selected }) => {
+                                        return (
+                                            <li {...props} id="listaBU">
+                                                <Checkbox
+                                                    id="checkbox"
+                                                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                                                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                                                    style={{ marginRight: 8 }}
+                                                    checked={selected}
+                                                />
+                                                <span onClick={lerTexto}>{bu}</span>
+                                            </li>
+                                        );
+                                    }}
+                                    options={bus}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                                :
+                                <Autocomplete
+                                    id="BU"
+                                    sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
+                                    multiple
+                                    disableCloseOnSelect
+                                    onChange={(e, valor: any) => {
+                                        let busBeneficiada: Object[] = []
 
-                                for (let buSelecionada of valor) {
-                                    for (let bu of objetoBus) {
-                                        if (bu.nomeBU == buSelecionada) {
-                                            busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                        for (let buSelecionada of valor) {
+                                            for (let bu of objetoBus) {
+                                                if (bu.nomeBU == buSelecionada) {
+                                                    busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                                }
+                                            }
                                         }
-                                    }
-                                }
 
-                                props.setValorBUsBeneficadas(busBeneficiada);
+                                        props.setValorBUsBeneficadas(busBeneficiada);
 
-                                const novaInfoDemanda = {
-                                    ...props.informacaoProcesso,
-                                    busBeneficiadas: busBeneficiada,
-                                };
-                                props.setInformacaoProcesso(novaInfoDemanda);
+                                        const novaInfoDemanda = {
+                                            ...props.informacaoProcesso,
+                                            busBeneficiadas: busBeneficiada,
+                                        };
+                                        props.setInformacaoProcesso(novaInfoDemanda);
 
-                            }}
-                            renderOption={(props, bu, { selected }) => {
-                                return (
-                                    <li {...props} id="listaBU">
-                                        <Checkbox
-                                            id="checkbox"
-                                            icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                                            checkedIcon={<CheckBoxIcon fontSize="small" />}
-                                            style={{ marginRight: 8 }}
-                                            checked={selected}
-                                        />
-                                        <span onClick={lerTexto}>{bu}</span>
-                                    </li>
-                                );
-                            }}
-                            options={bus}
-                            renderInput={(params) => <TextField {...params} />}
-                        />}
+                                    }}
+                                    renderOption={(props, bu, { selected }) => {
+                                        return (
+                                            <li {...props} id="listaBU">
+                                                <Checkbox
+                                                    id="checkbox"
+                                                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                                                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                                                    style={{ marginRight: 8 }}
+                                                    checked={selected}
+                                                />
+                                                <span onClick={lerTexto}>{bu}</span>
+                                            </li>
+                                        );
+                                    }}
+                                    options={bus}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />}
+                        </>
+                    }
                 </Box>
 
                 <BoxSessaoTIECodigoPPM>

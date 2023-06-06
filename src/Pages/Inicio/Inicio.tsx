@@ -1,12 +1,13 @@
-import { ChangeEventHandler, useEffect, useState, useContext } from "react";
+import { ChangeEventHandler, useEffect, useState, useContext, SetStateAction } from "react";
 import "./Inicio.scss";
 import semDemanda from "../../Assets/emptyFolder.png"
 import semResultado from "../../Assets/empty.png"
 import Searchbar from "../../Components/Searchbar/Searchbar";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
-import { BoxConteudo } from "../App.styles";
+import { BoxContainer, BoxConteudo } from "../App.styles";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
+import { Box, Grid, Skeleton } from "@mui/material";
 
 /**
  * Componente da página de início
@@ -19,7 +20,8 @@ export default function Inicio(props: {
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
   listaComponents: any[];
   filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  //carregou?: boolean
+  conteudoCarregou?: boolean;
+  setConteudoCarregou?: React.Dispatch<SetStateAction<boolean>>
 }) {
   // const listaComponentesLocalStorage = localStorage.getItem("LISTACOMPONENTS") != null ? JSON.parse(localStorage.getItem("LISTACOMPONENTS") as string) : []
   const [grid, setGrid] = useState(true);
@@ -31,16 +33,23 @@ export default function Inicio(props: {
   useEffect(() => {
     if (props.listaComponents.length != 0) {
       setTemComponente(true)
+
+      setTimeout(() => {
+        if (props.setConteudoCarregou) {
+          props.setConteudoCarregou(true)
+        }
+      }, 1000)
+
+
     } else {
       setTemComponente(false)
     }
-
     //para resetar os parâmetros da criação de rascunhos quando for criar demanda
     setTimeout(() => {
       localStorage.setItem("DEMANDACADASTRADA", "false")
       localStorage.setItem("OBJETODEMANDACRIADA", "null")
     }, 500)
-  }, [props.listaComponents])
+  }, [props.listaComponents, props.conteudoCarregou])
 
   useEffect(() => {
     if (!temComponente) {
@@ -67,14 +76,15 @@ export default function Inicio(props: {
         setGrid={setGrid}
         filtrarResultados={props.filtrarResultados}
       />
-      {/*props.carregou ?
+      {!temComponente ?
         <>
-          //componente sinal carregandinho
+          {props.conteudoCarregou &&
+            <>
+              <ResultadoVazio imagem={imagemSemNada} legenda={textoSemNada} />
+            </>
+          }
         </>
-      :
-
-      */}
-      {temComponente ?
+        :
         <CardsProcesso
           listaComponents={props.listaComponents}
           grid={grid}
@@ -83,9 +93,8 @@ export default function Inicio(props: {
           pauta={false}
           propostaSelecionada={0}
           setPropostaSelecionada={setPropostaSelecionada}
+          conteudoCarregou={props.conteudoCarregou}
         />
-        :
-        <ResultadoVazio imagem={imagemSemNada} legenda={textoSemNada} />
       }
     </BoxConteudo>
   );

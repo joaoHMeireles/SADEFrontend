@@ -33,10 +33,9 @@ import {
 } from "../../constants/enuns";
 import api from "../../api/api";
 import { Dayjs } from "dayjs";
-import { useLocationChange } from "../../utils";
+import { transformArquivosToFile, useLocationChange } from "../../utils";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semDemanda from "../../Assets/emptyFolder.png"
-import jsPDF from "jspdf";
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 
 
@@ -50,6 +49,8 @@ export default function CriacaoProposta(props: {
   const [valor, setValor] = useState(0);
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
   const [grid, setGrid] = useState(true);
+  const [conteudoCarregou, setConteudoCarregou] = useState(false)
+  const [temComponente, setTemComponente] = useState(true)
   const [listaComponents, setListaComponents] = useState<any[]>([])
 
   const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState(0)
@@ -99,7 +100,9 @@ export default function CriacaoProposta(props: {
       setListaComponents(listaDemandas);
     }).catch((err) => {
       console.log(err);
-    })    
+    }).finally(() => {
+      setConteudoCarregou(true)
+    })
   }, [])
 
   useEffect(() => {
@@ -108,13 +111,33 @@ export default function CriacaoProposta(props: {
     setInformacaoProcesso(info);
   }, [])
 
-  useLocationChange(() => {
-    localStorage.removeItem("DEMANDACRIARPROPOSTA")
-  })
-
   useEffect(() => {
     api.get("/sade/centroCusto").then((res) => setCentroCusto(res.data))
   }, [])
+
+  useEffect(() => {
+    const demandaClicada = listaComponents.find(demanda => demanda.idDemanda == propostaSelecionada)
+    if (demandaClicada != null) {
+      setArquivosProposta(transformArquivosToFile(demandaClicada.arquivosDemanda))
+    }
+
+    // console.log(propostaSelecionada);
+
+
+    // setArquivosProposta()
+  }, [propostaSelecionada])
+
+  useEffect(() => {
+    if (listaComponents.length != 0) {
+      setTemComponente(true)
+    } else {
+      setTemComponente(false)
+    }
+  }, [listaComponents])
+
+  useLocationChange(() => {
+    localStorage.removeItem("DEMANDACRIARPROPOSTA")
+  })
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
@@ -214,9 +237,6 @@ export default function CriacaoProposta(props: {
       responsaveisNegocio: usuariosResponsaveis,
       tabelasCustoProposta: listaTabelasCustoProposta
     }
-    
-    console.log(proposta);
-    
 
     let formData = new FormData()
     let idUsuario = localStorage.getItem("IDUSUARIO");
@@ -225,19 +245,21 @@ export default function CriacaoProposta(props: {
 
     if (arquivosProposta || arquivosProposta != undefined) {
       for (const arquivo of arquivosProposta) {
+        console.log(arquivo);
+
         formData.append("files", arquivo);
       }
     }
 
-    api.post(`/sade/proposta/${idUsuario}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      }
-    }).then((res) => {
-      console.log(res);
-    })
+    // api.post(`/sade/proposta/${idUsuario}`, formData, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   }
+    // }).then((res) => {
+    //   console.log(res);
+    // })
 
-    window.location.href = "/home"
+    // window.location.href = "/home"
   }
 
   return (
@@ -279,16 +301,21 @@ export default function CriacaoProposta(props: {
             filtrarResultados={props.filtrarResultados}
 
           />
-          {listaComponents.length != 0 ?
+          {!temComponente ?
+            <>
+              {conteudoCarregou &&
+                <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda disponível no sistema"} />
+              }
+            </>
+            :
             <CardsProcesso
               listaComponents={listaComponents}
               grid={grid}
               proposta={true}
               propostaSelecionada={propostaSelecionada}
               setPropostaSelecionada={setPropostaSelecionada}
+              conteudoCarregou={conteudoCarregou}
             />
-            :
-            <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda disponível no sistema"} />
           }
           <BotaoPrimario
             sx={{
@@ -341,7 +368,7 @@ export default function CriacaoProposta(props: {
               informacaoProcesso={informacaoProcesso}
               setInformacaoProcesso={setInformacaoProcesso}
             />
-            <InputAnexos rascunho={false} proposta={true} />
+            <InputAnexos rascunho={false} proposta={true} arquivosProposta={arquivosProposta} setArquivosProposta={setArquivosProposta} />
             <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}

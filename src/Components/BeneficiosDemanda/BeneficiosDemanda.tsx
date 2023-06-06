@@ -208,7 +208,7 @@ export default function BeneficiosDemanda(props: {
           <AddRoundedIcon
             sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
             onClick={() => {
-              if (props.setNumeroBeneficiosReais && props.numeroBeneficiosReais) {
+              if (props.setNumeroBeneficiosReais != null && props.numeroBeneficiosReais != null) {
                 props.setNumeroBeneficiosReais(props.numeroBeneficiosReais + 1);
               }
             }} />

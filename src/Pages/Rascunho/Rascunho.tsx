@@ -16,12 +16,14 @@ export default function Rascunho(props: {
   filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }) {
   const [grid, setGrid] = useState(true);
+  const [conteudoCarregou, setConteudoCarregou] = useState(false)
+  const [temComponente, setTemComponente] = useState(true)
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
   const [listaComponents, setListaComponents] = useState<any[]>([])
   const idUsuario = localStorage.getItem("IDUSUARIO")
 
   useEffect(() => {
-    api.get("/sade/demanda/usuario/" + idUsuario +"/rascunho/").then((response) => {
+    api.get("/sade/demanda/usuario/" + idUsuario + "/rascunho/").then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
         demanda.tipo = TipoComponenteProcesso.Demanda
@@ -30,8 +32,18 @@ export default function Rascunho(props: {
       setListaComponents(listaDemandas);
     }).catch((err) => {
       console.log(err);
+    }).finally(() => {
+      setConteudoCarregou(true)
     })
   }, [])
+
+  useEffect(() => {
+    if (listaComponents.length != 0) {
+      setTemComponente(true)
+    } else {
+      setTemComponente(false)
+    }
+  }, [listaComponents])
 
   return (
     <>
@@ -44,7 +56,13 @@ export default function Rascunho(props: {
           setGrid={setGrid}
           filtrarResultados={props.filtrarResultados}
         />
-        {listaComponents.length != 0 ?
+        {!temComponente ?
+          <>
+            {conteudoCarregou &&
+              <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda para completar"} />
+            }
+          </>
+          :
           <CardsProcesso
             listaComponents={listaComponents}
             grid={grid}
@@ -52,9 +70,8 @@ export default function Rascunho(props: {
             proposta={false}
             propostaSelecionada={0}
             setPropostaSelecionada={setPropostaSelecionada}
+            conteudoCarregou={conteudoCarregou}
           />
-          :
-          <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda para completar"} />
         }
       </BoxConteudo>
     </>

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 
 import {
   BoxContainerGeral,
@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 
 import Dropzone from "../Dropzone/Dropzone";
 import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
+import { arquivoDemandaToFile, transformArquivosToFile } from "../../utils";
 
 export default function InputAnexos(props: {
   rascunho: boolean;
@@ -22,6 +23,12 @@ export default function InputAnexos(props: {
   const { lerTexto } = useContext(TextReaderContext) as any
   const [files, setFiles] = props.files && props.setFiles ? [props.files, props.setFiles] : useState<any[]>([])
 
+  useEffect(() => {
+    if (props.arquivosProposta) {
+      setFiles(props.arquivosProposta)
+    }
+  }, [])
+
   return (
     <>
       <BoxTypographyAnexos>
@@ -29,7 +36,7 @@ export default function InputAnexos(props: {
       </BoxTypographyAnexos>
       <BoxContainerGeral sx={{ "&:hover": { borderColor: "#00579D" } }}>
         <BoxContainerConteudo>
-          <Dropzone rascunho={props.rascunho} proposta={props.proposta} files={files} setFiles={setFiles} arquivosProposta={props.arquivosProposta} setArquivosProposta={props.setArquivosProposta}/>
+          <Dropzone rascunho={props.rascunho} proposta={props.proposta} files={files} setFiles={setFiles} arquivosProposta={props.arquivosProposta} setArquivosProposta={props.setArquivosProposta} />
         </BoxContainerConteudo>
       </BoxContainerGeral>
     </>
