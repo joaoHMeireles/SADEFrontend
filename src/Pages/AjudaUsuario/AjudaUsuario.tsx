@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { Introducao, CriarDemanda, AvaliarDemandaA, AvaliarDemandaGN, AdicionarInfoDemanda, CriarProposta, CriarPauta, InformarParecerComissao, CriarATA, InformarParecerDiretoriaGeral, IniciarWorkflow, AvaliarWorkflow } from "./Componentes/Componentes";
+import { Introducao, CriarDemanda, AvaliarDemanda3Opcoes, AvaliarDemanda2Opcoes, AdicionarInfoDemanda, CriarProposta, CriarPauta, InformarParecerComissao, CriarATA, InformarParecerDiretoriaGeral, IniciarWorkflow, AvaliarWorkflow } from "./Componentes/Componentes";
 
 export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: boolean }) {
   const [ processosPrincipaisOpen,  setProcessosPrincipaisOpen] = useState(false);
@@ -66,7 +66,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                   </ListItemButton>
 
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
-                    setComponentes(AvaliarDemandaA);
+                    setComponentes(AvaliarDemanda3Opcoes);
                     setCor(2);
                   }}>
                     {cor == 2 ?
@@ -76,7 +76,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                   </ListItemButton>
 
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
-                    setComponentes(AvaliarDemandaGN);
+                    setComponentes(AvaliarDemanda2Opcoes);
                     setCor(3);
                   }}>
                     {cor == 3 ?

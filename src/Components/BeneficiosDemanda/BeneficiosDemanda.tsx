@@ -4,20 +4,23 @@ import TextField from '@mui/material/TextField'
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import {
-  BoxContainerGeral,
-  BoxTitulos,
-  TypographyTitulos,
-  BoxIcones,
-  BoxContainerGeralBeneficio,
   BoxContainerDivisorio,
-  BoxInputsAcima,
-  BoxValorMensal,
-  TypographyLabels,
-  BoxInputs,
-  BoxInputsAbaixo,
-  BoxObrigacaoLegal,
+  BoxContainerGeral,
+  BoxContainerGeralBeneficio,
   BoxDescricaoRequeistosControle,
   BoxFrequencia,
+  BoxIcones,
+  BoxInputs,
+  BoxInputsAbaixo,
+  BoxInputsAcima,
+  BoxObrigacaoLegal,
+  BoxValorMensal,
+  BoxTitulos,
+  FormControlEdited,
+  SelectEdited,
+  TextFieldEdited,
+  TypographyLabels,
+  TypographyTitulos,
 } from "./BeneficiosDemanda.styles";
 import { FormControl, InputAdornment, InputLabel, OutlinedInput, Select } from '@mui/material';
 import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
@@ -298,7 +301,7 @@ export default function BeneficiosDemanda(props: {
         <BoxFrequencia>
           <TypographyLabels onClick={lerTexto}>Frequência de uso da solução:</TypographyLabels>
 
-          <Select
+          <SelectEdited sx={{ width: "15vw" }}
             id="frequenciaUso"
             value={frequencia}
             onChange={onFrequenciaChange}>
@@ -307,7 +310,7 @@ export default function BeneficiosDemanda(props: {
                 <MenuItem key={index} value={valor} onClick={lerTexto}>{valor}</MenuItem>
               );
             })}
-          </Select>
+          </SelectEdited>
         </BoxFrequencia>
       </BoxContainerGeral>
     </>
@@ -456,9 +459,9 @@ function BeneficioReal(props: {
 
           <BoxInputs>
             {currencyInput == 0 ?
-              <FormControl
+              <FormControlEdited
                 variant="outlined"
-                sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000025", display: "flex", m: "1", marginRight: "2rem" }}
+                sx={{ marginRight: "2rem" }}
                 onChange={(e: any) => {
                   setValueInput(e.target.value);
 
@@ -478,12 +481,12 @@ function BeneficioReal(props: {
                   }
                 }}>
                 <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
-              </FormControl>
+              </FormControlEdited>
               :
               currencyInput == 1 ?
-                <FormControl
+                <FormControlEdited
                   variant="outlined"
-                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000025", display: "flex", m: "1", marginRight: "1rem" }}
+                  sx={{ marginRight: "2rem" }}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -503,11 +506,11 @@ function BeneficioReal(props: {
                     }
                   }}>
                   <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
-                </FormControl>
+                </FormControlEdited>
                 :
-                <FormControl
+                <FormControlEdited
                   variant="outlined"
-                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000025", display: "flex", m: "1", marginRight: "1rem" }}
+                  sx={{ marginRight: "2rem" }}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -527,12 +530,12 @@ function BeneficioReal(props: {
                     }
                   }}>
                   <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">€</InputAdornment>} />
-                </FormControl>
+                </FormControlEdited>
             }
 
-            <Select
+            <SelectEdited
               id={`moedaReal${props.index}`}
-              sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000025" }}
+              sx={{ width: "7vw" }}
               value={moedaBeneficio}
               onChange={(e: any) => {
                 setMoedaBeneficio(e.target.value);
@@ -560,14 +563,14 @@ function BeneficioReal(props: {
                   {option}
                 </MenuItem>
               ))}
-            </Select>
+            </SelectEdited>
           </BoxInputs>
         </BoxInputsAcima>
 
         <BoxInputsAbaixo>
           <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
 
-          <TextField
+          <TextFieldEdited
             id={`descricaoReal${props.index}`}
             onChange={(e: any) => {
               if (atualizarObjetos != null) {
@@ -586,9 +589,8 @@ function BeneficioReal(props: {
               }
             }}
             multiline
-            maxRows={Infinity}
-            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000025" }}>
-          </TextField>
+            maxRows={Infinity}>
+          </TextFieldEdited>
         </BoxInputsAbaixo>
       </BoxContainerDivisorio>
     </BoxContainerGeralBeneficio >
@@ -650,9 +652,9 @@ function BeneficioPotencial(props: {
 
           <BoxInputs>
             {currencyInput == 0 ?
-              <FormControl
+              <FormControlEdited
                 variant="outlined"
-                sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000025", display: "flex", m: "1", marginRight: "2rem" }}
+                sx={{ marginRight: "2rem" }}
                 onChange={(e: any) => {
                   setValueInput(e.target.value);
 
@@ -672,12 +674,12 @@ function BeneficioPotencial(props: {
                   }
                 }}>
                 <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
-              </FormControl>
+              </FormControlEdited>
               :
               currencyInput == 1 ?
-                <FormControl
+                <FormControlEdited
                   variant="outlined"
-                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000025", display: "flex", m: "1", marginRight: "2rem" }}
+                  sx={{ marginRight: "2rem" }}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -697,11 +699,11 @@ function BeneficioPotencial(props: {
                     }
                   }}>
                   <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
-                </FormControl>
+                </FormControlEdited>
                 :
-                <FormControl
+                <FormControlEdited
                   variant="outlined"
-                  sx={{ alignItems: "center", boxShadow: "5px 5px 10px 0 #00000025", display: "flex", m: "1", marginRight: "2rem" }}
+                  sx={{ marginRight: "2rem" }}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -721,12 +723,12 @@ function BeneficioPotencial(props: {
                     }
                   }}>
                   <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">€</InputAdornment>} />
-                </FormControl>
+                </FormControlEdited>
             }
 
-            <Select
+            <SelectEdited
               id={`moedaPotencial${props.index}`}
-              sx={{ width: "10%", boxShadow: "5px 5px 10px 0 #00000025" }}
+              sx={{ width: "7vw" }}
               value={moedaBeneficio}
               onChange={(e: any) => {
                 setMoedaBeneficio(e.target.value);
@@ -754,14 +756,14 @@ function BeneficioPotencial(props: {
                   {moeda}
                 </MenuItem>
               ))}
-            </Select>
+            </SelectEdited>
           </BoxInputs>
         </BoxInputsAcima>
 
         <BoxInputsAbaixo>
           <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
 
-          <TextField
+          <TextFieldEdited
             id={`descricaoPotencial${props.index}`}
             onChange={(e: any) => {
               if (atualizarObjetos != null) {
@@ -780,9 +782,8 @@ function BeneficioPotencial(props: {
               }
             }}
             multiline
-            maxRows={Infinity}
-            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000025" }}>
-          </TextField>
+            maxRows={Infinity}>
+          </TextFieldEdited>
         </BoxInputsAbaixo>
       </BoxContainerDivisorio>
     </BoxContainerGeralBeneficio>
@@ -798,7 +799,7 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
       <BoxDescricaoRequeistosControle>
         <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
 
-        <TextField
+        <TextFieldEdited
           id={`beneficiosQualitativos${props.index}`}
           onChange={(e: any) => {
             if (atualizarObjetos != null) {
@@ -817,9 +818,8 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
             }
           }}
           multiline
-          maxRows={Infinity}
-          sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000025" }}>
-        </TextField>
+          maxRows={Infinity}>
+        </TextFieldEdited>
       </BoxDescricaoRequeistosControle>
     </BoxContainerGeralBeneficio>
   );

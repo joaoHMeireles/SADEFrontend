@@ -94,7 +94,7 @@ export const CriarDemanda = (
     </BoxBackground>
 );
 
-export const AvaliarDemandaA = (
+export const AvaliarDemanda3Opcoes = (
     <BoxBackground>
         {usuarioLogado == "AnalistaTI" || usuarioLogado == "GerenteTI" ?
             <>
@@ -129,7 +129,7 @@ export const AvaliarDemandaA = (
     </BoxBackground>
 );
 
-export const AvaliarDemandaGN = (
+export const AvaliarDemanda2Opcoes = (
     <BoxBackground>
         {usuarioLogado == "GerenteNegocio" || usuarioLogado == "GerenteTI" ?
             <>
@@ -406,3 +406,15 @@ export const AvaliarWorkflow = (
             </>}
     </BoxBackground>
 );
+
+// Criar Demanda                         --> Todos
+// Avaliar Demanda                       --> Analista de TI ou Gerente de TI
+// Avaliar Demanda                       --> Gerente de Negócio ou Gerente de TI
+// Adicionar informações na Demanda      --> Analista de TI ou Gerente de TI
+// Criar Proposta                        --> Analista de TI ou Gerente de TI
+// Criar Pauta                           --> Analista de TI ou Gerente de TI
+// Informar o parecer da Comissão        --> Analista de TI ou Gerente de TI
+// Criar ATA                             --> Analista de TI ou Gerente de TI
+// Informar o parecer da Diretoria Geral --> Analista de TI ou Gerente de TI
+// Iniciar o Workflow de Aprovação       --> Analista de TI ou Gerente de TI
+// Avaliar o Workflow de Aprovação       --> Analista de TI ou Gerente de TI

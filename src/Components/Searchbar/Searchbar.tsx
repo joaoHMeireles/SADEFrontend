@@ -86,7 +86,7 @@ export default function Searchbar(props: {
 
     return (
         <BoxContainerInput>
-            <SearchTextField sx={{ border: "none" }} value={valorInput} onChange={atualizarInput} id='input-pesquisa' InputProps={{
+            <SearchTextField value={valorInput} onChange={atualizarInput} id='input-pesquisa' InputProps={{
                 disableUnderline: true,
                 startAdornment: startAdornment,
                 endAdornment: endAdornment,

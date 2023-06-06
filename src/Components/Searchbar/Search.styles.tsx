@@ -14,5 +14,9 @@ export const BoxContainerInput = styled(Box)({
 })
 
 export const SearchTextField = styled(TextField)({
+    backgroundColor: "#eee",
+    borderRadius: "10px",
+    boxShadow: "5px 5px 10px 0 #00000025",
+    "& fieldset": { border: "none" },
     width: "50vw"
 })

@@ -73,7 +73,12 @@ export default function EscopoProposta(props: {
       <BoxContainerGeral>
         <BoxPadrao>
           <TypographyStyled onClick={lerTexto}>Escopo: </TypographyStyled>
-          <Editor
+
+          <Editor style={{
+            backgroundColor: "#eee",
+            borderRadius: "10px",
+            boxShadow: "5px 5px 10px 0 #00000025",
+          }}
             tools={[
               [Bold, Italic, Underline],
               [Undo, Redo],
@@ -83,64 +88,67 @@ export default function EscopoProposta(props: {
             ]}
             contentStyle={{
               height: 320,
-              width: "100%", 
-              boxShadow: "5px 5px 10px 0 #00000025",
-              borderRadius: "5px",
+              width: "100%",
               fontFamily: "'Roboto','Helvetica','Arial', sans-serif"
             }}
-
             onChange={(e: any) => {
               props.setEscopoProposta(e.target.value.textContent)
-            }}
-          />
+            }} />
         </BoxPadrao>
+
         <BoxPadrao>
           <TypographyStyled onClick={lerTexto}>Tabelas de Custo: </TypographyStyled>
+
           <TabelaCustoCriacao
             centroCusto={props.centroCusto}
             centroCustoEscolhidas={props.centroCustoEscolhidas}
-            setCentroCustoEscolhidas={props.setCentroCustoEscolhidas}
-          />
+            setCentroCustoEscolhidas={props.setCentroCustoEscolhidas} />
         </BoxPadrao>
+
         <BoxPaybackExecucao>
           <BoxPaybackExe>
             <TypographyStyled onClick={lerTexto}>Período de Execução Inicio: </TypographyStyled>
+
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 value={props.periodoExecucaoInicio}
                 onChange={(e: any) => {
                   props.setPeriodoExecucaoInicio(e.$d);
                 }}
-                renderInput={(params: any) => <TextField id='periodoExecucaoInicio' {...params} />}
-              />
+                renderInput={(params: any) => <TextField id='periodoExecucaoInicio' {...params} />} />
             </LocalizationProvider>
           </BoxPaybackExe>
+
           <BoxPaybackExe>
             <TypographyStyled onClick={lerTexto}>Período de execução Fim: </TypographyStyled>
+
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 value={props.periodoExecucaoFim}
                 onChange={(e: any) => {
                   props.setPeriodoExecucaoFim(e.$d);
                 }}
-                renderInput={(params: any) => <TextField id='periodoExecucaoFim' {...params} />}
-              />
+                renderInput={(params: any) => <TextField id='periodoExecucaoFim' {...params} />} />
             </LocalizationProvider>
           </BoxPaybackExe>
+
           <BoxPaybackExe>
             <TypographyStyled onClick={lerTexto}>Payback: </TypographyStyled>
+
             <TextField
               value={props.payback}
               onChange={(e: any) => {
                 props.setPayback(e.target.value)
               }}
-              sx={{ width: "66%", boxShadow: "5px 5px 10px 0 #00000025" }}
-            ></TextField>
+              sx={{ width: "66%", boxShadow: "5px 5px 10px 0 #00000025" }}>
+            </TextField>
           </BoxPaybackExe>
         </BoxPaybackExecucao>
+
         <BoxResponsavel>
           <BoxResponsaveis>
             <TypographyStyled onClick={lerTexto}>Nome dos responsáveis: </TypographyStyled>
+
             <Autocomplete
               id="nomeResponsavel"
               sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
@@ -156,9 +164,7 @@ export default function EscopoProposta(props: {
                     }
                   }
                 }
-
                 props.setUsuariosResponsaveis(usuariosSelecionados);
-
               }}
               renderOption={(props, nomeResponsavel, { selected }) => {
                 return (
@@ -175,10 +181,10 @@ export default function EscopoProposta(props: {
                 );
               }}
               options={usuarios.map((usuario: any) => usuario.nomeUsuario)}
-              renderInput={(params) => <TextField {...params} />}
-            />
+              renderInput={(params) => <TextField {...params} />} />
           </BoxResponsaveis>
         </BoxResponsavel>
+
         <BoxPadrao>
           <InputAnexos rascunho={false} proposta={false} arquivosProposta={props.arquivosProposta} setArquivosProposta={props.setArquivosProposta} />
         </BoxPadrao>

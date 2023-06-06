@@ -11,6 +11,7 @@ export const Container = styled(Box)({
 });
 
 export const FirstColumn = styled(Box)({
+    backgroundColor: "#eee",
     borderRadius: "1rem",
     boxShadow: "5px 5px 10px 0px #00000025",
     height: "75vh",
@@ -28,6 +29,7 @@ export const Lista = styled(List)({
 });
 
 export const SecondColumn = styled(Box)({
+    backgroundColor: "#eee",
     borderRadius: "1rem 0.9rem 0.9rem 1rem",
     boxShadow: "5px 5px 10px 0px #00000025",
     height: "75vh",
