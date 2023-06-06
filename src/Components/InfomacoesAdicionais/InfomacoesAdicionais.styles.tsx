@@ -2,7 +2,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";
 import styled from "@emotion/styled";
-import TextField from "@mui/material/Textfield"
+import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography";
 
 const styledAutocomplete = styled(Autocomplete);
