@@ -1,122 +1,137 @@
-import { useContext, useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
+import BeneficiosTeste from "../../Components/BeneficiosDemanda/BeneficiosTeste/BeneficiosTeste";
 import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import PanoramaFishEyeRoundedIcon from "@mui/icons-material/PanoramaFishEyeRounded";
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
 import {
-  BotaoPrimario,
-  BotaoSecundario,
-  BotaoTerciario,
-  BoxConteudo,
+    BotaoPrimario,
+    BotaoTerciario,
+    BoxConteudo,
+    BotaoSecundario,
 } from "../App.styles";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import {
-  BoxContainerBotoes,
-  BoxBotoesPriSec,
-  BoxBotaoTerciario,
-  ContainerGeral,
+    ContainerGeral,
+    BoxContainerBotoes,
+    BoxBotaoTerciario,
+    BoxBotoesPriSec,
 } from "./CriacaoDemanda.styles";
 import api from "../../api/api";
 import jsPDF from "jspdf";
-import { PDFExport } from "@progress/kendo-react-pdf"
+import {PDFExport, savePDF} from "@progress/kendo-react-pdf"
 
-import EsqueletoPDFVersaoDemanda from "../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda";
+import EsqueletoPDFVersaoDemanda
+    from "../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda";
 import React from "react";
-import { WebSocketContext } from "../../api/websocketservice";
-import { novaNotificacao } from "../Notificacoes/Notificacoes";
-import { useLocation } from "react-router-dom";
-import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
+import {getNomeComponente, useLocationChange} from "../../utils";
+import {WebSocketContext} from "../../api/websocketservice";
+import novaNotificacao from "../Notificacoes/Notificacoes";
+
+import pdf from "../../Assets/pdf.pdf";
+import {TipoComponenteProcesso} from "../../constants/enuns";
+import {useLocation} from "react-router-dom";
+import {TextReaderContext} from "../../Components/TextReaderContext/TextReaderContext";
 
 export default function CriacaoDemanda(props: {
-  rascunho: boolean;
-  editarDemanda?: boolean;
+    rascunho: boolean;
+    editarDemanda?: boolean;
 }) {
-  const { lerTexto } = useContext(TextReaderContext) as any
-  const idUsuario = localStorage.getItem("IDUSUARIO");
-  const [segundo, setSegundo] = useState(false);
-  const [valor, setValor] = useState(0);
-  const [centroCusto, setCentroCusto] = useState<any[]>([]);
-  const [data, setData] = useState<any>({ usuario: { idUsuario: idUsuario } })
-  const [files, setFiles] = useState<any>([]);
-  const [pdfDemanda, setPDFDemanda] = useState<any>();
+    const {lerTexto} = useContext(TextReaderContext) as any
+    const idUsuario = localStorage.getItem("IDUSUARIO");
+    const [segundo, setSegundo] = useState(false);
+    const [valor, setValor] = useState(0);
+    const [centroCusto, setCentroCusto] = useState<any[]>([]);
+    const [data, setData] = useState<any>({usuario: {idUsuario: idUsuario}})
+    const [files, setFiles] = useState<any>([]);
+    const [pdfDemanda, setPDFDemanda] = useState<any>();
 
-  const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
-  const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
-  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
+    const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
+    const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
+    const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
 
-  const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
-  const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
+    const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
+    const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
 
-  const location = useLocation();
+    const location = useLocation();
 
-  const pdfExportComponent = React.useRef<PDFExport>(null);
+    const pdfExportComponent = React.useRef<PDFExport>(null);
 
-  const webSocketService: any = useContext(WebSocketContext)
+    const webSocketService: any = useContext(WebSocketContext)
 
-  useEffect(() => {
-    let info: any = null
+    useEffect(() => {
+        let info: any = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
+            localStorage.getItem("DEMANDASELECIONADA") as string
+            :
+            localStorage.getItem("RASCUNHOESCOLHIDO") as string
+        );
 
-    console.log("Location:  " + location)
-
-    if (location.search) {
-      let idDemanda = location.search.replace("?", "");
-
-      api.get("/sod/demanda/" + idDemanda).then((response) => {
-        info = response.data
-      })
-    } else {
-      info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
-        localStorage.getItem("DEMANDASELECIONADA") as string
-        :
-        localStorage.getItem("RASCUNHOESCOLHIDO") as string
-      );
-    }
-
-    if (props.rascunho) {
-      for (let atributo in info) {
-        if ((info as any)[atributo]) {
-          const inputAtributo = document.getElementById(
-            getIdByAtributo(atributo)
-          ) as HTMLInputElement;
-
-          if (inputAtributo) {
-            switch (inputAtributo.id) {
-              case 'titulo': {
-                inputAtributo.value = info.tituloDemanda;
-                break;
-              }
-              case "objetivo": {
-                inputAtributo.value = info.objetivo;
-                break;
-              }
-              case "situacaoAtual": {
-                inputAtributo.value = info.situacaoAtual;
-                break;
-              }
-              case "centrosDeCusto": {
-                // inputAtributo.value = info.centroCustoDemanda.map( (centroCusto: any) => centroCusto.nomeCentroCusto)
-              }
-            }
-          }
+        if (props.editarDemanda) {
+            setData(info)
         }
-      }
-    } else if (props.editarDemanda) {
-      setData(info)
-    }
-  }, [valor]);
+    }, [valor]);
 
-  useEffect(() => {
-    if (pdfDemanda == null || pdfDemanda == undefined) {
-      return
-    }
+    useEffect(() => {
+        let info: any = null
 
-    criarDemanda()
-  }, [pdfDemanda])
+        if (location.search) {
+            let idDemanda = location.search.replace("?", "");
+
+            api.get("/sod/demanda/" + idDemanda).then((response) => {
+                info = response.data
+            })
+        } else {
+            info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
+                localStorage.getItem("DEMANDASELECIONADA") as string
+                :
+                localStorage.getItem("RASCUNHOESCOLHIDO") as string
+            );
+        }
+
+        if (props.rascunho) {
+            for (let atributo in info) {
+                if ((info as any)[atributo]) {
+                    const inputAtributo = document.getElementById(
+                        getIdByAtributo(atributo)
+                    ) as HTMLInputElement;
+
+                    if (inputAtributo) {
+                        switch (inputAtributo.id) {
+                            case 'titulo': {
+                                inputAtributo.value = info.tituloDemanda;
+                                break;
+                            }
+                            case "objetivo": {
+                                inputAtributo.value = info.objetivo;
+                                break;
+                            }
+                            case "situacaoAtual": {
+                                inputAtributo.value = info.situacaoAtual;
+                                break;
+                            }
+                            case "centrosDeCusto": {
+                                inputAtributo.value = info.centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto)
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        if (pdfDemanda == null || pdfDemanda == undefined) {
+            return
+        }
+
+        criarDemanda()
+    }, [pdfDemanda])
 
   function atualizarDados(data: any) {
     setData(data);

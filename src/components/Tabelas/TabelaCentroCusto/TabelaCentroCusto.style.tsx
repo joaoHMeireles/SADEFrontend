@@ -7,12 +7,16 @@ export const BoxTabelaCusto = styledBox({
     justifyContent: "space-evenly",
     marginBottom: "30px",
     minWidth: "40vw",
-    width: "auto"
+    // width: "auto"
+    width: "100%"
 })
 
 export const BoxContainerCentroCusto = styledBox({
-    boxShadow: "5px 5px 10px 0 #00000025",
-    width: "25%"
+    boxShadow: "5px 5px 10px 0 #00000050",
+    // width: "25%"
+    // height: "20vh",
+    width: "auto",
+    height: "100%"
 })
 
 export const BoxTitulosCentroCusto = styledBox({
@@ -34,7 +38,7 @@ export const BoxCentroCusto = styledBox({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
-    height: "75%",
+    height: "100%",
     justifyContent: "space-evenly",
     width: "100%"
 })

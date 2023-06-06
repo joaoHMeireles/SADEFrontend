@@ -96,7 +96,6 @@ export default function App() {
         pauta.tipo = TipoColecaoComponenteProcesso.Pauta
         listaPautas.push(pauta)
       }
-
       setListaPautas(listaPautas);
     }).catch((err) => {
       console.log(err);

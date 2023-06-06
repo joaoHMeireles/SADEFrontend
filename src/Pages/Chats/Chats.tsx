@@ -1,315 +1,315 @@
-import { useEffect, useState, useContext } from "react";
+import {useEffect, useState, useContext} from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Chat from "../../Components/Chat/Chat";
 import Toolbar from "../../Components/Toolbar/Toolbar";
 import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import {
-  BoxBarraPesquisa, ContainerChats, ContainerGeralChats, LadoEsquerdoChat, LadoEsquerdoGeralChats, LadoDiretoChat,
-  LadoDireitoGeralChats, BarraPesquisa
+    BoxBarraPesquisa, ContainerChats, ContainerGeralChats, LadoEsquerdoChat, LadoEsquerdoGeralChats, LadoDiretoChat,
+    LadoDireitoGeralChats, BarraPesquisa
 } from "./Chats.styles";
 import {
-  BoxGeralMensagensLadoDireito, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoDireito, BoxMensagensLadoEsquerdo,
-  BoxMensagemLadoDireito, BoxMensagemLadoEsquerdo, TypographyPessoa, TypographyMensagem
+    BoxGeralMensagensLadoDireito, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoDireito, BoxMensagensLadoEsquerdo,
+    BoxMensagemLadoDireito, BoxMensagemLadoEsquerdo, TypographyPessoa, TypographyMensagem
 } from "./Chats.styles";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semChats from "../../Assets/leaf.png"
-import { WebSocketContext } from "../../api/websocketservice.jsx";
+import {WebSocketContext} from "../../api/websocketservice.jsx";
 import api from "../../api/api";
-import { useLocationChange } from "../../utils";
+import {useLocationChange} from "../../utils";
 
 
 /**
  * Função que tem dois componentes jutamente a ela, sendo um para chats e outro para as mensagem de determinado chat
- * @param props 
+ * @param props
  * @returns Retorna a tela de chat
  */
 
 export default function Chats(props: { aberto: boolean }) {
-  localStorage.setItem("PAGINATUAL", "chat")
+    localStorage.setItem("PAGINATUAL", "chat")
 
-  const [listaChats, setListaChats] = useState<any[]>([])
-  const [componenteChats, setComponenteChats] = useState<any>()
-  const [chatEscolhido, setChatEscolhido] = useState<any>({ mensagens: [] })
-  const [elementoMensagens, setElementoMensagens] = useState<any>()
-  const webSocketService: any = useContext(WebSocketContext)
-  let requisitouChats = false
+    const [listaChats, setListaChats] = useState<any[]>([])
+    const [componenteChats, setComponenteChats] = useState<any>()
+    const [chatEscolhido, setChatEscolhido] = useState<any>({mensagens: []})
+    const [elementoMensagens, setElementoMensagens] = useState<any>()
+    const webSocketService: any = useContext(WebSocketContext)
+    let requisitouChats = false
 
-  useEffect(() => {
-    const idUsuario = localStorage.getItem("IDUSUARIO")
-    if (listaChats.length == 0 && !requisitouChats) {
-      api.get("/sade/usuario/" + idUsuario + "/chat").then((response) => {
-        setListaChats(response.data)
-      }).catch((err) => {
-        console.log(err);
-      })
-    }
-  }, []);
-
-  useEffect(() => {
-    atualizarTela()
-
-    localStorage.setItem(`NOVAMENSAGEMCHAT${chatEscolhido.idChat}NOTIFICADA`, "false")
-  }, [chatEscolhido])
-
-  useEffect(() => {
-    if (webSocketService.stompClient == null) {
-      return
-    }
-
-    for (let chat of listaChats) {
-      function acaoNovaMensagem(response: any) {
-        const infoMensagem = JSON.parse(response.body)
-        //infoMensagem[0] = objeto da mensagem
-        const mensagemRecebida = infoMensagem[0];
-
-        const indexChat = listaChats.findIndex((chatAcharIndex: any) => chatAcharIndex.idChat == infoMensagem[1])
-        const chatNovaMensagem = listaChats[indexChat]
-
-        chatNovaMensagem.mensagens.push(mensagemRecebida)
-        listaChats[indexChat] = chatNovaMensagem
-
-        // infoMensagem[1] = id do chat da mensagem
-        if (infoMensagem[1] == chat.idChat) {
-          console.log(chatNovaMensagem);
-
-          setChatEscolhido(chatNovaMensagem)
-          atualizarMensagensNovaMensagem()
+    useEffect(() => {
+        const idUsuario = localStorage.getItem("IDUSUARIO")
+        if (listaChats.length == 0 && !requisitouChats) {
+            api.get("/sade/usuario/" + idUsuario + "/chat").then((response) => {
+                setListaChats(response.data)
+            }).catch((err) => {
+                console.log(err);
+            })
         }
+    }, []);
 
-        atualizarComponentes()
+    useEffect(() => {
+        atualizarTela()
 
+        localStorage.setItem(`NOVAMENSAGEMCHAT${chatEscolhido.idChat}NOTIFICADA`, "false")
+    }, [chatEscolhido])
 
-        if(localStorage.getItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`) == "false" && localStorage.getItem("PAGINATUAL") != "chat"){
-          //api.sdfjdsjf.then(() => {
-          // localstorage.setItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`, "true") 
-          // })
-        }
-      }
-
-      function atualizarMensagensNovaMensagem() {
-        if (chat != null) {
-          if (chat.mensagens != null) {
-            if (chat.mensagens.length == 0) {
-              return
-            }
-          } else {
+    useEffect(() => {
+        if (webSocketService.stompClient == null) {
             return
-          }
-        } else {
-          return
         }
 
-        const componenteMensagensNovo = chat.mensagens.map((mensagem: any) => {
-          const usuario = chat.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
+        for (let chat of listaChats) {
+            function acaoNovaMensagem(response: any) {
+                const infoMensagem = JSON.parse(response.body)
+                //infoMensagem[0] = objeto da mensagem
+                const mensagemRecebida = infoMensagem[0];
 
-          return (
-            <Mensagens mensagem={mensagem.mensagem} usuario={usuario} />
-          )
+                const indexChat = listaChats.findIndex((chatAcharIndex: any) => chatAcharIndex.idChat == infoMensagem[1])
+                const chatNovaMensagem = listaChats[indexChat]
+
+                chatNovaMensagem.mensagens.push(mensagemRecebida)
+                listaChats[indexChat] = chatNovaMensagem
+
+                // infoMensagem[1] = id do chat da mensagem
+                if (infoMensagem[1] == chat.idChat) {
+                    // console.log(chatNovaMensagem);
+
+                    setChatEscolhido(chatNovaMensagem)
+                    atualizarMensagensNovaMensagem()
+                }
+
+                atualizarComponentes()
+
+                // console.log("jfsdfnhsdlsdjknfsjkdfnfsdffnsdkfjsdfjksd")
+
+                if (localStorage.getItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`) == "false" && localStorage.getItem("PAGINATUAL") != "chat") {
+                    console.log("entrouhsbdjsahjsabdsahabdkabd")
+                    api.post("/sade/notificacao/chat/" + chat.idChat, chat).then((res) => {
+                        console.log(res)
+                        localStorage.setItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`, "true")
+                    })
+                }
+            }
+
+            function atualizarMensagensNovaMensagem() {
+                if (chat != null) {
+                    if (chat.mensagens != null) {
+                        if (chat.mensagens.length == 0) {
+                            return
+                        }
+                    } else {
+                        return
+                    }
+                } else {
+                    return
+                }
+
+                const componenteMensagensNovo = chat.mensagens.map((mensagem: any) => {
+                    const usuario = chat.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
+
+                    return (
+                        <Mensagens mensagem={mensagem.mensagem} usuario={usuario}/>
+                    )
+                })
+
+                setElementoMensagens(componenteMensagensNovo)
+            }
+
+            webSocketService.inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagem)
+        }
+
+        atualizarTela()
+    }, [webSocketService.stompClient])
+
+    function verChat(e: any) {
+        const chatAtual = listaChats.find(chat => chat.idChat == parseInt(e.target.id))
+        setChatEscolhido(chatAtual)
+    }
+
+    function atualizarTela() {
+        atualizarComponentes()
+        atualizarMensagens()
+    }
+
+    function atualizarComponentes() {
+        const componenteChatsNovo = listaChats.map((chat) => {
+            if (chat.usuariosChat) {
+                let ultimaMensagem: any = null
+
+                if (chat.mensagens.length > 0) {
+                    ultimaMensagem = chat.mensagens[chat.mensagens.length - 1]
+                }
+
+                const usuario = chat.usuariosChat.find((usuario: any) => {
+                    if (ultimaMensagem) {
+                        if (usuario.idUsuario == ultimaMensagem.usuario.idUsuario) {
+                            return usuario;
+                        }
+                    }
+                })
+
+                return (
+                    <Chat
+                        id={chat.idChat}
+                        titulo={chat.demanda.tituloDemanda}
+                        pessoa={(usuario?.nomeUsuario != undefined ? usuario.nomeUsuario : "")}
+                        mensagem={ultimaMensagem ? ultimaMensagem.mensagem : ""} verChat={verChat}/>
+                )
+            }
+        })
+
+        setComponenteChats(componenteChatsNovo)
+    }
+
+    function atualizarMensagens() {
+        if (chatEscolhido != null) {
+            if (chatEscolhido.mensagens != null) {
+                if (chatEscolhido.mensagens.length == 0) {
+                    return
+                }
+            } else {
+                return
+            }
+        } else {
+            return
+        }
+
+        const componenteMensagensNovo = chatEscolhido.mensagens.map((mensagem: any) => {
+            const usuario = chatEscolhido.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
+
+            return (
+                <Mensagens mensagem={mensagem.mensagem} usuario={usuario}/>
+            )
         })
 
         setElementoMensagens(componenteMensagensNovo)
-      }
-
-      webSocketService.inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagem)
     }
 
-    atualizarTela()
-  }, [webSocketService.stompClient])
-
-  useLocationChange(() => {
-    webSocketService.desconectar()
-  })
-
-  function verChat(e: any) {
-    const chatAtual = listaChats.find(chat => chat.idChat == parseInt(e.target.id))
-    setChatEscolhido(chatAtual)
-  }
-
-  function atualizarTela() {
-    atualizarComponentes()
-    atualizarMensagens()
-  }
-
-  function atualizarComponentes() {
-    const componenteChatsNovo = listaChats.map((chat) => {
-      if (chat.usuariosChat) {
-        let ultimaMensagem: any = null
-
-        if (chat.mensagens.length > 0) {
-          ultimaMensagem = chat.mensagens[chat.mensagens.length - 1]
-        }
-
-        const usuario = chat.usuariosChat.find((usuario: any) => {
-          if (ultimaMensagem) {
-            if (usuario.idUsuario == ultimaMensagem.usuario.idUsuario) {
-              return usuario;
-            }
-          }
-        })
-
-        return (
-          <Chat
-            id={chat.idChat}
-            titulo={chat.demanda.tituloDemanda}
-            pessoa={(usuario?.nomeUsuario != undefined ? usuario.nomeUsuario : "")}
-            mensagem={ultimaMensagem ? ultimaMensagem.mensagem : ""} verChat={verChat} />
-        )
-      }
-    })
-
-    setComponenteChats(componenteChatsNovo)
-  }
-
-  function atualizarMensagens() {
-    if (chatEscolhido != null) {
-      if (chatEscolhido.mensagens != null) {
-        if (chatEscolhido.mensagens.length == 0) {
-          return
-        }
-      } else {
-        return
-      }
-    } else {
-      return
-    }
-
-    const componenteMensagensNovo = chatEscolhido.mensagens.map((mensagem: any) => {
-      const usuario = chatEscolhido.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
-
-      return (
-        <Mensagens mensagem={mensagem.mensagem} usuario={usuario} />
-      )
-    })
-
-    setElementoMensagens(componenteMensagensNovo)
-  }
-
-  return (
-    <>
-      <ContainerGeralChats>
-        <Breadcrumb />
-        <ContainerChats sx={{ width: (props.aberto ? "80vw" : "91vw") }}>
-          {listaChats.length != 0 ?
-            <>
-              <LadoEsquerdoGeralChats>
-                <LadoEsquerdoChat>
-                  {componenteChats}
-                </LadoEsquerdoChat>
-              </LadoEsquerdoGeralChats>
-              <LadoDireitoGeralChats>
-                <ConversaChat chatEscolhido={chatEscolhido} mensagens={elementoMensagens} enviar={webSocketService.enviar} />
-              </LadoDireitoGeralChats>
-            </>
-            :
-            <ResultadoVazio imagem={semChats} legenda={"Nenhum chat disponível"} />
-          }
-        </ContainerChats>
-      </ContainerGeralChats>
-    </>
-  );
+    return (
+        <>
+            <ContainerGeralChats>
+                <Breadcrumb/>
+                <ContainerChats sx={{width: (props.aberto ? "80vw" : "91vw")}}>
+                    {listaChats.length != 0 ?
+                        <>
+                            <LadoEsquerdoGeralChats>
+                                <LadoEsquerdoChat>
+                                    {componenteChats}
+                                </LadoEsquerdoChat>
+                            </LadoEsquerdoGeralChats>
+                            <LadoDireitoGeralChats>
+                                <ConversaChat chatEscolhido={chatEscolhido} mensagens={elementoMensagens}
+                                              enviar={webSocketService.enviar}/>
+                            </LadoDireitoGeralChats>
+                        </>
+                        :
+                        <ResultadoVazio imagem={semChats} legenda={"Nenhum chat disponível"}/>
+                    }
+                </ContainerChats>
+            </ContainerGeralChats>
+        </>
+    );
 }
 
 function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Function }) {
-  const [mensagem, setMensagem] = useState<any>({
-    chat: {
-      idChat: 1
-    },
-    usuario: {
-      idUsuario: localStorage.getItem("IDUSUARIO")
-    },
-    dataHoraMensagem: new Date(),
-    mensagem: null
-  })
+    const [mensagem, setMensagem] = useState<any>({
+        chat: {
+            idChat: 1
+        },
+        usuario: {
+            idUsuario: localStorage.getItem("IDUSUARIO")
+        },
+        dataHoraMensagem: new Date(),
+        mensagem: null
+    })
 
-  function setDefaultMensagem() {
-    let mensagemPadrao: any = {
-      chat: {
-        idChat: props.chatEscolhido.idChat
-      },
-      usuario: {
-        idUsuario: localStorage.getItem("IDUSUARIO")
-      },
-      dataHoraMensagem: new Date(),
-      mensagem: null
+    function setDefaultMensagem() {
+        let mensagemPadrao: any = {
+            chat: {
+                idChat: props.chatEscolhido.idChat
+            },
+            usuario: {
+                idUsuario: localStorage.getItem("IDUSUARIO")
+            },
+            dataHoraMensagem: new Date(),
+            mensagem: null
+        }
+
+        setMensagem(mensagemPadrao)
+
+        const elemento = (document.getElementById("input-mensagem") as HTMLInputElement);
+        elemento.value = ""
     }
 
-    setMensagem(mensagemPadrao)
+    function atualizarMensagem(e: any) {
+        setMensagem({
+            chat: {
+                idChat: props.chatEscolhido.idChat
+            },
+            usuario: {
+                idUsuario: localStorage.getItem("IDUSUARIO")
+            },
+            dataHoraMensagem: new Date(),
+            mensagem: e.target.value
+        })
+    }
 
-    const elemento = (document.getElementById("input-mensagem") as HTMLInputElement);
-    elemento.value = ""
-  }
+    function enviarMensagem(e: any) {
+        e.preventDefault()
 
-  function atualizarMensagem(e: any) {
-    setMensagem({
-      chat: {
-        idChat: props.chatEscolhido.idChat
-      },
-      usuario: {
-        idUsuario: localStorage.getItem("IDUSUARIO")
-      },
-      dataHoraMensagem: new Date(),
-      mensagem: e.target.value
-    })
-  }
+        props.enviar("/sade/demanda/" + props.chatEscolhido.idChat, mensagem)
 
-  function enviarMensagem(e: any) {
-    e.preventDefault()
+        setDefaultMensagem()
+    }
 
-    props.enviar("/sade/demanda/" + props.chatEscolhido.idChat, mensagem)
-
-    setDefaultMensagem()
-  }
-
-  return (
-    <>
-      <LadoDiretoChat>
-        {props.mensagens}
-        <Toolbar />
-      </LadoDiretoChat>
-      <BoxBarraPesquisa>
-        <AttachmentRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} />
-        <BarraPesquisa onChange={atualizarMensagem} id="input-mensagem" />
-        <SendRoundedIcon sx={{ color: "#595959", "&:hover": { cursor: "pointer" } }} onClick={enviarMensagem} />
-      </BoxBarraPesquisa>
-    </>
-  )
+    return (
+        <>
+            <LadoDiretoChat>
+                {props.mensagens}
+                <Toolbar/>
+            </LadoDiretoChat>
+            <BoxBarraPesquisa>
+                <AttachmentRoundedIcon sx={{color: "#595959", "&:hover": {cursor: "pointer"}}}/>
+                <BarraPesquisa onChange={atualizarMensagem} id="input-mensagem"/>
+                <SendRoundedIcon sx={{color: "#595959", "&:hover": {cursor: "pointer"}}} onClick={enviarMensagem}/>
+            </BoxBarraPesquisa>
+        </>
+    )
 }
 
 
 /**
- * 
- * @param props 
+ *
+ * @param props
  * @returns Retorna uma mensagem que será direcionada de acordo com quem é, e para qual lado a mensagem dever ir, sendo esquerdo ou direito
  */
 function Mensagens(props: { mensagem: string, usuario: any }) {
-  const idUsuarioLocalStorage = parseInt(localStorage.getItem("IDUSUARIO") as string);
+    const idUsuarioLocalStorage = parseInt(localStorage.getItem("IDUSUARIO") as string);
 
-  if (idUsuarioLocalStorage == props.usuario.idUsuario) {
-    return (
-      <BoxGeralMensagensLadoDireito>
-        <BoxMensagensLadoDireito>
-          <BoxMensagemLadoDireito>
-            <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
-            <TypographyMensagem variant="body2">
-              {props.mensagem}
-            </TypographyMensagem>
-          </BoxMensagemLadoDireito>
-        </BoxMensagensLadoDireito>
-      </BoxGeralMensagensLadoDireito>
-    )
-  } else {
-    return (
-      <BoxGeralMensagensLadoEsquerdo>
-        <BoxMensagensLadoEsquerdo>
-          <BoxMensagemLadoEsquerdo>
-            <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
-            <TypographyMensagem variant="body2">
-              {props.mensagem}
-            </TypographyMensagem>
-          </BoxMensagemLadoEsquerdo>
-        </BoxMensagensLadoEsquerdo>
-      </BoxGeralMensagensLadoEsquerdo>
-    )
-  }
+    if (idUsuarioLocalStorage == props.usuario.idUsuario) {
+        return (
+            <BoxGeralMensagensLadoDireito>
+                <BoxMensagensLadoDireito>
+                    <BoxMensagemLadoDireito>
+                        <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
+                        <TypographyMensagem variant="body2">
+                            {props.mensagem}
+                        </TypographyMensagem>
+                    </BoxMensagemLadoDireito>
+                </BoxMensagensLadoDireito>
+            </BoxGeralMensagensLadoDireito>
+        )
+    } else {
+        return (
+            <BoxGeralMensagensLadoEsquerdo>
+                <BoxMensagensLadoEsquerdo>
+                    <BoxMensagemLadoEsquerdo>
+                        <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
+                        <TypographyMensagem variant="body2">
+                            {props.mensagem}
+                        </TypographyMensagem>
+                    </BoxMensagemLadoEsquerdo>
+                </BoxMensagensLadoEsquerdo>
+            </BoxGeralMensagensLadoEsquerdo>
+        )
+    }
 }

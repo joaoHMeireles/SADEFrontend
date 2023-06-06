@@ -31,7 +31,6 @@ import {
     BoxBotoesModal
 } from './TelaProcesso.styles';
 import imagemSemNada from "../../Assets/emptyFolder.png"
-
 import ResultadoVazio from '../../Components/ResultadoVazio/ResultadoVazio';
 import TopicoAtributos from '../../Components/TopicoAtributos/TopicoAtributos';
 
