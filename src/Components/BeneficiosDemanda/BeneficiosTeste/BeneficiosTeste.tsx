@@ -37,9 +37,9 @@ function BeneficioRealPotencial(props: { tipoBeneficio: string, listaBeneficios:
 
     return (
         <>
-            {props.tipoBeneficio == "real" ?
+            {/* {props.tipoBeneficio == "real" ?
                 {}
-            }
+            } */}
             <Box>
                 <BoxContainerGeralBeneficio>
                     <BoxContainerDivisorio>
@@ -212,12 +212,12 @@ function gerarBeneficios(listaBeneficios: any[], setListaBeneficios: any, tipoBe
     switch (tipoBeneficio) {
         case "real": {
             for (let i = 0; i < quantidadeBeneficio; i++) {
-                listaBeneficios.push(<BeneficioRealPotencial tipoBeneficio={"real"} />)
+                // listaBeneficios.push(<BeneficioRealPotencial tipoBeneficio={"real"} />)
             }
         }
         case "potencial": {
             for (let i = 0; i < quantidadeBeneficio; i++) {
-                listaBeneficios.push(<BeneficioRealPotencial tipoBeneficio={"potencial"} />)
+                // listaBeneficios.push(<BeneficioRealPotencial tipoBeneficio={"potencial"} />)
             }
         }
         case "qualitativo": {
