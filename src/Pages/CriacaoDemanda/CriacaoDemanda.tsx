@@ -400,7 +400,9 @@ export default function CriacaoDemanda(props: {
 
         {valor == 1 && (
           <>
-            {props.rascunho || props.editarDemanda ?
+
+            <BeneficiosTeste />
+            {/* {props.rascunho || props.editarDemanda ?
               <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
                 numeroBeneficiosReais={numeroBeneficiosReais}
                 numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
@@ -424,7 +426,7 @@ export default function CriacaoDemanda(props: {
                 moedaPotencial={moedaPotencial}
                 setMoedaPotencial={setMoedaPotencial}
                 partDoisDemanda={partDoisDemanda} />
-            }
+            } */}
 
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
