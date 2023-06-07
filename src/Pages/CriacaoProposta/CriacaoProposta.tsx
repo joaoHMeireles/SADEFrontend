@@ -305,8 +305,7 @@ export default function CriacaoProposta(props: {
               proposta={true}
               propostaSelecionada={propostaSelecionada}
               setPropostaSelecionada={setPropostaSelecionada}
-              conteudoCarregou={conteudoCarregou}
-            />
+              conteudoCarregou={conteudoCarregou} />
           }
           <BotaoPrimario
             sx={{
@@ -329,7 +328,7 @@ export default function CriacaoProposta(props: {
         {valor == 1 && (
           <>
             <InformacaoGeral proposta={true} informacaoProcesso={informacaoProcesso} setInformacaoProcesso={setInformacaoProcesso} />
-            
+
             <BeneficiosDemanda rascunho={false} proposta={true}
               numeroBeneficiosReais={numeroBeneficiosReais}
               numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
@@ -339,8 +338,8 @@ export default function CriacaoProposta(props: {
               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
               valor={valor}
               informacaoProcesso={informacaoProcesso}
-              setInformacaoProcesso={setInformacaoProcesso}/>
-            
+              setInformacaoProcesso={setInformacaoProcesso} />
+
             <InfomacoesAdicionais
               valorTamanho={valorTamanho}
               setValorTamanho={setValorTamanho}
@@ -357,9 +356,10 @@ export default function CriacaoProposta(props: {
               valorLinkJira={valorLinkJira}
               setValorLinkJira={setValorLinkJira}
               informacaoProcesso={informacaoProcesso}
-              setInformacaoProcesso={setInformacaoProcesso}
-            />
+              setInformacaoProcesso={setInformacaoProcesso}/>
+
             <InputAnexos rascunho={false} proposta={true} arquivosProposta={arquivosProposta} setArquivosProposta={setArquivosProposta} />
+            
             <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}
@@ -369,7 +369,7 @@ export default function CriacaoProposta(props: {
                 }}>
                 Cancelar
               </BotaoTerciario>
-              
+
               <BotaoPrimario
                 sx={{ width: "15%", height: "3rem" }}
                 variant="contained"
@@ -395,8 +395,8 @@ export default function CriacaoProposta(props: {
               centroCustoEscolhidas={centroCustoEscolhidas}
               setCentroCustoEscolhidas={setCentroCustoEscolhidas}
               arquivosProposta={arquivosProposta}
-              setArquivosProposta={setArquivosProposta}/>
-            
+              setArquivosProposta={setArquivosProposta} />
+
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
@@ -409,7 +409,7 @@ export default function CriacaoProposta(props: {
                   Cancelar
                 </BotaoTerciario>
               </BoxBotaoTerciario>
-              
+
               <BoxBotoesPriSec>
                 <BotaoSecundario
                   onClick={(e: any) => {
@@ -426,7 +426,7 @@ export default function CriacaoProposta(props: {
                   startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
                   Voltar
                 </BotaoSecundario>
-                
+
                 <BotaoPrimario
                   sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="contained"
@@ -445,5 +445,5 @@ export default function CriacaoProposta(props: {
         )}
       </ContainerGeral>
     </BoxConteudo>
-  );
+  )
 }

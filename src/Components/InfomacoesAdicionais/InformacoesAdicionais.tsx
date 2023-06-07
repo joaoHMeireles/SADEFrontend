@@ -122,7 +122,7 @@ export default function InfomacoesAdicionais(props: {
         <>
             <BoxGeral>
                 <BoxTitulo>
-                    <Typography variant="h6" component={"h1"} sx={{ fontSize: "16px", color: "#FFF" }} onClick={lerTexto}>Informações Adicionais</Typography>
+                    <Typography variant="h6" component={"h1"} sx={{ color: "#FFF", fontSize: "16px", height: "2rem" }} onClick={lerTexto}>Informações Adicionais</Typography>
                 </BoxTitulo>
 
                 <BoxContainerInputs>

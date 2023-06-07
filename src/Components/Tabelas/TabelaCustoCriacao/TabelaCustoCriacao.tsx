@@ -61,28 +61,23 @@ export default function TabelaCustoCriacao(props: {
   return (
     <>
       {tabelas}
+
       <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         {quantidadeTabela > 2 &&
-          <Tooltip
-            title="Remover Tabela de Recursos">
+          <Tooltip title="Remover Tabela de Recursos">
             <RemoveRoundedIcon
               sx={{ color: "#595959", cursor: "pointer", marginRight: 3 }}
-              onClick={() => setQuantidadeTabela(quantidadeTabela - 1)}
-            />
-          </Tooltip>
-        }
+              onClick={() => setQuantidadeTabela(quantidadeTabela - 1)} />
+          </Tooltip>}
         {quantidadeTabela < 3 &&
-          <Tooltip
-            title="Adicionar Tabela de recursos">
+          <Tooltip title="Adicionar Tabela de recursos">
             <AddRoundedIcon
               sx={{ color: "#595959", cursor: "pointer" }}
-              onClick={() => setQuantidadeTabela(quantidadeTabela + 1)}
-            />
-          </Tooltip>
-        }
+              onClick={() => setQuantidadeTabela(quantidadeTabela + 1)} />
+          </Tooltip>}
       </Box>
     </>
-  );
+  )
 }
 
 function Tabela(props: {
@@ -103,28 +98,29 @@ function Tabela(props: {
   const [atualizouPorcentagem, setAtualizouPorcentagem] = useState(false)
   const [valorCentroCustoInput, setValorCentroCustoInput] = useState([])
   const [tabelaDeLicencas, setTabelaDeLicencas] = useState(false)
-  const [iconeInput, setIconeInput] = useState( <AccessTimeRoundedIcon sx={{ paddingRight: 1 }} />)
+  const [iconeInput, setIconeInput] = useState(<AccessTimeRoundedIcon sx={{ paddingRight: 1 }} />)
 
   useEffect(() => {
     const newLinhas = []
 
     for (let i = 0; i < quantidadeLinha; i++) {
-      newLinhas.push(<LinhaTabela
-        index={i}
-        indexTabela={props.tabela}
-        atualizarValor={atualizarValor}
-        iconeInput={iconeInput}
-      />)
+      newLinhas.push(
+        <LinhaTabela
+          index={i}
+          indexTabela={props.tabela}
+          atualizarValor={atualizarValor}
+          iconeInput={iconeInput} />
+      )
     }
 
     setLinhas(newLinhas)
   }, [quantidadeLinha, iconeInput])
 
   useEffect(() => {
-    if(tabelaDeLicencas){
-      setIconeInput(<FactCheckRoundedIcon sx={{ paddingRight: 1 }} /> )
+    if (tabelaDeLicencas) {
+      setIconeInput(<FactCheckRoundedIcon sx={{ paddingRight: 1 }} />)
     } else {
-      setIconeInput(<AccessTimeRoundedIcon sx={{ paddingRight: 1 }} /> )
+      setIconeInput(<AccessTimeRoundedIcon sx={{ paddingRight: 1 }} />)
     }
   }, [tabelaDeLicencas])
 
@@ -194,7 +190,7 @@ function Tabela(props: {
     setPorcentagem(porcentagem - 5)
   }
 
-  function mudarTipoTabela(){
+  function mudarTipoTabela() {
     setTabelaDeLicencas(!tabelaDeLicencas)
   }
 
@@ -208,26 +204,29 @@ function Tabela(props: {
                 <TableCellEstilzada align="center" id={`tituloTabela${props.tabela}`} onClick={lerTexto}>
                   {props.tituloTabela}
                 </TableCellEstilzada>
+
                 <TableCellEstilzada align="center" onClick={lerTexto}>
                   {tabelaDeLicencas ? "Licenças" : "Esforço (h)"}
                 </TableCellEstilzada>
+
                 <TableCellEstilzada align="center" onClick={lerTexto}>
-                {tabelaDeLicencas ? "Valor Unidade" : "Valor Hora"}
+                  {tabelaDeLicencas ? "Valor Unidade" : "Valor Hora"}
                 </TableCellEstilzada>
               </TableRowEstilizada>
             </TableHead>
+
             <TableBody>
               {linhas}
             </TableBody>
           </Table>
         </TableContainerEstilizado>
+
         <BoxIconsAddMinus>
           {quantidadeLinha > 1 ? (
             <Tooltip title="Remover linha">
               <RemoveRoundedIcon
                 sx={{ color: "#595959", cursor: "pointer", marginRight: 3 }}
-                onClick={() => setQuantidadeLinha(quantidadeLinha - 1)}
-              />
+                onClick={() => setQuantidadeLinha(quantidadeLinha - 1)} />
             </Tooltip>
           ) : (
             ""
@@ -235,17 +234,20 @@ function Tabela(props: {
           <Tooltip title="Adicionar linha">
             <AddRoundedIcon
               sx={{ color: "#595959", cursor: "pointer" }}
-              onClick={() => setQuantidadeLinha(quantidadeLinha + 1)}
-            />
+              onClick={() => setQuantidadeLinha(quantidadeLinha + 1)} />
           </Tooltip>
         </BoxIconsAddMinus>
       </BoxContainerTabela>
+
       <Box sx={{ width: "100%", display: "flex", justifyContent: "end", alignItems: "center", fontSize: "12px" }}>
         Tabela de licenças
-        <Checkbox id={`tabelaDeLicencas${props.tabela}`}  checked={tabelaDeLicencas} onClick={mudarTipoTabela}/>
+        
+        <Checkbox id={`tabelaDeLicencas${props.tabela}`} checked={tabelaDeLicencas} onClick={mudarTipoTabela} />
       </Box>
+
       <Box>
         <TypographyStyled onClick={lerTexto}>Centro de Custo para {props.tituloTabela}:</TypographyStyled>
+        
         <Autocomplete
           id={`centroCusto${props.tabela}`}
           sx={{ boxShadow: "5px 5px 10px 0 #00000025", marginBottom: 2 }}
@@ -262,8 +264,7 @@ function Tabela(props: {
                   icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                   checkedIcon={<CheckBoxIcon fontSize="small" />}
                   style={{ marginRight: 8 }}
-                  checked={selected}
-                />
+                  checked={selected} />
                 <span onClick={lerTexto}> {cc} </span>
               </li>
             );
@@ -278,8 +279,7 @@ function Tabela(props: {
             return elementosRenderizados
           }}
           options={props.centroCusto.map((centroCusto: any) => centroCusto.nomeCentroCusto)}
-          renderInput={(params) => <TextField {...params} />}
-        />
+          renderInput={(params) => <TextField {...params} />} />
       </Box>
     </>
   );
