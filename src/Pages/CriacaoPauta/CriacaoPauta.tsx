@@ -192,12 +192,10 @@ export default function CriacaoPauta(props: {
               pauta={true}
               propostas={propostas}
               setPropostas={setPropostas}
-              conteudoCarregou={conteudoCarregou}
-            />
+              conteudoCarregou={conteudoCarregou} />
           }
           <BotaoPrimario
             sx={{
-              height: "3rem",
               position: "fixed",
               left: "88%",
               top: "90%",
@@ -211,8 +209,7 @@ export default function CriacaoPauta(props: {
                 "PROPOSTASELECIONADA",
                 JSON.stringify(propostas)
               );
-            }}
-          >
+            }}>
             Proximo
           </BotaoPrimario>
         </>
@@ -246,8 +243,7 @@ export default function CriacaoPauta(props: {
 
                       const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
                       setComissaoEscolhida(novaComissaoEscolhida);
-                    }}
-                  >
+                    }}>
                     {comissoes.map((comissao) => {
                       return <MenuItem value={comissao.nomeForum} id={comissao.idForum} onClick={lerTexto}>{comissao.nomeForum}</MenuItem>;
                     })}
@@ -348,23 +344,17 @@ export default function CriacaoPauta(props: {
                 setValor(0)
               }}
               sx={{
-                width: "10%",
-                minWidth: "auto",
-                height: "3rem",
                 marginRight: 3,
               }}
               variant="outlined"
-              startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}
-            >
+              startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
               Voltar
             </BotaoSecundario>
 
             <BotaoPrimario
-              sx={{ width: "10%", minWidth: "auto", height: "3rem" }}
               variant="contained"
               endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
-              onClick={criarPauta}
-            >
+              onClick={criarPauta}>
               Enviar
             </BotaoPrimario>
           </BoxBotoes>

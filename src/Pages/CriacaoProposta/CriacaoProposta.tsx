@@ -309,7 +309,6 @@ export default function CriacaoProposta(props: {
           }
           <BotaoPrimario
             sx={{
-              height: "3rem",
               position: "fixed",
               left: "88%",
               top: "90%",
@@ -362,7 +361,6 @@ export default function CriacaoProposta(props: {
             
             <BoxContainerBotoes>
               <BotaoTerciario
-                sx={{ width: "15%", height: "3rem" }}
                 variant="outlined"
                 onClick={() => {
                   window.location.href = "/home";
@@ -371,7 +369,6 @@ export default function CriacaoProposta(props: {
               </BotaoTerciario>
 
               <BotaoPrimario
-                sx={{ width: "15%", height: "3rem" }}
                 variant="contained"
                 endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
                 onClick={(e: any) => {
@@ -400,7 +397,6 @@ export default function CriacaoProposta(props: {
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
-                  sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="outlined"
                   onClick={(e: any) => {
                     lerTexto(e)
@@ -417,9 +413,6 @@ export default function CriacaoProposta(props: {
                     setValor(1);
                   }}
                   sx={{
-                    width: "25%",
-                    minWidth: "auto",
-                    height: "3rem",
                     marginRight: 3,
                   }}
                   variant="outlined"
@@ -428,7 +421,6 @@ export default function CriacaoProposta(props: {
                 </BotaoSecundario>
 
                 <BotaoPrimario
-                  sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="contained"
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />

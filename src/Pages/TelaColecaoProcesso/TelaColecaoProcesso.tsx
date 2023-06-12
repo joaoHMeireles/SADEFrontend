@@ -476,8 +476,7 @@ function Header(props: {
                       localStorage.setItem("PAUTACRIARATA", JSON.stringify(informacaoColecaoProcesso))
                       location.href = "/createata"
                     }
-                  }}
-                >
+                  }}>
                   {acao}
                 </BotaoPrimario>
               </>
@@ -485,8 +484,7 @@ function Header(props: {
               <BoxBotoes>
                 <BotaoPrimarioHeader
                   variant="contained"
-                  onClick={aprovarProcesso}
-                >
+                  onClick={aprovarProcesso}>
                   {" "}
                   Aprovar
                 </BotaoPrimarioHeader>
@@ -494,8 +492,7 @@ function Header(props: {
                   variant="outlined"
                   onClick={() => {
                     props.fecharAvaliacao();
-                  }}
-                >
+                  }}>
                   {" "}
                   Cancelar
                 </BotaoSecundarioHeader>
@@ -646,7 +643,9 @@ function ContainerColecaoProcesso(props: {
               </>
             )}
           </Box>
-          <BotaoTerciario variant="outlined" onClick={abrirModal}>Ver anexos </BotaoTerciario>
+          <BotaoTerciario variant="outlined" onClick={abrirModal}>
+            Ver anexos
+            </BotaoTerciario>
         </GridFooter>
       )}
       <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { minWidth: "35vw" } }}>

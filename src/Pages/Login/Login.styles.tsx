@@ -55,14 +55,6 @@ export const BoxTexts = styledBox({
     width: "auto"
 });
 
-export const ButtonEdited = styledButton({
-    backgroundColor: "#00579d",
-    borderRadius: "10px",
-    boxShadow: "5px 5px 10px 0 #00000025",
-    fontSize: "16px",
-    padding: "1rem 2rem"
-});
-
 export const Column = styledBox({
     alignItems: "center",
     display: "flex",

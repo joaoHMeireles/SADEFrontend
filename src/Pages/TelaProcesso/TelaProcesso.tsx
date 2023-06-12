@@ -742,17 +742,21 @@ export function Header(props: {
                     <TypographyTituloModal variant='h5' >
                         Processo de workflow de aprovação
                     </TypographyTituloModal>
+
                     <IconButton onClick={fecharModal}>
                         <CloseIcon />
                     </IconButton>
                 </BoxTituloModal>
+
                 <Typography variant='subtitle2' sx={{ marginBottom: "30px" }}>
                     Escolha se essa proposta continuará o seu flow de aprovação ou se será interrompida
                 </Typography>
+
                 <BoxBotoesModal>
                     <BotaoSecundario onClick={() => { props.setConteudoModal(modalReprovar) }} variant='outlined'>
                         Reprovar
                     </BotaoSecundario>
+
                     <BotaoPrimario onClick={() => { props.setConteudoModal(modalAprovar) }} variant="contained" sx={{ marginLeft: "20px" }}>
                         Aprovar
                     </BotaoPrimario>
@@ -761,7 +765,7 @@ export function Header(props: {
         )
 
         abrirModal()
-    } //feito
+    }
 
     function criarChat() {
         const conteudoFeedback = (
@@ -1113,6 +1117,7 @@ function Footer(props: {
     return (
         <Grid container>
             <Grid item xs={8} />
+            
             <GridItemFooter item xs={3.5} >
                 {props.link ?
                     <a href={props.link} target='_blank' onClick={lerTexto}>Ver projeto Jira</a>
