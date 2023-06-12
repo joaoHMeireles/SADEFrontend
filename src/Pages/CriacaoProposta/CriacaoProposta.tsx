@@ -108,15 +108,25 @@ export default function CriacaoProposta(props: {
   }, [])
 
   useEffect(() => {
-    const demandaClicada = listaComponents.find(demanda => demanda.idDemanda == propostaSelecionada)
-    if (demandaClicada != null) {
-      setArquivosProposta(transformArquivosToFile(demandaClicada.arquivosDemanda))
+    if (propostaSelecionada != 0) {
+      const demandaClicada = listaComponents.find(demanda => demanda.idDemanda == propostaSelecionada)
+
+      console.log("Demanda clicada:");
+
+      console.log(demandaClicada);
+
+      setValorTamanho(demandaClicada.tamanho)
+      setValorBUSolicitante(demandaClicada.busolicitante)
+      setValorBUsBeneficadas(demandaClicada.busBeneficiadas)
+      setPrazoElaboracao(demandaClicada.prazoElaboracao)
+      setValorSessaoTI(demandaClicada.secaoTIResponsavel)
+      setValorCodigoPPM(demandaClicada.codigoPPM)
+      setValorLinkJira(demandaClicada.linkJira)
+
+      if (demandaClicada != null) {
+        setArquivosProposta(transformArquivosToFile(demandaClicada.arquivosDemanda))
+      }
     }
-
-    // console.log(propostaSelecionada);
-
-
-    // setArquivosProposta()
   }, [propostaSelecionada])
 
   useEffect(() => {
@@ -356,10 +366,10 @@ export default function CriacaoProposta(props: {
               valorLinkJira={valorLinkJira}
               setValorLinkJira={setValorLinkJira}
               informacaoProcesso={informacaoProcesso}
-              setInformacaoProcesso={setInformacaoProcesso}/>
+              setInformacaoProcesso={setInformacaoProcesso} />
 
             <InputAnexos rascunho={false} proposta={true} arquivosProposta={arquivosProposta} setArquivosProposta={setArquivosProposta} />
-            
+
             <BoxContainerBotoes>
               <BotaoTerciario
                 sx={{ width: "15%", height: "3rem" }}

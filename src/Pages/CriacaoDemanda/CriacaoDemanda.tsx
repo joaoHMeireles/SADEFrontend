@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
@@ -9,129 +9,132 @@ import Tab from "@mui/material/Tab";
 import PanoramaFishEyeRoundedIcon from "@mui/icons-material/PanoramaFishEyeRounded";
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
 import {
-    BotaoPrimario,
-    BotaoTerciario,
-    BoxConteudo,
-    BotaoSecundario,
+  BotaoPrimario,
+  BotaoTerciario,
+  BoxConteudo,
+  BotaoSecundario,
 } from "../App.styles";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import {
-    ContainerGeral,
-    BoxContainerBotoes,
-    BoxBotaoTerciario,
-    BoxBotoesPriSec,
+  ContainerGeral,
+  BoxContainerBotoes,
+  BoxBotaoTerciario,
+  BoxBotoesPriSec,
 } from "./CriacaoDemanda.styles";
 import api from "../../api/api";
 import jsPDF from "jspdf";
-import {PDFExport, savePDF} from "@progress/kendo-react-pdf"
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
 
 import EsqueletoPDFVersaoDemanda
-    from "../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda";
+  from "../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda";
 import React from "react";
-import {getNomeComponente, useLocationChange} from "../../utils";
-import {WebSocketContext} from "../../api/websocketservice";
+import { getNomeComponente, useLocationChange } from "../../utils";
+import { WebSocketContext } from "../../api/websocketservice";
 import novaNotificacao from "../Notificacoes/Notificacoes";
 
 import pdf from "../../Assets/pdf.pdf";
-import {TipoComponenteProcesso} from "../../constants/enuns";
-import {useLocation} from "react-router-dom";
-import {TextReaderContext} from "../../Components/TextReaderContext/TextReaderContext";
+import { TipoComponenteProcesso } from "../../constants/enuns";
+import { useLocation } from "react-router-dom";
+import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
+import { Alert, Snackbar } from "@mui/material";
 
 export default function CriacaoDemanda(props: {
-    rascunho: boolean;
-    editarDemanda?: boolean;
+  rascunho: boolean;
+  editarDemanda?: boolean;
 }) {
-    const {lerTexto} = useContext(TextReaderContext) as any
-    const idUsuario = localStorage.getItem("IDUSUARIO");
-    const [segundo, setSegundo] = useState(false);
-    const [valor, setValor] = useState(0);
-    const [centroCusto, setCentroCusto] = useState<any[]>([]);
-    const [data, setData] = useState<any>({usuario: {idUsuario: idUsuario}})
-    const [files, setFiles] = useState<any>([]);
-    const [pdfDemanda, setPDFDemanda] = useState<any>();
+  const { lerTexto } = useContext(TextReaderContext) as any
+  const idUsuario = localStorage.getItem("IDUSUARIO");
+  const [segundo, setSegundo] = useState(false);
+  const [informacoesPreenchidas, setInformacoesPreenchidas] = useState(false)
+  const [valor, setValor] = useState(0);
+  const [centroCusto, setCentroCusto] = useState<any[]>([]);
+  const [data, setData] = useState<any>({ usuario: { idUsuario: idUsuario } })
+  const [files, setFiles] = useState<any>([]);
+  const [pdfDemanda, setPDFDemanda] = useState<any>();
+  const [feedbackAberto, setFeedbackAberto] = useState(false);
 
-    const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
-    const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
-    const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
+  const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
+  const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
+  const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
 
-    const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
-    const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
+  const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
+  const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
 
-    const location = useLocation();
+  const location = useLocation();
 
-    const pdfExportComponent = React.useRef<PDFExport>(null);
+  const pdfExportComponent = React.useRef<PDFExport>(null);
 
-    const webSocketService: any = useContext(WebSocketContext)
+  const webSocketService: any = useContext(WebSocketContext)
 
-    useEffect(() => {
-        let info: any = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
-            localStorage.getItem("DEMANDASELECIONADA") as string
-            :
-            localStorage.getItem("RASCUNHOESCOLHIDO") as string
-        );
+  useEffect(() => {
+    let info: any = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
+      localStorage.getItem("DEMANDASELECIONADA") as string
+      :
+      localStorage.getItem("RASCUNHOESCOLHIDO") as string
+    );
 
-        if (props.editarDemanda) {
-            setData(info)
-        }
-    }, [valor]);
+    if (props.editarDemanda) {
+      setData(info)
+    }
+  }, [valor]);
 
-    useEffect(() => {
-        let info: any = null
+  useEffect(() => {
+    let info: any = null
 
-        if (location.search) {
-            let idDemanda = location.search.replace("?", "");
+    if (location.search) {
+      let idDemanda = location.search.replace("?", "");
 
-            api.get("/sod/demanda/" + idDemanda).then((response) => {
-                info = response.data
-            })
-        } else {
-            info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
-                localStorage.getItem("DEMANDASELECIONADA") as string
-                :
-                localStorage.getItem("RASCUNHOESCOLHIDO") as string
-            );
-        }
+      api.get("/sod/demanda/" + idDemanda).then((response) => {
+        info = response.data
+      })
+    } else {
+      info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
+        localStorage.getItem("DEMANDASELECIONADA") as string
+        :
+        localStorage.getItem("RASCUNHOESCOLHIDO") as string
+      );
+    }
 
-        if (props.rascunho) {
-            for (let atributo in info) {
-                if ((info as any)[atributo]) {
-                    const inputAtributo = document.getElementById(
-                        getIdByAtributo(atributo)
-                    ) as HTMLInputElement;
+    if (props.rascunho) {
+      for (let atributo in info) {
+        if ((info as any)[atributo]) {
+          const inputAtributo = document.getElementById(
+            getIdByAtributo(atributo)
+          ) as HTMLInputElement;
 
-                    if (inputAtributo) {
-                        switch (inputAtributo.id) {
-                            case 'titulo': {
-                                inputAtributo.value = info.tituloDemanda;
-                                break;
-                            }
-                            case "objetivo": {
-                                inputAtributo.value = info.objetivo;
-                                break;
-                            }
-                            case "situacaoAtual": {
-                                inputAtributo.value = info.situacaoAtual;
-                                break;
-                            }
-                            case "centrosDeCusto": {
-                                inputAtributo.value = info.centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto)
-                            }
-                        }
-
-                    }
-                }
+          if (inputAtributo) {
+            switch (inputAtributo.id) {
+              case 'titulo': {
+                inputAtributo.value = info.tituloDemanda;
+                break;
+              }
+              case "objetivo": {
+                inputAtributo.value = info.objetivo;
+                break;
+              }
+              case "situacaoAtual": {
+                inputAtributo.value = info.situacaoAtual;
+                break;
+              }
+              case "centrosDeCusto": {
+                inputAtributo.value = info.centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto)
+              }
             }
-        }
-    }, [])
 
-    useEffect(() => {
-        if (pdfDemanda == null || pdfDemanda == undefined) {
-            return
+          }
         }
+      }
+    }
+  }, [])
 
-        criarDemanda()
-    }, [pdfDemanda])
+  useEffect(() => {
+    if (pdfDemanda == null || pdfDemanda == undefined) {
+      return
+    }
+
+    criarDemanda()
+  }, [pdfDemanda])
 
   function atualizarDados(data: any) {
     setData(data);
@@ -170,6 +173,8 @@ export default function CriacaoDemanda(props: {
       "situacaoAtual": situacaoAtual.value,
       "centroCustoDemanda": centroCusto
     }
+
+    localStorage.setItem("DADOSDEMANDACRIACAO", JSON.stringify(data))
 
     atualizarDados(data);
   }
@@ -243,6 +248,9 @@ export default function CriacaoDemanda(props: {
         "idUsuario": data.usuario.idUsuario
       }
     }
+
+    
+    localStorage.setItem("DADOSDEMANDACRIACAO", JSON.stringify(data2))
 
     atualizarDados(data2)
   }
@@ -370,7 +378,7 @@ export default function CriacaoDemanda(props: {
 
         {valor == 0 && (
           <>
-            <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} partUmDemanda={partUmDemanda} rascunho={props.rascunho} editarDemanda={props.editarDemanda} />
+            <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} partUmDemanda={partUmDemanda} rascunho={props.rascunho} editarDemanda={props.editarDemanda} informacoesPreenchidas={informacoesPreenchidas} />
 
             <BoxContainerBotoes>
               <BotaoTerciario
@@ -389,8 +397,19 @@ export default function CriacaoDemanda(props: {
                 endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
                 onClick={(e) => {
                   lerTexto(e)
-                  setValor(1);
                   partUmDemanda();
+
+                  const titulo = document.getElementById("titulo") as HTMLInputElement;
+                  const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
+                  const objetivo = document.getElementById("objetivo") as HTMLInputElement;
+              
+              
+                  if(titulo.value == "" || situacaoAtual.value == "" || objetivo.value == "" || centroCusto.length == 0){
+                    setFeedbackAberto(true)
+                    setInformacoesPreenchidas(true)
+                  } else {
+                    setValor(1);
+                  }
                 }}>
                 Proximo
               </BotaoPrimario>
@@ -530,6 +549,16 @@ export default function CriacaoDemanda(props: {
             }
           </>
         )}
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          autoHideDuration={3000}
+          open={feedbackAberto}
+          onClose={() => { setFeedbackAberto(false) }}>
+
+          <Alert onClose={() => { setFeedbackAberto(false) }} severity="error" sx={{ width: '100%' }}>
+            Algum campo não foi preenchido!
+          </Alert>
+        </Snackbar>
       </ContainerGeral>
     </BoxConteudo>
   );

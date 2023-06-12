@@ -6,6 +6,7 @@ export default function RascunhoObserver() {
 
     useLocationChange((newLocation: Location, previousLocation: Location) => {
         if (previousLocation.pathname == "/createdemand") {
+            localStorage.removeItem("DADOSDEMANDACRIACAO")
             const objetoDemanda = JSON.parse(localStorage.getItem("OBJETODEMANDACRIADA") as string)
 
             if (objetoDemanda != null) {
