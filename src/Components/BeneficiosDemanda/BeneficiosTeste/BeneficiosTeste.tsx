@@ -37,9 +37,9 @@ function BeneficioRealPotencial(props: { tipoBeneficio: string, listaBeneficios:
 
     return (
         <>
-            {props.tipoBeneficio == "real" ?
+            {/* {props.tipoBeneficio == "real" ?
                 {}
-            }
+            } */}
             <Box>
                 <BoxContainerGeralBeneficio>
                     <BoxContainerDivisorio>
