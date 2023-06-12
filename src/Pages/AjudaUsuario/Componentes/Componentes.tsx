@@ -3,7 +3,7 @@ import { BoxBackground, Title, P, BoxImage, Space } from "./Componentes.style";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded"
 // Introdução
-import SADE from "../../../Assets/AjudaUsuario/Introducao/sade.png";
+import sadeDescricaoAzul from "../../../Assets/AjudaUsuario/Introducao/sadeDescricaoAzul.png";
 // Avaliar Demanda - Analista de TI ou Gerente de TI
 import aprovarDemandaA from "../../../Assets/AjudaUsuario/AvaliarDemandaA/aprovarDemanda.png";
 import avaliarDemandaA from "../../../Assets/AjudaUsuario/AvaliarDemandaA/avaliarDemanda.png";
@@ -50,7 +50,7 @@ export const Introducao = (
         <P>A Aplicação Web SADE, é uma plataforma que permite aos colaboradores WEG criar, consultar, classificar e avaliar demandas, além de outras atividades. Este manual tem como objetivo ajudar os usuários a navegar e utilizar o site de forma eficiente e eficaz.</P>
 
         <BoxImage>
-            <img id="imgSade" src={SADE} alt="Logo - SADE" />
+            <img id="imgSade" src={sadeDescricaoAzul} alt="Logo - SADE" />
         </BoxImage>
     </BoxBackground>
 );
