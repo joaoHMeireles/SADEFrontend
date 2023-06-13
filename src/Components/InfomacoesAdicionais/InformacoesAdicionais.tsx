@@ -226,92 +226,95 @@ export default function InfomacoesAdicionais(props: {
 
                 <Box sx={{ marginBottom: "1rem", marginTop: "1rem", width: "100%" }}>
                     <TypographyPadrao onClick={lerTexto}>BUs Beneficiadas:</TypographyPadrao>
+                    {props.informacaoProcesso != null &&
+                        <>
+                            {props.informacaoProcesso.busBeneficiadas ?
+                                <AutocompleteEdited
+                                    id="BU"
+                                    sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
+                                    multiple
+                                    disableCloseOnSelect
+                                    defaultValue={props.informacaoProcesso.busBeneficiadas.map((bus: any) => bus.nomeBU)}
+                                    onChange={(e, valor: any) => {
+                                        let busBeneficiada: Object[] = []
 
-                    {props.informacaoProcesso.busBeneficiadas ?
-                        <AutocompleteEdited
-                            id="BU"
-                            sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
-                            multiple
-                            disableCloseOnSelect
-                            defaultValue={props.informacaoProcesso.busBeneficiadas.map((bus: any) => bus.nomeBU)}
-                            onChange={(e, valor: any) => {
-                                let busBeneficiada: Object[] = []
-
-                                for (let buSelecionada of valor) {
-                                    for (let bu of objetoBus) {
-                                        if (bu.nomeBU == buSelecionada) {
-                                            busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                        for (let buSelecionada of valor) {
+                                            for (let bu of objetoBus) {
+                                                if (bu.nomeBU == buSelecionada) {
+                                                    busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                                }
+                                            }
                                         }
-                                    }
-                                }
 
-                                props.setValorBUsBeneficadas(busBeneficiada);
+                                        props.setValorBUsBeneficadas(busBeneficiada);
 
-                                const novaInfoDemanda = {
-                                    ...props.informacaoProcesso,
-                                    busBeneficiadas: busBeneficiada,
-                                };
-                                props.setInformacaoProcesso(novaInfoDemanda);
+                                        const novaInfoDemanda = {
+                                            ...props.informacaoProcesso,
+                                            busBeneficiadas: busBeneficiada,
+                                        };
+                                        props.setInformacaoProcesso(novaInfoDemanda);
 
-                            }}
-                            renderOption={(props, bu: any, { selected }) => {
-                                return (
-                                    <li {...props} id="listaBU">
-                                        <Checkbox
-                                            id="checkbox"
-                                            icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                                            checkedIcon={<CheckBoxIcon fontSize="small" />}
-                                            style={{ marginRight: 8 }}
-                                            checked={selected} />
-                                        <span onClick={lerTexto}>{bu}</span>
-                                    </li>
-                                );
-                            }}
-                            options={bus}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                        :
-                        <AutocompleteEdited
-                            id="BU"
-                            multiple
-                            disableCloseOnSelect
-                            onChange={(e, valor: any) => {
-                                let busBeneficiada: Object[] = []
+                                    }}
+                                    renderOption={(props, bu: any, { selected }) => {
+                                        return (
+                                            <li {...props} id="listaBU">
+                                                <Checkbox
+                                                    id="checkbox"
+                                                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                                                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                                                    style={{ marginRight: 8 }}
+                                                    checked={selected} />
+                                                <span onClick={lerTexto}>{bu}</span>
+                                            </li>
+                                        );
+                                    }}
+                                    options={bus}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                                :
+                                <AutocompleteEdited
+                                    id="BU"
+                                    multiple
+                                    disableCloseOnSelect
+                                    onChange={(e, valor: any) => {
+                                        let busBeneficiada: Object[] = []
 
-                                for (let buSelecionada of valor) {
-                                    for (let bu of objetoBus) {
-                                        if (bu.nomeBU == buSelecionada) {
-                                            busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                        for (let buSelecionada of valor) {
+                                            for (let bu of objetoBus) {
+                                                if (bu.nomeBU == buSelecionada) {
+                                                    busBeneficiada.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
+                                                }
+                                            }
                                         }
-                                    }
-                                }
 
-                                props.setValorBUsBeneficadas(busBeneficiada);
+                                        props.setValorBUsBeneficadas(busBeneficiada);
 
-                                const novaInfoDemanda = {
-                                    ...props.informacaoProcesso,
-                                    busBeneficiadas: busBeneficiada,
-                                };
-                                props.setInformacaoProcesso(novaInfoDemanda);
+                                        const novaInfoDemanda = {
+                                            ...props.informacaoProcesso,
+                                            busBeneficiadas: busBeneficiada,
+                                        };
+                                        props.setInformacaoProcesso(novaInfoDemanda);
 
-                            }}
-                            renderOption={(props, bu: any, { selected }) => {
-                                return (
-                                    <li {...props} id="listaBU">
-                                        <Checkbox
-                                            id="checkbox"
-                                            icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                                            checkedIcon={<CheckBoxIcon fontSize="small" />}
-                                            style={{ marginRight: 8 }}
-                                            checked={selected}
-                                        />
-                                        <span onClick={lerTexto}>{bu}</span>
-                                    </li>
-                                );
-                            }}
-                            options={bus}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
+                                    }}
+                                    renderOption={(props, bu: any, { selected }) => {
+                                        return (
+                                            <li {...props} id="listaBU">
+                                                <Checkbox
+                                                    id="checkbox"
+                                                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                                                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                                                    style={{ marginRight: 8 }}
+                                                    checked={selected}
+                                                />
+                                                <span onClick={lerTexto}>{bu}</span>
+                                            </li>
+                                        );
+                                    }}
+                                    options={bus}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            }
+                        </>
                     }
                 </Box>
 

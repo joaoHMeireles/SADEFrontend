@@ -173,7 +173,7 @@ export default function CriacaoDemanda(props: {
       "situacaoAtual": situacaoAtual.value,
       "centroCustoDemanda": centroCusto,
       "usuario": {
-        "idUsuario": data.usuario.idUsuario
+        "idUsuario": idUsuario
       }
     }
 
