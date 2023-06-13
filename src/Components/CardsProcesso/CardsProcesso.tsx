@@ -57,9 +57,17 @@ export default function CardsProcesso(props: {
     }
 
     return (
-      <Grid key={index} item xs={props.grid ? (!matches ? 4 : 6) : 12} sx={{ marginBottom: props.grid ? "2rem" : "1rem" }}>
-        <BoxContainer>{componente}</BoxContainer>
-      </Grid>
+      <>
+        {!props.grid &&
+          <Grid item xs={1} />
+        }
+        <Grid key={index} item xs={props.grid ? (!matches ? 4 : 6) : 10} sx={{ marginBottom: props.grid ? "2rem" : "1rem" }}>
+          <BoxContainer>{componente}</BoxContainer>
+        </Grid>
+        {!props.grid &&
+          <Grid item xs={1} />
+        }
+      </>
     );
   });
 
@@ -70,7 +78,7 @@ export default function CardsProcesso(props: {
       <Grid item xs={4} sx={{ marginBottom: props.grid ? "2rem" : "1rem" }}>
         <BoxContainer>
           <MainPaper>
-            <Skeleton variant="rectangular" sx={{borderRadius: "5px", height: "20vh"}}/>
+            <Skeleton variant="rectangular" sx={{ borderRadius: "5px", height: "20vh" }} />
           </MainPaper>
         </BoxContainer>
       </Grid>

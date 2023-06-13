@@ -7,14 +7,14 @@ const styledTypograpfy = styled(Typography);
 export const MainPaper = styled(Paper)({
   borderRadius: "5px",
   boxShadow: "5px 5px 10px 0 #00000025",
-  heigth: "90%",
+  height: "100%",
   width: "90%",
 });
 
 export const BoxGridCorProcesso = styledBox({
   borderRadius: "5px 0 0 5px",
   height: "100%",
-  width: "50%",
+  width: "25%",
 });
 
 export const GridComponenteProcesso = styledGrid({
@@ -22,7 +22,7 @@ export const GridComponenteProcesso = styledGrid({
   cursor: "pointer",
   display: "grid",
   height: "21vh",
-  padding: "5px",
+  padding: "15px 15px 15px 0",
 });
 
 export const GridBoxTituloRadio = styledBox({
@@ -34,9 +34,13 @@ export const GridBoxTituloRadio = styledBox({
 });
 
 export const GridTypography = styledTypograpfy({
+  alignItems: "center",
+  display: "flex",  
+  justifyContent: "start",
+  margin: "none",
   overflow: "hidden",
-  textOverflow: "ellipsis",
   whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
   "& span": {
     fontWeight: "500",
   },
@@ -46,7 +50,6 @@ export const GridLinkTypograpfy = styledTypograpfy({
   alignItems: "center",
   display: "flex",
   justifyContent: "end",
-  width: "25%",
   "& a": {
     color: "#2382BA",
     "&:hover": {
@@ -54,6 +57,27 @@ export const GridLinkTypograpfy = styledTypograpfy({
       fontWeight: "500",
     },
   },
+});
+
+export const UltimaLinhaGridBox = styledBox({
+  alignItems: "center", 
+  display: "flex",
+  justifyContent: "space-between", 
+  width: "95%" 
+})
+
+export const StatusBox = styledBox({
+  alignItems: "center", 
+  display: "flex",
+})
+
+export const StatusColorIconBox = styled(StatusBox)({
+  fontSize: "12px",
+  marginLeft: "5px" 
+})
+
+export const GridLinkColecaoTypograpfy = styled(GridLinkTypograpfy)({
+  width: "25%",
 });
 
 export const BoxListaCorProcesso = styledBox({
@@ -71,7 +95,8 @@ export const ListaComponenteProcesso = styledGrid({
 });
 
 export const ListaTypography = styled(GridTypography)({
-  width: "15vw",
+  display: "flex",
+  alignItems: "center",
   "& a": {
     color: "#2382BA",
 
@@ -82,13 +107,19 @@ export const ListaTypography = styled(GridTypography)({
   },
 });
 
+export const StatusListaBox = styledBox({
+  alignItems: "center", 
+  display: "flex",
+  fontSize: "12px",  
+  width: "25%"
+})
+
 export const UltimaListaTypography = styled(ListaTypography)({
   display: "flex",
   justifyContent: "end",
   paddingRight: "10px",
   "& a": {
     color: "#2382BA",
-
     "&:hover": {
       color: "#00579d",
       fontWeight: "500",
