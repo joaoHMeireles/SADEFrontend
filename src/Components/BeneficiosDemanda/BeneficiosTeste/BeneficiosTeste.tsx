@@ -30,7 +30,7 @@ export default function BeneneficiosTeste() {
     const { lerTexto } = useContext(TextReaderContext) as any
     const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
     const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
-    // const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(0);
+    const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
     const [listaBeneficiosReal, setListaBeneficiosReal] = useState<any[]>(
         [
             <BeneficioReal index={0} numeroBeneficiosReais={numeroBeneficiosReais} />
@@ -41,7 +41,7 @@ export default function BeneneficiosTeste() {
     ]);
     const [listaBeneficiosQualitativos, setListaBeneficiosQualitativos] = useState<any[]>(
         [
-            <BeneficioQualitativo index={0} />
+            <BeneficioQualitativo index={0} numeroBeneficiosQualitativos={numeroBeneficiosQualitativos} />
         ]
     );
 
@@ -132,7 +132,8 @@ export default function BeneneficiosTeste() {
                     <TypographyTitulos onClick={lerTexto}>Benefício Qualitativo</TypographyTitulos>
                 </BoxTitulos>
 
-                {listaBeneficiosQualitativos}
+                <BeneficioQualitativo index={listaBeneficiosQualitativos.length} numeroBeneficiosQualitativos={numeroBeneficiosQualitativos} />
+                {/* {listaBeneficiosQualitativos} */}
 
                 <BoxIcones>
                     {listaBeneficiosQualitativos.length > 0 &&
@@ -145,8 +146,9 @@ export default function BeneneficiosTeste() {
                                     color: "#595959",
                                 }}
                                 onClick={() => {
-                                    listaBeneficiosQualitativos.pop();
-                                    setListaBeneficiosQualitativos(listaBeneficiosQualitativos)
+                                    setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos - 1)
+                                    // listaBeneficiosQualitativos.pop();
+                                    // setListaBeneficiosQualitativos(listaBeneficiosQualitativos)
 
                                 }} />
                         )
@@ -154,8 +156,10 @@ export default function BeneneficiosTeste() {
                     <AddRoundedIcon
                         sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
                         onClick={() => {
-                            listaBeneficiosQualitativos.push(<BeneficioQualitativo index={listaBeneficiosQualitativos.length} />)
-                            setListaBeneficiosQualitativos(listaBeneficiosQualitativos)
+                            setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos + 1)
+
+                            // listaBeneficiosQualitativos.push(<BeneficioQualitativo index={listaBeneficiosQualitativos.length} numeroBeneficiosQualitativos={numeroBeneficiosQualitativos} />)
+                            // setListaBeneficiosQualitativos(listaBeneficiosQualitativos)
                         }} />
                 </BoxIcones>
 
@@ -524,38 +528,48 @@ function BeneficioPotencial(props: { index: number, numeroBeneficiosPotencias: n
     return <>{beneficiosPotenciais}</>
 }
 
-function BeneficioQualitativo(props: { index: number }) {
+function BeneficioQualitativo(props: { index: number, numeroBeneficiosQualitativos: number }) {
     const { lerTexto } = useContext(TextReaderContext) as any
 
-    return (
-        <>
-            <BoxContainerGeralBeneficio key={props.index}>
-                <BoxDescricaoRequisitosControle>
-                    <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
+    let beneficiosQualitativos: any[] = []
 
-                    <TextFieldEdited
-                        id={`beneficiosQualitativos${props.index}`}
-                        // onChange={(e: any) => {
-                        //     if (atualizarObjetos != null) {
-                        //         atualizarObjetos();
-                        //     } else {
-                        //         atualizarBeneficiosDemanda(
-                        //             props.informacaoProcesso.beneficiosDemanda,
-                        //             idBeneficioComponente,
-                        //             setIdBeneficioComponente,
-                        //             "descricao",
-                        //             e.target.value,
-                        //             props.informacaoProcesso,
-                        //             props.setInformacaoProcesso,
-                        //             "QUALITATIVO"
-                        //         );
-                        //     }
-                        // }}
-                        multiline
-                        maxRows={Infinity}>
-                    </TextFieldEdited>
-                </BoxDescricaoRequisitosControle>
-            </BoxContainerGeralBeneficio>
-        </>
-    )
+    const BeneficioQualitativo = () => {
+        return (
+            <>
+                <BoxContainerGeralBeneficio key={props.index}>
+                    <BoxDescricaoRequisitosControle>
+                        <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
+
+                        <TextFieldEdited
+                            id={`beneficiosQualitativos${props.index}`}
+                            // onChange={(e: any) => {
+                            //     if (atualizarObjetos != null) {
+                            //         atualizarObjetos();
+                            //     } else {
+                            //         atualizarBeneficiosDemanda(
+                            //             props.informacaoProcesso.beneficiosDemanda,
+                            //             idBeneficioComponente,
+                            //             setIdBeneficioComponente,
+                            //             "descricao",
+                            //             e.target.value,
+                            //             props.informacaoProcesso,
+                            //             props.setInformacaoProcesso,
+                            //             "QUALITATIVO"
+                            //         );
+                            //     }
+                            // }}
+                            multiline
+                            maxRows={Infinity}>
+                        </TextFieldEdited>
+                    </BoxDescricaoRequisitosControle>
+                </BoxContainerGeralBeneficio>
+            </>
+        )
+    }
+
+    for (let i = 0; i < props.numeroBeneficiosQualitativos; i++) {
+        beneficiosQualitativos.push(<BeneficioQualitativo />)
+    }
+
+    return <>{beneficiosQualitativos}</>
 }
