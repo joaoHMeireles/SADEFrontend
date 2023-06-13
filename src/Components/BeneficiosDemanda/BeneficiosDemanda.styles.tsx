@@ -39,7 +39,7 @@ export const BoxContainerGeralBeneficio = styledBox({
     width: "100%",
 });
 
-export const BoxDescricaoRequeistosControle = styledBox({
+export const BoxDescricaoRequisitosControle = styledBox({
     height: "50%",
     marginTop: 40,
     width: "100%",

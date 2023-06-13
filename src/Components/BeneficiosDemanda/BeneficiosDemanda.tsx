@@ -7,7 +7,7 @@ import {
   BoxContainerDivisorio,
   BoxContainerGeral,
   BoxContainerGeralBeneficio,
-  BoxDescricaoRequeistosControle,
+  BoxDescricaoRequisitosControle,
   BoxFrequencia,
   BoxIcones,
   BoxInputs,
@@ -228,7 +228,8 @@ export default function BeneficiosDemanda(props: {
           beneficiosPotenciasLista={beneficiosPotenciaisLista}
           moedaPotencial={props.moedaPotencial}
           setMoedaPotencial={props.setMoedaPotencial} />
-        <BoxIcones id="o-0-tá-aqui">
+
+        <BoxIcones>
           {props.numeroBeneficiosPotenciais != null &&
             <>
               {props.numeroBeneficiosPotenciais > 0 ? (
@@ -546,7 +547,7 @@ function BeneficioReal(props: {
               onChange={(e: any) => {
                 setMoedaBeneficio(e.target.value);
 
-                console.log("e ==> " , e.target.value)
+                console.log("e ==> ", e.target.value)
                 console.log("props.moeda ==> " + props.moedaReal)
 
                 props.moedaReal.push(e.target.value);
@@ -805,7 +806,7 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
 
   return (
     <BoxContainerGeralBeneficio key={props.index}>
-      <BoxDescricaoRequeistosControle>
+      <BoxDescricaoRequisitosControle>
         <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
 
         <TextFieldEdited
@@ -829,7 +830,7 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
           multiline
           maxRows={Infinity}>
         </TextFieldEdited>
-      </BoxDescricaoRequeistosControle>
+      </BoxDescricaoRequisitosControle>
     </BoxContainerGeralBeneficio>
   );
 }
