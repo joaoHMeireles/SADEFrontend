@@ -534,9 +534,9 @@ export default function CriacaoDemanda(props: {
               </BoxBotoesPriSec>
             </BoxContainerBotoes>
 
-            {data != null &&
+            {/* {data != null &&
               <EsqueletoPDFVersaoDemanda demanda={data} pdfExportComponent={pdfExportComponent} />
-            }
+            } */}
           </>
         )}
 

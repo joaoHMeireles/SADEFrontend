@@ -215,24 +215,24 @@ function BeneficioReal(props: { index: number, numeroBeneficiosReais: number }) 
                                     <FormControlEdited
                                         variant="outlined"
                                         sx={{ marginRight: "2rem" }}
-                                    // onChange={(e: any) => {
-                                    //     setValueInput(e.target.value);
+                                        // onChange={(e: any) => {
+                                        //     setValueInput(e.target.value);
 
-                                    //     if (atualizarObjetos != null) {
-                                    //         atualizarObjetos();
-                                    //     } else {
-                                    //         atualizarBeneficiosDemanda(
-                                    //             props.informacaoProcesso.beneficiosDemanda,
-                                    //             idBeneficioComponente,
-                                    //             setIdBeneficioComponente,
-                                    //             "valor",
-                                    //             e.target.value,
-                                    //             props.informacaoProcesso,
-                                    //             props.setInformacaoProcesso,
-                                    //             "REAL"
-                                    //         );
-                                    //     }
-                                    // }}
+                                        //     if (atualizarObjetos != null) {
+                                        //         atualizarObjetos();
+                                        //     } else {
+                                        //         atualizarBeneficiosDemanda(
+                                        //             props.informacaoProcesso.beneficiosDemanda,
+                                        //             idBeneficioComponente,
+                                        //             setIdBeneficioComponente,
+                                        //             "valor",
+                                        //             e.target.value,
+                                        //             props.informacaoProcesso,
+                                        //             props.setInformacaoProcesso,
+                                        //             "REAL"
+                                        //         );
+                                        //     }
+                                        // }}
                                     >
                                         <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
                                     </FormControlEdited>
