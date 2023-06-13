@@ -8,6 +8,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import CircleIcon from '@mui/icons-material/Circle';
 import {
   BoxColecaoComponente,
   BoxGridCorProcesso,
@@ -22,7 +23,7 @@ import {
   UltimaListaTypography,
 } from "./ComponenteProcesso.styles";
 import { GlobalStyles } from "@mui/styled-engine";
-import { getNomeStatus } from "../../utils";
+import { getCorStatus, getNomeStatus } from "../../utils";
 import api from "../../api/api";
 
 export default function ComponenteProcesso(props: {
@@ -56,7 +57,7 @@ export default function ComponenteProcesso(props: {
   }
 
   const processElement = props.grid ? (
-    <GridComponent 
+    <GridComponent
       componente={componente}
       corComponente={corComponente}
       tituloToolTip={tituloToolTip}
@@ -277,34 +278,34 @@ function GridComponent(props: ComponentProps) {
             <GridTypography variant="subtitle1">
               Score: {props.componente.score}
             </GridTypography>
-            <GridTypography variant="subtitle1">
-              Status: {getNomeStatus(props.componente.statusDemanda)}
-            </GridTypography>
-            <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
-              <BoxColecaoComponente>
-                Frequencia de uso: {props.componente.frequenciaUso}
-              </BoxColecaoComponente>
-              <GridLinkTypograpfy variant="body2">
-                {props.temDemandaDevolvida && props.componente.devolvida ?
-                  <Link to={"/editdemand"} onClick={props.setProcesso}>
-                    Editar
-                  </Link>
-                  :
-                  <>
-                    {!props.rascunho ? (
-                      <Link to={props.linkComponente} onClick={props.setProcesso}>
-                        Ver mais
-                      </Link>
-                    ) : (
-                      <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                        Continuar
-                      </Link>
-                    )
-                    }
-                  </>
-                }
-              </GridLinkTypograpfy>
-            </GridTypography>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box sx={{ fontSize: "12px", display: "flex", alignItems: "center", marginRight: "5px" }}>
+                <CircleIcon fontSize="inherit" sx={{ color: getCorStatus(props.componente.statusDemanda) }} />
+              </Box>
+              <GridTypography variant="subtitle1">
+                Status: {getNomeStatus(props.componente.statusDemanda)}
+              </GridTypography>
+            </Box>
+            <GridLinkTypograpfy variant="body2">
+              {props.temDemandaDevolvida && props.componente.devolvida ?
+                <Link to={"/editdemand"} onClick={props.setProcesso}>
+                  Editar
+                </Link>
+                :
+                <>
+                  {!props.rascunho ? (
+                    <Link to={props.linkComponente} onClick={props.setProcesso}>
+                      Ver mais
+                    </Link>
+                  ) : (
+                    <Link to={"/continuedemand"} onClick={props.setProcesso}>
+                      Continuar
+                    </Link>
+                  )
+                  }
+                </>
+              }
+            </GridLinkTypograpfy>
           </GridComponenteProcesso>
         </>
       ) : props.proposta ? (
@@ -333,34 +334,34 @@ function GridComponent(props: ComponentProps) {
                 {props.componente.tituloDemanda}
               </GridTypography>
               <Radio
-                checked={props.demandaSelecionada == props.componente.idDemanda}
+                checked={props.demandaSelecionada == props.componente.idDemanda || props.propostaSelecionada == props.componente.idDemanda}
               />
             </GridBoxTituloRadio>
             <GridTypography variant="subtitle1">
-              <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
+              Solicitante: {props.componente.usuario.nomeUsuario}
             </GridTypography>
             <GridTypography variant="subtitle1">
-              <span>Score:</span> {props.componente.score}
+              Score: {props.componente.score}
             </GridTypography>
-            <GridTypography variant="subtitle1">
-              <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
-            </GridTypography>
-            <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
-              <BoxColecaoComponente>
-                <span>Tamanho:</span> {props.componente.tamanho}
-              </BoxColecaoComponente>
-              <GridLinkTypograpfy variant="body2">
-                {!props.rascunho ? (
-                  <Link to={props.linkComponente} onClick={props.setProcesso}>
-                    Ver mais
-                  </Link>
-                ) : (
-                  <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                    Continuar
-                  </Link>
-                )}
-              </GridLinkTypograpfy>
-            </GridTypography>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box sx={{ fontSize: "12px", display: "flex", alignItems: "center", marginRight: "5px" }}>
+                <CircleIcon fontSize="inherit" sx={{ color: getCorStatus(props.componente.statusDemanda) }} />
+              </Box>
+              <GridTypography variant="subtitle1">
+                Status: {getNomeStatus(props.componente.statusDemanda)}
+              </GridTypography>
+            </Box>
+            <GridLinkTypograpfy variant="body2">
+              {!props.rascunho ? (
+                <Link to={props.linkComponente} onClick={props.setProcesso}>
+                  Ver mais
+                </Link>
+              ) : (
+                <Link to={"/continuedemand"} onClick={props.setProcesso}>
+                  Continuar
+                </Link>
+              )}
+            </GridLinkTypograpfy>
           </GridComponenteProcesso>
         </>
       ) : (
@@ -384,30 +385,31 @@ function GridComponent(props: ComponentProps) {
                 />
               </GridBoxTituloRadio>
               <GridTypography variant="subtitle1">
-                <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
+                Solicitante: {props.componente.usuario.nomeUsuario}
               </GridTypography>
               <GridTypography variant="subtitle1">
-                <span>Score:</span> {props.componente.score}
+                Score: {props.componente.score}
               </GridTypography>
-              <GridTypography variant="subtitle1">
-                <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
-              </GridTypography>
-              <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
-                <BoxColecaoComponente>
-                  <span>Tamanho:</span> {props.componente.tamanho}
-                </BoxColecaoComponente>
-                <GridLinkTypograpfy variant="body2">
-                  {!props.rascunho ? (
-                    <Link to={props.linkComponente} onClick={props.setProcesso}>
-                      Ver mais
-                    </Link>
-                  ) : (
-                    <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                      Continuar
-                    </Link>
-                  )}
-                </GridLinkTypograpfy>
-              </GridTypography>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box sx={{ fontSize: "12px", display: "flex", alignItems: "center", marginRight: "5px" }}>
+                  <CircleIcon fontSize="inherit" sx={{ color: getCorStatus(props.componente.statusDemanda) }} />
+                </Box>
+                <GridTypography variant="subtitle1">
+                  Status: {getNomeStatus(props.componente.statusDemanda)}
+                </GridTypography>
+              </Box>
+              <GridLinkTypograpfy variant="body2">
+                {!props.rascunho ? (
+                  <Link to={props.linkComponente} onClick={props.setProcesso}>
+                    Ver mais
+                  </Link>
+                ) : (
+                  <Link to={"/continuedemand"} onClick={props.setProcesso}>
+                    Continuar
+                  </Link>
+                )}
+              </GridLinkTypograpfy>
+
             </GridComponenteProcesso>
           </>
         )

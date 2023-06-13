@@ -14,7 +14,7 @@ export const MainPaper = styled(Paper)({
 export const BoxGridCorProcesso = styledBox({
   borderRadius: "5px 0 0 5px",
   height: "100%",
-  width: "50%",
+  width: "25%",
 });
 
 export const GridComponenteProcesso = styledGrid({
@@ -22,7 +22,7 @@ export const GridComponenteProcesso = styledGrid({
   cursor: "pointer",
   display: "grid",
   height: "21vh",
-  padding: "5px",
+  // padding: "5px",
 });
 
 export const GridBoxTituloRadio = styledBox({
@@ -34,8 +34,13 @@ export const GridBoxTituloRadio = styledBox({
 });
 
 export const GridTypography = styledTypograpfy({
+  alignItems: "center",
+  display: "flex",  
+  justifyContent: "start",
+  margin: "none",
   overflow: "hidden",
   textOverflow: "ellipsis",
+  // width: "80%",
   whiteSpace: "nowrap",
   "& span": {
     fontWeight: "500",
@@ -46,7 +51,7 @@ export const GridLinkTypograpfy = styledTypograpfy({
   alignItems: "center",
   display: "flex",
   justifyContent: "end",
-  width: "25%",
+  width: "95%",
   "& a": {
     color: "#2382BA",
     "&:hover": {
@@ -54,6 +59,10 @@ export const GridLinkTypograpfy = styledTypograpfy({
       fontWeight: "500",
     },
   },
+});
+
+export const GridLinkColecaoTypograpfy = styled(GridLinkTypograpfy)({
+  width: "25%",
 });
 
 export const BoxListaCorProcesso = styledBox({
