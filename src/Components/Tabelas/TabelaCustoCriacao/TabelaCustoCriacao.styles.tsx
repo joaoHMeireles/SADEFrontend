@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const BoxIconsAddMinus = styled(Box)({
@@ -6,4 +6,11 @@ export const BoxIconsAddMinus = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
   padding: 10,
+});
+
+export const TextFieldEdited = styled(TextField)({
+  backgroundColor: "#eee",
+  borderRadius: "10px",
+  boxShadow: "5px 5px 10px 0 #00000025",
+  "& fieldset": { border: "none" }
 });
