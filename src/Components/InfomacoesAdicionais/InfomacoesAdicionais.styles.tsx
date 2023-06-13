@@ -18,10 +18,6 @@ export const AutocompleteEdited = styledAutocomplete({
     "& fieldset": { border: "none" }
 });
 
-export const BoxContainerInputs = styledBox({
-    width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20
-});
-
 export const BoxGeral = styledBox({
     width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", marginTop: 40, marginBottom: 40
 });
@@ -31,15 +27,11 @@ export const BoxTitulo = styledBox({
 });
 
 export const BoxPadraoDireta = styledBox({
-    width: "33%", display: "flex", justifyContent: "center", alignItems: "flex-start", flexDirection: "column", marginTop: 16, marginBottom: 16
+    width: "33%", display: "flex", justifyContent: "center", alignItems: "flex-start", flexDirection: "column"
 });
 
 export const BoxPadraoEsquerda = styledBox({
-    width: "33%", display: "flex", justifyContent: "center", alignItems: "flex-end", flexDirection: "column", marginTop: 16, marginBottom: 16
-});
-
-export const BoxSessaoTIECodigoPPM = styledBox({
-    width: "100%", display: "flex", justifyContent: "start", alignItems: "center", marginTop: 40, marginBottom: 40
+    width: "33%", display: "flex", justifyContent: "center", alignItems: "flex-end", flexDirection: "column"
 });
 
 export const SelectEdited = styledSelect({

@@ -74,9 +74,11 @@ export default function Dropzone(props: {
       <BoxContainerUploadImagens {...getRootProps()}>
         <BoxTypography>
           <input id="anexos" {...getInputProps()} />
+
           <Typography variant="h6" sx={{ color: "#595959" }}>
             Escolher arquivo
           </Typography>
+
           <FileUploadRoundedIcon sx={{ color: "#595959" }} />
         </BoxTypography>
         {/* {props.rascunho &&
@@ -101,8 +103,7 @@ export default function Dropzone(props: {
                   icone={e["type"]}
                   nome={e["name"]}
                   files={props.files}
-                  setFiles={props.setFiles}
-                />
+                  setFiles={props.setFiles} />
               );
             })}
           </>
