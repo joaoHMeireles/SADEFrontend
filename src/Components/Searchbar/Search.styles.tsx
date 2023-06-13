@@ -9,7 +9,7 @@ export const BoxContainerInput = styled(Box)({
     display: "flex",
     height: "auto",
     justifyContent: "center",
-    marginBottom: "2rem",
+    margin: "2rem 0",
     width: "100%"
 })
 

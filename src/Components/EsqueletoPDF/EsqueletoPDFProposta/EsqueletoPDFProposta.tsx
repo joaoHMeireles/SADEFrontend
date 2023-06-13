@@ -391,9 +391,7 @@ export default function EsqueletoPDFProposta(props: { proposta: any }) {
         <Box id="BOX" sx={{ display: "none" }}>
             <BoxConteudo>
                 <div className="example-config">
-                    <button
-                        onClick={exportPDFWithComponent}
-                    >
+                    <button onClick={exportPDFWithComponent}>
                         Export to PDF with component
                     </button>
                 </div>

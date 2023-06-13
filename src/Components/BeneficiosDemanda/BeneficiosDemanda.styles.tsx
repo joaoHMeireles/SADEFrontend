@@ -85,6 +85,7 @@ export const BoxObrigacaoLegal = styledBox({
 export const BoxTitulos = styledBox({
     alignItems: "center",
     backgroundColor: "#00579D",
+    borderRadius: "5px",
     display: "flex",
     justifyContent: "center",
     marginTop: 24,

@@ -8,6 +8,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import CircleIcon from '@mui/icons-material/Circle';
 import {
   BoxColecaoComponente,
   BoxGridCorProcesso,
@@ -19,10 +20,14 @@ import {
   ListaComponenteProcesso,
   ListaTypography,
   MainPaper,
+  StatusBox,
+  StatusColorIconBox,
+  StatusListaBox,
+  UltimaLinhaGridBox,
   UltimaListaTypography,
 } from "./ComponenteProcesso.styles";
 import { GlobalStyles } from "@mui/styled-engine";
-import { getNomeStatus } from "../../utils";
+import { getCorStatus, getNomeStatus } from "../../utils";
 import api from "../../api/api";
 
 export default function ComponenteProcesso(props: {
@@ -56,7 +61,7 @@ export default function ComponenteProcesso(props: {
   }
 
   const processElement = props.grid ? (
-    <GridComponent 
+    <GridComponent
       componente={componente}
       corComponente={corComponente}
       tituloToolTip={tituloToolTip}
@@ -224,7 +229,7 @@ export default function ComponenteProcesso(props: {
         }}
       />
       <MainPaper key={componente.id} id={componente.idDemanda} className={`card-proposta${componente.id}`} >
-        <Grid container>{processElement}</Grid>
+        <Grid container >{processElement}</Grid>
       </MainPaper>
     </>
   );
@@ -249,12 +254,12 @@ function GridComponent(props: ComponentProps) {
                 <GridTypography variant="h6">
                   {props.componente.tituloDemanda}
                 </GridTypography>
-                <WarningRoundedIcon sx={{ marginRight: "1.6vw", color: "#00579d" }} />
+                <WarningRoundedIcon sx={{ color: "#00579d" }} />
               </GridBoxTituloRadio>
               :
               <>
                 {!props.rascunho ?
-                  <GridTypography variant="h6">
+                  <GridTypography variant="h6" sx={{ fontWeight: "500" }}>
                     {props.componente.tituloDemanda}
                   </GridTypography>
                   :
@@ -277,34 +282,38 @@ function GridComponent(props: ComponentProps) {
             <GridTypography variant="subtitle1">
               Score: {props.componente.score}
             </GridTypography>
-            <GridTypography variant="subtitle1">
-              Status: {getNomeStatus(props.componente.statusDemanda)}
-            </GridTypography>
-            <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
-              <BoxColecaoComponente>
-                Frequencia de uso: {props.componente.frequenciaUso}
-              </BoxColecaoComponente>
-              <GridLinkTypograpfy variant="body2">
-                {props.temDemandaDevolvida && props.componente.devolvida ?
-                  <Link to={"/editdemand"} onClick={props.setProcesso}>
-                    Editar
+            <UltimaLinhaGridBox>
+              {props.rascunho ?
+                <GridLinkTypograpfy variant="body2" sx={{ width: "95% !important" }}>
+                  <Link to={"/continuedemand"} onClick={props.setProcesso}>
+                    Continuar
                   </Link>
-                  :
-                  <>
-                    {!props.rascunho ? (
-                      <Link to={props.linkComponente} onClick={props.setProcesso}>
-                        Ver mais
-                      </Link>
-                    ) : (
-                      <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                        Continuar
-                      </Link>
-                    )
-                    }
-                  </>
-                }
-              </GridLinkTypograpfy>
-            </GridTypography>
+                </GridLinkTypograpfy>
+                :
+                <>
+                  <StatusBox >
+                    <GridTypography variant="subtitle1">
+                      Status: {getNomeStatus(props.componente.statusDemanda)}
+                    </GridTypography>
+                    <StatusColorIconBox>
+                      <CircleIcon fontSize="inherit" sx={{ color: getCorStatus(props.componente.statusDemanda) }} />
+                    </StatusColorIconBox>
+                  </StatusBox>
+
+                  {props.temDemandaDevolvida &&
+                    <>
+                      {props.componente.devolvida &&
+                        <GridLinkTypograpfy variant="body2">
+                          <Link to={"/editdemand"} onClick={props.setProcesso}>
+                            Editar
+                          </Link>
+                        </GridLinkTypograpfy>
+                      }
+                    </>
+                  }
+                </>
+              }
+            </UltimaLinhaGridBox>
           </GridComponenteProcesso>
         </>
       ) : props.proposta ? (
@@ -333,34 +342,30 @@ function GridComponent(props: ComponentProps) {
                 {props.componente.tituloDemanda}
               </GridTypography>
               <Radio
-                checked={props.demandaSelecionada == props.componente.idDemanda}
+                checked={props.demandaSelecionada == props.componente.idDemanda || props.propostaSelecionada == props.componente.idDemanda}
               />
             </GridBoxTituloRadio>
             <GridTypography variant="subtitle1">
-              <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
+              Solicitante: {props.componente.usuario.nomeUsuario}
             </GridTypography>
             <GridTypography variant="subtitle1">
-              <span>Score:</span> {props.componente.score}
+              Score: {props.componente.score}
             </GridTypography>
-            <GridTypography variant="subtitle1">
-              <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
-            </GridTypography>
-            <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
-              <BoxColecaoComponente>
-                <span>Tamanho:</span> {props.componente.tamanho}
-              </BoxColecaoComponente>
+            <UltimaLinhaGridBox>
+              <StatusBox >
+                <GridTypography variant="subtitle1">
+                  Status: {getNomeStatus(props.componente.statusDemanda)}
+                </GridTypography>
+                <StatusColorIconBox>
+                  <CircleIcon fontSize="inherit" sx={{ color: getCorStatus(props.componente.statusDemanda) }} />
+                </StatusColorIconBox>
+              </StatusBox>
               <GridLinkTypograpfy variant="body2">
-                {!props.rascunho ? (
-                  <Link to={props.linkComponente} onClick={props.setProcesso}>
-                    Ver mais
-                  </Link>
-                ) : (
-                  <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                    Continuar
-                  </Link>
-                )}
+                <Link to={props.linkComponente} onClick={props.setProcesso}>
+                  Ver mais
+                </Link>
               </GridLinkTypograpfy>
-            </GridTypography>
+            </UltimaLinhaGridBox>
           </GridComponenteProcesso>
         </>
       ) : (
@@ -384,30 +389,26 @@ function GridComponent(props: ComponentProps) {
                 />
               </GridBoxTituloRadio>
               <GridTypography variant="subtitle1">
-                <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
+                Solicitante: {props.componente.usuario.nomeUsuario}
               </GridTypography>
               <GridTypography variant="subtitle1">
-                <span>Score:</span> {props.componente.score}
+                Score: {props.componente.score}
               </GridTypography>
-              <GridTypography variant="subtitle1">
-                <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
-              </GridTypography>
-              <GridTypography variant="subtitle1" sx={{ display: "flex" }}>
-                <BoxColecaoComponente>
-                  <span>Tamanho:</span> {props.componente.tamanho}
-                </BoxColecaoComponente>
+              <UltimaLinhaGridBox>
+                <StatusBox >
+                  <GridTypography variant="subtitle1">
+                    Status: {getNomeStatus(props.componente.statusDemanda)}
+                  </GridTypography>
+                  <StatusColorIconBox>
+                    <CircleIcon fontSize="inherit" sx={{ color: getCorStatus(props.componente.statusDemanda) }} />
+                  </StatusColorIconBox>
+                </StatusBox>
                 <GridLinkTypograpfy variant="body2">
-                  {!props.rascunho ? (
-                    <Link to={props.linkComponente} onClick={props.setProcesso}>
-                      Ver mais
-                    </Link>
-                  ) : (
-                    <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                      Continuar
-                    </Link>
-                  )}
+                  <Link to={props.linkComponente} onClick={props.setProcesso}>
+                    Ver mais
+                  </Link>
                 </GridLinkTypograpfy>
-              </GridTypography>
+              </UltimaLinhaGridBox>
             </GridComponenteProcesso>
           </>
         )
@@ -429,37 +430,25 @@ function ListComponent(props: ComponentProps) {
             </Grid>
           </Tooltip>
           <ListaComponenteProcesso item xs={11.7} onClick={props.verProcesso}>
-            <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
+            <ListaTypography variant="subtitle1" sx={{ width: "35%" }}>
               {props.componente.tituloDemanda}
             </ListaTypography>
-            <ListaTypography variant="subtitle2">
-              <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
+            <ListaTypography variant="subtitle2" sx={{ width: "20%" }}>
+              Solicitante: {props.componente.usuario.nomeUsuario}
             </ListaTypography>
-            <ListaTypography variant="subtitle2" sx={{ maxWidth: "7.5vw" }}>
-              <span>Score:</span> {props.componente.score}
+            <ListaTypography variant="subtitle2" sx={{ width: "20%" }}>
+              Score: {props.componente.score}
             </ListaTypography>
-            <ListaTypography variant="subtitle2">
-              <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
-            </ListaTypography>
-            <UltimaListaTypography variant="body2" sx={{ maxWidth: "10vw" }}>
-              {props.temDemandaDevolvida && props.componente.devolvida ?
-                <Link to={"/editdemand"} onClick={props.setProcesso}>
-                  Editar
-                </Link>
-                :
+            <Box sx={{ fontSize: "12px", display: "flex", alignItems: "center" }}>
+              {!props.rascunho &&
                 <>
-                  {!props.rascunho ? (
-                    <Link to={props.linkComponente} onClick={props.setProcesso}>
-                      Ver mais
-                    </Link>
-                  ) : (
-                    <Link to={"/continuedemand"} onClick={props.setProcesso}>
-                      Continuar
-                    </Link>
-                  )}
+                  <ListaTypography variant="subtitle2">
+                    Status: {getNomeStatus(props.componente.statusDemanda)}
+                  </ListaTypography>
+                  <CircleIcon fontSize="inherit" sx={{ color: getCorStatus(props.componente.statusDemanda), marginLeft: "5px" }} />
                 </>
               }
-            </UltimaListaTypography>
+            </Box>
           </ListaComponenteProcesso>
         </>
       ) : props.proposta ? (
@@ -485,18 +474,21 @@ function ListComponent(props: ComponentProps) {
               }
             }}
           >
-            <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
-              {props.componente.id} - {props.componente.tituloDemanda}
+            <ListaTypography variant="subtitle1" sx={{ width: "35%" }}>
+              {props.componente.tituloDemanda}
             </ListaTypography>
-            <ListaTypography variant="subtitle2">
-              <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
+            <ListaTypography variant="subtitle2" sx={{ width: "15%" }}>
+              Solicitante: {props.componente.usuario.nomeUsuario}
             </ListaTypography>
-            <ListaTypography variant="subtitle2" sx={{ maxWidth: "7.5vw" }}>
-              <span>Score:</span> {props.componente.score}
+            <ListaTypography variant="subtitle2" sx={{ width: "15%" }}>
+              Score: {props.componente.score}
             </ListaTypography>
-            <ListaTypography variant="subtitle2">
-              <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
-            </ListaTypography>
+            <StatusListaBox >
+              <ListaTypography variant="subtitle2">
+                Status: {getNomeStatus(props.componente.statusDemanda)}
+              </ListaTypography>
+              <CircleIcon fontSize="inherit" sx={{ color: getCorStatus(props.componente.statusDemanda), marginLeft: "5px" }} />
+            </StatusListaBox>
             <ListaTypography variant="subtitle2">
               {!props.rascunho ? (
                 <Link to={props.linkComponente} onClick={props.setProcesso}>
@@ -527,18 +519,21 @@ function ListComponent(props: ComponentProps) {
               </Grid>
             </Tooltip>
             <ListaComponenteProcesso item xs={11.7} onClick={props.mudarIsChecked}>
-              <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
-                {props.componente.id} - {props.componente.tituloDemanda}
+              <ListaTypography variant="subtitle1" sx={{ width: "35%" }}>
+                {props.componente.tituloDemanda}
               </ListaTypography>
-              <ListaTypography variant="subtitle2">
-                <span>Solicitante:</span> {props.componente.usuario.nomeUsuario}
+              <ListaTypography variant="subtitle2" sx={{ width: "15%" }}>
+                Solicitante: {props.componente.usuario.nomeUsuario}
               </ListaTypography>
-              <ListaTypography variant="subtitle2" sx={{ maxWidth: "7.5vw" }}>
-                <span>Score:</span> {props.componente.score}
+              <ListaTypography variant="subtitle2" sx={{ width: "15%" }}>
+                Score: {props.componente.score}
               </ListaTypography>
-              <ListaTypography variant="subtitle2">
-                <span>Status:</span> {getNomeStatus(props.componente.statusDemanda)}
-              </ListaTypography>
+              <StatusListaBox >
+                <ListaTypography variant="subtitle2">
+                  Status: {getNomeStatus(props.componente.statusDemanda)}
+                </ListaTypography>
+                <CircleIcon fontSize="inherit" sx={{ color: getCorStatus(props.componente.statusDemanda), marginLeft: "5px" }} />
+              </StatusListaBox>
               <ListaTypography variant="subtitle2">
                 {!props.rascunho ? (
                   <Link to={props.linkComponente} onClick={props.setProcesso}>
