@@ -37,7 +37,7 @@ export function TextReaderComponent() {
     const { leituraDeSiteAtiva, setLeituraDeSiteAtiva } = useContext(TextReaderContext) as any
 
     return (
-        <Box sx={{ width: "50px", height: "50px", position: "fixed", right: 0, top: "22vh", zIndex: 3000 }}>
+        <Box sx={{ width: "50px", height: "50px", position: "fixed", right: "-11px", top: "32vh", zIndex: 3000 }}>
             <IconButton onClick={() => { setLeituraDeSiteAtiva(!leituraDeSiteAtiva) }}>
                 <SpatialAudioRoundedIcon sx={{ color: (leituraDeSiteAtiva ? "#00579d" : "") }}/>
             </IconButton>

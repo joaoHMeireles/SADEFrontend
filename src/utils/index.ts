@@ -38,9 +38,12 @@ export function getNomeComponente(location: string) {
 export function getCorTipo(tipo: string | undefined) {
     const coresStatus = {
         Demanda: "#00579D",
-        Proposta: "#6AACDA",
-        Pauta: "#2382BA",
-        ATA: "#28B9DA"
+        // Proposta: "#6AACDA",
+        Proposta: "#9acae5",
+        // Pauta: "#2382BA",
+        Pauta: "#3d83bc",
+        // ATA: "#28B9DA"
+        ATA: "#4ebbde"
     }
 
     if (tipo != undefined) {
@@ -159,7 +162,6 @@ export function useLocationChange(action: any) {
     useEffect(() => { action(previousLocation.to, previousLocation.from) }, [previousLocation])
 }
 
-//criar função pra pegar as cores dos status dos históricos
 
 export function getCorStatusHistorico(status: StatusTarefaHistorico) {
     const cores = {

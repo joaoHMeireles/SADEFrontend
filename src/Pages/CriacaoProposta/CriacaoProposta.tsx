@@ -30,6 +30,7 @@ import { transformArquivosToFile, useLocationChange } from "../../utils";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semDemanda from "../../Assets/emptyFolder.png"
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
+import { Alert, Snackbar } from "@mui/material";
 
 export default function CriacaoProposta(props: {
   filtrar: boolean;
@@ -43,6 +44,8 @@ export default function CriacaoProposta(props: {
   const [grid, setGrid] = useState(true);
   const [conteudoCarregou, setConteudoCarregou] = useState(false)
   const [temComponente, setTemComponente] = useState(true)
+  const [feedbackAberto, setFeedbackAberto] = useState(false);
+  const [mensagemDoErro, setMensagemDoErro] = useState("")
   const [listaComponents, setListaComponents] = useState<any[]>([])
 
   const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState(0)
@@ -108,15 +111,20 @@ export default function CriacaoProposta(props: {
   }, [])
 
   useEffect(() => {
-    const demandaClicada = listaComponents.find(demanda => demanda.idDemanda == propostaSelecionada)
-    if (demandaClicada != null) {
-      setArquivosProposta(transformArquivosToFile(demandaClicada.arquivosDemanda))
+    if (propostaSelecionada != 0) {
+      const demandaClicada = listaComponents.find(demanda => demanda.idDemanda == propostaSelecionada)
+
+      if (demandaClicada != null) {
+        setValorTamanho(demandaClicada.tamanho)
+        setValorBUSolicitante(demandaClicada.busolicitante)
+        setValorBUsBeneficadas(demandaClicada.busBeneficiadas)
+        setPrazoElaboracao(demandaClicada.prazoElaboracao)
+        setValorSessaoTI(demandaClicada.secaoTIResponsavel)
+        setValorCodigoPPM(demandaClicada.codigoPPM)
+        setValorLinkJira(demandaClicada.linkJira)
+        setArquivosProposta(transformArquivosToFile(demandaClicada.arquivosDemanda))
+      }
     }
-
-    // console.log(propostaSelecionada);
-
-
-    // setArquivosProposta()
   }, [propostaSelecionada])
 
   useEffect(() => {
@@ -126,6 +134,12 @@ export default function CriacaoProposta(props: {
       setTemComponente(false)
     }
   }, [listaComponents])
+
+  useEffect(() => {
+    if (mensagemDoErro != "") {
+      setFeedbackAberto(true)
+    }
+  }, [mensagemDoErro])
 
   useLocationChange(() => {
     localStorage.removeItem("DEMANDACRIARPROPOSTA")
@@ -141,6 +155,8 @@ export default function CriacaoProposta(props: {
   }
 
   function criarProposta() {
+    checarPreenchimento()
+
     const listaTabelasCustoProposta: any[] = []
     let listaTabelas = document.getElementsByClassName("tabelaCustoCriacao");
 
@@ -155,7 +171,6 @@ export default function CriacaoProposta(props: {
       const tituloTabela = (document.getElementById(`tituloTabela${i}`) as HTMLInputElement).innerText;
 
       for (let j = 0; j < listaLinhasTabela.length; j++) {
-
         const nomeRecurso = (document.getElementById(`tituloLinha${i}-${j}`) as HTMLInputElement).value
         const quantidade = (document.getElementById(`esforco${i}-${j}`) as HTMLInputElement).value
         const valorQuantidade = (document.getElementById(`valorHora${i}-${j}`) as HTMLInputElement).value
@@ -254,6 +269,82 @@ export default function CriacaoProposta(props: {
     // window.location.href = "/home"
   }
 
+  function checarPreenchimento(){
+    // escopoProposta
+    //
+    //
+    //
+    //
+    //
+    //
+    // fazer validação de preenchimento
+    let listaTabelas = document.getElementsByClassName("tabelaCustoCriacao");
+
+    for (let i = 0; i < listaTabelas.length; i++) {
+      const listaLinhasTabelaCustoProposta: any[] = []
+      let listaLinhasTabela = document.getElementsByClassName(`linhaTabelaCustoCriacao${i}`);
+      let checkboxTabelaDeLicenca = document.getElementById(`tabelaDeLicencas${i}`) as HTMLInputElement
+      let valorTotal: number = 0;
+      let quantidadeTotal: number = 0;
+      let linhaTabela;
+
+      const tituloTabela = (document.getElementById(`tituloTabela${i}`) as HTMLInputElement).innerText;
+
+      for (let j = 0; j < listaLinhasTabela.length; j++) {
+        const nomeRecurso = (document.getElementById(`tituloLinha${i}-${j}`) as HTMLInputElement).value
+        const quantidade = (document.getElementById(`esforco${i}-${j}`) as HTMLInputElement).value
+        const valorQuantidade = (document.getElementById(`valorHora${i}-${j}`) as HTMLInputElement).value
+
+
+        if (nomeRecurso && quantidade && valorQuantidade) {
+          linhaTabela = {
+            nomeRecurso: nomeRecurso,
+            quantidade: parseInt(quantidade),
+            valorQuantidade: parseInt(valorQuantidade)
+          }
+          valorTotal += (parseInt(valorQuantidade) * parseInt(quantidade));
+          quantidadeTotal += parseInt(quantidade);
+        }
+
+        listaLinhasTabelaCustoProposta.push(linhaTabela);
+      }
+
+      let listaCentroCustoTabela: any[] = []
+
+      for (const centroCustos of centroCustoEscolhidas) {
+        for (const centroCusto of centroCustos) {
+
+          let objetoCentroCusto: {
+            centroCusto: Object,
+            porcentagemDespesa: number
+          }
+
+          let centroCustoTabela: {
+            idCentroCusto: number,
+            nomeCentroCusto: string
+          };
+
+          if (centroCusto.tabela == i) {
+            centroCustoTabela = { idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto }
+            objetoCentroCusto = { centroCusto: centroCustoTabela, porcentagemDespesa: (parseFloat(centroCusto.porcentagem) / 100) }
+            listaCentroCustoTabela.push(objetoCentroCusto);
+          }
+        }
+      }
+
+      let tabela = {
+        tituloTabela: tituloTabela,
+        quantidadeTotal: quantidadeTotal,
+        valorTotal: valorTotal,
+        licenca: checkboxTabelaDeLicenca.checked,
+        centrosCustoPagantes: listaCentroCustoTabela,
+        linhasTabela: listaLinhasTabelaCustoProposta
+      }
+
+      // listaTabelasCustoProposta.push(tabela)
+    }
+  }
+
   return (
     <BoxConteudo>
       <Breadcrumb />
@@ -317,12 +408,17 @@ export default function CriacaoProposta(props: {
             endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
             onClick={(e: any) => {
               lerTexto(e)
-              setValor(1);
+              if (propostaSelecionada == 0) {
+                setMensagemDoErro("Escolha uma demanda antes de continuar")
+              } else {
+                setValor(1);
+              }
             }}>
             Próximo
           </BotaoPrimario>
         </>
       )}
+
       <ContainerGeral>
         {valor == 1 && (
           <>
@@ -355,14 +451,15 @@ export default function CriacaoProposta(props: {
               valorLinkJira={valorLinkJira}
               setValorLinkJira={setValorLinkJira}
               informacaoProcesso={informacaoProcesso}
-              setInformacaoProcesso={setInformacaoProcesso}/>
+              setInformacaoProcesso={setInformacaoProcesso} />
 
             <InputAnexos rascunho={false} proposta={true} arquivosProposta={arquivosProposta} setArquivosProposta={setArquivosProposta} />
-            
+
             <BoxContainerBotoes>
               <BotaoTerciario
                 variant="outlined"
-                onClick={() => {
+                onClick={(e: any) => {
+                  lerTexto(e)
                   window.location.href = "/home";
                 }}>
                 Cancelar
@@ -381,6 +478,7 @@ export default function CriacaoProposta(props: {
             </BoxContainerBotoes>
           </>
         )}
+
         {valor == 2 && (
           <>
             <EscopoProposta proposta={true} escopoProposta={escopoProposta} setEscopoProposta={setEscopoProposta}
@@ -435,6 +533,17 @@ export default function CriacaoProposta(props: {
             </BoxContainerBotoes>
           </>
         )}
+
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          autoHideDuration={3000}
+          open={feedbackAberto}
+          onClose={() => { setFeedbackAberto(false) }}>
+
+          <Alert onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }} severity="error" sx={{ width: '100%' }}>
+            {mensagemDoErro}
+          </Alert>
+        </Snackbar>
       </ContainerGeral>
     </BoxConteudo>
   )

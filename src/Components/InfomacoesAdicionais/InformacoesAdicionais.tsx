@@ -273,7 +273,6 @@ export default function InfomacoesAdicionais(props: {
                         :
                         <AutocompleteEdited
                             id="BU"
-                            sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
                             multiple
                             disableCloseOnSelect
                             onChange={(e, valor: any) => {

@@ -24,11 +24,12 @@ export default function InformacaoGeral(props: {
   setInformacaoProcesso?: React.Dispatch<React.SetStateAction<any>>
   partUmDemanda?: Function;
   editarDemanda?: boolean;
+  informacoesPreenchidas?: boolean;
 }) {
-  // const info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
   const { lerTexto } = useContext(TextReaderContext) as any
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
   const [idCentroCusto, setIdCentroCusto] = useState<any[]>([]);
+  const [centrosDeCustoCriacao, setCentrosDeCustoCriacao] = useState<any[]>([])
 
   const info = localStorage.getItem("DEMANDASELECIONADA") ? localStorage.getItem("DEMANDASELECIONADA") : localStorage.getItem("RASCUNHOESCOLHIDO")
   const demandaSelecionada = JSON.parse(info as string);
@@ -65,6 +66,33 @@ export default function InformacaoGeral(props: {
       }
     }
   }, []);
+
+  useEffect(() => {
+    const infoDemandaNova = JSON.parse(localStorage.getItem("DADOSDEMANDACRIACAO") as string)
+
+    if (infoDemandaNova != null) {
+      for (let atributo in infoDemandaNova) {
+        if ((infoDemandaNova as any)[atributo]) {
+          const inputAtributo = document.getElementById(
+            getIdByAtributo(atributo)
+          ) as HTMLInputElement;
+          if (inputAtributo) {
+            if (inputAtributo.id == "titulo") {
+              inputAtributo.value = infoDemandaNova.tituloDemanda;
+            }
+            if (inputAtributo.id == "objetivo") {
+              inputAtributo.value = infoDemandaNova.objetivo;
+            }
+            if (inputAtributo.id == "situacaoAtual") {
+              inputAtributo.value = infoDemandaNova.situacaoAtual;
+            }
+          }
+        }
+      }
+
+      setCentrosDeCustoCriacao(infoDemandaNova.centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto))
+    }
+  }, [props.informacoesPreenchidas]);
 
   function getIdByAtributo(atributo: string) {
     const idsInputsAtributo = {
@@ -213,6 +241,7 @@ export default function InformacaoGeral(props: {
               <AutocompleteEdited
                 id="centrosDeCusto"
                 sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
+                value={centrosDeCustoCriacao}
                 multiple
                 disableCloseOnSelect
                 onChange={(e, valor: any) => {
@@ -225,6 +254,8 @@ export default function InformacaoGeral(props: {
                       }
                     }
                   }
+
+                  setCentrosDeCustoCriacao(centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto))
 
                   if (props.setCentroCusto) {
                     props.setCentroCusto(centroCustoDemanda)

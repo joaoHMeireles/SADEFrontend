@@ -182,7 +182,7 @@ function MenuItem(props: { index: number, item: { id: number, nome: string, rota
           <Grid item xs={0.3} sx={{ backgroundColor: (selecionado ? "#00579d" : "inherit"), borderRadius: "0 5px 5px 0" }} />
 
           <Grid item xs={11.7}>
-            {props.item.nome == "Notificações" ?
+            {/* {props.item.nome == "Notificações" ?
               props.aberto ? (
                 <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center', "& .MuiSvgIcon-root": { color: (selecionado ? "#00579d" : "inherit") } }} selected={selecionado}>
                   <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
@@ -203,7 +203,7 @@ function MenuItem(props: { index: number, item: { id: number, nome: string, rota
 
                   <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
                 </SidebarListItemButton>
-              ) : (
+              ) : ( */}
                 <SidebarListItemButton sx={{ justifyContent: props.aberto ? 'initial' : 'center', "& .MuiSvgIcon-root": { color: (selecionado ? "#00579d" : "inherit") } }} selected={selecionado}>
                   <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
                     {props.item.icone}
@@ -211,7 +211,7 @@ function MenuItem(props: { index: number, item: { id: number, nome: string, rota
 
                   <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
                 </SidebarListItemButton>
-              )}
+              {/* )} */}
           </Grid>
         </Grid>
       </SidebarListItem>

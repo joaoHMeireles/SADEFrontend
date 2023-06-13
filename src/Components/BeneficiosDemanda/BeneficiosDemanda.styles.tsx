@@ -39,7 +39,7 @@ export const BoxContainerGeralBeneficio = styledBox({
     width: "100%",
 });
 
-export const BoxDescricaoRequeistosControle = styledBox({
+export const BoxDescricaoRequisitosControle = styledBox({
     height: "50%",
     marginTop: 40,
     width: "100%",
@@ -85,6 +85,7 @@ export const BoxObrigacaoLegal = styledBox({
 export const BoxTitulos = styledBox({
     alignItems: "center",
     backgroundColor: "#00579D",
+    borderRadius: "5px",
     display: "flex",
     justifyContent: "center",
     marginTop: 24,
