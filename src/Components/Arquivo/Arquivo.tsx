@@ -12,9 +12,11 @@ export default function Arquivo(props: { id: number, icone: string; nome: string
   return (
     <BoxTypographyFiles>
       <Icone sx={{ color: "#595959" }} />
+
       <TypographyUploadFiles variant="body2">
         {props.nome}
       </TypographyUploadFiles>
+      
       <Box>
         <ClearRoundedIcon sx={{ cursor: "pointer", color: "#595959" }} onClick={() => {
           if(props.files != null){

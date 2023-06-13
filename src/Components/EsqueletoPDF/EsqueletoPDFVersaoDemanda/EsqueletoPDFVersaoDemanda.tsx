@@ -136,9 +136,7 @@ export default function EsqueletoPDFVersaoDemanda(props: { demanda: any, pdfExpo
         >
             <BoxConteudo>
                 <div className="example-config">
-                    <button
-                        onClick={exportPDFWithComponent}
-                    >
+                    <button onClick={exportPDFWithComponent}>
                         Export to PDF with component
                     </button>
                 </div>

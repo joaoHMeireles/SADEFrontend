@@ -385,7 +385,6 @@ export default function CriacaoDemanda(props: {
 
             <BoxContainerBotoes>
               <BotaoTerciario
-                sx={{ width: "15%", height: "3rem" }}
                 variant="outlined"
                 onClick={(e) => {
                   lerTexto(e)
@@ -395,7 +394,6 @@ export default function CriacaoDemanda(props: {
               </BotaoTerciario>
 
               <BotaoPrimario
-                sx={{ width: "15%", height: "3rem" }}
                 variant="contained"
                 endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
                 onClick={(e) => {
@@ -453,7 +451,6 @@ export default function CriacaoDemanda(props: {
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
-                  sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="outlined"
                   onClick={(e) => {
                     lerTexto(e)
@@ -470,9 +467,6 @@ export default function CriacaoDemanda(props: {
                     setValor(valor - 1);
                   }}
                   sx={{
-                    width: "25%",
-                    minWidth: "auto",
-                    height: "3rem",
                     marginRight: 3,
                   }}
                   variant="outlined"
@@ -481,7 +475,6 @@ export default function CriacaoDemanda(props: {
                 </BotaoSecundario>
 
                 <BotaoPrimario
-                  sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="contained"
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
@@ -505,7 +498,6 @@ export default function CriacaoDemanda(props: {
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
-                  sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="outlined"
                   onClick={(e) => {
                     window.location.href = "/home";
@@ -522,9 +514,6 @@ export default function CriacaoDemanda(props: {
                     setValor(1);
                   }}
                   sx={{
-                    width: "25%",
-                    minWidth: "auto",
-                    height: "3rem",
                     marginRight: 3,
                   }}
                   variant="outlined"
@@ -533,7 +522,6 @@ export default function CriacaoDemanda(props: {
                 </BotaoSecundario>
 
                 <BotaoPrimario
-                  sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="contained"
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />

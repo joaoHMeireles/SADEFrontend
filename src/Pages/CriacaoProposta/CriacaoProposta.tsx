@@ -400,7 +400,6 @@ export default function CriacaoProposta(props: {
           }
           <BotaoPrimario
             sx={{
-              height: "3rem",
               position: "fixed",
               left: "88%",
               top: "90%",
@@ -458,7 +457,6 @@ export default function CriacaoProposta(props: {
 
             <BoxContainerBotoes>
               <BotaoTerciario
-                sx={{ width: "15%", height: "3rem" }}
                 variant="outlined"
                 onClick={(e: any) => {
                   lerTexto(e)
@@ -467,36 +465,16 @@ export default function CriacaoProposta(props: {
                 Cancelar
               </BotaoTerciario>
 
-              <BoxBotoesPriSec>
-                <BotaoSecundario
-                  onClick={(e) => {
-                    lerTexto(e)
-                    setValor(valor - 1);
-                  }}
-                  sx={{
-                    width: "25%",
-                    minWidth: "auto",
-                    height: "3rem",
-                    marginRight: 3,
-                  }}
-                  variant="outlined"
-                  startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
-                  Voltar
-                </BotaoSecundario>
-
-                <BotaoPrimario
-                  sx={{ width: "15%", height: "3rem" }}
-                  variant="contained"
-                  endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
-                  onClick={(e: any) => {
-                    lerTexto(e)
-                    setValor(2);
-                    setSegundo(true);
-                    window.scrollTo(0,0)
-                  }}>
-                  Próximo
-                </BotaoPrimario>
-              </BoxBotoesPriSec>
+              <BotaoPrimario
+                variant="contained"
+                endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
+                onClick={(e: any) => {
+                  lerTexto(e)
+                  setValor(2);
+                  setSegundo(true);
+                }}>
+                Próximo
+              </BotaoPrimario>
             </BoxContainerBotoes>
           </>
         )}
@@ -517,7 +495,6 @@ export default function CriacaoProposta(props: {
             <BoxContainerBotoes>
               <BoxBotaoTerciario>
                 <BotaoTerciario
-                  sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="outlined"
                   onClick={(e: any) => {
                     lerTexto(e)
@@ -534,9 +511,6 @@ export default function CriacaoProposta(props: {
                     setValor(1);
                   }}
                   sx={{
-                    width: "25%",
-                    minWidth: "auto",
-                    height: "3rem",
                     marginRight: 3,
                   }}
                   variant="outlined"
@@ -545,7 +519,6 @@ export default function CriacaoProposta(props: {
                 </BotaoSecundario>
 
                 <BotaoPrimario
-                  sx={{ width: "25%", minWidth: "auto", height: "3rem" }}
                   variant="contained"
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />

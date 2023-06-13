@@ -16,7 +16,7 @@ import { GridIndicadorItem, SidebarListItem, SidebarListItemButton, SidebarListI
 import { useLocationChange } from "../../utils";
 import api from "../../api/api";
 
-//listas de ícones e opções do menu
+// Listas de opções do menu
 const lista = [
   {
     id: 1,
@@ -82,7 +82,7 @@ const lista = [
   },
 ]
 
-//estilos próprios da aplicação que necessitam das variáveis aqui presentes
+// Estilos próprios da aplicação que necessitam das variáveis aqui presentes
 let drawerWidth = "240";
 
 /**
@@ -129,9 +129,11 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
       {location.pathname != "/" &&
         <Sidebar variant="permanent" open={props.aberto}>
           <Toolbar variant="dense" />
+
           <List>
             {itensMenu}
           </List>
+
           {/* arrumar a posição dessa budega de logout */}
           <Box sx={{ width: "100%", height: "100%", display: "flex", alignItems: "flex-end" }}>
             <Box sx={{ width: "50%", paddingBottom: "3rem", paddingLeft: "1rem", display: "flex", justifyContent: "space-around" }}>
@@ -178,6 +180,7 @@ function MenuItem(props: { index: number, item: { id: number, nome: string, rota
       <SidebarListItem key={props.item.id} disablePadding >
         <Grid container>
           <Grid item xs={0.3} sx={{ backgroundColor: (selecionado ? "#00579d" : "inherit"), borderRadius: "0 5px 5px 0" }} />
+
           <Grid item xs={11.7}>
             {/* {props.item.nome == "Notificações" ?
               props.aberto ? (
@@ -187,6 +190,7 @@ function MenuItem(props: { index: number, item: { id: number, nome: string, rota
                       {props.item.icone}
                     </Badge>
                   </SidebarListItemIcon>
+
                   <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
                 </SidebarListItemButton>
               ) : (
@@ -196,6 +200,7 @@ function MenuItem(props: { index: number, item: { id: number, nome: string, rota
                       {props.item.icone}
                     </SidebarListItemIcon>
                   </Badge>
+
                   <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
                 </SidebarListItemButton>
               ) : ( */}
@@ -203,6 +208,7 @@ function MenuItem(props: { index: number, item: { id: number, nome: string, rota
                   <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
                     {props.item.icone}
                   </SidebarListItemIcon>
+
                   <ListItemText primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
                 </SidebarListItemButton>
               {/* )} */}
@@ -293,6 +299,7 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
             <SidebarListItemIcon sx={{ mr: props.aberto ? 3 : 'auto' }} >
               {props.item.icone}
             </SidebarListItemIcon>
+
             <ListItemText onClick={lerTexto} primary={props.item.nome} sx={{ opacity: props.aberto ? 1 : 0 }} />
             {props.aberto &&
               <>
@@ -304,6 +311,7 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
               </>
             }
           </SidebarListItemButton>
+
           <Collapse in={componenteAberto} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               {rotasSecundarias}
@@ -334,10 +342,12 @@ const closedMixin = (theme: Theme): CSSObject => ({
 
 const Sidebar = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
-    minWidth: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
+    // border: "none",
+    // boxShadow: "5px 5px 10px 0 #00000025",
     boxSizing: 'border-box',
+    flexShrink: 0,
+    minWidth: drawerWidth,
+    whiteSpace: 'nowrap',
     zIndex: 1100,
     ...(open && {
       ...openedMixin(),

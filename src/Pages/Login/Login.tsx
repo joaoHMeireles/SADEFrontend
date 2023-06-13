@@ -13,6 +13,7 @@ import {
   Container,
   TextFieldEdited
 } from "./Login.styles";
+import { BotaoPrimario } from "../App.styles";
 import wegLogo from "../../Assets/wegLogoAzul.png"
 import sadeLogo from "../../Assets/sadeLogoAzul.png"
 import TextField from '@mui/material/TextField';
@@ -168,9 +169,9 @@ export default function Login(props: {
               </BoxRememberMe>
             </BoxInputs>
 
-            <ButtonEdited variant="contained" startIcon={<LoginRoundedIcon />} onClick={onClickToDo}>
+            <BotaoPrimario variant="contained" startIcon={<LoginRoundedIcon />} onClick={onClickToDo}>
               Entrar
-            </ButtonEdited>
+            </BotaoPrimario>
           </Container>
         </Column>
       </BoxLogin>

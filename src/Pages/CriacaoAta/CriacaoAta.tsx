@@ -175,8 +175,7 @@ export default function CriacaoAta(props: {
             filtrar={props.filtrar}
             grid={grid}
             setGrid={setGrid}
-            filtrarResultados={props.filtrarResultados}
-          />
+            filtrarResultados={props.filtrarResultados} />
           {!temComponente ?
             <>
               {conteudoCarregou &&
@@ -190,12 +189,10 @@ export default function CriacaoAta(props: {
               criandoATA={true}
               pautaEscolhida={pautaEscolhida}
               setPautaEscolhida={setPautaEscolhida}
-              conteudoCarregou={conteudoCarregou}
-            />
+              conteudoCarregou={conteudoCarregou} />
           }
           <BotaoPrimario
             sx={{
-              height: "3rem",
               position: "fixed",
               left: "88%",
               top: "90%",
@@ -205,8 +202,7 @@ export default function CriacaoAta(props: {
             onClick={(e: any) => {
               lerTexto(e)
               setValor(1);
-            }}
-          >
+            }}>
             Proximo
           </BotaoPrimario>
         </>
@@ -217,53 +213,60 @@ export default function CriacaoAta(props: {
             <Box sx={{ width: "75%", display: "flex" }}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
+
                   <TypographyTituloInput onClick={lerTexto}>
                     Título da reunião
                   </TypographyTituloInput>
+
                   <TextField sx={{ width: "100%" }} id="tituloReuniao" />
                 </Grid>
+
                 <Grid item xs={12}>
                   <TypographyTituloInput onClick={lerTexto}>
                     Data da Reunião
                   </TypographyTituloInput>
+
                   <DatePicker
                     value={valorData}
                     onChange={(newValue) => {
                       setValorData(newValue);
                     }}
-                    renderInput={(params) => <TextField id='dataReuniaoEscolhida' {...params} />}
-                  />
+                    renderInput={(params) => <TextField id='dataReuniaoEscolhida' {...params} />} />
                 </Grid>
+
                 <Grid item xs={6}>
                   <TypographyTituloInput onClick={lerTexto}>
                     Início da reunião
                   </TypographyTituloInput>
+
                   <TimePicker
                     ampm={false}
                     value={inicioReuniao}
                     onChange={(newValue) => setInicioReuniao(newValue)}
                     renderInput={(params) => {
                       return <TextField id="horarioInicioReuniao" {...params} />;
-                    }}
-                  />
+                    }} />
                 </Grid>
+
                 <Grid item xs={6}>
                   <TypographyTituloInput onClick={lerTexto}>
                     Final da reunião
                   </TypographyTituloInput>
+
                   <TimePicker
                     ampm={false}
                     value={finalReuniao}
                     onChange={(newValue) => setFinalReuniao(newValue)}
                     renderInput={(params) => {
                       return <TextField id="horarioFinalReuniao" {...params} />;
-                    }}
-                  />
+                    }} />
                 </Grid>
+
                 <InputAnexos rascunho={false} proposta={false} files={files} setFiles={setFiles} />
               </Grid>
             </Box>
           </BoxInputsDataComissao>
+
           <BoxBotoes>
             <BotaoSecundario
               onClick={(e: any) => {
@@ -271,22 +274,17 @@ export default function CriacaoAta(props: {
                 setValor(0)
               }}
               sx={{
-                width: "10%",
-                minWidth: "auto",
-                height: "3rem",
                 marginRight: 3,
               }}
               variant="outlined"
-              startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}
-            >
+              startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
               Voltar
             </BotaoSecundario>
+
             <BotaoPrimario
-              sx={{ width: "10%", minWidth: "auto", height: "3rem" }}
               variant="contained"
               endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
-              onClick={criarATA}
-            >
+              onClick={criarATA}>
               Enviar
             </BotaoPrimario>
           </BoxBotoes>
