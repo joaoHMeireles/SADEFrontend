@@ -27,7 +27,7 @@ import {
   TableCellEstilzada,
 } from "../Tabelas.style";
 
-import { BoxIconsAddMinus } from "./TabelaCustoCriacao.styles";
+import { BoxIconsAddMinus,TextFieldEdited } from "./TabelaCustoCriacao.styles";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import { Button, Chip } from "@mui/material";
@@ -68,7 +68,8 @@ export default function TabelaCustoCriacao(props: {
             <RemoveRoundedIcon
               sx={{ color: "#595959", cursor: "pointer", marginRight: 3 }}
               onClick={() => setQuantidadeTabela(quantidadeTabela - 1)} />
-          </Tooltip>}
+          </Tooltip>
+        }
         {quantidadeTabela < 3 &&
           <Tooltip title="Adicionar Tabela de recursos">
             <AddRoundedIcon
@@ -241,13 +242,15 @@ function Tabela(props: {
 
       <Box sx={{ width: "100%", display: "flex", justifyContent: "end", alignItems: "center", fontSize: "12px" }}>
         Tabela de licenças
-        
+
         <Checkbox id={`tabelaDeLicencas${props.tabela}`} checked={tabelaDeLicencas} onClick={mudarTipoTabela} />
       </Box>
 
       <Box>
-        <TypographyStyled onClick={lerTexto}>Centro de Custo para {props.tituloTabela}:</TypographyStyled>
-        
+        <TypographyStyled onClick={lerTexto}>
+          Centro de Custo para {props.tituloTabela}:
+        </TypographyStyled>
+
         <Autocomplete
           id={`centroCusto${props.tabela}`}
           sx={{ boxShadow: "5px 5px 10px 0 #00000025", marginBottom: 2 }}
@@ -265,7 +268,9 @@ function Tabela(props: {
                   checkedIcon={<CheckBoxIcon fontSize="small" />}
                   style={{ marginRight: 8 }}
                   checked={selected} />
-                <span onClick={lerTexto}> {cc} </span>
+                <span onClick={lerTexto}>
+                  {cc}
+                </span>
               </li>
             );
           }}
@@ -297,6 +302,7 @@ function ChipAutocompleteCentroCusto(props: { id: any, nome: string, mudarPorcen
   return (
     <Box sx={{ marginRight: 2 }}>
       <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#59595930 solid 1px" }} label={props.nome} onClick={lerTexto} />
+
       <Button id={props.id} sx={{ backgroundColor: "rgba(0,0,0,0.08)", height: "32px", borderRadius: "0 16px 16px 0" }} onClick={atualizarPorcentagem}>{porcentagem} %</Button>
     </Box>
   )
@@ -323,28 +329,28 @@ function LinhaTabela(props: {
       <TableRow className={`linhaTabelaCustoCriacao${props.indexTabela}`}>
         <TableCell sx={{ width: "25%" }} align="center">
           <FormControl fullWidth sx={{ m: 1 }} variant="filled">
-            <TextField
+            <TextFieldEdited
               id={`tituloLinha${props.indexTabela}-${props.index}`}
               // onChange={(e: any) => { props.set(e.target.value) }}
               sx={{ width: "100%" }}
               InputProps={{
                 startAdornment: <GroupsRoundedIcon sx={{ paddingRight: 1 }} />,
-              }}
-            />
+              }} />
           </FormControl>
         </TableCell>
+
         <TableCell sx={{ width: "25%" }} align="center">
-          <TextField
+          <TextFieldEdited
             onChange={(e: any) => { setEsforco(e.target.value) }}
             id={`esforco${props.indexTabela}-${props.index}`}
             sx={{ width: "100%" }}
             InputProps={{
               startAdornment: props.iconeInput,
-            }}
-          ></TextField>
+            }} />
         </TableCell>
+
         <TableCell sx={{ width: "25%" }} align="center">
-          <TextField
+          <TextFieldEdited
             onChange={(e: any) => { setValorHora(e.target.value) }}
             id={`valorHora${props.indexTabela}-${props.index}`}
             sx={{ width: "100%" }}
@@ -352,8 +358,7 @@ function LinhaTabela(props: {
               startAdornment: (
                 <AttachMoneyRoundedIcon sx={{ paddingRight: "2px" }} />
               ),
-            }}
-          ></TextField>
+            }} />
         </TableCell>
       </TableRow>
     </>
