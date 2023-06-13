@@ -11,7 +11,7 @@ import {
   BoxListaCorProcesso,
   GridBoxTituloRadio,
   GridComponenteProcesso,
-  GridLinkTypograpfy,
+  GridLinkColecaoTypograpfy,
   GridTypography,
   ListaComponenteProcesso,
   ListaTypography,
@@ -142,11 +142,7 @@ function GridComponent(props: ComponentCollectionProps) {
               />
             </GridBoxTituloRadio>
             <GridTypography variant="subtitle1">
-              <span> Data: </span>{" "}
-              {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
-            </GridTypography>
-            <GridTypography variant="subtitle1">
-              <span> Propostas: </span>
+              Propostas:
             </GridTypography>
             <GridTypography variant="body1">
               - {props.componente.propostas[0].proposta.demanda.tituloDemanda}
@@ -161,11 +157,11 @@ function GridComponent(props: ComponentCollectionProps) {
                   {""}
                 </BoxColecaoComponente>
               }
-              <GridLinkTypograpfy variant="body2">
+              <GridLinkColecaoTypograpfy variant="body2" sx={{width: "25% !important"}}>
                 <Link to={props.linkComponente} onClick={props.setProcesso}>
                   Ver mais
                 </Link>
-              </GridLinkTypograpfy>
+              </GridLinkColecaoTypograpfy>
             </GridTypography>
           </GridComponenteProcesso>
         </>
@@ -181,11 +177,7 @@ function GridComponent(props: ComponentCollectionProps) {
               {props.componente.tituloReuniao}
             </GridTypography>
             <GridTypography variant="subtitle1">
-              <span> Data: </span>{" "}
-              {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
-            </GridTypography>
-            <GridTypography variant="subtitle1">
-              <span> Propostas: </span>
+              Propostas:
             </GridTypography>
             {props.componente.propostas.length > 0 ?
               <GridTypography variant="body1">
@@ -205,11 +197,11 @@ function GridComponent(props: ComponentCollectionProps) {
                   {""}
                 </BoxColecaoComponente>
               }
-              <GridLinkTypograpfy variant="body2">
+              <GridLinkColecaoTypograpfy variant="body2">
                 <Link to={props.linkComponente} onClick={props.setProcesso}>
                   Ver mais
                 </Link>
-              </GridLinkTypograpfy>
+              </GridLinkColecaoTypograpfy>
             </GridTypography>
           </GridComponenteProcesso>
         </>
