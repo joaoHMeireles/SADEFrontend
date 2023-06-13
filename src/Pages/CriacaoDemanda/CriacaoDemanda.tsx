@@ -171,7 +171,10 @@ export default function CriacaoDemanda(props: {
       "tituloDemanda": titulo.value,
       "objetivo": objetivo.value,
       "situacaoAtual": situacaoAtual.value,
-      "centroCustoDemanda": centroCusto
+      "centroCustoDemanda": centroCusto,
+      "usuario": {
+        "idUsuario": data.usuario.idUsuario
+      }
     }
 
     localStorage.setItem("DADOSDEMANDACRIACAO", JSON.stringify(data))
