@@ -558,3 +558,4 @@ function BeneficioQualitativo(props: { index: number }) {
             </BoxContainerGeralBeneficio>
         </>
     )
+}
