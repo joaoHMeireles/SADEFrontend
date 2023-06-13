@@ -401,7 +401,7 @@ export default function CriacaoDemanda(props: {
         {valor == 1 && (
           <>
 
-            <BeneficiosTeste />
+            <BeneficiosTeste proposta={false}/>
             {/* {props.rascunho || props.editarDemanda ?
               <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
                 numeroBeneficiosReais={numeroBeneficiosReais}

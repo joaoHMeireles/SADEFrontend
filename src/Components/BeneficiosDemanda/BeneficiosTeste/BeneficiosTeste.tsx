@@ -26,28 +26,37 @@ const valoresFrequencia = [
     "MENSALMENTE"
 ]
 
-export default function BeneneficiosTeste() {
+// criacao demanda - ler inputs
+// criacao proposta - inputs preenchidos
+// rascunho - inputs preenchidos ou ler inputs
+// demanda devolvida - inputs preenchidos ou ler inputs
+
+export default function BeneneficiosTeste(props: { proposta: boolean }) {
     const { lerTexto } = useContext(TextReaderContext) as any
     const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
     const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
     const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
     const [listaBeneficiosReal, setListaBeneficiosReal] = useState<any[]>(
-        [
-            <BeneficioReal index={0} numeroBeneficiosReais={numeroBeneficiosReais} />
-        ]
+        [<BeneficioReal index={0} numeroBeneficiosReais={numeroBeneficiosReais} />]
     );
-    const [listaBeneficiosPotencial, setListaBeneficiosPotencial] = useState<any[]>([
-        <BeneficioPotencial index={0} numeroBeneficiosPotencias={numeroBeneficiosPotenciais} />
-    ]);
+    const [listaBeneficiosPotencial, setListaBeneficiosPotencial] = useState<any[]>(
+        [<BeneficioPotencial index={0} numeroBeneficiosPotencias={numeroBeneficiosPotenciais} />]
+    );
     const [listaBeneficiosQualitativos, setListaBeneficiosQualitativos] = useState<any[]>(
-        [
-            <BeneficioQualitativo index={0} numeroBeneficiosQualitativos={numeroBeneficiosQualitativos} />
-        ]
+        [<BeneficioQualitativo index={0} numeroBeneficiosQualitativos={numeroBeneficiosQualitativos} />]
     );
 
+    const [frequenciaUso, setFrequenciaUso] = useState<any>()
+
+    if (props.proposta) {
+        useEffect(() => {
+            // inputs preenchidos
+        }, [])
+    }
+
     useEffect(() => {
-        console.log(listaBeneficiosReal);
-    }, [])
+        console.log(frequenciaUso);
+    }, [frequenciaUso])
 
     return (
         <>
@@ -57,7 +66,6 @@ export default function BeneneficiosTeste() {
                 </BoxTitulos>
 
                 <BeneficioReal index={listaBeneficiosReal.length} numeroBeneficiosReais={numeroBeneficiosReais} />
-                {/* {listaBeneficiosReal} */}
 
                 <BoxIcones>
                     {numeroBeneficiosReais > 0 &&
@@ -100,7 +108,6 @@ export default function BeneneficiosTeste() {
                 </BoxTitulos>
 
                 <BeneficioPotencial index={listaBeneficiosPotencial.length} numeroBeneficiosPotencias={numeroBeneficiosPotenciais} />
-                {/* {listaBeneficiosPotencial} */}
 
                 <BoxIcones>
                     {listaBeneficiosPotencial.length > 0 &&
@@ -133,7 +140,6 @@ export default function BeneneficiosTeste() {
                 </BoxTitulos>
 
                 <BeneficioQualitativo index={listaBeneficiosQualitativos.length} numeroBeneficiosQualitativos={numeroBeneficiosQualitativos} />
-                {/* {listaBeneficiosQualitativos} */}
 
                 <BoxIcones>
                     {listaBeneficiosQualitativos.length > 0 &&
@@ -169,8 +175,10 @@ export default function BeneneficiosTeste() {
 
                     <SelectEdited sx={{ width: "15vw" }}
                         id="frequenciaUso"
-                    // value={frequencia}
-                    // onChange={onFrequenciaChange}
+                        value={frequenciaUso}
+                        onChange={(e: any) => {
+                            setFrequenciaUso(e.target.value)
+                        }}
                     >
                         {valoresFrequencia.map((valor: any, index: number) => {
                             return (
