@@ -192,7 +192,6 @@ function BeneficioReal(props: { index: number, numeroBeneficiosReais: number }) 
         return (
             <>
                 <BoxContainerGeralBeneficio key={props.index}>
-
                     <BoxContainerDivisorio>
 
                         <BoxInputsAcima>
@@ -559,4 +558,3 @@ function BeneficioQualitativo(props: { index: number }) {
             </BoxContainerGeralBeneficio>
         </>
     )
-}

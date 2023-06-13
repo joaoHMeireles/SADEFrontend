@@ -168,10 +168,7 @@ export default function CriacaoDemanda(props: {
       "tituloDemanda": titulo.value,
       "objetivo": objetivo.value,
       "situacaoAtual": situacaoAtual.value,
-      "centroCustoDemanda": centroCusto,
-      "usuario": {
-        "idUsuario": idUsuario
-      }
+      "centroCustoDemanda": centroCusto
     }
 
     atualizarDados(data);

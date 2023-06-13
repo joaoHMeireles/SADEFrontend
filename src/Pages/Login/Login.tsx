@@ -2,14 +2,16 @@ import { useEffect, useState, useContext } from "react";
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 import "./Login.scss";
 import {
-  BoxLogin,
   BoxImage,
+  BoxInputs,
+  BoxLogin,
+  BoxLogos,
+  BoxRememberMe,
+  BoxTexts,
+  ButtonEdited,
   Column,
   Container,
-  BoxLogos,
-  BoxTexts,
-  BoxInputs,
-  BoxRememberMe
+  TextFieldEdited
 } from "./Login.styles";
 import wegLogo from "../../Assets/wegLogoAzul.png"
 import sadeLogo from "../../Assets/sadeLogoAzul.png"
@@ -20,7 +22,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import Checkbox from '@mui/material/Checkbox';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
-import { Alert, Button, FormControl, FormHelperText, InputAdornment, Snackbar } from "@mui/material";
+import { Alert, FormControl, FormHelperText, InputAdornment, Snackbar } from "@mui/material";
 import { WebSocketContext } from "../../api/websocketservice";
 import api from "../../api/api";
 import Cookies from "js-cookie";
@@ -42,8 +44,8 @@ export default function Login(props: {
   const [user, setUser] = useState({ email: '', senha: '' });
   const { lerTexto } = useContext(TextReaderContext) as any;
   const webSocketService: any = useContext(WebSocketContext);
-  const handleLogin = async (e?: any) => {
-    e?.preventDefault();
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
 
     if ((user.email == '' || user.email == null) || (user.senha == '' || user.senha == null)) {
       setInvalido(true);
@@ -58,22 +60,20 @@ export default function Login(props: {
 
     api.post(`/sade/login/auth`, user, config).then((response: any) => {
       const dadosUserJPA = response.data;
-      setarAmbienteUsuario(dadosUserJPA)
+      localStorage.setItem("TIPOUSUARIO", dadosUserJPA.authorities[0].authority);
+      localStorage.setItem("USUARIO", JSON.stringify(dadosUserJPA.usuario));
+      localStorage.setItem("IDUSUARIO", JSON.stringify(dadosUserJPA.usuario.idUsuario));
 
       const inputCheckbox = document.getElementById("checkboxLembrarDeMim") as HTMLInputElement
 
       if (inputCheckbox.checked) {
-        const usuarioCookie: any = user
-        usuarioCookie.stringUsuario = JSON.stringify(dadosUserJPA)
-
-        api.post(`/sade/login/auth/cookie`, usuarioCookie, config).then(() => {
-          webSocketService.conectar();
-          location.href = "/home";
-        })
-      } else {
-        webSocketService.conectar();
-        location.href = "/home";
+        api.post(`/sade/login/auth/cookie`, user, config)
       }
+
+      return dadosUserJPA;
+    }).then(() => {
+      webSocketService.conectar();
+      location.href = "/home";
     }).catch((err: any) => {
       console.log(err);
       setFeedbackAberto(true);
@@ -82,21 +82,10 @@ export default function Login(props: {
 
   localStorage.setItem("PAGINATUAL", "login");
 
-  useEffect(() => {
-    //   //veriicar se tem o cookie do lembrar de mim e fazer o login com as informações
-    const token = Cookies.get('rjwt');
+  // useEffect(() => {
 
 
-    if (token != null) {
-      api.get(`/sade/login/cookie/${token}`).then((response) => {
-        console.log(response.data);
-        const usuarioJPA = JSON.parse(response.data.body.sub)
-        setarAmbienteUsuario(usuarioJPA)
-        location.href = "/home";
-      })
-    }
-
-  }, [])
+  // }, [])
 
   /**
  * Função para setar o filtro e o menu como fechados
@@ -105,12 +94,6 @@ export default function Login(props: {
     props.setAberto(false);
     props.setFiltro(false);
   });
-
-  function setarAmbienteUsuario(dadosUserJPA: any) {
-    localStorage.setItem("TIPOUSUARIO", dadosUserJPA.authorities[0].authority);
-    localStorage.setItem("USUARIO", JSON.stringify(dadosUserJPA.usuario));
-    localStorage.setItem("IDUSUARIO", JSON.stringify(dadosUserJPA.usuario.idUsuario));
-  }
 
   function atualizarUsuario(event: any) {
     setUser({
@@ -156,7 +139,7 @@ export default function Login(props: {
 
             <BoxInputs>
               <FormControl>
-                <TextField sx={{ marginBottom: "2rem", width: "20vw" }} name="email" onChange={atualizarUsuario}
+                <TextFieldEdited sx={{ marginBottom: "2rem" }} name="email" onChange={atualizarUsuario}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -164,7 +147,7 @@ export default function Login(props: {
                       </InputAdornment>)
                   }} variant="outlined" placeholder="Email" />
 
-                <TextField sx={{ marginBottom: "0.5rem", width: "20vw" }} name="senha" type={tipo} onChange={atualizarUsuario}
+                <TextFieldEdited sx={{ marginBottom: "0.5rem" }} name="senha" type={tipo} onChange={atualizarUsuario}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -185,9 +168,9 @@ export default function Login(props: {
               </BoxRememberMe>
             </BoxInputs>
 
-            <Button variant="contained" startIcon={<LoginRoundedIcon />} sx={{ backgroundColor: "#00579d", fontSize: "16px", padding: "1rem 2rem" }} onClick={onClickToDo}>
+            <ButtonEdited variant="contained" startIcon={<LoginRoundedIcon />} onClick={onClickToDo}>
               Entrar
-            </Button>
+            </ButtonEdited>
           </Container>
         </Column>
       </BoxLogin>
