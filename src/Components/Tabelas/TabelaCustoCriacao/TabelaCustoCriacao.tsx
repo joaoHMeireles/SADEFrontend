@@ -25,12 +25,13 @@ import {
   TableContainerEstilizado,
   TableRowEstilizada,
   TableCellEstilzada,
+  PlusIconButton,
 } from "../Tabelas.style";
 
 import { BoxIconsAddMinus } from "./TabelaCustoCriacao.styles";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
-import { Button, Chip } from "@mui/material";
+import { Button, Chip, IconButton } from "@mui/material";
 import { TypographyStyled } from "../../EscopoProposta/EscopoProposta.styles";
 import { TextReaderContext } from "../../TextReaderContext/TextReaderContext";
 
@@ -65,15 +66,15 @@ export default function TabelaCustoCriacao(props: {
       <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         {quantidadeTabela > 2 &&
           <Tooltip title="Remover Tabela de Recursos">
-            <RemoveRoundedIcon
-              sx={{ color: "#595959", cursor: "pointer", marginRight: 3 }}
-              onClick={() => setQuantidadeTabela(quantidadeTabela - 1)} />
+            <PlusIconButton onClick={() => setQuantidadeTabela(quantidadeTabela - 1)}>
+              <RemoveRoundedIcon />
+            </PlusIconButton>
           </Tooltip>}
         {quantidadeTabela < 3 &&
           <Tooltip title="Adicionar Tabela de recursos">
-            <AddRoundedIcon
-              sx={{ color: "#595959", cursor: "pointer" }}
-              onClick={() => setQuantidadeTabela(quantidadeTabela + 1)} />
+            <PlusIconButton onClick={() => setQuantidadeTabela(quantidadeTabela + 1)}>
+              <AddRoundedIcon />
+            </PlusIconButton>
           </Tooltip>}
       </Box>
     </>
@@ -92,7 +93,6 @@ function Tabela(props: {
   const [quantidadeLinha, setQuantidadeLinha] = useState(1);
   const [esforcoTotal, setEsforcoTotal] = useState(0)
   const [valorTotal, setValorTotal] = useState(0)
-  const [centroCusto, setCentroCusto] = useState<string[]>([])
   const [linhas, setLinhas] = useState<JSX.Element[]>([])
   const [centroCustoEscolhidos, setCentroCustoEscolhidos] = useState<any[]>([])
   const [atualizouPorcentagem, setAtualizouPorcentagem] = useState(false)
@@ -159,6 +159,7 @@ function Tabela(props: {
     }
 
     setCentroCustoEscolhidos(listaCentroCustoTabela);
+    props.setCentroCustoEscolhidas(listaCentroCustoTabela)
   }
 
   function atualizarValor() {
@@ -241,13 +242,13 @@ function Tabela(props: {
 
       <Box sx={{ width: "100%", display: "flex", justifyContent: "end", alignItems: "center", fontSize: "12px" }}>
         Tabela de licenças
-        
+
         <Checkbox id={`tabelaDeLicencas${props.tabela}`} checked={tabelaDeLicencas} onClick={mudarTipoTabela} />
       </Box>
 
       <Box>
         <TypographyStyled onClick={lerTexto}>Centro de Custo para {props.tituloTabela}:</TypographyStyled>
-        
+
         <Autocomplete
           id={`centroCusto${props.tabela}`}
           sx={{ boxShadow: "5px 5px 10px 0 #00000025", marginBottom: 2 }}
@@ -325,7 +326,6 @@ function LinhaTabela(props: {
           <FormControl fullWidth sx={{ m: 1 }} variant="filled">
             <TextField
               id={`tituloLinha${props.indexTabela}-${props.index}`}
-              // onChange={(e: any) => { props.set(e.target.value) }}
               sx={{ width: "100%" }}
               InputProps={{
                 startAdornment: <GroupsRoundedIcon sx={{ paddingRight: 1 }} />,

@@ -155,7 +155,16 @@ export default function CriacaoProposta(props: {
   }
 
   function criarProposta() {
-    checarPreenchimento()
+    switch(checarPreenchimento()){
+      case 1: {
+        setMensagemDoErro("Algum campo não foi preenchido!")
+        return
+      }
+      case 2: {
+        setMensagemDoErro("Algum campo não foi preenchido!")
+        return
+      }
+    }
 
     const listaTabelasCustoProposta: any[] = []
     let listaTabelas = document.getElementsByClassName("tabelaCustoCriacao");
@@ -269,81 +278,99 @@ export default function CriacaoProposta(props: {
     // window.location.href = "/home"
   }
 
-  //sdfjiosfgdasfgdanjofgdasfgodhfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfd
   function checarPreenchimento(){
-    // escopoProposta
-    //
-    //
-    //
-    //
-    //
-    //
-    // fazer validação de preenchimento
+    if(escopoProposta == ""){
+      return 1
+    }
+
+    const dataExecucaoInicio = (document.getElementById("periodoExecucaoInicio") as HTMLInputElement).value
+    const dataExecucaoFim = (document.getElementById("periodoExecucaoFim") as HTMLInputElement).value
+
+    //payback
+
+    // informacaoProcesso
+
+    //usuariosResponsaveis
+    
     let listaTabelas = document.getElementsByClassName("tabelaCustoCriacao");
+    let tabelaPreenchida = 0
 
     for (let i = 0; i < listaTabelas.length; i++) {
-      const listaLinhasTabelaCustoProposta: any[] = []
       let listaLinhasTabela = document.getElementsByClassName(`linhaTabelaCustoCriacao${i}`);
-      let checkboxTabelaDeLicenca = document.getElementById(`tabelaDeLicencas${i}`) as HTMLInputElement
-      let valorTotal: number = 0;
-      let quantidadeTotal: number = 0;
-      let linhaTabela;
-
-      const tituloTabela = (document.getElementById(`tituloTabela${i}`) as HTMLInputElement).innerText;
 
       for (let j = 0; j < listaLinhasTabela.length; j++) {
         const nomeRecurso = (document.getElementById(`tituloLinha${i}-${j}`) as HTMLInputElement).value
         const quantidade = (document.getElementById(`esforco${i}-${j}`) as HTMLInputElement).value
         const valorQuantidade = (document.getElementById(`valorHora${i}-${j}`) as HTMLInputElement).value
 
-
-        if (nomeRecurso && quantidade && valorQuantidade) {
-          linhaTabela = {
-            nomeRecurso: nomeRecurso,
-            quantidade: parseInt(quantidade),
-            valorQuantidade: parseInt(valorQuantidade)
-          }
-          valorTotal += (parseInt(valorQuantidade) * parseInt(quantidade));
-          quantidadeTotal += parseInt(quantidade);
+        if(nomeRecurso == "" || quantidade == "" || valorQuantidade == ""){
+          tabelaPreenchida = 1
+          break
         }
-
-        listaLinhasTabelaCustoProposta.push(linhaTabela);
       }
 
-      let listaCentroCustoTabela: any[] = []
+      if(tabelaPreenchida != 0){
+        break
+      }
+
+      if(centroCustoEscolhidas.length == 0){
+        tabelaPreenchida = 1
+        break
+      }
+
+      console.log(centroCustoEscolhidas);
+      
+
 
       for (const centroCustos of centroCustoEscolhidas) {
-        for (const centroCusto of centroCustos) {
+        if(centroCustos != undefined){
 
-          let objetoCentroCusto: {
-            centroCusto: Object,
-            porcentagemDespesa: number
+          console.log(centroCustos);
+          
+          console.log("Tabela " + (i + 1));
+
+          if(centroCustos.length == 0){
+            tabelaPreenchida = 1
+            break
           }
 
-          let centroCustoTabela: {
-            idCentroCusto: number,
-            nomeCentroCusto: string
-          };
 
-          if (centroCusto.tabela == i) {
-            centroCustoTabela = { idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto }
-            objetoCentroCusto = { centroCusto: centroCustoTabela, porcentagemDespesa: (parseFloat(centroCusto.porcentagem) / 100) }
-            listaCentroCustoTabela.push(objetoCentroCusto);
+          for (const centroCusto of centroCustos) {
+            console.log(centroCusto);
+            
+            //ver como isso funnunca
+  
+            // let objetoCentroCusto: {
+            //   centroCusto: Object,
+            //   porcentagemDespesa: number
+            // }
+  
+            // let centroCustoTabela: {
+            //   idCentroCusto: number,
+            //   nomeCentroCusto: string
+            // };
+  
+            // if (centroCusto.tabela == i) {
+            //   centroCustoTabela = { idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto }
+            //   objetoCentroCusto = { centroCusto: centroCustoTabela, porcentagemDespesa: (parseFloat(centroCusto.porcentagem) / 100) }
+            // }
           }
         }
+
+     
       }
 
-      let tabela = {
-        tituloTabela: tituloTabela,
-        quantidadeTotal: quantidadeTotal,
-        valorTotal: valorTotal,
-        licenca: checkboxTabelaDeLicenca.checked,
-        centrosCustoPagantes: listaCentroCustoTabela,
-        linhasTabela: listaLinhasTabelaCustoProposta
+      if(tabelaPreenchida != 0){
+        break
       }
 
-      // listaTabelasCustoProposta.push(tabela)
     }
+
+    if(tabelaPreenchida != 0){
+      return tabelaPreenchida
+    }
+
+    return 0
   }
 
   return (
@@ -540,7 +567,7 @@ export default function CriacaoProposta(props: {
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           autoHideDuration={3000}
           open={feedbackAberto}
-          onClose={() => { setFeedbackAberto(false) }}>
+          onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }}>
 
           <Alert onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }} severity="error" sx={{ width: '100%' }}>
             {mensagemDoErro}

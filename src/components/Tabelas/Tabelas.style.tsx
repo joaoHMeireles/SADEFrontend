@@ -1,5 +1,6 @@
 import {
   Box,
+  IconButton,
   TableCell,
   tableCellClasses,
   TableContainer,
@@ -43,3 +44,16 @@ export const BoxContainerTabela = styledBox({
   boxShadow: "5px 5px 10px 0 #00000025",
   marginBottom: 24
 });
+
+export const PlusIconButton = styled(IconButton)({
+  backgroundColor: "#00579d",
+  color: "white",
+  boxShadow: "5px 5px 10px 0 #00000025",
+  height: "auto",
+  '&:hover': {
+    backgroundColor: "#003c6d",
+    transition: 'ease-in-out',
+    transitionDuration: "0.7s"
+  }
+
+})
