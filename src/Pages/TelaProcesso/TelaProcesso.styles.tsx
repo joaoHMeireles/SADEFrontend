@@ -38,7 +38,8 @@ export const BoxAviso = styledBox({
 
 export const TypographyTitulo = styledTypography({
     color: "#595959",
-    marginBottom: "20px"
+    marginBottom: "20px",
+    // fontSize: "40px"
 })
 
 export const GridPequenosAtributos = styledGrid({
@@ -54,6 +55,10 @@ export const TypographyTituloAtributo = styledTypography({
 
 export const TypographyTexto = styledTypography({
     textAlign: 'justify'
+})
+
+export const TypographyBeneficioQualitativo = styledTypography({
+    width: "100%", wordBreak: "break-word"
 })
 
 export const CircleIconPonto = styled(CircleIcon)({

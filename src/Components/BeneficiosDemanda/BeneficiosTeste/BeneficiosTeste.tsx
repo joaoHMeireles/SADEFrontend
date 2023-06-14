@@ -1,4 +1,3 @@
-import Box from "@mui/material/Box";
 import {
     BoxContainerDivisorio,
     BoxContainerGeral,
@@ -8,8 +7,7 @@ import {
 } from "../BeneficiosDemanda.styles";
 import { useContext, useEffect, useState } from "react";
 import { TextReaderContext } from "../../TextReaderContext/TextReaderContext";
-import TextField from "@mui/material/TextField";
-import { FormControl, InputAdornment, OutlinedInput, Select } from "@mui/material";
+import { InputAdornment, OutlinedInput } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
@@ -26,181 +24,42 @@ const valoresFrequencia = [
     "MENSALMENTE"
 ]
 
-// criacao demanda - ler inputs
-// criacao proposta - inputs preenchidos
+// criacao demanda - ler inputs - PRONTO
+// criacao proposta - inputs preenchidos ou let inputs
 // rascunho - inputs preenchidos ou ler inputs
 // demanda devolvida - inputs preenchidos ou ler inputs
 
-export default function BeneneficiosTeste(props: { proposta: boolean }) {
+export default function BeneneficiosTeste(props: {
+    proposta: boolean,
+    numeroBeneficiosReais: number,
+    setNumeroBeneficiosReais: any,
+    numeroBeneficiosPotenciais: number,
+    setNumeroBeneficiosPotenciais: any,
+    numeroBeneficiosQualitativos: number,
+    setNumeroBeneficiosQualitativos: any,
+    frequenciaUso: any,
+    setFrequenciaUso: any
+}) {
     const { lerTexto } = useContext(TextReaderContext) as any
-    const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
-    const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
-    const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
-    const [listaBeneficiosReal, setListaBeneficiosReal] = useState<any[]>(
-        [<BeneficioReal index={0} numeroBeneficiosReais={numeroBeneficiosReais} />]
-    );
-    const [listaBeneficiosPotencial, setListaBeneficiosPotencial] = useState<any[]>(
-        [<BeneficioPotencial index={0} numeroBeneficiosPotencias={numeroBeneficiosPotenciais} />]
-    );
-    const [listaBeneficiosQualitativos, setListaBeneficiosQualitativos] = useState<any[]>(
-        [<BeneficioQualitativo index={0} numeroBeneficiosQualitativos={numeroBeneficiosQualitativos} />]
-    );
-
-    const [frequenciaUso, setFrequenciaUso] = useState<any>()
 
     if (props.proposta) {
         useEffect(() => {
+
             // inputs preenchidos
         }, [])
     }
 
-    useEffect(() => {
-        console.log(frequenciaUso);
-    }, [frequenciaUso])
-
-    return (
-        <>
-            <BoxContainerGeral>
-                <BoxTitulos>
-                    <TypographyTitulos onClick={lerTexto}>Benefício Real</TypographyTitulos>
-                </BoxTitulos>
-
-                <BeneficioReal index={listaBeneficiosReal.length} numeroBeneficiosReais={numeroBeneficiosReais} />
-
-                <BoxIcones>
-                    {numeroBeneficiosReais > 0 &&
-                        (
-                            <RemoveRoundedIcon
-                                sx={{
-                                    fontSize: "2rem",
-                                    marginRight: 3,
-                                    cursor: "pointer",
-                                    color: "#595959",
-                                }}
-                                onClick={() => {
-                                    // console.log("Entrou -");
-                                    // console.log("Antes: ", listaBeneficiosReal);
-                                    // listaBeneficiosReal.pop();
-                                    // console.log("Depois: ", listaBeneficiosReal);
-
-                                    // setListaBeneficiosReal(listaBeneficiosReal)
-
-                                    setNumeroBeneficiosReais(numeroBeneficiosReais - 1)
-
-                                }} />
-                        )
-                    }
-                    <AddRoundedIcon
-                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
-                        onClick={() => {
-                            // console.log("Entrou +");
-
-                            // console.log("Antes: ", listaBeneficiosReal);
-                            // listaBeneficiosReal.push(<BeneficioReal index={listaBeneficiosReal.length + 1} />)
-                            // console.log("Depois: ", listaBeneficiosReal);
-                            // setListaBeneficiosReal(listaBeneficiosReal)
-                            setNumeroBeneficiosReais(numeroBeneficiosReais + 1)
-                        }} />
-                </BoxIcones>
-
-                <BoxTitulos>
-                    <TypographyTitulos onClick={lerTexto}>Benefício Potencial</TypographyTitulos>
-                </BoxTitulos>
-
-                <BeneficioPotencial index={listaBeneficiosPotencial.length} numeroBeneficiosPotencias={numeroBeneficiosPotenciais} />
-
-                <BoxIcones>
-                    {listaBeneficiosPotencial.length > 0 &&
-                        (
-                            <RemoveRoundedIcon
-                                sx={{
-                                    fontSize: "2rem",
-                                    marginRight: 3,
-                                    cursor: "pointer",
-                                    color: "#595959",
-                                }}
-                                onClick={() => {
-                                    setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais - 1)
-                                    // listaBeneficiosPotencial.pop();
-                                    // setListaBeneficiosPotencial(listaBeneficiosPotencial)
-                                }} />
-                        )
-                    }
-                    <AddRoundedIcon
-                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
-                        onClick={() => {
-                            setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais + 1)
-                            // listaBeneficiosPotencial.push(<BeneficioPotencial index={listaBeneficiosPotencial.length} />)
-                            // setListaBeneficiosPotencial(listaBeneficiosPotencial)
-                        }} />
-                </BoxIcones>
-
-                <BoxTitulos>
-                    <TypographyTitulos onClick={lerTexto}>Benefício Qualitativo</TypographyTitulos>
-                </BoxTitulos>
-
-                <BeneficioQualitativo index={listaBeneficiosQualitativos.length} numeroBeneficiosQualitativos={numeroBeneficiosQualitativos} />
-
-                <BoxIcones>
-                    {listaBeneficiosQualitativos.length > 0 &&
-                        (
-                            <RemoveRoundedIcon
-                                sx={{
-                                    fontSize: "2rem",
-                                    marginRight: 3,
-                                    cursor: "pointer",
-                                    color: "#595959",
-                                }}
-                                onClick={() => {
-                                    setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos - 1)
-                                    // listaBeneficiosQualitativos.pop();
-                                    // setListaBeneficiosQualitativos(listaBeneficiosQualitativos)
-
-                                }} />
-                        )
-                    }
-                    <AddRoundedIcon
-                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
-                        onClick={() => {
-                            setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos + 1)
-
-                            // listaBeneficiosQualitativos.push(<BeneficioQualitativo index={listaBeneficiosQualitativos.length} numeroBeneficiosQualitativos={numeroBeneficiosQualitativos} />)
-                            // setListaBeneficiosQualitativos(listaBeneficiosQualitativos)
-                        }} />
-                </BoxIcones>
-
-
-                <BoxFrequencia>
-                    <TypographyLabels onClick={lerTexto}>Frequência de uso da solução:</TypographyLabels>
-
-                    <SelectEdited sx={{ width: "15vw" }}
-                        id="frequenciaUso"
-                        value={frequenciaUso}
-                        onChange={(e: any) => {
-                            setFrequenciaUso(e.target.value)
-                        }}
-                    >
-                        {valoresFrequencia.map((valor: any, index: number) => {
-                            return (
-                                <MenuItem key={index} value={valor} onClick={lerTexto}>{valor}</MenuItem>
-                            );
-                        })}
-                    </SelectEdited>
-                </BoxFrequencia>
-
-            </BoxContainerGeral >
-        </>
-    )
-}
-
-function BeneficioReal(props: { index: number, numeroBeneficiosReais: number }) {
-    const { lerTexto } = useContext(TextReaderContext) as any
-    const [currencyInput, setCurrencyInput] = useState(0);
-    const [valueInput, setValueInput] = useState<any>();
+    // useEffect(() => {
+    //     console.log(props.frequenciaUso);
+    // }, [props.frequenciaUso])
 
     let beneficiosReais: any[] = [];
 
-    const BeneficioReal = () => {
+    const BeneficioRealRender = (props: { index: number }) => {
+        const { lerTexto } = useContext(TextReaderContext) as any
+        const [currencyInput, setCurrencyInput] = useState(0);
+        const [valueInput, setValueInput] = useState<any>();
+
         return (
             <>
                 <BoxContainerGeralBeneficio key={props.index}>
@@ -215,24 +74,24 @@ function BeneficioReal(props: { index: number, numeroBeneficiosReais: number }) 
                                     <FormControlEdited
                                         variant="outlined"
                                         sx={{ marginRight: "2rem" }}
-                                        // onChange={(e: any) => {
-                                        //     setValueInput(e.target.value);
+                                    // onChange={(e: any) => {
+                                    //     setValueInput(e.target.value);
 
-                                        //     if (atualizarObjetos != null) {
-                                        //         atualizarObjetos();
-                                        //     } else {
-                                        //         atualizarBeneficiosDemanda(
-                                        //             props.informacaoProcesso.beneficiosDemanda,
-                                        //             idBeneficioComponente,
-                                        //             setIdBeneficioComponente,
-                                        //             "valor",
-                                        //             e.target.value,
-                                        //             props.informacaoProcesso,
-                                        //             props.setInformacaoProcesso,
-                                        //             "REAL"
-                                        //         );
-                                        //     }
-                                        // }}
+                                    //     if (atualizarObjetos != null) {
+                                    //         atualizarObjetos();
+                                    //     } else {
+                                    //         atualizarBeneficiosDemanda(
+                                    //             props.informacaoProcesso.beneficiosDemanda,
+                                    //             idBeneficioComponente,
+                                    //             setIdBeneficioComponente,
+                                    //             "valor",
+                                    //             e.target.value,
+                                    //             props.informacaoProcesso,
+                                    //             props.setInformacaoProcesso,
+                                    //             "REAL"
+                                    //         );
+                                    //     }
+                                    // }}
                                     >
                                         <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
                                     </FormControlEdited>
@@ -361,20 +220,131 @@ function BeneficioReal(props: { index: number, numeroBeneficiosReais: number }) 
     }
 
     for (let i = 0; i < props.numeroBeneficiosReais; i++) {
-        beneficiosReais.push(<BeneficioReal />)
+        beneficiosReais.push(<BeneficioRealRender key={i} index={i} />)
     }
 
-    return <>{beneficiosReais}</>
+    return (
+        <>
+            <BoxContainerGeral>
+                <BoxTitulos>
+                    <TypographyTitulos onClick={lerTexto}>Benefício Real</TypographyTitulos>
+                </BoxTitulos>
+
+                <BeneficioReal numeroBeneficiosReais={props.numeroBeneficiosReais} beneficiosReais={beneficiosReais} />
+
+                <BoxIcones>
+                    {props.numeroBeneficiosReais > 0 &&
+                        (
+                            <RemoveRoundedIcon
+                                sx={{
+                                    fontSize: "2rem",
+                                    marginRight: 3,
+                                    cursor: "pointer",
+                                    color: "#595959",
+                                }}
+                                onClick={() => {
+                                    props.setNumeroBeneficiosReais(props.numeroBeneficiosReais - 1)
+
+                                }} />
+                        )
+                    }
+                    <AddRoundedIcon
+                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+                        onClick={() => {
+                            props.setNumeroBeneficiosReais(props.numeroBeneficiosReais + 1)
+                        }} />
+                </BoxIcones>
+
+                <BoxTitulos>
+                    <TypographyTitulos onClick={lerTexto}>Benefício Potencial</TypographyTitulos>
+                </BoxTitulos>
+
+                <BeneficioPotencial numeroBeneficiosPotencias={props.numeroBeneficiosPotenciais} />
+
+                <BoxIcones>
+                    {props.numeroBeneficiosPotenciais > 0 &&
+                        (
+                            <RemoveRoundedIcon
+                                sx={{
+                                    fontSize: "2rem",
+                                    marginRight: 3,
+                                    cursor: "pointer",
+                                    color: "#595959",
+                                }}
+                                onClick={() => {
+                                    props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais - 1)
+                                }} />
+                        )
+                    }
+                    <AddRoundedIcon
+                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+                        onClick={() => {
+                            props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais + 1)
+                        }} />
+                </BoxIcones>
+
+                <BoxTitulos>
+                    <TypographyTitulos onClick={lerTexto}>Benefício Qualitativo</TypographyTitulos>
+                </BoxTitulos>
+
+                <BeneficioQualitativo numeroBeneficiosQualitativos={props.numeroBeneficiosQualitativos} />
+
+                <BoxIcones>
+                    {props.numeroBeneficiosQualitativos > 0 &&
+                        (
+                            <RemoveRoundedIcon
+                                sx={{
+                                    fontSize: "2rem",
+                                    marginRight: 3,
+                                    cursor: "pointer",
+                                    color: "#595959",
+                                }}
+                                onClick={() => {
+                                    props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos - 1)
+
+                                }} />
+                        )
+                    }
+                    <AddRoundedIcon
+                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+                        onClick={() => {
+                            props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos + 1)
+                        }} />
+                </BoxIcones>
+
+
+                <BoxFrequencia>
+                    <TypographyLabels onClick={lerTexto}>Frequência de uso da solução:</TypographyLabels>
+
+                    <SelectEdited sx={{ width: "15vw" }}
+                        id="frequenciaUso"
+                        defaultValue={valoresFrequencia[0]}
+                    >
+                        {valoresFrequencia.map((valor: any, index: number) => {
+                            return (
+                                <MenuItem key={index} value={valor} onClick={lerTexto}>{valor}</MenuItem>
+                            );
+                        })}
+                    </SelectEdited>
+                </BoxFrequencia>
+
+            </BoxContainerGeral >
+        </>
+    )
 }
 
-function BeneficioPotencial(props: { index: number, numeroBeneficiosPotencias: number }) {
+function BeneficioReal(props: { numeroBeneficiosReais: number, beneficiosReais: any }) {
+    return <>{props.beneficiosReais}</>
+}
+
+function BeneficioPotencial(props: { numeroBeneficiosPotencias: number }) {
     const { lerTexto } = useContext(TextReaderContext) as any
     const [currencyInput, setCurrencyInput] = useState(0);
     const [valueInput, setValueInput] = useState<any>();
 
     let beneficiosPotenciais: any[] = []
 
-    const BeneficioPotencial = () => {
+    const BeneficioPotencial = (props: { index: number }) => {
         return (
             <>
                 <BoxContainerGeralBeneficio key={props.index}>
@@ -530,18 +500,18 @@ function BeneficioPotencial(props: { index: number, numeroBeneficiosPotencias: n
     }
 
     for (let i = 0; i < props.numeroBeneficiosPotencias; i++) {
-        beneficiosPotenciais.push(<BeneficioPotencial />)
+        beneficiosPotenciais.push(<BeneficioPotencial key={i} index={i} />)
     }
 
     return <>{beneficiosPotenciais}</>
 }
 
-function BeneficioQualitativo(props: { index: number, numeroBeneficiosQualitativos: number }) {
+function BeneficioQualitativo(props: { numeroBeneficiosQualitativos: number }) {
     const { lerTexto } = useContext(TextReaderContext) as any
 
     let beneficiosQualitativos: any[] = []
 
-    const BeneficioQualitativo = () => {
+    const BeneficioQualitativo = (props: { index: number }) => {
         return (
             <>
                 <BoxContainerGeralBeneficio key={props.index}>
@@ -576,7 +546,7 @@ function BeneficioQualitativo(props: { index: number, numeroBeneficiosQualitativ
     }
 
     for (let i = 0; i < props.numeroBeneficiosQualitativos; i++) {
-        beneficiosQualitativos.push(<BeneficioQualitativo />)
+        beneficiosQualitativos.push(<BeneficioQualitativo key={i} index={i} />)
     }
 
     return <>{beneficiosQualitativos}</>

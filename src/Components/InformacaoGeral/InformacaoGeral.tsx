@@ -82,7 +82,7 @@ export default function InformacaoGeral(props: {
             }
             if (inputAtributo.id == "objetivo") {
               inputAtributo.value = infoDemandaNova.objetivo;
-            }
+            }InformacaoGeral
             if (inputAtributo.id == "situacaoAtual") {
               inputAtributo.value = infoDemandaNova.situacaoAtual;
             }
@@ -125,7 +125,7 @@ export default function InformacaoGeral(props: {
                 props.setInformacaoProcesso(novaInfoDemanda);
               }
 
-              if (props.partUmDemanda) {
+              if (props.partUmDemanda != null) {
                 props.partUmDemanda()
               }
             }}
@@ -150,7 +150,7 @@ export default function InformacaoGeral(props: {
                 props.setInformacaoProcesso(novaInfoDemanda);
               }
 
-              if (props.partUmDemanda) {
+              if (props.partUmDemanda != null) {
                 props.partUmDemanda()
               }
             }}
@@ -175,7 +175,7 @@ export default function InformacaoGeral(props: {
                 props.setInformacaoProcesso(novaInfoDemanda);
               }
 
-              if (props.partUmDemanda) {
+              if (props.partUmDemanda != null)  {
                 props.partUmDemanda()
               }
             }}

@@ -58,12 +58,14 @@ export default function CriacaoDemanda(props: {
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
 
-  const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
-  const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
+  // const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
+  // const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
+
+  const [frequenciaUso, setFrequenciaUso] = useState<any>("SEMANALMENTE");
 
   const location = useLocation();
 
-  const pdfExportComponent = React.useRef<PDFExport>(null);
+  // const pdfExportComponent = React.useRef<PDFExport>(null);
 
   const webSocketService: any = useContext(WebSocketContext)
 
@@ -136,6 +138,10 @@ export default function CriacaoDemanda(props: {
     criarDemanda()
   }, [pdfDemanda])
 
+  useEffect(() => {
+    console.log(data);
+  }, [data])
+
   function atualizarDados(data: any) {
     setData(data);
     localStorage.setItem("OBJETODEMANDACRIADA", JSON.stringify(data))
@@ -179,7 +185,7 @@ export default function CriacaoDemanda(props: {
 
     localStorage.setItem("DADOSDEMANDACRIACAO", JSON.stringify(dataDemanda))
 
-    atualizarDados(data);
+    atualizarDados(dataDemanda);
   }
 
   function partDoisDemanda() {
@@ -190,22 +196,23 @@ export default function CriacaoDemanda(props: {
 
     let valorMensal;
     let descricao;
+    let tipoMoeda
 
     let beneficios = [];
-
 
     for (let i = 0; i < numeroBeneficiosReais; i++) {
       valorMensal = document.getElementById(`valorMensalReal${i}`) as HTMLInputElement;
       descricao = document.getElementById(`descricaoReal${i}`) as HTMLInputElement;
+      tipoMoeda = document.getElementById(`moedaReal${i}`) as HTMLInputElement;
 
       let beneficioReal = {
         "tipoBeneficio": "REAL",
         "descricao": descricao.value,
-        "moeda": moedaReal[i],
+        "moeda": tipoMoeda.innerText,
         "valor": valorMensal.value
       }
 
-      if (numeroBeneficiosReais > 0 && valorMensal.value && moedaReal && descricao.value) {
+      if (numeroBeneficiosReais > 0 && valorMensal.value && tipoMoeda.innerText != "" && descricao.value) {
         beneficios.push(beneficioReal);
       }
     }
@@ -213,15 +220,16 @@ export default function CriacaoDemanda(props: {
     for (let i = 0; i < numeroBeneficiosPotenciais; i++) {
       valorMensal = document.getElementById(`valorMensalPotencial${i}`) as HTMLInputElement;
       descricao = document.getElementById(`descricaoPotencial${i}`) as HTMLInputElement;
+      tipoMoeda = document.getElementById(`moedaPotencial${i}`) as HTMLInputElement;
 
       let beneficioPotencial = {
         "tipoBeneficio": "POTENCIAL",
         "descricao": descricao.value,
-        "moeda": moedaPotencial[i],
+        "moeda": tipoMoeda.innerText,
         "valor": valorMensal.value
       }
 
-      if (numeroBeneficiosReais > 0 && valorMensal.value && moedaPotencial && descricao.value) {
+      if (numeroBeneficiosReais > 0 && valorMensal.value && tipoMoeda.innerText != "" && descricao.value) {
         beneficios.push(beneficioPotencial);
       }
     }
@@ -252,7 +260,6 @@ export default function CriacaoDemanda(props: {
       }
     }
 
-
     localStorage.setItem("DADOSDEMANDACRIACAO", JSON.stringify(data2))
 
     atualizarDados(data2)
@@ -260,7 +267,7 @@ export default function CriacaoDemanda(props: {
 
   function gerarPDFDemanda() {
     const doc = new jsPDF()
-    const pdf = document.getElementById("BOX") as HTMLElement
+    // const pdf = document.getElementById("BOX") as HTMLElement
 
     // console.log(pdf);
     // console.log(pdfExportComponent.current);
@@ -269,7 +276,7 @@ export default function CriacaoDemanda(props: {
     //   pdfExportComponent.current.save();
     // }
 
-    doc.html(pdf)
+    doc.html("")
 
     const pdfArquivo = doc.output("blob")
 
@@ -351,7 +358,7 @@ export default function CriacaoDemanda(props: {
       })
     }
 
-    window.location.href = "/home";
+    // window.location.href = "/home";
   }
 
   return (
@@ -420,7 +427,17 @@ export default function CriacaoDemanda(props: {
 
         {valor == 1 && (
           <>
-            <BeneficiosTeste proposta={false} />
+            <BeneficiosTeste
+              proposta={false}
+              numeroBeneficiosReais={numeroBeneficiosReais}
+              setNumeroBeneficiosReais={setNumeroBeneficiosReais}
+              numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
+              setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
+              numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
+              setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
+              frequenciaUso={frequenciaUso}
+              setFrequenciaUso={setFrequenciaUso}
+            />
             {/* {props.rascunho || props.editarDemanda ?
               <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
                 numeroBeneficiosReais={numeroBeneficiosReais}

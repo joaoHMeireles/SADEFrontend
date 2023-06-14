@@ -28,7 +28,7 @@ import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario, BotaoSecundar
 import {
     BoxAviso, BoxHeader, BoxTabela, CircleIconPonto, GridItemFooter, GridPequenosAtributos, TypographyTexto,
     TypographyTitulo, TypographyTituloAtributo, BoxConteudoModal, TypographyTituloModal, BoxTituloModal,
-    BoxBotoesModal
+    BoxBotoesModal, TypographyBeneficioQualitativo
 } from './TelaProcesso.styles';
 import imagemSemNada from "../../Assets/emptyFolder.png"
 import ResultadoVazio from '../../Components/ResultadoVazio/ResultadoVazio';
@@ -908,7 +908,9 @@ function InfoGeral(props: { processo: any }) {
                 <ListItemIcon>
                     <CircleIconPonto />
                 </ListItemIcon>
-                {beneficio.descricao}
+                <TypographyBeneficioQualitativo>
+                    {beneficio.descricao}
+                </TypographyBeneficioQualitativo>
             </ListItem>
         )
     })
@@ -1044,7 +1046,7 @@ function InfoComercial(props: {
                 }
                 {atributos.tabelasCusto &&
                     <BoxTabela>
-                        <TypographyTitulo variant='subtitle1' onClick={lerTexto}>
+                        <TypographyTitulo variant='h6' onClick={lerTexto}>
                             Tabelas de custo
                         </TypographyTitulo>
                         {elementosTabelaCusto}
@@ -1117,7 +1119,7 @@ function Footer(props: {
     return (
         <Grid container>
             <Grid item xs={8} />
-            
+
             <GridItemFooter item xs={3.5} >
                 {props.link ?
                     <a href={props.link} target='_blank' onClick={lerTexto}>Ver projeto Jira</a>

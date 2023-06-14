@@ -9,7 +9,7 @@ export default function TabelaBeneficios(props: { atributos: any[], title: strin
     const beneficios = props.atributos.map((beneficio: { descricao: string, moeda: string, valor: string, memoriaCalculo: string }, index: number) => {
         return (
             <TableRowEstilizada key={index}>
-                <TableCellEstilzada align='center' onClick={lerTexto}>{beneficio.descricao}</TableCellEstilzada>
+                <TableCellEstilzada sx={{ width: "60%" }} align='center' onClick={lerTexto}>{beneficio.descricao}</TableCellEstilzada>
                 <TableCellEstilzada align='center' onClick={lerTexto}>{beneficio.moeda}</TableCellEstilzada>
                 <TableCellEstilzada align='center' onClick={lerTexto}>{beneficio.valor}</TableCellEstilzada>
             </TableRowEstilizada>
@@ -17,8 +17,8 @@ export default function TabelaBeneficios(props: { atributos: any[], title: strin
     })
 
     return (
-        <BoxTabela sx={{ marginBottom: "30px" }}>
-            <TypographyTitulo variant='subtitle1' onClick={lerTexto}>
+        <BoxTabela sx={{ marginBottom: "50px" }}>
+            <TypographyTitulo variant='h6' onClick={lerTexto}>
                 {props.title}
             </TypographyTitulo>
             <TableContainerEstilizado sx={{ width: "40vw" }}>
