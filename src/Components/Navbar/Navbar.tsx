@@ -44,11 +44,11 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
         const horaAtual = new Date().getHours();
 
         if (horaAtual >= 6 && horaAtual < 12) {
-            setMensagem('Bom dia, ' + nomeUsuario);
+            setMensagem('Bom dia, ');
         } else if (horaAtual >= 12 && horaAtual < 18) {
-            setMensagem('Boa tarde, ' + nomeUsuario);
+            setMensagem('Boa tarde, ');
         } else {
-            setMensagem('Boa noite, ' + nomeUsuario);
+            setMensagem('Boa noite, ');
         }
     }, []);
 
@@ -72,10 +72,8 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                             </Box>
 
                             <Box sx={{ alignItems: "center", display: "flex" }}>
-                                <Box sx={{ marginLeft: "1rem", "&:hover": { cursor: "pointer" } }} onClick={() => {
-                                    window.location.href = "/profile";
-                                }}>
-                                    <p>{mensagem}</p>
+                                <Box sx={{ marginLeft: "1rem" }}>
+                                    <p>{mensagem + nomeUsuario}</p>
                                 </Box>
 
                                 <Box sx={{ height: "100%", marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>
