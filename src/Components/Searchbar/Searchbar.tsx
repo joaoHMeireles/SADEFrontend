@@ -93,7 +93,7 @@ export default function Searchbar(props: {
                 placeholder: "Pesquisar por Título ou Solicitante"
             }} />
 
-            <IconButton sx={{ marginLeft: "1rem" }} onClick={toggleGrid}>
+            <IconButton sx={{ alignItems: "center", display: "flex", justifyContent: "center", marginLeft: "1rem" }} onClick={toggleGrid}>
                 {!props.grid ?
                     <GridViewRoundedIcon sx={{ color: "#00579d" }} />
                     :

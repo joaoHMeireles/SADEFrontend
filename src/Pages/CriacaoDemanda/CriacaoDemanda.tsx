@@ -138,7 +138,7 @@ export default function CriacaoDemanda(props: {
 
   function atualizarDados(data: any) {
     setData(data);
-    localStorage.setItem("OBJETODEMANDACRIADA", JSON.stringify(data))
+    localStorage.setItem("DADOSDEMANDACRIACAO", JSON.stringify(data))
   }
 
   function getIdByAtributo(atributo: string) {
