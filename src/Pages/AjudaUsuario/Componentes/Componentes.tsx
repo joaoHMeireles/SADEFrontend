@@ -52,6 +52,8 @@ export const Introducao = (
         <BoxImage>
             <img id="imgSade" src={sadeDescricaoAzul} alt="Logo - SADE" />
         </BoxImage>
+
+        <Space>.</Space>
     </BoxBackground>
 );
 
@@ -91,6 +93,8 @@ export const CriarDemanda = (
                 <li className="liAjudaUsuario"><b>Anexos:</b> Refere-se à possibilidade de anexar arquivos que possam complementar ou apoiar as informações apresentadas nas duas primeiras partes. Esta seção é opcional e serve para incluir qualquer informação adicional que possa ajudar a avaliar e implementar a solução Proposta ; Para anexar um arquivo à Demanda, basta clicar no botão "Anexar arquivo" ou arrastar o arquivo até a dropzone.</li>
             </ul>
         </P>
+
+        <Space>.</Space>
     </BoxBackground>
 );
 
@@ -108,13 +112,13 @@ export const AvaliarDemanda3Opcoes = (
                     <img id="imgs" src={avaliarDemandaA} alt="Avaliar Demanda" />
                 </BoxImage>
 
-                <P>Caso a ela seja devolvida, explique claramente o motivo. Isso permite que o solicitante entenda os pontos que precisam ser melhorados ou esclarecidos, para que possa refazer a Demanda e entregá-la novamente. O objetivo é garantir que a Demanda possa ser atendida com sucesso e dentro dos parâmetros estabelecidos.</P>
+                <P>Caso a ela seja devolvida, explique claramente o motivo. Isso permite que o Solicitante entenda os pontos que precisam ser melhorados ou esclarecidos, para que possa refazer a Demanda e entregá-la novamente. O objetivo é garantir que a Demanda possa ser atendida com sucesso e dentro dos parâmetros estabelecidos.</P>
 
                 <BoxImage>
                     <img id="imgs" src={devolverDemanda} alt="Devolver Demanda" />
                 </BoxImage>
 
-                <P>Se a Demanda for aprovada, classifique a Demanda por tamanho, informe a BU solicitante, a(s) BU(s) beneficiada(s) e a sessão de TI responsável pela Demanda.</P>
+                <P>Se a Demanda for aprovada, classifique a Demanda por tamanho, informe a BU Solicitante, a(s) BU(s) beneficiada(s) e a sessão de TI responsável pela Demanda.</P>
 
                 <BoxImage>
                     <img id="imgs" src={aprovarDemandaA} alt="Aprovar Demanda" />
@@ -143,7 +147,7 @@ export const AvaliarDemanda2Opcoes = (
                     <img id="imgs" src={avaliarDemandaGN} alt="Avaliar Demanda" />
                 </BoxImage>
 
-                <P>Se a Demanda for reprovada, explique porquê ela não pode ser atendida. Caso a Demanda for aprovada, ela será devolvida para o analista.</P>
+                <P>Se a Demanda for reprovada, explique porquê ela não pode ser atendida. Caso a Demanda for aprovada, ela será devolvida para o Analista.</P>
 
                 <BoxImage>
                     <img id="imgs" src={reprovarDemanda} alt="Reprovar Demanda" />
@@ -265,7 +269,7 @@ export const InformarParecerComissao = (
                     <p>Informar o parecer da Comissão</p>
                 </Title>
 
-                <P>Após a Pauta passar pela reunião, será necessário informar o parecer da comissão que a discutiu. Para isso, dentro da Pauta, clique no botão de "Informar parecer".</P>
+                <P>Após a Pauta passar pela reunião, será necessário informar o parecer da Comissão que a discutiu. Para isso, dentro da Pauta, clique no botão de "Informar parecer".</P>
 
                 <BoxImage>
                     <img id="imgs" src={informarParecerComissao} alt="Informar o parecer da Comissão" />
@@ -353,6 +357,7 @@ export const InformarParecerDiretoriaGeral = (
             </>
             :
             <>
+                <P>Após uma ATA ser criada e passar pela reunião com a Diretoria Geral, o Analista de TI ou o Gerente de TI terão que informar qual foi o parecer da mesma, escolhendo o status da ATA, podendo ser Cancelled, Business Case, To Do ou Assessment, informendo também o número da ATA da DG, e sendo opcional, anexar aquivos e escrever os comentários necessários.</P>
             </>}
     </BoxBackground>
 );
@@ -371,10 +376,13 @@ export const IniciarWorkflow = (
                     <img id="imgs" src={iniciarWorkflow} alt="Iniciar Workflow de Aprovação" />
                 </BoxImage>
 
-                <P>Quando o Workflow de Aprovação é aprovado pelos Gerentes de Negócio e de TI, a Proposta automaticamente torna-se uma Pauta aprovada (não passará pela reunião com a comissão).</P>
+                <P>Quando o Workflow de Aprovação é aprovado pelos Gerentes de Negócio e de TI, a Proposta automaticamente torna-se uma Pauta aprovada (não passará pela reunião com a Comissão).</P>
+
+                <Space>.</Space>
             </>
             :
             <>
+                <P>Dentro de uma Proposta, o Analista de TI ou o Gerente de TI poderão criar um Workflow de Aprovação, que serve agilizar o porcesso de aprovação da Proposta.</P>
             </>}
     </BoxBackground>
 );
@@ -403,13 +411,14 @@ export const AvaliarWorkflow = (
             </>
             :
             <>
+                <P>Após um Analista de TI ou um Gerente de TI criar um Workflow de Aprovação, ele passára por um Gerente de Negócio ou de TI, quer o aprovarão ou não. Caso seja aprovado, a Proposta automaticamente vira uma Pauta sem precisar passar por uma reunião com a Comissão.</P>
             </>}
     </BoxBackground>
 );
 
 // Criar Demanda                         --> Todos
-// Avaliar Demanda                       --> Analista de TI ou Gerente de TI
-// Avaliar Demanda                       --> Gerente de Negócio ou Gerente de TI
+// Avaliar Demanda (três opções)         --> Analista de TI ou Gerente de TI
+// Avaliar Demanda (duas opções)         --> Gerente de Negócio ou Gerente de TI
 // Adicionar informações na Demanda      --> Analista de TI ou Gerente de TI
 // Criar Proposta                        --> Analista de TI ou Gerente de TI
 // Criar Pauta                           --> Analista de TI ou Gerente de TI

@@ -353,7 +353,7 @@ export default function CriacaoProposta(props: {
         {valor != 0 ? (
           <Tabs value={valor} onChange={mudarValor}>
             {valor == 0 ? (
-              <Tab icon={<LensRoundedIcon sx={{ color: "#00579d" }} />}></Tab>
+              <Tab icon={<LensRoundedIcon sx={{ color: " 00579d" }} />}></Tab>
             ) : (
               <Tab icon={<LensRoundedIcon sx={{ color: "#90caf9" }} />}></Tab>
             )}
