@@ -966,9 +966,9 @@ export function Proposta(props: {
           <RadioGroup sx={{ flexDirection: "row" }}>
             <FormControlLabel
               className={`radioButtonStatus${props.index}`}
-              value="Canceled"
+              value="Cancelled"
               control={<Radio sx={{ "&.Mui-checked": { color: "#ff1616" } }} />}
-              label="Canceled"
+              label="Cancelled"
             />
             <FormControlLabel
               className={`radioButtonStatus${props.index}`}

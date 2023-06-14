@@ -7,7 +7,7 @@ const styledGrid = styled(Grid)
 const styledTypography = styled(Typography)
 
 export const BoxHeader = styledBox({
-    backgroundColor: "#ffffff99",
+    backgroundColor: "#ffffff",
     boxSizing: "border-box",
     display: "flex",
     justifyContent: "space-between",

@@ -27,7 +27,7 @@ export enum StatusComponenteProcesso {
     BACKLOG = "Backlog",
     ASSESMENT = "Assesment",
     BUSINESSCASE = "Business Case",
-    CANCELED = "Canceled",
+    CANCELLED = "Cancelled",
     TODO = "ToDo",
 }
 

@@ -62,7 +62,7 @@ export function getCorStatus(status: string | undefined) {
         BACKLOG: "#ddd",
         ASSESMENT: "#444",
         BUSINESSCASE: "#ffd600",
-        CANCELED: "#ff1616",
+        CANCELLED: "#ff1616",
         TODO: "#00612e"
     }
 
@@ -185,7 +185,7 @@ export function getNomeStatus(status: string) {
         BACKLOG: "Aguardando revisão",
         ASSESMENT: "Em planejamento",
         BUSINESSCASE: "Em planejamento demorado",
-        CANCELED: "Cancelado",
+        CANCELLED: "Cancelado",
         TODO: "A fazer",
     };
 
@@ -277,7 +277,7 @@ export function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLBu
         if (estaEmProposta && (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI")) {
             listaBotoes.push(historico)
         } else {
-            if (statusProcesso == "CANCELED" || ultimoHistorico.tarefa == "REENVIARDEMANDA" && (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI")) {
+            if (statusProcesso == "CANCELLED" || ultimoHistorico.tarefa == "REENVIARDEMANDA" && (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI")) {
                 listaBotoes.push(historico)
             } else {
 
