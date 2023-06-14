@@ -144,13 +144,13 @@ export default function ModalAdiconarInformacoes(props: Modal) {
                                 <FormControlLabel
                                     className='radio-status'
                                     value="Assesment"
-                                    control={<Radio sx={{ "&.Mui-checked": { color: "#595959" } }} />}
+                                    control={<Radio sx={{ "&.Mui-checked": { color: "#444" } }} />}
                                     label="Assesment"
                                 />
                                 <FormControlLabel
                                     className='radio-status'
                                     value="Business Case"
-                                    control={<Radio sx={{ "&.Mui-checked": { color: "#FFD600" } }} />}
+                                    control={<Radio sx={{ "&.Mui-checked": { color: "#ffd600" } }} />}
                                     label="Business Case"
                                 />
                             </RadioGroup>

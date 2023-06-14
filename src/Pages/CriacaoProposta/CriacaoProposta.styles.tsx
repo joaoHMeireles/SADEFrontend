@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 const styledBox = styled(Box);
-const styledTypography = styled(Typography);
 
 export const ContainerGeral = styled(Container)({
   alignItems: "center",

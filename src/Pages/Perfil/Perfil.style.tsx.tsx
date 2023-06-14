@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 export const BoxBackground = styled(Box)({
     alignItems: "center",
-    color: "#595959",
+    color: "#444",
     display: "flex",
     flexDirection: "column",
     height: "100%",

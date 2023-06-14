@@ -732,18 +732,18 @@ function Propostas(props: {
           {eUmaPauta ?
             <>
               <Grid>
-                <AccordionProposta {...props.expanded} sx={{ border: "none", borderTop: "#ffffff" }} >
+                <AccordionProposta {...props.expanded} sx={{ border: "none", borderTop: "#fff" }} >
                   <AccordionSummary
                     onClick={mudarAcordeon}
                     expandIcon={props.expanded.expanded ? <RemoveRoundedIcon /> : adicionarIcon}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
-                    sx={{ border: "none", borderTop: "#ffffff" }}
+                    sx={{ border: "none", borderTop: "#fff" }}
                   >
                     {props.expanded.expanded ?
                       <>
                         <Grid item xs={12}>
-                          <Typography variant="h5" sx={{ color: "#595959" }}>
+                          <Typography variant="h5" sx={{ color: "#444" }}>
                             Informações ATA
                           </Typography>
                         </Grid>
@@ -760,7 +760,7 @@ function Propostas(props: {
                       </>
                     }
                   </AccordionSummary>
-                  <AccordionDetails sx={{ border: "none", borderTop: "#ffffff" }} >
+                  <AccordionDetails sx={{ border: "none", borderTop: "#fff" }} >
                     <Grid item xs={12}>
                       <Grid container spacing={3}>
                         <GridInfoATA item xs={12}>
@@ -934,7 +934,7 @@ export function Proposta(props: {
               </TypographyTexto>
             </GridPequenosAtributos>
             <Grid item>
-              <TypographyTexto variant='body1' sx={{ color: "#595959" }}>
+              <TypographyTexto variant='body1' sx={{ color: "#444" }}>
                 <b>Comentário :</b>   {props.propostaAnterior.comentario}
               </TypographyTexto>
             </Grid>
@@ -967,25 +967,25 @@ export function Proposta(props: {
             <FormControlLabel
               className={`radioButtonStatus${props.index}`}
               value="Canceled"
-              control={<Radio sx={{ "&.Mui-checked": { color: "#FF1616" } }} />}
+              control={<Radio sx={{ "&.Mui-checked": { color: "#ff1616" } }} />}
               label="Canceled"
             />
             <FormControlLabel
               className={`radioButtonStatus${props.index}`}
               value="Business Case"
-              control={<Radio sx={{ "&.Mui-checked": { color: "#FFD600" } }} />}
+              control={<Radio sx={{ "&.Mui-checked": { color: "#ffd600" } }} />}
               label="Business Case"
             />
             <FormControlLabel
               className={`radioButtonStatus${props.index}`}
               value="To do"
-              control={<Radio sx={{ "&.Mui-checked": { color: "#00612E" } }} />}
+              control={<Radio sx={{ "&.Mui-checked": { color: "#00612e" } }} />}
               label="To do"
             />
             <FormControlLabel
               className={`radioButtonStatus${props.index}`}
               value="Assesment"
-              control={<Radio sx={{ "&.Mui-checked": { color: "#595959" } }} />}
+              control={<Radio sx={{ "&.Mui-checked": { color: "#444" } }} />}
               label="Assesment"
             />
           </RadioGroup>
@@ -1139,7 +1139,7 @@ export function Proposta(props: {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography variant="h5" sx={{ color: "#595959" }}>
+            <Typography variant="h5" sx={{ color: "#444" }}>
               {decisaoProposta.proposta.demanda.tituloDemanda}
             </Typography>
 

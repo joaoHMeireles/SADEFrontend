@@ -19,7 +19,7 @@ export const SidebarListItem = styled(ListItem)({
 export const SidebarListItemButton = styled(ListItemButton)({
     px: 2.5,
     minHeight: 48,
-    color: "#595959",
+    color: "#444",
     textDecorationColor: "transparent"
 })
 
@@ -29,7 +29,7 @@ export const SidebarListItemIcon = styled(ListItemIcon)({
 })
 
 export const SidebarTypography = styled(Typography)({
-    color: "#595959",
+    color: "#444",
     "& .Mui-selected": { ...styleItemSelecionado }
 })
 

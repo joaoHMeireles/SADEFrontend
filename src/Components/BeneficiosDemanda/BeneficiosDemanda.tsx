@@ -195,7 +195,7 @@ export default function BeneficiosDemanda(props: {
                     fontSize: "2rem",
                     marginRight: 3,
                     cursor: "pointer",
-                    color: "#595959",
+                    color: "#444",
                   }}
                   onClick={() => {
                     if (props.setNumeroBeneficiosReais != null && props.numeroBeneficiosReais != null) {
@@ -208,7 +208,7 @@ export default function BeneficiosDemanda(props: {
             </>
           }
           <AddRoundedIcon
-            sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+            sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
             onClick={() => {
               if (props.setNumeroBeneficiosReais != null && props.numeroBeneficiosReais != null) {
                 props.setNumeroBeneficiosReais(props.numeroBeneficiosReais + 1);
@@ -237,7 +237,7 @@ export default function BeneficiosDemanda(props: {
                     fontSize: "2rem",
                     marginRight: 3,
                     cursor: "pointer",
-                    color: "#595959",
+                    color: "#444",
                   }}
                   onClick={() => {
                     if (props.setNumeroBeneficiosPotenciais && props.numeroBeneficiosPotenciais) {
@@ -250,7 +250,7 @@ export default function BeneficiosDemanda(props: {
             </>
           }
           <AddRoundedIcon
-            sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+            sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
             onClick={() => {
               if (props.setNumeroBeneficiosPotenciais != null && props.numeroBeneficiosPotenciais != null) {
                 props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais + 1);
@@ -277,7 +277,7 @@ export default function BeneficiosDemanda(props: {
                     fontSize: "2rem",
                     marginRight: 3,
                     cursor: "pointer",
-                    color: "#595959",
+                    color: "#444",
                   }}
                   onClick={() => {
                     if (props.setNumeroBeneficiosQualitativos && props.numeroBeneficiosQualitativos) {
@@ -290,7 +290,7 @@ export default function BeneficiosDemanda(props: {
             </>
           }
           <AddRoundedIcon
-            sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+            sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
             onClick={() => {
               if (props.setNumeroBeneficiosQualitativos != null && props.numeroBeneficiosQualitativos != null) {
                 props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos + 1);

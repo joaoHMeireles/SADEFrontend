@@ -32,10 +32,10 @@ export default function InputAnexos(props: {
   return (
     <>
       <BoxTypographyAnexos>
-        <Typography sx={{ color: "#595959", fontWeight: "bold", marginTop: 2 }} onClick={lerTexto}>Anexos</Typography>
+        <Typography sx={{ color: "#444", fontWeight: "bold", marginTop: 2 }} onClick={lerTexto}>Anexos</Typography>
       </BoxTypographyAnexos>
       
-      <BoxContainerGeral sx={{ "&:hover": { borderColor: "#00579D" } }}>
+      <BoxContainerGeral sx={{ "&:hover": { borderColor: "#00579d" } }}>
         <BoxContainerConteudo>
           <Dropzone rascunho={props.rascunho} proposta={props.proposta} files={files} setFiles={setFiles} arquivosProposta={props.arquivosProposta} setArquivosProposta={props.setArquivosProposta} />
         </BoxContainerConteudo>

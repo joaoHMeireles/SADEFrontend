@@ -84,7 +84,7 @@ export const BoxObrigacaoLegal = styledBox({
 
 export const BoxTitulos = styledBox({
     alignItems: "center",
-    backgroundColor: "#00579D",
+    backgroundColor: "#00579d",
     borderRadius: "5px",
     display: "flex",
     justifyContent: "center",
@@ -121,13 +121,13 @@ export const TextFieldEdited = styledTextField({
 });
 
 export const TypographyLabels = styledTypography({
-    color: "#595959",
+    color: "#444",
     fontWeight: "bold"
 });
 
 export const TypographyTitulos = styledTypography({
     alignItems: "center",
-    color: "#FFF",
+    color: "#fff",
     display: "flex",
     height: "2rem",
     justifyContent: "center",

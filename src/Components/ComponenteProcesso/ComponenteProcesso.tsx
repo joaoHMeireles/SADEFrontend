@@ -55,7 +55,7 @@ export default function ComponenteProcesso(props: {
     tituloToolTip = "Demanda";
     nomeTipoLink = `/${paginaAtual}/demand`;
   } else {
-    corComponente = "#6aacda";
+    corComponente = "#9acae5";
     tituloToolTip = "Proposta";
     nomeTipoLink = `/${paginaAtual}/proposal`;
   }

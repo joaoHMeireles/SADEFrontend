@@ -50,7 +50,7 @@ export const TextFieldEdited = styledTextField({
 })
 
 export const TypographyPadrao = styledTypography({
-    color: "#595959",
+    color: "#444",
     fontWeight: "bold",
     marginBottom: 16
 });

@@ -38,11 +38,11 @@ export default function ComponenteColecaoProcesso(props: {
     nomeTipoLink = "";
 
   if (componente.tipo == TipoColecaoComponenteProcesso.ATA) {
-    corComponente = "#28B9DA";
+    corComponente = "#4ebbde";
     tituloToolTip = "Ata";
     nomeTipoLink = `/${paginaAtual}/ata`;
   } else {
-    corComponente = "#2382BA";
+    corComponente = "#3d83bc";
     tituloToolTip = "Pauta";
     nomeTipoLink = `/${paginaAtual}/agenda`;
   }

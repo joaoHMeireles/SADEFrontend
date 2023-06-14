@@ -7,7 +7,7 @@ const styledGrid = styled(Grid)
 const styledTypography = styled(Typography)
 
 export const BoxHeader = styledBox({
-    backgroundColor: "rgb(255,255,255, 0.9)",
+    backgroundColor: "#ffffff99",
     boxSizing: "border-box",
     display: "flex",
     justifyContent: "space-between",
@@ -20,7 +20,7 @@ export const BoxHeader = styledBox({
 
 export const BoxAviso = styledBox({
     alignItems: "center",
-    backgroundColor: "#FAD27190",
+    backgroundColor: "#ffd60050",
     borderRadius: "40px 0 0 40px",
     display: "flex",
     justifyContent: "space-evenly",
@@ -37,7 +37,7 @@ export const BoxAviso = styledBox({
 })
 
 export const TypographyTitulo = styledTypography({
-    color: "#595959",
+    color: "#444",
     marginBottom: "20px"
 })
 
@@ -48,7 +48,7 @@ export const GridPequenosAtributos = styledGrid({
 })
 
 export const TypographyTituloAtributo = styledTypography({
-    color: "#595959",
+    color: "#444",
     fontWeight: "bold"
 })
 
@@ -72,7 +72,7 @@ export const GridItemFooter = styledGrid({
     display: "flex",
     justifyContent: "space-between",
     '& a': {
-        color: "#595959",
+        color: "#444",
         fontSize: "0.9rem",
         "&:hover": {
             transition: "ease-in",
@@ -91,7 +91,7 @@ export const BoxConteudoModal = styled(BoxConteudo)({
 })
 
 export const TypographyTituloModal = styled(TypographyTitulo)({
-    color: "#00579D",
+    color: "#00579d",
     fontWeight: "500",
     marginBottom: "0px"
 })

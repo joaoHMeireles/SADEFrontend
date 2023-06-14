@@ -44,7 +44,7 @@ export const TypographyTituloInput = styled(TypographyTitulo)({
 
 export const GridInfoATA = styledGrid({
     "& input": {
-        color: "#595959"
+        color: "#444"
     }
 })
 

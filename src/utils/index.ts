@@ -59,10 +59,10 @@ export function getCorTipo(tipo: string | undefined) {
  */
 export function getCorStatus(status: string | undefined) {
     const coresStatus = {
-        BACKLOG: "#DDDDDD",
-        ASSESMENT: "#595959",
-        BUSINESSCASE: "#FFD600",
-        CANCELED: "#FF1616",
+        BACKLOG: "#ddd",
+        ASSESMENT: "#444",
+        BUSINESSCASE: "#ffd600",
+        CANCELED: "#ff1616",
         TODO: "#00612e"
     }
 
@@ -165,10 +165,10 @@ export function useLocationChange(action: any) {
 
 export function getCorStatusHistorico(status: StatusTarefaHistorico) {
     const cores = {
-        "Em Aguardo": "#595959",
+        "Em Aguardo": "#444",
         "Em Andamento": "#00579d",
-        "Concluído": "#00612E",
-        "Atrasado": "#FF1616"
+        "Concluído": "#00612e",
+        "Atrasado": "#ff1616"
     }
 
     return (cores as any)[status]

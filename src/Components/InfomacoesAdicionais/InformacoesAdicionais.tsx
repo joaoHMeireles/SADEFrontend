@@ -120,7 +120,7 @@ export default function InfomacoesAdicionais(props: {
         <>
             <BoxGeral>
                 <BoxTitulo>
-                    <Typography variant="h6" component={"h1"} sx={{ color: "#FFF", fontSize: "16px", height: "2rem" }} onClick={lerTexto}>Informações Adicionais</Typography>
+                    <Typography variant="h6" component={"h1"} sx={{ color: "#fff", fontSize: "16px", height: "2rem" }} onClick={lerTexto}>Informações Adicionais</Typography>
                 </BoxTitulo>
 
                 <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "1rem", marginTop: "1rem", width: "100%" }}>

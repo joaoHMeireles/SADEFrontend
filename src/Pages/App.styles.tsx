@@ -36,15 +36,15 @@ export const BotaoSecundario = styledButton({
 });
 
 export const BotaoTerciario = styledButton({
-    borderColor: "#595959",
-    border: "1px solid #595959",
+    borderColor: "#444",
+    border: "1px solid #444",
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
-    color: '#595959',
+    color: '#444',
     fontSize: "16px",
     '&:hover': {
-        backgroundColor: "#59595920",
-        borderColor: "#595959",
+        backgroundColor: "#44444420",
+        borderColor: "#444",
         transition: 'ease-in-out',
         transitionDuration: "0.7s"
     },
@@ -66,7 +66,7 @@ export const BoxConteudo = styledBox({
 });
 
 export const BoxDraggable = styledBox({
-    backgroundColor: "rgb(255,255,255, 0.9)",
+    backgroundColor: "#ffffff99",
     borderRadius: "5px",
     bottom: "0px",
     cursor: "move",

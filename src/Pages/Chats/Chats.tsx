@@ -268,9 +268,9 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
                 <Toolbar/>
             </LadoDiretoChat>
             <BoxBarraPesquisa>
-                <AttachmentRoundedIcon sx={{color: "#595959", "&:hover": {cursor: "pointer"}}}/>
+                <AttachmentRoundedIcon sx={{color: "#444", "&:hover": {cursor: "pointer"}}}/>
                 <BarraPesquisa onChange={atualizarMensagem} id="input-mensagem"/>
-                <SendRoundedIcon sx={{color: "#595959", "&:hover": {cursor: "pointer"}}} onClick={enviarMensagem}/>
+                <SendRoundedIcon sx={{color: "#444", "&:hover": {cursor: "pointer"}}} onClick={enviarMensagem}/>
             </BoxBarraPesquisa>
         </>
     )

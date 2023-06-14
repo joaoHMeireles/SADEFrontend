@@ -66,14 +66,14 @@ export default function TabelaCustoCriacao(props: {
         {quantidadeTabela > 2 &&
           <Tooltip title="Remover Tabela de Recursos">
             <RemoveRoundedIcon
-              sx={{ color: "#595959", cursor: "pointer", marginRight: 3 }}
+              sx={{ color: "#444", cursor: "pointer", marginRight: 3 }}
               onClick={() => setQuantidadeTabela(quantidadeTabela - 1)} />
           </Tooltip>
         }
         {quantidadeTabela < 3 &&
           <Tooltip title="Adicionar Tabela de recursos">
             <AddRoundedIcon
-              sx={{ color: "#595959", cursor: "pointer" }}
+              sx={{ color: "#444", cursor: "pointer" }}
               onClick={() => setQuantidadeTabela(quantidadeTabela + 1)} />
           </Tooltip>}
       </Box>
@@ -226,7 +226,7 @@ function Tabela(props: {
           {quantidadeLinha > 1 ? (
             <Tooltip title="Remover linha">
               <RemoveRoundedIcon
-                sx={{ color: "#595959", cursor: "pointer", marginRight: 3 }}
+                sx={{ color: "#444", cursor: "pointer", marginRight: 3 }}
                 onClick={() => setQuantidadeLinha(quantidadeLinha - 1)} />
             </Tooltip>
           ) : (
@@ -234,7 +234,7 @@ function Tabela(props: {
           )}
           <Tooltip title="Adicionar linha">
             <AddRoundedIcon
-              sx={{ color: "#595959", cursor: "pointer" }}
+              sx={{ color: "#444", cursor: "pointer" }}
               onClick={() => setQuantidadeLinha(quantidadeLinha + 1)} />
           </Tooltip>
         </BoxIconsAddMinus>
@@ -301,7 +301,7 @@ function ChipAutocompleteCentroCusto(props: { id: any, nome: string, mudarPorcen
 
   return (
     <Box sx={{ marginRight: 2 }}>
-      <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#59595930 solid 1px" }} label={props.nome} onClick={lerTexto} />
+      <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#44444430 solid 1px" }} label={props.nome} onClick={lerTexto} />
 
       <Button id={props.id} sx={{ backgroundColor: "rgba(0,0,0,0.08)", height: "32px", borderRadius: "0 16px 16px 0" }} onClick={atualizarPorcentagem}>{porcentagem} %</Button>
     </Box>

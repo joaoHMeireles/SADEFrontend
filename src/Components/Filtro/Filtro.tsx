@@ -288,7 +288,7 @@ function OpcoesRadio(props: OptionInterface) {
         label={e.nome}
         onClick={lerTextoClique}
         sx={{
-          color: "#595959"
+          color: "#444"
         }}
       />
     );
@@ -328,7 +328,7 @@ function OpcoesCheck(props: OptionInterface) {
   }
 
   return (
-    <FormGroup id={`grupo-opcoes-${props.titulo}`} sx={{ color: "#595959" }}>
+    <FormGroup id={`grupo-opcoes-${props.titulo}`} sx={{ color: "#444" }}>
       {
         props.itens.map((e) =>
           <FormControlLabel
@@ -351,7 +351,7 @@ function OpcaoInput(props: { filtrarResultados: Function, lerTexto: MouseEventHa
     <TextField id="input-pesquisa-ppm" variant="standard" 
       InputProps={{
         sx: {
-          color: "#595959"
+          color: "#444"
         },
         startAdornment: (
           <InputAdornment position="start">

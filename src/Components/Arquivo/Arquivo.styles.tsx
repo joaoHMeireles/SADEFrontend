@@ -18,6 +18,6 @@ export const BoxTypographyFiles = styledBox({
 });
 
 export const TypographyUploadFiles = styledTypography({
-  color: "#595959",
+  color: "#444",
   width: "100%",
 });

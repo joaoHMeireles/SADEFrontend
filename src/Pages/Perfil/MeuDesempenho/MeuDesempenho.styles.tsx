@@ -10,7 +10,7 @@ export const LineChart = styledBox({
 
 export const BoxLine = styledBox({
     alignItems: "center",
-    backgroundColor: "#EEE",
+    backgroundColor: "#eee",
     boxShadow: "5px 5px 10px 0 #00000025",
     borderRadius: "1rem",
     display: "flex",
@@ -55,7 +55,7 @@ export const BoxStatusDoughnut = styledBox({
 
 export const BoxDoughnut = styledBox({
     alignItems: "center",
-    backgroundColor: "#EEE",
+    backgroundColor: "#eee",
     borderRadius: "1rem",
     boxShadow: "5px 5px 10px 0 #00000025",
     display: "flex",
@@ -86,7 +86,7 @@ export const BoxStatusBar = styledBox({
 
 export const BoxBar = styledBox({
     alignItems: "center",
-    backgroundColor: "#EEE",
+    backgroundColor: "#eee",
     borderRadius: "1rem",
     boxShadow: "5px 5px 10px 0 #00000025",
     display: "flex",
