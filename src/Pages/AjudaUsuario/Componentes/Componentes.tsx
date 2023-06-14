@@ -52,9 +52,7 @@ export const Introducao = (
         <BoxImage>
             <img id="imgSade" src={sadeDescricaoAzul} alt="Logo - SADE" />
         </BoxImage>
-
-        <Space>.</Space>
-    </BoxBackground>
+    </BoxBackground >
 );
 
 export const CriarDemanda = (
