@@ -269,6 +269,7 @@ export default function CriacaoProposta(props: {
     // window.location.href = "/home"
   }
 
+  //sdfjiosfgdasfgdanjofgdasfgodhfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfd
   function checarPreenchimento(){
     // escopoProposta
     //
@@ -472,6 +473,7 @@ export default function CriacaoProposta(props: {
                   lerTexto(e)
                   setValor(2);
                   setSegundo(true);
+                  window.scrollTo(0,0)
                 }}>
                 Próximo
               </BotaoPrimario>
