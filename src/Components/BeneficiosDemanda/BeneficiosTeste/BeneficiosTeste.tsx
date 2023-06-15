@@ -24,14 +24,17 @@ const valoresFrequencia = [
 
 export default function BeneneficiosTeste(props: {
     proposta: boolean,
+    rascunho: boolean,
     numeroBeneficiosReais: number,
     setNumeroBeneficiosReais: any,
     numeroBeneficiosPotenciais: number,
     setNumeroBeneficiosPotenciais: any,
     numeroBeneficiosQualitativos: number,
     setNumeroBeneficiosQualitativos: any,
-    frequenciaUso: any,
-    setFrequenciaUso: any
+    frequenciaUso?: any,
+    setFrequenciaUso?: any,
+    informacaoProcesso?: any,
+    setInformacaoProcesso?: any
 }) {
     const { lerTexto } = useContext(TextReaderContext) as any
 
@@ -39,10 +42,98 @@ export default function BeneneficiosTeste(props: {
     const [beneficiosPotenciais, setBeneficiosPotenciais] = useState<any>([])
     const [beneficiosQualitativos, setBeneficiosQualitativos] = useState<any>([])
 
-    if (props.proposta) {
+    const [frequenciaUso, setFrequenciaUso] = useState("DIARIAMENTE");
+
+    if (props.proposta || props.rascunho) {
+        let numeroBeneficiosPotenciais = 0;
+        let numeroBeneficiosReais = 0;
+        let numeroBeneficiosQualitativos = 0;
+
         useEffect(() => {
-            // inputs preenchidos
+            let info;
+
+            if (props.rascunho) {
+                info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") as string);
+            } else if (props.proposta) {
+                info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string);
+            }
+
+            props.setInformacaoProcesso(info);
+
+            if (info) {
+                numeroBeneficiosReais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "REAL").length;
+                numeroBeneficiosPotenciais = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL").length;
+                numeroBeneficiosQualitativos = info.beneficiosDemanda.filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO").length;
+            }
+
+            if (props.setNumeroBeneficiosReais && props.setNumeroBeneficiosPotenciais && props.setNumeroBeneficiosQualitativos) {
+                props.setNumeroBeneficiosReais(numeroBeneficiosReais);
+                props.setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais);
+                props.setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos);
+            }
         }, [])
+
+        useEffect(() => {
+            for (let atributo in props.informacaoProcesso) {
+                if (atributo == "frequenciaUso") {
+                    setFrequenciaUso(props.informacaoProcesso[atributo])
+                }
+
+                if (atributo == "beneficiosDemanda") {
+                    let beneficiosBancoReais = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "REAL");
+                    let beneficiosBancoPotenciais = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "POTENCIAL");
+                    let beneficiosBancoQualitativos = props.informacaoProcesso[atributo].filter((beneficio: any) => beneficio.tipoBeneficio == "QUALITATIVO");
+
+                    setBeneficiosReais(beneficiosBancoReais);
+                    setBeneficiosPotenciais(beneficiosBancoPotenciais);
+                    setBeneficiosQualitativos(beneficiosBancoQualitativos);
+
+                    for (let i = 0; i < props.numeroBeneficiosReais; i++) {
+                        const beneficioRealValorMensal = document.getElementById("valorMensalReal" + i) as HTMLInputElement;
+                        const beneficioRealDescricaoReal = document.getElementById("descricaoReal" + i) as HTMLInputElement;
+                        const beneficioRealMoeda = document.getElementById("moedaReal" + i) as HTMLInputElement;
+
+                        if (beneficioRealValorMensal && beneficiosBancoReais[i]) {
+                            beneficioRealValorMensal.value = beneficiosBancoReais[i].valor;
+                        }
+
+                        if (beneficioRealDescricaoReal && beneficiosBancoReais[i]) {
+                            beneficioRealDescricaoReal.value = beneficiosBancoReais[i].descricao;
+                        }
+
+                        if (beneficioRealMoeda && beneficiosBancoReais[i]) {
+                            beneficioRealMoeda.innerText = beneficiosBancoReais[i].moeda
+                        }
+                    }
+
+                    for (let i = 0; i < props.numeroBeneficiosPotenciais; i++) {
+                        const beneficioPotencialValorMensal = document.getElementById("valorMensalPotencial" + i) as HTMLInputElement;
+                        const beneficioPotencialDescricaoPotencial = document.getElementById("descricaoPotencial" + i) as HTMLInputElement;
+                        const beneficioPotencialMoeda = document.getElementById("moedaPotencial" + i) as HTMLInputElement;
+
+                        if (beneficioPotencialValorMensal && beneficiosBancoPotenciais[i]) {
+                            beneficioPotencialValorMensal.value = beneficiosBancoPotenciais[i].valor;
+                        }
+
+                        if (beneficioPotencialDescricaoPotencial && beneficiosBancoPotenciais[i]) {
+                            beneficioPotencialDescricaoPotencial.value = beneficiosBancoPotenciais[i].descricao;
+                        }
+
+                        if (beneficioPotencialMoeda && beneficiosBancoPotenciais[i]) {
+                            beneficioPotencialMoeda.innerText = beneficiosBancoPotenciais[i].moeda
+                        }
+                    }
+
+                    for (let i = 0; i < props.numeroBeneficiosQualitativos; i++) {
+                        const beneficioQualitativoDescricao = document.getElementById("beneficiosQualitativos" + i) as HTMLInputElement;
+
+                        if (beneficioQualitativoDescricao && beneficiosBancoQualitativos[i]) {
+                            beneficioQualitativoDescricao.value = beneficiosBancoQualitativos[i].descricao;
+                        }
+                    }
+                }
+            }
+        }, [props.informacaoProcesso])
     }
 
     return (
@@ -138,16 +229,46 @@ export default function BeneneficiosTeste(props: {
                 <BoxFrequencia>
                     <TypographyLabels onClick={lerTexto}>Frequência de uso da solução:</TypographyLabels>
 
-                    <SelectEdited sx={{ width: "15vw" }}
-                        id="frequenciaUso"
-                        defaultValue={valoresFrequencia[0]}
-                    >
-                        {valoresFrequencia.map((valor: any, index: number) => {
-                            return (
-                                <MenuItem key={index} value={valor} onClick={lerTexto}>{valor}</MenuItem>
-                            );
-                        })}
-                    </SelectEdited>
+                    {props.proposta ?
+                        <>
+                            <SelectEdited sx={{ width: "15vw" }}
+                                id="frequenciaUso"
+                                value={frequenciaUso}
+                                onChange={(e: any) => {
+                                    setFrequenciaUso(e.target.value);
+
+                                    const novaInfoDemanda = {
+                                        ...props.informacaoProcesso,
+                                        frequenciaUso: e.target.value,
+                                    };
+
+                                    if (props.setInformacaoProcesso || props.informacaoProcesso) {
+                                        props.setInformacaoProcesso(novaInfoDemanda);
+                                    }
+                                }}
+                            >
+                                {valoresFrequencia.map((valor: any, index: number) => {
+                                    return (
+                                        <MenuItem key={index} value={valor} onClick={lerTexto}>{valor}</MenuItem>
+                                    );
+                                })}
+                            </SelectEdited>
+                        </>
+                        :
+                        <>
+                            <SelectEdited sx={{ width: "15vw" }}
+                                id="frequenciaUso"
+                                defaultValue={valoresFrequencia[0]}
+                            >
+                                {valoresFrequencia.map((valor: any, index: number) => {
+                                    return (
+                                        <MenuItem key={index} value={valor} onClick={lerTexto}>{valor}</MenuItem>
+                                    );
+                                })}
+                            </SelectEdited>
+                        </>}
+
+
                 </BoxFrequencia>
 
             </BoxContainerGeral >

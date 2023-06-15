@@ -428,7 +428,7 @@ export default function CriacaoDemanda(props: {
         {valor == 1 && (
           <>
             <BeneficiosTeste
-              proposta={false}
+              proposta={false} rascunho={false}
               numeroBeneficiosReais={numeroBeneficiosReais}
               setNumeroBeneficiosReais={setNumeroBeneficiosReais}
               numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
