@@ -7,7 +7,6 @@ export const BotaoPrimario = styledButton({
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
     fontSize: "16px",
-    height: "auto",
     '&:hover': {
         backgroundColor: "#003c6d",
         transition: 'ease-in-out',
@@ -30,7 +29,6 @@ export const BotaoSecundario = styledButton({
         transition: 'ease-in-out',
         transitionDuration: "0.7s"
     },
-    height: "auto",
     padding: "0.75rem 2rem",
     width: "auto"
 });
@@ -48,7 +46,6 @@ export const BotaoTerciario = styledButton({
         transition: 'ease-in-out',
         transitionDuration: "0.7s"
     },
-    height: "auto",
     padding: "0.75rem 2rem",
     width: "auto"
 });

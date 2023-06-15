@@ -15,7 +15,8 @@ export const AutocompleteEdited = styledAutocomplete({
     backgroundColor: "#eee",
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
-    "& fieldset": { border: "none" }
+    "& fieldset": { border: "none" },
+    width: "100%"
 });
 
 export const BoxGeral = styledBox({

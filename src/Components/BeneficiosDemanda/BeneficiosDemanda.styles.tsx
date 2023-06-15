@@ -25,7 +25,6 @@ export const BoxContainerGeral = styledBox({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
-    height: "auto",
     justifyContent: "space-around",
     width: '100%',
 });
@@ -84,9 +83,10 @@ export const BoxObrigacaoLegal = styledBox({
 
 export const BoxTitulos = styledBox({
     alignItems: "center",
-    backgroundColor: "#00579d",
-    borderRadius: "5px",
+    color: "#00579d",
     display: "flex",
+    fontSize: "20px",
+    fontWeight: "bold",
     justifyContent: "center",
     marginTop: 24,
     width: "100%",

@@ -28,7 +28,7 @@ export default function TabelasCusto(props: { tabelasCusto: any[] }) {
             const porcentagem = centroDeCusto.porcentagemDespesa * 100
 
             return (
-                <Typography key={indexcentroCusto} variant="body1" sx={{ color: "#444", width: "auto", height: "auto", padding: 2, fontSize: 14 }} onClick={lerTexto}>
+                <Typography key={indexcentroCusto} variant="body1" sx={{ color: "#444", width: "auto", padding: 2, fontSize: 14 }} onClick={lerTexto}>
                     {centroDeCusto.centroCusto.nomeCentroCusto} - {porcentagem}%
                 </Typography>
             )

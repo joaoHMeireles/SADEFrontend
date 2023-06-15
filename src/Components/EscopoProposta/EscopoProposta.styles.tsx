@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import styled from "@emotion/styled";
-import TextField from "@mui/material/TextField"
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 const styledBox = styled(Box);
@@ -11,13 +11,11 @@ export const BoxContainerGeral = styledBox({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
-  height: "auto",
   justifyContent: "center",
   width: "100%",
 });
 
 export const BoxPadrao = styledBox({
-  marginTop: 24,
   width: "100%",
 });
 
@@ -55,5 +53,5 @@ export const TextFieldEdited = styledTextField({
 export const TypographyStyled = styledTypography({
   color: "#444",
   fontWeight: "bold",
-  marginBottom: 16
+  marginBottom: "1rem"
 });

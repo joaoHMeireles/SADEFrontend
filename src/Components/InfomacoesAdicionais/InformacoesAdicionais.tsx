@@ -1,16 +1,12 @@
-import './InformacoesAdicionais.scss';
 import { useState, useEffect, useContext } from "react";
 import Box from "@mui/material/Box";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
-import Typography from "@mui/material/Typography";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 import api from "../../api/api";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -122,14 +118,11 @@ export default function InfomacoesAdicionais(props: {
         <>
             <BoxGeral>
                 <BoxTitulo>
-                    {/* <Typography variant="h6" component={"h1"} sx={{ color: "#fff", fontSize: "16px", height: "2rem" }} onClick={lerTexto}>Informações Adicionais</Typography> */}
-                    <Divider sx={{ backgroundColor: "#00579d", height: "2px", marginLeft: "1rem", marginRight: "1rem", width: "50%" }} />
-                    <p>Informações Adicionais</p>
-                    <Divider sx={{ backgroundColor: "#00579d", height: "2px", marginLeft: "1rem", marginRight: "1rem", width: "50%" }} />
+                    <Divider color="#00579d" sx={{ "&::before, &::after": { border: "1px solid #00579d" }, width: "100%" }}>Informações Adicionais</Divider>
                 </BoxTitulo>
 
-                <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "1rem", marginTop: "1rem", width: "100%" }}>
-                    <BoxPadraoDireta>
+                <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", margin: "2rem 0", width: "100%" }}>
+                    <Box>
                         <TypographyPadrao onClick={lerTexto}>Tamanho:</TypographyPadrao>
 
                         <SelectEdited
@@ -151,7 +144,7 @@ export default function InfomacoesAdicionais(props: {
                                 )
                             })}
                         </SelectEdited>
-                    </BoxPadraoDireta>
+                    </Box>
 
                     <Box>
                         <TypographyPadrao onClick={lerTexto}>Prazo elaboração da proposta:</TypographyPadrao>
@@ -181,10 +174,8 @@ export default function InfomacoesAdicionais(props: {
                         </LocalizationProvider>
                     </Box>
 
-                    <BoxPadraoEsquerda>
-                        <Box sx={{ width: "50%" }}>
-                            <TypographyPadrao onClick={lerTexto}>BU Solicitante:</TypographyPadrao>
-                        </Box>
+                    <Box>
+                        <TypographyPadrao onClick={lerTexto}>BU Solicitante:</TypographyPadrao>
 
                         <SelectEdited
                             id="busolicitante"
@@ -226,17 +217,16 @@ export default function InfomacoesAdicionais(props: {
                                 )
                             })}
                         </SelectEdited>
-                    </BoxPadraoEsquerda>
+                    </Box>
                 </Box>
 
-                <Box sx={{ marginBottom: "1rem", marginTop: "1rem", width: "100%" }}>
+                <Box sx={{ marginBottom: "2rem", width: "100%" }}>
                     <TypographyPadrao onClick={lerTexto}>BUs Beneficiadas:</TypographyPadrao>
                     {props.informacaoProcesso != null &&
                         <>
                             {props.informacaoProcesso.busBeneficiadas ?
                                 <AutocompleteEdited
                                     id="BU"
-                                    sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
                                     multiple
                                     disableCloseOnSelect
                                     defaultValue={props.informacaoProcesso.busBeneficiadas.map((bus: any) => bus.nomeBU)}
@@ -323,8 +313,8 @@ export default function InfomacoesAdicionais(props: {
                     }
                 </Box>
 
-                <Box sx={{ marginBottom: "1rem", marginTop: "1rem", width: "100%" }}>
-                    <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "50%" }}>
+                <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "2rem", width: "100%" }}>
+                    {/* <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "50%" }}> */}
                         <Box>
                             <TypographyPadrao onClick={lerTexto}>Sessão TI responsável:</TypographyPadrao>
 
@@ -363,7 +353,7 @@ export default function InfomacoesAdicionais(props: {
                             </SelectEdited>
                         </Box>
 
-                        <Box sx={{ width: "30%" }}>
+                        <Box>
                             <TypographyPadrao onClick={lerTexto}>Código PPM:</TypographyPadrao>
 
                             <TextFieldEdited sx={{ width: "15vw" }} id="codigoPPM" type="search" value={props.valorCodigoPPM} onChange={(e: any) => {
@@ -378,10 +368,10 @@ export default function InfomacoesAdicionais(props: {
                             }}>
                             </TextFieldEdited>
                         </Box>
-                    </Box>
+                    {/* </Box> */}
                 </Box>
 
-                <Box sx={{ mariginBottom: "1rem", marginTop: "1rem", width: "100%" }}>
+                <Box sx={{ mmarginBottom: "2rem", width: "100%" }}>
                     <TypographyPadrao onClick={lerTexto}>Link EPIC Jira:</TypographyPadrao>
 
                     <TextFieldEdited sx={{ width: "100%" }} id="linkJira" type="search" value={props.valorLinkJira}

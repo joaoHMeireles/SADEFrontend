@@ -17,10 +17,9 @@ import {
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import {
-  ContainerGeral,
-  BoxContainerBotoes,
-  BoxBotaoTerciario,
-  BoxBotoesPriSec,
+  BoxBotoes,
+  ContainerBotoes,
+  ContainerGeral
 } from "./CriacaoDemanda.styles";
 import api from "../../api/api";
 import jsPDF from "jspdf";
@@ -383,7 +382,7 @@ export default function CriacaoDemanda(props: {
           <>
             <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} partUmDemanda={partUmDemanda} rascunho={props.rascunho} editarDemanda={props.editarDemanda} informacoesPreenchidas={informacoesPreenchidas} />
 
-            <BoxContainerBotoes>
+            <ContainerBotoes>
               <BotaoTerciario
                 variant="outlined"
                 onClick={(e) => {
@@ -414,14 +413,12 @@ export default function CriacaoDemanda(props: {
                 }}>
                 Proximo
               </BotaoPrimario>
-            </BoxContainerBotoes>
+            </ContainerBotoes>
           </>
         )}
 
         {valor == 1 && (
           <>
-
-            {/* <BeneficiosTeste /> */}
             {props.rascunho || props.editarDemanda ?
               <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
                 numeroBeneficiosReais={numeroBeneficiosReais}
@@ -447,9 +444,7 @@ export default function CriacaoDemanda(props: {
                 setMoedaPotencial={setMoedaPotencial}
                 partDoisDemanda={partDoisDemanda} />
             }
-
-            <BoxContainerBotoes>
-              <BoxBotaoTerciario>
+            <ContainerBotoes>
                 <BotaoTerciario
                   variant="outlined"
                   onClick={(e) => {
@@ -458,16 +453,12 @@ export default function CriacaoDemanda(props: {
                   }}>
                   Cancelar
                 </BotaoTerciario>
-              </BoxBotaoTerciario>
 
-              <BoxBotoesPriSec>
+              <BoxBotoes>
                 <BotaoSecundario
                   onClick={(e) => {
                     lerTexto(e)
                     setValor(valor - 1);
-                  }}
-                  sx={{
-                    marginRight: 3,
                   }}
                   variant="outlined"
                   startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
@@ -476,6 +467,7 @@ export default function CriacaoDemanda(props: {
 
                 <BotaoPrimario
                   variant="contained"
+                  sx={{ marginLeft: "1rem" }}
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
@@ -487,16 +479,16 @@ export default function CriacaoDemanda(props: {
                   }}>
                   Proximo
                 </BotaoPrimario>
-              </BoxBotoesPriSec>
-            </BoxContainerBotoes>
+              </BoxBotoes>
+            </ContainerBotoes>
           </>
         )}
 
         {valor == 2 && (
           <>
             <InputAnexos rascunho={props.rascunho} proposta={false} files={files} setFiles={setFiles} />
-            <BoxContainerBotoes>
-              <BoxBotaoTerciario>
+
+            <ContainerBotoes>
                 <BotaoTerciario
                   variant="outlined"
                   onClick={(e) => {
@@ -505,16 +497,12 @@ export default function CriacaoDemanda(props: {
                   }}>
                   Cancelar
                 </BotaoTerciario>
-              </BoxBotaoTerciario>
 
-              <BoxBotoesPriSec>
+              <BoxBotoes>
                 <BotaoSecundario
                   onClick={(e) => {
                     lerTexto(e)
                     setValor(1);
-                  }}
-                  sx={{
-                    marginRight: 3,
                   }}
                   variant="outlined"
                   startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
@@ -523,6 +511,7 @@ export default function CriacaoDemanda(props: {
 
                 <BotaoPrimario
                   variant="contained"
+                  sx={{ marginLeft: "1rem" }}
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
@@ -532,8 +521,8 @@ export default function CriacaoDemanda(props: {
                   }}>
                   Enviar
                 </BotaoPrimario>
-              </BoxBotoesPriSec>
-            </BoxContainerBotoes>
+              </BoxBotoes>
+            </ContainerBotoes>
 
             {data != null &&
               <EsqueletoPDFVersaoDemanda demanda={data} pdfExportComponent={pdfExportComponent} />
