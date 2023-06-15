@@ -21,7 +21,7 @@ import {
   TypographyLabels,
   TypographyTitulos,
 } from "./BeneficiosDemanda.styles";
-import { Divider, FormControl, InputAdornment, InputLabel, OutlinedInput, Select } from '@mui/material';
+import { Box, Divider, FormControl, InputAdornment, InputLabel, OutlinedInput, Select } from '@mui/material';
 import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 
 const moedas = [
@@ -459,9 +459,9 @@ function BeneficioReal(props: {
     <BoxContainerGeralBeneficio key={props.index}>
       <BoxContainerDivisorio>
         <BoxInputsAcima>
-          <BoxValorMensal>
+          <Box sx={{ width: "100%" }}>
             <TypographyLabels onClick={lerTexto}>Valor Mensal:</TypographyLabels>
-          </BoxValorMensal>
+          </Box>
 
           <BoxInputs>
             {currencyInput == 0 ?
@@ -655,9 +655,9 @@ function BeneficioPotencial(props: {
     <BoxContainerGeralBeneficio key={props.index}>
       <BoxContainerDivisorio>
         <BoxInputsAcima>
-          <BoxValorMensal>
+          <Box sx={{ width: "100%" }}>
             <TypographyLabels onClick={lerTexto}>Valor Mensal:</TypographyLabels>
-          </BoxValorMensal>
+          </Box>
 
           <BoxInputs>
             {currencyInput == 0 ?

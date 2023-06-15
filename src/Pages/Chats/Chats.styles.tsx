@@ -130,7 +130,6 @@ export const BoxMensagemLadoDireito = styledBox({
     background: "#fff",
     borderRadius: "5px 5px 0 5px",
     boxShadow: "-5px 5px 10px 0 #00000025",
-    height: "auto",
     padding: 4,
     width: "auto",
 })
@@ -139,7 +138,6 @@ export const BoxMensagemLadoEsquerdo = styledBox({
     background: "#fff",
     borderRadius: "5px 5px 5px 0px",
     boxShadow: "-5px 5px 10px 0 #00000025",
-    height: "auto",
     padding: 4,
     width: "auto",
 })

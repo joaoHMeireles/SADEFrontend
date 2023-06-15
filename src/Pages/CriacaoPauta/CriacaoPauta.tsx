@@ -273,7 +273,7 @@ export default function CriacaoPauta(props: {
                   </TypographyTituloInput>
 
 
-                  <Box sx={{ height: "auto", width: "60vw" }}>
+                  <Box sx={{ width: "60vw" }}>
                     <TimePicker
                       InputProps={{ sx: { width: "15vw" } }}
                       ampm={false}
@@ -311,7 +311,7 @@ export default function CriacaoPauta(props: {
               <>
                 <BoxGeral key={proposta.id}>
                   <BoxProposta>
-                    <Box sx={{ display: "flex", height: "auto", justifyContent: "center", width: "50vw" }}>
+                    <Box sx={{ display: "flex", justifyContent: "center", width: "50vw" }}>
                       <CardProposta cor="#9acae5">
                         <BoxConteudoProposta>
                           <BoxTituloProposta onClick={lerTexto}>{proposta.tituloDemanda}</BoxTituloProposta>
