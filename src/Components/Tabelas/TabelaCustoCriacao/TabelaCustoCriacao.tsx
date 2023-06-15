@@ -150,7 +150,7 @@ function Tabela(props: {
     for (let centroCustoSelecionada of valorCentroCustoInput) {
       for (let centroCusto of props.centroCusto) {
         if (centroCustoSelecionada == centroCusto.nomeCentroCusto) {
-          const valorPorcetagem = document.getElementById(`chipCentroCusto${centroCusto.idCentroCusto}`) as HTMLButtonElement;
+          const valorPorcetagem = document.getElementById(`tabela${props.tabela}ChipCentroCusto${centroCusto.idCentroCusto}`) as HTMLButtonElement;
           let porcentagemNumero = valorPorcetagem.innerText.slice(0, valorPorcetagem.innerText.length - 1);
 
           listaCentroCustoTabela.push({ idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto, tabela: props.tabela, porcentagem: porcentagemNumero })
@@ -274,7 +274,7 @@ function Tabela(props: {
             const elementosRenderizados = elementos.map((nome: string, index: number) => {
               let centroDeCustoChip = props.centroCusto.find((centroDeCusto: any) => centroDeCusto.nomeCentroCusto == nome)
 
-              return <ChipAutocompleteCentroCusto id={`chipCentroCusto${centroDeCustoChip.idCentroCusto}`} nome={nome} mudarPorcentagem={mudarPorcentagem} />
+              return <ChipAutocompleteCentroCusto id={`tabela${props.tabela}ChipCentroCusto${centroDeCustoChip.idCentroCusto}`} nome={nome} mudarPorcentagem={mudarPorcentagem} />
             })
 
             return elementosRenderizados

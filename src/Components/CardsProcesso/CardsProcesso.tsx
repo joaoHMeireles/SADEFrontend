@@ -21,6 +21,7 @@ export default function CardsProcesso(props: {
   pautaEscolhida?: any;
   setPautaEscolhida?: React.Dispatch<React.SetStateAction<any>>;
   conteudoCarregou?: boolean
+  setListaRascunhos?: React.Dispatch<React.SetStateAction<any[]>>;
 }) {
   const matches = useMediaQuery("(max-width:1100px)");
   const [demandaSelecionada, setDemandaSelecionada] = useState(0)
@@ -42,6 +43,7 @@ export default function CardsProcesso(props: {
           setPropostaSelecionada={props.setPropostaSelecionada}
           demandaSelecionada={demandaSelecionada}
           setDemandaSelecionada={setDemandaSelecionada}
+          setListaRascunhos={props.setListaRascunhos}
         />
       );
     } else {

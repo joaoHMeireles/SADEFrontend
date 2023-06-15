@@ -43,6 +43,7 @@ export default function ComponenteProcesso(props: {
   setPropostas?: React.Dispatch<React.SetStateAction<Array<Object>>>;
   propostaSelecionada?: number;
   setPropostaSelecionada?: React.Dispatch<React.SetStateAction<number>>;
+  setListaRascunhos?: React.Dispatch<React.SetStateAction<any[]>>;
 }) {
   const [isChecked, setIsChecked] = useState(props.atributosProcesso.escolhidaCriacao ? true : false);
   const { lerTexto, leituraDeSiteAtiva } = useContext(TextReaderContext) as any
@@ -149,11 +150,17 @@ export default function ComponenteProcesso(props: {
 
       componentePaginaPauta.link = nomeTipoLink;
 
-      props.propostas?.push(componente);
+      if (props.setPropostas) {
+        const novaListaPropostas = props.propostas as any[]
+        novaListaPropostas.push(componente);
+
+        props.setPropostas(novaListaPropostas);
+      }
     } else {
       card?.classList.remove("selecionado")
 
       if (props.setPropostas) {
+
         props.setPropostas((propostas: any) => {
           return propostas.filter(
             (proposta: any) => proposta.id !== componente.id
@@ -209,11 +216,14 @@ export default function ComponenteProcesso(props: {
   }
 
   function deletarRascunho() {
-    console.log("cancelar rascunho");
     api.delete("/sade/demanda/" + componente.idDemanda).then((response) => {
-      console.log(response);
-      location.reload()
-
+      if (props.setListaRascunhos != null) {
+        props.setListaRascunhos((rascunhos: any) => {
+          return rascunhos.filter(
+            (rascunho: any) => rascunho.idDemanda !== componente.idDemanda
+          );
+        });
+      }
     }).catch((err) => {
       console.log(err);
     })

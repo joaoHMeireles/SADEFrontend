@@ -8,7 +8,7 @@ import Searchbar from "../../Components/Searchbar/Searchbar";
 
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { Box, Grid, MenuItem, Select, TextField } from "@mui/material";
+import { Alert, Box, Grid, MenuItem, Select, Snackbar, TextField } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
@@ -51,6 +51,8 @@ export default function CriacaoPauta(props: {
   const [grid, setGrid] = useState(true);
   const [conteudoCarregou, setConteudoCarregou] = useState(false)
   const [temComponente, setTemComponente] = useState(true)
+  const [feedbackAberto, setFeedbackAberto] = useState(false);
+  const [mensagemDoErro, setMensagemDoErro] = useState("")
   const [propostas, setPropostas] = useState<any[]>([]);
   const [listaComponents, setListaComponents] = useState<any[]>([])
   const [comissoes, setComissoes] = useState<any[]>([]);
@@ -107,6 +109,12 @@ export default function CriacaoPauta(props: {
     }
   }, [listaComponents])
 
+  useEffect(() => {
+    if (mensagemDoErro != "") {
+      setFeedbackAberto(true)
+    }
+  }, [mensagemDoErro])
+
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
   }
@@ -142,9 +150,6 @@ export default function CriacaoPauta(props: {
 
 
     api.post("/sade/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then((response) => {
-
-      console.log(response.data);
-
       location.href = "/home"
     })
   }
@@ -204,6 +209,11 @@ export default function CriacaoPauta(props: {
             endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
             onClick={(e: any) => {
               lerTexto(e)
+              if (propostas.length == 0) {
+                setMensagemDoErro("Selecione pelo menos uma proposta primeiro!")
+                return
+              }
+
               setValor(1);
               localStorage.setItem(
                 "PROPOSTASELECIONADA",
@@ -238,9 +248,6 @@ export default function CriacaoPauta(props: {
                     value={comissaoEscolhida}
                     inputProps={{ id: "comissaoEscolhida" }}
                     onChange={(e: any) => {
-                      console.log(comissoes);
-                      console.log(e);
-
                       const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
                       setComissaoEscolhida(novaComissaoEscolhida);
                     }}>
@@ -360,6 +367,16 @@ export default function CriacaoPauta(props: {
           </BoxBotoes>
         </>
       )}
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        autoHideDuration={5000}
+        open={feedbackAberto}
+        onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }}>
+
+        <Alert onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }} severity="error" sx={{ width: '100%' }}>
+          {mensagemDoErro}
+        </Alert>
+      </Snackbar>
     </BoxConteudo>
   );
 }

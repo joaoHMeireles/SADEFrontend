@@ -161,7 +161,7 @@ export default function CriacaoProposta(props: {
         return
       }
       case 2: {
-        setMensagemDoErro("Algum campo não foi preenchido!")
+        setMensagemDoErro("As informações dos centros de custo estão conflitantes!")
         return
       }
     }
@@ -261,37 +261,29 @@ export default function CriacaoProposta(props: {
 
     if (arquivosProposta || arquivosProposta != undefined) {
       for (const arquivo of arquivosProposta) {
-        console.log(arquivo);
-
         formData.append("files", arquivo);
       }
     }
 
-    // api.post(`/sade/proposta/${idUsuario}`, formData, {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   }
-    // }).then((res) => {
-    //   console.log(res);
-    // })
+    api.post(`/sade/proposta/${idUsuario}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    }).then((res) => {
+      console.log(res);
+    })
 
-    // window.location.href = "/home"
+    window.location.href = "/home"
   }
 
-  function checarPreenchimento(){
-    if(escopoProposta == ""){
-      return 1
-    }
-
+  function checarPreenchimento(): number{
     const dataExecucaoInicio = (document.getElementById("periodoExecucaoInicio") as HTMLInputElement).value
     const dataExecucaoFim = (document.getElementById("periodoExecucaoFim") as HTMLInputElement).value
 
-    //payback
+    if(escopoProposta == "" || (payback == "" || payback == undefined) || informacaoProcesso == "" || usuariosResponsaveis.length == 0 || dataExecucaoInicio == "" || dataExecucaoFim == "" ){
+      return 1
+    }
 
-    // informacaoProcesso
-
-    //usuariosResponsaveis
-    
     let listaTabelas = document.getElementsByClassName("tabelaCustoCriacao");
     let tabelaPreenchida = 0
 
@@ -313,51 +305,31 @@ export default function CriacaoProposta(props: {
         break
       }
 
-      if(centroCustoEscolhidas.length == 0){
+      if(centroCustoEscolhidas.length < 2){
         tabelaPreenchida = 1
         break
       }
 
-      console.log(centroCustoEscolhidas);
-      
-
-
       for (const centroCustos of centroCustoEscolhidas) {
         if(centroCustos != undefined){
-
-          console.log(centroCustos);
-          
-          console.log("Tabela " + (i + 1));
-
           if(centroCustos.length == 0){
             tabelaPreenchida = 1
             break
           }
 
+          let porcentagemTotal = 0
 
           for (const centroCusto of centroCustos) {
-            console.log(centroCusto);
-            
-            //ver como isso funnunca
-  
-            // let objetoCentroCusto: {
-            //   centroCusto: Object,
-            //   porcentagemDespesa: number
-            // }
-  
-            // let centroCustoTabela: {
-            //   idCentroCusto: number,
-            //   nomeCentroCusto: string
-            // };
-  
-            // if (centroCusto.tabela == i) {
-            //   centroCustoTabela = { idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto }
-            //   objetoCentroCusto = { centroCusto: centroCustoTabela, porcentagemDespesa: (parseFloat(centroCusto.porcentagem) / 100) }
-            // }
+            if(centroCusto.tabela == i){
+              porcentagemTotal += centroCusto.porcentagem
+            }
+          }
+
+          if(porcentagemTotal != 100){
+            tabelaPreenchida = 2
+            break;
           }
         }
-
-     
       }
 
       if(tabelaPreenchida != 0){
@@ -565,7 +537,7 @@ export default function CriacaoProposta(props: {
 
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          autoHideDuration={3000}
+          autoHideDuration={5000}
           open={feedbackAberto}
           onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }}>
 

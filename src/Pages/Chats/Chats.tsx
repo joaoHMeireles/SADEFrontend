@@ -47,6 +47,14 @@ export default function Chats(props: { aberto: boolean }) {
     }, []);
 
     useEffect(() => {
+        if(listaChats.length == 0){
+            return
+        }
+
+        setChatEscolhido(listaChats[0])
+    }, [listaChats])
+
+    useEffect(() => {
         atualizarTela()
 
         localStorage.setItem(`NOVAMENSAGEMCHAT${chatEscolhido.idChat}NOTIFICADA`, "false")
@@ -71,15 +79,11 @@ export default function Chats(props: { aberto: boolean }) {
 
                 // infoMensagem[1] = id do chat da mensagem
                 if (infoMensagem[1] == chat.idChat) {
-                    // console.log(chatNovaMensagem);
-
                     setChatEscolhido(chatNovaMensagem)
                     atualizarMensagensNovaMensagem()
                 }
 
                 atualizarComponentes()
-
-                // console.log("jfsdfnhsdlsdjknfsjkdfnfsdffnsdkfjsdfjksd")
 
                 if (localStorage.getItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`) == "false" && localStorage.getItem("PAGINATUAL") != "chat") {
                     console.log("entrouhsbdjsahjsabdsahabdkabd")
