@@ -60,7 +60,7 @@ export function getCorTipo(tipo: string | undefined) {
 export function getCorStatus(status: string | undefined) {
     const coresStatus = {
         BACKLOG: "#ddd",
-        ASSESMENT: "#444",
+        ASSESSMENT: "#444",
         BUSINESSCASE: "#ffd600",
         CANCELLED: "#ff1616",
         TODO: "#00612e"
@@ -183,7 +183,7 @@ export function getCorStatusHistorico(status: StatusTarefaHistorico) {
 export function getNomeStatus(status: string) {
     const nomeStatus = {
         BACKLOG: "Aguardando revisão",
-        ASSESMENT: "Em planejamento",
+        ASSESSMENT: "Em planejamento",
         BUSINESSCASE: "Em planejamento demorado",
         CANCELLED: "Cancelado",
         TODO: "A fazer",

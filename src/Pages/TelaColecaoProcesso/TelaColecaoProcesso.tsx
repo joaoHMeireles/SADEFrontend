@@ -984,9 +984,9 @@ export function Proposta(props: {
             />
             <FormControlLabel
               className={`radioButtonStatus${props.index}`}
-              value="Assesment"
+              value="Assessment"
               control={<Radio sx={{ "&.Mui-checked": { color: "#444" } }} />}
-              label="Assesment"
+              label="Assessment"
             />
           </RadioGroup>
           <FormHelperText id="component-error-text">

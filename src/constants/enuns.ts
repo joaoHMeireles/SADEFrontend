@@ -25,7 +25,7 @@ export enum TamanhoComponenteProcesso {
 
 export enum StatusComponenteProcesso {
     BACKLOG = "Backlog",
-    ASSESMENT = "Assesment",
+    ASSESSMENT = "Assessment",
     BUSINESSCASE = "Business Case",
     CANCELLED = "Cancelled",
     TODO = "ToDo",

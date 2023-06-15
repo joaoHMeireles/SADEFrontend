@@ -1,8 +1,10 @@
+import './InformacoesAdicionais.scss';
 import { useState, useEffect, useContext } from "react";
 import Box from "@mui/material/Box";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
+import Divider from '@mui/material/Divider';
 import Typography from "@mui/material/Typography";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
@@ -22,7 +24,7 @@ import {
     SelectEdited,
     TextFieldEdited,
     TypographyPadrao,
-} from "./InfomacoesAdicionais.styles";
+} from "./InformacoesAdicionais.styles";
 import { getValueEnum } from "../../utils";
 import { sessaoTI } from "../../constants/enuns";
 import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
@@ -120,7 +122,10 @@ export default function InfomacoesAdicionais(props: {
         <>
             <BoxGeral>
                 <BoxTitulo>
-                    <Typography variant="h6" component={"h1"} sx={{ color: "#fff", fontSize: "16px", height: "2rem" }} onClick={lerTexto}>Informações Adicionais</Typography>
+                    {/* <Typography variant="h6" component={"h1"} sx={{ color: "#fff", fontSize: "16px", height: "2rem" }} onClick={lerTexto}>Informações Adicionais</Typography> */}
+                    <Divider sx={{ backgroundColor: "#00579d", height: "2px", marginLeft: "1rem", marginRight: "1rem", width: "50%" }} />
+                    <p>Informações Adicionais</p>
+                    <Divider sx={{ backgroundColor: "#00579d", height: "2px", marginLeft: "1rem", marginRight: "1rem", width: "50%" }} />
                 </BoxTitulo>
 
                 <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "1rem", marginTop: "1rem", width: "100%" }}>

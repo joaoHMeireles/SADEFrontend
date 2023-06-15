@@ -19,19 +19,41 @@ export const AutocompleteEdited = styledAutocomplete({
 });
 
 export const BoxGeral = styledBox({
-    width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", marginTop: 40, marginBottom: 40
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    marginBottom: 40,
+    marginTop: 40,
+    width: "100%"
 });
 
 export const BoxTitulo = styledBox({
-    width: "100%", backgroundColor: "#00579d", display: "flex", justifyContent: "center", alignItems: "center", marginTop: 40, marginBottom: 20
+    alignItems: "center",
+    color: "#00579d",
+    display: "flex",
+    fontSize: "20px",
+    fontWeight: "bold",
+    justifyContent: "center",
+    marginBottom: 20,
+    marginTop: 40,
+    width: "100%",
 });
 
 export const BoxPadraoDireta = styledBox({
-    width: "33%", display: "flex", justifyContent: "center", alignItems: "flex-start", flexDirection: "column"
+    alignItems: "flex-start",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    width: "auto"
 });
 
 export const BoxPadraoEsquerda = styledBox({
-    width: "33%", display: "flex", justifyContent: "center", alignItems: "flex-end", flexDirection: "column"
+    alignItems: "flex-end",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    width: "auto"
 });
 
 export const SelectEdited = styledSelect({
