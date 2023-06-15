@@ -82,7 +82,7 @@ export const BoxTitulos = styledBox({
     fontSize: "20px",
     fontWeight: "bold",
     justifyContent: "center",
-    marginTop: 24,
+    margin: "2rem 0",
     width: "100%",
 });
 
