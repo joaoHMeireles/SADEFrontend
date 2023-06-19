@@ -437,6 +437,7 @@ export default function CriacaoDemanda(props: {
               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
               frequenciaUso={frequenciaUso}
               setFrequenciaUso={setFrequenciaUso}
+              partDoisDemanda={partDoisDemanda}
             />
             {/* {props.rascunho || props.editarDemanda ?
               <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
