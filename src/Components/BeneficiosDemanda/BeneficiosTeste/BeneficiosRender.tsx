@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TextReaderContext } from "../../TextReaderContext/TextReaderContext";
 import {
     BoxContainerDivisorio, BoxContainerGeralBeneficio, BoxDescricaoRequisitosControle, BoxInputs, BoxInputsAbaixo,
@@ -13,10 +13,46 @@ const moedas = [
     "REAL"
 ]
 
-export const BeneficioRealRender = (props: { index: number }) => {
+// let atualizarObjetos: any = null;
+
+export const BeneficioRealRender = (props: {
+    index: number, proposta?: any,
+    rascunho?: any, beneficios?: any,
+    informacaoProcesso?: any, setInformacaoProcesso?: any,
+    idBeneficio?: any
+}) => {
     const { lerTexto } = useContext(TextReaderContext) as any
     const [currencyInput, setCurrencyInput] = useState(0);
     const [valueInput, setValueInput] = useState<any>();
+    const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficio);
+
+    const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[2]);
+
+    useEffect(() => {
+        if (props.proposta || props.rascunho) {
+            for (const beneficio of props.beneficios) {
+                setMoedaBeneficio(beneficio.moeda)
+            }
+        }
+    }, [])
+
+
+    useEffect(() => {
+        switch (moedaBeneficio) {
+            case "REAL": {
+                setCurrencyInput(0);
+                break;
+            }
+            case "DOLAR": {
+                setCurrencyInput(1);
+                break;
+            }
+            case "EURO": {
+                setCurrencyInput(2);
+                break;
+            }
+        }
+    }, [moedaBeneficio]);
 
     return (
         <>
@@ -32,24 +68,24 @@ export const BeneficioRealRender = (props: { index: number }) => {
                                 <FormControlEdited
                                     variant="outlined"
                                     sx={{ marginRight: "2rem" }}
-                                // onChange={(e: any) => {
-                                //     setValueInput(e.target.value);
+                                    onChange={(e: any) => {
+                                        setValueInput(e.target.value);
 
-                                //     if (atualizarObjetos != null) {
-                                //         atualizarObjetos();
-                                //     } else {
-                                //         atualizarBeneficiosDemanda(
-                                //             props.informacaoProcesso.beneficiosDemanda,
-                                //             idBeneficioComponente,
-                                //             setIdBeneficioComponente,
-                                //             "valor",
-                                //             e.target.value,
-                                //             props.informacaoProcesso,
-                                //             props.setInformacaoProcesso,
-                                //             "REAL"
-                                //         );
-                                //     }
-                                // }}
+                                        // if (atualizarObjetos != null) {
+                                        //     atualizarObjetos();
+                                        // } else {
+                                        atualizarBeneficiosDemanda(
+                                            props.informacaoProcesso.beneficiosDemanda,
+                                            idBeneficioComponente,
+                                            setIdBeneficioComponente,
+                                            "valor",
+                                            e.target.value,
+                                            props.informacaoProcesso,
+                                            props.setInformacaoProcesso,
+                                            "REAL"
+                                        );
+                                        // }
+                                    }}
                                 >
                                     <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
                                 </FormControlEdited>
@@ -58,24 +94,24 @@ export const BeneficioRealRender = (props: { index: number }) => {
                                     <FormControlEdited
                                         variant="outlined"
                                         sx={{ marginRight: "2rem" }}
-                                    // onChange={(e: any) => {
-                                    //     setValueInput(e.target.value);
+                                        onChange={(e: any) => {
+                                            setValueInput(e.target.value);
 
-                                    //     if (atualizarObjetos != null) {
-                                    //         atualizarObjetos();
-                                    //     } else {
-                                    //         atualizarBeneficiosDemanda(
-                                    //             props.informacaoProcesso.beneficiosDemanda,
-                                    //             idBeneficioComponente,
-                                    //             setIdBeneficioComponente,
-                                    //             "valor",
-                                    //             e.target.value,
-                                    //             props.informacaoProcesso,
-                                    //             props.setInformacaoProcesso,
-                                    //             "REAL"
-                                    //         );
-                                    //     }
-                                    // }}
+                                            // if (atualizarObjetos != null) {
+                                            //     atualizarObjetos();
+                                            // } else {
+                                            atualizarBeneficiosDemanda(
+                                                props.informacaoProcesso.beneficiosDemanda,
+                                                idBeneficioComponente,
+                                                setIdBeneficioComponente,
+                                                "valor",
+                                                e.target.value,
+                                                props.informacaoProcesso,
+                                                props.setInformacaoProcesso,
+                                                "REAL"
+                                            );
+                                            // }
+                                        }}
                                     >
                                         <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
                                     </FormControlEdited>
@@ -83,24 +119,24 @@ export const BeneficioRealRender = (props: { index: number }) => {
                                     <FormControlEdited
                                         variant="outlined"
                                         sx={{ marginRight: "2rem" }}
-                                    // onChange={(e: any) => {
-                                    //     setValueInput(e.target.value);
+                                        onChange={(e: any) => {
+                                            setValueInput(e.target.value);
 
-                                    //     if (atualizarObjetos != null) {
-                                    //         atualizarObjetos();
-                                    //     } else {
-                                    //         atualizarBeneficiosDemanda(
-                                    //             props.informacaoProcesso.beneficiosDemanda,
-                                    //             idBeneficioComponente,
-                                    //             setIdBeneficioComponente,
-                                    //             "valor",
-                                    //             e.target.value,
-                                    //             props.informacaoProcesso,
-                                    //             props.setInformacaoProcesso,
-                                    //             "REAL"
-                                    //         );
-                                    //     }
-                                    // }}
+                                            // if (atualizarObjetos != null) {
+                                            //     atualizarObjetos();
+                                            // } else {
+                                            atualizarBeneficiosDemanda(
+                                                props.informacaoProcesso.beneficiosDemanda,
+                                                idBeneficioComponente,
+                                                setIdBeneficioComponente,
+                                                "valor",
+                                                e.target.value,
+                                                props.informacaoProcesso,
+                                                props.setInformacaoProcesso,
+                                                "REAL"
+                                            );
+                                            // }
+                                        }}
                                     >
                                         <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">€</InputAdornment>} />
                                     </FormControlEdited>
@@ -109,31 +145,28 @@ export const BeneficioRealRender = (props: { index: number }) => {
                             <SelectEdited
                                 id={`moedaReal${props.index}`}
                                 sx={{ width: "7vw" }}
-                            // value={moedaBeneficio}
-                            // onChange={(e: any) => {
-                            //     setMoedaBeneficio(e.target.value);
+                                value={moedaBeneficio}
+                                onChange={(e: any) => {
+                                    setMoedaBeneficio(e.target.value);
 
-                            //     console.log("e ==> ", e.target.value)
-                            //     console.log("props.moeda ==> " + props.moedaReal)
+                                    // props.moedaReal.push(e.target.value);
+                                    // props.setMoedaReal(props.moedaReal);
 
-                            //     props.moedaReal.push(e.target.value);
-                            //     props.setMoedaReal(props.moedaReal);
-
-                            //     if (atualizarObjetos != null) {
-                            //         atualizarObjetos();
-                            //     } else {
-                            //         atualizarBeneficiosDemanda(
-                            //             props.informacaoProcesso.beneficiosDemanda,
-                            //             idBeneficioComponente,
-                            //             setIdBeneficioComponente,
-                            //             "moeda",
-                            //             e.target.value,
-                            //             props.informacaoProcesso,
-                            //             props.setInformacaoProcesso,
-                            //             "REAL"
-                            //         );
-                            //     }
-                            // }}
+                                    // if (atualizarObjetos != null) {
+                                    //     atualizarObjetos();
+                                    // } else {
+                                    atualizarBeneficiosDemanda(
+                                        props.informacaoProcesso.beneficiosDemanda,
+                                        idBeneficioComponente,
+                                        setIdBeneficioComponente,
+                                        "moeda",
+                                        e.target.value,
+                                        props.informacaoProcesso,
+                                        props.setInformacaoProcesso,
+                                        "REAL"
+                                    );
+                                    // }
+                                }}
                             >
                                 {moedas.map((option: any, index: number) => (
                                     <MenuItem id={`moedaRealoptions${props.index}`} key={index} value={option} onClick={lerTexto}>
@@ -148,22 +181,22 @@ export const BeneficioRealRender = (props: { index: number }) => {
                         <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
                         <TextFieldEdited
                             id={`descricaoReal${props.index}`}
-                            // onChange={(e: any) => {
-                            //     if (atualizarObjetos != null) {
-                            //         atualizarObjetos();* /}
-                            //     } else {* /}
-                            //         atualizarBeneficiosDemanda(
-                            //             props.informacaoProcesso.beneficiosDemanda,
-                            //             idBeneficioComponente,
-                            //             setIdBeneficioComponente,
-                            //             "descricao",
-                            //             e.target.value,
-                            //             props.informacaoProcesso,
-                            //             props.setInformacaoProcesso,
-                            //             "REAL"
-                            //         );
-                            //     }
-                            // }}
+                            onChange={(e: any) => {
+                                // if (atualizarObjetos != null) {
+                                //     atualizarObjetos();* /}
+                                // } else {
+                                atualizarBeneficiosDemanda(
+                                    props.informacaoProcesso.beneficiosDemanda,
+                                    idBeneficioComponente,
+                                    setIdBeneficioComponente,
+                                    "descricao",
+                                    e.target.value,
+                                    props.informacaoProcesso,
+                                    props.setInformacaoProcesso,
+                                    "REAL"
+                                );
+                                // }
+                            }}
                             multiline
                             maxRows={Infinity}
                             sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}>
@@ -177,10 +210,35 @@ export const BeneficioRealRender = (props: { index: number }) => {
     )
 }
 
-export const BeneficioPotencialRender = (props: { index: number }) => {
+export const BeneficioPotencialRender = (props: {
+    index: number, proposta?: any,
+    rascunho?: any, beneficios?: any,
+    informacaoProcesso?: any, setInformacaoProcesso?: any,
+    idBeneficio?: any
+}) => {
     const { lerTexto } = useContext(TextReaderContext) as any
     const [currencyInput, setCurrencyInput] = useState(0);
     const [valueInput, setValueInput] = useState<any>();
+    const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficio);
+
+    const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[2]);
+
+    useEffect(() => {
+        switch (moedaBeneficio) {
+            case "REAL": {
+                setCurrencyInput(0);
+                break;
+            }
+            case "DOLAR": {
+                setCurrencyInput(1);
+                break;
+            }
+            case "EURO": {
+                setCurrencyInput(2);
+                break;
+            }
+        }
+    }, [moedaBeneficio]);
 
     return (
         <>
@@ -196,24 +254,24 @@ export const BeneficioPotencialRender = (props: { index: number }) => {
                                 <FormControlEdited
                                     variant="outlined"
                                     sx={{ marginRight: "2rem" }}
-                                // onChange={(e: any) => {
-                                //     setValueInput(e.target.value);
+                                    onChange={(e: any) => {
+                                        setValueInput(e.target.value);
 
-                                //     if (atualizarObjetos != null) {
-                                //         atualizarObjetos();
-                                //     } else {
-                                //         atualizarBeneficiosDemanda(
-                                //             props.informacaoProcesso.beneficiosDemanda,
-                                //             idBeneficioComponente,
-                                //             setIdBeneficioComponente,
-                                //             "valor",
-                                //             e.target.value,
-                                //             props.informacaoProcesso,
-                                //             props.setInformacaoProcesso,
-                                //             "POTENCIAL"
-                                //         );
-                                //     }
-                                // }}
+                                        // if (atualizarObjetos != null) {
+                                        //     atualizarObjetos();
+                                        // } else {
+                                        atualizarBeneficiosDemanda(
+                                            props.informacaoProcesso.beneficiosDemanda,
+                                            idBeneficioComponente,
+                                            setIdBeneficioComponente,
+                                            "valor",
+                                            e.target.value,
+                                            props.informacaoProcesso,
+                                            props.setInformacaoProcesso,
+                                            "POTENCIAL"
+                                        );
+                                        // }
+                                    }}
                                 >
                                     <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
                                 </FormControlEdited>
@@ -222,24 +280,24 @@ export const BeneficioPotencialRender = (props: { index: number }) => {
                                     <FormControlEdited
                                         variant="outlined"
                                         sx={{ marginRight: "2rem" }}
-                                    // onChange={(e: any) => {
-                                    //     setValueInput(e.target.value);
+                                        onChange={(e: any) => {
+                                            setValueInput(e.target.value);
 
-                                    //     if (atualizarObjetos != null) {
-                                    //         atualizarObjetos()
-                                    //     } else {
-                                    //         atualizarBeneficiosDemanda(
-                                    //             props.informacaoProcesso.beneficiosDemanda,
-                                    //             idBeneficioComponente,
-                                    //             setIdBeneficioComponente,
-                                    //             "valor",
-                                    //             e.target.value,
-                                    //             props.informacaoProcesso,
-                                    //             props.setInformacaoProcesso,
-                                    //             "POTENCIAL"
-                                    //         );
-                                    //     }
-                                    // }}
+                                            // if (atualizarObjetos != null) {
+                                            //     atualizarObjetos()
+                                            // } else {
+                                            atualizarBeneficiosDemanda(
+                                                props.informacaoProcesso.beneficiosDemanda,
+                                                idBeneficioComponente,
+                                                setIdBeneficioComponente,
+                                                "valor",
+                                                e.target.value,
+                                                props.informacaoProcesso,
+                                                props.setInformacaoProcesso,
+                                                "POTENCIAL"
+                                            );
+                                            // }
+                                        }}
                                     >
                                         <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
                                     </FormControlEdited>
@@ -247,24 +305,24 @@ export const BeneficioPotencialRender = (props: { index: number }) => {
                                     <FormControlEdited
                                         variant="outlined"
                                         sx={{ marginRight: "2rem" }}
-                                    // onChange={(e: any) => {
-                                    //     setValueInput(e.target.value);
+                                        onChange={(e: any) => {
+                                            setValueInput(e.target.value);
 
-                                    //     if (atualizarObjetos != null) {
-                                    //         atualizarObjetos()
-                                    //     } else {
-                                    //         atualizarBeneficiosDemanda(
-                                    //             props.informacaoProcesso.beneficiosDemanda,
-                                    //             idBeneficioComponente,
-                                    //             setIdBeneficioComponente,
-                                    //             "valor",
-                                    //             e.target.value,
-                                    //             props.informacaoProcesso,
-                                    //             props.setInformacaoProcesso,
-                                    //             "POTENCIAL"
-                                    //         );
-                                    //     }
-                                    // }}
+                                            // if (atualizarObjetos != null) {
+                                            //     atualizarObjetos()
+                                            // } else {
+                                            atualizarBeneficiosDemanda(
+                                                props.informacaoProcesso.beneficiosDemanda,
+                                                idBeneficioComponente,
+                                                setIdBeneficioComponente,
+                                                "valor",
+                                                e.target.value,
+                                                props.informacaoProcesso,
+                                                props.setInformacaoProcesso,
+                                                "POTENCIAL"
+                                            );
+                                            // }
+                                        }}
                                     >
                                         <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">€</InputAdornment>} />
                                     </FormControlEdited>
@@ -273,28 +331,28 @@ export const BeneficioPotencialRender = (props: { index: number }) => {
                             <SelectEdited
                                 id={`moedaPotencial${props.index}`}
                                 sx={{ width: "7vw" }}
-                            // value={moedaBeneficio}
-                            // onChange={(e: any) => {
-                            //     setMoedaBeneficio(e.target.value);
+                                value={moedaBeneficio}
+                                onChange={(e: any) => {
+                                    setMoedaBeneficio(e.target.value);
 
-                            //     props.moedaPotencial.push(e.target.value);
-                            //     props.setMoedaPotencial(props.moedaPotencial);
+                                    // props.moedaPotencial.push(e.target.value);
+                                    // props.setMoedaPotencial(props.moedaPotencial);
 
-                            //     if (atualizarObjetos != null) {
-                            //         atualizarObjetos();
-                            //     } else {
-                            //         atualizarBeneficiosDemanda(
-                            //             props.informacaoProcesso.beneficiosDemanda,
-                            //             idBeneficioComponente,
-                            //             setIdBeneficioComponente,
-                            //             "moeda",
-                            //             e.target.value,
-                            //             props.informacaoProcesso,
-                            //             props.setInformacaoProcesso,
-                            //             "POTENCIAL"
-                            //         );
-                            //     }
-                            // }}
+                                    // if (atualizarObjetos != null) {
+                                    //     atualizarObjetos();
+                                    // } else {
+                                    atualizarBeneficiosDemanda(
+                                        props.informacaoProcesso.beneficiosDemanda,
+                                        idBeneficioComponente,
+                                        setIdBeneficioComponente,
+                                        "moeda",
+                                        e.target.value,
+                                        props.informacaoProcesso,
+                                        props.setInformacaoProcesso,
+                                        "POTENCIAL"
+                                    );
+                                    // }
+                                }}
                             >
                                 {moedas.map((moeda: any, index: number) => (
                                     <MenuItem id={`moedaPotencial${props.index}`} key={index} value={moeda} onClick={lerTexto}>
@@ -310,22 +368,22 @@ export const BeneficioPotencialRender = (props: { index: number }) => {
 
                         <TextFieldEdited
                             id={`descricaoPotencial${props.index}`}
-                            // onChange={(e: any) => {
-                            //     if (atualizarObjetos != null) {
-                            //         atualizarObjetos();
-                            //     } else {
-                            //         atualizarBeneficiosDemanda(
-                            //             props.informacaoProcesso.beneficiosDemanda,
-                            //             idBeneficioComponente,
-                            //             setIdBeneficioComponente,
-                            //             "descricao",
-                            //             e.target.value,
-                            //             props.informacaoProcesso,
-                            //             props.setInformacaoProcesso,
-                            //             "POTENCIAL"
-                            //         );
-                            //     }
-                            // }}
+                            onChange={(e: any) => {
+                                // if (atualizarObjetos != null) {
+                                //     atualizarObjetos();
+                                // } else {
+                                atualizarBeneficiosDemanda(
+                                    props.informacaoProcesso.beneficiosDemanda,
+                                    idBeneficioComponente,
+                                    setIdBeneficioComponente,
+                                    "descricao",
+                                    e.target.value,
+                                    props.informacaoProcesso,
+                                    props.setInformacaoProcesso,
+                                    "POTENCIAL"
+                                );
+                                // }
+                            }}
                             multiline
                             maxRows={Infinity}>
                         </TextFieldEdited>
@@ -336,8 +394,15 @@ export const BeneficioPotencialRender = (props: { index: number }) => {
     )
 }
 
-export const BeneficioQualitativoRender = (props: { index: number }) => {
+export const BeneficioQualitativoRender = (props: {
+    index: number, proposta?: any,
+    rascunho?: any, beneficios?: any,
+    informacaoProcesso?: any, setInformacaoProcesso?: any,
+    idBeneficio?: any
+}) => {
     const { lerTexto } = useContext(TextReaderContext) as any
+
+    const [idBeneficioComponente, setIdBeneficioComponente] = useState(props.idBeneficio);
 
     return (
         <>
@@ -347,22 +412,22 @@ export const BeneficioQualitativoRender = (props: { index: number }) => {
 
                     <TextFieldEdited
                         id={`beneficiosQualitativos${props.index}`}
-                        // onChange={(e: any) => {
-                        //     if (atualizarObjetos != null) {
-                        //         atualizarObjetos();
-                        //     } else {
-                        //         atualizarBeneficiosDemanda(
-                        //             props.informacaoProcesso.beneficiosDemanda,
-                        //             idBeneficioComponente,
-                        //             setIdBeneficioComponente,
-                        //             "descricao",
-                        //             e.target.value,
-                        //             props.informacaoProcesso,
-                        //             props.setInformacaoProcesso,
-                        //             "QUALITATIVO"
-                        //         );
-                        //     }
-                        // }}
+                        onChange={(e: any) => {
+                            // if (atualizarObjetos != null) {
+                            //     atualizarObjetos();
+                            // } else {
+                            atualizarBeneficiosDemanda(
+                                props.informacaoProcesso.beneficiosDemanda,
+                                idBeneficioComponente,
+                                setIdBeneficioComponente,
+                                "descricao",
+                                e.target.value,
+                                props.informacaoProcesso,
+                                props.setInformacaoProcesso,
+                                "QUALITATIVO"
+                            );
+                            // }
+                        }}
                         multiline
                         maxRows={Infinity}>
                     </TextFieldEdited>
@@ -370,4 +435,70 @@ export const BeneficioQualitativoRender = (props: { index: number }) => {
             </BoxContainerGeralBeneficio>
         </>
     )
+}
+
+function atualizarBeneficiosDemanda(
+    atualizacaoBeneficiosDemanda: any[],
+    idBeneficioComponente: number,
+    setIdBeneficioComponente: React.Dispatch<React.SetStateAction<number>>,
+    nomeAtributo: string,
+    valorInput: string,
+    informacaoProcesso: any,
+    setInformacaoProcesso: React.Dispatch<React.SetStateAction<any>>,
+    tipoBeneficio: string
+) {
+    const beneficioComponente = atualizacaoBeneficiosDemanda.find((beneficio: any) => beneficio.idBeneficio == idBeneficioComponente);
+    let newBeneficio: {
+        idBeneficio?: number,
+        descricao?: string,
+        moeda?: string,
+        tipoBeneficio?: string,
+        valor?: number,
+        novo?: boolean
+    };
+
+    if (beneficioComponente == null) {
+        let idNovoBeneficio = -1;
+
+        if (atualizacaoBeneficiosDemanda.length == 0) {
+            idNovoBeneficio = 1;
+        } else {
+            idNovoBeneficio = atualizacaoBeneficiosDemanda[atualizacaoBeneficiosDemanda.length - 1].idBeneficio + 1;
+        }
+
+        setIdBeneficioComponente(idNovoBeneficio);
+
+        newBeneficio = {
+            idBeneficio: idNovoBeneficio,
+            [nomeAtributo]: Number.parseInt(valorInput),
+            novo: true
+        };
+
+        atualizacaoBeneficiosDemanda.push(newBeneficio);
+    } else {
+        newBeneficio = {
+            ...beneficioComponente,
+            [nomeAtributo]: valorInput as any,
+            tipoBeneficio: tipoBeneficio
+        }
+
+        let index = -1;
+
+        for (let i = 0; i < atualizacaoBeneficiosDemanda.length; i++) {
+            if (atualizacaoBeneficiosDemanda[i].idBeneficio == idBeneficioComponente) {
+                index = i;
+            }
+        }
+
+        atualizacaoBeneficiosDemanda[index] = newBeneficio;
+    }
+
+    const novaInfoDemanda = {
+        ...informacaoProcesso,
+        beneficiosDemanda: atualizacaoBeneficiosDemanda
+    };
+
+    if (novaInfoDemanda) {
+        setInformacaoProcesso(novaInfoDemanda);
+    }
 }

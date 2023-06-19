@@ -18,7 +18,7 @@ const valoresFrequencia = [
 ]
 
 // criacao demanda - ler inputs - PRONTO
-// criacao proposta - inputs preenchidos ou let inputs
+// criacao proposta - inputs preenchidos (vericar currencyInput de bosta) ou let inputs - PRONTO
 // rascunho - inputs preenchidos ou ler inputs
 // demanda devolvida - inputs preenchidos ou ler inputs
 
@@ -143,7 +143,9 @@ export default function BeneneficiosTeste(props: {
                     <TypographyTitulos onClick={lerTexto}>Benefício Real</TypographyTitulos>
                 </BoxTitulos>
 
-                <BeneficioReal numeroBeneficiosReais={props.numeroBeneficiosReais} beneficiosReais={beneficiosReais} />
+                <BeneficioReal numeroBeneficiosReais={props.numeroBeneficiosReais} beneficiosReais={beneficiosReais}
+                    proposta={props.proposta} rascunho={props.rascunho}
+                    informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} />
 
                 <BoxIcones>
                     {props.numeroBeneficiosReais > 0 &&
@@ -172,7 +174,9 @@ export default function BeneneficiosTeste(props: {
                     <TypographyTitulos onClick={lerTexto}>Benefício Potencial</TypographyTitulos>
                 </BoxTitulos>
 
-                <BeneficioPotencial numeroBeneficiosPotencias={props.numeroBeneficiosPotenciais} beneficiosPotenciais={beneficiosPotenciais} />
+                <BeneficioPotencial numeroBeneficiosPotencias={props.numeroBeneficiosPotenciais} beneficiosPotenciais={beneficiosPotenciais}
+                    proposta={props.proposta} rascunho={props.rascunho}
+                    informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} />
 
                 <BoxIcones>
                     {props.numeroBeneficiosPotenciais > 0 &&
@@ -200,7 +204,9 @@ export default function BeneneficiosTeste(props: {
                     <TypographyTitulos onClick={lerTexto}>Benefício Qualitativo</TypographyTitulos>
                 </BoxTitulos>
 
-                <BeneficioQualitativo numeroBeneficiosQualitativos={props.numeroBeneficiosQualitativos} beneficiosQualitativos={beneficiosQualitativos} />
+                <BeneficioQualitativo numeroBeneficiosQualitativos={props.numeroBeneficiosQualitativos} beneficiosQualitativos={beneficiosQualitativos}
+                    proposta={props.proposta} rascunho={props.rascunho}
+                    informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} />
 
                 <BoxIcones>
                     {props.numeroBeneficiosQualitativos > 0 &&
@@ -268,7 +274,6 @@ export default function BeneneficiosTeste(props: {
                             </SelectEdited>
                         </>}
 
-
                 </BoxFrequencia>
 
             </BoxContainerGeral >
@@ -276,45 +281,51 @@ export default function BeneneficiosTeste(props: {
     )
 }
 
-function BeneficioReal(props: { numeroBeneficiosReais: number, beneficiosReais: any }) {
+function BeneficioReal(props: { numeroBeneficiosReais: number, beneficiosReais: any, proposta: any, rascunho: any, informacaoProcesso: any, setInformacaoProcesso: any }) {
 
     let beneficios: any[] = [];
 
     for (let i = 0; i < props.numeroBeneficiosReais; i++) {
         if (props.beneficiosReais[i] != undefined || props.beneficiosReais[i]) {
-            beneficios.push(<BeneficioRealRender key={i} index={i} />)
+            beneficios.push(<BeneficioRealRender key={i} index={i} proposta={props.proposta} rascunho={props.rascunho} beneficios={props.beneficiosReais}
+                informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} idBeneficio={props.beneficiosReais[i].idBeneficio} />)
         } else {
-            beneficios.push(<BeneficioRealRender key={i} index={i} />)
+            beneficios.push(<BeneficioRealRender key={i} index={i} proposta={props.proposta} rascunho={props.rascunho} beneficios={props.beneficiosReais}
+                informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} />)
         }
     }
 
     return <>{beneficios}</>
 }
 
-function BeneficioPotencial(props: { numeroBeneficiosPotencias: number, beneficiosPotenciais: any }) {
+function BeneficioPotencial(props: { numeroBeneficiosPotencias: number, beneficiosPotenciais: any, proposta: any, rascunho: any, informacaoProcesso: any, setInformacaoProcesso: any }) {
 
     let beneficios: any[] = []
 
     for (let i = 0; i < props.numeroBeneficiosPotencias; i++) {
         if (props.beneficiosPotenciais[i] != undefined || props.beneficiosPotenciais[i]) {
-            beneficios.push(<BeneficioPotencialRender key={i} index={i} />)
+            beneficios.push(<BeneficioPotencialRender key={i} index={i} proposta={props.proposta} rascunho={props.rascunho} beneficios={props.beneficiosPotenciais}
+                informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} idBeneficio={props.beneficiosPotenciais[i].idBeneficio} />)
         } else {
-            beneficios.push(<BeneficioPotencialRender key={i} index={i} />)
+            beneficios.push(<BeneficioPotencialRender key={i} index={i} proposta={props.proposta} rascunho={props.rascunho} beneficios={props.beneficiosPotenciais}
+                informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} />)
         }
     }
 
     return <>{beneficios}</>
 }
 
-function BeneficioQualitativo(props: { numeroBeneficiosQualitativos: number, beneficiosQualitativos: any }) {
+function BeneficioQualitativo(props: { numeroBeneficiosQualitativos: number, beneficiosQualitativos: any, proposta: any, rascunho: any, informacaoProcesso: any, setInformacaoProcesso: any }) {
 
     let beneficios: any[] = []
 
     for (let i = 0; i < props.numeroBeneficiosQualitativos; i++) {
         if (props.beneficiosQualitativos[i] != undefined || props.beneficiosQualitativos[i]) {
-            beneficios.push(<BeneficioQualitativoRender key={i} index={i} />)
+            beneficios.push(<BeneficioQualitativoRender key={i} index={i} proposta={props.proposta} rascunho={props.rascunho} beneficios={props.beneficiosQualitativos}
+                informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} idBeneficio={props.beneficiosQualitativos[i].idBeneficio} />)
         } else {
-            beneficios.push(<BeneficioQualitativoRender key={i} index={i} />)
+            beneficios.push(<BeneficioQualitativoRender key={i} index={i} proposta={props.proposta} rascunho={props.rascunho} beneficios={props.beneficiosQualitativos}
+                informacaoProcesso={props.informacaoProcesso} setInformacaoProcesso={props.setInformacaoProcesso} />)
         }
     }
 
