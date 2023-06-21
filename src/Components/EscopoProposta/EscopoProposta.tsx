@@ -6,8 +6,13 @@ import InputAnexos from "../InputAnexos/InputAnexos";
 import TabelaCustoCriacao from "../Tabelas/TabelaCustoCriacao/TabelaCustoCriacao";
 
 import {
-  BoxContainerGeral, BoxPadrao, BoxPaybackExecucao,
-  BoxResponsavel, BoxPaybackExe, BoxResponsaveis,
+  BoxContainerGeral,
+  BoxPadrao,
+  BoxPaybackExecucao,
+  BoxResponsavel,
+  BoxPaybackExe,
+  BoxResponsaveis,
+  TextFieldEdited,
   TypographyStyled
 } from "./EscopoProposta.styles";
 
@@ -72,7 +77,7 @@ export default function EscopoProposta(props: {
     <>
       <BoxContainerGeral>
         <BoxPadrao>
-          <TypographyStyled onClick={lerTexto}>Escopo: </TypographyStyled>
+          <TypographyStyled onClick={lerTexto}>Escopo:</TypographyStyled>
 
           <Editor style={{
             backgroundColor: "#eee",
@@ -97,7 +102,7 @@ export default function EscopoProposta(props: {
         </BoxPadrao>
 
         <BoxPadrao>
-          <TypographyStyled onClick={lerTexto}>Tabelas de Custo: </TypographyStyled>
+          <TypographyStyled onClick={lerTexto}>Tabelas de Custo:</TypographyStyled>
 
           <TabelaCustoCriacao
             centroCusto={props.centroCusto}
@@ -107,10 +112,19 @@ export default function EscopoProposta(props: {
 
         <BoxPaybackExecucao>
           <BoxPaybackExe>
-            <TypographyStyled onClick={lerTexto}>Período de Execução Inicio: </TypographyStyled>
+            <TypographyStyled onClick={lerTexto}>Período de Execução Inicio:</TypographyStyled>
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
+                InputProps={{
+                  sx: {
+                    backgroundColor: "#eee",
+                    borderRadius: "10px",
+                    boxShadow: "5px 5px 10px 0 #00000025",
+                    "& fieldset": { border: "none" },
+                    width: "15vw"
+                  }
+                }}
                 value={props.periodoExecucaoInicio}
                 onChange={(e: any) => {
                   props.setPeriodoExecucaoInicio(e.$d);
@@ -120,10 +134,19 @@ export default function EscopoProposta(props: {
           </BoxPaybackExe>
 
           <BoxPaybackExe>
-            <TypographyStyled onClick={lerTexto}>Período de execução Fim: </TypographyStyled>
+            <TypographyStyled onClick={lerTexto}>Período de execução Fim:</TypographyStyled>
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
+                InputProps={{
+                  sx: {
+                    backgroundColor: "#eee",
+                    borderRadius: "10px",
+                    boxShadow: "5px 5px 10px 0 #00000025",
+                    "& fieldset": { border: "none" },
+                    width: "15vw"
+                  }
+                }}
                 value={props.periodoExecucaoFim}
                 onChange={(e: any) => {
                   props.setPeriodoExecucaoFim(e.$d);
@@ -133,21 +156,21 @@ export default function EscopoProposta(props: {
           </BoxPaybackExe>
 
           <BoxPaybackExe>
-            <TypographyStyled onClick={lerTexto}>Payback: </TypographyStyled>
+            <TypographyStyled onClick={lerTexto}>Payback:</TypographyStyled>
 
-            <TextField
+            <TextFieldEdited
               value={props.payback}
               onChange={(e: any) => {
                 props.setPayback(e.target.value)
               }}
-              sx={{ width: "66%", boxShadow: "5px 5px 10px 0 #00000025" }}>
-            </TextField>
+              sx={{ width: "15vw" }}>
+            </TextFieldEdited>
           </BoxPaybackExe>
         </BoxPaybackExecucao>
 
         <BoxResponsavel>
           <BoxResponsaveis>
-            <TypographyStyled onClick={lerTexto}>Nome dos responsáveis: </TypographyStyled>
+            <TypographyStyled onClick={lerTexto}>Nome dos responsáveis:</TypographyStyled>
 
             <Autocomplete
               id="nomeResponsavel"
@@ -174,9 +197,11 @@ export default function EscopoProposta(props: {
                       icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                       checkedIcon={<CheckBoxIcon fontSize="small" />}
                       style={{ marginRight: 8 }}
-                      checked={selected}
-                    />
-                    <span onClick={lerTexto}>{nomeResponsavel}</span>
+                      checked={selected} />
+
+                    <span onClick={lerTexto}>
+                      {nomeResponsavel}
+                    </span>
                   </li>
                 );
               }}

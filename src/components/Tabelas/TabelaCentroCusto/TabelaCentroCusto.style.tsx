@@ -24,7 +24,7 @@ export const BoxTitulosCentroCusto = styledBox({
     backgroundColor: "#00579d",
     borderRadius: "5px 5px 0 0",
     boxSizing: 'border-box',
-    color: "#ffffff",
+    color: "#fff",
     display: 'flex',
     fontFamily: "'Roboto','Helvetica','Arial',sans-serif",
     fontSize: "0.875rem",

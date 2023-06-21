@@ -18,7 +18,7 @@ export const BoxGridCorProcesso = styledBox({
 });
 
 export const GridComponenteProcesso = styledGrid({
-  color: "#595959",
+  color: "#444",
   cursor: "pointer",
   display: "grid",
   height: "21vh",
@@ -51,7 +51,7 @@ export const GridLinkTypograpfy = styledTypograpfy({
   display: "flex",
   justifyContent: "end",
   "& a": {
-    color: "#2382BA",
+    color: "#3d83bc",
     "&:hover": {
       color: "#00579d",
       fontWeight: "500",
@@ -88,7 +88,7 @@ export const BoxListaCorProcesso = styledBox({
 
 export const ListaComponenteProcesso = styledGrid({
   alignItems: "center",
-  color: "#595959",
+  color: "#444",
   cursor: "pointer",
   display: "flex",
   padding: "5px",
@@ -98,7 +98,7 @@ export const ListaTypography = styled(GridTypography)({
   display: "flex",
   alignItems: "center",
   "& a": {
-    color: "#2382BA",
+    color: "#3d83bc",
 
     "&:hover": {
       color: "#00579d",
@@ -119,7 +119,7 @@ export const UltimaListaTypography = styled(ListaTypography)({
   justifyContent: "end",
   paddingRight: "10px",
   "& a": {
-    color: "#2382BA",
+    color: "#3d83bc",
     "&:hover": {
       color: "#00579d",
       fontWeight: "500",

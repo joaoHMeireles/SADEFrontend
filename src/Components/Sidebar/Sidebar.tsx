@@ -325,13 +325,13 @@ function DropMenuItem(props: { index: number, item: { id: number, nome: string, 
 
 const openedMixin = (): CSSObject => ({
   minWidth: drawerWidth,
-  color: "#595959",
+  color: "#444",
   overflowX: 'hidden',
   boxSizing: 'border-box'
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
-  color: "#595959",
+  color: "#444",
   overflowX: 'hidden',
   boxSizing: 'border-box',
   width: `calc(${theme.spacing(7)} + 1px)`,

@@ -157,7 +157,7 @@ export default function BeneneficiosTeste(props: {
                                     fontSize: "2rem",
                                     marginRight: 3,
                                     cursor: "pointer",
-                                    color: "#595959",
+                                    color: "#444",
                                 }}
                                 onClick={() => {
                                     props.setNumeroBeneficiosReais(props.numeroBeneficiosReais - 1)
@@ -166,7 +166,7 @@ export default function BeneneficiosTeste(props: {
                         )
                     }
                     <AddRoundedIcon
-                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
                         onClick={() => {
                             props.setNumeroBeneficiosReais(props.numeroBeneficiosReais + 1)
                         }} />
@@ -188,7 +188,7 @@ export default function BeneneficiosTeste(props: {
                                     fontSize: "2rem",
                                     marginRight: 3,
                                     cursor: "pointer",
-                                    color: "#595959",
+                                    color: "#444",
                                 }}
                                 onClick={() => {
                                     props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais - 1)
@@ -196,7 +196,7 @@ export default function BeneneficiosTeste(props: {
                         )
                     }
                     <AddRoundedIcon
-                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
                         onClick={() => {
                             props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais + 1)
                         }} />
@@ -218,7 +218,7 @@ export default function BeneneficiosTeste(props: {
                                     fontSize: "2rem",
                                     marginRight: 3,
                                     cursor: "pointer",
-                                    color: "#595959",
+                                    color: "#444",
                                 }}
                                 onClick={() => {
                                     props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos - 1)
@@ -227,7 +227,7 @@ export default function BeneneficiosTeste(props: {
                         )
                     }
                     <AddRoundedIcon
-                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
                         onClick={() => {
                             props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos + 1)
                         }} />

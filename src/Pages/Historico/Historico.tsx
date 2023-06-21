@@ -156,7 +156,7 @@ export default function TelaHistoricos(props: {}) {
             {params.row.pdfHistorico != null ?
               <Tooltip title="Ver pdf">
                 <PictureAsPdfRoundedIcon
-                  sx={{ color: "#595959", "&:hover": { color: "#00579d" } }}
+                  sx={{ color: "#444", "&:hover": { color: "#00579d" } }}
                 />
               </Tooltip>
               :
@@ -330,13 +330,13 @@ export default function TelaHistoricos(props: {}) {
 
                 "& .MuiInputBase-root": {
                   boxSizing: "border-box",
-                  color: "#595959",
+                  color: "#444",
 
                   "& .MuiNativeSelect-select ": {
                     "& option": {
                       backgroundColor: "white",
                       border: "none",
-                      color: "#595959",
+                      color: "#444",
                       fontSize: "16px",
                       padding: "3px",
 
@@ -355,13 +355,13 @@ export default function TelaHistoricos(props: {}) {
 
                 "& .MuiInputBase-root": {
                   boxSizing: "border-box",
-                  color: "#595959",
+                  color: "#444",
 
                   "& .MuiNativeSelect-select ": {
                     "& option": {
                       backgroundColor: "white",
                       border: "none",
-                      color: "#595959",
+                      color: "#444",
                       fontSize: "16px",
                       padding: "3px",
 
@@ -380,7 +380,7 @@ export default function TelaHistoricos(props: {}) {
 
                 "& .MuiInputBase-root": {
                   boxSizing: "border-box",
-                  color: "#595959",
+                  color: "#444",
                 },
               },
             },
@@ -390,7 +390,7 @@ export default function TelaHistoricos(props: {}) {
 
               "& .MuiDataGrid-panelHeader": {
                 "& .MuiInputLabel-standard": {
-                  color: "#595959",
+                  color: "#444",
                 },
 
                 "& .MuiInputLabel-shrink": {
@@ -400,7 +400,7 @@ export default function TelaHistoricos(props: {}) {
 
               "& .MuiDataGrid-panelContent": {
                 "& .MuiTypography-root": {
-                  color: "#595959",
+                  color: "#444",
                 },
 
                 "& .MuiButtonBase-root": {
@@ -419,7 +419,7 @@ export default function TelaHistoricos(props: {}) {
               backgroundColor: "white",
 
               "& li": {
-                color: "#595959",
+                color: "#444",
               },
             },
           },
@@ -485,7 +485,7 @@ export default function TelaHistoricos(props: {}) {
                     background: "#000",
                   }}
                 >
-                  <DownloadIcon sx={{ color: "#FFF" }} />
+                  <DownloadIcon sx={{ color: "#fff" }} />
                 </IconButton>
                 <IconButton
                   onClick={fecharPDF}
@@ -496,7 +496,7 @@ export default function TelaHistoricos(props: {}) {
                     background: "#000",
                   }}
                 >
-                  <CloseIcon sx={{ color: "#FFF" }} />
+                  <CloseIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Box>
             </Modal>

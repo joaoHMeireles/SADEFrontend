@@ -23,7 +23,6 @@ export default function Inicio(props: {
   conteudoCarregou?: boolean;
   setConteudoCarregou?: React.Dispatch<SetStateAction<boolean>>
 }) {
-  // const listaComponentesLocalStorage = localStorage.getItem("LISTACOMPONENTS") != null ? JSON.parse(localStorage.getItem("LISTACOMPONENTS") as string) : []
   const [grid, setGrid] = useState(true);
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
   const [temComponente, setTemComponente] = useState(false)
@@ -39,15 +38,14 @@ export default function Inicio(props: {
           props.setConteudoCarregou(true)
         }
       }, 1000)
-
-
     } else {
       setTemComponente(false)
     }
+
     //para resetar os parâmetros da criação de rascunhos quando for criar demanda
     setTimeout(() => {
       localStorage.setItem("DEMANDACADASTRADA", "false")
-      localStorage.setItem("OBJETODEMANDACRIADA", "null")
+      localStorage.removeItem("DADOSDEMANDACRIACAO")
     }, 500)
   }, [props.listaComponents, props.conteudoCarregou])
 

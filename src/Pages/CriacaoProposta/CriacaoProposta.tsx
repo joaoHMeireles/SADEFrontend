@@ -16,9 +16,8 @@ import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import InfomacoesAdicionais from "../../Components/InfomacoesAdicionais/InformacoesAdicionais";
 import { ContainerGeral, ContainerBoxTabs } from "./CriacaoProposta.styles";
 import {
-  BoxContainerBotoes,
-  BoxBotaoTerciario,
-  BoxBotoesPriSec,
+  BoxBotoes,
+  ContainerBotoes
 } from "../CriacaoDemanda/CriacaoDemanda.styles";
 import { BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles";
 import {
@@ -156,7 +155,16 @@ export default function CriacaoProposta(props: {
   }
 
   function criarProposta() {
-    checarPreenchimento()
+    switch (checarPreenchimento()) {
+      case 1: {
+        setMensagemDoErro("Algum campo não foi preenchido!")
+        return
+      }
+      case 2: {
+        setMensagemDoErro("As informações dos centros de custo estão conflitantes!")
+        return
+      }
+    }
 
     const listaTabelasCustoProposta: any[] = []
     let listaTabelas = document.getElementsByClassName("tabelaCustoCriacao");
@@ -253,8 +261,6 @@ export default function CriacaoProposta(props: {
 
     if (arquivosProposta || arquivosProposta != undefined) {
       for (const arquivo of arquivosProposta) {
-        console.log(arquivo);
-
         formData.append("files", arquivo);
       }
     }
@@ -270,80 +276,71 @@ export default function CriacaoProposta(props: {
     window.location.href = "/home"
   }
 
-  function checarPreenchimento() {
-    // escopoProposta
-    //
-    //
-    //
-    //
-    //
-    //
-    // fazer validação de preenchimento
+  function checarPreenchimento(): number {
+    const dataExecucaoInicio = (document.getElementById("periodoExecucaoInicio") as HTMLInputElement).value
+    const dataExecucaoFim = (document.getElementById("periodoExecucaoFim") as HTMLInputElement).value
+
+    if (escopoProposta == "" || (payback == "" || payback == undefined) || informacaoProcesso == "" || usuariosResponsaveis.length == 0 || dataExecucaoInicio == "" || dataExecucaoFim == "") {
+      return 1
+    }
+
     let listaTabelas = document.getElementsByClassName("tabelaCustoCriacao");
+    let tabelaPreenchida = 0
 
     for (let i = 0; i < listaTabelas.length; i++) {
-      const listaLinhasTabelaCustoProposta: any[] = []
       let listaLinhasTabela = document.getElementsByClassName(`linhaTabelaCustoCriacao${i}`);
-      let checkboxTabelaDeLicenca = document.getElementById(`tabelaDeLicencas${i}`) as HTMLInputElement
-      let valorTotal: number = 0;
-      let quantidadeTotal: number = 0;
-      let linhaTabela;
-
-      const tituloTabela = (document.getElementById(`tituloTabela${i}`) as HTMLInputElement).innerText;
 
       for (let j = 0; j < listaLinhasTabela.length; j++) {
         const nomeRecurso = (document.getElementById(`tituloLinha${i}-${j}`) as HTMLInputElement).value
         const quantidade = (document.getElementById(`esforco${i}-${j}`) as HTMLInputElement).value
         const valorQuantidade = (document.getElementById(`valorHora${i}-${j}`) as HTMLInputElement).value
 
-
-        if (nomeRecurso && quantidade && valorQuantidade) {
-          linhaTabela = {
-            nomeRecurso: nomeRecurso,
-            quantidade: parseInt(quantidade),
-            valorQuantidade: parseInt(valorQuantidade)
-          }
-          valorTotal += (parseInt(valorQuantidade) * parseInt(quantidade));
-          quantidadeTotal += parseInt(quantidade);
+        if (nomeRecurso == "" || quantidade == "" || valorQuantidade == "") {
+          tabelaPreenchida = 1
+          break
         }
-
-        listaLinhasTabelaCustoProposta.push(linhaTabela);
       }
 
-      let listaCentroCustoTabela: any[] = []
+      if (tabelaPreenchida != 0) {
+        break
+      }
+
+      if (centroCustoEscolhidas.length < 2) {
+        tabelaPreenchida = 1
+        break
+      }
 
       for (const centroCustos of centroCustoEscolhidas) {
-        for (const centroCusto of centroCustos) {
-
-          let objetoCentroCusto: {
-            centroCusto: Object,
-            porcentagemDespesa: number
+        if (centroCustos != undefined) {
+          if (centroCustos.length == 0) {
+            tabelaPreenchida = 1
+            break
           }
 
-          let centroCustoTabela: {
-            idCentroCusto: number,
-            nomeCentroCusto: string
-          };
+          let porcentagemTotal = 0
 
-          if (centroCusto.tabela == i) {
-            centroCustoTabela = { idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto }
-            objetoCentroCusto = { centroCusto: centroCustoTabela, porcentagemDespesa: (parseFloat(centroCusto.porcentagem) / 100) }
-            listaCentroCustoTabela.push(objetoCentroCusto);
+          for (const centroCusto of centroCustos) {
+            porcentagemTotal += Number.parseInt(centroCusto.porcentagem)
+          }
+
+          if (porcentagemTotal != 100) {
+            tabelaPreenchida = 2
+            break;
           }
         }
       }
 
-      let tabela = {
-        tituloTabela: tituloTabela,
-        quantidadeTotal: quantidadeTotal,
-        valorTotal: valorTotal,
-        licenca: checkboxTabelaDeLicenca.checked,
-        centrosCustoPagantes: listaCentroCustoTabela,
-        linhasTabela: listaLinhasTabelaCustoProposta
+      if (tabelaPreenchida != 0) {
+        break
       }
 
-      // listaTabelasCustoProposta.push(tabela)
     }
+
+    if (tabelaPreenchida != 0) {
+      return tabelaPreenchida
+    }
+
+    return 0
   }
 
   useEffect(() => {
@@ -358,7 +355,7 @@ export default function CriacaoProposta(props: {
         {valor != 0 ? (
           <Tabs value={valor} onChange={mudarValor}>
             {valor == 0 ? (
-              <Tab icon={<LensRoundedIcon sx={{ color: "#00579d" }} />}></Tab>
+              <Tab icon={<LensRoundedIcon sx={{ color: " 00579d" }} />}></Tab>
             ) : (
               <Tab icon={<LensRoundedIcon sx={{ color: "#90caf9" }} />}></Tab>
             )}
@@ -470,7 +467,7 @@ export default function CriacaoProposta(props: {
 
             <InputAnexos rascunho={false} proposta={true} arquivosProposta={arquivosProposta} setArquivosProposta={setArquivosProposta} />
 
-            <BoxContainerBotoes>
+            <ContainerBotoes>
               <BotaoTerciario
                 variant="outlined"
                 onClick={(e: any) => {
@@ -487,10 +484,11 @@ export default function CriacaoProposta(props: {
                   lerTexto(e)
                   setValor(2);
                   setSegundo(true);
+                  window.scrollTo(0, 0)
                 }}>
                 Próximo
               </BotaoPrimario>
-            </BoxContainerBotoes>
+            </ContainerBotoes>
           </>
         )}
 
@@ -507,19 +505,17 @@ export default function CriacaoProposta(props: {
               arquivosProposta={arquivosProposta}
               setArquivosProposta={setArquivosProposta} />
 
-            <BoxContainerBotoes>
-              <BoxBotaoTerciario>
-                <BotaoTerciario
-                  variant="outlined"
-                  onClick={(e: any) => {
-                    lerTexto(e)
-                    window.location.href = "/home";
-                  }}>
-                  Cancelar
-                </BotaoTerciario>
-              </BoxBotaoTerciario>
+            <ContainerBotoes>
+              <BotaoTerciario
+                variant="outlined"
+                onClick={(e: any) => {
+                  lerTexto(e)
+                  window.location.href = "/home";
+                }}>
+                Cancelar
+              </BotaoTerciario>
 
-              <BoxBotoesPriSec>
+              <BoxBotoes>
                 <BotaoSecundario
                   onClick={(e: any) => {
                     lerTexto(e)
@@ -544,16 +540,16 @@ export default function CriacaoProposta(props: {
                   }}>
                   Enviar
                 </BotaoPrimario>
-              </BoxBotoesPriSec>
-            </BoxContainerBotoes>
+              </BoxBotoes>
+            </ContainerBotoes>
           </>
         )}
 
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          autoHideDuration={3000}
+          autoHideDuration={5000}
           open={feedbackAberto}
-          onClose={() => { setFeedbackAberto(false) }}>
+          onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }}>
 
           <Alert onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }} severity="error" sx={{ width: '100%' }}>
             {mensagemDoErro}

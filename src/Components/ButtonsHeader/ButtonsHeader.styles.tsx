@@ -4,24 +4,25 @@ import { styled } from '@mui/material/styles';
 
 
 export const BotaoIcone = styled(IconButton)({
-    marginLeft: "1vw"
+    marginLeft: "1rem"
 })
 
 export const BotaoPrimarioHeader = styled(BotaoPrimario)({
-    marginLeft: "1vw"
+    marginLeft: "1rem"
 })
 
 export const BotaoSecundarioHeader = styled(BotaoSecundario)({
-    marginLeft: "1vw"
+    marginLeft: "1rem"
 })
 
 export const BotaoTerciarioHeader = styled(BotaoTerciario)({
-    marginLeft: "1vw"
+    marginLeft: "1rem"
 })
 
 export const BoxBotoes = styled(Box)({
+    alignItems: "center",
     display: "flex",
-    flexDirection: 'row-reverse',
-    justifyContent: "space-between",
+    flexDirection: "row-reverse",
+    justifyContent: "flex-end",
     width: "auto"
 })

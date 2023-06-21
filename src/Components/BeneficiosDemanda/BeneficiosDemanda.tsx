@@ -21,7 +21,7 @@ import {
   TypographyLabels,
   TypographyTitulos,
 } from "./BeneficiosDemanda.styles";
-import { FormControl, InputAdornment, InputLabel, OutlinedInput, Select } from '@mui/material';
+import { Box, Divider, FormControl, InputAdornment, InputLabel, OutlinedInput, Select } from '@mui/material';
 import { TextReaderContext } from "../TextReaderContext/TextReaderContext";
 
 const moedas = [
@@ -175,7 +175,7 @@ export default function BeneficiosDemanda(props: {
     <>
       <BoxContainerGeral>
         <BoxTitulos>
-          <TypographyTitulos onClick={lerTexto}>Benefício Real</TypographyTitulos>
+          <Divider color="#00579d" sx={{ "&::before, &::after": { border: "1px solid #00579d" }, width: "100%" }}>Benefícios Reais</Divider>
         </BoxTitulos>
 
         <BeneficiosReais
@@ -195,7 +195,7 @@ export default function BeneficiosDemanda(props: {
                     fontSize: "2rem",
                     marginRight: 3,
                     cursor: "pointer",
-                    color: "#595959",
+                    color: "#444",
                   }}
                   onClick={() => {
                     if (props.setNumeroBeneficiosReais != null && props.numeroBeneficiosReais != null) {
@@ -208,7 +208,7 @@ export default function BeneficiosDemanda(props: {
             </>
           }
           <AddRoundedIcon
-            sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+            sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
             onClick={() => {
               if (props.setNumeroBeneficiosReais != null && props.numeroBeneficiosReais != null) {
                 props.setNumeroBeneficiosReais(props.numeroBeneficiosReais + 1);
@@ -217,7 +217,7 @@ export default function BeneficiosDemanda(props: {
         </BoxIcones>
 
         <BoxTitulos>
-          <TypographyTitulos onClick={lerTexto}>Benefício Potencial</TypographyTitulos>
+          <Divider color="#00579d" sx={{ "&::before, &::after": { border: "1px solid #00579d" }, width: "100%" }}>Benefícios Potenciais</Divider>
         </BoxTitulos>
 
         <BeneficiosPotenciais
@@ -237,7 +237,7 @@ export default function BeneficiosDemanda(props: {
                     fontSize: "2rem",
                     marginRight: 3,
                     cursor: "pointer",
-                    color: "#595959",
+                    color: "#444",
                   }}
                   onClick={() => {
                     if (props.setNumeroBeneficiosPotenciais && props.numeroBeneficiosPotenciais) {
@@ -250,7 +250,7 @@ export default function BeneficiosDemanda(props: {
             </>
           }
           <AddRoundedIcon
-            sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+            sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
             onClick={() => {
               if (props.setNumeroBeneficiosPotenciais != null && props.numeroBeneficiosPotenciais != null) {
                 props.setNumeroBeneficiosPotenciais(props.numeroBeneficiosPotenciais + 1);
@@ -259,7 +259,7 @@ export default function BeneficiosDemanda(props: {
         </BoxIcones>
 
         <BoxTitulos>
-          <TypographyTitulos onClick={lerTexto}>Benefício Qualitativo</TypographyTitulos>
+          <Divider color="#00579d" sx={{ "&::before, &::after": { border: "1px solid #00579d" }, width: "100%" }}>Benefícios Qualitativos</Divider>
         </BoxTitulos>
 
         <BeneficiosQualitativos
@@ -277,7 +277,7 @@ export default function BeneficiosDemanda(props: {
                     fontSize: "2rem",
                     marginRight: 3,
                     cursor: "pointer",
-                    color: "#595959",
+                    color: "#444",
                   }}
                   onClick={() => {
                     if (props.setNumeroBeneficiosQualitativos && props.numeroBeneficiosQualitativos) {
@@ -290,7 +290,7 @@ export default function BeneficiosDemanda(props: {
             </>
           }
           <AddRoundedIcon
-            sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+            sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
             onClick={() => {
               if (props.setNumeroBeneficiosQualitativos != null && props.numeroBeneficiosQualitativos != null) {
                 props.setNumeroBeneficiosQualitativos(props.numeroBeneficiosQualitativos + 1);
@@ -459,15 +459,15 @@ function BeneficioReal(props: {
     <BoxContainerGeralBeneficio key={props.index}>
       <BoxContainerDivisorio>
         <BoxInputsAcima>
-          <BoxValorMensal>
-            <TypographyLabels onClick={lerTexto}>Valor Mensal: </TypographyLabels>
-          </BoxValorMensal>
+          <Box sx={{ width: "100%" }}>
+            <TypographyLabels onClick={lerTexto}>Valor Mensal:</TypographyLabels>
+          </Box>
 
           <BoxInputs>
             {currencyInput == 0 ?
               <FormControlEdited
                 variant="outlined"
-                sx={{ marginRight: "2rem" }}
+                sx={{ marginRight: "1rem" }}
                 onChange={(e: any) => {
                   setValueInput(e.target.value);
 
@@ -492,7 +492,7 @@ function BeneficioReal(props: {
               currencyInput == 1 ?
                 <FormControlEdited
                   variant="outlined"
-                  sx={{ marginRight: "2rem" }}
+                  sx={{ marginRight: "1rem" }}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -516,7 +516,7 @@ function BeneficioReal(props: {
                 :
                 <FormControlEdited
                   variant="outlined"
-                  sx={{ marginRight: "2rem" }}
+                  sx={{ marginRight: "1rem" }}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -577,7 +577,7 @@ function BeneficioReal(props: {
         </BoxInputsAcima>
 
         <BoxInputsAbaixo>
-          <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
+          <TypographyLabels onClick={lerTexto}>Descrição:</TypographyLabels>
 
           <TextFieldEdited
             id={`descricaoReal${props.index}`}
@@ -655,15 +655,15 @@ function BeneficioPotencial(props: {
     <BoxContainerGeralBeneficio key={props.index}>
       <BoxContainerDivisorio>
         <BoxInputsAcima>
-          <BoxValorMensal>
+          <Box sx={{ width: "100%" }}>
             <TypographyLabels onClick={lerTexto}>Valor Mensal:</TypographyLabels>
-          </BoxValorMensal>
+          </Box>
 
           <BoxInputs>
             {currencyInput == 0 ?
               <FormControlEdited
                 variant="outlined"
-                sx={{ marginRight: "2rem" }}
+                sx={{ marginRight: "1rem" }}
                 onChange={(e: any) => {
                   setValueInput(e.target.value);
 
@@ -688,7 +688,7 @@ function BeneficioPotencial(props: {
               currencyInput == 1 ?
                 <FormControlEdited
                   variant="outlined"
-                  sx={{ marginRight: "2rem" }}
+                  sx={{ marginRight: "1rem" }}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -712,7 +712,7 @@ function BeneficioPotencial(props: {
                 :
                 <FormControlEdited
                   variant="outlined"
-                  sx={{ marginRight: "2rem" }}
+                  sx={{ marginRight: "1rem" }}
                   onChange={(e: any) => {
                     setValueInput(e.target.value);
 
@@ -770,7 +770,7 @@ function BeneficioPotencial(props: {
         </BoxInputsAcima>
 
         <BoxInputsAbaixo>
-          <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
+          <TypographyLabels onClick={lerTexto}>Descrição:</TypographyLabels>
 
           <TextFieldEdited
             id={`descricaoPotencial${props.index}`}
@@ -806,7 +806,7 @@ function BeneficioQualitativo(props: { index: number, informacaoProcesso: any, s
   return (
     <BoxContainerGeralBeneficio key={props.index}>
       <BoxDescricaoRequisitosControle>
-        <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
+        <TypographyLabels onClick={lerTexto}>Descrição:</TypographyLabels>
 
         <TextFieldEdited
           id={`beneficiosQualitativos${props.index}`}

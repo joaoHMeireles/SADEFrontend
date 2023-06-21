@@ -8,7 +8,7 @@ import Searchbar from "../../Components/Searchbar/Searchbar";
 
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { Box, Grid, MenuItem, Select, TextField } from "@mui/material";
+import { Alert, Box, Grid, MenuItem, Select, Snackbar, TextField } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
@@ -51,6 +51,8 @@ export default function CriacaoPauta(props: {
   const [grid, setGrid] = useState(true);
   const [conteudoCarregou, setConteudoCarregou] = useState(false)
   const [temComponente, setTemComponente] = useState(true)
+  const [feedbackAberto, setFeedbackAberto] = useState(false);
+  const [mensagemDoErro, setMensagemDoErro] = useState("")
   const [propostas, setPropostas] = useState<any[]>([]);
   const [listaComponents, setListaComponents] = useState<any[]>([])
   const [comissoes, setComissoes] = useState<any[]>([]);
@@ -58,6 +60,7 @@ export default function CriacaoPauta(props: {
   const [valorData, setValorData] = useState<Dayjs | null>(null)
   const [inicioReuniao, setInicioReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T13:30'));
   const [finalReuniao, setFinalReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T14:30'));
+
 
   useEffect(() => {
     const idPropostaEscolhida = localStorage.getItem("PROPOSTACRIARPAUTA")
@@ -107,6 +110,13 @@ export default function CriacaoPauta(props: {
     }
   }, [listaComponents])
 
+  useEffect(() => {
+    if (mensagemDoErro != "") {
+      setFeedbackAberto(true)
+    }
+  }, [mensagemDoErro])
+
+
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
   }
@@ -124,12 +134,15 @@ export default function CriacaoPauta(props: {
   function criarPauta(e: any) {
     lerTexto(e)
 
+    checarPreenchimento()
+
     const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
     const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
     const horarioInicioReuniao = (document.getElementById("horarioInicioReuniao") as HTMLInputElement).value
     const horarioFinalReuniao = (document.getElementById("horarioFinalReuniao") as HTMLInputElement).value
     let dataReuniaoCerta = dataReuniaoEscolhida.slice(6) + "/" + dataReuniaoEscolhida.slice(0, 5)
     dataReuniaoCerta = dataReuniaoCerta.replaceAll("/", "-")
+
 
     const pauta = {
       tituloReuniaoPauta: tituloReuniao,
@@ -141,13 +154,27 @@ export default function CriacaoPauta(props: {
     }
 
 
-    api.post("/sade/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then((response) => {
-
-      console.log(response.data);
-
-      location.href = "/home"
-    })
+    // api.post("/sade/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then((response) => {
+    //   location.href = "/home"
+    // })
   }
+
+  function checarPreenchimento(){
+    const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
+    const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
+    // comissaoEscolhida
+
+    console.log(tituloReuniao);
+    console.log(dataReuniaoEscolhida);
+    console.log(comissaoEscolhida);
+
+    if(tituloReuniao == "" || dataReuniaoEscolhida == "" || comissaoEscolhida == undefined){
+      setMensagemDoErro("Algum campo não foi preenchido!")
+    }
+    
+
+  }
+
 
   return (
     <BoxConteudo>
@@ -204,6 +231,11 @@ export default function CriacaoPauta(props: {
             endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
             onClick={(e: any) => {
               lerTexto(e)
+              if (propostas.length == 0) {
+                setMensagemDoErro("Selecione pelo menos uma proposta primeiro!")
+                return
+              }
+
               setValor(1);
               localStorage.setItem(
                 "PROPOSTASELECIONADA",
@@ -238,9 +270,6 @@ export default function CriacaoPauta(props: {
                     value={comissaoEscolhida}
                     inputProps={{ id: "comissaoEscolhida" }}
                     onChange={(e: any) => {
-                      console.log(comissoes);
-                      console.log(e);
-
                       const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
                       setComissaoEscolhida(novaComissaoEscolhida);
                     }}>
@@ -273,7 +302,7 @@ export default function CriacaoPauta(props: {
                   </TypographyTituloInput>
 
 
-                  <Box sx={{ height: "auto", width: "60vw" }}>
+                  <Box sx={{ width: "60vw" }}>
                     <TimePicker
                       InputProps={{ sx: { width: "15vw" } }}
                       ampm={false}
@@ -311,8 +340,8 @@ export default function CriacaoPauta(props: {
               <>
                 <BoxGeral key={proposta.id}>
                   <BoxProposta>
-                    <Box sx={{ display: "flex", height: "auto", justifyContent: "center", width: "50vw" }}>
-                      <CardProposta cor="#6AACDA">
+                    <Box sx={{ display: "flex", justifyContent: "center", width: "50vw" }}>
+                      <CardProposta cor="#9acae5">
                         <BoxConteudoProposta>
                           <BoxTituloProposta onClick={lerTexto}>{proposta.tituloDemanda}</BoxTituloProposta>
                           <BoxIconeLink>
@@ -360,6 +389,16 @@ export default function CriacaoPauta(props: {
           </BoxBotoes>
         </>
       )}
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        autoHideDuration={5000}
+        open={feedbackAberto}
+        onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }}>
+
+        <Alert onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }} severity="error" sx={{ width: '100%' }}>
+          {mensagemDoErro}
+        </Alert>
+      </Snackbar>
     </BoxConteudo>
   );
 }

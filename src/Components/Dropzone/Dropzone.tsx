@@ -75,11 +75,11 @@ export default function Dropzone(props: {
         <BoxTypography>
           <input id="anexos" {...getInputProps()} />
 
-          <Typography variant="h6" sx={{ color: "#595959" }}>
+          <Typography variant="h6" sx={{ color: "#444" }}>
             Escolher arquivo
           </Typography>
 
-          <FileUploadRoundedIcon sx={{ color: "#595959" }} />
+          <FileUploadRoundedIcon sx={{ color: "#444" }} />
         </BoxTypography>
         {/* {props.rascunho &&
           arquivos.map((e: Anexos, index: number) => {

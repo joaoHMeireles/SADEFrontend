@@ -4,14 +4,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 const styledBox = styled(Box);
-const styledTypography = styled(Typography);
 
 export const ContainerGeral = styled(Container)({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
-  height: "auto",
   marginTop: 24,
 });
 

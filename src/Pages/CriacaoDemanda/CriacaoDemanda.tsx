@@ -17,10 +17,9 @@ import {
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import {
-  ContainerGeral,
-  BoxContainerBotoes,
-  BoxBotaoTerciario,
-  BoxBotoesPriSec,
+  BoxBotoes,
+  ContainerBotoes,
+  ContainerGeral
 } from "./CriacaoDemanda.styles";
 import api from "../../api/api";
 import jsPDF from "jspdf";
@@ -68,6 +67,7 @@ export default function CriacaoDemanda(props: {
   // const pdfExportComponent = React.useRef<PDFExport>(null);
 
   const webSocketService: any = useContext(WebSocketContext)
+  let info: any = null
 
   useEffect(() => {
     let info: any = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
@@ -82,22 +82,38 @@ export default function CriacaoDemanda(props: {
   }, [valor]);
 
   useEffect(() => {
-    let info: any = null
-
-    if (location.search) {
+    if (location.search != "") {
       let idDemanda = location.search.replace("?", "");
 
-      api.get("/sod/demanda/" + idDemanda).then((response) => {
+      api.get("/sade/demanda/" + idDemanda).then((response) => {
         info = response.data
+        preencherInformacoesCarregamento()
       })
     } else {
-      info = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") ?
-        localStorage.getItem("DEMANDASELECIONADA") as string
-        :
+      info = JSON.parse(localStorage.getItem("RASCUNHOESCOLHIDO") != "" ?
         localStorage.getItem("RASCUNHOESCOLHIDO") as string
+        :
+        localStorage.getItem("DEMANDASELECIONADA") as string
       );
+
+      preencherInformacoesCarregamento()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (pdfDemanda == null || pdfDemanda == undefined) {
+      return
     }
 
+    criarDemanda()
+  }, [pdfDemanda])
+
+  function atualizarDados(data: any) {
+    setData(data);
+    localStorage.setItem("DADOSDEMANDACRIACAO", JSON.stringify(data))
+  }
+
+  function preencherInformacoesCarregamento() {
     if (props.rascunho) {
       for (let atributo in info) {
         if ((info as any)[atributo]) {
@@ -128,23 +144,6 @@ export default function CriacaoDemanda(props: {
         }
       }
     }
-  }, [])
-
-  useEffect(() => {
-    if (pdfDemanda == null || pdfDemanda == undefined) {
-      return
-    }
-
-    criarDemanda()
-  }, [pdfDemanda])
-
-  useEffect(() => {
-    console.log(data);
-  }, [data])
-
-  function atualizarDados(data: any) {
-    setData(data);
-    localStorage.setItem("OBJETODEMANDACRIADA", JSON.stringify(data))
   }
 
   function getIdByAtributo(atributo: string) {
@@ -160,7 +159,12 @@ export default function CriacaoDemanda(props: {
   }
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
-    setValor(newValue);
+    if (valor == 0) {
+      checarPreenchimento()
+    } else {
+      setValor(newValue);
+    }
+
     if (newValue == 2) {
       setSegundo(true);
     } else {
@@ -179,7 +183,7 @@ export default function CriacaoDemanda(props: {
       "situacaoAtual": situacaoAtual.value,
       "centroCustoDemanda": centroCusto,
       "usuario": {
-        "idUsuario": data.usuario.idUsuario
+        "idUsuario": idUsuario
       }
     }
 
@@ -261,7 +265,6 @@ export default function CriacaoDemanda(props: {
     }
 
     localStorage.setItem("DADOSDEMANDACRIACAO", JSON.stringify(data2))
-
     atualizarDados(data2)
   }
 
@@ -335,6 +338,7 @@ export default function CriacaoDemanda(props: {
         }
       }).catch((err: any) => {
         console.log(err);
+        erroEncontrado()
       })
     } else if (props.editarDemanda) {
       api.put("/sade/demanda/" + idDemandaEditar + "/" + idUsuario, formData, {
@@ -345,6 +349,7 @@ export default function CriacaoDemanda(props: {
         console.log(response);
       }).catch((err: any) => {
         console.log(err);
+        erroEncontrado()
       })
     } else {
       api.post("/sade/demanda", formData, {
@@ -355,11 +360,35 @@ export default function CriacaoDemanda(props: {
         webSocketService.inscrever(`/notificacao/demanda/${res.data.idDemanda}`, novaNotificacao)
       }).catch((err: any) => {
         console.log(err);
+        erroEncontrado()
       })
     }
 
     window.location.href = "/home";
   }
+
+  function checarPreenchimento() {
+    const titulo = document.getElementById("titulo") as HTMLInputElement;
+    const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
+    const objetivo = document.getElementById("objetivo") as HTMLInputElement;
+
+
+    if (titulo.value == "" || situacaoAtual.value == "" || objetivo.value == "" || centroCusto.length == 0) {
+      setFeedbackAberto(true)
+      setInformacoesPreenchidas(true)
+
+      return false
+    } else {
+      setValor(1);
+
+      return true
+    }
+  }
+
+  function erroEncontrado(){
+    
+  }
+
 
   return (
     <BoxConteudo>
@@ -390,7 +419,7 @@ export default function CriacaoDemanda(props: {
           <>
             <InformacaoGeral proposta={false} centroCusto={centroCusto} setCentroCusto={setCentroCusto} partUmDemanda={partUmDemanda} rascunho={props.rascunho} editarDemanda={props.editarDemanda} informacoesPreenchidas={informacoesPreenchidas} />
 
-            <BoxContainerBotoes>
+            <ContainerBotoes>
               <BotaoTerciario
                 variant="outlined"
                 onClick={(e) => {
@@ -418,10 +447,11 @@ export default function CriacaoDemanda(props: {
                   } else {
                     setValor(1);
                   }
+
                 }}>
                 Proximo
               </BotaoPrimario>
-            </BoxContainerBotoes>
+            </ContainerBotoes>
           </>
         )}
 
@@ -465,10 +495,9 @@ export default function CriacaoDemanda(props: {
                 moedaPotencial={moedaPotencial}
                 setMoedaPotencial={setMoedaPotencial}
                 partDoisDemanda={partDoisDemanda} />
-            } */}
-
-            <BoxContainerBotoes>
-              <BoxBotaoTerciario>
+            }
+            */}
+            <ContainerBotoes>
                 <BotaoTerciario
                   variant="outlined"
                   onClick={(e) => {
@@ -477,16 +506,12 @@ export default function CriacaoDemanda(props: {
                   }}>
                   Cancelar
                 </BotaoTerciario>
-              </BoxBotaoTerciario>
 
-              <BoxBotoesPriSec>
+              <BoxBotoes>
                 <BotaoSecundario
                   onClick={(e) => {
                     lerTexto(e)
                     setValor(valor - 1);
-                  }}
-                  sx={{
-                    marginRight: 3,
                   }}
                   variant="outlined"
                   startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
@@ -495,6 +520,7 @@ export default function CriacaoDemanda(props: {
 
                 <BotaoPrimario
                   variant="contained"
+                  sx={{ marginLeft: "1rem" }}
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
@@ -506,16 +532,16 @@ export default function CriacaoDemanda(props: {
                   }}>
                   Proximo
                 </BotaoPrimario>
-              </BoxBotoesPriSec>
-            </BoxContainerBotoes>
+              </BoxBotoes>
+            </ContainerBotoes>
           </>
         )}
 
         {valor == 2 && (
           <>
             <InputAnexos rascunho={props.rascunho} proposta={false} files={files} setFiles={setFiles} />
-            <BoxContainerBotoes>
-              <BoxBotaoTerciario>
+
+            <ContainerBotoes>
                 <BotaoTerciario
                   variant="outlined"
                   onClick={(e) => {
@@ -524,16 +550,12 @@ export default function CriacaoDemanda(props: {
                   }}>
                   Cancelar
                 </BotaoTerciario>
-              </BoxBotaoTerciario>
 
-              <BoxBotoesPriSec>
+              <BoxBotoes>
                 <BotaoSecundario
                   onClick={(e) => {
                     lerTexto(e)
                     setValor(1);
-                  }}
-                  sx={{
-                    marginRight: 3,
                   }}
                   variant="outlined"
                   startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
@@ -542,6 +564,7 @@ export default function CriacaoDemanda(props: {
 
                 <BotaoPrimario
                   variant="contained"
+                  sx={{ marginLeft: "1rem" }}
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }
@@ -551,8 +574,8 @@ export default function CriacaoDemanda(props: {
                   }}>
                   Enviar
                 </BotaoPrimario>
-              </BoxBotoesPriSec>
-            </BoxContainerBotoes>
+              </BoxBotoes>
+            </ContainerBotoes>
 
             {/* {data != null &&
               <EsqueletoPDFVersaoDemanda demanda={data} pdfExportComponent={pdfExportComponent} />

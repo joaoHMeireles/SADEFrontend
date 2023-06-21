@@ -23,7 +23,7 @@ export const FirstColumn = styled(Box)({
 
 export const Lista = styled(List)({
     borderRadius: "20px",
-    color: "#595959",
+    color: "#444",
     height: "100%",
     width: "100%"
 });

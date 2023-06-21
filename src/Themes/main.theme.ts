@@ -34,11 +34,6 @@ export const MainTheme = createTheme({
       }
     },
     MuiTextField: {
-      defaultProps: {
-        inputProps: {
-          disableUnderline: true
-        }
-      },
       styleOverrides: {
         root: {
           ":hover": {
@@ -54,21 +49,12 @@ export const ContentTheme = createTheme({
   palette: {
     background: {
       default: "#f6fff8",
-      paper: "#EEEEEE",
+      paper: "#eee",
     }
   },
   typography: {
     button: {
       textTransform: 'none'
-    }
-  },
-  components: {
-    MuiTextField: {
-      defaultProps: {
-        inputProps: {
-          disableUnderline: true
-        }
-      }
     }
   }
 })

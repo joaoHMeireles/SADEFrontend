@@ -33,7 +33,7 @@ export default function ButtonsHeader(props: { listaBotoes: Botao[] }) {
             if (botao.includes("!")) {
                 botoes.push(
                     <BotaoIcone key={i} onClick={componenteBotao.function}>
-                        <Badge badgeContent={<ErrorRoundedIcon fontSize='small' sx={{ color: "#FAD271" }} />}>
+                        <Badge badgeContent={<ErrorRoundedIcon fontSize='small' sx={{ color: "#fad271" }} />}>
                             {iconeBotao}
                         </Badge>
                     </BotaoIcone>

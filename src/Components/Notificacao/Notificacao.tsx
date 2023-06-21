@@ -131,7 +131,7 @@ export default function Notificacao(props: {
                 <>
                     <NotificacaoLadoEsquerdo>
                         <NotificacaoBoxIcone>
-                            <props.Icone sx={{ color: "#595959" }}></props.Icone>
+                            <props.Icone sx={{ color: "#444" }}></props.Icone>
                         </NotificacaoBoxIcone>
                         <Box>
                             <Box>
@@ -146,7 +146,7 @@ export default function Notificacao(props: {
                     </NotificacaoLadoEsquerdo>
                     <NotificacaoLadoDireito>
                         <DeleteRoundedIcon
-                            sx={{ color: "#595959", cursor: "pointer" }}
+                            sx={{ color: "#444", cursor: "pointer" }}
                             onClick={() => {
                                 console.log(bodyNotificacaoDTO);
                                 api.delete(`/sade/notificacao/${bodyNotificacaoDTO.notificacao.idNotificacao}/${bodyNotificacaoDTO.usuario.idUsuario}`).then((res) => {

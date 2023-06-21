@@ -9,7 +9,7 @@ export const ImageBox = styledBox({
     height: "70vh",
     justifyContent: "center",
     width: "100%",
-    color:"#595959",
+    color:"#444",
     "& #imagem": {
         width: "250px",
         height: "250px"

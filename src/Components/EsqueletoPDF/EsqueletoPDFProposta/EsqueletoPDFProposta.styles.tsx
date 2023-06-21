@@ -37,11 +37,11 @@ export const BoxResponsaveis = styledBox({
 })
 
 export const TypographyTituloATA = styledTypography({
-    color: "#0070c0", fontSize: "12px", width: "100%", display: "flex", justifyContent: "center", alignItems: "center"
+    color: "#00579d", fontSize: "12px", width: "100%", display: "flex", justifyContent: "center", alignItems: "center"
 })
 
 export const TypographyTitulos = styledTypography({
-    color: "#0070c0", fontSize: "12px", width: "100%",
+    color: "#00579d", fontSize: "12px", width: "100%",
 })
 
 export const TypographyTextos = styledTypography({

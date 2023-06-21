@@ -25,12 +25,13 @@ import {
   TableContainerEstilizado,
   TableRowEstilizada,
   TableCellEstilzada,
+  PlusIconButton,
 } from "../Tabelas.style";
 
-import { BoxIconsAddMinus } from "./TabelaCustoCriacao.styles";
+import { BoxIconsAddMinus,TextFieldEdited } from "./TabelaCustoCriacao.styles";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
-import { Button, Chip } from "@mui/material";
+import { Button, Chip, IconButton } from "@mui/material";
 import { TypographyStyled } from "../../EscopoProposta/EscopoProposta.styles";
 import { TextReaderContext } from "../../TextReaderContext/TextReaderContext";
 
@@ -65,15 +66,15 @@ export default function TabelaCustoCriacao(props: {
       <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         {quantidadeTabela > 2 &&
           <Tooltip title="Remover Tabela de Recursos">
-            <RemoveRoundedIcon
-              sx={{ color: "#595959", cursor: "pointer", marginRight: 3 }}
-              onClick={() => setQuantidadeTabela(quantidadeTabela - 1)} />
+            <PlusIconButton onClick={() => setQuantidadeTabela(quantidadeTabela - 1)}>
+              <RemoveRoundedIcon />
+            </PlusIconButton>
           </Tooltip>}
         {quantidadeTabela < 3 &&
           <Tooltip title="Adicionar Tabela de recursos">
-            <AddRoundedIcon
-              sx={{ color: "#595959", cursor: "pointer" }}
-              onClick={() => setQuantidadeTabela(quantidadeTabela + 1)} />
+            <PlusIconButton onClick={() => setQuantidadeTabela(quantidadeTabela + 1)}>
+              <AddRoundedIcon />
+            </PlusIconButton>
           </Tooltip>}
       </Box>
     </>
@@ -92,7 +93,6 @@ function Tabela(props: {
   const [quantidadeLinha, setQuantidadeLinha] = useState(1);
   const [esforcoTotal, setEsforcoTotal] = useState(0)
   const [valorTotal, setValorTotal] = useState(0)
-  const [centroCusto, setCentroCusto] = useState<string[]>([])
   const [linhas, setLinhas] = useState<JSX.Element[]>([])
   const [centroCustoEscolhidos, setCentroCustoEscolhidos] = useState<any[]>([])
   const [atualizouPorcentagem, setAtualizouPorcentagem] = useState(false)
@@ -150,8 +150,8 @@ function Tabela(props: {
     for (let centroCustoSelecionada of valorCentroCustoInput) {
       for (let centroCusto of props.centroCusto) {
         if (centroCustoSelecionada == centroCusto.nomeCentroCusto) {
-          const valorPorcetagem = document.getElementById(`chipCentroCusto${centroCusto.idCentroCusto}`) as HTMLButtonElement;
-          let porcentagemNumero = valorPorcetagem.innerText.slice(0, valorPorcetagem.innerText.length - 1);
+          const valorPorcetagem = document.getElementById(`tabela${props.tabela}ChipCentroCusto${centroCusto.idCentroCusto}`) as HTMLButtonElement;
+          let porcentagemNumero = valorPorcetagem.innerText.slice(0, valorPorcetagem.innerText.length - 2);
 
           listaCentroCustoTabela.push({ idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto, tabela: props.tabela, porcentagem: porcentagemNumero })
         }
@@ -159,6 +159,7 @@ function Tabela(props: {
     }
 
     setCentroCustoEscolhidos(listaCentroCustoTabela);
+    props.setCentroCustoEscolhidas(listaCentroCustoTabela)
   }
 
   function atualizarValor() {
@@ -225,7 +226,7 @@ function Tabela(props: {
           {quantidadeLinha > 1 ? (
             <Tooltip title="Remover linha">
               <RemoveRoundedIcon
-                sx={{ color: "#595959", cursor: "pointer", marginRight: 3 }}
+                sx={{ color: "#444", cursor: "pointer", marginRight: 3 }}
                 onClick={() => setQuantidadeLinha(quantidadeLinha - 1)} />
             </Tooltip>
           ) : (
@@ -233,7 +234,7 @@ function Tabela(props: {
           )}
           <Tooltip title="Adicionar linha">
             <AddRoundedIcon
-              sx={{ color: "#595959", cursor: "pointer" }}
+              sx={{ color: "#444", cursor: "pointer" }}
               onClick={() => setQuantidadeLinha(quantidadeLinha + 1)} />
           </Tooltip>
         </BoxIconsAddMinus>
@@ -241,13 +242,15 @@ function Tabela(props: {
 
       <Box sx={{ width: "100%", display: "flex", justifyContent: "end", alignItems: "center", fontSize: "12px" }}>
         Tabela de licenças
-        
+
         <Checkbox id={`tabelaDeLicencas${props.tabela}`} checked={tabelaDeLicencas} onClick={mudarTipoTabela} />
       </Box>
 
       <Box>
-        <TypographyStyled onClick={lerTexto}>Centro de Custo para {props.tituloTabela}:</TypographyStyled>
-        
+        <TypographyStyled onClick={lerTexto}>
+          Centro de Custo para {props.tituloTabela}:
+        </TypographyStyled>
+
         <Autocomplete
           id={`centroCusto${props.tabela}`}
           sx={{ boxShadow: "5px 5px 10px 0 #00000025", marginBottom: 2 }}
@@ -265,7 +268,9 @@ function Tabela(props: {
                   checkedIcon={<CheckBoxIcon fontSize="small" />}
                   style={{ marginRight: 8 }}
                   checked={selected} />
-                <span onClick={lerTexto}> {cc} </span>
+                <span onClick={lerTexto}>
+                  {cc}
+                </span>
               </li>
             );
           }}
@@ -273,7 +278,7 @@ function Tabela(props: {
             const elementosRenderizados = elementos.map((nome: string, index: number) => {
               let centroDeCustoChip = props.centroCusto.find((centroDeCusto: any) => centroDeCusto.nomeCentroCusto == nome)
 
-              return <ChipAutocompleteCentroCusto id={`chipCentroCusto${centroDeCustoChip.idCentroCusto}`} nome={nome} mudarPorcentagem={mudarPorcentagem} />
+              return <ChipAutocompleteCentroCusto id={`tabela${props.tabela}ChipCentroCusto${centroDeCustoChip.idCentroCusto}`} nome={nome} mudarPorcentagem={mudarPorcentagem} />
             })
 
             return elementosRenderizados
@@ -296,7 +301,8 @@ function ChipAutocompleteCentroCusto(props: { id: any, nome: string, mudarPorcen
 
   return (
     <Box sx={{ marginRight: 2 }}>
-      <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#59595930 solid 1px" }} label={props.nome} onClick={lerTexto} />
+      <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#44444430 solid 1px" }} label={props.nome} onClick={lerTexto} />
+
       <Button id={props.id} sx={{ backgroundColor: "rgba(0,0,0,0.08)", height: "32px", borderRadius: "0 16px 16px 0" }} onClick={atualizarPorcentagem}>{porcentagem} %</Button>
     </Box>
   )
@@ -323,28 +329,27 @@ function LinhaTabela(props: {
       <TableRow className={`linhaTabelaCustoCriacao${props.indexTabela}`}>
         <TableCell sx={{ width: "25%" }} align="center">
           <FormControl fullWidth sx={{ m: 1 }} variant="filled">
-            <TextField
+            <TextFieldEdited
               id={`tituloLinha${props.indexTabela}-${props.index}`}
-              // onChange={(e: any) => { props.set(e.target.value) }}
               sx={{ width: "100%" }}
               InputProps={{
                 startAdornment: <GroupsRoundedIcon sx={{ paddingRight: 1 }} />,
-              }}
-            />
+              }} />
           </FormControl>
         </TableCell>
+
         <TableCell sx={{ width: "25%" }} align="center">
-          <TextField
+          <TextFieldEdited
             onChange={(e: any) => { setEsforco(e.target.value) }}
             id={`esforco${props.indexTabela}-${props.index}`}
             sx={{ width: "100%" }}
             InputProps={{
               startAdornment: props.iconeInput,
-            }}
-          ></TextField>
+            }} />
         </TableCell>
+
         <TableCell sx={{ width: "25%" }} align="center">
-          <TextField
+          <TextFieldEdited
             onChange={(e: any) => { setValorHora(e.target.value) }}
             id={`valorHora${props.indexTabela}-${props.index}`}
             sx={{ width: "100%" }}
@@ -352,8 +357,7 @@ function LinhaTabela(props: {
               startAdornment: (
                 <AttachMoneyRoundedIcon sx={{ paddingRight: "2px" }} />
               ),
-            }}
-          ></TextField>
+            }} />
         </TableCell>
       </TableRow>
     </>

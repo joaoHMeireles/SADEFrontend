@@ -2,29 +2,23 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logo from '../../assets/wegLogo.png';
 import './Navbar.scss';
-import { Avatar, Box, IconButton, Toolbar, MenuItem } from '@mui/material';
+import { Avatar, Box, IconButton, Toolbar } from '@mui/material';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
-import { NavBar, TextFieldLinguas } from "./Navbar.styles";
+import { NavBar } from "./Navbar.styles";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
 import api from '../../api/api';
 import sadeLogo from "../../Assets/sadeLogoBranca.png";
 
-const listaLinguas = [
-    "Português",
-    "English (USA)",
-    "Espanõl",
-    "Englsh (UK)",
-    "Français"
-]
-
 export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
     const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem("USUARIO") as string));
+    const [nomeUsuario, setNomeUsuario] = useState();
     const [fotoUsuario, setFotoUsuario] = useState<Blob>(new Blob);
+    const [mensagem, setMensagem] = useState('');
 
-    const [lingua, setLingua] = useState("Português");
     const path = useLocation();
 
+    // Pega a foto de perfil do usuário logado
     useEffect(() => {
         if (usuario != null) {
             api.get("/sade/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
@@ -34,14 +28,34 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
         }
     }, []);
 
+    // Pega o nome do usuário logado
+    useEffect(() => {
+        api.get("/sade/usuario/" + usuario.idUsuario)
+            .then((response) => {
+                setNomeUsuario(response.data.nomeUsuario);
+            });
+    }, []);
+
+    // Manhã --> 06h até 12h
+    // Tarde --> 12h até 18h
+    // Noite --> 18h até 06h
+
+    useEffect(() => {
+        const horaAtual = new Date().getHours();
+
+        if (horaAtual >= 6 && horaAtual < 12) {
+            setMensagem('Bom dia, ');
+        } else if (horaAtual >= 12 && horaAtual < 18) {
+            setMensagem('Boa tarde, ');
+        } else {
+            setMensagem('Boa noite, ');
+        }
+    }, []);
+
     function mudarSidebar() {
         props.setAberto(!props.aberto)
         props.setFiltro(false)
     }
-
-    const mudarLingua = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setLingua(event.target.value);
-    };
 
     return (
         <>
@@ -58,13 +72,9 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                             </Box>
 
                             <Box sx={{ alignItems: "center", display: "flex" }}>
-                                <TextFieldLinguas sx={{ "& fieldset": { border: 'none' } }} select value={lingua} onChange={mudarLingua} variant="outlined">
-                                    {listaLinguas.map((option) => (
-                                        <MenuItem key={option} value={option}>
-                                            {option}
-                                        </MenuItem>
-                                    ))}
-                                </TextFieldLinguas>
+                                <Box sx={{ marginLeft: "1rem" }}>
+                                    <p>{mensagem + nomeUsuario + "!"}</p>
+                                </Box>
 
                                 <Box sx={{ height: "100%", marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>
                                     <Avatar {...stringAvatar(usuario.nomeUsuario)} onClick={() => {

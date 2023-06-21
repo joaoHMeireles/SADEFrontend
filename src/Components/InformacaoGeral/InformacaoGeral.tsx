@@ -131,10 +131,12 @@ export default function InformacaoGeral(props: {
             }}
           />
         </BoxContainerLabels>
+
         <BoxContainerLabels>
           <TypographyLabels onClick={lerTexto}>
             Problema a ser resolvido (situação atual):
           </TypographyLabels>
+
           <TextFieldEdited
             id="situacaoAtual"
             sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
@@ -156,10 +158,12 @@ export default function InformacaoGeral(props: {
             }}
           />
         </BoxContainerLabels>
+
         <BoxContainerLabels>
           <TypographyLabels onClick={lerTexto}>
             Proposta / Solicitação de proposta:
           </TypographyLabels>
+
           <TextFieldEdited
             id="objetivo"
             sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
@@ -181,11 +185,13 @@ export default function InformacaoGeral(props: {
             }}
           />
         </BoxContainerLabels>
+
         <BoxContainerLabels>
           <BoxContainerCentroCusto>
             <TypographyLabels onClick={lerTexto}>
               Centros de custo:
             </TypographyLabels>
+            
             {props.proposta || props.rascunho || props.editarDemanda ? (
               <AutocompleteEdited
                 id="centrosDeCusto"

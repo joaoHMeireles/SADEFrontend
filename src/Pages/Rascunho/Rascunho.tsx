@@ -65,6 +65,7 @@ export default function Rascunho(props: {
           :
           <CardsProcesso
             listaComponents={listaComponents}
+            setListaRascunhos={setListaComponents}
             grid={grid}
             rascunho={true}
             proposta={false}

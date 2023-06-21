@@ -7,7 +7,7 @@ const styledTypography = styled(Typography);
 
 export const BoxNotificacao = styledBox({
     alignItens: "center",
-    backgroundColor: "#EEEEEE",
+    backgroundColor: "#eee",
     borderRadius: "5px",
     display: "flex",
     justifyContent: "space-between",
@@ -30,12 +30,12 @@ export const NotificacaoBoxIcone = styledBox({
 })
 
 export const TypographyTitulo = styledTypography({
-    color: "#595959",
+    color: "#444",
     marginLeft: 20
 })
 
 export const TypographyMensagem = styledTypography({
-    color: "#999999",
+    color: "#aaa",
     marginLeft: 20
 })
 
