@@ -143,7 +143,6 @@ export default function CriacaoPauta(props: {
     let dataReuniaoCerta = dataReuniaoEscolhida.slice(6) + "/" + dataReuniaoEscolhida.slice(0, 5)
     dataReuniaoCerta = dataReuniaoCerta.replaceAll("/", "-")
 
-
     const pauta = {
       tituloReuniaoPauta: tituloReuniao,
       dataReuniao: dataReuniaoCerta,
@@ -153,26 +152,18 @@ export default function CriacaoPauta(props: {
       propostasPauta: propostas
     }
 
-
-    // api.post("/sade/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then((response) => {
-    //   location.href = "/home"
-    // })
+    api.post("/sade/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then((response) => {
+      location.href = "/home"
+    })
   }
 
   function checarPreenchimento(){
     const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
     const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
-    // comissaoEscolhida
-
-    console.log(tituloReuniao);
-    console.log(dataReuniaoEscolhida);
-    console.log(comissaoEscolhida);
 
     if(tituloReuniao == "" || dataReuniaoEscolhida == "" || comissaoEscolhida == undefined){
       setMensagemDoErro("Algum campo não foi preenchido!")
     }
-    
-
   }
 
 
@@ -266,7 +257,6 @@ export default function CriacaoPauta(props: {
 
                   <Select
                     sx={{ width: "15vw" }}
-                    defaultValue={"Comitê de TI"}
                     value={comissaoEscolhida}
                     inputProps={{ id: "comissaoEscolhida" }}
                     onChange={(e: any) => {

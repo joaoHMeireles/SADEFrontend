@@ -35,6 +35,7 @@ import AjudaUsuario from "./AjudaUsuario/AjudaUsuario";
 import { WebSocketService } from "../api/websocketservice";
 import { TextReaderProvider, TextReaderComponent } from "../Components/TextReaderContext/TextReaderContext";
 import RascunhoObserver from "../Components/RascunhoObserver/RascunhoObserver";
+import ToggleColorMode from "../Components/ThemeProviderComponent/ThemeProviderComponent";
 
 
 
@@ -299,7 +300,7 @@ export default function App() {
             <TextReaderProvider>
               <TextReaderComponent />
               <RascunhoObserver />
-              <ThemeProvider theme={MainTheme}>
+              <ToggleColorMode>
                 <Navbar aberto={sidebarAberta} setAberto={setSidebarAberta} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />
                 <Box sx={{ marginLeft: sidebarAberta ? `${tamanhoSideBar}px` : 0, display: "flex" }} >
                   <Sidebar aberto={sidebarAberta} tamanho={tamanhoSideBar} setAberto={setSidebarAberta} setFiltro={setFiltrar} />
@@ -358,7 +359,7 @@ export default function App() {
                   </MainBox>
                   <Filter aberto={filtrar} setAberto={setFiltrar} setSidebar={setSidebarAberta} filtrarResultados={filtrarResultados} listaComponents={listaComponents} />
                 </Box>
-              </ThemeProvider>
+              </ToggleColorMode>
             </TextReaderProvider>
           </WebSocketService>
         </BrowserRouter>

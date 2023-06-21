@@ -33,11 +33,9 @@ export default function Inicio(props: {
     if (props.listaComponents.length != 0) {
       setTemComponente(true)
 
-      setTimeout(() => {
-        if (props.setConteudoCarregou) {
-          props.setConteudoCarregou(true)
-        }
-      }, 1000)
+      if (props.setConteudoCarregou) {
+        props.setConteudoCarregou(true)
+      }
     } else {
       setTemComponente(false)
     }

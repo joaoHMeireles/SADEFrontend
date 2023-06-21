@@ -1,42 +1,25 @@
-import { Link } from "react-router-dom";
 import { ChangeEventHandler, useContext, useEffect, useState } from "react";
 
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
-import CardProposta from "../../Components/CardProposta/CardProposta";
 import Searchbar from "../../Components/Searchbar/Searchbar";
 
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { Box, Grid, MenuItem, Select, TextField } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
+import { Alert, Box, Grid, Snackbar, TextField } from "@mui/material";
 
-import DeleteIcon from "@mui/icons-material/Delete";
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
 import PanoramaFishEyeRoundedIcon from "@mui/icons-material/PanoramaFishEyeRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import { BotaoPrimario, BotaoSecundario, BoxConteudo } from "../App.styles";
 import { ContainerBoxTabs } from "../CriacaoProposta/CriacaoProposta.styles";
-import {
-  BoxBotoes,
-  BoxConteudoProposta,
-  BoxGeral,
-  BoxIconeLink,
-  BoxInputsDataComissao,
-  BoxProposta,
-  BoxTituloProposta,
-  TypographyVermais,
-} from "../CriacaoPauta/CriacaoPauta.styles";
-import {
-  TipoColecaoComponenteProcesso,
-  TipoComponenteProcesso,
-} from "../../constants/enuns";
+import { BoxBotoes, BoxInputsDataComissao } from "../CriacaoPauta/CriacaoPauta.styles";
+import { TipoColecaoComponenteProcesso } from "../../constants/enuns";
 import api from "../../api/api";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semDemanda from "../../Assets/emptyFolder.png"
-import { GridInfoATA, TypographyTituloInput } from "../TelaColecaoProcesso/TelaColecaoProcesso.styles";
+import { TypographyTituloInput } from "../TelaColecaoProcesso/TelaColecaoProcesso.styles";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
 import dayjs from 'dayjs';
@@ -55,6 +38,8 @@ export default function CriacaoAta(props: {
   const [grid, setGrid] = useState(true);
   const [conteudoCarregou, setConteudoCarregou] = useState(false)
   const [temComponente, setTemComponente] = useState(true)
+  const [feedbackAberto, setFeedbackAberto] = useState(false);
+  const [mensagemDoErro, setMensagemDoErro] = useState("")
   const [pautaEscolhida, setPautaEscolhida] = useState<any>();
   const [listaComponents, setListaComponents] = useState<any[]>([])
   const [valorData, setValorData] = useState<Dayjs | null>(null)
@@ -89,7 +74,7 @@ export default function CriacaoAta(props: {
     }).catch((err) => {
       console.log(err);
     }).finally(() => {
-        setConteudoCarregou(true)
+      setConteudoCarregou(true)
     })
 
   }, [])
@@ -101,6 +86,12 @@ export default function CriacaoAta(props: {
       setTemComponente(false)
     }
   }, [listaComponents])
+  
+  useEffect(() => {
+    if (mensagemDoErro != "") {
+      setFeedbackAberto(true)
+    }
+  }, [mensagemDoErro])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
@@ -108,6 +99,10 @@ export default function CriacaoAta(props: {
 
   function criarATA(event: any) {
     lerTexto(event)
+
+
+    checarPreenchimento()
+
     const tituloReuniaoATA = (document.getElementById("tituloReuniao") as HTMLInputElement).value
     const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
     const horarioInicioReuniao = (document.getElementById("horarioInicioReuniao") as HTMLInputElement).value
@@ -144,7 +139,15 @@ export default function CriacaoAta(props: {
     }).catch((err) => {
       console.log(err);
     })
+  }
 
+  function checarPreenchimento(){
+    const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
+    const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
+
+    if(tituloReuniao == "" || dataReuniaoEscolhida == ""){
+      setMensagemDoErro("Algum campo não foi preenchido!")
+    }
   }
 
   return (
@@ -179,7 +182,7 @@ export default function CriacaoAta(props: {
           {!temComponente ?
             <>
               {conteudoCarregou &&
-                  <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação"} />
+                <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação"} />
               }
             </>
             :
@@ -201,6 +204,12 @@ export default function CriacaoAta(props: {
             endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
             onClick={(e: any) => {
               lerTexto(e)
+
+              if (pautaEscolhida == undefined) {
+                setMensagemDoErro("Selecione pelo menos uma proposta primeiro!")
+                return
+              }
+
               setValor(1);
             }}>
             Proximo
@@ -290,6 +299,16 @@ export default function CriacaoAta(props: {
           </BoxBotoes>
         </>
       )}
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        autoHideDuration={5000}
+        open={feedbackAberto}
+        onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }}>
+
+        <Alert onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }} severity="error" sx={{ width: '100%' }}>
+          {mensagemDoErro}
+        </Alert>
+      </Snackbar>
     </BoxConteudo>
   );
 }

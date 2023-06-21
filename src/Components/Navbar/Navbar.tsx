@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logo from '../../assets/wegLogo.png';
 import './Navbar.scss';
-import { Avatar, Box, IconButton, Toolbar } from '@mui/material';
+import { Avatar, Box, Button, IconButton, Toolbar } from '@mui/material';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
 import { NavBar } from "./Navbar.styles";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
@@ -67,13 +67,15 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                                 <DehazeRoundedIcon />
                             </IconButton>
 
-                            <Box sx={{ flexGrow: 1 }}>
-                                <img id="imgLogoNav" src={sadeLogo} alt="Logo SADE" />
+                            <Box sx={{ flexGrow: 1, "& img": {cursor: "pointer"}}}>
+                                <img id="imgLogoNav" src={sadeLogo} alt="Logo SADE" onClick={() => {location.href = "/home"}}/>
+                                
                             </Box>
 
                             <Box sx={{ alignItems: "center", display: "flex" }}>
                                 <Box sx={{ marginLeft: "1rem" }}>
-                                    <p>{mensagem + nomeUsuario + "!"}</p>
+                                    {/* <p>{mensagem + nomeUsuario + "!"}</p> */}
+                                    <Button>mudar tema</Button>
                                 </Box>
 
                                 <Box sx={{ height: "100%", marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>

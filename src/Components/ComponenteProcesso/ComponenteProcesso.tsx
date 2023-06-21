@@ -264,7 +264,7 @@ function GridComponent(props: ComponentProps) {
                 <GridTypography variant="h6">
                   {props.componente.tituloDemanda}
                 </GridTypography>
-                <WarningRoundedIcon sx={{ color: "#00579d" }} />
+                <WarningRoundedIcon sx={{ color: "#00579d", marginRight: "15px" }} />
               </GridBoxTituloRadio>
               :
               <>

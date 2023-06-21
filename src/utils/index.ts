@@ -68,6 +68,8 @@ export function getCorStatus(status: string | undefined) {
 
     if (status != undefined) {
         return (coresStatus as any)[status]
+    } else {
+        return "#ffffff"
     }
 }
 
@@ -189,7 +191,9 @@ export function getNomeStatus(status: string) {
         TODO: "A fazer",
     };
 
-    return (nomeStatus as any)[status];
+    const nomeStatusEscolhido = (nomeStatus as any)[status]
+
+    return nomeStatusEscolhido == null ? "Aguardando avaliação" : nomeStatusEscolhido;
 }
 
 export function getBeneficiosPorTipo(listaBeneficios: any[], tipoBeneficio: string) {
@@ -220,12 +224,10 @@ export function getKeyEnum(enumerador: Object, valor: any) {
 
 export function baixarArquivo(anexo: any) {
     const url = window.URL.createObjectURL(new Blob([anexo.arquivo]));
-    console.log(url);
 
     const link = document.createElement('a');
     link.href = url;
     link.setAttribute('download', `${anexo.nome}.pdf`);
-    console.log(link);
 
     document.body.appendChild(link);
     link.click();
