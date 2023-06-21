@@ -15,7 +15,7 @@ export const TableContainerEstilizado = styled(TableContainer)({
 });
 
 export const TableCellEstilzada = styled(TableCell)(({ theme: Theme }) => ({
-  color: "#595959",
+  color: "#444",
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#00579d",
     color: Theme.palette.common.white,

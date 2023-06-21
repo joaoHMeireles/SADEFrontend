@@ -16,9 +16,8 @@ import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import InfomacoesAdicionais from "../../Components/InfomacoesAdicionais/InformacoesAdicionais";
 import { ContainerGeral, ContainerBoxTabs } from "./CriacaoProposta.styles";
 import {
-  BoxContainerBotoes,
-  BoxBotaoTerciario,
-  BoxBotoesPriSec,
+  BoxBotoes,
+  ContainerBotoes
 } from "../CriacaoDemanda/CriacaoDemanda.styles";
 import { BotaoTerciario, BotaoPrimario, BotaoSecundario } from "../App.styles";
 import {
@@ -351,7 +350,7 @@ export default function CriacaoProposta(props: {
         {valor != 0 ? (
           <Tabs value={valor} onChange={mudarValor}>
             {valor == 0 ? (
-              <Tab icon={<LensRoundedIcon sx={{ color: "#00579d" }} />}></Tab>
+              <Tab icon={<LensRoundedIcon sx={{ color: " 00579d" }} />}></Tab>
             ) : (
               <Tab icon={<LensRoundedIcon sx={{ color: "#90caf9" }} />}></Tab>
             )}
@@ -453,7 +452,7 @@ export default function CriacaoProposta(props: {
 
             <InputAnexos rascunho={false} proposta={true} arquivosProposta={arquivosProposta} setArquivosProposta={setArquivosProposta} />
 
-            <BoxContainerBotoes>
+            <ContainerBotoes>
               <BotaoTerciario
                 variant="outlined"
                 onClick={(e: any) => {
@@ -474,7 +473,7 @@ export default function CriacaoProposta(props: {
                 }}>
                 Próximo
               </BotaoPrimario>
-            </BoxContainerBotoes>
+            </ContainerBotoes>
           </>
         )}
 
@@ -491,19 +490,17 @@ export default function CriacaoProposta(props: {
               arquivosProposta={arquivosProposta}
               setArquivosProposta={setArquivosProposta} />
 
-            <BoxContainerBotoes>
-              <BoxBotaoTerciario>
-                <BotaoTerciario
-                  variant="outlined"
-                  onClick={(e: any) => {
-                    lerTexto(e)
-                    window.location.href = "/home";
-                  }}>
-                  Cancelar
-                </BotaoTerciario>
-              </BoxBotaoTerciario>
+            <ContainerBotoes>
+              <BotaoTerciario
+                variant="outlined"
+                onClick={(e: any) => {
+                  lerTexto(e)
+                  window.location.href = "/home";
+                }}>
+                Cancelar
+              </BotaoTerciario>
 
-              <BoxBotoesPriSec>
+              <BoxBotoes>
                 <BotaoSecundario
                   onClick={(e: any) => {
                     lerTexto(e)
@@ -528,8 +525,8 @@ export default function CriacaoProposta(props: {
                   }}>
                   Enviar
                 </BotaoPrimario>
-              </BoxBotoesPriSec>
-            </BoxContainerBotoes>
+              </BoxBotoes>
+            </ContainerBotoes>
           </>
         )}
 

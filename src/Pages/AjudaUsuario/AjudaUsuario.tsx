@@ -15,16 +15,19 @@ import ListItemText from '@mui/material/ListItemText';
 import { Introducao, CriarDemanda, AvaliarDemanda3Opcoes, AvaliarDemanda2Opcoes, AdicionarInfoDemanda, CriarProposta, CriarPauta, InformarParecerComissao, CriarATA, InformarParecerDiretoriaGeral, IniciarWorkflow, AvaliarWorkflow } from "./Componentes/Componentes";
 
 export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: boolean }) {
-  const [ processosPrincipaisOpen,  setProcessosPrincipaisOpen] = useState(false);
+  const [processosPrincipaisOpen, setProcessosPrincipaisOpen] = useState(false);
   const [componentes, setComponentes] = useState<any>(Introducao);
   const [cor, setCor] = useState(0);
 
   const atividadesPrincipaisClick = () => {
-     setProcessosPrincipaisOpen(! processosPrincipaisOpen);
+    setProcessosPrincipaisOpen(!processosPrincipaisOpen);
   };
 
   useEffect(() => {
   }, [cor]);
+
+  const secondColumn = document.getElementById("secondColumn");
+  secondColumn?.scrollTo(0, 0);
 
   return (
     <Box>
@@ -50,10 +53,10 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
 
               <ListItemButton onClick={atividadesPrincipaisClick}>
                 <ListItemText primary="PROCESSOS PRINCIPAIS" />
-                { processosPrincipaisOpen ? <ExpandLess /> : <ExpandMore />}
+                {processosPrincipaisOpen ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
 
-              <Collapse in={ processosPrincipaisOpen} timeout="auto" unmountOnExit>
+              <Collapse in={processosPrincipaisOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
                     setComponentes(CriarDemanda);
@@ -147,7 +150,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
 
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
                     setComponentes(IniciarWorkflow);
-                    setCor(10)
+                    setCor(10);
                   }}>
                     {cor == 10 ?
                       <ListItemText primary="Iniciar Workflow de Aprovação" sx={{ color: "#00579d" }} />
@@ -169,7 +172,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
             </Lista>
           </FirstColumn>
 
-          <SecondColumn>
+          <SecondColumn id="secondColumn">
             {componentes}
           </SecondColumn>
         </Container>

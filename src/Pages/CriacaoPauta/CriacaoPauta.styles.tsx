@@ -47,7 +47,7 @@ export const BoxIconeLink = styledBox({
 });
 
 export const TypographyVermais = styledTypography({
-  color: "#00579D",
+  color: "#00579d",
 });
 
 export const BoxInputsDataComissao = styledBox({

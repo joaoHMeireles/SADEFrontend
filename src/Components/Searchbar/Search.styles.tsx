@@ -7,7 +7,6 @@ import styled from "@emotion/styled"
 export const BoxContainerInput = styled(Box)({
     alignItems: "center",
     display: "flex",
-    height: "auto",
     justifyContent: "center",
     margin: "2rem 0",
     width: "100%"

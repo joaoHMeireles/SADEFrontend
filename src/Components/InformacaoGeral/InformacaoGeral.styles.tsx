@@ -29,7 +29,6 @@ export const BoxContainerGeralInformacaoGeral = styledBox({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
-  height: "auto",
   width: "100%",
 });
 
@@ -37,15 +36,14 @@ export const BoxContainerLabels = styledBox({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  height: "25%",
-  marginTop: 40,
+  marginBottom: "2rem",
   width: "100%",
 });
 
 export const TypographyLabels = styledTypography({
-  color: "#595959",
+  color: "#444",
   fontWeight: "bold",
-  marginBottom: 16
+  marginBottom: "1rem"
 });
 
 export const TextFieldEdited = styledTextField({

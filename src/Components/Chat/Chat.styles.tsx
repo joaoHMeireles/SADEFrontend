@@ -7,7 +7,7 @@ const styledTypography = styled(Typography);
 
 export const ContainerGeralChat = styledBox({
     alignItems: "center",
-    backgroundColor: "#EEEEEE",
+    backgroundColor: "#eee",
     borderRadius: "5px",
     display: "flex",
     height: "50px",
@@ -20,7 +20,7 @@ export const ContainerGeralChat = styledBox({
 })
 
 export const BoxIconePessoa = styledBox({
-    color: "#595959",
+    color: "#444",
     marginLeft: 24,
     marginRight: 24,
 })
@@ -39,9 +39,9 @@ export const BoxChat = styledBox({
 })
 
 export const TypographyTitulo = styledTypography({
-    color: "#595959"
+    color: "#444"
 })
 
 export const TypographyPessoaMensagem = styledTypography({
-    color: "#999999"
+    color: "#aaa"
 })

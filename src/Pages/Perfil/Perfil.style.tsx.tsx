@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 export const BoxBackground = styled(Box)({
     alignItems: "center",
-    color: "#595959",
+    color: "#444",
     display: "flex",
     flexDirection: "column",
     height: "100%",
@@ -17,7 +17,6 @@ export const FirstContainer = styled(Box)({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    height: "auto",
     padding: "2rem 0",
     width: "90%"
 })
@@ -27,7 +26,6 @@ export const SecondContainer = styled(Box)({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    height: "auto",
     padding: "2rem 0",
     width: "90%"
 })

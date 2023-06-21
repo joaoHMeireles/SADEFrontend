@@ -15,17 +15,14 @@ export const BoxContainerDivisorio = styledBox({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
-    height: "80%",
     justifyContent: "space-around",
-    marginTop: 40,
-    width: "100%",
+    width: "100%"
 });
 
 export const BoxContainerGeral = styledBox({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
-    height: "auto",
     justifyContent: "space-around",
     width: '100%',
 });
@@ -34,26 +31,23 @@ export const BoxContainerGeralBeneficio = styledBox({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
-    height: "50%",
     justifyContent: "start",
     width: "100%",
 });
 
 export const BoxDescricaoRequisitosControle = styledBox({
     height: "50%",
-    marginTop: 40,
     width: "100%",
 });
 
 export const BoxFrequencia = styledBox({
     flexDirection: "column",
     height: "50%",
-    marginTop: 40,
     width: "100%",
 });
 
 export const BoxIcones = styledBox({
-    marginTop: 24
+    marginTop: "2rem"
 });
 
 export const BoxInputs = styledBox({
@@ -64,8 +58,7 @@ export const BoxInputs = styledBox({
 });
 
 export const BoxInputsAbaixo = styledBox({
-    height: "50%",
-    marginTop: 24,
+    marginTop: "2rem",
     width: "100%",
 });
 
@@ -84,16 +77,16 @@ export const BoxObrigacaoLegal = styledBox({
 
 export const BoxTitulos = styledBox({
     alignItems: "center",
-    backgroundColor: "#00579D",
-    borderRadius: "5px",
+    color: "#00579d",
     display: "flex",
+    fontSize: "20px",
+    fontWeight: "bold",
     justifyContent: "center",
-    marginTop: 24,
+    margin: "2rem 0",
     width: "100%",
 });
 
 export const BoxValorMensal = styledBox({
-    marginBottom: 8,
     width: "100%",
 });
 
@@ -121,13 +114,14 @@ export const TextFieldEdited = styledTextField({
 });
 
 export const TypographyLabels = styledTypography({
-    color: "#595959",
-    fontWeight: "bold"
+    color: "#444",
+    fontWeight: "bold",
+    marginBottom: "1rem"
 });
 
 export const TypographyTitulos = styledTypography({
     alignItems: "center",
-    color: "#FFF",
+    color: "#fff",
     display: "flex",
     height: "2rem",
     justifyContent: "center",

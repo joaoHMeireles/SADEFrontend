@@ -15,7 +15,6 @@ export const BoxImage = styledBox({
 export const BoxInputs = styledBox({
     display: "flex",
     flexDirection: "column",
-    height: "auto",
     marginBottom: "4rem",
     marginTop: "4rem",
     width: "auto"
@@ -32,7 +31,6 @@ export const BoxLogin = styledBox({
 export const BoxLogos = styledBox({
     alignItems: "center",
     display: "flex",
-    height: "auto",
     justifyContent: "center",
     marginBottom: "2rem",
     width: "auto"
@@ -41,7 +39,6 @@ export const BoxLogos = styledBox({
 export const BoxRememberMe = styledBox({
     alignItems: "center",
     display: "flex",
-    height: "auto",
     justifyContent: "flex-start",
     width: "100%"
 });
@@ -50,7 +47,6 @@ export const BoxTexts = styledBox({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
-    height: "auto",
     justifyContent: "center",
     width: "auto"
 });
@@ -69,7 +65,6 @@ export const Container = styledBox({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    height: "auto",
     width: "100%"
 });
 

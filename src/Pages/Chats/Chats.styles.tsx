@@ -47,7 +47,7 @@ export const LadoEsquerdoChat = styledBox({
 
 export const LadoDireitoGeralChats = styledBox({
     alignItems: "center",
-    background: "#EEEEEE",
+    background: "#eee",
     borderRadius: "5px",
     display: "flex",
     flexDirection: "column",
@@ -127,30 +127,28 @@ export const BoxMensagensLadoEsquerdo = styledBox({
 })
 
 export const BoxMensagemLadoDireito = styledBox({
-    background: "#FFF",
+    background: "#fff",
     borderRadius: "5px 5px 0 5px",
     boxShadow: "-5px 5px 10px 0 #00000025",
-    height: "auto",
     padding: 4,
     width: "auto",
 })
 
 export const BoxMensagemLadoEsquerdo = styledBox({
-    background: "#FFF",
+    background: "#fff",
     borderRadius: "5px 5px 5px 0px",
     boxShadow: "-5px 5px 10px 0 #00000025",
-    height: "auto",
     padding: 4,
     width: "auto",
 })
 
 export const TypographyPessoa = styledTypography({
-    color: "#00579D",
+    color: "#00579d",
     fontSize: "16px",
     fontWeight: "bold",
 })
 
 export const TypographyMensagem = styledTypography({
-    color: "#595959",
+    color: "#444",
     fontSize: "16px",
 })

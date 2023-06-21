@@ -28,7 +28,7 @@ import {
   PlusIconButton,
 } from "../Tabelas.style";
 
-import { BoxIconsAddMinus } from "./TabelaCustoCriacao.styles";
+import { BoxIconsAddMinus,TextFieldEdited } from "./TabelaCustoCriacao.styles";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import { Button, Chip, IconButton } from "@mui/material";
@@ -226,7 +226,7 @@ function Tabela(props: {
           {quantidadeLinha > 1 ? (
             <Tooltip title="Remover linha">
               <RemoveRoundedIcon
-                sx={{ color: "#595959", cursor: "pointer", marginRight: 3 }}
+                sx={{ color: "#444", cursor: "pointer", marginRight: 3 }}
                 onClick={() => setQuantidadeLinha(quantidadeLinha - 1)} />
             </Tooltip>
           ) : (
@@ -234,7 +234,7 @@ function Tabela(props: {
           )}
           <Tooltip title="Adicionar linha">
             <AddRoundedIcon
-              sx={{ color: "#595959", cursor: "pointer" }}
+              sx={{ color: "#444", cursor: "pointer" }}
               onClick={() => setQuantidadeLinha(quantidadeLinha + 1)} />
           </Tooltip>
         </BoxIconsAddMinus>
@@ -247,7 +247,9 @@ function Tabela(props: {
       </Box>
 
       <Box>
-        <TypographyStyled onClick={lerTexto}>Centro de Custo para {props.tituloTabela}:</TypographyStyled>
+        <TypographyStyled onClick={lerTexto}>
+          Centro de Custo para {props.tituloTabela}:
+        </TypographyStyled>
 
         <Autocomplete
           id={`centroCusto${props.tabela}`}
@@ -266,7 +268,9 @@ function Tabela(props: {
                   checkedIcon={<CheckBoxIcon fontSize="small" />}
                   style={{ marginRight: 8 }}
                   checked={selected} />
-                <span onClick={lerTexto}> {cc} </span>
+                <span onClick={lerTexto}>
+                  {cc}
+                </span>
               </li>
             );
           }}
@@ -297,7 +301,8 @@ function ChipAutocompleteCentroCusto(props: { id: any, nome: string, mudarPorcen
 
   return (
     <Box sx={{ marginRight: 2 }}>
-      <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#59595930 solid 1px" }} label={props.nome} onClick={lerTexto} />
+      <Chip sx={{ borderRadius: "16px 0  0 16px", borderRight: "#44444430 solid 1px" }} label={props.nome} onClick={lerTexto} />
+
       <Button id={props.id} sx={{ backgroundColor: "rgba(0,0,0,0.08)", height: "32px", borderRadius: "0 16px 16px 0" }} onClick={atualizarPorcentagem}>{porcentagem} %</Button>
     </Box>
   )
@@ -324,27 +329,27 @@ function LinhaTabela(props: {
       <TableRow className={`linhaTabelaCustoCriacao${props.indexTabela}`}>
         <TableCell sx={{ width: "25%" }} align="center">
           <FormControl fullWidth sx={{ m: 1 }} variant="filled">
-            <TextField
+            <TextFieldEdited
               id={`tituloLinha${props.indexTabela}-${props.index}`}
               sx={{ width: "100%" }}
               InputProps={{
                 startAdornment: <GroupsRoundedIcon sx={{ paddingRight: 1 }} />,
-              }}
-            />
+              }} />
           </FormControl>
         </TableCell>
+
         <TableCell sx={{ width: "25%" }} align="center">
-          <TextField
+          <TextFieldEdited
             onChange={(e: any) => { setEsforco(e.target.value) }}
             id={`esforco${props.indexTabela}-${props.index}`}
             sx={{ width: "100%" }}
             InputProps={{
               startAdornment: props.iconeInput,
-            }}
-          ></TextField>
+            }} />
         </TableCell>
+
         <TableCell sx={{ width: "25%" }} align="center">
-          <TextField
+          <TextFieldEdited
             onChange={(e: any) => { setValorHora(e.target.value) }}
             id={`valorHora${props.indexTabela}-${props.index}`}
             sx={{ width: "100%" }}
@@ -352,8 +357,7 @@ function LinhaTabela(props: {
               startAdornment: (
                 <AttachMoneyRoundedIcon sx={{ paddingRight: "2px" }} />
               ),
-            }}
-          ></TextField>
+            }} />
         </TableCell>
       </TableRow>
     </>

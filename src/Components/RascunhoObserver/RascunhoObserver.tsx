@@ -7,7 +7,7 @@ export default function RascunhoObserver() {
     useLocationChange((newLocation: Location, previousLocation: Location) => {
         if (previousLocation.pathname == "/createdemand") {
             const objetoDemanda = JSON.parse(localStorage.getItem("DADOSDEMANDACRIACAO") as string)
-
+            
             if (objetoDemanda != null) {
                 let temInformacao = false
 

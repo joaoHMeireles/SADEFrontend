@@ -67,7 +67,7 @@ export default function BeneneficiosTeste() {
                                     fontSize: "2rem",
                                     marginRight: 3,
                                     cursor: "pointer",
-                                    color: "#595959",
+                                    color: "#444",
                                 }}
                                 onClick={() => {
                                     // console.log("Entrou -");
@@ -83,7 +83,7 @@ export default function BeneneficiosTeste() {
                         )
                     }
                     <AddRoundedIcon
-                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
                         onClick={() => {
                             // console.log("Entrou +");
 
@@ -110,7 +110,7 @@ export default function BeneneficiosTeste() {
                                     fontSize: "2rem",
                                     marginRight: 3,
                                     cursor: "pointer",
-                                    color: "#595959",
+                                    color: "#444",
                                 }}
                                 onClick={() => {
                                     setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais - 1)
@@ -120,7 +120,7 @@ export default function BeneneficiosTeste() {
                         )
                     }
                     <AddRoundedIcon
-                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
                         onClick={() => {
                             setNumeroBeneficiosPotenciais(numeroBeneficiosPotenciais + 1)
                             // listaBeneficiosPotencial.push(<BeneficioPotencial index={listaBeneficiosPotencial.length} />)
@@ -143,7 +143,7 @@ export default function BeneneficiosTeste() {
                                     fontSize: "2rem",
                                     marginRight: 3,
                                     cursor: "pointer",
-                                    color: "#595959",
+                                    color: "#444",
                                 }}
                                 onClick={() => {
                                     setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos - 1)
@@ -154,7 +154,7 @@ export default function BeneneficiosTeste() {
                         )
                     }
                     <AddRoundedIcon
-                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#595959" }}
+                        sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
                         onClick={() => {
                             setNumeroBeneficiosQualitativos(numeroBeneficiosQualitativos + 1)
 

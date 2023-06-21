@@ -8,7 +8,6 @@ import {
   BoxLogos,
   BoxRememberMe,
   BoxTexts,
-  ButtonEdited,
   Column,
   Container,
   TextFieldEdited
@@ -158,7 +157,7 @@ export default function Login(props: {
                       tipo == "text" ? <VisibilityOffOutlinedIcon onClick={mostrarSenha} sx={{ color: "#00579d", cursor: "pointer" }} /> : <VisibilityOutlinedIcon onClick={mostrarSenha} sx={{ color: "#00579d", cursor: "pointer" }} />)
                   }} variant="outlined" placeholder="Senha" />
 
-                <FormHelperText id="component-error-text" sx={{ color: "#E90821" }}>
+                <FormHelperText id="component-error-text" sx={{ color: "#e90821" }}>
                   {invalido && "Um dos campos não foi preenchido"}
                 </FormHelperText>
               </FormControl>

@@ -30,9 +30,9 @@ export default function Breadcrumb() {
             )
         } else {
             linksBreadcrumb.push(
-                <BoxRota key={i} sx={{ color: "#595959" }}>
+                <BoxRota key={i} sx={{ color: "#444" }}>
                     <Link to={rotaComponente + breadcrumb[i].path + searchComponente + breadcrumb[i].search} >
-                        <Typography component="h5" variant="h6" sx={{ color: "#595959" }} onClick={lerTexto}>
+                        <Typography component="h5" variant="h6" sx={{ color: "#444" }} onClick={lerTexto}>
                             {breadcrumb[i].name}
                         </Typography>
                     </Link>

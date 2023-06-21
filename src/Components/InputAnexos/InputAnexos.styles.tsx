@@ -5,13 +5,11 @@ const styledBox = styled(Box);
 
 export const BoxContainerGeral = styledBox({
   alignItems: "center",
-  border: "2px solid #595959",
-  borderRadius: "5px",
-  borderStyle: "dashed",
+  border: "2px dashed #444",
+  borderRadius: "10px",
   display: "flex",
   justifyContent: "center",
-  height: "auto",
-  marginTop: 24,
+  marginTop: "1rem",
   minHeight: "10vh",
   width: "100%",
 });
@@ -19,10 +17,8 @@ export const BoxContainerGeral = styledBox({
 export const BoxContainerConteudo = styledBox({
   alignItems: "center",
   display: "flex",
-  flexDirection: "column",
   justifyContent: "center",
-  height: "100%",
-  padding: 12,
+  padding: "1rem",
   textAlign: "center",
   width: "100%",
 });

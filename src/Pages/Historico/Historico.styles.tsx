@@ -18,15 +18,15 @@ export const DataGridEstilizado = styled(DataGrid)(({ theme }) => ({
     },
 
     "& .em-aguardo": {
-        color: "#595959"
+        color: "#444"
     },
 
     "& .em-andamento": {
-        color: "#FFD600"
+        color: "#ffd600"
     },
 
     "& .concluido": {
-        color: "#00612E"
+        color: "#00612e"
     },
 
     '& .celula-grid': {
@@ -50,27 +50,12 @@ export const DataGridEstilizado = styled(DataGrid)(({ theme }) => ({
     "& .MuiDataGrid-footerContainer": {
         borderTop: "none",
         "& .MuiTablePagination-selectLabel, .MuiInputBase-root .MuiSelect-select, .MuiTablePagination-displayedRows, .MuiTablePagination-actions button": {
-            color: "#595959",
+            color: "#444",
             "&:hover": {
                 color: "#00579d"
             }
         }
     },
-
-    // "& .MuiDataGrid-main ": {
-    //     "& .MuiDataGrid-virtualScroller": {
-    //         "&::-webkit-scrollbar ": {
-    //             width: "10px",
-    //             height: "10px",
-    //             backgroundColor: "white"
-    //         },
-
-    //         "::-webkit-scrollbar-thumb": {
-    //             background: "#bababa",
-    //             borderRadius: "15px",
-    //         },
-    //     }
-    // },
 
     [`& .${gridClasses.row}.even`]: {
         backgroundColor: theme.palette.grey[200],

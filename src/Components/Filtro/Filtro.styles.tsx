@@ -17,7 +17,7 @@ export const BoxItemHeader = styledBox({
 })
 
 export const TypographyItemHeader = styled(Typography)({
-    color: "#595959"
+    color: "#444"
 })
 
 export const BoxBotaoExcel = styledBox({
