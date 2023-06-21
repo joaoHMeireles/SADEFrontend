@@ -1,13 +1,10 @@
 import { useState, useEffect, SetStateAction, useContext } from "react";
 
-import Autocomplete from "@mui/material/Autocomplete";
-import Typography from "@mui/material/Typography";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Tooltip from '@mui/material/Tooltip';
 
@@ -28,10 +25,10 @@ import {
   PlusIconButton,
 } from "../Tabelas.style";
 
-import { BoxIconsAddMinus,TextFieldEdited } from "./TabelaCustoCriacao.styles";
+import { AutocompleteEdited, BoxIconsAddMinus, TextFieldEdited } from "./TabelaCustoCriacao.styles";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
-import { Button, Chip, IconButton } from "@mui/material";
+import { Button, Chip } from "@mui/material";
 import { TypographyStyled } from "../../EscopoProposta/EscopoProposta.styles";
 import { TextReaderContext } from "../../TextReaderContext/TextReaderContext";
 
@@ -251,9 +248,8 @@ function Tabela(props: {
           Centro de Custo para {props.tituloTabela}:
         </TypographyStyled>
 
-        <Autocomplete
+        <AutocompleteEdited
           id={`centroCusto${props.tabela}`}
-          sx={{ boxShadow: "5px 5px 10px 0 #00000025", marginBottom: 2 }}
           multiple
           disableCloseOnSelect
           onChange={(e, valor: any) => {
@@ -327,18 +323,16 @@ function LinhaTabela(props: {
   return (
     <>
       <TableRow className={`linhaTabelaCustoCriacao${props.indexTabela}`}>
-        <TableCell sx={{ width: "25%" }} align="center">
-          <FormControl fullWidth sx={{ m: 1 }} variant="filled">
+        <TableCell align="center">
             <TextFieldEdited
               id={`tituloLinha${props.indexTabela}-${props.index}`}
               sx={{ width: "100%" }}
               InputProps={{
                 startAdornment: <GroupsRoundedIcon sx={{ paddingRight: 1 }} />,
               }} />
-          </FormControl>
         </TableCell>
 
-        <TableCell sx={{ width: "25%" }} align="center">
+        <TableCell align="center">
           <TextFieldEdited
             onChange={(e: any) => { setEsforco(e.target.value) }}
             id={`esforco${props.indexTabela}-${props.index}`}
@@ -348,7 +342,7 @@ function LinhaTabela(props: {
             }} />
         </TableCell>
 
-        <TableCell sx={{ width: "25%" }} align="center">
+        <TableCell align="center">
           <TextFieldEdited
             onChange={(e: any) => { setValorHora(e.target.value) }}
             id={`valorHora${props.indexTabela}-${props.index}`}

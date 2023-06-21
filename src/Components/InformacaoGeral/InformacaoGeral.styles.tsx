@@ -1,22 +1,14 @@
+import { Autocomplete, Box, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
-import Autocomplete from "@mui/material/Autocomplete";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 
-const styledAutocomplete = styled(Autocomplete);
-const styledBox = styled(Box);
-const styledTextField = styled(TextField);
-const styledTypography = styled(Typography);
-
-export const AutocompleteEdited = styledAutocomplete({
+export const AutocompleteEdited = styled(Autocomplete)({
   backgroundColor: "#eee",
   borderRadius: "10px",
   boxShadow: "5px 5px 10px 0 #00000025",
   "& fieldset": { border: "none" }
 })
 
-export const BoxContainerCentroCusto = styledBox({
+export const BoxContainerCentroCusto = styled(Box)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -24,7 +16,7 @@ export const BoxContainerCentroCusto = styledBox({
   width: "100%",
 });
 
-export const BoxContainerGeralInformacaoGeral = styledBox({
+export const BoxContainerGeralInformacaoGeral = styled(Box)({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
@@ -32,7 +24,7 @@ export const BoxContainerGeralInformacaoGeral = styledBox({
   width: "100%",
 });
 
-export const BoxContainerLabels = styledBox({
+export const BoxContainerLabels = styled(Box)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -40,15 +32,15 @@ export const BoxContainerLabels = styledBox({
   width: "100%",
 });
 
-export const TypographyLabels = styledTypography({
-  color: "#444",
-  fontWeight: "bold",
-  marginBottom: "1rem"
-});
-
-export const TextFieldEdited = styledTextField({
+export const TextFieldEdited = styled(TextField)({
   backgroundColor: "#eee",
   borderRadius: "10px",
   boxShadow: "5px 5px 10px 0 #00000025",
   "& fieldset": { border: "none" }
+});
+
+export const TypographyLabels = styled(Typography)({
+  color: "#444",
+  fontWeight: "bold",
+  marginBottom: "1rem"
 });

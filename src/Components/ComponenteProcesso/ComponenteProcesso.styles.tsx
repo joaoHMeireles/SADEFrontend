@@ -1,8 +1,5 @@
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import styled from "@emotion/styled";
-const styledBox = styled(Box);
-const styledGrid = styled(Grid);
-const styledTypograpfy = styled(Typography);
 
 export const MainPaper = styled(Paper)({
   borderRadius: "5px",
@@ -11,13 +8,13 @@ export const MainPaper = styled(Paper)({
   width: "90%",
 });
 
-export const BoxGridCorProcesso = styledBox({
+export const BoxGridCorProcesso = styled(Box)({
   borderRadius: "5px 0 0 5px",
   height: "100%",
   width: "25%",
 });
 
-export const GridComponenteProcesso = styledGrid({
+export const GridComponenteProcesso = styled(Grid)({
   color: "#444",
   cursor: "pointer",
   display: "grid",
@@ -25,7 +22,7 @@ export const GridComponenteProcesso = styledGrid({
   padding: "15px 15px 15px 0",
 });
 
-export const GridBoxTituloRadio = styledBox({
+export const GridBoxTituloRadio = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
@@ -33,7 +30,7 @@ export const GridBoxTituloRadio = styledBox({
   textOverflow: "ellipsis",
 });
 
-export const GridTypography = styledTypograpfy({
+export const GridTypography = styled(Typography)({
   alignItems: "center",
   display: "flex",  
   justifyContent: "start",
@@ -46,7 +43,7 @@ export const GridTypography = styledTypograpfy({
   },
 });
 
-export const GridLinkTypograpfy = styledTypograpfy({
+export const GridLinkTypograpfy = styled(Typography)({
   alignItems: "center",
   display: "flex",
   justifyContent: "end",
@@ -59,34 +56,34 @@ export const GridLinkTypograpfy = styledTypograpfy({
   },
 });
 
-export const UltimaLinhaGridBox = styledBox({
+export const UltimaLinhaGridBox = styled(Box)({
   alignItems: "center", 
   display: "flex",
   justifyContent: "space-between", 
   width: "95%" 
-})
+});
 
-export const StatusBox = styledBox({
+export const StatusBox = styled(Box)({
   alignItems: "center", 
   display: "flex",
-})
+});
 
 export const StatusColorIconBox = styled(StatusBox)({
   fontSize: "12px",
   marginLeft: "5px" 
-})
+});
 
 export const GridLinkColecaoTypograpfy = styled(GridLinkTypograpfy)({
   width: "25%",
 });
 
-export const BoxListaCorProcesso = styledBox({
+export const BoxListaCorProcesso = styled(Box)({
   borderRadius: "5px 0 0 5px",
   height: "100%",
   maxWidth: "13px",
 });
 
-export const ListaComponenteProcesso = styledGrid({
+export const ListaComponenteProcesso = styled(Grid)({
   alignItems: "center",
   color: "#444",
   cursor: "pointer",
@@ -107,7 +104,7 @@ export const ListaTypography = styled(GridTypography)({
   },
 });
 
-export const StatusListaBox = styledBox({
+export const StatusListaBox = styled(Box)({
   alignItems: "center", 
   display: "flex",
   fontSize: "12px",  
@@ -127,7 +124,7 @@ export const UltimaListaTypography = styled(ListaTypography)({
   },
 });
 
-export const BoxColecaoComponente = styledBox({
+export const BoxColecaoComponente = styled(Box)({
   margin: "none",
   overflow: "hidden",
   textOverflow: "ellipsis",

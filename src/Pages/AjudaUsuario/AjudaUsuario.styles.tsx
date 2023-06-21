@@ -1,5 +1,4 @@
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
+import { Box, List } from "@mui/material";
 import styled from "@emotion/styled";
 
 export const Container = styled(Box)({

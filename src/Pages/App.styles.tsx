@@ -1,8 +1,7 @@
-import { Box, Button, styled } from "@mui/material";
-const styledBox = styled(Box);
-const styledButton = styled(Button);
+import { Box, Button } from "@mui/material";
+import styled from "@emotion/styled";
 
-export const BotaoPrimario = styledButton({
+export const BotaoPrimario = styled(Button)({
     backgroundColor: "#00579d",
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
@@ -12,11 +11,12 @@ export const BotaoPrimario = styledButton({
         transition: 'ease-in-out',
         transitionDuration: "0.7s"
     },
+    margin: "0 1rem",
     padding: "0.75rem 2rem",
     width: "auto"
 });
 
-export const BotaoSecundario = styledButton({
+export const BotaoSecundario = styled(Button)({
     borderColor: "#00579d",
     border: "1px solid #00579d",
     borderRadius: "10px",
@@ -29,11 +29,12 @@ export const BotaoSecundario = styledButton({
         transition: 'ease-in-out',
         transitionDuration: "0.7s"
     },
+    margin: "0 1rem", 
     padding: "0.75rem 2rem",
     width: "auto"
 });
 
-export const BotaoTerciario = styledButton({
+export const BotaoTerciario = styled(Button)({
     borderColor: "#444",
     border: "1px solid #444",
     borderRadius: "10px",
@@ -46,11 +47,12 @@ export const BotaoTerciario = styledButton({
         transition: 'ease-in-out',
         transitionDuration: "0.7s"
     },
+    margin: "0 1rem",
     padding: "0.75rem 2rem",
     width: "auto"
 });
 
-export const BoxContainer = styledBox({
+export const BoxContainer = styled(Box)({
     width: "100%",
     height: "100%",
     display: "flex",
@@ -58,11 +60,11 @@ export const BoxContainer = styledBox({
     alignItems: "center"
 });
 
-export const BoxConteudo = styledBox({
+export const BoxConteudo = styled(Box)({
     margin: "24px"
 });
 
-export const BoxDraggable = styledBox({
+export const BoxDraggable = styled(Box)({
     backgroundColor: "#ffffff99",
     borderRadius: "5px",
     bottom: "0px",
@@ -73,7 +75,7 @@ export const BoxDraggable = styledBox({
     width: "50vw"
 });
 
-export const MainBox = styledBox({
+export const MainBox = styled(Box)({
     flexGrow: 1,
     width: "auto",
 });

@@ -1,17 +1,7 @@
-import Autocomplete from "@mui/material/Autocomplete";
-import Box from "@mui/material/Box";
-import Select from "@mui/material/Select";
+import { Autocomplete, Box, Select, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
-import TextField from "@mui/material/TextField"
-import Typography from "@mui/material/Typography";
 
-const styledAutocomplete = styled(Autocomplete);
-const styledBox = styled(Box);
-const styledSelect = styled(Select);
-const styledTextField = styled(TextField);
-const styledTypography = styled(Typography);
-
-export const AutocompleteEdited = styledAutocomplete({
+export const AutocompleteEdited = styled(Autocomplete)({
     backgroundColor: "#eee",
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
@@ -19,7 +9,7 @@ export const AutocompleteEdited = styledAutocomplete({
     width: "100%"
 });
 
-export const BoxGeral = styledBox({
+export const BoxGeral = styled(Box)({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
@@ -29,7 +19,7 @@ export const BoxGeral = styledBox({
     width: "100%"
 });
 
-export const BoxTitulo = styledBox({
+export const BoxTitulo = styled(Box)({
     alignItems: "center",
     color: "#00579d",
     display: "flex",
@@ -41,7 +31,7 @@ export const BoxTitulo = styledBox({
     width: "100%",
 });
 
-export const BoxPadraoDireta = styledBox({
+export const BoxPadraoDireta = styled(Box)({
     alignItems: "flex-start",
     display: "flex",
     flexDirection: "column",
@@ -49,7 +39,7 @@ export const BoxPadraoDireta = styledBox({
     width: "auto"
 });
 
-export const BoxPadraoEsquerda = styledBox({
+export const BoxPadraoEsquerda = styled(Box)({
     alignItems: "flex-end",
     display: "flex",
     flexDirection: "column",
@@ -57,7 +47,7 @@ export const BoxPadraoEsquerda = styledBox({
     width: "auto"
 });
 
-export const SelectEdited = styledSelect({
+export const SelectEdited = styled(Select)({
     backgroundColor: "#eee",
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
@@ -65,14 +55,14 @@ export const SelectEdited = styledSelect({
     width: "15vw"
 });
 
-export const TextFieldEdited = styledTextField({
+export const TextFieldEdited = styled(TextField)({
     backgroundColor: "#eee",
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
     "& fieldset": { border: "none" }
 })
 
-export const TypographyPadrao = styledTypography({
+export const TypographyPadrao = styled(Typography)({
     color: "#444",
     fontWeight: "bold",
     marginBottom: 16

@@ -1,13 +1,15 @@
-import Box from "@mui/material/Box";
+import { Autocomplete, Box, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 
-const styledBox = styled(Box);
-const styledTextField = styled(TextField);
-const styledTypography = styled(Typography);
+export const AutocompleteEdited = styled(Autocomplete)({
+  backgroundColor: "#eee",
+  borderRadius: "10px",
+  boxShadow: "5px 5px 10px 0 #00000025",
+  "& fieldset": { border: "none" },
+  width: "100%"
+})
 
-export const BoxContainerGeral = styledBox({
+export const BoxContainerGeral = styled(Box)({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
@@ -15,42 +17,35 @@ export const BoxContainerGeral = styledBox({
   width: "100%",
 });
 
-export const BoxPadrao = styledBox({
+export const BoxPadrao = styled(Box)({
   width: "100%",
 });
 
-export const BoxPaybackExecucao = styledBox({
+export const BoxPaybackExecucao = styled(Box)({
   alignItems: "center",
   display: "flex",
   justifyContent: "space-between",
-  marginTop: 24,
+  margin: "2rem 0",
   width: "100%",
 });
 
-export const BoxPaybackExe = styledBox({
-  width: "33%",
-});
-
-export const BoxResponsavel = styledBox({
-  alignItems: "center",
+export const BoxResponsavel = styled(Box)({
+  alignItems: "flex-start",
   display: "flex",
-  justifyContent: "space-between",
-  marginTop: 24,
+  flexDirection: "column",
+  justifyContent: "center",
+  marginBottom: "2rem",
   width: "100%",
 });
 
-export const BoxResponsaveis = styledBox({
-  width: "100%",
-});
-
-export const TextFieldEdited = styledTextField({
+export const TextFieldEdited = styled(TextField)({
   backgroundColor: "#eee",
   borderRadius: "10px",
   boxShadow: "5px 5px 10px 0 #00000025",
   "& fieldset": { border: "none" }
 })
 
-export const TypographyStyled = styledTypography({
+export const TypographyStyled = styled(Typography)({
   color: "#444",
   fontWeight: "bold",
   marginBottom: "1rem"

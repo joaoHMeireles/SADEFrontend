@@ -1,61 +1,56 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import TableCell from "@mui/material/TableCell";
+import { Box, TableCell, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 
-const styledBox = styled(Box);
-const styledTypography = styled(Typography);
-
-export const BoxPrincipal = styledBox({
+export const BoxPrincipal = styled(Box)({
     width: "50vw", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"
-})
+});
 
-export const BoxTitulo = styledBox({
+export const BoxTitulo = styled(Box)({
     width: "100%", display: "flex", justifyContent: "center", alignItems: "center"
-})
+});
 
 // -------------------------------------
 
-export const BoxItens = styledBox({
-    width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"
-})
-
-export const BoxTituloItens = styledBox({
-    width: "100%", display: "flex", justifyContent: "flex-start", alignItems: "center",
-})
-
-export const BoxObjetivo = styledBox({
-    width: "100%", marginTop: 16
-})
-
-export const BoxGeralResponsaveis = styledBox({
+export const BoxGeralResponsaveis = styled(Box)({
     display: "flex", justifyContent: "center", alignItems: "center", width: "100%", marginTop: 16
-})
+});
 
-export const BoxResponsaveis = styledBox({
+export const BoxItens = styled(Box)({
+    width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"
+});
+
+export const BoxObjetivo = styled(Box)({
+    width: "100%", marginTop: 16
+});
+
+export const BoxResponsaveis = styled(Box)({
     display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", width: "50%"
-})
+});
 
-export const TypographyTituloATA = styledTypography({
-    color: "#00579d", fontSize: "12px", width: "100%", display: "flex", justifyContent: "center", alignItems: "center"
-})
-
-export const TypographyTitulos = styledTypography({
-    color: "#00579d", fontSize: "12px", width: "100%",
-})
-
-export const TypographyTextos = styledTypography({
-    width: "50%", fontSize: "10px"
-})
+export const BoxTituloItens = styled(Box)({
+    width: "100%", display: "flex", justifyContent: "flex-start", alignItems: "center",
+});
 
 export const TableCellStyled = styled(TableCell)({
     fontSize: "10px",
-})
+});
 
-export const TypographyParticipantes = styledTypography({
-    width: "50%", fontSize: "10px", fontWeight: "bold"
-})
+export const TypographyTextos = styled(Typography)({
+    width: "50%", fontSize: "10px"
+});
 
-export const TypographyParecerComissao = styledTypography({
+export const TypographyTituloATA = styled(Typography)({
+    color: "#00579d", fontSize: "12px", width: "100%", display: "flex", justifyContent: "center", alignItems: "center"
+});
+
+export const TypographyTitulos = styled(Typography)({
+    color: "#00579d", fontSize: "12px", width: "100%",
+});
+
+export const TypographyParecerComissao = styled(Typography)({
     width: "50%", fontSize: "12px", textDecoration: "underline", fontWeight: "bold"
-})
+});
+
+export const TypographyParticipantes = styled(Typography)({
+    width: "50%", fontSize: "10px", fontWeight: "bold"
+});

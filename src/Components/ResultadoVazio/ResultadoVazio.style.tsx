@@ -1,8 +1,7 @@
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import styled from "@emotion/styled";
-const styledBox = styled(Box)
 
-export const ImageBox = styledBox({
+export const ImageBox = styled(Box)({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
@@ -14,4 +13,4 @@ export const ImageBox = styledBox({
         width: "250px",
         height: "250px"
     }
-})
+});

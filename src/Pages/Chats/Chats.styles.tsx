@@ -1,27 +1,48 @@
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import { Box, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
-
-const styledBox = styled(Box);
-const styledTypography = styled(Typography);
 
 /**
  * Estilização do componente de chat
  */
 
-export const ContainerGeralChats = styledBox({
-    margin: 24
-})
+export const BarraPesquisa = styled(TextField)({
+    "& input": { padding: "5px", fontSize: "12px" },
+    padding: "5px",
+    width: "85%",
+});
 
-export const ContainerChats = styledBox({
+export const BoxBarraPesquisa = styled(Box)({
+    alignItems: "center",
+    backgroundColor: "transparent",
+    display: "flex",
+    justifyContent: "center",
+    height: "10%",
+    padding: 1,
+    width: "100%",
+});
+
+export const ContainerChats = styled(Box)({
     alignItems: "center",
     display: "flex",
     justifyContent: "space-between",
     height: "80%"
-})
+});
 
-export const LadoEsquerdoGeralChats = styledBox({
+export const ContainerGeralChats = styled(Box)({
+    margin: 24
+});
+
+export const LadoEsquerdoChat = styled(Box)({
+    alignItems: "flex-start",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    maxHeight: "auto",
+    minHeight: "auto",
+    width: "100%",
+});
+
+export const LadoEsquerdoGeralChats = styled(Box)({
     alignItems: "flex-start",
     display: "flex",
     justifyContent: "flex-start",
@@ -33,19 +54,18 @@ export const LadoEsquerdoGeralChats = styledBox({
     overflowX: "hidden",
     overflowY: "scroll", '&::-webkit-scrollbar': { backgroundColor: "transparent" },
     width: "25%",
-})
+});
 
-export const LadoEsquerdoChat = styledBox({
-    alignItems: "flex-start",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    maxHeight: "auto",
-    minHeight: "auto",
+export const LadoDiretoChat = styled(Box)({
+    maxHeight: "75vh",
+    minHeight: "70vh",
+    overflowX: "hidden",
+    overflowY: "scroll",
+    '&::-webkit-scrollbar': { backgroundColor: "transparent" },
     width: "100%",
-})
+});
 
-export const LadoDireitoGeralChats = styledBox({
+export const LadoDireitoGeralChats = styled(Box)({
     alignItems: "center",
     background: "#eee",
     borderRadius: "5px",
@@ -54,53 +74,43 @@ export const LadoDireitoGeralChats = styledBox({
     justifyContent: "center",
     minHeight: "80vh",
     width: "75%",
-})
-
-export const LadoDiretoChat = styledBox({
-    maxHeight: "75vh",
-    minHeight: "70vh",
-    overflowX: "hidden",
-    overflowY: "scroll",
-    '&::-webkit-scrollbar': { backgroundColor: "transparent" },
-    width: "100%",
-})
-
-export const BoxBarraPesquisa = styledBox({
-    alignItems: "center",
-    backgroundColor: "transparent",
-    display: "flex",
-    justifyContent: "center",
-    height: "10%",
-    padding: 1,
-    width: "100%",
-})
-
-export const BarraPesquisa = styled(TextField)({
-    "& input": { padding: "5px", fontSize: "12px" },
-    padding: "5px",
-    width: "85%",
-})
+});
 
 // ----------------------------------------------------------------------------
-
 
 /**
  * Estilização do componente de mensagem
  */
 
-export const BoxGeralMensagensLadoDireito = styledBox({
-    alignItems: "center",
-    display: "flex",
-    justifyContent: "end",
-})
-
-export const BoxGeralMensagensLadoEsquerdo = styledBox({
+export const BoxGeralMensagensLadoEsquerdo = styled(Box)({
     alignItems: "center",
     display: "flex",
     justifyContent: "start",
-})
+});
 
-export const BoxMensagensLadoDireito = styledBox({
+export const BoxGeralMensagensLadoDireito = styled(Box)({
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "end",
+});
+
+export const BoxMensagemLadoEsquerdo = styled(Box)({
+    background: "#fff",
+    borderRadius: "5px 5px 5px 0px",
+    boxShadow: "-5px 5px 10px 0 #00000025",
+    padding: 4,
+    width: "auto",
+});
+
+export const BoxMensagemLadoDireito = styled(Box)({
+    background: "#fff",
+    borderRadius: "5px 5px 0 5px",
+    boxShadow: "-5px 5px 10px 0 #00000025",
+    padding: 4,
+    width: "auto",
+});
+
+export const BoxMensagensLadoDireito = styled(Box)({
     height: "100%",
     marginBottom: 8,
     marginTop: 8,
@@ -111,9 +121,9 @@ export const BoxMensagensLadoDireito = styledBox({
     top: 30,
     width: "auto",
     wordWrap: "break-word",
-})
+});
 
-export const BoxMensagensLadoEsquerdo = styledBox({
+export const BoxMensagensLadoEsquerdo = styled(Box)({
     height: "100%",
     marginBottom: 8,
     marginTop: 8,
@@ -124,31 +134,15 @@ export const BoxMensagensLadoEsquerdo = styledBox({
     top: 30,
     width: "auto",
     wordWrap: "break-word",
-})
+});
 
-export const BoxMensagemLadoDireito = styledBox({
-    background: "#fff",
-    borderRadius: "5px 5px 0 5px",
-    boxShadow: "-5px 5px 10px 0 #00000025",
-    padding: 4,
-    width: "auto",
-})
+export const TypographyMensagem = styled(Typography)({
+    color: "#444",
+    fontSize: "16px",
+});
 
-export const BoxMensagemLadoEsquerdo = styledBox({
-    background: "#fff",
-    borderRadius: "5px 5px 5px 0px",
-    boxShadow: "-5px 5px 10px 0 #00000025",
-    padding: 4,
-    width: "auto",
-})
-
-export const TypographyPessoa = styledTypography({
+export const TypographyPessoa = styled(Typography)({
     color: "#00579d",
     fontSize: "16px",
     fontWeight: "bold",
-})
-
-export const TypographyMensagem = styledTypography({
-    color: "#444",
-    fontSize: "16px",
-})
+});
