@@ -22,12 +22,8 @@ export const BeneficioRealRender = (props: BeneficioRender) => {
     const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[2]);
 
     useEffect(() => {
-        if (props.proposta || props.rascunho) {
-            for (const beneficio of props.beneficios) {
-                if (beneficio.idBeneficio == props.idBeneficio) {
-                    setMoedaBeneficio(beneficio.moeda)
-                }
-            }
+        if (props.proposta || props.rascunho || props.editandoDemanda) {
+            setMoedaBeneficio(document.getElementById("moedaReal" + props.index)?.innerText as string)
         }
     }, [])
 
@@ -210,12 +206,8 @@ export const BeneficioPotencialRender = (props: BeneficioRender) => {
     const [moedaBeneficio, setMoedaBeneficio] = useState(moedas[2]);
 
     useEffect(() => {
-        if (props.proposta || props.rascunho) {
-            for (const beneficio of props.beneficios) {
-                if (beneficio.idBeneficio == props.idBeneficio) {
-                    setMoedaBeneficio(beneficio.moeda)
-                }
-            }
+        if (props.proposta || props.editandoDemanda || props.rascunho) {
+            setMoedaBeneficio(document.getElementById("moedaPotencial" + props.index)?.innerText as string)
         }
     }, [])
 
@@ -497,6 +489,7 @@ interface BeneficioRender {
     index: number,
     proposta: boolean,
     rascunho: boolean,
+    editandoDemanda: boolean,
     beneficios: any,
     informacaoProcesso: any,
     setInformacaoProcesso: any,

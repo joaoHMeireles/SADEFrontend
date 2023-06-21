@@ -358,7 +358,7 @@ export default function CriacaoDemanda(props: {
       })
     }
 
-    // window.location.href = "/home";
+    window.location.href = "/home";
   }
 
   return (
@@ -428,7 +428,7 @@ export default function CriacaoDemanda(props: {
         {valor == 1 && (
           <>
             <BeneficiosTeste
-              proposta={false} rascunho={false}
+              proposta={false} rascunho={props.rascunho} editarDemanda={props.editarDemanda}
               numeroBeneficiosReais={numeroBeneficiosReais}
               setNumeroBeneficiosReais={setNumeroBeneficiosReais}
               numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
@@ -437,6 +437,8 @@ export default function CriacaoDemanda(props: {
               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
               frequenciaUso={frequenciaUso}
               setFrequenciaUso={setFrequenciaUso}
+              informacaoProcesso={data}
+              setInformacaoProcesso={setData}
               partDoisDemanda={partDoisDemanda}
             />
             {/* {props.rascunho || props.editarDemanda ?

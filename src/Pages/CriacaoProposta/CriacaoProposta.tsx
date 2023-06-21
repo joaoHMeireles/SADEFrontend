@@ -259,15 +259,15 @@ export default function CriacaoProposta(props: {
       }
     }
 
-    // api.post(`/sade/proposta/${idUsuario}`, formData, {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   }
-    // }).then((res) => {
-    //   console.log(res);
-    // })
+    api.post(`/sade/proposta/${idUsuario}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    }).then((res) => {
+      console.log(res);
+    })
 
-    // window.location.href = "/home"
+    window.location.href = "/home"
   }
 
   function checarPreenchimento() {
@@ -429,7 +429,7 @@ export default function CriacaoProposta(props: {
           <>
             <InformacaoGeral proposta={true} informacaoProcesso={informacaoProcesso} setInformacaoProcesso={setInformacaoProcesso} />
 
-            <BeneneficiosTeste proposta={true} rascunho={false}
+            <BeneneficiosTeste proposta={true} rascunho={false} editarDemanda={false}
               numeroBeneficiosReais={numeroBeneficiosReais}
               setNumeroBeneficiosReais={setNumeroBeneficiosReais}
               numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
