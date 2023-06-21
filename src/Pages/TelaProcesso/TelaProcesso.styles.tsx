@@ -1,24 +1,9 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import { BoxConteudo } from '../App.styles';
-import { styled } from '@mui/material/styles';
-const styledBox = styled(Box)
-const styledGrid = styled(Grid)
-const styledTypography = styled(Typography)
+import styled from '@emotion/styled';
 
-export const BoxHeader = styledBox({
-    backgroundColor: "#ffffff",
-    boxSizing: "border-box",
-    display: "flex",
-    justifyContent: "space-between",
-    position: "fixed",
-    padding: "19px 24px 24px 24px",
-    top: "7.2vh",
-    width: "96.5%",
-    zIndex: 10
-})
-
-export const BoxAviso = styledBox({
+export const BoxAviso = styled(Box)({
     alignItems: "center",
     backgroundColor: "#ffd60050",
     borderRadius: "40px 0 0 40px",
@@ -34,44 +19,53 @@ export const BoxAviso = styledBox({
         transition: 'ease-in-out',
         transitionDuration: "0.3s"
     }
-})
+});
 
-export const TypographyTitulo = styledTypography({
-    color: "#444",
-    marginBottom: "2rem"
-})
-
-export const GridPequenosAtributos = styledGrid({
-    alignItems: "center",
+export const BoxBotoesModal = styled(Box)({
     display: "flex",
-    justifyContent: "flex-start"
-})
+    justifyContent: "flex-end",
+    width: "100%"
+});
 
-export const TypographyTituloAtributo = styledTypography({
-    color: "#444",
-    fontWeight: "bold"
-})
+export const BoxConteudoModal = styled(BoxConteudo)({
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    margin: "30px 50px"
+});
 
-export const TypographyTexto = styledTypography({
-    textAlign: 'justify'
-})
+export const BoxHeader = styled(Box)({
+    backgroundColor: "#ffffff",
+    boxSizing: "border-box",
+    display: "flex",
+    justifyContent: "space-between",
+    position: "fixed",
+    padding: "19px 24px 24px 24px",
+    top: "7.2vh",
+    width: "96.5%",
+    zIndex: 10
+});
 
-export const TypographyBeneficioQualitativo = styledTypography({
-    width: "100%", wordBreak: "break-word"
-})
-
-export const CircleIconPonto = styled(CircleIcon)({
-    fontSize: "10px"
-})
-
-export const BoxTabela = styledBox({
+export const BoxTabela = styled(Box)({
     alignItems: "center",
     display: 'flex',
     flexDirection: "column",
     width: "100%",
-})
+});
 
-export const GridItemFooter = styledGrid({
+export const BoxTituloModal = styled(Box)({
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: "30px",
+    width: "100%"
+});
+
+export const CircleIconPonto = styled(CircleIcon)({
+    fontSize: "10px"
+});
+
+export const GridItemFooter = styled(Grid)({
     alignItems: "center",
     display: "flex",
     justifyContent: "space-between",
@@ -85,31 +79,34 @@ export const GridItemFooter = styledGrid({
             color: "#00579d"
         }
     }
-})
+});
 
-export const BoxConteudoModal = styled(BoxConteudo)({
+export const GridPequenosAtributos = styled(Grid)({
+    alignItems: "center",
     display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    margin: "30px 50px"
-})
+    justifyContent: "flex-start"
+});
+
+export const TypographyBeneficioQualitativo = styled(Typography)({
+    width: "100%", wordBreak: "break-word"
+});
+
+export const TypographyTexto = styled(Typography)({
+    textAlign: 'justify'
+});
+
+export const TypographyTitulo = styled(Typography)({
+    color: "#444",
+    marginBottom: "2rem"
+});
+
+export const TypographyTituloAtributo = styled(Typography)({
+    color: "#444",
+    fontWeight: "bold"
+});
 
 export const TypographyTituloModal = styled(TypographyTitulo)({
     color: "#00579d",
     fontWeight: "500",
     marginBottom: "0px"
-})
-
-export const BoxTituloModal = styledBox({
-    alignItems: "center",
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "30px",
-    width: "100%"
-})
-
-export const BoxBotoesModal = styledBox({
-    display: "flex",
-    justifyContent: "flex-end",
-    width: "100%"
-})
+});

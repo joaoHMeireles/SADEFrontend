@@ -1,6 +1,6 @@
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton, gridClasses } from "@mui/x-data-grid";
-import { alpha, styled } from '@mui/material/styles';
 import { Dialog } from "@mui/material";
+import { alpha, styled } from '@mui/material/styles';
 
 export const DataGridEstilizado = styled(DataGrid)(({ theme }) => ({
     boxShadow: "5px 5px 10px 0 #00000025",
@@ -82,23 +82,19 @@ export const GridToolbarContainerEstilizado = styled(GridToolbarContainer)({
     "& button": {
         color: "#00579d"
     }
-})
-
-export const GridToolbarFilterButtonEstilizado = styled(GridToolbarFilterButton)({
-
-})
+});
 
 export const GridToolbarColumnsButtonEstilizado = styled(GridToolbarColumnsButton)({
     marginLeft: "30px"
-})
+});
 
 export const GridToolbarExportEstilizado = styled(GridToolbarExport)({
     marginLeft: "30px",
 
-})
+});
 
 export const Modal = styled(Dialog)({
     '& .MuiPaper-root': {
         height: "80vh", width: "80vw"
     }
-})
+});

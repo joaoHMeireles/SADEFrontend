@@ -10,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import { BeneficioPotencialRender, BeneficioQualitativoRender, BeneficioRealRender } from "./BeneficiosRender";
+import { Divider } from "@mui/material";
 
 const valoresFrequencia = [
     "DIARIAMENTE",
@@ -142,7 +143,7 @@ export default function BeneneficiosTeste(props: {
         <>
             <BoxContainerGeral>
                 <BoxTitulos>
-                    <TypographyTitulos onClick={lerTexto}>Benefício Real</TypographyTitulos>
+                    <Divider color="#00579d" sx={{ "&::before, &::after": { border: "1px solid #00579d" }, width: "100%" }} onClick={lerTexto}>Benefícios Reais</Divider>
                 </BoxTitulos>
 
                 <BeneficioReal numeroBeneficios={props.numeroBeneficiosReais} beneficios={beneficiosReais}
@@ -173,7 +174,7 @@ export default function BeneneficiosTeste(props: {
                 </BoxIcones>
 
                 <BoxTitulos>
-                    <TypographyTitulos onClick={lerTexto}>Benefício Potencial</TypographyTitulos>
+                    <Divider color="#00579d" sx={{ "&::before, &::after": { border: "1px solid #00579d" }, width: "100%" }} onClick={lerTexto}>Benefícios Potenciais</Divider>
                 </BoxTitulos>
 
                 <BeneficioPotencial numeroBeneficios={props.numeroBeneficiosPotenciais} beneficios={beneficiosPotenciais}
@@ -203,7 +204,7 @@ export default function BeneneficiosTeste(props: {
                 </BoxIcones>
 
                 <BoxTitulos>
-                    <TypographyTitulos onClick={lerTexto}>Benefício Qualitativo</TypographyTitulos>
+                    <Divider color="#00579d" sx={{ "&::before, &::after": { border: "1px solid #00579d" }, width: "100%" }} onClick={lerTexto}>Benefícios Qualitativos</Divider>
                 </BoxTitulos>
 
                 <BeneficioQualitativo numeroBeneficios={props.numeroBeneficiosQualitativos} beneficios={beneficiosQualitativos}
