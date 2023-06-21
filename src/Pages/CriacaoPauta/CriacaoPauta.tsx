@@ -61,6 +61,7 @@ export default function CriacaoPauta(props: {
   const [inicioReuniao, setInicioReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T13:30'));
   const [finalReuniao, setFinalReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T14:30'));
 
+
   useEffect(() => {
     const idPropostaEscolhida = localStorage.getItem("PROPOSTACRIARPAUTA")
 
@@ -115,6 +116,7 @@ export default function CriacaoPauta(props: {
     }
   }, [mensagemDoErro])
 
+
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
   }
@@ -132,12 +134,15 @@ export default function CriacaoPauta(props: {
   function criarPauta(e: any) {
     lerTexto(e)
 
+    checarPreenchimento()
+
     const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
     const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
     const horarioInicioReuniao = (document.getElementById("horarioInicioReuniao") as HTMLInputElement).value
     const horarioFinalReuniao = (document.getElementById("horarioFinalReuniao") as HTMLInputElement).value
     let dataReuniaoCerta = dataReuniaoEscolhida.slice(6) + "/" + dataReuniaoEscolhida.slice(0, 5)
     dataReuniaoCerta = dataReuniaoCerta.replaceAll("/", "-")
+
 
     const pauta = {
       tituloReuniaoPauta: tituloReuniao,
@@ -149,10 +154,27 @@ export default function CriacaoPauta(props: {
     }
 
 
-    api.post("/sade/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then((response) => {
-      location.href = "/home"
-    })
+    // api.post("/sade/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then((response) => {
+    //   location.href = "/home"
+    // })
   }
+
+  function checarPreenchimento(){
+    const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
+    const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
+    // comissaoEscolhida
+
+    console.log(tituloReuniao);
+    console.log(dataReuniaoEscolhida);
+    console.log(comissaoEscolhida);
+
+    if(tituloReuniao == "" || dataReuniaoEscolhida == "" || comissaoEscolhida == undefined){
+      setMensagemDoErro("Algum campo não foi preenchido!")
+    }
+    
+
+  }
+
 
   return (
     <BoxConteudo>

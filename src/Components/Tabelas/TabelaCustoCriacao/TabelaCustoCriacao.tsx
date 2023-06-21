@@ -151,7 +151,7 @@ function Tabela(props: {
       for (let centroCusto of props.centroCusto) {
         if (centroCustoSelecionada == centroCusto.nomeCentroCusto) {
           const valorPorcetagem = document.getElementById(`tabela${props.tabela}ChipCentroCusto${centroCusto.idCentroCusto}`) as HTMLButtonElement;
-          let porcentagemNumero = valorPorcetagem.innerText.slice(0, valorPorcetagem.innerText.length - 1);
+          let porcentagemNumero = valorPorcetagem.innerText.slice(0, valorPorcetagem.innerText.length - 2);
 
           listaCentroCustoTabela.push({ idCentroCusto: centroCusto.idCentroCusto, nomeCentroCusto: centroCusto.nomeCentroCusto, tabela: props.tabela, porcentagem: porcentagemNumero })
         }

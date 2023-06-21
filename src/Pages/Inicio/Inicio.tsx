@@ -45,7 +45,6 @@ export default function Inicio(props: {
     //para resetar os parâmetros da criação de rascunhos quando for criar demanda
     setTimeout(() => {
       localStorage.setItem("DEMANDACADASTRADA", "false")
-      localStorage.setItem("OBJETODEMANDACRIADA", "null")
       localStorage.setItem("DADOSDEMANDACRIACAO", "null")
     }, 500)
   }, [props.listaComponents, props.conteudoCarregou])

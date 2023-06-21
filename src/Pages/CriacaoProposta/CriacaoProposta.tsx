@@ -155,7 +155,7 @@ export default function CriacaoProposta(props: {
   }
 
   function criarProposta() {
-    switch(checarPreenchimento()){
+    switch (checarPreenchimento()) {
       case 1: {
         setMensagemDoErro("Algum campo não foi preenchido!")
         return
@@ -276,11 +276,11 @@ export default function CriacaoProposta(props: {
     window.location.href = "/home"
   }
 
-  function checarPreenchimento(): number{
+  function checarPreenchimento(): number {
     const dataExecucaoInicio = (document.getElementById("periodoExecucaoInicio") as HTMLInputElement).value
     const dataExecucaoFim = (document.getElementById("periodoExecucaoFim") as HTMLInputElement).value
 
-    if(escopoProposta == "" || (payback == "" || payback == undefined) || informacaoProcesso == "" || usuariosResponsaveis.length == 0 || dataExecucaoInicio == "" || dataExecucaoFim == "" ){
+    if (escopoProposta == "" || (payback == "" || payback == undefined) || informacaoProcesso == "" || usuariosResponsaveis.length == 0 || dataExecucaoInicio == "" || dataExecucaoFim == "") {
       return 1
     }
 
@@ -295,24 +295,24 @@ export default function CriacaoProposta(props: {
         const quantidade = (document.getElementById(`esforco${i}-${j}`) as HTMLInputElement).value
         const valorQuantidade = (document.getElementById(`valorHora${i}-${j}`) as HTMLInputElement).value
 
-        if(nomeRecurso == "" || quantidade == "" || valorQuantidade == ""){
+        if (nomeRecurso == "" || quantidade == "" || valorQuantidade == "") {
           tabelaPreenchida = 1
           break
         }
       }
 
-      if(tabelaPreenchida != 0){
+      if (tabelaPreenchida != 0) {
         break
       }
 
-      if(centroCustoEscolhidas.length < 2){
+      if (centroCustoEscolhidas.length < 2) {
         tabelaPreenchida = 1
         break
       }
 
       for (const centroCustos of centroCustoEscolhidas) {
-        if(centroCustos != undefined){
-          if(centroCustos.length == 0){
+        if (centroCustos != undefined) {
+          if (centroCustos.length == 0) {
             tabelaPreenchida = 1
             break
           }
@@ -320,25 +320,23 @@ export default function CriacaoProposta(props: {
           let porcentagemTotal = 0
 
           for (const centroCusto of centroCustos) {
-            if(centroCusto.tabela == i){
-              porcentagemTotal += centroCusto.porcentagem
-            }
+            porcentagemTotal += Number.parseInt(centroCusto.porcentagem)
           }
 
-          if(porcentagemTotal != 100){
+          if (porcentagemTotal != 100) {
             tabelaPreenchida = 2
             break;
           }
         }
       }
 
-      if(tabelaPreenchida != 0){
+      if (tabelaPreenchida != 0) {
         break
       }
 
     }
 
-    if(tabelaPreenchida != 0){
+    if (tabelaPreenchida != 0) {
       return tabelaPreenchida
     }
 
@@ -472,7 +470,7 @@ export default function CriacaoProposta(props: {
                   lerTexto(e)
                   setValor(2);
                   setSegundo(true);
-                  window.scrollTo(0,0)
+                  window.scrollTo(0, 0)
                 }}>
                 Próximo
               </BotaoPrimario>

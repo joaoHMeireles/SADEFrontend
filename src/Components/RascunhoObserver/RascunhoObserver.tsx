@@ -5,15 +5,8 @@ import { useLocationChange } from "../../utils";
 export default function RascunhoObserver() {
 
     useLocationChange((newLocation: Location, previousLocation: Location) => {
-        if(previousLocation.pathname == "/createdemanda" || previousLocation.pathname == "/continuedemand" || previousLocation.pathname == "/editdemand"){
-            localStorage.removeItem("DADOSDEMANDACRIACAO")
-            localStorage.removeItem("DEMANDASELECIONADA")
-            localStorage.removeItem("RASCUNHOESCOLHIDO")
-        }
-
         if (previousLocation.pathname == "/createdemand") {
-            localStorage.removeItem("DADOSDEMANDACRIACAO")
-            const objetoDemanda = JSON.parse(localStorage.getItem("OBJETODEMANDACRIADA") as string)
+            const objetoDemanda = JSON.parse(localStorage.getItem("DADOSDEMANDACRIACAO") as string)
 
             if (objetoDemanda != null) {
                 let temInformacao = false
@@ -47,6 +40,12 @@ export default function RascunhoObserver() {
                     }
                 }
             }
+        }
+
+        if(previousLocation.pathname == "/createdemanda" || previousLocation.pathname == "/continuedemand" || previousLocation.pathname == "/editdemand"){
+            localStorage.removeItem("DADOSDEMANDACRIACAO")
+            localStorage.removeItem("DEMANDASELECIONADA")
+            localStorage.removeItem("RASCUNHOESCOLHIDO")
         }
     })
 
