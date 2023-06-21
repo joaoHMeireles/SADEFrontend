@@ -6,12 +6,11 @@ import InputAnexos from "../InputAnexos/InputAnexos";
 import TabelaCustoCriacao from "../Tabelas/TabelaCustoCriacao/TabelaCustoCriacao";
 
 import {
+  AutocompleteEdited,
   BoxContainerGeral,
   BoxPadrao,
   BoxPaybackExecucao,
   BoxResponsavel,
-  BoxPaybackExe,
-  BoxResponsaveis,
   TextFieldEdited,
   TypographyStyled
 } from "./EscopoProposta.styles";
@@ -25,11 +24,11 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 import api from "../../api/api";
-import Autocomplete from "@mui/material/Autocomplete";
 import Checkbox from "@mui/material/Checkbox";
 
 import { Editor, EditorTools } from "@progress/kendo-react-editor";
 import { TextReaderContext } from '../TextReaderContext/TextReaderContext';
+import { Box } from '@mui/material';
 const {
   Bold,
   Italic,
@@ -83,6 +82,7 @@ export default function EscopoProposta(props: {
             backgroundColor: "#eee",
             borderRadius: "10px",
             boxShadow: "5px 5px 10px 0 #00000025",
+            marginBottom: "2rem",
           }}
             tools={[
               [Bold, Italic, Underline],
@@ -111,7 +111,7 @@ export default function EscopoProposta(props: {
         </BoxPadrao>
 
         <BoxPaybackExecucao>
-          <BoxPaybackExe>
+          <Box>
             <TypographyStyled onClick={lerTexto}>Período de Execução Inicio:</TypographyStyled>
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -131,10 +131,10 @@ export default function EscopoProposta(props: {
                 }}
                 renderInput={(params: any) => <TextField id='periodoExecucaoInicio' {...params} />} />
             </LocalizationProvider>
-          </BoxPaybackExe>
+          </Box>
 
-          <BoxPaybackExe>
-            <TypographyStyled onClick={lerTexto}>Período de execução Fim:</TypographyStyled>
+          <Box>
+            <TypographyStyled onClick={lerTexto}>Período de Execução Fim:</TypographyStyled>
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
@@ -153,9 +153,9 @@ export default function EscopoProposta(props: {
                 }}
                 renderInput={(params: any) => <TextField id='periodoExecucaoFim' {...params} />} />
             </LocalizationProvider>
-          </BoxPaybackExe>
+          </Box>
 
-          <BoxPaybackExe>
+          <Box>
             <TypographyStyled onClick={lerTexto}>Payback:</TypographyStyled>
 
             <TextFieldEdited
@@ -165,49 +165,47 @@ export default function EscopoProposta(props: {
               }}
               sx={{ width: "15vw" }}>
             </TextFieldEdited>
-          </BoxPaybackExe>
+          </Box>
         </BoxPaybackExecucao>
 
         <BoxResponsavel>
-          <BoxResponsaveis>
-            <TypographyStyled onClick={lerTexto}>Nome dos responsáveis:</TypographyStyled>
+          <TypographyStyled onClick={lerTexto}>Nome dos responsáveis:</TypographyStyled>
 
-            <Autocomplete
-              id="nomeResponsavel"
-              sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
-              multiple
-              disableCloseOnSelect
-              onChange={(e: any, valor: any) => {
-                let usuariosSelecionados: Object[] = []
+          <AutocompleteEdited
+            id="nomeResponsavel"
+            sx={{ boxShadow: "5px 5px 10px 0 #00000025" }}
+            multiple
+            disableCloseOnSelect
+            onChange={(e: any, valor: any) => {
+              let usuariosSelecionados: Object[] = []
 
-                for (let usuarioSelecionado of valor) {
-                  for (let usuario of usuarios) {
-                    if (usuario.nomeUsuario == usuarioSelecionado) {
-                      usuariosSelecionados.push({ idUsuario: usuario.idUsuario, nomeUsuario: usuario.nomeUsuario })
-                    }
+              for (let usuarioSelecionado of valor) {
+                for (let usuario of usuarios) {
+                  if (usuario.nomeUsuario == usuarioSelecionado) {
+                    usuariosSelecionados.push({ idUsuario: usuario.idUsuario, nomeUsuario: usuario.nomeUsuario })
                   }
                 }
-                props.setUsuariosResponsaveis(usuariosSelecionados);
-              }}
-              renderOption={(props, nomeResponsavel, { selected }) => {
-                return (
-                  <li {...props} id="listaBU">
-                    <Checkbox
-                      id="checkbox"
-                      icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                      checkedIcon={<CheckBoxIcon fontSize="small" />}
-                      style={{ marginRight: 8 }}
-                      checked={selected} />
+              }
+              props.setUsuariosResponsaveis(usuariosSelecionados);
+            }}
+            renderOption={(props, nomeResponsavel: any, { selected }) => {
+              return (
+                <li {...props} id="listaBU">
+                  <Checkbox
+                    id="checkbox"
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                    style={{ marginRight: 8 }}
+                    checked={selected} />
 
-                    <span onClick={lerTexto}>
-                      {nomeResponsavel}
-                    </span>
-                  </li>
-                );
-              }}
-              options={usuarios.map((usuario: any) => usuario.nomeUsuario)}
-              renderInput={(params) => <TextField {...params} />} />
-          </BoxResponsaveis>
+                  <span onClick={lerTexto}>
+                    {nomeResponsavel}
+                  </span>
+                </li>
+              );
+            }}
+            options={usuarios.map((usuario: any) => usuario.nomeUsuario)}
+            renderInput={(params) => <TextField {...params} />} />
         </BoxResponsavel>
 
         <BoxPadrao>

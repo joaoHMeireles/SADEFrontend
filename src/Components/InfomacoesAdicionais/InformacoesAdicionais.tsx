@@ -118,7 +118,7 @@ export default function InfomacoesAdicionais(props: {
         <>
             <BoxGeral>
                 <BoxTitulo>
-                    <Divider color="#00579d" sx={{ "&::before, &::after": { border: "1px solid #00579d" }, width: "100%" }}>Informações Adicionais</Divider>
+                    <Divider sx={{ "&::before, &::after": { border: "1px solid #00579d" }, width: "100%" }}>Informações Adicionais</Divider>
                 </BoxTitulo>
 
                 <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", margin: "2rem 0", width: "100%" }}>

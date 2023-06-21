@@ -1,15 +1,21 @@
+import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 
-const styledBox = styled(Box);
-const styledTypography = styled(Typography);
+export const BoxBotoes = styled(Box)({
+  position: "fixed",
+  top: "90%",
+  left: "68%",
+  width: "100%",
+});
 
-export const BoxInfoPauta = styledBox({
+export const BoxConteudoProposta = styled(Box)({
+  alignItems: "center",
+  display: "flex",
+  justifyContent: "space-between",
+  width: "100%",
+});
 
-})
-
-export const BoxGeral = styledBox({
+export const BoxGeral = styled(Box)({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
@@ -18,27 +24,7 @@ export const BoxGeral = styledBox({
   width: "auto",
 });
 
-export const BoxProposta = styledBox({
-  alignItems: "center",
-  display: "flex",
-  justifyContent: "center",
-  width: "80%",
-});
-
-export const BoxConteudoProposta = styledBox({
-  alignItems: "center",
-  display: "flex",
-  justifyContent: "space-between",
-  width: "100%",
-});
-
-export const BoxTituloProposta = styledBox({
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  whiteSpace: "nowrap",
-});
-
-export const BoxIconeLink = styledBox({
+export const BoxIconeLink = styled(Box)({
   alignItems: "center",
   display: "flex",
   flexDirection: "row-reverse",
@@ -46,22 +32,27 @@ export const BoxIconeLink = styledBox({
   width: "6.5%",
 });
 
-export const TypographyVermais = styledTypography({
-  color: "#00579d",
-});
-
-export const BoxInputsDataComissao = styledBox({
+export const BoxInputsDataComissao = styled(Box)({
   alignItems: "center",
   display: "flex",
   justifyContent: "center",
-  marginTop: 40,
   height: "100%",
   width: "100%",
 });
 
-export const BoxBotoes = styledBox({
-  position: "fixed",
-  top: "90%",
-  left: "68%",
-  width: "100%",
+export const BoxProposta = styled(Box)({
+  alignItems: "center",
+  display: "flex",
+  justifyContent: "center",
+  width: "80%",
+});
+
+export const BoxTituloProposta = styled(Box)({
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+});
+
+export const TypographyVermais = styled(Typography)({
+  color: "#00579d",
 });

@@ -1,16 +1,13 @@
+import { Box, Container } from "@mui/material";
 import styled from "@emotion/styled";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 
-const styledBox = styled(Box);
-
-export const BoxBotoes = styledBox({
+export const BoxBotoes = styled(Box)({
   alignItems: "center",
   display: "flex",
   justifyContent: "flex-end"
 });
 
-export const ContainerBotoes = styledBox({
+export const ContainerBotoes = styled(Box)({
   alignItems: "center",
   display: "flex",
   justifyContent: "space-between",

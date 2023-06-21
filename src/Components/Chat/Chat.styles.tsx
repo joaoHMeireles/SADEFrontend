@@ -1,11 +1,26 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 
-const styledBox = styled(Box);
-const styledTypography = styled(Typography);
+export const BoxChat = styled(Box)({
+    width: "100%",
+});
 
-export const ContainerGeralChat = styledBox({
+export const BoxContainerChat = styled(Box)({
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    justifyContent: "space-around",
+    width: "30%",
+});
+
+export const BoxIconePessoa = styled(Box)({
+    color: "#444",
+    marginLeft: 24,
+    marginRight: 24,
+});
+
+export const ContainerGeralChat = styled(Box)({
     alignItems: "center",
     backgroundColor: "#eee",
     borderRadius: "5px",
@@ -17,31 +32,12 @@ export const ContainerGeralChat = styledBox({
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
     width: "100%",
-})
+});
 
-export const BoxIconePessoa = styledBox({
-    color: "#444",
-    marginLeft: 24,
-    marginRight: 24,
-})
-
-export const BoxContainerChat = styledBox({
-    alignItems: "center",
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
-    justifyContent: "space-around",
-    width: "30%",
-})
-
-export const BoxChat = styledBox({
-    width: "100%",
-})
-
-export const TypographyTitulo = styledTypography({
-    color: "#444"
-})
-
-export const TypographyPessoaMensagem = styledTypography({
+export const TypographyPessoaMensagem = styled(Typography)({
     color: "#aaa"
-})
+});
+
+export const TypographyTitulo = styled(Typography)({
+    color: "#444"
+});

@@ -1,11 +1,7 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 
-const styledBox = styled(Box);
-const styledTypography = styled(Typography);
-
-export const BoxNotificacao = styledBox({
+export const BoxNotificacao = styled(Box)({
     alignItens: "center",
     backgroundColor: "#eee",
     borderRadius: "5px",
@@ -16,33 +12,32 @@ export const BoxNotificacao = styledBox({
     textOverflow: "ellipsis",
     width: "100%",
     whiteSpace: "nowrap",
-})
+});
 
-export const NotificacaoLadoEsquerdo = styledBox({
+export const NotificacaoBoxIcone = styled(Box)({
+    marginLeft: 20,
+});
+
+export const NotificacaoLadoEsquerdo = styled(Box)({
     alignItems: "center",
     display: "flex",
     justifyContent: "start",
     width: "40%",
-})
+});
 
-export const NotificacaoBoxIcone = styledBox({
-    marginLeft: 20,
-})
-
-export const TypographyTitulo = styledTypography({
-    color: "#444",
-    marginLeft: 20
-})
-
-export const TypographyMensagem = styledTypography({
-    color: "#aaa",
-    marginLeft: 20
-})
-
-export const NotificacaoLadoDireito = styledBox({
+export const NotificacaoLadoDireito = styled(Box)({
     alignItems: "center",
     display: "flex",
     justifyContent: "center",
     marginRight: 20,
-})
+});
 
+export const TypographyMensagem = styled(Typography)({
+    color: "#aaa",
+    marginLeft: 20
+});
+
+export const TypographyTitulo = styled(Typography)({
+    color: "#444",
+    marginLeft: 20
+});

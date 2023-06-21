@@ -1,9 +1,11 @@
+import { Box, Container } from "@mui/material";
 import styled from "@emotion/styled";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 
-const styledBox = styled(Box);
+export const ContainerBoxTabs = styled(Box)({
+  alignItems: "center",
+  display: "flex",
+  justifyContent: "center",
+});
 
 export const ContainerGeral = styled(Container)({
   alignItems: "center",
@@ -11,10 +13,4 @@ export const ContainerGeral = styled(Container)({
   flexDirection: "column",
   justifyContent: "space-between",
   marginTop: 24,
-});
-
-export const ContainerBoxTabs = styledBox({
-  alignItems: "center",
-  display: "flex",
-  justifyContent: "center",
 });

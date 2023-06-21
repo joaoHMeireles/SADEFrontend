@@ -10,7 +10,7 @@ import { styled } from "@mui/material/styles";
 const styledBox = styled(Box);
 
 export const TableContainerEstilizado = styled(TableContainer)({
-  borderRadius: "5px",
+  borderRadius: "10px",
   boxShadow: "5px 5px 10px 0 #00000025",
 });
 
@@ -21,7 +21,7 @@ export const TableCellEstilzada = styled(TableCell)(({ theme: Theme }) => ({
     color: Theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: 16,
   },
 }));
 
@@ -41,19 +41,16 @@ export const BoxContainerTabela = styledBox({
   flexDirection: "column",
   width: "auto",
   borderRadius: "5px",
-  boxShadow: "5px 5px 10px 0 #00000025",
-  marginBottom: 24
+  boxShadow: "5px 5px 10px 0 #00000025"
 });
 
 export const PlusIconButton = styled(IconButton)({
   backgroundColor: "#00579d",
   color: "white",
   boxShadow: "5px 5px 10px 0 #00000025",
-  height: "auto",
   '&:hover': {
     backgroundColor: "#003c6d",
     transition: 'ease-in-out',
     transitionDuration: "0.7s"
   }
-
 })

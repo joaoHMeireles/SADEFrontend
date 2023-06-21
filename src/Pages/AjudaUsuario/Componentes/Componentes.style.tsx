@@ -1,4 +1,4 @@
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import styled from "@emotion/styled";
 
 export const BoxBackground = styled(Box)({
@@ -12,15 +12,6 @@ export const BoxBackground = styled(Box)({
     width: "100%"
 });
 
-export const Title = styled(Box)({
-    fontWeight: "bold",
-    marginBottom: "1rem"
-});
-
-export const P = styled(Box)({
-    marginBottom: "1rem"
-});
-
 export const BoxImage = styled(Box)({
     alignItems: "flex-start",
     display: "flex",
@@ -29,6 +20,15 @@ export const BoxImage = styled(Box)({
     width: "100%"
 });
 
+export const P = styled(Box)({
+    marginBottom: "1rem"
+});
+
 export const Space = styled(Box) ({
     color: "#fff"
+});
+
+export const Title = styled(Box)({
+    fontWeight: "bold",
+    marginBottom: "1rem"
 });

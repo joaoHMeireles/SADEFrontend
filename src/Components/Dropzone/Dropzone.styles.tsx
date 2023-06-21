@@ -1,9 +1,7 @@
+import { Box } from "@mui/material";
 import styled from "@emotion/styled";
-import Box from "@mui/material/Box";
 
-const styledBox = styled(Box);
-
-export const BoxContainerUploadImagens = styledBox({
+export const BoxContainerUploadImagens = styled(Box)({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
@@ -12,7 +10,7 @@ export const BoxContainerUploadImagens = styledBox({
   width: "100%",
 });
 
-export const BoxTypography = styledBox({
+export const BoxTypography = styled(Box)({
   alignItems: "center",
   display: "flex",
   justifyContent: "center",

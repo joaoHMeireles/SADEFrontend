@@ -1,17 +1,7 @@
-import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import { Box, FormControl, Select, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 
-const styledBox = styled(Box);
-const styledFormControl = styled(FormControl);
-const styledSelect = styled(Select);
-const styledTextField = styled(TextField);
-const styledTypography = styled(Typography);
-
-export const BoxContainerDivisorio = styledBox({
+export const BoxContainerDivisorio = styled(Box)({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
@@ -19,7 +9,7 @@ export const BoxContainerDivisorio = styledBox({
     width: "100%"
 });
 
-export const BoxContainerGeral = styledBox({
+export const BoxContainerGeral = styled(Box)({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
@@ -27,7 +17,7 @@ export const BoxContainerGeral = styledBox({
     width: '100%',
 });
 
-export const BoxContainerGeralBeneficio = styledBox({
+export const BoxContainerGeralBeneficio = styled(Box)({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
@@ -35,34 +25,34 @@ export const BoxContainerGeralBeneficio = styledBox({
     width: "100%",
 });
 
-export const BoxDescricaoRequisitosControle = styledBox({
+export const BoxDescricaoRequisitosControle = styled(Box)({
     height: "50%",
     width: "100%",
 });
 
-export const BoxFrequencia = styledBox({
+export const BoxFrequencia = styled(Box)({
     flexDirection: "column",
     height: "50%",
     width: "100%",
 });
 
-export const BoxIcones = styledBox({
+export const BoxIcones = styled(Box)({
     marginTop: "2rem"
 });
 
-export const BoxInputs = styledBox({
+export const BoxInputs = styled(Box)({
     alignItems: "center",
     display: "flex",
     justifyContent: "start",
     width: "100%",
 });
 
-export const BoxInputsAbaixo = styledBox({
+export const BoxInputsAbaixo = styled(Box)({
     marginTop: "2rem",
     width: "100%",
 });
 
-export const BoxInputsAcima = styledBox({
+export const BoxInputsAcima = styled(Box)({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
@@ -70,12 +60,12 @@ export const BoxInputsAcima = styledBox({
     width: "100%",
 });
 
-export const BoxObrigacaoLegal = styledBox({
+export const BoxObrigacaoLegal = styled(Box)({
     marginTop: 16,
     width: "100%",
 });
 
-export const BoxTitulos = styledBox({
+export const BoxTitulos = styled(Box)({
     alignItems: "center",
     color: "#00579d",
     display: "flex",
@@ -86,11 +76,11 @@ export const BoxTitulos = styledBox({
     width: "100%",
 });
 
-export const BoxValorMensal = styledBox({
+export const BoxValorMensal = styled(Box)({
     width: "100%",
 });
 
-export const FormControlEdited = styledFormControl({
+export const FormControlEdited = styled(FormControl)({
     backgroundColor: "#eee",
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
@@ -98,14 +88,14 @@ export const FormControlEdited = styledFormControl({
     width: "15vw"
 });
 
-export const SelectEdited = styledSelect({
+export const SelectEdited = styled(Select)({
     backgroundColor: "#eee",
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
     "& fieldset": { border: "none" },
 });
 
-export const TextFieldEdited = styledTextField({
+export const TextFieldEdited = styled(TextField)({
     backgroundColor: "#eee",
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
@@ -113,13 +103,13 @@ export const TextFieldEdited = styledTextField({
     width: "100%"
 });
 
-export const TypographyLabels = styledTypography({
+export const TypographyLabels = styled(Typography)({
     color: "#444",
     fontWeight: "bold",
     marginBottom: "1rem"
 });
 
-export const TypographyTitulos = styledTypography({
+export const TypographyTitulos = styled(Typography)({
     alignItems: "center",
     color: "#fff",
     display: "flex",

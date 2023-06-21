@@ -1,18 +1,12 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import { Box, TextField } from "@mui/material";
 import styled from "@emotion/styled";
-import TextField from "@mui/material/TextField";
 
-const styledBox = styled(Box);
-const styledButton = styled(Button);
-const styledTextField = styled(TextField);
-
-export const BoxImage = styledBox({
+export const BoxImage = styled(Box)({
     height: "100vh",
     width: "65vw"
 });
 
-export const BoxInputs = styledBox({
+export const BoxInputs = styled(Box)({
     display: "flex",
     flexDirection: "column",
     marginBottom: "4rem",
@@ -20,7 +14,7 @@ export const BoxInputs = styledBox({
     width: "auto"
 });
 
-export const BoxLogin = styledBox({
+export const BoxLogin = styled(Box)({
     alignItems: "center",
     display: "flex",
     height: "100vh",
@@ -28,7 +22,7 @@ export const BoxLogin = styledBox({
     width: "100vw"
 });
 
-export const BoxLogos = styledBox({
+export const BoxLogos = styled(Box)({
     alignItems: "center",
     display: "flex",
     justifyContent: "center",
@@ -36,14 +30,14 @@ export const BoxLogos = styledBox({
     width: "auto"
 });
 
-export const BoxRememberMe = styledBox({
+export const BoxRememberMe = styled(Box)({
     alignItems: "center",
     display: "flex",
     justifyContent: "flex-start",
     width: "100%"
 });
 
-export const BoxTexts = styledBox({
+export const BoxTexts = styled(Box)({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
@@ -51,7 +45,7 @@ export const BoxTexts = styledBox({
     width: "auto"
 });
 
-export const Column = styledBox({
+export const Column = styled(Box)({
     alignItems: "center",
     display: "flex",
     height: "100vh",
@@ -60,7 +54,7 @@ export const Column = styledBox({
     width: "35vw"
 });
 
-export const Container = styledBox({
+export const Container = styled(Box)({
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
@@ -68,7 +62,7 @@ export const Container = styledBox({
     width: "100%"
 });
 
-export const TextFieldEdited = styledTextField({
+export const TextFieldEdited = styled(TextField)({
     backgroundColor: "#eee",
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",

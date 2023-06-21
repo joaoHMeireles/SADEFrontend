@@ -1,11 +1,7 @@
+import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 
-const styledBox = styled(Box);
-const styledTypography = styled(Typography);
-
-export const BoxTypographyFiles = styledBox({
+export const BoxTypographyFiles = styled(Box)({
   alignItems: "center",
   backgroundColor: "#eee",
   borderRadius: "10px",
@@ -17,7 +13,7 @@ export const BoxTypographyFiles = styledBox({
   width: "90%",
 });
 
-export const TypographyUploadFiles = styledTypography({
+export const TypographyUploadFiles = styled(Typography)({
   color: "#444",
   width: "100%",
 });

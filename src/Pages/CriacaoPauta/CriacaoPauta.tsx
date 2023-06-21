@@ -175,10 +175,10 @@ export default function CriacaoPauta(props: {
 
   }
 
-
   return (
     <BoxConteudo>
       <Breadcrumb />
+
       <ContainerBoxTabs>
         {valor != 0 && valor != 1 ? (
           <Tabs value={valor} onChange={mudarValor}>
@@ -197,6 +197,7 @@ export default function CriacaoPauta(props: {
           ""
         )}
       </ContainerBoxTabs>
+    
       {valor == 0 && (
         <>
           <Searchbar
@@ -204,8 +205,8 @@ export default function CriacaoPauta(props: {
             filtrar={props.filtrar}
             grid={grid}
             setGrid={setGrid}
-            filtrarResultados={props.filtrarResultados}
-          />
+            filtrarResultados={props.filtrarResultados}/>
+
           {!temComponente ?
             <>
               {conteudoCarregou &&
@@ -235,17 +236,14 @@ export default function CriacaoPauta(props: {
                 setMensagemDoErro("Selecione pelo menos uma proposta primeiro!")
                 return
               }
-
               setValor(1);
-              localStorage.setItem(
-                "PROPOSTASELECIONADA",
-                JSON.stringify(propostas)
-              );
+              localStorage.setItem("PROPOSTASELECIONADA", JSON.stringify(propostas));
             }}>
             Proximo
           </BotaoPrimario>
         </>
       )}
+
       {valor == 1 && (
         <>
           <BoxInputsDataComissao>
@@ -291,8 +289,7 @@ export default function CriacaoPauta(props: {
                       onChange={(newValue) => {
                         setValorData(newValue);
                       }}
-                      renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />}
-                    />
+                      renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />} />
                   </Box>
                 </Grid>
 
@@ -300,7 +297,6 @@ export default function CriacaoPauta(props: {
                   <TypographyTituloInput onClick={lerTexto}>
                     Início da reunião
                   </TypographyTituloInput>
-
 
                   <Box sx={{ width: "60vw" }}>
                     <TimePicker
@@ -310,8 +306,7 @@ export default function CriacaoPauta(props: {
                       onChange={(newValue) => setInicioReuniao(newValue)}
                       renderInput={(params) => {
                         return <TextField id="horarioInicioReuniao" {...params} />;
-                      }}
-                    />
+                      }} />
                   </Box>
                 </Grid>
 
@@ -328,13 +323,13 @@ export default function CriacaoPauta(props: {
                       onChange={(newValue) => setFinalReuniao(newValue)}
                       renderInput={(params) => {
                         return <TextField id="horarioFinalReuniao" {...params} />;
-                      }}
-                    />
+                      }} />
                   </Box>
                 </Grid>
               </Grid>
             </Box>
           </BoxInputsDataComissao>
+
           {propostas.map((proposta: any) => {
             return (
               <>
@@ -344,6 +339,7 @@ export default function CriacaoPauta(props: {
                       <CardProposta cor="#9acae5">
                         <BoxConteudoProposta>
                           <BoxTituloProposta onClick={lerTexto}>{proposta.tituloDemanda}</BoxTituloProposta>
+
                           <BoxIconeLink>
                             <DeleteIcon
                               sx={{
@@ -352,8 +348,8 @@ export default function CriacaoPauta(props: {
                                 },
                               }}
                               className={`${proposta.id}`}
-                              onClick={() => removerProposta(proposta.id)}
-                            />
+                              onClick={() => removerProposta(proposta.id)} />
+
                             <TypographyVermais variant="body2">
                               <Link to={proposta.link} onClick={(e: any) => { lerTexto(e); atualizarPropostaEscolhida(proposta) }}>Ver mais</Link>
                             </TypographyVermais>
@@ -366,14 +362,12 @@ export default function CriacaoPauta(props: {
               </>
             );
           })}
+          
           <BoxBotoes>
             <BotaoSecundario
               onClick={(e: any) => {
                 lerTexto(e)
                 setValor(0)
-              }}
-              sx={{
-                marginRight: 3,
               }}
               variant="outlined"
               startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
@@ -389,6 +383,7 @@ export default function CriacaoPauta(props: {
           </BoxBotoes>
         </>
       )}
+
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         autoHideDuration={5000}
