@@ -282,7 +282,6 @@ export function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLBu
             if (statusProcesso == "CANCELLED" || ultimoHistorico.tarefa == "REENVIARDEMANDA" && (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI")) {
                 listaBotoes.push(historico)
             } else {
-
                 if (!tamanho) {
                     if (tipoPessoa == "AnalistaTI" || tipoPessoa == "GerenteTI") {
                         const devolver = { nome: "devolver", function: funcoes[3] }

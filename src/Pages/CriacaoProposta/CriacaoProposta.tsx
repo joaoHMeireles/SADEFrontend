@@ -30,6 +30,7 @@ import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semDemanda from "../../Assets/emptyFolder.png"
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 import { Alert, Snackbar } from "@mui/material";
+import BeneneficiosTeste from "../../Components/BeneficiosDemanda/BeneficiosTeste/BeneficiosTeste";
 
 export default function CriacaoProposta(props: {
   filtrar: boolean;
@@ -342,6 +343,10 @@ export default function CriacaoProposta(props: {
     return 0
   }
 
+  useEffect(() => {
+    console.log(informacaoProcesso);
+  }, [informacaoProcesso])
+
   return (
     <BoxConteudo>
       <Breadcrumb />
@@ -421,7 +426,17 @@ export default function CriacaoProposta(props: {
           <>
             <InformacaoGeral proposta={true} informacaoProcesso={informacaoProcesso} setInformacaoProcesso={setInformacaoProcesso} />
 
-            <BeneficiosDemanda rascunho={false} proposta={true}
+            <BeneneficiosTeste proposta={true} rascunho={false} editarDemanda={false}
+              numeroBeneficiosReais={numeroBeneficiosReais}
+              setNumeroBeneficiosReais={setNumeroBeneficiosReais}
+              numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
+              setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
+              numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
+              setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
+              informacaoProcesso={informacaoProcesso}
+              setInformacaoProcesso={setInformacaoProcesso}
+            />
+            {/* <BeneficiosDemanda rascunho={false} proposta={true}
               numeroBeneficiosReais={numeroBeneficiosReais}
               numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
               numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
@@ -430,7 +445,7 @@ export default function CriacaoProposta(props: {
               setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
               valor={valor}
               informacaoProcesso={informacaoProcesso}
-              setInformacaoProcesso={setInformacaoProcesso} />
+              setInformacaoProcesso={setInformacaoProcesso} /> */}
 
             <InfomacoesAdicionais
               valorTamanho={valorTamanho}

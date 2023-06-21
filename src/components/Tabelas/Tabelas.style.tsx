@@ -23,6 +23,7 @@ export const TableCellEstilzada = styled(TableCell)(({ theme: Theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
   },
+  wordBreak: "break-word",
 }));
 
 export const TableRowEstilizada = styled(TableRow)(({ theme: Theme }) => ({

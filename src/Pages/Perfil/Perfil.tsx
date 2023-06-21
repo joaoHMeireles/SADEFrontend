@@ -9,7 +9,7 @@ import { TextReaderContext } from "../../Components/TextReaderContext/TextReader
 import { Box, Toolbar } from "@mui/material";
 import { BoxHeader } from "../TelaProcesso/TelaProcesso.styles";
 
-export default function InformacoesGerais(props: { sidebarAberta: boolean }) {
+export default function InformacoesGerais(props: { aberto?: boolean, sidebarAberta: boolean }) {
   const { lerTexto } = useContext(TextReaderContext) as any
   const usuario = JSON.parse(localStorage.getItem("USUARIO") as string);
   const [fotoUsuario, setFotoUsuario] = useState<any>({ size: 0 });

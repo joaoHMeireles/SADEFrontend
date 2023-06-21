@@ -28,7 +28,7 @@ import { BoxContainer, BoxConteudo, BotaoTerciario, BotaoPrimario, BotaoSecundar
 import {
     BoxAviso, BoxHeader, BoxTabela, CircleIconPonto, GridItemFooter, GridPequenosAtributos, TypographyTexto,
     TypographyTitulo, TypographyTituloAtributo, BoxConteudoModal, TypographyTituloModal, BoxTituloModal,
-    BoxBotoesModal
+    BoxBotoesModal, TypographyBeneficioQualitativo
 } from './TelaProcesso.styles';
 import imagemSemNada from "../../Assets/emptyFolder.png"
 import ResultadoVazio from '../../Components/ResultadoVazio/ResultadoVazio';
@@ -57,14 +57,16 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
     const [conteudoModal, setConteudoModal] = useState(<div />)
     const [feedbackAberto, setFeedbackAberto] = useState(false)
     const [conteudoFeedback, setConteudoFeedback] = useState(<div />)
-    const [informacaoProcesso, setInformacaoProcesso] = useState({
+    const location = useLocation()
+    const processoLocalStorage = localStorage.getItem(`${getNomeComponente(location.pathname)}ESCOLHIDA`)
+    const informacaoPadrao = {
         usuario: {
             nomeUsuario: "",
             departamento: ""
         },
         beneficiosDemanda: []
-    });
-    const location = useLocation()
+    }
+    const [informacaoProcesso, setInformacaoProcesso] = useState(processoLocalStorage == null ? informacaoPadrao : JSON.parse(processoLocalStorage));
 
     useEffect(() => {
         if (location.search) {
@@ -89,11 +91,6 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
 
                 localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta))
             })
-        } else {
-            const processoLocalStorage = localStorage.getItem(`${getNomeComponente(location.pathname)}ESCOLHIDA`)
-            if (processoLocalStorage != null) {
-                setInformacaoProcesso(JSON.parse(processoLocalStorage))
-            }
         }
     }, [])
 
@@ -172,7 +169,9 @@ export function Header(props: {
 
     useEffect(() => {
         try {
-            verificarHistoricoAprovado(processo.id, setAprovadoGerente)
+            console.log("processo", processo);
+
+            verificarHistoricoAprovado(processo.idDemanda, setAprovadoGerente)
         } catch (erro: any) {
             console.log(erro);
         }
@@ -883,7 +882,7 @@ function InfoGeral(props: { processo: any }) {
     const atributosPequenos = {
         numero: (processo.idDemanda ? processo.idDemanda : processo.idProposta),
         status: processo.statusDemanda,
-        solicitante: processo.usuario.nomeUsuario,
+        solicitante: processo.usuario.nomeUsuario ,
         departamento: processo.usuario.departamento,
         //num sei oq é iso
         // gerenteResponsavel: processo.gerenteResponsavel,
@@ -908,7 +907,9 @@ function InfoGeral(props: { processo: any }) {
                 <ListItemIcon>
                     <CircleIconPonto />
                 </ListItemIcon>
-                {beneficio.descricao}
+                <TypographyBeneficioQualitativo>
+                    {beneficio.descricao}
+                </TypographyBeneficioQualitativo>
             </ListItem>
         )
     })
@@ -1044,7 +1045,7 @@ function InfoComercial(props: {
                 }
                 {atributos.tabelasCusto &&
                     <BoxTabela>
-                        <TypographyTitulo variant='subtitle1' onClick={lerTexto}>
+                        <TypographyTitulo variant='h6' onClick={lerTexto}>
                             Tabelas de custo
                         </TypographyTitulo>
                         {elementosTabelaCusto}
@@ -1117,7 +1118,7 @@ function Footer(props: {
     return (
         <Grid container>
             <Grid item xs={8} />
-            
+
             <GridItemFooter item xs={3.5} >
                 {props.link ?
                     <a href={props.link} target='_blank' onClick={lerTexto}>Ver projeto Jira</a>

@@ -57,12 +57,14 @@ export default function CriacaoDemanda(props: {
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
 
-  const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
-  const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
+  // const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
+  // const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
+
+  const [frequenciaUso, setFrequenciaUso] = useState<any>("SEMANALMENTE");
 
   const location = useLocation();
 
-  const pdfExportComponent = React.useRef<PDFExport>(null);
+  // const pdfExportComponent = React.useRef<PDFExport>(null);
 
   const webSocketService: any = useContext(WebSocketContext)
   let info: any = null
@@ -175,7 +177,7 @@ export default function CriacaoDemanda(props: {
     const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
     const objetivo = document.getElementById("objetivo") as HTMLInputElement;
 
-    let data = {
+    let dataDemanda = {
       "tituloDemanda": titulo.value,
       "objetivo": objetivo.value,
       "situacaoAtual": situacaoAtual.value,
@@ -185,9 +187,9 @@ export default function CriacaoDemanda(props: {
       }
     }
 
-    localStorage.setItem("DADOSDEMANDACRIACAO", JSON.stringify(data))
+    localStorage.setItem("DADOSDEMANDACRIACAO", JSON.stringify(dataDemanda))
 
-    atualizarDados(data);
+    atualizarDados(dataDemanda);
   }
 
   function partDoisDemanda() {
@@ -198,22 +200,23 @@ export default function CriacaoDemanda(props: {
 
     let valorMensal;
     let descricao;
+    let tipoMoeda
 
     let beneficios = [];
-
 
     for (let i = 0; i < numeroBeneficiosReais; i++) {
       valorMensal = document.getElementById(`valorMensalReal${i}`) as HTMLInputElement;
       descricao = document.getElementById(`descricaoReal${i}`) as HTMLInputElement;
+      tipoMoeda = document.getElementById(`moedaReal${i}`) as HTMLInputElement;
 
       let beneficioReal = {
         "tipoBeneficio": "REAL",
         "descricao": descricao.value,
-        "moeda": moedaReal[i],
+        "moeda": tipoMoeda.innerText,
         "valor": valorMensal.value
       }
 
-      if (numeroBeneficiosReais > 0 && valorMensal.value && moedaReal && descricao.value) {
+      if (numeroBeneficiosReais > 0 && valorMensal.value && tipoMoeda.innerText != "" && descricao.value) {
         beneficios.push(beneficioReal);
       }
     }
@@ -221,15 +224,16 @@ export default function CriacaoDemanda(props: {
     for (let i = 0; i < numeroBeneficiosPotenciais; i++) {
       valorMensal = document.getElementById(`valorMensalPotencial${i}`) as HTMLInputElement;
       descricao = document.getElementById(`descricaoPotencial${i}`) as HTMLInputElement;
+      tipoMoeda = document.getElementById(`moedaPotencial${i}`) as HTMLInputElement;
 
       let beneficioPotencial = {
         "tipoBeneficio": "POTENCIAL",
         "descricao": descricao.value,
-        "moeda": moedaPotencial[i],
+        "moeda": tipoMoeda.innerText,
         "valor": valorMensal.value
       }
 
-      if (numeroBeneficiosReais > 0 && valorMensal.value && moedaPotencial && descricao.value) {
+      if (numeroBeneficiosReais > 0 && valorMensal.value && tipoMoeda.innerText != "" && descricao.value) {
         beneficios.push(beneficioPotencial);
       }
     }
@@ -260,15 +264,13 @@ export default function CriacaoDemanda(props: {
       }
     }
 
-
     localStorage.setItem("DADOSDEMANDACRIACAO", JSON.stringify(data2))
-
     atualizarDados(data2)
   }
 
   function gerarPDFDemanda() {
     const doc = new jsPDF()
-    const pdf = document.getElementById("BOX") as HTMLElement
+    // const pdf = document.getElementById("BOX") as HTMLElement
 
     // console.log(pdf);
     // console.log(pdfExportComponent.current);
@@ -277,7 +279,7 @@ export default function CriacaoDemanda(props: {
     //   pdfExportComponent.current.save();
     // }
 
-    doc.html(pdf)
+    doc.html("")
 
     const pdfArquivo = doc.output("blob")
 
@@ -432,8 +434,18 @@ export default function CriacaoDemanda(props: {
                 endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
                 onClick={(e) => {
                   lerTexto(e)
-                  if (checarPreenchimento()) {
-                    partUmDemanda();
+                  partUmDemanda();
+
+                  const titulo = document.getElementById("titulo") as HTMLInputElement;
+                  const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
+                  const objetivo = document.getElementById("objetivo") as HTMLInputElement;
+
+
+                  if (titulo.value == "" || situacaoAtual.value == "" || objetivo.value == "" || centroCusto.length == 0) {
+                    setFeedbackAberto(true)
+                    setInformacoesPreenchidas(true)
+                  } else {
+                    setValor(1);
                   }
 
                 }}>
@@ -445,7 +457,21 @@ export default function CriacaoDemanda(props: {
 
         {valor == 1 && (
           <>
-            {props.rascunho || props.editarDemanda ?
+            <BeneficiosTeste
+              proposta={false} rascunho={props.rascunho} editarDemanda={props.editarDemanda}
+              numeroBeneficiosReais={numeroBeneficiosReais}
+              setNumeroBeneficiosReais={setNumeroBeneficiosReais}
+              numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
+              setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
+              numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
+              setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
+              frequenciaUso={frequenciaUso}
+              setFrequenciaUso={setFrequenciaUso}
+              informacaoProcesso={data}
+              setInformacaoProcesso={setData}
+              partDoisDemanda={partDoisDemanda}
+            />
+            {/* {props.rascunho || props.editarDemanda ?
               <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
                 numeroBeneficiosReais={numeroBeneficiosReais}
                 numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
@@ -470,6 +496,7 @@ export default function CriacaoDemanda(props: {
                 setMoedaPotencial={setMoedaPotencial}
                 partDoisDemanda={partDoisDemanda} />
             }
+            */}
             <ContainerBotoes>
                 <BotaoTerciario
                   variant="outlined"
@@ -550,9 +577,9 @@ export default function CriacaoDemanda(props: {
               </BoxBotoes>
             </ContainerBotoes>
 
-            {data != null &&
+            {/* {data != null &&
               <EsqueletoPDFVersaoDemanda demanda={data} pdfExportComponent={pdfExportComponent} />
-            }
+            } */}
           </>
         )}
 
