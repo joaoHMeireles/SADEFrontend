@@ -6,7 +6,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { createContext, useContext, useMemo, useState } from 'react';
 import { MainTheme } from '../../Themes';
 
-const ColorModeContext = createContext({ toggleColorMode: () => { } });
+export const ColorModeContext = createContext({ toggleColorMode: () => { } });
 
 // function MyApp() {
 //     const theme = useTheme();

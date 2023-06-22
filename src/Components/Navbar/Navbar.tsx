@@ -1,21 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import logo from '../../assets/wegLogo.png';
 import './Navbar.scss';
 import { Avatar, Box, Button, IconButton, Toolbar } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
 import { NavBar } from "./Navbar.styles";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
 import api from '../../api/api';
 import sadeLogo from "../../Assets/sadeLogoBranca.png";
+import { ColorModeContext } from '../ThemeProviderComponent/ThemeProviderComponent';
 
 export default function Navbar(props: { aberto: boolean, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<React.SetStateAction<boolean>>, tamanhoNavbar: string }) {
     const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem("USUARIO") as string));
     const [nomeUsuario, setNomeUsuario] = useState();
     const [fotoUsuario, setFotoUsuario] = useState<Blob>(new Blob);
     const [mensagem, setMensagem] = useState('');
-
+    // const theme = useTheme();
+    // const colorMode = useContext(ColorModeContext);
     const path = useLocation();
 
     // Pega a foto de perfil do usuário logado
@@ -74,8 +77,8 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
 
                             <Box sx={{ alignItems: "center", display: "flex" }}>
                                 <Box sx={{ marginLeft: "1rem" }}>
-                                    {/* <p>{mensagem + nomeUsuario + "!"}</p> */}
-                                    <Button>mudar tema</Button>
+                                    <p>{mensagem + nomeUsuario + "!"}</p>
+                                    {/* <Button sx={{backgroundColor: "white",color: "red"}} onClick={colorMode.toggleColorMode}>mudar tema</Button> */}
                                 </Box>
 
                                 <Box sx={{ height: "100%", marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>
