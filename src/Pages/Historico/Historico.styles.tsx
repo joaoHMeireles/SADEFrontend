@@ -1,4 +1,4 @@
-import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton, gridClasses } from "@mui/x-data-grid";
+import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarExport, gridClasses } from "@mui/x-data-grid";
 import { Dialog } from "@mui/material";
 import { alpha, styled } from '@mui/material/styles';
 
