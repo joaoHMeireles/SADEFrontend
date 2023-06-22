@@ -520,7 +520,6 @@ export default function CriacaoDemanda(props: {
 
                 <BotaoPrimario
                   variant="contained"
-                  sx={{ marginLeft: "1rem" }}
                   endIcon={
                     <ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />
                   }

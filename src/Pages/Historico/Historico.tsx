@@ -19,7 +19,7 @@ import {
 import DownloadIcon from "@mui/icons-material/Download";
 import CloseIcon from "@mui/icons-material/Close";
 import PictureAsPdfRoundedIcon from "@mui/icons-material/PictureAsPdfRounded";
-import { GridColDef, GridCellParams, ptBR } from "@mui/x-data-grid";
+import { GridColDef, GridCellParams, ptBR, GridToolbarFilterButton } from "@mui/x-data-grid";
 import { BoxContainer, BoxConteudo } from "../App.styles";
 import { BoxHeader } from "../TelaProcesso/TelaProcesso.styles";
 import {
@@ -27,7 +27,6 @@ import {
   GridToolbarContainerEstilizado,
   GridToolbarColumnsButtonEstilizado,
   GridToolbarExportEstilizado,
-  GridToolbarFilterButtonEstilizado,
 } from "./Historico.styles";
 
 import "@react-pdf-viewer/core/lib/styles/index.css";
@@ -110,7 +109,7 @@ export default function TelaHistoricos(props: {}) {
       width: 110,
       renderHeader: renderHeader,
       renderCell: (params: any) => {
-  
+
         return (
           <Tooltip title={params.row.status}>
             <span className="table-cell-trucate">{params.row.status}</span>
@@ -125,7 +124,7 @@ export default function TelaHistoricos(props: {}) {
       width: 155,
       renderHeader: renderHeader,
       renderCell: (params: any) => {
-  
+
         return (
           <Tooltip title={params.row.tarefaExecutada}>
             <span className="table-cell-trucate">
@@ -165,7 +164,7 @@ export default function TelaHistoricos(props: {}) {
               </div>
             }
           </>
-  
+
           // </Link>
         );
       },
@@ -305,8 +304,8 @@ export default function TelaHistoricos(props: {}) {
     }
   }
 
-  function renderHeader(info: any){
-    return  <Box className="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle" onClick={lerTexto}> {info.colDef.headerName}</Box>
+  function renderHeader(info: any) {
+    return <Box className="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle" onClick={lerTexto}> {info.colDef.headerName}</Box>
   }
 
   return (
@@ -510,16 +509,16 @@ export default function TelaHistoricos(props: {}) {
 function CustomGridToolbar() {
   return (
     <GridToolbarContainerEstilizado>
-      <GridToolbarFilterButtonEstilizado
+      <GridToolbarFilterButton
         nonce={undefined}
         onResize={undefined}
-        onResizeCapture={undefined}
-      />
+        onResizeCapture={undefined} />
+
       <GridToolbarColumnsButtonEstilizado
         nonce={undefined}
         onResize={undefined}
-        onResizeCapture={undefined}
-      />
+        onResizeCapture={undefined} />
+
       <GridToolbarExportEstilizado />
     </GridToolbarContainerEstilizado>
   );

@@ -1,12 +1,11 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Select, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 
-export const BoxBotoes = styled(Box)({
-  position: "fixed",
-  top: "90%",
-  left: "68%",
-  width: "100%",
-});
+// export const BoxBotoes = styled(Box)({
+//   position: "fixed",
+//   bottom: "0",
+//   right: "0",
+// });
 
 export const BoxConteudoProposta = styled(Box)({
   alignItems: "center",
@@ -35,8 +34,9 @@ export const BoxIconeLink = styled(Box)({
 export const BoxInputsDataComissao = styled(Box)({
   alignItems: "center",
   display: "flex",
+  flexDirection: "column",
   justifyContent: "center",
-  width: "100%",
+  width: "100%"
 });
 
 export const BoxProposta = styled(Box)({
@@ -50,6 +50,13 @@ export const BoxTituloProposta = styled(Box)({
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
+});
+
+export const SelectEdited = styled(Select)({
+  backgroundColor: "#eee",
+  borderRadius: "10px",
+  boxShadow: "5px 5px 10px 0 #00000025",
+  "& fieldset": { border: "none" }
 });
 
 export const TextFieldEdited = styled(TextField)({

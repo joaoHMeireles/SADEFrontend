@@ -9,6 +9,7 @@ import {
 import api from "../../api/api";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semDemanda from "../../Assets/emptyFolder.png"
+import { Box } from "@mui/material";
 
 export default function Enviadas(props: {
   filtrar: boolean;
@@ -64,7 +65,9 @@ export default function Enviadas(props: {
         {!temComponente ?
           <>
             {conteudoCarregou &&
-              <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda sua cadastrada"} />
+              <Box sx={{ height: "70vh", width: "100%" }}>
+                <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda sua cadastrada"} />
+              </Box>
             }
           </>
           :

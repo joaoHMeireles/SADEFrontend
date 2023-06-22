@@ -8,7 +8,7 @@ import Searchbar from "../../Components/Searchbar/Searchbar";
 
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { Alert, Box, Grid, MenuItem, Select, Snackbar, TextField } from "@mui/material";
+import { Alert, Box, Container, Grid, MenuItem, Select, Snackbar, TextField } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
@@ -18,13 +18,13 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import { BotaoPrimario, BotaoSecundario, BoxConteudo } from "../App.styles";
 import { ContainerBoxTabs } from "../CriacaoProposta/CriacaoProposta.styles";
 import {
-  BoxBotoes,
+  // BoxBotoes,
   BoxConteudoProposta,
   BoxGeral,
   BoxIconeLink,
-  BoxInputsDataComissao,
   BoxProposta,
   BoxTituloProposta,
+  SelectEdited,
   TextFieldEdited,
   TypographyVermais,
 } from "./CriacaoPauta.styles";
@@ -158,11 +158,11 @@ export default function CriacaoPauta(props: {
     })
   }
 
-  function checarPreenchimento(){
+  function checarPreenchimento() {
     const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
     const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
 
-    if(tituloReuniao == "" || dataReuniaoEscolhida == "" || comissaoEscolhida == undefined){
+    if (tituloReuniao == "" || dataReuniaoEscolhida == "" || comissaoEscolhida == undefined) {
       setMensagemDoErro("Algum campo não foi preenchido!")
     }
   }
@@ -189,7 +189,7 @@ export default function CriacaoPauta(props: {
           ""
         )}
       </ContainerBoxTabs>
-    
+
       {valor == 0 && (
         <>
           <Searchbar
@@ -197,12 +197,14 @@ export default function CriacaoPauta(props: {
             filtrar={props.filtrar}
             grid={grid}
             setGrid={setGrid}
-            filtrarResultados={props.filtrarResultados}/>
+            filtrarResultados={props.filtrarResultados} />
 
           {!temComponente ?
             <>
               {conteudoCarregou &&
-                <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma proposta disponível no sistema"} />
+                <Box sx={{ height: "70vh", width: "100%" }}>
+                  <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma proposta disponível no sistema"} />
+                </Box>
               }
             </>
             :
@@ -238,23 +240,58 @@ export default function CriacaoPauta(props: {
 
       {valor == 1 && (
         <>
-          <BoxInputsDataComissao>
-            <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-              {/* <Grid container spacing={1}> */}
-                {/* <Grid item xs={12} sx={{ alignItems: "flex-start", display: "flex", flexDirection: "column" }}> */}
-                  <TypographyTituloInput onClick={lerTexto}>
-                    Título da reunião
-                  </TypographyTituloInput>
+          <Box sx={{ alignItems: "center", display: "flex", justifyContent: "flex-start", padding: "2rem 1rem" }}>
+            <Box sx={{ width: "50%" }}>
+              {propostas.map((proposta: any) => {
+                return (
+                  <>
+                    <BoxGeral key={proposta.id}>
+                      <BoxProposta>
+                        <Box sx={{ display: "flex", justifyContent: "center", width: "40vw" }}>
+                          <CardProposta cor="#9acae5">
+                            <BoxConteudoProposta>
+                              <BoxTituloProposta onClick={lerTexto}>{proposta.tituloDemanda}</BoxTituloProposta>
 
-                  <TextFieldEdited  id="tituloReuniao" />
-                {/* </Grid> */}
+                              <BoxIconeLink>
+                                <DeleteIcon
+                                  sx={{
+                                    "&:hover": {
+                                      cursor: "pointer",
+                                    },
+                                  }}
+                                  className={`${proposta.id}`}
+                                  onClick={() => removerProposta(proposta.id)} />
 
-                {/* <Grid item xs={6}> */}
+                                <TypographyVermais variant="body2">
+                                  <Link to={proposta.link} onClick={(e: any) => { lerTexto(e); atualizarPropostaEscolhida(proposta) }}>Ver mais</Link>
+                                </TypographyVermais>
+                              </BoxIconeLink>
+                            </BoxConteudoProposta>
+                          </CardProposta>
+                        </Box>
+                      </BoxProposta>
+                    </BoxGeral>
+                  </>
+                );
+              })}
+            </Box>
+
+            <Box sx={{ width: "50%" }}>
+              <Box sx={{ width: "40vw" }}>
+                <TypographyTituloInput onClick={lerTexto}>
+                  Título da reunião
+                </TypographyTituloInput>
+
+                <TextFieldEdited id="tituloReuniao" />
+              </Box>
+
+              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "40vw" }}>
+                <Box>
                   <TypographyTituloInput onClick={lerTexto}>
                     Fórum da reunião
                   </TypographyTituloInput>
 
-                  <Select
+                  <SelectEdited
                     sx={{ width: "15vw" }}
                     value={comissaoEscolhida}
                     inputProps={{ id: "comissaoEscolhida" }}
@@ -265,113 +302,100 @@ export default function CriacaoPauta(props: {
                     {comissoes.map((comissao) => {
                       return <MenuItem value={comissao.nomeForum} id={comissao.idForum} onClick={lerTexto}>{comissao.nomeForum}</MenuItem>;
                     })}
-                  </Select>
-                {/* </Grid> */}
+                  </SelectEdited>
+                </Box>
 
-                {/* <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}> */}
-                  <Box>
-                    <TypographyTituloInput onClick={lerTexto}>
-                      Data da Reunião
-                    </TypographyTituloInput>
+                <Box>
+                  <TypographyTituloInput onClick={lerTexto}>
+                    Data da Reunião
+                  </TypographyTituloInput>
 
-                    <DatePicker
-                      InputProps={{ sx: { width: "15vw" } }}
-                      value={valorData}
-                      onChange={(newValue) => {
-                        setValorData(newValue);
-                      }}
-                      renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />} />
-                  </Box>
-                {/* </Grid> */}
+                  <DatePicker
+                    InputProps={{
+                      sx: {
+                        backgroundColor: "#eee",
+                        borderRadius: "10px",
+                        boxShadow: "5px 5px 10px 0 #00000025",
+                        "& fieldset": { border: "none" },
+                        width: "15vw"
+                      }
+                    }}
+                    value={valorData}
+                    onChange={(newValue) => {
+                      setValorData(newValue);
+                    }}
+                    renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />} />
+                </Box>
+              </Box>
 
-                {/* <Grid item xs={6}> */}
+              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "40vw" }}>
+                <Box>
                   <TypographyTituloInput onClick={lerTexto}>
                     Início da reunião
                   </TypographyTituloInput>
 
-                  <Box sx={{ width: "60vw" }}>
-                    <TimePicker
-                      InputProps={{ sx: { width: "15vw" } }}
-                      ampm={false}
-                      value={inicioReuniao}
-                      onChange={(newValue) => setInicioReuniao(newValue)}
-                      renderInput={(params) => {
-                        return <TextField id="horarioInicioReuniao" {...params} />;
-                      }} />
-                  </Box>
-                {/* </Grid> */}
+                  <TimePicker
+                    InputProps={{
+                      sx: {
+                        backgroundColor: "#eee",
+                        borderRadius: "10px",
+                        boxShadow: "5px 5px 10px 0 #00000025",
+                        "& fieldset": { border: "none" },
+                        width: "15vw"
+                      }
+                    }}
+                    ampm={false}
+                    value={inicioReuniao}
+                    onChange={(newValue) => setInicioReuniao(newValue)}
+                    renderInput={(params) => {
+                      return <TextField id="horarioInicioReuniao" {...params} />;
+                    }} />
+                </Box>
 
-                {/* <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}> */}
-                  <Box>
-                    <TypographyTituloInput onClick={lerTexto}>
-                      Final da reunião
-                    </TypographyTituloInput>
+                <Box>
+                  <TypographyTituloInput onClick={lerTexto}>
+                    Final da reunião
+                  </TypographyTituloInput>
 
-                    <TimePicker
-                      InputProps={{ sx: { width: "15vw" } }}
-                      ampm={false}
-                      value={finalReuniao}
-                      onChange={(newValue) => setFinalReuniao(newValue)}
-                      renderInput={(params) => {
-                        return <TextField id="horarioFinalReuniao" {...params} />;
-                      }} />
-                  </Box>
-                {/* </Grid> */}
-              {/* </Grid> */}
+                  <TimePicker
+                    InputProps={{
+                      sx: {
+                        backgroundColor: "#eee",
+                        borderRadius: "10px",
+                        boxShadow: "5px 5px 10px 0 #00000025",
+                        "& fieldset": { border: "none" },
+                        width: "15vw"
+                      }
+                    }}
+                    ampm={false}
+                    value={finalReuniao}
+                    onChange={(newValue) => setFinalReuniao(newValue)}
+                    renderInput={(params) => {
+                      return <TextField id="horarioFinalReuniao" {...params} />;
+                    }} />
+                </Box>
+              </Box>
+
+              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "flex-end", marginTop: "4rem", width: "40vw" }}>
+                <BotaoSecundario
+                  onClick={(e: any) => {
+                    lerTexto(e)
+                    setValor(0)
+                  }}
+                  variant="outlined"
+                  startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
+                  Voltar
+                </BotaoSecundario>
+
+                <BotaoPrimario
+                  variant="contained"
+                  endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
+                  onClick={criarPauta}>
+                  Enviar
+                </BotaoPrimario>
+              </Box>
             </Box>
-          </BoxInputsDataComissao>
-
-          {propostas.map((proposta: any) => {
-            return (
-              <>
-                <BoxGeral key={proposta.id}>
-                  <BoxProposta>
-                    <Box sx={{ display: "flex", justifyContent: "center", width: "50vw" }}>
-                      <CardProposta cor="#9acae5">
-                        <BoxConteudoProposta>
-                          <BoxTituloProposta onClick={lerTexto}>{proposta.tituloDemanda}</BoxTituloProposta>
-
-                          <BoxIconeLink>
-                            <DeleteIcon
-                              sx={{
-                                "&:hover": {
-                                  cursor: "pointer",
-                                },
-                              }}
-                              className={`${proposta.id}`}
-                              onClick={() => removerProposta(proposta.id)} />
-
-                            <TypographyVermais variant="body2">
-                              <Link to={proposta.link} onClick={(e: any) => { lerTexto(e); atualizarPropostaEscolhida(proposta) }}>Ver mais</Link>
-                            </TypographyVermais>
-                          </BoxIconeLink>
-                        </BoxConteudoProposta>
-                      </CardProposta>
-                    </Box>
-                  </BoxProposta>
-                </BoxGeral>
-              </>
-            );
-          })}
-          
-          <BoxBotoes>
-            <BotaoSecundario
-              onClick={(e: any) => {
-                lerTexto(e)
-                setValor(0)
-              }}
-              variant="outlined"
-              startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>
-              Voltar
-            </BotaoSecundario>
-
-            <BotaoPrimario
-              variant="contained"
-              endIcon={<ArrowForwardIosRoundedIcon sx={{ width: "15px" }} />}
-              onClick={criarPauta}>
-              Enviar
-            </BotaoPrimario>
-          </BoxBotoes>
+          </Box>
         </>
       )}
 

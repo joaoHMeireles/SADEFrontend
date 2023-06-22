@@ -756,7 +756,7 @@ export function Header(props: {
                         Reprovar
                     </BotaoSecundario>
 
-                    <BotaoPrimario onClick={() => { props.setConteudoModal(modalAprovar) }} variant="contained" sx={{ marginLeft: "20px" }}>
+                    <BotaoPrimario onClick={() => { props.setConteudoModal(modalAprovar) }} variant="contained">
                         Aprovar
                     </BotaoPrimario>
                 </BoxBotoesModal>

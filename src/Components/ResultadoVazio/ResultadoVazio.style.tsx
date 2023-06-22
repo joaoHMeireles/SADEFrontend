@@ -3,14 +3,14 @@ import styled from "@emotion/styled";
 
 export const ImageBox = styled(Box)({
     alignItems: "center",
+    color:"#444",
     display: "flex",
     flexDirection: "column",
-    height: "70vh",
+    height: "100%",
     justifyContent: "center",
-    width: "100%",
-    color:"#444",
     "& #imagem": {
         width: "250px",
         height: "250px"
-    }
+    },
+    width: "100%",
 });

@@ -14,7 +14,7 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import { BotaoPrimario, BotaoSecundario, BoxConteudo } from "../App.styles";
 import { ContainerBoxTabs } from "../CriacaoProposta/CriacaoProposta.styles";
-import { BoxBotoes, BoxInputsDataComissao } from "../CriacaoPauta/CriacaoPauta.styles";
+import { BoxInputsDataComissao } from "../CriacaoPauta/CriacaoPauta.styles";
 import { TipoColecaoComponenteProcesso } from "../../constants/enuns";
 import api from "../../api/api";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
@@ -86,7 +86,7 @@ export default function CriacaoAta(props: {
       setTemComponente(false)
     }
   }, [listaComponents])
-  
+
   useEffect(() => {
     if (mensagemDoErro != "") {
       setFeedbackAberto(true)
@@ -141,11 +141,11 @@ export default function CriacaoAta(props: {
     })
   }
 
-  function checarPreenchimento(){
+  function checarPreenchimento() {
     const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
     const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
 
-    if(tituloReuniao == "" || dataReuniaoEscolhida == ""){
+    if (tituloReuniao == "" || dataReuniaoEscolhida == "") {
       setMensagemDoErro("Algum campo não foi preenchido!")
     }
   }
@@ -182,7 +182,9 @@ export default function CriacaoAta(props: {
           {!temComponente ?
             <>
               {conteudoCarregou &&
-                <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação"} />
+                <Box sx={{ height: "70vh", width: "100%" }}>
+                  <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação"} />
+                </Box>
               }
             </>
             :
@@ -276,7 +278,7 @@ export default function CriacaoAta(props: {
             </Box>
           </BoxInputsDataComissao>
 
-          <BoxBotoes>
+          <Box>
             <BotaoSecundario
               onClick={(e: any) => {
                 lerTexto(e)
@@ -296,7 +298,7 @@ export default function CriacaoAta(props: {
               onClick={criarATA}>
               Enviar
             </BotaoPrimario>
-          </BoxBotoes>
+          </Box>
         </>
       )}
       <Snackbar

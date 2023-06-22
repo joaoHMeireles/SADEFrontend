@@ -33,7 +33,7 @@ export default function ConteudoModalConfirmacao(props: {
                 <BotaoSecundario onClick={props.fecharModal} variant='outlined'>
                     Não
                 </BotaoSecundario>
-                <BotaoPrimario onClick={executarAcao} variant="contained" sx={{ marginLeft: "20px" }}>
+                <BotaoPrimario onClick={executarAcao} variant="contained">
                     Sim
                 </BotaoPrimario>
             </BoxBotoesModal>
