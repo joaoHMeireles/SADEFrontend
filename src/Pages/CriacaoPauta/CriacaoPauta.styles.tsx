@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 
 export const BoxBotoes = styled(Box)({
@@ -36,7 +36,6 @@ export const BoxInputsDataComissao = styled(Box)({
   alignItems: "center",
   display: "flex",
   justifyContent: "center",
-  height: "100%",
   width: "100%",
 });
 
@@ -51,6 +50,14 @@ export const BoxTituloProposta = styled(Box)({
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
+});
+
+export const TextFieldEdited = styled(TextField)({
+  backgroundColor: "#eee",
+  borderRadius: "10px",
+  boxShadow: "5px 5px 10px 0 #00000025",
+  "& fieldset": { border: "none" },
+  width: "100%"
 });
 
 export const TypographyVermais = styled(Typography)({

@@ -25,6 +25,7 @@ import {
   BoxInputsDataComissao,
   BoxProposta,
   BoxTituloProposta,
+  TextFieldEdited,
   TypographyVermais,
 } from "./CriacaoPauta.styles";
 import {
@@ -238,17 +239,17 @@ export default function CriacaoPauta(props: {
       {valor == 1 && (
         <>
           <BoxInputsDataComissao>
-            <Box sx={{ width: "50vw", display: "flex", justifyContent: "center" }}>
-              <Grid container spacing={1}>
-                <Grid item xs={12} sx={{ alignItems: "flex-start", display: "flex", flexDirection: "column" }}>
+            <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+              {/* <Grid container spacing={1}> */}
+                {/* <Grid item xs={12} sx={{ alignItems: "flex-start", display: "flex", flexDirection: "column" }}> */}
                   <TypographyTituloInput onClick={lerTexto}>
                     Título da reunião
                   </TypographyTituloInput>
 
-                  <TextField sx={{ width: "50vw" }} id="tituloReuniao" />
-                </Grid>
+                  <TextFieldEdited  id="tituloReuniao" />
+                {/* </Grid> */}
 
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}> */}
                   <TypographyTituloInput onClick={lerTexto}>
                     Fórum da reunião
                   </TypographyTituloInput>
@@ -265,9 +266,9 @@ export default function CriacaoPauta(props: {
                       return <MenuItem value={comissao.nomeForum} id={comissao.idForum} onClick={lerTexto}>{comissao.nomeForum}</MenuItem>;
                     })}
                   </Select>
-                </Grid>
+                {/* </Grid> */}
 
-                <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+                {/* <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}> */}
                   <Box>
                     <TypographyTituloInput onClick={lerTexto}>
                       Data da Reunião
@@ -281,9 +282,9 @@ export default function CriacaoPauta(props: {
                       }}
                       renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />} />
                   </Box>
-                </Grid>
+                {/* </Grid> */}
 
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}> */}
                   <TypographyTituloInput onClick={lerTexto}>
                     Início da reunião
                   </TypographyTituloInput>
@@ -298,9 +299,9 @@ export default function CriacaoPauta(props: {
                         return <TextField id="horarioInicioReuniao" {...params} />;
                       }} />
                   </Box>
-                </Grid>
+                {/* </Grid> */}
 
-                <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+                {/* <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}> */}
                   <Box>
                     <TypographyTituloInput onClick={lerTexto}>
                       Final da reunião
@@ -315,8 +316,8 @@ export default function CriacaoPauta(props: {
                         return <TextField id="horarioFinalReuniao" {...params} />;
                       }} />
                   </Box>
-                </Grid>
-              </Grid>
+                {/* </Grid> */}
+              {/* </Grid> */}
             </Box>
           </BoxInputsDataComissao>
 
