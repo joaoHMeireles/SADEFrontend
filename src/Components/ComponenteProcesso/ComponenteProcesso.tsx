@@ -152,7 +152,7 @@ export default function ComponenteProcesso(props: {
 
       if (props.setPropostas) {
         const novaListaPropostas = props.propostas as any[]
-        novaListaPropostas.push(componente);
+        novaListaPropostas.push(componentePaginaPauta);
 
         props.setPropostas(novaListaPropostas);
       }

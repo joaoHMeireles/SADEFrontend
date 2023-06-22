@@ -73,11 +73,11 @@ export default function Notificacoes() {
                 icone = GroupsRoundedIcon;
             } else if (acao == "STATUSDEMANDA") {
                 icone = NewReleasesRoundedIcon;
-                // } else if (acao == "PRAZOELABORACAOPROPOSTA") {
-                //     icone = AccessTimeRoundedIcon;
             } else if (acao == "AVALIARDEMANDA") {
                 icone = CheckBoxRoundedIcon;
             } else if (acao == "VIROUATA") {
+                icone = CheckBoxRoundedIcon;
+            } else if (acao == "VIROUPAUTA") {
                 icone = CheckBoxRoundedIcon;
             } else if (acao == "RASCUNHO") {
                 icone = DrawRoundedIcon;
@@ -89,6 +89,7 @@ export default function Notificacoes() {
 
     const notificacoesElement = notificacoes.map((notificacao: any, index: number) => {
         getTipoIcone(notificacao.acao)
+        
         return (
             <Notificacao key={index}
                 idNotificacao={notificacao.idNotificacao}

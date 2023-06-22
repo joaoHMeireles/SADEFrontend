@@ -19,15 +19,14 @@ import {
 import DownloadIcon from "@mui/icons-material/Download";
 import CloseIcon from "@mui/icons-material/Close";
 import PictureAsPdfRoundedIcon from "@mui/icons-material/PictureAsPdfRounded";
-import { GridColDef, GridCellParams, ptBR } from "@mui/x-data-grid";
+import { GridColDef, GridCellParams, ptBR, GridToolbarFilterButton } from "@mui/x-data-grid";
 import { BoxContainer, BoxConteudo } from "../App.styles";
 import { BoxHeader } from "../TelaProcesso/TelaProcesso.styles";
 import {
   DataGridEstilizado,
   GridToolbarContainerEstilizado,
   GridToolbarColumnsButtonEstilizado,
-  GridToolbarExportEstilizado,
-  GridToolbarFilterButtonEstilizado,
+  GridToolbarExportEstilizado
 } from "./Historico.styles";
 
 import "@react-pdf-viewer/core/lib/styles/index.css";
@@ -510,7 +509,7 @@ export default function TelaHistoricos(props: {}) {
 function CustomGridToolbar() {
   return (
     <GridToolbarContainerEstilizado>
-      <GridToolbarFilterButtonEstilizado
+      <GridToolbarFilterButton
         nonce={undefined}
         onResize={undefined}
         onResizeCapture={undefined}

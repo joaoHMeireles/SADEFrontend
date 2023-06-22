@@ -19,10 +19,16 @@ export const MainTheme = createTheme({
       light: "#f29b33",
     },
     background: {
-      default: "#f6fff8"
+      default: "#f6fff8",
+      paper: "#eee",
     },
     action: {
       focus: "#00579d"
+    }
+  },
+  typography: {
+    button: {
+      textTransform: 'none'
     }
   },
   components: {
@@ -41,20 +47,6 @@ export const MainTheme = createTheme({
           }
         }
       }
-    }
-  }
-})
-
-export const ContentTheme = createTheme({
-  palette: {
-    background: {
-      default: "#f6fff8",
-      paper: "#eee",
-    }
-  },
-  typography: {
-    button: {
-      textTransform: 'none'
     }
   }
 })

@@ -440,7 +440,6 @@ export default function CriacaoDemanda(props: {
                   const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
                   const objetivo = document.getElementById("objetivo") as HTMLInputElement;
 
-
                   if (titulo.value == "" || situacaoAtual.value == "" || objetivo.value == "" || centroCusto.length == 0) {
                     setFeedbackAberto(true)
                     setInformacoesPreenchidas(true)

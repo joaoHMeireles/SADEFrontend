@@ -61,6 +61,8 @@ export default function CriacaoPauta(props: {
   const [inicioReuniao, setInicioReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T13:30'));
   const [finalReuniao, setFinalReuniao] = useState<Dayjs | any>(dayjs('2022-04-17T14:30'));
 
+  localStorage.setItem("PAGINATUAL", "createagenda");
+
 
   useEffect(() => {
     const idPropostaEscolhida = localStorage.getItem("PROPOSTACRIARPAUTA")
