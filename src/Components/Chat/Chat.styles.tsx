@@ -22,6 +22,20 @@ export const BoxIconePessoa = styled(Box)({
 
 export const ContainerGeralChat = styled(Box)({
     alignItems: "center",
+    // backgroundColor: "#eee",
+    borderRadius: "5px",
+    display: "flex",
+    height: "50px",
+    justifyContent: "start",
+    marginBottom: "15px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    width: "100%",
+});
+
+export const ContainerGeralChatEscolhido = styled(Box)({
+    alignItems: "center",
     backgroundColor: "#eee",
     borderRadius: "5px",
     display: "flex",

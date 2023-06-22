@@ -1,22 +1,27 @@
-import {useEffect, useState, useContext} from "react";
+import { useEffect, useState, useContext } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Chat from "../../Components/Chat/Chat";
 import Toolbar from "../../Components/Toolbar/Toolbar";
 import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import {
     BoxBarraPesquisa, ContainerChats, ContainerGeralChats, LadoEsquerdoChat, LadoEsquerdoGeralChats, LadoDiretoChat,
     LadoDireitoGeralChats, BarraPesquisa
 } from "./Chats.styles";
 import {
     BoxGeralMensagensLadoDireito, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoDireito, BoxMensagensLadoEsquerdo,
-    BoxMensagemLadoDireito, BoxMensagemLadoEsquerdo, TypographyPessoa, TypographyMensagem
+    BoxMensagemLadoDireito, BoxMensagemLadoEsquerdo, TypographyPessoa, TypographyMensagem, InputPesquisaChat
 } from "./Chats.styles";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semChats from "../../Assets/leaf.png"
-import {WebSocketContext} from "../../api/websocketservice.jsx";
+import { WebSocketContext } from "../../api/websocketservice.jsx";
 import api from "../../api/api";
-import {useLocationChange} from "../../utils";
+import { useLocationChange } from "../../utils";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import InputAdornment from "@mui/material/InputAdornment";
+import selecionarChat from "../../Assets/selecionarChat.png"
 
 
 /**
@@ -30,7 +35,7 @@ export default function Chats(props: { aberto: boolean }) {
 
     const [listaChats, setListaChats] = useState<any[]>([])
     const [componenteChats, setComponenteChats] = useState<any>()
-    const [chatEscolhido, setChatEscolhido] = useState<any>({mensagens: []})
+    const [chatEscolhido, setChatEscolhido] = useState<any>({ mensagens: [] })
     const [elementoMensagens, setElementoMensagens] = useState<any>()
     const webSocketService: any = useContext(WebSocketContext)
     let requisitouChats = false
@@ -46,13 +51,13 @@ export default function Chats(props: { aberto: boolean }) {
         }
     }, []);
 
-    useEffect(() => {
-        if(listaChats.length == 0){
-            return
-        }
+    // useEffect(() => {
+    //     if (listaChats.length == 0) {
+    //         return
+    //     }
 
-        setChatEscolhido(listaChats[0])
-    }, [listaChats])
+    //     setChatEscolhido(listaChats[0])
+    // }, [listaChats])
 
     useEffect(() => {
         atualizarTela()
@@ -111,7 +116,7 @@ export default function Chats(props: { aberto: boolean }) {
                     const usuario = chat.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
 
                     return (
-                        <Mensagens mensagem={mensagem.mensagem} usuario={usuario}/>
+                        <Mensagens mensagem={mensagem.mensagem} usuario={usuario} />
                     )
                 })
 
@@ -154,9 +159,10 @@ export default function Chats(props: { aberto: boolean }) {
                 return (
                     <Chat
                         id={chat.idChat}
+                        idChatEscolhido={chatEscolhido.idChat}
                         titulo={chat.demanda.tituloDemanda}
                         pessoa={(usuario?.nomeUsuario != undefined ? usuario.nomeUsuario : "")}
-                        mensagem={ultimaMensagem ? ultimaMensagem.mensagem : ""} verChat={verChat}/>
+                        mensagem={ultimaMensagem ? ultimaMensagem.mensagem : ""} verChat={verChat} />
                 )
             }
         })
@@ -181,7 +187,7 @@ export default function Chats(props: { aberto: boolean }) {
             const usuario = chatEscolhido.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
 
             return (
-                <Mensagens mensagem={mensagem.mensagem} usuario={usuario}/>
+                <Mensagens mensagem={mensagem.mensagem} usuario={usuario} />
             )
         })
 
@@ -191,22 +197,34 @@ export default function Chats(props: { aberto: boolean }) {
     return (
         <>
             <ContainerGeralChats>
-                <Breadcrumb/>
-                <ContainerChats sx={{width: (props.aberto ? "80vw" : "91vw")}}>
+                <Breadcrumb />
+                <ContainerChats sx={{ width: (props.aberto ? "80vw" : "91vw") }}>
                     {listaChats.length != 0 ?
                         <>
                             <LadoEsquerdoGeralChats>
                                 <LadoEsquerdoChat>
+                                    <InputPesquisaChat placeholder="Pesquisar"
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <SearchRoundedIcon />
+                                                </InputAdornment>
+                                            ),
+                                        }} />
                                     {componenteChats}
                                 </LadoEsquerdoChat>
                             </LadoEsquerdoGeralChats>
                             <LadoDireitoGeralChats>
-                                <ConversaChat chatEscolhido={chatEscolhido} mensagens={elementoMensagens}
-                                              enviar={webSocketService.enviar}/>
+                                {chatEscolhido.idChat == null ?
+                                    <ResultadoVazio imagem={selecionarChat} legenda={"Selecione um chat disponível"} />
+                                    :
+                                    <ConversaChat chatEscolhido={chatEscolhido} mensagens={elementoMensagens} enviar={webSocketService.enviar} />
+                                }
+
                             </LadoDireitoGeralChats>
                         </>
                         :
-                        <ResultadoVazio imagem={semChats} legenda={"Nenhum chat disponível"}/>
+                        <ResultadoVazio imagem={semChats} legenda={"Nenhum chat disponível"} />
                     }
                 </ContainerChats>
             </ContainerGeralChats>
@@ -269,12 +287,12 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
         <>
             <LadoDiretoChat>
                 {props.mensagens}
-                <Toolbar/>
+                <Toolbar />
             </LadoDiretoChat>
             <BoxBarraPesquisa>
-                <AttachmentRoundedIcon sx={{color: "#444", "&:hover": {cursor: "pointer"}}}/>
-                <BarraPesquisa onChange={atualizarMensagem} id="input-mensagem"/>
-                <SendRoundedIcon sx={{color: "#444", "&:hover": {cursor: "pointer"}}} onClick={enviarMensagem}/>
+                <AttachmentRoundedIcon sx={{ color: "#444", "&:hover": { cursor: "pointer" } }} />
+                <BarraPesquisa onChange={atualizarMensagem} id="input-mensagem" />
+                <SendRoundedIcon sx={{ color: "#444", "&:hover": { cursor: "pointer" } }} onClick={enviarMensagem} />
             </BoxBarraPesquisa>
         </>
     )

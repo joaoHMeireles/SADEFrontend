@@ -42,6 +42,17 @@ export const LadoEsquerdoChat = styled(Box)({
     width: "100%",
 });
 
+export const InputPesquisaChat = styled(TextField)({
+    backgroundColor: "#eee",
+    borderRadius: "10px",
+    boxShadow: "5px 5px 10px 0 #00000025",
+    color: "#444",
+    "& fieldset": { border: "none" },
+    marginBottom: "1rem",
+    "&::placeholder": { color: "#00579d" },
+    width: "100%",
+})
+
 export const LadoEsquerdoGeralChats = styled(Box)({
     alignItems: "flex-start",
     display: "flex",
