@@ -9,7 +9,24 @@ export const BarraPesquisa = styled(TextField)({
     "& input": { padding: "5px", fontSize: "12px" },
     padding: "5px",
     width: "85%",
+    backgroundColor: "#eee",
+    borderRadius: "10px",
+    boxShadow: "5px 5px 10px 0 #00000025",
+    color: "#595959",
+    "& fieldset": { border: "none" },
+    "&::placeholder": { color: "#00579d" },
+    marginRight: "0.5rem",
 });
+
+export const BoxIconeEnviar = styled(Box)({
+    backgroundColor: "#00579D",
+    borderRadius: "360px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "2rem",
+    height: "2rem"
+})
 
 export const BoxBarraPesquisa = styled(Box)({
     alignItems: "center",
@@ -18,7 +35,7 @@ export const BoxBarraPesquisa = styled(Box)({
     justifyContent: "center",
     height: "10%",
     padding: 1,
-    width: "100%",
+    width: "60%",
 });
 
 export const ContainerChats = styled(Box)({
@@ -50,16 +67,15 @@ export const InputPesquisaChat = styled(TextField)({
     "& fieldset": { border: "none" },
     marginBottom: "1rem",
     "&::placeholder": { color: "#00579d" },
-    width: "100%",
+    width: "90%",
 })
 
 export const LadoEsquerdoGeralChats = styled(Box)({
     alignItems: "flex-start",
     display: "flex",
     justifyContent: "flex-start",
-    marginTop: 16,
-    marginBottom: 16,
-    height: "80vh",
+    // marginTop: 16,
+    height: "75vh",
     // maxHeight: "80vh",
     // minHeight: "80vh",
     overflowX: "hidden",
@@ -78,14 +94,32 @@ export const LadoDiretoChat = styled(Box)({
 
 export const LadoDireitoGeralChats = styled(Box)({
     alignItems: "center",
-    background: "#eee",
+    background: "#FFF",
     borderRadius: "5px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    minHeight: "80vh",
+    minHeight: "75vh",
     width: "75%",
+    // marginTop: 16
 });
+
+export const BoxLadoDireitoTituloDemanda = styled(Box)({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    flexDirection: "column",
+    width: "60%"
+})
+
+export const TypographyTituloDemandaLadoDireito = styled(Typography)({
+    color: "#595959",
+    fontWeight: "bold"
+})
+
+export const TypographyQuantidadeMembrosLadoDireito = styled(Typography)({
+    color: "#595959"
+})
 
 // ----------------------------------------------------------------------------
 
@@ -106,7 +140,7 @@ export const BoxGeralMensagensLadoDireito = styled(Box)({
 });
 
 export const BoxMensagemLadoEsquerdo = styled(Box)({
-    background: "#fff",
+    background: "#EEEEEE",
     borderRadius: "5px 5px 5px 0px",
     boxShadow: "-5px 5px 10px 0 #00000025",
     padding: 4,
@@ -114,7 +148,7 @@ export const BoxMensagemLadoEsquerdo = styled(Box)({
 });
 
 export const BoxMensagemLadoDireito = styled(Box)({
-    background: "#fff",
+    background: "#9ACAE580",
     borderRadius: "5px 5px 0 5px",
     boxShadow: "-5px 5px 10px 0 #00000025",
     padding: 4,
@@ -147,8 +181,13 @@ export const BoxMensagensLadoEsquerdo = styled(Box)({
     wordWrap: "break-word",
 });
 
-export const TypographyMensagem = styled(Typography)({
+export const TypographyMensagemDireita = styled(Typography)({
     color: "#444",
+    fontSize: "16px",
+});
+
+export const TypographyMensagemEsquerda = styled(Typography)({
+    color: "#595959",
     fontSize: "16px",
 });
 

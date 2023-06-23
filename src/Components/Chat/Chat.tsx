@@ -1,4 +1,5 @@
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import {
   BoxChat, BoxContainerChat, BoxIconePessoa, ContainerGeralChat,
   TypographyPessoaMensagem, TypographyTitulo, ContainerGeralChatEscolhido
@@ -20,37 +21,38 @@ export default function Chat(props: {
 }) {
   return (
     <>
-      {props.idChatEscolhido == null ? <ContainerGeralChat id={props.id + ""} onClick={props.verChat} key={props.id}>
-        <BoxIconePessoa id={props.id + ""} >
-          {<PersonRoundedIcon id={props.id + ""} />}
-        </BoxIconePessoa>
-        <BoxContainerChat id={props.id + ""} >
-          <BoxChat id={props.id + ""} >
-            <TypographyTitulo variant="h6" id={props.id + ""} >
-              {props.titulo}
-            </TypographyTitulo>
-          </BoxChat>
-          <BoxChat id={props.id + ""} >
-            <TypographyPessoaMensagem id={props.id + ""}
-              variant="caption">
-              {props.pessoa}: {props.mensagem}
-            </TypographyPessoaMensagem>
-          </BoxChat>
-        </BoxContainerChat>
-      </ContainerGeralChat>
-        :
-        <ContainerGeralChatEscolhido id={props.id + ""} onClick={props.verChat} key={props.id}>
-          <BoxIconePessoa id={props.id + ""} >
-            {<PersonRoundedIcon id={props.id + ""} />}
+      {props.idChatEscolhido != props.id ?
+        <ContainerGeralChat onClick={() => { props.verChat(props.id) }} key={props.id}>
+          <BoxIconePessoa  >
+            {<GroupsRoundedIcon />}
           </BoxIconePessoa>
-          <BoxContainerChat id={props.id + ""} >
-            <BoxChat id={props.id + ""} >
-              <TypographyTitulo variant="h6" id={props.id + ""} >
+          <BoxContainerChat  >
+            <BoxChat  >
+              <TypographyTitulo variant="h6"  >
                 {props.titulo}
               </TypographyTitulo>
             </BoxChat>
-            <BoxChat id={props.id + ""} >
-              <TypographyPessoaMensagem id={props.id + ""}
+            <BoxChat  >
+              <TypographyPessoaMensagem
+                variant="caption">
+                {props.pessoa}: {props.mensagem}
+              </TypographyPessoaMensagem>
+            </BoxChat>
+          </BoxContainerChat>
+        </ContainerGeralChat>
+        :
+        <ContainerGeralChatEscolhido onClick={() => { props.verChat(props.id) }} key={props.id}>
+          <BoxIconePessoa  >
+            {<GroupsRoundedIcon />}
+          </BoxIconePessoa>
+          <BoxContainerChat  >
+            <BoxChat  >
+              <TypographyTitulo variant="h6"  >
+                {props.titulo}
+              </TypographyTitulo>
+            </BoxChat>
+            <BoxChat  >
+              <TypographyPessoaMensagem
                 variant="caption">
                 {props.pessoa}: {props.mensagem}
               </TypographyPessoaMensagem>

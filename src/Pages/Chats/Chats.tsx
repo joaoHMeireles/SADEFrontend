@@ -7,11 +7,9 @@ import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import {
     BoxBarraPesquisa, ContainerChats, ContainerGeralChats, LadoEsquerdoChat, LadoEsquerdoGeralChats, LadoDiretoChat,
-    LadoDireitoGeralChats, BarraPesquisa
-} from "./Chats.styles";
-import {
-    BoxGeralMensagensLadoDireito, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoDireito, BoxMensagensLadoEsquerdo,
-    BoxMensagemLadoDireito, BoxMensagemLadoEsquerdo, TypographyPessoa, TypographyMensagem, InputPesquisaChat
+    LadoDireitoGeralChats, BarraPesquisa, TypographyMensagemEsquerda, TypographyMensagemDireita, BoxGeralMensagensLadoDireito,
+    BoxMensagensLadoDireito, BoxMensagemLadoDireito, TypographyPessoa, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoEsquerdo,
+    BoxMensagemLadoEsquerdo, InputPesquisaChat, BoxIconeEnviar, BoxLadoDireitoTituloDemanda, TypographyTituloDemandaLadoDireito, TypographyQuantidadeMembrosLadoDireito
 } from "./Chats.styles";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semChats from "../../Assets/leaf.png"
@@ -22,6 +20,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
 import selecionarChat from "../../Assets/selecionarChat.png"
+import Typography from "@mui/material/Typography";
 
 
 /**
@@ -129,8 +128,9 @@ export default function Chats(props: { aberto: boolean }) {
         atualizarTela()
     }, [webSocketService.stompClient])
 
-    function verChat(e: any) {
-        const chatAtual = listaChats.find(chat => chat.idChat == parseInt(e.target.id))
+    function verChat(idChat: any) {
+
+        const chatAtual = listaChats.find(chat => chat.idChat == idChat)
         setChatEscolhido(chatAtual)
     }
 
@@ -194,11 +194,22 @@ export default function Chats(props: { aberto: boolean }) {
         setElementoMensagens(componenteMensagensNovo)
     }
 
+    console.log(chatEscolhido);
+
+
     return (
         <>
             <ContainerGeralChats>
-                <Breadcrumb />
-                <ContainerChats sx={{ width: (props.aberto ? "80vw" : "91vw") }}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", width: "50%", alignItems: "center" }}>
+                    <Breadcrumb />
+                    {(listaChats.length != 0 && chatEscolhido.demanda != null) &&
+                        <BoxLadoDireitoTituloDemanda>
+                            <TypographyTituloDemandaLadoDireito variant="h6">{chatEscolhido.demanda.tituloDemanda}</TypographyTituloDemandaLadoDireito>
+                            <TypographyQuantidadeMembrosLadoDireito>{chatEscolhido.usuariosChat.length} membros</TypographyQuantidadeMembrosLadoDireito>
+                        </BoxLadoDireitoTituloDemanda>
+                    }
+                </Box>
+                <ContainerChats sx={{ width: "100%" }}>
                     {listaChats.length != 0 ?
                         <>
                             <LadoEsquerdoGeralChats>
@@ -218,7 +229,10 @@ export default function Chats(props: { aberto: boolean }) {
                                 {chatEscolhido.idChat == null ?
                                     <ResultadoVazio imagem={selecionarChat} legenda={"Selecione um chat disponível"} />
                                     :
-                                    <ConversaChat chatEscolhido={chatEscolhido} mensagens={elementoMensagens} enviar={webSocketService.enviar} />
+                                    <>
+
+                                        <ConversaChat chatEscolhido={chatEscolhido} mensagens={elementoMensagens} enviar={webSocketService.enviar} />
+                                    </>
                                 }
 
                             </LadoDireitoGeralChats>
@@ -290,9 +304,17 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
                 <Toolbar />
             </LadoDiretoChat>
             <BoxBarraPesquisa>
-                <AttachmentRoundedIcon sx={{ color: "#444", "&:hover": { cursor: "pointer" } }} />
-                <BarraPesquisa onChange={atualizarMensagem} id="input-mensagem" />
-                <SendRoundedIcon sx={{ color: "#444", "&:hover": { cursor: "pointer" } }} onClick={enviarMensagem} />
+                <BarraPesquisa onChange={atualizarMensagem} id="input-mensagem" placeholder="Mensagem"
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <AttachmentRoundedIcon sx={{ color: "#444", "&:hover": { cursor: "pointer" } }} />
+                            </InputAdornment>
+                        ),
+                    }} />
+                <BoxIconeEnviar>
+                    <SendRoundedIcon sx={{ color: "#fff", "&:hover": { cursor: "pointer" }, width: "1.2rem" }} onClick={enviarMensagem} />
+                </BoxIconeEnviar>
             </BoxBarraPesquisa>
         </>
     )
@@ -313,9 +335,9 @@ function Mensagens(props: { mensagem: string, usuario: any }) {
                 <BoxMensagensLadoDireito>
                     <BoxMensagemLadoDireito>
                         <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
-                        <TypographyMensagem variant="body2">
+                        <TypographyMensagemDireita variant="body2">
                             {props.mensagem}
-                        </TypographyMensagem>
+                        </TypographyMensagemDireita>
                     </BoxMensagemLadoDireito>
                 </BoxMensagensLadoDireito>
             </BoxGeralMensagensLadoDireito>
@@ -326,9 +348,9 @@ function Mensagens(props: { mensagem: string, usuario: any }) {
                 <BoxMensagensLadoEsquerdo>
                     <BoxMensagemLadoEsquerdo>
                         <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
-                        <TypographyMensagem variant="body2">
+                        <TypographyMensagemEsquerda variant="body2">
                             {props.mensagem}
-                        </TypographyMensagem>
+                        </TypographyMensagemEsquerda>
                     </BoxMensagemLadoEsquerdo>
                 </BoxMensagensLadoEsquerdo>
             </BoxGeralMensagensLadoEsquerdo>

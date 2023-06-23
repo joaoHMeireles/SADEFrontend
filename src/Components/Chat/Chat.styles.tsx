@@ -31,7 +31,8 @@ export const ContainerGeralChat = styled(Box)({
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
-    width: "100%",
+    width: "90%",
+    padding: "1rem"
 });
 
 export const ContainerGeralChatEscolhido = styled(Box)({
@@ -45,7 +46,7 @@ export const ContainerGeralChatEscolhido = styled(Box)({
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
-    width: "100%",
+    width: "90%",
 });
 
 export const TypographyPessoaMensagem = styled(Typography)({
