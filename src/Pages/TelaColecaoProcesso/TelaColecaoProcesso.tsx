@@ -443,11 +443,11 @@ function Header(props: {
         }
       }
     } else {
-      // if (!informacaoColecaoProcesso.numeroDG) {
-      //   if (dataReuniao <= new Date()) {
+      if (!informacaoColecaoProcesso.numeroDG) {
+        if (dataReuniao <= new Date()) {
           setAcao("Finalizar processo");
-      //   }
-      // }
+        }
+      }
     }
   }, []);
 
@@ -532,7 +532,7 @@ function ContainerColecaoProcesso(props: {
     setAnexos(props.informacaoColecaoProcesso.arquivos.map((anexo: any, index: number) => {
       const IconeAnexo = getIconeArquivo(anexo.nome)
       console.log(anexo);
-      
+
       return (
         <ListItem key={index}
           secondaryAction={
@@ -645,7 +645,7 @@ function ContainerColecaoProcesso(props: {
           </Box>
           <BotaoTerciario variant="outlined" onClick={abrirModal}>
             Ver anexos
-            </BotaoTerciario>
+          </BotaoTerciario>
         </GridFooter>
       )}
       <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { minWidth: "35vw" } }}>
@@ -985,7 +985,7 @@ export function Proposta(props: {
             <FormControlLabel
               className={`radioButtonStatus${props.index}`}
               value="Assessment"
-              control={<Radio sx={{ "&.Mui-checked": { color: "#444" } }} />}
+              control={<Radio sx={{ "&.Mui-checked": { color: "#ef8300" } }} />}
               label="Assessment"
             />
           </RadioGroup>

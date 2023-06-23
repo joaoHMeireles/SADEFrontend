@@ -1,8 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { TextReaderContext } from "../../TextReaderContext/TextReaderContext";
 import {
-    BoxContainerDivisorio, BoxContainerGeralBeneficio, BoxDescricaoRequisitosControle, BoxInputs, BoxInputsAbaixo,
-    BoxInputsAcima, BoxValorMensal, FormControlEdited, SelectEdited, TextFieldEdited,
+    BoxContainerDivisorio,
+    BoxContainerGeralBeneficio,
+    BoxDescricaoRequisitosControle,
+    BoxInputs,
+    BoxInputsAbaixo,
+    BoxInputsAcima,
+    FormControlEdited,
+    SelectEdited,
+    TextFieldEdited,
     TypographyLabels
 } from "../BeneficiosDemanda.styles";
 import { InputAdornment, MenuItem, OutlinedInput } from "@mui/material";
@@ -50,14 +57,12 @@ export const BeneficioRealRender = (props: BeneficioRender) => {
                 <BoxContainerDivisorio>
 
                     <BoxInputsAcima>
-                        <BoxValorMensal>
-                            <TypographyLabels onClick={lerTexto}>Valor Mensal: </TypographyLabels>
-                        </BoxValorMensal>
+                        <TypographyLabels onClick={lerTexto}>Valor Mensal:</TypographyLabels>
+
                         <BoxInputs>
                             {currencyInput == 0 ?
                                 <FormControlEdited
                                     variant="outlined"
-                                    sx={{ marginRight: "2rem" }}
                                     onChange={(e: any) => {
                                         setValueInput(e.target.value);
 
@@ -75,15 +80,13 @@ export const BeneficioRealRender = (props: BeneficioRender) => {
                                                 "REAL"
                                             );
                                         }
-                                    }}
-                                >
+                                    }}>
                                     <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
                                 </FormControlEdited>
                                 :
                                 currencyInput == 1 ?
                                     <FormControlEdited
                                         variant="outlined"
-                                        sx={{ marginRight: "2rem" }}
                                         onChange={(e: any) => {
                                             setValueInput(e.target.value);
 
@@ -101,14 +104,12 @@ export const BeneficioRealRender = (props: BeneficioRender) => {
                                                     "REAL"
                                                 );
                                             }
-                                        }}
-                                    >
+                                        }}>
                                         <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
                                     </FormControlEdited>
                                     :
                                     <FormControlEdited
                                         variant="outlined"
-                                        sx={{ marginRight: "2rem" }}
                                         onChange={(e: any) => {
                                             setValueInput(e.target.value);
 
@@ -126,8 +127,7 @@ export const BeneficioRealRender = (props: BeneficioRender) => {
                                                     "REAL"
                                                 );
                                             }
-                                        }}
-                                    >
+                                        }}>
                                         <OutlinedInput value={valueInput} id={`valorMensalReal${props.index}`} startAdornment={<InputAdornment position="start">€</InputAdornment>} />
                                     </FormControlEdited>
                             }
@@ -153,8 +153,8 @@ export const BeneficioRealRender = (props: BeneficioRender) => {
                                             "REAL"
                                         );
                                     }
-                                }}
-                            >
+                                }}>
+
                                 {moedas.map((option: any, index: number) => (
                                     <MenuItem id={`moedaRealoptions${props.index}`} key={index} value={option} onClick={lerTexto}>
                                         {option}
@@ -165,7 +165,8 @@ export const BeneficioRealRender = (props: BeneficioRender) => {
                     </BoxInputsAcima>
 
                     <BoxInputsAbaixo>
-                        <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
+                        <TypographyLabels onClick={lerTexto}>Descrição:</TypographyLabels>
+
                         <TextFieldEdited
                             id={`descricaoReal${props.index}`}
                             onChange={(e: any) => {
@@ -185,8 +186,7 @@ export const BeneficioRealRender = (props: BeneficioRender) => {
                                 }
                             }}
                             multiline
-                            maxRows={Infinity}
-                            sx={{ width: "100%", boxShadow: "5px 5px 10px 0 #00000050" }}>
+                            maxRows={Infinity}>
                         </TextFieldEdited>
                     </BoxInputsAbaixo>
 
@@ -233,15 +233,12 @@ export const BeneficioPotencialRender = (props: BeneficioRender) => {
             <BoxContainerGeralBeneficio key={props.index}>
                 <BoxContainerDivisorio>
                     <BoxInputsAcima>
-                        <BoxValorMensal>
-                            <TypographyLabels onClick={lerTexto}>Valor Mensal:</TypographyLabels>
-                        </BoxValorMensal>
+                        <TypographyLabels onClick={lerTexto}>Valor Mensal:</TypographyLabels>
 
                         <BoxInputs>
                             {currencyInput == 0 ?
                                 <FormControlEdited
                                     variant="outlined"
-                                    sx={{ marginRight: "2rem" }}
                                     onChange={(e: any) => {
                                         setValueInput(e.target.value);
 
@@ -259,15 +256,13 @@ export const BeneficioPotencialRender = (props: BeneficioRender) => {
                                                 "POTENCIAL"
                                             );
                                         }
-                                    }}
-                                >
+                                    }}>
                                     <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">R$</InputAdornment>} />
                                 </FormControlEdited>
                                 :
                                 currencyInput == 1 ?
                                     <FormControlEdited
                                         variant="outlined"
-                                        sx={{ marginRight: "2rem" }}
                                         onChange={(e: any) => {
                                             setValueInput(e.target.value);
 
@@ -285,14 +280,12 @@ export const BeneficioPotencialRender = (props: BeneficioRender) => {
                                                     "POTENCIAL"
                                                 );
                                             }
-                                        }}
-                                    >
+                                        }}>
                                         <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
                                     </FormControlEdited>
                                     :
                                     <FormControlEdited
                                         variant="outlined"
-                                        sx={{ marginRight: "2rem" }}
                                         onChange={(e: any) => {
                                             setValueInput(e.target.value);
 
@@ -310,8 +303,7 @@ export const BeneficioPotencialRender = (props: BeneficioRender) => {
                                                     "POTENCIAL"
                                                 );
                                             }
-                                        }}
-                                    >
+                                        }}>
                                         <OutlinedInput value={valueInput} id={`valorMensalPotencial${props.index}`} startAdornment={<InputAdornment position="start">€</InputAdornment>} />
                                     </FormControlEdited>
                             }
@@ -337,8 +329,8 @@ export const BeneficioPotencialRender = (props: BeneficioRender) => {
                                             "POTENCIAL"
                                         );
                                     }
-                                }}
-                            >
+                                }}>
+
                                 {moedas.map((moeda: any, index: number) => (
                                     <MenuItem id={`moedaPotencial${props.index}`} key={index} value={moeda} onClick={lerTexto}>
                                         {moeda}
@@ -349,7 +341,7 @@ export const BeneficioPotencialRender = (props: BeneficioRender) => {
                     </BoxInputsAcima>
 
                     <BoxInputsAbaixo>
-                        <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
+                        <TypographyLabels onClick={lerTexto}>Descrição:</TypographyLabels>
 
                         <TextFieldEdited
                             id={`descricaoPotencial${props.index}`}
@@ -381,14 +373,13 @@ export const BeneficioPotencialRender = (props: BeneficioRender) => {
 
 export const BeneficioQualitativoRender = (props: BeneficioRender) => {
     const { lerTexto } = useContext(TextReaderContext) as any
-
     const [idBeneficioComponente, setIdBeneficioComponente] = useState<any>(props.idBeneficio);
 
     return (
         <>
             <BoxContainerGeralBeneficio key={props.index}>
                 <BoxDescricaoRequisitosControle>
-                    <TypographyLabels onClick={lerTexto}>Descrição: </TypographyLabels>
+                    <TypographyLabels onClick={lerTexto}>Descrição:</TypographyLabels>
 
                     <TextFieldEdited
                         id={`beneficiosQualitativos${props.index}`}
@@ -407,12 +398,10 @@ export const BeneficioQualitativoRender = (props: BeneficioRender) => {
                                     "QUALITATIVO"
                                 );
                             }
-                        }
-                        }
+                        }}
                         multiline
                         maxRows={Infinity}>
                     </TextFieldEdited>
-
                 </BoxDescricaoRequisitosControle>
             </BoxContainerGeralBeneficio>
         </>

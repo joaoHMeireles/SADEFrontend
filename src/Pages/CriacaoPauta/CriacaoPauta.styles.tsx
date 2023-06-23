@@ -43,7 +43,7 @@ export const BoxProposta = styled(Box)({
   alignItems: "center",
   display: "flex",
   justifyContent: "center",
-  width: "80%",
+  width: "100%",
 });
 
 export const BoxTituloProposta = styled(Box)({

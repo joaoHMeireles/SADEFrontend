@@ -216,6 +216,7 @@ export default function CriacaoPauta(props: {
               setPropostas={setPropostas}
               conteudoCarregou={conteudoCarregou} />
           }
+
           <BotaoPrimario
             sx={{
               position: "fixed",
@@ -240,14 +241,14 @@ export default function CriacaoPauta(props: {
 
       {valor == 1 && (
         <>
-          <Box sx={{ alignItems: "center", display: "flex", justifyContent: "flex-start", padding: "2rem 1rem" }}>
-            <Box sx={{ width: "50%" }}>
+          <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-evenly", padding: "2rem" }}>
+            <Box sx={{ paddingRight: "1rem", width: "30%" }}>
               {propostas.map((proposta: any) => {
                 return (
                   <>
                     <BoxGeral key={proposta.id}>
                       <BoxProposta>
-                        <Box sx={{ display: "flex", justifyContent: "center", width: "40vw" }}>
+                        <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
                           <CardProposta cor="#9acae5">
                             <BoxConteudoProposta>
                               <BoxTituloProposta onClick={lerTexto}>{proposta.tituloDemanda}</BoxTituloProposta>
@@ -276,8 +277,8 @@ export default function CriacaoPauta(props: {
               })}
             </Box>
 
-            <Box sx={{ width: "50%" }}>
-              <Box sx={{ width: "40vw" }}>
+            <Box sx={{ paddingLeft: "1rem", width: "50%" }}>
+              <Box sx={{ width: "100%" }}>
                 <TypographyTituloInput onClick={lerTexto}>
                   Título da reunião
                 </TypographyTituloInput>
@@ -285,7 +286,7 @@ export default function CriacaoPauta(props: {
                 <TextFieldEdited id="tituloReuniao" />
               </Box>
 
-              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "40vw" }}>
+              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "100%" }}>
                 <Box>
                   <TypographyTituloInput onClick={lerTexto}>
                     Fórum da reunião
@@ -328,7 +329,7 @@ export default function CriacaoPauta(props: {
                 </Box>
               </Box>
 
-              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "40vw" }}>
+              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "100%" }}>
                 <Box>
                   <TypographyTituloInput onClick={lerTexto}>
                     Início da reunião
@@ -376,7 +377,7 @@ export default function CriacaoPauta(props: {
                 </Box>
               </Box>
 
-              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "flex-end", marginTop: "4rem", width: "40vw" }}>
+              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "flex-end", marginTop: "4rem", width: "100%" }}>
                 <BotaoSecundario
                   onClick={(e: any) => {
                     lerTexto(e)

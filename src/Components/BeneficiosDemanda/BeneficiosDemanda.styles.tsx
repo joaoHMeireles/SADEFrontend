@@ -43,20 +43,19 @@ export const BoxIcones = styled(Box)({
 export const BoxInputs = styled(Box)({
     alignItems: "center",
     display: "flex",
-    justifyContent: "start",
+    justifyContent: "flex-start",
     width: "100%",
 });
 
 export const BoxInputsAbaixo = styled(Box)({
-    marginTop: "2rem",
     width: "100%",
 });
 
 export const BoxInputsAcima = styled(Box)({
-    alignItems: "center",
+    alignItems: "flex-start",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "start",
+    justifyContent: "center",
     width: "100%",
 });
 
@@ -72,12 +71,12 @@ export const BoxTitulos = styled(Box)({
     fontSize: "20px",
     fontWeight: "bold",
     justifyContent: "center",
-    margin: "2rem 0",
+    marginTop: "2rem",
     width: "100%",
 });
 
 export const BoxValorMensal = styled(Box)({
-    width: "100%",
+    // width: "100%",
 });
 
 export const FormControlEdited = styled(FormControl)({
@@ -85,6 +84,7 @@ export const FormControlEdited = styled(FormControl)({
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
     "& fieldset": { border: "none" },
+    marginRight: "1rem",
     width: "15vw"
 });
 
@@ -106,13 +106,6 @@ export const TextFieldEdited = styled(TextField)({
 export const TypographyLabels = styled(Typography)({
     color: "#444",
     fontWeight: "bold",
-    marginBottom: "1rem"
-});
-
-export const TypographyTitulos = styled(Typography)({
-    alignItems: "center",
-    color: "#fff",
-    display: "flex",
-    height: "2rem",
-    justifyContent: "center",
+    marginBottom: "1rem",
+    marginTop: "2rem",
 });
