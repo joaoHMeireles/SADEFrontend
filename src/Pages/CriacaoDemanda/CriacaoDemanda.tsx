@@ -137,6 +137,8 @@ export default function CriacaoDemanda(props: {
               }
               case "centrosDeCusto": {
                 inputAtributo.value = info.centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto)
+                setCentroCusto(info.centroCustoDemanda);
+                break;
               }
             }
 
@@ -440,6 +442,7 @@ export default function CriacaoDemanda(props: {
                   const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
                   const objetivo = document.getElementById("objetivo") as HTMLInputElement;
 
+                  console.log(titulo.value, situacaoAtual.value, objetivo.value, centroCusto.length);
 
                   if (titulo.value == "" || situacaoAtual.value == "" || objetivo.value == "" || centroCusto.length == 0) {
                     setFeedbackAberto(true)
