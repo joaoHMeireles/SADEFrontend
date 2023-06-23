@@ -75,6 +75,8 @@ export default function CriacaoProposta(props: {
 
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>();
 
+  localStorage.setItem("PAGINATUAL", "createproposal");
+
   useEffect(() => {
     const idDemandaCriacao = localStorage.getItem("DEMANDACRIARPROPOSTA")
 

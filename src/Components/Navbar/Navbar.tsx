@@ -28,10 +28,12 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
 
     // Pega o nome do usuário logado
     useEffect(() => {
-        api.get("/sade/usuario/" + usuario.idUsuario)
-            .then((response) => {
-                setNomeUsuario(response.data.nomeUsuario);
-            });
+        if (usuario != null) {
+            api.get("/sade/usuario/" + usuario.idUsuario)
+                .then((response) => {
+                    setNomeUsuario(response.data.nomeUsuario);
+                });
+        }
     }, []);
 
     // Manhã --> 06h até 12h
@@ -65,9 +67,9 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                                 <DehazeRoundedIcon />
                             </IconButton>
 
-                            <Box sx={{ flexGrow: 1, "& img": {cursor: "pointer"}}}>
-                                <img id="imgLogoNav" src={sadeLogo} alt="Logo SADE" onClick={() => {location.href = "/home"}}/>
-                                
+                            <Box sx={{ flexGrow: 1, "& img": { cursor: "pointer" } }}>
+                                <img id="imgLogoNav" src={sadeLogo} alt="Logo SADE" onClick={() => { location.href = "/home" }} />
+
                             </Box>
 
                             <Box sx={{ alignItems: "center", display: "flex" }}>

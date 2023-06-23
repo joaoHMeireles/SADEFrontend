@@ -65,6 +65,7 @@ export default function CriacaoDemanda(props: {
   const location = useLocation();
 
   // const pdfExportComponent = React.useRef<PDFExport>(null);
+  localStorage.setItem("PAGINATUAL", "createdemand");
 
   const webSocketService: any = useContext(WebSocketContext)
   let info: any = null
@@ -586,7 +587,8 @@ export default function CriacaoDemanda(props: {
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           autoHideDuration={3000}
           open={feedbackAberto}
-          onClose={() => { setFeedbackAberto(false) }}>
+          onClose={() => { setFeedbackAberto(false) }}
+          >
 
           <Alert onClose={() => { setFeedbackAberto(false) }} severity="error" sx={{ width: '100%' }}>
             Algum campo não foi preenchido!
