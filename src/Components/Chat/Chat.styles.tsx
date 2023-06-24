@@ -3,6 +3,9 @@ import styled from "@emotion/styled";
 
 export const BoxChat = styled(Box)({
     width: "100%",
+    // overflow: "hidden",
+    // textOverflow: "ellipsis",
+    // whiteSpace: "nowrap",
 });
 
 export const BoxContainerChat = styled(Box)({
@@ -11,28 +14,24 @@ export const BoxContainerChat = styled(Box)({
     flexDirection: "column",
     height: "100%",
     justifyContent: "space-around",
-    width: "30%",
+    width: "80%",
 });
 
 export const BoxIconePessoa = styled(Box)({
     color: "#444",
-    marginLeft: 24,
-    marginRight: 24,
+    // marginLeft: 24,
+    // marginRight: 24,
 });
 
 export const ContainerGeralChat = styled(Box)({
     alignItems: "center",
-    // backgroundColor: "#eee",
     borderRadius: "5px",
     display: "flex",
-    height: "50px",
-    justifyContent: "start",
+    height: "auto",
+    justifyContent: "space-around",
     marginBottom: "15px",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
+    padding: "5px",
     width: "90%",
-    padding: "1rem"
 });
 
 export const ContainerGeralChatEscolhido = styled(Box)({
@@ -40,19 +39,21 @@ export const ContainerGeralChatEscolhido = styled(Box)({
     backgroundColor: "#eee",
     borderRadius: "5px",
     display: "flex",
-    height: "50px",
-    justifyContent: "start",
+    height: "auto",
+    justifyContent: "space-around",
     marginBottom: "15px",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
+    padding: "5px",
     width: "90%",
 });
 
 export const TypographyPessoaMensagem = styled(Typography)({
-    color: "#aaa"
+    color: "#aaa",
 });
 
 export const TypographyTitulo = styled(Typography)({
-    color: "#444"
+    color: "#444",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    width: "100%"
 });

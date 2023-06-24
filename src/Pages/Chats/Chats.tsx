@@ -9,7 +9,7 @@ import {
     BoxBarraPesquisa, ContainerChats, ContainerGeralChats, LadoEsquerdoChat, LadoEsquerdoGeralChats, LadoDiretoChat,
     LadoDireitoGeralChats, BarraPesquisa, TypographyMensagemEsquerda, TypographyMensagemDireita, BoxGeralMensagensLadoDireito,
     BoxMensagensLadoDireito, BoxMensagemLadoDireito, TypographyPessoa, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoEsquerdo,
-    BoxMensagemLadoEsquerdo, InputPesquisaChat, BoxIconeEnviar, BoxLadoDireitoTituloDemanda, TypographyTituloDemandaLadoDireito, TypographyQuantidadeMembrosLadoDireito
+    BoxMensagemLadoEsquerdo, InputPesquisaChat, BoxIconeEnviar, BoxLadoDireitoTituloDemanda, TypographyTituloDemandaLadoDireito, TypographyQuantidadeMembrosLadoDireito, BoxBreadcrumbTituloChat
 } from "./Chats.styles";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semChats from "../../Assets/leaf.png"
@@ -85,9 +85,10 @@ export default function Chats(props: { aberto: boolean }) {
                 if (infoMensagem[1] == chat.idChat) {
                     setChatEscolhido(chatNovaMensagem)
                     atualizarMensagensNovaMensagem()
+                } else {
+                    atualizarComponentes()
                 }
 
-                atualizarComponentes()
 
                 if (localStorage.getItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`) == "false" && localStorage.getItem("PAGINATUAL") != "chat") {
                     console.log("entrouhsbdjsahjsabdsahabdkabd")
@@ -162,7 +163,9 @@ export default function Chats(props: { aberto: boolean }) {
                         idChatEscolhido={chatEscolhido.idChat}
                         titulo={chat.demanda.tituloDemanda}
                         pessoa={(usuario?.nomeUsuario != undefined ? usuario.nomeUsuario : "")}
-                        mensagem={ultimaMensagem ? ultimaMensagem.mensagem : ""} verChat={verChat} />
+                        mensagem={ultimaMensagem ? ultimaMensagem.mensagem : ""}
+                        horaMensagem={ultimaMensagem ? ultimaMensagem.dataHoraMensagem : ""}
+                        verChat={verChat} />
                 )
             }
         })
@@ -194,13 +197,10 @@ export default function Chats(props: { aberto: boolean }) {
         setElementoMensagens(componenteMensagensNovo)
     }
 
-    console.log(chatEscolhido);
-
-
     return (
         <>
             <ContainerGeralChats>
-                <Box sx={{ display: "flex", justifyContent: "space-between", width: "50%", alignItems: "center" }}>
+                <BoxBreadcrumbTituloChat>
                     <Breadcrumb />
                     {(listaChats.length != 0 && chatEscolhido.demanda != null) &&
                         <BoxLadoDireitoTituloDemanda>
@@ -208,7 +208,7 @@ export default function Chats(props: { aberto: boolean }) {
                             <TypographyQuantidadeMembrosLadoDireito>{chatEscolhido.usuariosChat.length} membros</TypographyQuantidadeMembrosLadoDireito>
                         </BoxLadoDireitoTituloDemanda>
                     }
-                </Box>
+                </BoxBreadcrumbTituloChat>
                 <ContainerChats sx={{ width: "100%" }}>
                     {listaChats.length != 0 ?
                         <>

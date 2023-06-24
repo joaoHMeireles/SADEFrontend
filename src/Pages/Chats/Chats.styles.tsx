@@ -38,6 +38,13 @@ export const BoxBarraPesquisa = styled(Box)({
     width: "60%",
 });
 
+export const BoxBreadcrumbTituloChat = styled(Box)({
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "space-between",
+    width: "60%",
+})
+
 export const ContainerChats = styled(Box)({
     alignItems: "center",
     display: "flex",
@@ -80,7 +87,7 @@ export const LadoEsquerdoGeralChats = styled(Box)({
     // minHeight: "80vh",
     overflowX: "hidden",
     overflowY: "scroll", '&::-webkit-scrollbar': { backgroundColor: "transparent" },
-    width: "25%",
+    width: "30%",
 });
 
 export const LadoDiretoChat = styled(Box)({
@@ -100,7 +107,7 @@ export const LadoDireitoGeralChats = styled(Box)({
     flexDirection: "column",
     justifyContent: "center",
     minHeight: "75vh",
-    width: "75%",
+    width: "70%",
     // marginTop: 16
 });
 
@@ -109,7 +116,7 @@ export const BoxLadoDireitoTituloDemanda = styled(Box)({
     justifyContent: "center",
     alignItems: "flex-start",
     flexDirection: "column",
-    width: "60%"
+    width: "50%"
 })
 
 export const TypographyTituloDemandaLadoDireito = styled(Typography)({
@@ -184,11 +191,16 @@ export const BoxMensagensLadoEsquerdo = styled(Box)({
 export const TypographyMensagemDireita = styled(Typography)({
     color: "#444",
     fontSize: "16px",
+    textAlign: "justify",
+    padding: "0.3rem 1rem 1rem 0"
 });
 
 export const TypographyMensagemEsquerda = styled(Typography)({
     color: "#595959",
     fontSize: "16px",
+    textAlign: "justify",
+    padding: "0.3rem 1rem 1rem 0"
+
 });
 
 export const TypographyPessoa = styled(Typography)({
