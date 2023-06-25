@@ -2,10 +2,11 @@ import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import {
   BoxChat, BoxContainerChat, BoxIconePessoa, ContainerGeralChat,
-  TypographyPessoaMensagem, TypographyTitulo, ContainerGeralChatEscolhido
+  TypographyPessoaMensagem, TypographyTitulo, ContainerGeralChatEscolhido, TypographyHoraMensagem
 } from "./Chat.styles";
 import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 /**
  * 
@@ -32,15 +33,20 @@ export default function Chat(props: {
     </>
   )
 
-  let data = new Date(props.horaMensagem);
+  let data: any;
+
+  if (props.horaMensagem) {
+    data = new Date(props.horaMensagem);
+  } else {
+    data = "";
+  }
+
 
   function HoraUltimaMensagem() {
-    console.log(data);
-
     return (
       <>
         {data ?
-          <Typography>{data.getHours() + ":" + data.getMinutes()}</Typography>
+          <TypographyHoraMensagem>{data.getHours() + ":" + data.getMinutes()}</TypographyHoraMensagem>
           :
           ""
         }
@@ -48,8 +54,6 @@ export default function Chat(props: {
     )
 
   }
-
-
 
   return (
     <>
@@ -91,6 +95,7 @@ export default function Chat(props: {
               </TypographyPessoaMensagem>
             </BoxChat>
           </BoxContainerChat>
+          <HoraUltimaMensagem />
         </ContainerGeralChatEscolhido>}
     </>
   );

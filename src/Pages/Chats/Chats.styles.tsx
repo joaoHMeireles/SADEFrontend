@@ -192,14 +192,14 @@ export const TypographyMensagemDireita = styled(Typography)({
     color: "#444",
     fontSize: "16px",
     textAlign: "justify",
-    padding: "0.3rem 1rem 1rem 0"
+    // padding: "0.3rem 1rem 1rem 0"
 });
 
 export const TypographyMensagemEsquerda = styled(Typography)({
     color: "#595959",
     fontSize: "16px",
     textAlign: "justify",
-    padding: "0.3rem 1rem 1rem 0"
+    // padding: "0.3rem 1rem 1rem 0"
 
 });
 
@@ -208,3 +208,18 @@ export const TypographyPessoa = styled(Typography)({
     fontSize: "16px",
     fontWeight: "bold",
 });
+
+export const BoxMensagemHorario = styled(Box)({
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    margin: "0 2px 0 2px"
+})
+
+export const TypographyHoraMensagem = styled(Typography)({
+    fontSize: "10px",
+    height: "2vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-end",
+})

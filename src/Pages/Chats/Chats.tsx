@@ -9,7 +9,7 @@ import {
     BoxBarraPesquisa, ContainerChats, ContainerGeralChats, LadoEsquerdoChat, LadoEsquerdoGeralChats, LadoDiretoChat,
     LadoDireitoGeralChats, BarraPesquisa, TypographyMensagemEsquerda, TypographyMensagemDireita, BoxGeralMensagensLadoDireito,
     BoxMensagensLadoDireito, BoxMensagemLadoDireito, TypographyPessoa, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoEsquerdo,
-    BoxMensagemLadoEsquerdo, InputPesquisaChat, BoxIconeEnviar, BoxLadoDireitoTituloDemanda, TypographyTituloDemandaLadoDireito, TypographyQuantidadeMembrosLadoDireito, BoxBreadcrumbTituloChat
+    BoxMensagemLadoEsquerdo, InputPesquisaChat, BoxIconeEnviar, BoxLadoDireitoTituloDemanda, TypographyTituloDemandaLadoDireito, TypographyQuantidadeMembrosLadoDireito, BoxBreadcrumbTituloChat, BoxMensagemHorario, TypographyHoraMensagem
 } from "./Chats.styles";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semChats from "../../Assets/leaf.png"
@@ -190,7 +190,7 @@ export default function Chats(props: { aberto: boolean }) {
             const usuario = chatEscolhido.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
 
             return (
-                <Mensagens mensagem={mensagem.mensagem} usuario={usuario} />
+                <Mensagens mensagem={mensagem.mensagem} horaMensagem={mensagem.dataHoraMensagem} usuario={usuario} />
             )
         })
 
@@ -326,8 +326,30 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
  * @param props
  * @returns Retorna uma mensagem que será direcionada de acordo com quem é, e para qual lado a mensagem dever ir, sendo esquerdo ou direito
  */
-function Mensagens(props: { mensagem: string, usuario: any }) {
+function Mensagens(props: { mensagem: string, horaMensagem?: any, usuario: any }) {
     const idUsuarioLocalStorage = parseInt(localStorage.getItem("IDUSUARIO") as string);
+
+    let data: any;
+
+    if (props.horaMensagem) {
+        data = new Date(props.horaMensagem);
+    } else {
+        data = "";
+    }
+
+
+    function HoraUltimaMensagem() {
+        return (
+            <>
+                {data ?
+                    <TypographyHoraMensagem>{data.getHours() + ":" + data.getMinutes()}</TypographyHoraMensagem>
+                    :
+                    ""
+                }
+            </>
+        )
+
+    }
 
     if (idUsuarioLocalStorage == props.usuario.idUsuario) {
         return (
@@ -335,9 +357,12 @@ function Mensagens(props: { mensagem: string, usuario: any }) {
                 <BoxMensagensLadoDireito>
                     <BoxMensagemLadoDireito>
                         <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
-                        <TypographyMensagemDireita variant="body2">
-                            {props.mensagem}
-                        </TypographyMensagemDireita>
+                        <BoxMensagemHorario>
+                            <TypographyMensagemDireita variant="body2">
+                                {props.mensagem}
+                            </TypographyMensagemDireita>
+                            <HoraUltimaMensagem />
+                        </BoxMensagemHorario>
                     </BoxMensagemLadoDireito>
                 </BoxMensagensLadoDireito>
             </BoxGeralMensagensLadoDireito>
@@ -348,9 +373,12 @@ function Mensagens(props: { mensagem: string, usuario: any }) {
                 <BoxMensagensLadoEsquerdo>
                     <BoxMensagemLadoEsquerdo>
                         <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
-                        <TypographyMensagemEsquerda variant="body2">
-                            {props.mensagem}
-                        </TypographyMensagemEsquerda>
+                        <BoxMensagemHorario>
+                            <TypographyMensagemEsquerda variant="body2">
+                                {props.mensagem}
+                            </TypographyMensagemEsquerda>
+                            <HoraUltimaMensagem />
+                        </BoxMensagemHorario>
                     </BoxMensagemLadoEsquerdo>
                 </BoxMensagensLadoEsquerdo>
             </BoxGeralMensagensLadoEsquerdo>

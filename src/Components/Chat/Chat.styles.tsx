@@ -17,6 +17,14 @@ export const BoxContainerChat = styled(Box)({
     width: "80%",
 });
 
+export const TypographyHoraMensagem = styled(Typography)({
+    fontSize: "10px",
+    height: "5vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-end",
+})
+
 export const BoxIconePessoa = styled(Box)({
     color: "#444",
     // marginLeft: 24,
