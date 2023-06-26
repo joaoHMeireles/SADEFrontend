@@ -27,8 +27,8 @@ export default function InformacaoGeral(props: {
   informacoesPreenchidas?: boolean;
 }) {
   const { lerTexto } = useContext(TextReaderContext) as any
-  const [centroCusto, setCentroCusto] = useState<any[]>([]);
-  const [idCentroCusto, setIdCentroCusto] = useState<any[]>([]);
+  const [centrosCustoBanco, setCentrosCustoBanco] = useState<any[]>([]);
+  const [centroCustoSelect, setCentroCustoSelect] = useState<any[]>([]);
   const [centrosDeCustoCriacao, setCentrosDeCustoCriacao] = useState<any[]>([])
 
   const info = localStorage.getItem("DEMANDASELECIONADA") ? localStorage.getItem("DEMANDASELECIONADA") : localStorage.getItem("RASCUNHOESCOLHIDO")
@@ -37,8 +37,8 @@ export default function InformacaoGeral(props: {
   useEffect(() => {
     api.get("/sade/centroCusto").then((res: any) => {
       const listaCentroCusto = res.data.map((centroCusto: any) => centroCusto.nomeCentroCusto)
-      setIdCentroCusto(res.data)
-      setCentroCusto(listaCentroCusto)
+      setCentrosCustoBanco(res.data)
+      setCentroCustoSelect(listaCentroCusto)
     }).catch((err: any) => {
       console.log(err);
     })
@@ -82,7 +82,7 @@ export default function InformacaoGeral(props: {
             }
             if (inputAtributo.id == "objetivo") {
               inputAtributo.value = infoDemandaNova.objetivo;
-            }InformacaoGeral
+            } InformacaoGeral
             if (inputAtributo.id == "situacaoAtual") {
               inputAtributo.value = infoDemandaNova.situacaoAtual;
             }
@@ -179,7 +179,7 @@ export default function InformacaoGeral(props: {
                 props.setInformacaoProcesso(novaInfoDemanda);
               }
 
-              if (props.partUmDemanda != null)  {
+              if (props.partUmDemanda != null) {
                 props.partUmDemanda()
               }
             }}
@@ -191,7 +191,7 @@ export default function InformacaoGeral(props: {
             <TypographyLabels onClick={lerTexto}>
               Centros de custo:
             </TypographyLabels>
-            
+
             {props.proposta || props.rascunho || props.editarDemanda ? (
               <AutocompleteEdited
                 id="centrosDeCusto"
@@ -204,7 +204,7 @@ export default function InformacaoGeral(props: {
                     let centroCustoDemanda: Object[] = []
 
                     for (let centroCustoSelecionado of valor) {
-                      for (let centroCustoBanco of idCentroCusto) {
+                      for (let centroCustoBanco of centrosCustoBanco) {
                         if (centroCustoBanco.nomeCentroCusto == centroCustoSelecionado) {
                           centroCustoDemanda.push({ idCentroCusto: centroCustoBanco.idCentroCusto })
                         }
@@ -225,7 +225,9 @@ export default function InformacaoGeral(props: {
                     }
                   }
                 }}
-                renderOption={(props, centroCusto: any, { selected }) => {
+                renderOption={(props, nomeCentroCusto: any, { selected }) => {
+                  const objetoCentroCusto = centrosCustoBanco.find((cc: any) => cc.nomeCentroCusto == nomeCentroCusto)
+
                   return (
                     <li {...props} id="listaCentroCusto" >
                       <Checkbox
@@ -236,12 +238,12 @@ export default function InformacaoGeral(props: {
                         checked={selected} />
 
                       <span onClick={lerTexto}>
-                        {centroCusto}
+                        {objetoCentroCusto.numeroCentroCusto} - {nomeCentroCusto}
                       </span>
                     </li>
                   );
                 }}
-                options={centroCusto}
+                options={centroCustoSelect}
                 renderInput={(params) => <TextField {...params} onClick={lerTexto} />} />
             ) : (
               <AutocompleteEdited
@@ -252,9 +254,8 @@ export default function InformacaoGeral(props: {
                 disableCloseOnSelect
                 onChange={(e, valor: any) => {
                   let centroCustoDemanda: Object[] = []
-
                   for (let centroCustoSelecionado of valor) {
-                    for (let centroCustoBanco of idCentroCusto) {
+                    for (let centroCustoBanco of centrosCustoBanco) {
                       if (centroCustoBanco.nomeCentroCusto == centroCustoSelecionado) {
                         centroCustoDemanda.push({ idCentroCusto: centroCustoBanco.idCentroCusto, nomeCentroCusto: centroCustoBanco.nomeCentroCusto })
                       }
@@ -267,7 +268,9 @@ export default function InformacaoGeral(props: {
                     props.setCentroCusto(centroCustoDemanda)
                   }
                 }}
-                renderOption={(props, centroCusto: any, { selected }) => {
+                renderOption={(props, nomeCentroCusto: any, { selected }) => {
+                  const objetoCentroCusto = centrosCustoBanco.find((cc: any) => cc.nomeCentroCusto == nomeCentroCusto)
+
                   return (
                     <li {...props} id="listaCentroCusto">
                       <Checkbox
@@ -278,12 +281,12 @@ export default function InformacaoGeral(props: {
                         checked={selected}
                       />
                       <span onClick={lerTexto}>
-                        {centroCusto}
+                        {objetoCentroCusto.numeroCentroCusto} - {nomeCentroCusto}
                       </span>
                     </li>
                   );
                 }}
-                options={centroCusto}
+                options={centroCustoSelect}
                 renderInput={(params) => <TextField sx={{
                   backgroundColor: "#eee",
                   borderRadius: "10px",

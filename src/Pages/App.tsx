@@ -14,7 +14,7 @@ import TelaProcesso from "./TelaProcesso/TelaProcesso";
 import Notificacoes from "./Notificacoes/Notificacoes";
 import Chats from "./Chats/Chats";
 import Perfil from "./Perfil/Perfil"
-import { Box, GlobalStyles, ThemeProvider } from "@mui/material";
+import { Alert, Box, GlobalStyles, Snackbar, ThemeProvider } from "@mui/material";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { MainBox } from "./App.styles";
@@ -23,7 +23,6 @@ import CriacaoProposta from "./CriacaoProposta/CriacaoProposta";
 import Rascunho from "./Rascunho/Rascunho";
 import CriacaoPauta from "./CriacaoPauta/CriacaoPauta";
 import CriacaoAta from "./CriacaoAta/CriacaoAta";
-import VisualizarCriacaoPDF from "./VisualizarCriacaoPDF/VisualizarCriacaoPDF";
 import Enviadas from "./Enviadas/Enviadas";
 import api from "../api/api";
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../constants/enuns";
@@ -34,16 +33,18 @@ import { WebSocketService } from "../api/websocketservice";
 import { TextReaderProvider, TextReaderComponent } from "../Components/TextReaderContext/TextReaderContext";
 import RascunhoObserver from "../Components/RascunhoObserver/RascunhoObserver";
 import { MainTheme } from "../Themes";
-import { aborted } from "util";
+
 
 
 
 
 export default function App() {
   const [sidebarAberta, setSidebarAberta] = useState(false)
-  const [conteudoCarregou, setConteudoCarregou] = useState(false)
-  const [tamanhoSideBar, setTamanhoSideBar] = useState("220")
   const [filtrar, setFiltrar] = useState(false)
+  const [conteudoCarregou, setConteudoCarregou] = useState(false)
+  const [feedbackAberto, setFeedbackAberto] = useState(false);
+  const [mensagemDoFeedback, setMensagemDoFeedback] = useState("")
+  const [tamanhoSideBar, setTamanhoSideBar] = useState("220")
   const [listaComponents, setListaComponents] = useState<any[]>(["", "", "", "", "", "", "", "", "", "", "", ""])
   const [listaFiltrada, setListaFiltrada] = useState<any[]>([]);
   const [listaDemandas, setListaDemandas] = useState<any[]>([])
@@ -128,6 +129,12 @@ export default function App() {
   useEffect(() => {
     filtrarResultados()
   }, [listaComponents])
+
+  useEffect(() => {
+    if (mensagemDoFeedback != "") {
+      setFeedbackAberto(true)
+    }
+  }, [mensagemDoFeedback])
 
   useEffect(() => {
     if (sidebarAberta) {
@@ -311,21 +318,21 @@ export default function App() {
                       <Route path="/" element={<Login setAberto={setSidebarAberta} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />} />
                       <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} conteudoCarregou={conteudoCarregou} setConteudoCarregou={setConteudoCarregou} />} />
                       <Route path="/notifications" element={<Notificacoes />} />
-                      <Route path="/chats" element={<Chats aberto={sidebarAberta} />}/>
-                      <Route path="/mydemands" element={<Enviadas setFiltrar={setFiltrar} filtrar={filtrar} filtrarResultados={filtrarResultados} />}/>
-                      <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar} filtrarResultados={filtrarResultados} />}/>
+                      <Route path="/chats" element={<Chats aberto={sidebarAberta} />} />
+                      <Route path="/mydemands" element={<Enviadas setFiltrar={setFiltrar} filtrar={filtrar} filtrarResultados={filtrarResultados} />} />
+                      <Route path="/mydrafts" element={<Rascunho setFiltrar={setFiltrar} filtrar={filtrar} filtrarResultados={filtrarResultados} />} />
                       <Route path="/profile" element={<Perfil aberto={sidebarAberta} sidebarAberta={sidebarAberta} />} />
                       <Route path="/userhelp" element={<AjudaUsuario aberto={sidebarAberta} sidebarAberta={sidebarAberta} />} />
 
 
-                      <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true} />}/>
-                      <Route path="/editdemand" element={<CriacaoDemanda rascunho={false} editarDemanda={true} />}/>
+                      <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true} setMensagemFeedback={setMensagemDoFeedback}/>} />
+                      <Route path="/editdemand" element={<CriacaoDemanda rascunho={false} editarDemanda={true} setMensagemFeedback={setMensagemDoFeedback}/>} />
 
 
-                      <Route path="/createdemand" element={<CriacaoDemanda rascunho={false} editarDemanda={false} />} />
-                      <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar} filtrarResultados={filtrarResultados} />} />
-                      <Route path="/createagenda" element={<CriacaoPauta setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} />} />
-                      <Route path="/createata" element={<CriacaoAta setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} />} />
+                      <Route path="/createdemand" element={<CriacaoDemanda rascunho={false} editarDemanda={false} setMensagemFeedback={setMensagemDoFeedback}/>} />
+                      <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar} filtrarResultados={filtrarResultados} setMensagemFeedback={setMensagemDoFeedback}/>} />
+                      <Route path="/createagenda" element={<CriacaoPauta setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} setMensagemFeedback={setMensagemDoFeedback}/>} />
+                      <Route path="/createata" element={<CriacaoAta setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} setMensagemFeedback={setMensagemDoFeedback}/>} />
 
 
                       <Route path="/home/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
@@ -359,7 +366,17 @@ export default function App() {
                       <Route path="/home/ata" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
 
                     </Routes>
-                    
+                    {/* <Snackbar
+                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                      autoHideDuration={3000}
+                      open={feedbackAberto}
+                      onClose={() => { setFeedbackAberto(false); setMensagemDoFeedback(""); window.location.href = "/home" }}>
+
+                      <Alert onClose={() => { setFeedbackAberto(false); setMensagemDoFeedback(""); window.location.href = "/home" }} severity="success" sx={{ width: '100%' }}>
+                        {mensagemDoFeedback}
+                      </Alert>
+                    </Snackbar> */}
+
                   </MainBox>
                   <Filter aberto={filtrar} setAberto={setFiltrar} setSidebar={setSidebarAberta} filtrarResultados={filtrarResultados} listaComponents={listaComponents} />
                 </Box>

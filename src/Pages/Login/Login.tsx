@@ -88,10 +88,6 @@ export default function Login(props: {
     //veriicar se tem o cookie do lembrar de mim e fazer o login com as informações
     const token = Cookies.get('rjwt');
 
-    console.log(token);
-    
-
-
     if (token != null) {
       api.get(`/sade/login/cookie/${token}`).then((response) => {
         console.log(response);
