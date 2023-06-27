@@ -91,7 +91,7 @@ let drawerWidth = "240";
  * @param props 
  * @returns 
  */
-export default function MiniDrawer(props: { aberto: boolean, tamanho: string, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<SetStateAction<boolean>> }) {
+export default function Sidebar(props: { aberto: boolean, tamanho: string, setAberto: React.Dispatch<React.SetStateAction<boolean>>, setFiltro: React.Dispatch<SetStateAction<boolean>> }) {
   const { lerTexto } = useContext(TextReaderContext) as any
   const location = useLocation()
   const cargoUser = localStorage.getItem("TIPOUSUARIO")
@@ -127,7 +127,7 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
   return (
     <>
       {location.pathname != "/" &&
-        <Sidebar variant="permanent" open={props.aberto}>
+        <SidebarElement variant="permanent" open={props.aberto}>
           <Toolbar variant="dense" />
 
           <List>
@@ -149,7 +149,7 @@ export default function MiniDrawer(props: { aberto: boolean, tamanho: string, se
               </Link>
             </Box>
           </Box>
-        </Sidebar>
+        </SidebarElement>
       }
     </>
   );
@@ -342,7 +342,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
-const Sidebar = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+const SidebarElement = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     // border: "none",
     // boxShadow: "5px 5px 10px 0 #00000025",

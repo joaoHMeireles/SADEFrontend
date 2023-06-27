@@ -29,6 +29,7 @@ import novaNotificacao from "../Notificacoes/Notificacoes";
 import { useLocation } from "react-router-dom";
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 import { Alert, Snackbar } from "@mui/material";
+import ModalEditarDemanda from "../../Components/Modais/ModalEditarDemanda/ModalEditarDemanda";
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
@@ -49,15 +50,10 @@ export default function CriacaoDemanda(props: {
   const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
-
-  // const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
-  // const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
-
   const [frequenciaUso, setFrequenciaUso] = useState<any>("SEMANALMENTE");
 
   const location = useLocation();
 
-  // const pdfExportComponent = React.useRef<PDFExport>(null);
   localStorage.setItem("PAGINATUAL", "createdemand");
 
   const webSocketService: any = useContext(WebSocketContext)
@@ -583,6 +579,8 @@ export default function CriacaoDemanda(props: {
             } */}
           </>
         )}
+
+        {props.editarDemanda && <ModalEditarDemanda />}
 
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
