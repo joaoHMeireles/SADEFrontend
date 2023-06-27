@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Chat from "../../Components/Chat/Chat";
 import Toolbar from "../../Components/Toolbar/Toolbar";
@@ -38,10 +38,9 @@ export default function Chats(props: { aberto: boolean }) {
     const webSocketService: any = useContext(WebSocketContext)
     let requisitouChats = false
 
-    let teste: HTMLElement | any = document.getElementById("ladoDireitoChat");
-    if (teste) {
-        teste.scrollTo(0, document.body.scrollHeight);
-    }
+    // let teste: HTMLElement = document.getElementById("ladoDireitoChat");
+    // if (teste) {
+    // }
 
     useEffect(() => {
         const idUsuario = localStorage.getItem("IDUSUARIO")
@@ -304,9 +303,25 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
         setDefaultMensagem()
     }
 
+
+    // rever scrolllllllllllll
+    const scroll = useRef(null);
+    useEffect(() => {
+        console.log("ashdbjhsakd");
+
+        const boxScroll: HTMLElement | any = document.getElementById("ladoDireitoChat");
+
+        if (boxScroll) {
+            console.log("ashdbjhsakd");
+
+            boxScroll.scrollTo = boxScroll.scrollHeight
+        }
+
+    }, [props.mensagens])
+
     return (
         <>
-            <LadoDiretoChat id="ladoDireitoChat">
+            <LadoDiretoChat id="ladoDireitoChat" ref={scroll}>
                 {props.mensagens}
                 <Toolbar />
             </LadoDiretoChat>

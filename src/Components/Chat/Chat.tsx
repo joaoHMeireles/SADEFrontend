@@ -57,7 +57,9 @@ export default function Chat(props: {
   return (
     <>
       {props.idChatEscolhido != props.id ?
-        <ContainerGeralChat onClick={() => { props.verChat(props.id) }} key={props.id} id="box-chat">
+        <ContainerGeralChat onClick={() => {
+          props.verChat(props.id)
+        }} key={props.id} id="box-chat">
           <BoxIconePessoa>
             {<GroupsRoundedIcon />}
           </BoxIconePessoa>

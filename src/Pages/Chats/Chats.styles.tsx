@@ -94,8 +94,10 @@ export const LadoDiretoChat = styled(Box)({
     maxHeight: "75vh",
     minHeight: "70vh",
     overflowX: "hidden",
-    overflowY: "scroll",
-    '&::-webkit-scrollbar': { backgroundColor: "transparent" },
+    overflowY: "auto",
+    '&::-webkit-scrollbar': { backgroundColor: "transparent", },
+    // '&::-webkit-scrollbar': { backgroundColor: "#00579d", borderRadius: "10px", width: "5px" },
+    scrollbarColor: "#fff",
     width: "100%",
 });
 
