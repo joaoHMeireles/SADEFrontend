@@ -41,7 +41,6 @@ export default function Chat(props: {
     data = "";
   }
 
-
   function HoraUltimaMensagem() {
     return (
       <>
@@ -58,44 +57,40 @@ export default function Chat(props: {
   return (
     <>
       {props.idChatEscolhido != props.id ?
-        <ContainerGeralChat onClick={() => { props.verChat(props.id) }} key={props.id}>
+        <ContainerGeralChat onClick={() => { props.verChat(props.id) }} key={props.id} id="box-chat">
           <BoxIconePessoa>
             {<GroupsRoundedIcon />}
           </BoxIconePessoa>
+
           <BoxContainerChat>
             <BoxChat>
-              <TypographyTitulo variant="h6"  >
-                {props.titulo}
-              </TypographyTitulo>
+              <TypographyTitulo variant="h6">{props.titulo}</TypographyTitulo>
             </BoxChat>
+
             <BoxChat>
-              <TypographyPessoaMensagem
-                variant="caption">
-                {props.mensagem.length > 0 ? mensagem : ""}
-              </TypographyPessoaMensagem>
+              <TypographyPessoaMensagem variant="caption">{props.mensagem.length > 0 ? mensagem : ""}</TypographyPessoaMensagem>
+
+              <HoraUltimaMensagem />
             </BoxChat>
           </BoxContainerChat>
-          <HoraUltimaMensagem />
         </ContainerGeralChat>
         :
         <ContainerGeralChatEscolhido onClick={() => { props.verChat(props.id) }} key={props.id}>
-          <BoxIconePessoa  >
+          <BoxIconePessoa >
             {<GroupsRoundedIcon />}
           </BoxIconePessoa>
-          <BoxContainerChat  >
-            <BoxChat  >
-              <TypographyTitulo variant="h6"  >
-                {props.titulo}
-              </TypographyTitulo>
+
+          <BoxContainerChat>
+            <BoxChat>
+              <TypographyTitulo variant="h6" >{props.titulo}</TypographyTitulo>
             </BoxChat>
-            <BoxChat  >
-              <TypographyPessoaMensagem
-                variant="caption">
-                {props.mensagem.length > 0 ? mensagem : ""}
-              </TypographyPessoaMensagem>
+
+            <BoxChat>
+              <TypographyPessoaMensagem variant="caption">{props.mensagem.length > 0 ? mensagem : ""}</TypographyPessoaMensagem>
+
+              <HoraUltimaMensagem />
             </BoxChat>
           </BoxContainerChat>
-          <HoraUltimaMensagem />
         </ContainerGeralChatEscolhido>}
     </>
   );

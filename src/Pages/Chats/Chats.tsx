@@ -22,7 +22,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import selecionarChat from "../../Assets/selecionarChat.png"
 import Typography from "@mui/material/Typography";
 
-
 /**
  * Função que tem dois componentes jutamente a ela, sendo um para chats e outro para as mensagem de determinado chat
  * @param props
@@ -38,6 +37,11 @@ export default function Chats(props: { aberto: boolean }) {
     const [elementoMensagens, setElementoMensagens] = useState<any>()
     const webSocketService: any = useContext(WebSocketContext)
     let requisitouChats = false
+
+    let teste: HTMLElement | any = document.getElementById("ladoDireitoChat");
+    if (teste) {
+        teste.scrollTo(0, document.body.scrollHeight);
+    }
 
     useEffect(() => {
         const idUsuario = localStorage.getItem("IDUSUARIO")
@@ -201,14 +205,18 @@ export default function Chats(props: { aberto: boolean }) {
         <>
             <ContainerGeralChats>
                 <BoxBreadcrumbTituloChat>
-                    <Breadcrumb />
+                    <Box>
+                        <Breadcrumb />
+                    </Box>
                     {(listaChats.length != 0 && chatEscolhido.demanda != null) &&
                         <BoxLadoDireitoTituloDemanda>
                             <TypographyTituloDemandaLadoDireito variant="h6">{chatEscolhido.demanda.tituloDemanda}</TypographyTituloDemandaLadoDireito>
+
                             <TypographyQuantidadeMembrosLadoDireito>{chatEscolhido.usuariosChat.length} membros</TypographyQuantidadeMembrosLadoDireito>
                         </BoxLadoDireitoTituloDemanda>
                     }
                 </BoxBreadcrumbTituloChat>
+
                 <ContainerChats sx={{ width: "100%" }}>
                     {listaChats.length != 0 ?
                         <>
@@ -220,21 +228,20 @@ export default function Chats(props: { aberto: boolean }) {
                                                 <InputAdornment position="start">
                                                     <SearchRoundedIcon />
                                                 </InputAdornment>
-                                            ),
+                                            )
                                         }} />
                                     {componenteChats}
                                 </LadoEsquerdoChat>
                             </LadoEsquerdoGeralChats>
+
                             <LadoDireitoGeralChats>
                                 {chatEscolhido.idChat == null ?
                                     <ResultadoVazio imagem={selecionarChat} legenda={"Selecione um chat disponível"} />
                                     :
                                     <>
-
                                         <ConversaChat chatEscolhido={chatEscolhido} mensagens={elementoMensagens} enviar={webSocketService.enviar} />
                                     </>
                                 }
-
                             </LadoDireitoGeralChats>
                         </>
                         :
@@ -299,12 +306,13 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
 
     return (
         <>
-            <LadoDiretoChat>
+            <LadoDiretoChat id="ladoDireitoChat">
                 {props.mensagens}
                 <Toolbar />
             </LadoDiretoChat>
+
             <BoxBarraPesquisa>
-                <BarraPesquisa onChange={atualizarMensagem} id="input-mensagem" placeholder="Mensagem"
+                <BarraPesquisa onChange={atualizarMensagem} placeholder="Mensagem"
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -357,10 +365,12 @@ function Mensagens(props: { mensagem: string, horaMensagem?: any, usuario: any }
                 <BoxMensagensLadoDireito>
                     <BoxMensagemLadoDireito>
                         <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
+
                         <BoxMensagemHorario>
                             <TypographyMensagemDireita variant="body2">
                                 {props.mensagem}
                             </TypographyMensagemDireita>
+
                             <HoraUltimaMensagem />
                         </BoxMensagemHorario>
                     </BoxMensagemLadoDireito>
@@ -373,10 +383,12 @@ function Mensagens(props: { mensagem: string, horaMensagem?: any, usuario: any }
                 <BoxMensagensLadoEsquerdo>
                     <BoxMensagemLadoEsquerdo>
                         <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
+
                         <BoxMensagemHorario>
                             <TypographyMensagemEsquerda variant="body2">
                                 {props.mensagem}
                             </TypographyMensagemEsquerda>
+
                             <HoraUltimaMensagem />
                         </BoxMensagemHorario>
                     </BoxMensagemLadoEsquerdo>

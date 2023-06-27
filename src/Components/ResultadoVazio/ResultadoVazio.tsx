@@ -10,6 +10,7 @@ export default function ResultadoVazio(props: { imagem: string, legenda: string 
     return (
         <ImageBox>
             <img id="imagem" src={props.imagem} />
+            
             <Box sx={{ marginTop: "30px" }} onClick={lerTexto}>
                 {props.legenda}
             </Box>
