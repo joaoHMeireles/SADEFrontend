@@ -247,7 +247,7 @@ export default function ComponenteProcesso(props: {
 }
 
 function GridComponent(props: ComponentProps) {
-
+  //{props.componente.tituloDemanda != null ? (props.componente.tituloDemanda.length > 25 ? "..." : "") : ""}
   return (
     <>
       {!props.proposta && !props.pauta ? (
@@ -271,7 +271,7 @@ function GridComponent(props: ComponentProps) {
               <>
                 {!props.rascunho ?
                   <GridTituloTypography variant="h6" sx={{ fontWeight: "500" }}>
-                    {props.componente.tituloDemanda}
+                    {props.componente.tituloDemanda} 
                   </GridTituloTypography>
                   :
                   <GridBoxTituloRadio>

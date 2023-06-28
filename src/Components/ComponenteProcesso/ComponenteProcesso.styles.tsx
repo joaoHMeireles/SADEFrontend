@@ -44,10 +44,11 @@ export const GridTypography = styled(Typography)({
 });
 
 export const GridTituloTypography = styled(GridTypography)({
-  width: "70%",
+  width: "85%",
   overflow: "hidden",
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
+  display: "block"
 })
 
 export const GridLinkTypograpfy = styled(Typography)({
