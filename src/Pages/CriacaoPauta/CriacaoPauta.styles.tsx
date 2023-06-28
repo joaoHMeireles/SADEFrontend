@@ -7,6 +7,14 @@ import styled from "@emotion/styled";
 //   right: "0",
 // });
 
+export const BackgroundInputs = styled(Box)({
+  backgroundColor: "#eee",
+  borderRadius: "10px",
+  boxShadow: "5px 5px 10px 0 #00000025",
+  padding: "2rem",
+  width: "90%"
+});
+
 export const BoxConteudoProposta = styled(Box)({
   alignItems: "center",
   display: "flex",
@@ -19,7 +27,7 @@ export const BoxGeral = styled(Box)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  marginTop: 30,
+  marginBottom: "2rem",
   width: "auto",
 });
 
@@ -53,14 +61,14 @@ export const BoxTituloProposta = styled(Box)({
 });
 
 export const SelectEdited = styled(Select)({
-  backgroundColor: "#eee",
+  backgroundColor: "#fff",
   borderRadius: "10px",
   boxShadow: "5px 5px 10px 0 #00000025",
   "& fieldset": { border: "none" }
 });
 
 export const TextFieldEdited = styled(TextField)({
-  backgroundColor: "#eee",
+  backgroundColor: "#fff",
   borderRadius: "10px",
   boxShadow: "5px 5px 10px 0 #00000025",
   "& fieldset": { border: "none" },

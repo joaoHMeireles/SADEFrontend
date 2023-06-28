@@ -19,6 +19,7 @@ import { BotaoPrimario, BotaoSecundario, BoxConteudo } from "../App.styles";
 import { ContainerBoxTabs } from "../CriacaoProposta/CriacaoProposta.styles";
 import {
   // BoxBotoes,
+  BackgroundInputs,
   BoxConteudoProposta,
   BoxGeral,
   BoxIconeLink,
@@ -278,106 +279,108 @@ export default function CriacaoPauta(props: {
             </Box>
 
             <Box sx={{ paddingLeft: "1rem", width: "50%" }}>
-              <Box sx={{ width: "100%" }}>
-                <TypographyTituloInput onClick={lerTexto}>
-                  Título da reunião
-                </TypographyTituloInput>
-
-                <TextFieldEdited id="tituloReuniao" />
-              </Box>
-
-              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "100%" }}>
-                <Box>
-                  <TypographyTituloInput onClick={lerTexto}>
-                    Fórum da reunião
+              <BackgroundInputs>
+                <Box sx={{ width: "100%" }}>
+                  <TypographyTituloInput sx={{ marginTop: 0 }} onClick={lerTexto}>
+                    Título da reunião
                   </TypographyTituloInput>
 
-                  <SelectEdited
-                    sx={{ width: "15vw" }}
-                    value={comissaoEscolhida}
-                    inputProps={{ id: "comissaoEscolhida" }}
-                    onChange={(e: any) => {
-                      const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
-                      setComissaoEscolhida(novaComissaoEscolhida);
-                    }}>
-                    {comissoes.map((comissao) => {
-                      return <MenuItem value={comissao.nomeForum} id={comissao.idForum} onClick={lerTexto}>{comissao.nomeForum}</MenuItem>;
-                    })}
-                  </SelectEdited>
+                  <TextFieldEdited id="tituloReuniao" />
                 </Box>
 
-                <Box>
-                  <TypographyTituloInput onClick={lerTexto}>
-                    Data da Reunião
-                  </TypographyTituloInput>
+                <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "100%" }}>
+                  <Box>
+                    <TypographyTituloInput onClick={lerTexto}>
+                      Fórum da reunião
+                    </TypographyTituloInput>
 
-                  <DatePicker
-                    InputProps={{
-                      sx: {
-                        backgroundColor: "#eee",
-                        borderRadius: "10px",
-                        boxShadow: "5px 5px 10px 0 #00000025",
-                        "& fieldset": { border: "none" },
-                        width: "15vw"
-                      }
-                    }}
-                    value={valorData}
-                    onChange={(newValue) => {
-                      setValorData(newValue);
-                    }}
-                    renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />} />
-                </Box>
-              </Box>
+                    <SelectEdited
+                      sx={{ width: "15vw" }}
+                      value={comissaoEscolhida}
+                      inputProps={{ id: "comissaoEscolhida" }}
+                      onChange={(e: any) => {
+                        const novaComissaoEscolhida = comissoes.find((comissao: any) => comissao.nomeForum == e.target.value)
+                        setComissaoEscolhida(novaComissaoEscolhida);
+                      }}>
+                      {comissoes.map((comissao) => {
+                        return <MenuItem value={comissao.nomeForum} id={comissao.idForum} onClick={lerTexto}>{comissao.nomeForum}</MenuItem>;
+                      })}
+                    </SelectEdited>
+                  </Box>
 
-              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "100%" }}>
-                <Box>
-                  <TypographyTituloInput onClick={lerTexto}>
-                    Início da reunião
-                  </TypographyTituloInput>
+                  <Box>
+                    <TypographyTituloInput onClick={lerTexto}>
+                      Data da Reunião
+                    </TypographyTituloInput>
 
-                  <TimePicker
-                    InputProps={{
-                      sx: {
-                        backgroundColor: "#eee",
-                        borderRadius: "10px",
-                        boxShadow: "5px 5px 10px 0 #00000025",
-                        "& fieldset": { border: "none" },
-                        width: "15vw"
-                      }
-                    }}
-                    ampm={false}
-                    value={inicioReuniao}
-                    onChange={(newValue) => setInicioReuniao(newValue)}
-                    renderInput={(params) => {
-                      return <TextField id="horarioInicioReuniao" {...params} />;
-                    }} />
+                    <DatePicker
+                      InputProps={{
+                        sx: {
+                          backgroundColor: "#fff",
+                          borderRadius: "10px",
+                          boxShadow: "5px 5px 10px 0 #00000025",
+                          "& fieldset": { border: "none" },
+                          width: "15vw"
+                        }
+                      }}
+                      value={valorData}
+                      onChange={(newValue) => {
+                        setValorData(newValue);
+                      }}
+                      renderInput={(params: any) => <TextField id='dataReuniaoEscolhida' {...params} />} />
+                  </Box>
                 </Box>
 
-                <Box>
-                  <TypographyTituloInput onClick={lerTexto}>
-                    Final da reunião
-                  </TypographyTituloInput>
+                <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "100%" }}>
+                  <Box>
+                    <TypographyTituloInput onClick={lerTexto}>
+                      Início da reunião
+                    </TypographyTituloInput>
 
-                  <TimePicker
-                    InputProps={{
-                      sx: {
-                        backgroundColor: "#eee",
-                        borderRadius: "10px",
-                        boxShadow: "5px 5px 10px 0 #00000025",
-                        "& fieldset": { border: "none" },
-                        width: "15vw"
-                      }
-                    }}
-                    ampm={false}
-                    value={finalReuniao}
-                    onChange={(newValue) => setFinalReuniao(newValue)}
-                    renderInput={(params) => {
-                      return <TextField id="horarioFinalReuniao" {...params} />;
-                    }} />
+                    <TimePicker
+                      InputProps={{
+                        sx: {
+                          backgroundColor: "#fff",
+                          borderRadius: "10px",
+                          boxShadow: "5px 5px 10px 0 #00000025",
+                          "& fieldset": { border: "none" },
+                          width: "15vw"
+                        }
+                      }}
+                      ampm={false}
+                      value={inicioReuniao}
+                      onChange={(newValue) => setInicioReuniao(newValue)}
+                      renderInput={(params) => {
+                        return <TextField id="horarioInicioReuniao" {...params} />;
+                      }} />
+                  </Box>
+
+                  <Box>
+                    <TypographyTituloInput onClick={lerTexto}>
+                      Final da reunião
+                    </TypographyTituloInput>
+
+                    <TimePicker
+                      InputProps={{
+                        sx: {
+                          backgroundColor: "#fff",
+                          borderRadius: "10px",
+                          boxShadow: "5px 5px 10px 0 #00000025",
+                          "& fieldset": { border: "none" },
+                          width: "15vw"
+                        }
+                      }}
+                      ampm={false}
+                      value={finalReuniao}
+                      onChange={(newValue) => setFinalReuniao(newValue)}
+                      renderInput={(params) => {
+                        return <TextField id="horarioFinalReuniao" {...params} />;
+                      }} />
+                  </Box>
                 </Box>
-              </Box>
+              </BackgroundInputs>
 
-              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "flex-end", marginTop: "4rem", width: "100%" }}>
+              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "flex-end", marginTop: "4rem", width: "90%" }}>
                 <BotaoSecundario
                   onClick={(e: any) => {
                     lerTexto(e)
