@@ -1,20 +1,14 @@
-import * as React from 'react';
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
+import { styled, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import api from '../../../api/api';
+import { BoxMotivoDevolucao } from '../Modais.style';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -31,17 +25,19 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `calc(${theme.spacing(4)} + 1px)`,
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
+    width: `calc(${theme.spacing(6)} + 1px)`,
   },
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
+  backgroundColor: "#00579d",
+  minHeight: "2rem !important",
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
+  justifyContent: 'space-between',
+  padding: theme.spacing(0, 2),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
@@ -64,84 +60,41 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function ModalEditarDemanda() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [motivoDevolucao, setMotivoDevolucao] = useState("")
 
-  const demanda = localStorage.getItem("DEMANDASELECIONADA")
-    console.log(demanda);
-    
+  useEffect(() => {
+    const demanda = JSON.parse(localStorage.getItem("DEMANDASELECIONADA") as string)
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+    api.get("/sade/historicoWorkflow/ultimoconcluido/" + demanda.idDemanda).then((response: any) => {
+      setMotivoDevolucao(response.data.motivoDevolucao)
+    }).catch((err: any) => {
+      console.log(err);
+    })
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  })
 
-  function toggleDrawer(){
+
+
+  function toggleDrawer() {
     setOpen(!open)
   }
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <Drawer variant="permanent" open={open} anchor='right' sx={{'& .MuiDrawer-paper': {position:"absolute", top: "10vh",height: "150px"}}}>
-        <DrawerHeader>
-          <IconButton onClick={toggleDrawer}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+      <Drawer variant="permanent" open={open} anchor='right' sx={{ '& .MuiDrawer-paper': { position: "absolute", top: "10vh", height: open ? "150px" : "64px", borderRadius: "10px 0 0 10px", } }}>
+        <DrawerHeader sx={{color: "white", padding: !open ? 0 : "0 16px"}}>
+          {open && <>Motivo da devolução</>}
+          <IconButton onClick={toggleDrawer} sx={{ color: "white" }}>
+            {open ? <ChevronRightIcon /> : <InfoRoundedIcon />}
           </IconButton>
         </DrawerHeader>
-        <Divider />
-        bla bla bla
-        {/* <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List> */}
+        {open &&
+          <BoxMotivoDevolucao>
+           {motivoDevolucao}
+           {/* Em linguística, a noção de texto é ampla e ainda aberta a uma definição mais preonhecimentos  */}
+          </BoxMotivoDevolucao>
+        }
       </Drawer>
     </Box>
   );

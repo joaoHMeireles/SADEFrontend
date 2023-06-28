@@ -1,8 +1,9 @@
 import { Box, TextField } from '@mui/material';
 import { TypographyTituloAtributo } from '../../Pages/TelaProcesso/TelaProcesso.styles';
 import { styled } from '@mui/material/styles';
+const styledBox = styled(Box)
 
-export const BoxAtributoInfoModal = styled(Box)({
+export const BoxAtributoInfoModal = styledBox({
     alignItems: "center",
     display: "flex",
     justifyContent: "center"
@@ -13,7 +14,7 @@ export const BoxAtributoInfoModal2 = styled(BoxAtributoInfoModal)({
     width: "40%"
 });
 
-export const BoxAtributosInfoModal = styled(Box)({
+export const BoxAtributosInfoModal = styledBox({
     alignItems: "center",
     display: "flex",
     justifyContent: "space-between",
@@ -21,19 +22,19 @@ export const BoxAtributosInfoModal = styled(Box)({
     width: "100%"
 });
 
-export const BoxBUsBeneficiadas = styled(Box)({
+export const BoxBUsBeneficiadas = styledBox({
     display: "flex",
     flexDirection: "column",
     marginBottom: "20px"
 });
 
-export const BoxInfoModal = styled(Box)({
+export const BoxInfoModal = styledBox({
     display: "grid",
     justifyContent: "center",
     width: "100%"
 });
 
-export const BoxSessaoTI = styled(Box)({
+export const BoxSessaoTI = styledBox({
     alignItems: "center",
     display: "flex",
     marginBottom: "30px",
@@ -47,3 +48,12 @@ export const TextFieldURL = styled(TextField)({
 export const TypographyTituloAtributoModal = styled(TypographyTituloAtributo)({
     marginBottom: "1rem"
 });
+
+export const BoxMotivoDevolucao = styledBox({
+    color: "#444",
+    padding: "8px",
+    textAlign: "justify",
+    overflowWrap: "break-word",
+    wordWrap: "break-word",
+    whiteSpace: "pre-wrap"
+})
