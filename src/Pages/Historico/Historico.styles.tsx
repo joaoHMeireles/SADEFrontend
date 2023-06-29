@@ -90,7 +90,6 @@ export const GridToolbarColumnsButtonEstilizado = styled(GridToolbarColumnsButto
 
 export const GridToolbarExportEstilizado = styled(GridToolbarExport)({
     marginLeft: "30px",
-
 });
 
 export const Modal = styled(Dialog)({

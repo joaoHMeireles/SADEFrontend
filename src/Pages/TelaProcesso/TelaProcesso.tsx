@@ -171,7 +171,7 @@ export function Header(props: {
         try {
             console.log("processo", processo);
 
-            verificarHistoricoAprovado(processo.idDemanda, setAprovadoGerente)
+            verificarHistoricoAprovado(processo.id ? processo.id: processo.idDemanda, setAprovadoGerente)
         } catch (erro: any) {
             console.log(erro);
         }

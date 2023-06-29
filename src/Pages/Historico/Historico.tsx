@@ -27,7 +27,7 @@ import {
   DataGridEstilizado,
   GridToolbarContainerEstilizado,
   GridToolbarColumnsButtonEstilizado,
-  GridToolbarExportEstilizado,
+  GridToolbarExportEstilizado
 } from "./Historico.styles";
 
 import "@react-pdf-viewer/core/lib/styles/index.css";

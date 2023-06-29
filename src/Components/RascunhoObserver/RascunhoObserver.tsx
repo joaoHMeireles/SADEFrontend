@@ -42,7 +42,9 @@ export default function RascunhoObserver() {
             }
         }
 
-        if(previousLocation.pathname == "/createdemanda" || previousLocation.pathname == "/continuedemand" || previousLocation.pathname == "/editdemand"){
+        if((previousLocation.pathname == "/createdemanda" && newLocation.pathname != "/createdemanda") || 
+        (previousLocation.pathname == "/continuedemand" && newLocation.pathname != "/continuedemand") || 
+        (previousLocation.pathname == "/editdemand" && newLocation.pathname != "/editdemand")){
             localStorage.removeItem("DADOSDEMANDACRIACAO")
             localStorage.removeItem("DEMANDASELECIONADA")
             localStorage.removeItem("RASCUNHOESCOLHIDO")

@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
-import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
 import BeneficiosTeste from "../../Components/BeneficiosDemanda/BeneficiosTeste/BeneficiosTeste";
 import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import Tabs from "@mui/material/Tabs";
@@ -23,24 +22,19 @@ import {
 } from "./CriacaoDemanda.styles";
 import api from "../../api/api";
 import jsPDF from "jspdf";
-import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
-
-import EsqueletoPDFVersaoDemanda
-  from "../../Components/EsqueletoPDF/EsqueletoPDFVersaoDemanda/EsqueletoPDFVersaoDemanda";
 import React from "react";
-import { getNomeComponente, useLocationChange } from "../../utils";
 import { WebSocketContext } from "../../api/websocketservice";
 import novaNotificacao from "../Notificacoes/Notificacoes";
 
-import pdf from "../../Assets/pdf.pdf";
-import { TipoComponenteProcesso } from "../../constants/enuns";
 import { useLocation } from "react-router-dom";
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 import { Alert, Snackbar } from "@mui/material";
+import ModalEditarDemanda from "../../Components/Modais/ModalEditarDemanda/ModalEditarDemanda";
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
   editarDemanda?: boolean;
+  setMensagemFeedback: React.Dispatch<SetStateAction<string>>;
 }) {
   const { lerTexto } = useContext(TextReaderContext) as any
   const idUsuario = localStorage.getItem("IDUSUARIO");
@@ -56,15 +50,11 @@ export default function CriacaoDemanda(props: {
   const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
   const [numeroBeneficiosPotenciais, setNumeroBeneficiosPotenciais] = useState<number>(1);
   const [numeroBeneficiosQualitativos, setNumeroBeneficiosQualitativos] = useState<number>(1);
-
-  // const [moedaReal, setMoedaReal] = useState<string[]>(["REAL"]);
-  // const [moedaPotencial, setMoedaPotencial] = useState<string[]>(["REAL"]);
-
   const [frequenciaUso, setFrequenciaUso] = useState<any>("SEMANALMENTE");
 
   const location = useLocation();
 
-  // const pdfExportComponent = React.useRef<PDFExport>(null);
+  localStorage.setItem("PAGINATUAL", "createdemand");
 
   const webSocketService: any = useContext(WebSocketContext)
   let info: any = null
@@ -304,9 +294,11 @@ export default function CriacaoDemanda(props: {
       let { tipo, ...dataCerta } = data
       let beneficios = []
 
-      for (let beneficio of data.beneficiosDemanda) {
-        const { novo, ...beneficioCerto } = beneficio
-        beneficios.push(beneficioCerto)
+      if (data.beneficiosDemanda != null) {
+        for (let beneficio of data.beneficiosDemanda) {
+          const { novo, ...beneficioCerto } = beneficio
+          beneficios.push(beneficioCerto)
+        }
       }
 
       dataCerta.beneficiosDemanda = beneficios
@@ -338,6 +330,8 @@ export default function CriacaoDemanda(props: {
         headers: {
           "Content-Type": "multipart/form-data",
         }
+      }).then(() => {
+        mostrarFeedback()
       }).catch((err: any) => {
         console.log(err);
         erroEncontrado()
@@ -348,6 +342,7 @@ export default function CriacaoDemanda(props: {
           "Content-Type": "multipart/form-data",
         }
       }).then((response) => {
+        mostrarFeedback()
         console.log(response);
       }).catch((err: any) => {
         console.log(err);
@@ -359,14 +354,13 @@ export default function CriacaoDemanda(props: {
           "Content-Type": "multipart/form-data",
         }
       }).then((res: any) => {
+        mostrarFeedback()
         webSocketService.inscrever(`/notificacao/demanda/${res.data.idDemanda}`, novaNotificacao)
       }).catch((err: any) => {
         console.log(err);
         erroEncontrado()
       })
     }
-
-    window.location.href = "/home";
   }
 
   function checarPreenchimento() {
@@ -387,8 +381,12 @@ export default function CriacaoDemanda(props: {
     }
   }
 
-  function erroEncontrado(){
-    
+  function erroEncontrado() {
+
+  }
+
+  function mostrarFeedback() {
+    props.setMensagemFeedback("Demanda cadastrada com sucesso")
   }
 
   return (
@@ -440,8 +438,6 @@ export default function CriacaoDemanda(props: {
                   const titulo = document.getElementById("titulo") as HTMLInputElement;
                   const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
                   const objetivo = document.getElementById("objetivo") as HTMLInputElement;
-
-                  console.log(titulo.value, situacaoAtual.value, objetivo.value, centroCusto.length);
 
                   if (titulo.value == "" || situacaoAtual.value == "" || objetivo.value == "" || centroCusto.length == 0) {
                     setFeedbackAberto(true)
@@ -500,14 +496,14 @@ export default function CriacaoDemanda(props: {
             }
             */}
             <ContainerBotoes>
-                <BotaoTerciario
-                  variant="outlined"
-                  onClick={(e) => {
-                    lerTexto(e)
-                    window.location.href = "/home";
-                  }}>
-                  Cancelar
-                </BotaoTerciario>
+              <BotaoTerciario
+                variant="outlined"
+                onClick={(e) => {
+                  lerTexto(e)
+                  window.location.href = "/home";
+                }}>
+                Cancelar
+              </BotaoTerciario>
 
               <BoxBotoes>
                 <BotaoSecundario
@@ -543,14 +539,14 @@ export default function CriacaoDemanda(props: {
             <InputAnexos rascunho={props.rascunho} proposta={false} files={files} setFiles={setFiles} />
 
             <ContainerBotoes>
-                <BotaoTerciario
-                  variant="outlined"
-                  onClick={(e) => {
-                    window.location.href = "/home";
-                    lerTexto(e)
-                  }}>
-                  Cancelar
-                </BotaoTerciario>
+              <BotaoTerciario
+                variant="outlined"
+                onClick={(e) => {
+                  window.location.href = "/home";
+                  lerTexto(e)
+                }}>
+                Cancelar
+              </BotaoTerciario>
 
               <BoxBotoes>
                 <BotaoSecundario
@@ -584,11 +580,14 @@ export default function CriacaoDemanda(props: {
           </>
         )}
 
+        {props.editarDemanda && <ModalEditarDemanda />}
+
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           autoHideDuration={3000}
           open={feedbackAberto}
-          onClose={() => { setFeedbackAberto(false) }}>
+          onClose={() => { setFeedbackAberto(false) }}
+        >
 
           <Alert onClose={() => { setFeedbackAberto(false) }} severity="error" sx={{ width: '100%' }}>
             Algum campo não foi preenchido!

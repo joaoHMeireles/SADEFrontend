@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useContext, useEffect, useState } from "react";
+import { ChangeEventHandler, SetStateAction, useContext, useEffect, useState } from "react";
 
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
@@ -32,6 +32,7 @@ export default function CriacaoAta(props: {
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
   listaComponents: any[];
   filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  setMensagemFeedback: React.Dispatch<SetStateAction<string>>;
 }) {
   const { lerTexto } = useContext(TextReaderContext) as any
   const [valor, setValor] = useState(0);
@@ -135,7 +136,7 @@ export default function CriacaoAta(props: {
     }
 
     api.post("/sade/ata/" + localStorage.getItem("IDUSUARIO"), formData).then((response) => {
-      location.href = "/home"
+      mostrarFeedback()
     }).catch((err) => {
       console.log(err);
     })
@@ -148,6 +149,10 @@ export default function CriacaoAta(props: {
     if (tituloReuniao == "" || dataReuniaoEscolhida == "") {
       setMensagemDoErro("Algum campo não foi preenchido!")
     }
+  }
+
+  function mostrarFeedback() {
+    props.setMensagemFeedback("Proposta cadastrada com sucesso")
   }
 
   return (

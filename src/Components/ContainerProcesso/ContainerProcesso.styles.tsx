@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 export const BoxCorStatus = styled(Box)({
     borderRadius: "10px 0 0 10px",
     height: "100%",
-    width: "100%"
+    width: "50%"
 });
 
 export const GridContainer = styled(Grid)({

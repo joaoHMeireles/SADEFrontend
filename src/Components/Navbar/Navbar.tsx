@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import logo from '../../assets/wegLogo.png';
 import './Navbar.scss';
-import { Avatar, Box, Button, IconButton, Toolbar } from '@mui/material';
+import { Avatar, Box, IconButton, Toolbar } from '@mui/material';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
 import { NavBar } from "./Navbar.styles";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
@@ -15,7 +14,6 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
     const [nomeUsuario, setNomeUsuario] = useState();
     const [fotoUsuario, setFotoUsuario] = useState<Blob>(new Blob);
     const [mensagem, setMensagem] = useState('');
-
     const path = useLocation();
 
     // Pega a foto de perfil do usuário logado

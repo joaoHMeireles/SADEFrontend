@@ -78,4 +78,5 @@ export const BoxDraggable = styled(Box)({
 export const MainBox = styled(Box)({
     flexGrow: 1,
     width: "auto",
+    backgroundColor: "background.default"
 });

@@ -4,13 +4,12 @@ import Searchbar from "../../Components/Searchbar/Searchbar";
 import CardsProcesso from "../../Components/CardsProcesso/CardsProcesso";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { ChangeEventHandler, useContext, useEffect, useState } from "react";
+import { ChangeEventHandler, SetStateAction, useContext, useEffect, useState } from "react";
 import { BoxConteudo } from "../App.styles";
 import LensRoundedIcon from "@mui/icons-material/LensRounded";
 import PanoramaFishEyeRoundedIcon from "@mui/icons-material/PanoramaFishEyeRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import BeneficiosDemanda from "../../Components/BeneficiosDemanda/BeneficiosDemanda";
 import InformacaoGeral from "../../Components/InformacaoGeral/InformacaoGeral";
 import InputAnexos from "../../Components/InputAnexos/InputAnexos";
 import InfomacoesAdicionais from "../../Components/InfomacoesAdicionais/InformacoesAdicionais";
@@ -36,6 +35,7 @@ export default function CriacaoProposta(props: {
   filtrar: boolean;
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
   filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  setMensagemFeedback: React.Dispatch<SetStateAction<string>>;
 }) {
   const { lerTexto } = useContext(TextReaderContext) as any
   const [segundo, setSegundo] = useState(false);
@@ -74,6 +74,8 @@ export default function CriacaoProposta(props: {
   const [arquivosProposta, setArquivosProposta] = useState<any>([])
 
   const [informacaoProcesso, setInformacaoProcesso] = useState<any>();
+
+  localStorage.setItem("PAGINATUAL", "createproposal");
 
   useEffect(() => {
     const idDemandaCriacao = localStorage.getItem("DEMANDACRIARPROPOSTA")
@@ -265,15 +267,16 @@ export default function CriacaoProposta(props: {
       }
     }
 
-    api.post(`/sade/proposta/${idUsuario}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      }
-    }).then((res) => {
-      console.log(res);
-    })
+    // api.post(`/sade/proposta/${idUsuario}`, formData, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   }
+    // }).then((res) => {
+      mostrarFeedback()
+    //   console.log(res);
+    // })
 
-    window.location.href = "/home"
+    // window.location.href = "/home"
   }
 
   function checarPreenchimento(): number {
@@ -343,9 +346,9 @@ export default function CriacaoProposta(props: {
     return 0
   }
 
-  useEffect(() => {
-    console.log(informacaoProcesso);
-  }, [informacaoProcesso])
+  function mostrarFeedback() {
+    props.setMensagemFeedback("Proposta cadastrada com sucesso")
+  }
 
   return (
     <BoxConteudo>

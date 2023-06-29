@@ -16,6 +16,7 @@ import {
   GridBoxTituloRadio,
   GridComponenteProcesso,
   GridLinkTypograpfy,
+  GridTituloTypography,
   GridTypography,
   ListaComponenteProcesso,
   ListaTypography,
@@ -152,7 +153,7 @@ export default function ComponenteProcesso(props: {
 
       if (props.setPropostas) {
         const novaListaPropostas = props.propostas as any[]
-        novaListaPropostas.push(componente);
+        novaListaPropostas.push(componentePaginaPauta);
 
         props.setPropostas(novaListaPropostas);
       }
@@ -246,7 +247,7 @@ export default function ComponenteProcesso(props: {
 }
 
 function GridComponent(props: ComponentProps) {
-
+  //{props.componente.tituloDemanda != null ? (props.componente.tituloDemanda.length > 25 ? "..." : "") : ""}
   return (
     <>
       {!props.proposta && !props.pauta ? (
@@ -261,22 +262,22 @@ function GridComponent(props: ComponentProps) {
           <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
             {(props.temDemandaDevolvida && props.componente.devolvida) ?
               <GridBoxTituloRadio>
-                <GridTypography variant="h6">
+                <GridTituloTypography variant="h6">
                   {props.componente.tituloDemanda}
-                </GridTypography>
+                </GridTituloTypography>
                 <WarningRoundedIcon sx={{ color: "#00579d", marginRight: "15px" }} />
               </GridBoxTituloRadio>
               :
               <>
                 {!props.rascunho ?
-                  <GridTypography variant="h6" sx={{ fontWeight: "500" }}>
-                    {props.componente.tituloDemanda}
-                  </GridTypography>
+                  <GridTituloTypography variant="h6" sx={{ fontWeight: "500" }}>
+                    {props.componente.tituloDemanda} 
+                  </GridTituloTypography>
                   :
                   <GridBoxTituloRadio>
-                    <GridTypography variant="h6">
+                    <GridTituloTypography variant="h6">
                       {props.componente.tituloDemanda}
-                    </GridTypography>
+                    </GridTituloTypography>
                     <Box>
                       <IconButton onClick={props.deletarRascunho}>
                         <DeleteRoundedIcon />
@@ -348,9 +349,9 @@ function GridComponent(props: ComponentProps) {
               }
             }}>
             <GridBoxTituloRadio>
-              <GridTypography variant="h6">
+              <GridTituloTypography variant="h6">
                 {props.componente.tituloDemanda}
-              </GridTypography>
+              </GridTituloTypography>
               <Radio
                 checked={props.demandaSelecionada == props.componente.idDemanda || props.propostaSelecionada == props.componente.idDemanda}
               />
@@ -390,9 +391,9 @@ function GridComponent(props: ComponentProps) {
             </Tooltip>
             <GridComponenteProcesso item xs={11} onClick={props.mudarIsChecked}>
               <GridBoxTituloRadio>
-                <GridTypography variant="h6">
+                <GridTituloTypography variant="h6">
                   {props.componente.tituloDemanda}
-                </GridTypography>
+                </GridTituloTypography>
                 <Checkbox
                   id="checkbox"
                   checked={props.isChecked}
