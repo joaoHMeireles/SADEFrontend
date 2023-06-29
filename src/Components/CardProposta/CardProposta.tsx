@@ -9,7 +9,7 @@ export default function CardProposta(props: { cor: string; children: any }) {
         <BoxCorStatus sx={{ backgroundColor: props.cor }}></BoxCorStatus>
       </Grid>
 
-      <Grid item xs={11.8} sx={{ backgroundColor: "#eee", borderRadius: "0 10px 10px 0", padding: "1rem" }} >
+      <Grid item xs={11.8} sx={{ backgroundColor: "#eee", borderRadius: "0 10px 10px 0", padding: "1.5rem 1rem" }} >
         {props.children}
       </Grid>
     </GridProposta>

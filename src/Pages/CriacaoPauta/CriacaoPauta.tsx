@@ -18,14 +18,15 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import { BotaoPrimario, BotaoSecundario, BoxConteudo } from "../App.styles";
 import { ContainerBoxTabs } from "../CriacaoProposta/CriacaoProposta.styles";
 import {
-  // BoxBotoes,
   BackgroundInputs,
+  BoxBotoes,
   BoxConteudoProposta,
   BoxGeral,
   BoxIconeLink,
   BoxProposta,
   BoxTituloProposta,
   SelectEdited,
+  PrincipalBox,
   TextFieldEdited,
   TypographyVermais,
 } from "./CriacaoPauta.styles";
@@ -242,8 +243,8 @@ export default function CriacaoPauta(props: {
 
       {valor == 1 && (
         <>
-          <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-evenly", padding: "2rem" }}>
-            <Box sx={{ paddingRight: "1rem", width: "30%" }}>
+          <PrincipalBox>
+            <Box sx={{ alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "center", overflow: "hidden", paddingRight: "1rem", width: "30%" }}>
               {propostas.map((proposta: any) => {
                 return (
                   <>
@@ -255,6 +256,10 @@ export default function CriacaoPauta(props: {
                               <BoxTituloProposta onClick={lerTexto}>{proposta.tituloDemanda}</BoxTituloProposta>
 
                               <BoxIconeLink>
+                                <TypographyVermais variant="body2">
+                                  <Link to={proposta.link} onClick={(e: any) => { lerTexto(e); atualizarPropostaEscolhida(proposta) }}>Ver mais</Link>
+                                </TypographyVermais>
+
                                 <DeleteIcon
                                   sx={{
                                     "&:hover": {
@@ -263,10 +268,6 @@ export default function CriacaoPauta(props: {
                                   }}
                                   className={`${proposta.id}`}
                                   onClick={() => removerProposta(proposta.id)} />
-
-                                <TypographyVermais variant="body2">
-                                  <Link to={proposta.link} onClick={(e: any) => { lerTexto(e); atualizarPropostaEscolhida(proposta) }}>Ver mais</Link>
-                                </TypographyVermais>
                               </BoxIconeLink>
                             </BoxConteudoProposta>
                           </CardProposta>
@@ -278,7 +279,7 @@ export default function CriacaoPauta(props: {
               })}
             </Box>
 
-            <Box sx={{ paddingLeft: "1rem", width: "50%" }}>
+            <Box sx={{ paddingLeft: "1rem", position: "relative", width: "50%" }}>
               <BackgroundInputs>
                 <Box sx={{ width: "100%" }}>
                   <TypographyTituloInput sx={{ marginTop: 0 }} onClick={lerTexto}>
@@ -380,7 +381,7 @@ export default function CriacaoPauta(props: {
                 </Box>
               </BackgroundInputs>
 
-              <Box sx={{ alignItems: "center", display: "flex", justifyContent: "flex-end", marginTop: "4rem", width: "90%" }}>
+              <BoxBotoes>
                 <BotaoSecundario
                   onClick={(e: any) => {
                     lerTexto(e)
@@ -397,9 +398,9 @@ export default function CriacaoPauta(props: {
                   onClick={criarPauta}>
                   Enviar
                 </BotaoPrimario>
-              </Box>
+              </BoxBotoes>
             </Box>
-          </Box>
+          </PrincipalBox>
         </>
       )}
 
