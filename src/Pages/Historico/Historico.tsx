@@ -110,7 +110,7 @@ export default function TelaHistoricos(props: {}) {
       width: 110,
       renderHeader: renderHeader,
       renderCell: (params: any) => {
-  
+
         return (
           <Tooltip title={params.row.status}>
             <span className="table-cell-trucate">{params.row.status}</span>
@@ -125,7 +125,7 @@ export default function TelaHistoricos(props: {}) {
       width: 155,
       renderHeader: renderHeader,
       renderCell: (params: any) => {
-  
+
         return (
           <Tooltip title={params.row.tarefaExecutada}>
             <span className="table-cell-trucate">
@@ -165,7 +165,7 @@ export default function TelaHistoricos(props: {}) {
               </div>
             }
           </>
-  
+
           // </Link>
         );
       },
@@ -305,8 +305,8 @@ export default function TelaHistoricos(props: {}) {
     }
   }
 
-  function renderHeader(info: any){
-    return  <Box className="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle" onClick={lerTexto}> {info.colDef.headerName}</Box>
+  function renderHeader(info: any) {
+    return <Box className="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle" onClick={lerTexto}> {info.colDef.headerName}</Box>
   }
 
   return (
@@ -513,13 +513,13 @@ function CustomGridToolbar() {
       <GridToolbarFilterButton
         nonce={undefined}
         onResize={undefined}
-        onResizeCapture={undefined}
-      />
+        onResizeCapture={undefined} />
+
       <GridToolbarColumnsButtonEstilizado
         nonce={undefined}
         onResize={undefined}
-        onResizeCapture={undefined}
-      />
+        onResizeCapture={undefined} />
+
       <GridToolbarExportEstilizado />
     </GridToolbarContainerEstilizado>
   );

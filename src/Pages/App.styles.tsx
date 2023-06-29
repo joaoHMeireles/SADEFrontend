@@ -11,7 +11,7 @@ export const BotaoPrimario = styled(Button)({
         transition: 'ease-in-out',
         transitionDuration: "0.7s"
     },
-    margin: "0 1rem",
+    margin: "0 0.5rem",
     padding: "0.75rem 2rem",
     width: "auto"
 });
@@ -29,7 +29,7 @@ export const BotaoSecundario = styled(Button)({
         transition: 'ease-in-out',
         transitionDuration: "0.7s"
     },
-    margin: "0 1rem", 
+    margin: "0 0.5rem", 
     padding: "0.75rem 2rem",
     width: "auto"
 });
@@ -47,7 +47,7 @@ export const BotaoTerciario = styled(Button)({
         transition: 'ease-in-out',
         transitionDuration: "0.7s"
     },
-    margin: "0 1rem",
+    margin: "0 0.5rem",
     padding: "0.75rem 2rem",
     width: "auto"
 });

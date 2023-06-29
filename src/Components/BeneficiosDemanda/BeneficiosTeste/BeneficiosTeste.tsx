@@ -1,8 +1,10 @@
 import {
     BoxContainerGeral,
-    BoxFrequencia, BoxIcones,
-    BoxTitulos, SelectEdited, TypographyLabels,
-    TypographyTitulos
+    BoxFrequencia,
+    BoxIcones,
+    BoxTitulos,
+    SelectEdited,
+    TypographyLabels
 } from "../BeneficiosDemanda.styles";
 import { useContext, useEffect, useState } from "react";
 import { TextReaderContext } from "../../TextReaderContext/TextReaderContext";
@@ -18,10 +20,7 @@ const valoresFrequencia = [
     "MENSALMENTE"
 ]
 
-// criacao demanda - ler inputs - PRONTO
-// criacao proposta - inputs preenchidos ou let inputs - PRONTO
 // rascunho - inputs preenchidos ou ler inputs - PRONTO - verificar inputs de moeda
-// demanda devolvida - inputs preenchidos ou ler inputs - PRONTO
 
 export default function BeneneficiosTeste(props: {
     proposta: boolean,
@@ -154,18 +153,13 @@ export default function BeneneficiosTeste(props: {
                     {props.numeroBeneficiosReais > 0 &&
                         (
                             <RemoveRoundedIcon
-                                sx={{
-                                    fontSize: "2rem",
-                                    marginRight: 3,
-                                    cursor: "pointer",
-                                    color: "#444",
-                                }}
+                                sx={{ fontSize: "2rem", marginRight: "1rem", cursor: "pointer", color: "#444" }}
                                 onClick={() => {
                                     props.setNumeroBeneficiosReais(props.numeroBeneficiosReais - 1)
-
                                 }} />
                         )
                     }
+
                     <AddRoundedIcon
                         sx={{ fontSize: "2rem", cursor: "pointer", color: "#444" }}
                         onClick={() => {

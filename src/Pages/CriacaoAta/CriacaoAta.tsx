@@ -86,7 +86,7 @@ export default function CriacaoAta(props: {
       setTemComponente(false)
     }
   }, [listaComponents])
-  
+
   useEffect(() => {
     if (mensagemDoErro != "") {
       setFeedbackAberto(true)
@@ -141,11 +141,11 @@ export default function CriacaoAta(props: {
     })
   }
 
-  function checarPreenchimento(){
+  function checarPreenchimento() {
     const tituloReuniao = (document.getElementById("tituloReuniao") as HTMLInputElement).value
     const dataReuniaoEscolhida = (document.getElementById("dataReuniaoEscolhida") as HTMLInputElement).value
 
-    if(tituloReuniao == "" || dataReuniaoEscolhida == ""){
+    if (tituloReuniao == "" || dataReuniaoEscolhida == "") {
       setMensagemDoErro("Algum campo não foi preenchido!")
     }
   }
@@ -182,7 +182,9 @@ export default function CriacaoAta(props: {
           {!temComponente ?
             <>
               {conteudoCarregou &&
-                <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação"} />
+                <Box sx={{ height: "70vh", width: "100%" }}>
+                  <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma pauta disponível para essa ação"} />
+                </Box>
               }
             </>
             :
@@ -219,60 +221,88 @@ export default function CriacaoAta(props: {
       {valor == 1 && (
         <>
           <BoxInputsDataComissao>
-            <Box sx={{ width: "75%", display: "flex" }}>
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
+            <Box sx={{ width: "70%" }}>
+              <TypographyTituloInput onClick={lerTexto}>
+                Título da reunião
+              </TypographyTituloInput>
 
-                  <TypographyTituloInput onClick={lerTexto}>
-                    Título da reunião
-                  </TypographyTituloInput>
+              <TextField sx={{ backgroundColor: "#eee", borderRadius: "10px", boxShadow: "5px 5px 10px 0 #00000025", "& fieldset": { border: "none" }, width: "100%" }} id="tituloReuniao" />
+            </Box>
 
-                  <TextField sx={{ width: "100%" }} id="tituloReuniao" />
-                </Grid>
+            <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "4rem", width: "70%" }}>
+              <Box>
+                <TypographyTituloInput onClick={lerTexto}>
+                  Data da Reunião
+                </TypographyTituloInput>
 
-                <Grid item xs={12}>
-                  <TypographyTituloInput onClick={lerTexto}>
-                    Data da Reunião
-                  </TypographyTituloInput>
+                <DatePicker
+                  value={valorData}
+                  onChange={(newValue) => {
+                    setValorData(newValue);
+                  }}
+                  InputProps={{
+                    sx: {
+                      backgroundColor: "#eee",
+                      borderRadius: "10px",
+                      boxShadow: "5px 5px 10px 0 #00000025",
+                      "& fieldset": { border: "none" },
+                      marginRight: "1rem",
+                      width: "15vw"
+                    }
+                  }}
+                  renderInput={(params) => <TextField id='dataReuniaoEscolhida' {...params} />} />
+              </Box>
 
-                  <DatePicker
-                    value={valorData}
-                    onChange={(newValue) => {
-                      setValorData(newValue);
-                    }}
-                    renderInput={(params) => <TextField id='dataReuniaoEscolhida' {...params} />} />
-                </Grid>
+              <Box>
+                <TypographyTituloInput onClick={lerTexto}>
+                  Início da reunião
+                </TypographyTituloInput>
 
-                <Grid item xs={6}>
-                  <TypographyTituloInput onClick={lerTexto}>
-                    Início da reunião
-                  </TypographyTituloInput>
+                <TimePicker
+                  ampm={false}
+                  value={inicioReuniao}
+                  onChange={(newValue) => setInicioReuniao(newValue)}
+                  InputProps={{
+                    sx: {
+                      backgroundColor: "#eee",
+                      borderRadius: "10px",
+                      boxShadow: "5px 5px 10px 0 #00000025",
+                      "& fieldset": { border: "none" },
+                      width: "15vw"
+                    }
+                  }}
+                  renderInput={(params) => {
+                    return <TextField id="horarioInicioReuniao" {...params} />;
+                  }} />
+              </Box>
 
-                  <TimePicker
-                    ampm={false}
-                    value={inicioReuniao}
-                    onChange={(newValue) => setInicioReuniao(newValue)}
-                    renderInput={(params) => {
-                      return <TextField id="horarioInicioReuniao" {...params} />;
-                    }} />
-                </Grid>
+              <Box>
+                <TypographyTituloInput onClick={lerTexto}>
+                  Final da reunião
+                </TypographyTituloInput>
 
-                <Grid item xs={6}>
-                  <TypographyTituloInput onClick={lerTexto}>
-                    Final da reunião
-                  </TypographyTituloInput>
+                <TimePicker
+                  ampm={false}
+                  value={finalReuniao}
+                  onChange={(newValue) => setFinalReuniao(newValue)}
+                  InputProps={{
+                    sx: {
+                      backgroundColor: "#eee",
+                      borderRadius: "10px",
+                      boxShadow: "5px 5px 10px 0 #00000025",
+                      "& fieldset": { border: "none" },
+                      marginLeft: "1rem",
+                      width: "15vw"
+                    }
+                  }}
+                  renderInput={(params) => {
+                    return <TextField id="horarioFinalReuniao" {...params} />;
+                  }} />
+              </Box>
+            </Box>
 
-                  <TimePicker
-                    ampm={false}
-                    value={finalReuniao}
-                    onChange={(newValue) => setFinalReuniao(newValue)}
-                    renderInput={(params) => {
-                      return <TextField id="horarioFinalReuniao" {...params} />;
-                    }} />
-                </Grid>
-
-                <InputAnexos rascunho={false} proposta={false} files={files} setFiles={setFiles} />
-              </Grid>
+            <Box sx={{ width: "70%" }}>
+              <InputAnexos rascunho={false} proposta={false} files={files} setFiles={setFiles} />
             </Box>
           </BoxInputsDataComissao>
 

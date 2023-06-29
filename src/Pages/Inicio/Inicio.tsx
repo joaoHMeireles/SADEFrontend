@@ -76,7 +76,9 @@ export default function Inicio(props: {
         <>
           {props.conteudoCarregou &&
             <>
-              <ResultadoVazio imagem={imagemSemNada} legenda={textoSemNada} />
+              <Box sx={{ height: "70vh", width: "100%" }}>
+                <ResultadoVazio imagem={imagemSemNada} legenda={textoSemNada} />
+              </Box>
             </>
           }
         </>

@@ -57,7 +57,7 @@ export default function ModalMotivoDevolucao(props: Modal) {
                 <BotaoSecundario onClick={(e: any) => { lerTexto(e); props.fecharModal(e) }} variant='outlined'>
                     Cancelar
                 </BotaoSecundario>
-                <BotaoPrimario onClick={(e: any) => { lerTexto(e); finalizarAcao() }} variant="contained" sx={{ marginLeft: "20px" }}>
+                <BotaoPrimario onClick={(e: any) => { lerTexto(e); finalizarAcao() }} variant="contained">
                     Enviar
                 </BotaoPrimario>
             </BoxBotoesModal>

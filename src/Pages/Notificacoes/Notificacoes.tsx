@@ -46,13 +46,13 @@ export default function Notificacoes() {
         }).catch(err => {
             console.log(err);
         })
-        .finally(() => {
-            setConteudoCarregou(true)
-        })
+            .finally(() => {
+                setConteudoCarregou(true)
+            })
     }, [])
 
     useEffect(() => {
-        if(notificacoes.length != 0){
+        if (notificacoes.length != 0) {
             setTemComponente(true)
         } else {
             setTemComponente(false)
@@ -114,7 +114,9 @@ export default function Notificacoes() {
                     {!temComponente ?
                         <>
                             {conteudoCarregou &&
-                                <ResultadoVazio imagem={semNotificacao} legenda={"Nenhuma notificação presente"} />
+                                <Box sx={{ height: "70vh", width: "100%" }}>
+                                    <ResultadoVazio imagem={semNotificacao} legenda={"Nenhuma notificação presente"} />
+                                </Box>
                             }
                         </>
                         :

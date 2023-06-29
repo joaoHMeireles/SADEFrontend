@@ -9,6 +9,7 @@ import {
 import api from "../../api/api";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semDemanda from "../../Assets/emptyFolder.png"
+import { Box } from "@mui/material";
 
 export default function Rascunho(props: {
   filtrar: boolean;
@@ -59,7 +60,9 @@ export default function Rascunho(props: {
         {!temComponente ?
           <>
             {conteudoCarregou &&
+            <Box sx={{ height: "70vh", width: "100%" }}>
               <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda para completar"} />
+            </Box>
             }
           </>
           :

@@ -29,7 +29,7 @@ import { transformArquivosToFile, useLocationChange } from "../../utils";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semDemanda from "../../Assets/emptyFolder.png"
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, Box, Snackbar } from "@mui/material";
 import BeneneficiosTeste from "../../Components/BeneficiosDemanda/BeneficiosTeste/BeneficiosTeste";
 
 export default function CriacaoProposta(props: {
@@ -388,7 +388,9 @@ export default function CriacaoProposta(props: {
           {!temComponente ?
             <>
               {conteudoCarregou &&
-                <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda disponível no sistema"} />
+                <Box sx={{ height: "70vh", width: "100%" }}>
+                  <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda disponível no sistema"} />
+                </Box>
               }
             </>
             :
@@ -520,9 +522,6 @@ export default function CriacaoProposta(props: {
                   onClick={(e: any) => {
                     lerTexto(e)
                     setValor(1);
-                  }}
-                  sx={{
-                    marginRight: 3,
                   }}
                   variant="outlined"
                   startIcon={<ArrowBackIosRoundedIcon sx={{ width: "15px" }} />}>

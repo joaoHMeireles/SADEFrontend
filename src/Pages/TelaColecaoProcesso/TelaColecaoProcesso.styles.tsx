@@ -38,7 +38,7 @@ export const TypographyTituloDecisao = styled(TypographyTituloAtributo)({
 
 export const TypographyTituloInput = styled(TypographyTitulo)({
     fontWeight: "bold",
-    marginBottom: "1rem"
+    margin: "2rem 0 1rem 0"
 });
 
 export const GridInfoATA = styled(Grid)({

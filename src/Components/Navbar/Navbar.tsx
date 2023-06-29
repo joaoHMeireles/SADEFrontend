@@ -76,8 +76,7 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
 
                             <Box sx={{ alignItems: "center", display: "flex" }}>
                                 <Box sx={{ marginLeft: "1rem" }}>
-                                    {/* <p>{mensagem + nomeUsuario + "!"}</p> */}
-                                    <Button>mudar tema</Button>
+                                    <p>{mensagem + nomeUsuario + "!"}</p>
                                 </Box>
 
                                 <Box sx={{ height: "100%", marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>
