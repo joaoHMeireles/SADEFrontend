@@ -92,7 +92,6 @@ export default function ModalEditarDemanda() {
         {open &&
           <BoxMotivoDevolucao>
            {motivoDevolucao}
-           {/* Em linguística, a noção de texto é ampla e ainda aberta a uma definição mais preonhecimentos  */}
           </BoxMotivoDevolucao>
         }
       </Drawer>

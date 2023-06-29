@@ -88,7 +88,7 @@ export const GridLinkColecaoTypograpfy = styled(GridLinkTypograpfy)({
 export const BoxListaCorProcesso = styled(Box)({
   borderRadius: "5px 0 0 5px",
   height: "100%",
-  maxWidth: "13px",
+  maxWidth: "8px",
 });
 
 export const ListaComponenteProcesso = styled(Grid)({

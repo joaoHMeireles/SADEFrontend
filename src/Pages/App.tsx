@@ -366,16 +366,6 @@ export default function App() {
                       <Route path="/home/ata" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
 
                     </Routes>
-                    {/* <Snackbar
-                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                      autoHideDuration={3000}
-                      open={feedbackAberto}
-                      onClose={() => { setFeedbackAberto(false); setMensagemDoFeedback(""); window.location.href = "/home" }}>
-
-                      <Alert onClose={() => { setFeedbackAberto(false); setMensagemDoFeedback(""); window.location.href = "/home" }} severity="success" sx={{ width: '100%' }}>
-                        {mensagemDoFeedback}
-                      </Alert>
-                    </Snackbar> */}
 
                   </MainBox>
                   <Filter aberto={filtrar} setAberto={setFiltrar} setSidebar={setSidebarAberta} filtrarResultados={filtrarResultados} listaComponents={listaComponents} />

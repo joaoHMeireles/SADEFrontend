@@ -169,6 +169,7 @@ export default function Filtro(props: {
             width: drawerWidth,
             "& .MuiDrawer-paper": {
               width: drawerWidth,
+              backgroundColor: 'white'
             },
           }}
           variant="persistent"
