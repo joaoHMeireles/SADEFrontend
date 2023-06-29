@@ -8,7 +8,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import { BotaoPrimario, BotaoSecundario } from "../../../Pages/App.styles"
 import { BoxBotoesModal, BoxConteudoModal, BoxTituloModal, TypographyTituloModal } from "../../../Pages/TelaProcesso/TelaProcesso.styles"
-import { BoxAtributoInfoModal2, BoxAtributosInfoModal, BoxInfoModal, TextFieldURL, TypographyTituloAtributoModal } from "../Modais.style"
+import { BoxAtributoInfoModal2, BoxAtributosInfoModal, BoxInfoModal, TextFieldEdited, TextFieldURL, TypographyTituloAtributoModal } from "../Modais.style"
 import { TypographyTituloDecisao } from "../../../Pages/TelaColecaoProcesso/TelaColecaoProcesso.styles"
 import { urlValida } from "../../../utils"
 
@@ -129,67 +129,85 @@ export default function ModalAdiconarInformacoes(props: Modal) {
                 <TypographyTituloModal variant='h5' onClick={lerTexto}>
                     Informações
                 </TypographyTituloModal>
+
                 <IconButton onClick={props.fecharModal}>
                     <CloseIcon />
                 </IconButton>
             </BoxTituloModal>
-            <BoxInfoModal>
+
+            <BoxInfoModal id="AquiTaOGrid">
                 <BoxAtributosInfoModal >
-                    <BoxAtributoInfoModal2 sx={{ width: "60%" }}>
+                    <BoxAtributoInfoModal2 sx={{ width: "100%" }}>
                         <TypographyTituloDecisao variant="body1" onClick={lerTexto}>
                             Status escolhido:
                         </TypographyTituloDecisao>
-                        <FormControl error sx={{ display: "flex", flexDirection: "row" }}>
-                            <RadioGroup sx={{ display: "flex", flexDirection: "row" }}>
+
+                        <FormControl error>
+                            <RadioGroup>
                                 <FormControlLabel
                                     className='radio-status'
                                     value="Assessment"
                                     control={<Radio sx={{ "&.Mui-checked": { color: "#ef8300" } }} />}
-                                    label="Assessment"
-                                />
+                                    label="Assessment" />
+
                                 <FormControlLabel
                                     className='radio-status'
                                     value="Business Case"
                                     control={<Radio sx={{ "&.Mui-checked": { color: "#ffd600" } }} />}
-                                    label="Business Case"
-                                />
+                                    label="Business Case" />
                             </RadioGroup>
                         </FormControl>
                     </BoxAtributoInfoModal2>
                 </BoxAtributosInfoModal>
-                <BoxAtributosInfoModal >
-                    <BoxAtributoInfoModal2 sx={{ width: "50%" }}>
+
+                <Box id="AquiÓ" sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "2rem", width: "100%" }}>
+                    <Box sx={{ width: "60%" }}>
                         <TypographyTituloAtributoModal variant='body1' onClick={lerTexto}>
                             Prazo de elaboração:
                         </TypographyTituloAtributoModal>
+
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                                 value={valorData}
                                 onChange={(newValue) => {
                                     setValorData(newValue);
                                 }}
-                                renderInput={(params: any) => <TextField id='inputDataInformacoes' {...params} {...erroObjectPrazo} />}
-                            />
+                                InputProps={{
+                                    sx: {
+                                        backgroundColor: "#eee",
+                                        borderRadius: "10px",
+                                        boxShadow: "5px 5px 10px 0 #00000025",
+                                        "& fieldset": { border: "none" },
+                                        width: "100%"
+                                    }
+                                }}
+                                renderInput={(params: any) => <TextField id='inputDataInformacoes' {...params} {...erroObjectPrazo} />} />
                         </LocalizationProvider>
-                    </BoxAtributoInfoModal2>
-                    <BoxAtributoInfoModal2>
+                    </Box>
+
+                    <Box sx={{ width: "40%" }}>
                         <TypographyTituloAtributoModal variant='body1' onClick={lerTexto}>
                             Código PPM:
                         </TypographyTituloAtributoModal>
-                        <TextField type='number' id='inputCodigoPPM' onChange={checarValor} {...erroObjectCodigoPPM} />
-                    </BoxAtributoInfoModal2>
-                </BoxAtributosInfoModal>
-                <Box sx={{ width: "100%" }}>
+
+                        <TextFieldEdited type='number' id='inputCodigoPPM' onChange={checarValor} {...erroObjectCodigoPPM} sx={{ width: "100%" }} />
+                    </Box>
+                </Box>
+
+                <Box sx={{ marginBottom: "2rem", width: "100%" }}>
                     <TypographyTituloAtributoModal variant='body1' onClick={lerTexto}>
                         Link Jira:
                     </TypographyTituloAtributoModal>
+
                     <TextFieldURL placeholder='https://exemplo.com' type={'url'} id="inputLinkJira" {...erroObjectLink} />
                 </Box>
             </BoxInfoModal>
+
             <BoxBotoesModal>
                 <BotaoSecundario onClick={(e: any) => { lerTexto(e); props.fecharModal(e) }} variant='outlined'>
                     Cancelar
                 </BotaoSecundario>
+
                 <BotaoPrimario onClick={(e: any) => { lerTexto(e); finalizarAcao() }} variant="contained">
                     Enviar
                 </BotaoPrimario>

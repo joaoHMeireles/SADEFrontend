@@ -28,10 +28,11 @@ export const BoxBotoesModal = styled(Box)({
 });
 
 export const BoxConteudoModal = styled(BoxConteudo)({
+    alignItems: "center", 
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    margin: "30px 50px"
+    margin: "2rem"
 });
 
 export const BoxHeader = styled(Box)({
@@ -57,7 +58,7 @@ export const BoxTituloModal = styled(Box)({
     alignItems: "center",
     display: "flex",
     justifyContent: "space-between",
-    marginBottom: "30px",
+    marginBottom: "2rem",
     width: "100%"
 });
 
