@@ -152,7 +152,7 @@ export default function CriacaoAta(props: {
   }
 
   function mostrarFeedback() {
-    props.setMensagemFeedback("Proposta cadastrada com sucesso")
+    props.setMensagemFeedback("ATA cadastrada com sucesso")
   }
 
   return (

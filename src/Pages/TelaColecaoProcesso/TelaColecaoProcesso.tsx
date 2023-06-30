@@ -437,16 +437,16 @@ function Header(props: {
         setAcao("Criar ATA")
       } else {
         if (!informacaoColecaoProcesso.pertenceUmaATA) {
-          if (dataReuniao <= new Date()) {
+          // if (dataReuniao <= new Date()) {
             setAcao("Informar parecer");
-          }
+          // }
         }
       }
     } else {
       if (!informacaoColecaoProcesso.numeroDG) {
-        if (dataReuniao <= new Date()) {
+        // if (dataReuniao <= new Date()) {
           setAcao("Finalizar processo");
-        }
+        // }
       }
     }
   }, []);
