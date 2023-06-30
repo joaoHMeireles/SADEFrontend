@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from '@mui/material';
-import CircleIcon from '@mui/icons-material/Circle';
 import { BoxConteudo } from '../App.styles';
+import CircleIcon from '@mui/icons-material/Circle';
 import styled from '@emotion/styled';
 
 export const BoxAviso = styled(Box)({
@@ -109,5 +109,5 @@ export const TypographyTituloAtributo = styled(Typography)({
 export const TypographyTituloModal = styled(TypographyTitulo)({
     color: "#00579d",
     fontWeight: "500",
-    marginBottom: "0px"
+    marginBottom: "0"
 });

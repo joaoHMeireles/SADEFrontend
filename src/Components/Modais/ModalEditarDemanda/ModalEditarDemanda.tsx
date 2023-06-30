@@ -85,6 +85,7 @@ export default function ModalEditarDemanda() {
       <Drawer variant="permanent" open={open} anchor='right' sx={{ '& .MuiDrawer-paper': { position: "absolute", top: "10vh", height: open ? "150px" : "64px", borderRadius: "10px 0 0 10px", } }}>
         <DrawerHeader sx={{color: "white", padding: !open ? 0 : "0 16px"}}>
           {open && <>Motivo da devolução</>}
+
           <IconButton onClick={toggleDrawer} sx={{ color: "white" }}>
             {open ? <ChevronRightIcon /> : <InfoRoundedIcon />}
           </IconButton>

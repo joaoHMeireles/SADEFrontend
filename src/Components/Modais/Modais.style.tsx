@@ -19,7 +19,7 @@ export const BoxAtributoInfoModal2 = styled(BoxAtributoInfoModal)({
 export const BoxAtributosInfoModal = styled(Box)({
     alignItems: "center",
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "space-between",
     marginBottom: "2rem",
     width: "100%"
 });
@@ -31,10 +31,10 @@ export const BoxBUsBeneficiadas = styled(Box)({
 });
 
 export const BoxInfoModal = styled(Box)({
-    alignItems: "center",
+    alignItems: "flex-start",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     width: "100%"
 });
 
@@ -50,7 +50,8 @@ export const BoxMotivoDevolucao = styled(Box)({
 export const BoxSessaoTI = styled(Box)({
     alignItems: "center",
     display: "flex",
-    marginBottom: "30px",
+    justifyContent: "flex-start",
+    marginBottom: "2rem"
 });
 
 export const TextFieldEdited = styled(TextField)({

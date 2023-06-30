@@ -114,7 +114,7 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
                             <InfoComercial processo={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
                         </ContainerProcesso >
 
-                        <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { backgroundColor: "#fff", borderRadius: "10px", minWidth: "35vw" } }}>
+                        <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { backgroundColor: "#fff", borderRadius: "10px", minWidth: "30vw" } }}>
                             {conteudoModal}
                         </Dialog>
                         

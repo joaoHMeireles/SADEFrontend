@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import { TextReaderContext } from "../../TextReaderContext/TextReaderContext"
 import { Modal } from "../../../constants/interfaces"
 import { sessaoTI } from "../../../constants/enuns"
-import { Alert, Checkbox, FormControl, FormControlLabel, FormGroup, FormHelperText, Grid, IconButton, SelectChangeEvent } from "@mui/material"
+import { Alert, Box, Checkbox, FormControl, FormControlLabel, FormGroup, FormHelperText, Grid, IconButton, SelectChangeEvent } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close';
 import SelectBox from "../../SelectBox/SelectBox"
 import { BotaoPrimario, BotaoSecundario } from "../../../Pages/App.styles"
@@ -99,46 +99,57 @@ export default function ModalClassificacaoDemanda(props: Modal) {
                 <TypographyTituloModal variant='h5' onClick={lerTexto}>
                     Processo de aprovação
                 </TypographyTituloModal>
+
                 <IconButton onClick={props.fecharModal}>
                     <CloseIcon />
                 </IconButton>
             </BoxTituloModal>
+
             <BoxInfoModal>
                 <BoxAtributosInfoModal >
                     <BoxAtributoInfoModal>
                         <TypographyTituloAtributo variant='body1' onClick={lerTexto}>
                             Tamanho:
                         </TypographyTituloAtributo>
-                        <SelectBox listaLabelValores={valoresInputTamanho} listaValores={valoresInputTamanho} mudarValor={selecionarTamanho} valorInicial={tamanhoDemanda} chave="input-tamanho" />
+
+                            <SelectBox listaLabelValores={valoresInputTamanho} listaValores={valoresInputTamanho} mudarValor={selecionarTamanho} valorInicial={tamanhoDemanda} chave="input-tamanho" />
                     </BoxAtributoInfoModal>
+
                     <BoxAtributoInfoModal>
                         <TypographyTituloAtributo variant='body1' onClick={lerTexto}>
                             BU Solicitante:
                         </TypographyTituloAtributo>
-                        <SelectBox listaLabelValores={nomesBU} listaValores={nomesBU} mudarValor={selecionarBU} valorInicial={BUSolicitante} chave="input-bu-solicitante" />
+
+                            <SelectBox listaLabelValores={nomesBU} listaValores={nomesBU} mudarValor={selecionarBU} valorInicial={BUSolicitante} chave="input-bu-solicitante" />
                     </BoxAtributoInfoModal>
                 </BoxAtributosInfoModal>
+
                 <BoxBUsBeneficiadas>
                     <TypographyTituloAtributo variant='body1' onClick={lerTexto}>
                         BUs beneficiadas:
                     </TypographyTituloAtributo>
+
                     <FormGroup>
                         <Grid container>
                             {BUsbeneficiadas}
                         </Grid>
                     </FormGroup>
                 </BoxBUsBeneficiadas >
+
                 <BoxSessaoTI>
                     <TypographyTituloAtributo variant='body1' onClick={lerTexto}>
                         Sessão TI responsável:
                     </TypographyTituloAtributo>
+
                     <SelectBox listaLabelValores={valoresSessaoTI} listaValores={keysSessaoTI} mudarValor={selecionarSessaoTI} valorInicial={sessaoTIescolhida} maxWidth="none" chave="input-sessao-ti" />
                 </BoxSessaoTI>
             </BoxInfoModal>
+
             <BoxBotoesModal>
                 <BotaoSecundario onClick={(e: any) => { lerTexto(e); props.fecharModal(e) }} variant='outlined'>
                     Cancelar
                 </BotaoSecundario>
+
                 <BotaoPrimario onClick={(e: any) => { lerTexto(e); finalizarAcao() }} variant="contained">
                     Enviar
                 </BotaoPrimario>
