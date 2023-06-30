@@ -258,7 +258,7 @@ export default function CriacaoPauta(props: {
                     <BoxGeral key={proposta.id}>
                       <BoxProposta>
                         <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                          <CardProposta cor="#9acae5">
+                          <CardProposta cor="#9acae5" tamanhoCorCard={0.2} >
                             <BoxConteudoProposta>
                               <BoxTituloProposta onClick={lerTexto}>{proposta.tituloDemanda}</BoxTituloProposta>
 
