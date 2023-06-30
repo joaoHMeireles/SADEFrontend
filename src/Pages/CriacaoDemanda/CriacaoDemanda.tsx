@@ -515,7 +515,7 @@ export default function CriacaoDemanda(props: {
 
         {valor == 2 && (
           <>
-            {similaridadeDemanda && <Dialog open={similaridadeDemanda} sx={{ '& .MuiPaper-root': { backgroundColor: "#fff", borderRadius: "10px" } }}><ModalMostrarDemandasSimilares /></Dialog>}
+            {similaridadeDemanda && <Dialog open={similaridadeDemanda} sx={{ '& .MuiPaper-root': { backgroundColor: "#fff", borderRadius: "10px" } }}><ModalMostrarDemandasSimilares open={similaridadeDemanda} setOpen={setSimilaridadeDemanda}/></Dialog>}
 
             <InputAnexos rascunho={props.rascunho} proposta={false} files={files} setFiles={setFiles} />
             <ContainerBotoes>
