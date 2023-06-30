@@ -34,10 +34,6 @@ import { TextReaderProvider, TextReaderComponent } from "../Components/TextReade
 import RascunhoObserver from "../Components/RascunhoObserver/RascunhoObserver";
 import { MainTheme } from "../Themes";
 
-
-
-
-
 export default function App() {
   const [sidebarAberta, setSidebarAberta] = useState(false)
   const [filtrar, setFiltrar] = useState(false)
@@ -325,14 +321,14 @@ export default function App() {
                       <Route path="/userhelp" element={<AjudaUsuario aberto={sidebarAberta} sidebarAberta={sidebarAberta} />} />
 
 
-                      <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true} setMensagemFeedback={setMensagemDoFeedback}/>} />
-                      <Route path="/editdemand" element={<CriacaoDemanda rascunho={false} editarDemanda={true} setMensagemFeedback={setMensagemDoFeedback}/>} />
+                      <Route path="/continuedemand" element={<CriacaoDemanda rascunho={true} setMensagemFeedback={setMensagemDoFeedback} />} />
+                      <Route path="/editdemand" element={<CriacaoDemanda rascunho={false} editarDemanda={true} setMensagemFeedback={setMensagemDoFeedback} />} />
 
 
-                      <Route path="/createdemand" element={<CriacaoDemanda rascunho={false} editarDemanda={false} setMensagemFeedback={setMensagemDoFeedback}/>} />
-                      <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar} filtrarResultados={filtrarResultados} setMensagemFeedback={setMensagemDoFeedback}/>} />
-                      <Route path="/createagenda" element={<CriacaoPauta setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} setMensagemFeedback={setMensagemDoFeedback}/>} />
-                      <Route path="/createata" element={<CriacaoAta setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} setMensagemFeedback={setMensagemDoFeedback}/>} />
+                      <Route path="/createdemand" element={<CriacaoDemanda rascunho={false} editarDemanda={false} setMensagemFeedback={setMensagemDoFeedback} />} />
+                      <Route path="/createproposal" element={<CriacaoProposta setFiltrar={setFiltrar} filtrar={filtrar} filtrarResultados={filtrarResultados} setMensagemFeedback={setMensagemDoFeedback} />} />
+                      <Route path="/createagenda" element={<CriacaoPauta setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} setMensagemFeedback={setMensagemDoFeedback} />} />
+                      <Route path="/createata" element={<CriacaoAta setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} setMensagemFeedback={setMensagemDoFeedback} />} />
 
 
                       <Route path="/home/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
@@ -366,6 +362,17 @@ export default function App() {
                       <Route path="/home/ata" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
 
                     </Routes>
+
+                    <Snackbar
+                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                      autoHideDuration={3000}
+                      open={feedbackAberto}
+                      onClose={() => { setFeedbackAberto(false); setMensagemDoFeedback(""); window.location.href = "/home" }}>
+
+                      <Alert onClose={() => { setFeedbackAberto(false); setMensagemDoFeedback(""); window.location.href = "/home" }} severity="success" sx={{ width: '100%' }}>
+                        {mensagemDoFeedback}
+                      </Alert>
+                    </Snackbar>
 
                   </MainBox>
                   <Filter aberto={filtrar} setAberto={setFiltrar} setSidebar={setSidebarAberta} filtrarResultados={filtrarResultados} listaComponents={listaComponents} />

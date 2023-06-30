@@ -28,14 +28,17 @@ import novaNotificacao from "../Notificacoes/Notificacoes";
 
 import { useLocation } from "react-router-dom";
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, Dialog, Snackbar } from "@mui/material";
 import ModalEditarDemanda from "../../Components/Modais/ModalEditarDemanda/ModalEditarDemanda";
+import ModalMostrarDemandasSimilares from "../../Components/Modais/ModalMostrarDemandasSimilares/ModalMostrarDemandasSimilares";
 
 export default function CriacaoDemanda(props: {
   rascunho: boolean;
   editarDemanda?: boolean;
   setMensagemFeedback: React.Dispatch<SetStateAction<string>>;
 }) {
+  const [similaridadeDemanda, setSimilaridadeDemanda] = useState<any>(true)
+
   const { lerTexto } = useContext(TextReaderContext) as any
   const idUsuario = localStorage.getItem("IDUSUARIO");
   const [segundo, setSegundo] = useState(false);
@@ -385,6 +388,7 @@ export default function CriacaoDemanda(props: {
 
   }
 
+
   function mostrarFeedback() {
     props.setMensagemFeedback("Demanda cadastrada com sucesso")
   }
@@ -469,32 +473,7 @@ export default function CriacaoDemanda(props: {
               setInformacaoProcesso={setData}
               partDoisDemanda={partDoisDemanda}
             />
-            {/* {props.rascunho || props.editarDemanda ?
-              <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
-                numeroBeneficiosReais={numeroBeneficiosReais}
-                numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
-                numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
-                setNumeroBeneficiosReais={setNumeroBeneficiosReais}
-                setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
-                setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
-                informacaoProcesso={data}
-                setInformacaoProcesso={setData}
-              />
-              :
-              <BeneficiosDemanda rascunho={props.rascunho} proposta={false}
-                numeroBeneficiosReais={numeroBeneficiosReais}
-                numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
-                numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
-                setNumeroBeneficiosReais={setNumeroBeneficiosReais}
-                setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
-                setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
-                moedaReal={moedaReal}
-                setMoedaReal={setMoedaReal}
-                moedaPotencial={moedaPotencial}
-                setMoedaPotencial={setMoedaPotencial}
-                partDoisDemanda={partDoisDemanda} />
-            }
-            */}
+
             <ContainerBotoes>
               <BotaoTerciario
                 variant="outlined"
@@ -536,8 +515,9 @@ export default function CriacaoDemanda(props: {
 
         {valor == 2 && (
           <>
-            <InputAnexos rascunho={props.rascunho} proposta={false} files={files} setFiles={setFiles} />
+            {similaridadeDemanda && <Dialog open={similaridadeDemanda} sx={{ '& .MuiPaper-root': { backgroundColor: "#fff", borderRadius: "10px" } }}><ModalMostrarDemandasSimilares open={similaridadeDemanda} setOpen={setSimilaridadeDemanda}/></Dialog>}
 
+            <InputAnexos rascunho={props.rascunho} proposta={false} files={files} setFiles={setFiles} />
             <ContainerBotoes>
               <BotaoTerciario
                 variant="outlined"
@@ -573,10 +553,6 @@ export default function CriacaoDemanda(props: {
                 </BotaoPrimario>
               </BoxBotoes>
             </ContainerBotoes>
-
-            {/* {data != null &&
-              <EsqueletoPDFVersaoDemanda demanda={data} pdfExportComponent={pdfExportComponent} />
-            } */}
           </>
         )}
 

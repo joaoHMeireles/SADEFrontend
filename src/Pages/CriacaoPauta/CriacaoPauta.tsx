@@ -158,7 +158,9 @@ export default function CriacaoPauta(props: {
       propostasPauta: propostas
     }
 
-    api.post("/sade/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then(() => {
+    api.post("/sade/pauta/" + localStorage.getItem("IDUSUARIO"), pauta).then((res) => {
+      console.log(res);
+      
       mostrarFeedback()
     })
   }
@@ -173,7 +175,7 @@ export default function CriacaoPauta(props: {
   }
 
   function mostrarFeedback() {
-    props.setMensagemFeedback("Proposta cadastrada com sucesso")
+    props.setMensagemFeedback("Pauta cadastrada com sucesso")
   }
 
   return (
