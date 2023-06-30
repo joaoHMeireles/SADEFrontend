@@ -56,13 +56,14 @@ import {
 import { GridLinkTypograpfy } from "../../Components/ComponenteProcesso/ComponenteProcesso.styles";
 import {
   AccordionProposta,
+  BoxInputsNumeros,
   GridContainerColecao,
   GridFooter,
+  TextFieldEdited,
   GridInfoATA,
   TypographyTextoColecao,
   TypographyTituloDecisao,
   TypographyTituloInput,
-  BoxInputsNumeros
 } from "./TelaColecaoProcesso.styles";
 import {
   GridContainerHeader,
@@ -437,16 +438,16 @@ function Header(props: {
         setAcao("Criar ATA")
       } else {
         if (!informacaoColecaoProcesso.pertenceUmaATA) {
-          if (dataReuniao <= new Date()) {
+          // if (dataReuniao <= new Date()) {
             setAcao("Informar parecer");
-          }
+          // }
         }
       }
     } else {
       if (!informacaoColecaoProcesso.numeroDG) {
-        if (dataReuniao <= new Date()) {
+        // if (dataReuniao <= new Date()) {
           setAcao("Finalizar processo");
-        }
+        // }
       }
     }
   }, []);
@@ -1038,7 +1039,7 @@ export function Proposta(props: {
         <TypographyTituloDecisao variant="body1">
           Comentários
         </TypographyTituloDecisao>
-        <TextField
+        <TextFieldEdited
           id={`comentario${props.index}`}
           placeholder="Coloque aqui pontos interessantes que foram discutidos durante a reunião"
           multiline
