@@ -37,9 +37,9 @@ export default function CriacaoDemanda(props: {
   editarDemanda?: boolean;
   setMensagemFeedback: React.Dispatch<SetStateAction<string>>;
 }) {
-  const [similaridadeDemanda, setSimilaridadeDemanda] = useState<any>(true)
-
   const { lerTexto } = useContext(TextReaderContext) as any
+  const [similaridadeDemanda, setSimilaridadeDemanda] = useState<any>(false)
+  const [demandasSimilares, setDemandasSimilares] = useState<any[]>([])
   const idUsuario = localStorage.getItem("IDUSUARIO");
   const [segundo, setSegundo] = useState(false);
   const [informacoesPreenchidas, setInformacoesPreenchidas] = useState(false)
@@ -47,7 +47,6 @@ export default function CriacaoDemanda(props: {
   const [centroCusto, setCentroCusto] = useState<any[]>([]);
   const [data, setData] = useState<any>({ usuario: { idUsuario: idUsuario } })
   const [files, setFiles] = useState<any>([]);
-  const [pdfDemanda, setPDFDemanda] = useState<any>();
   const [feedbackAberto, setFeedbackAberto] = useState(false);
 
   const [numeroBeneficiosReais, setNumeroBeneficiosReais] = useState<number>(1);
@@ -94,12 +93,12 @@ export default function CriacaoDemanda(props: {
   }, [])
 
   useEffect(() => {
-    if (pdfDemanda == null || pdfDemanda == undefined) {
+    if (demandasSimilares.length == 0) {
       return
     }
 
-    criarDemanda()
-  }, [pdfDemanda])
+    setSimilaridadeDemanda(true)
+  }, [demandasSimilares])
 
   function atualizarDados(data: any) {
     setData(data);
@@ -263,27 +262,7 @@ export default function CriacaoDemanda(props: {
     atualizarDados(data2)
   }
 
-  function gerarPDFDemanda() {
-    const doc = new jsPDF()
-    // const pdf = document.getElementById("BOX") as HTMLElement
-
-    // console.log(pdf);
-    // console.log(pdfExportComponent.current);
-
-    // if (pdfExportComponent.current) {
-    //   pdfExportComponent.current.save();
-    // }
-
-    doc.html("")
-
-    const pdfArquivo = doc.output("blob")
-
-    setPDFDemanda(pdfArquivo)
-  }
-
   function criarDemanda() {
-    localStorage.setItem("DEMANDACADASTRADA", "true")
-
     let idDemandaEditar = -1
     let formData = new FormData();
 
@@ -352,18 +331,71 @@ export default function CriacaoDemanda(props: {
         erroEncontrado()
       })
     } else {
-      api.post("/sade/demanda", formData, {
+      console.log("chegou aqui");
+      
+
+      api.post("/sade/demanda/false", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }
       }).then((res: any) => {
-        mostrarFeedback()
-        webSocketService.inscrever(`/notificacao/demanda/${res.data.idDemanda}`, novaNotificacao)
+        console.log("aaaaaaaaaaaaaaaa");
+        
+        const resposta = res.data
+
+        if (resposta.length != null) {
+          console.log(resposta);
+          setDemandasSimilares(resposta)
+        } else {
+          mostrarFeedback()
+          webSocketService.inscrever(`/notificacao/demanda/${res.data.idDemanda}`, novaNotificacao)
+        }
       }).catch((err: any) => {
         console.log(err);
         erroEncontrado()
       })
     }
+
+    localStorage.setItem("DEMANDACADASTRADA", "true")
+  }
+
+  function continuarCriacaoDemanda() {
+    let formData = new FormData();
+
+    if (files != undefined) {
+      for (const file of files) {
+        formData.append("files", file);
+      }
+    }
+
+    if (data != undefined) {
+      let { tipo, ...dataCerta } = data
+      let beneficios = []
+
+      if (data.beneficiosDemanda != null) {
+        for (let beneficio of data.beneficiosDemanda) {
+          const { novo, ...beneficioCerto } = beneficio
+          beneficios.push(beneficioCerto)
+        }
+      }
+
+      dataCerta.beneficiosDemanda = beneficios
+      dataCerta.rascunho = false
+
+      formData.append("demanda", JSON.stringify(dataCerta));
+    }
+
+    api.post("/sade/demanda/true", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    }).then((res: any) => {
+      mostrarFeedback()
+      webSocketService.inscrever(`/notificacao/demanda/${res.data.idDemanda}`, novaNotificacao)
+    }).catch((err: any) => {
+      console.log(err);
+      erroEncontrado()
+    })
   }
 
   function checarPreenchimento() {
@@ -387,7 +419,6 @@ export default function CriacaoDemanda(props: {
   function erroEncontrado() {
 
   }
-
 
   function mostrarFeedback() {
     props.setMensagemFeedback("Demanda cadastrada com sucesso")
@@ -515,7 +546,11 @@ export default function CriacaoDemanda(props: {
 
         {valor == 2 && (
           <>
-            {similaridadeDemanda && <Dialog open={similaridadeDemanda} sx={{ '& .MuiPaper-root': { backgroundColor: "#fff", borderRadius: "10px" } }}><ModalMostrarDemandasSimilares open={similaridadeDemanda} setOpen={setSimilaridadeDemanda}/></Dialog>}
+            {similaridadeDemanda &&
+              <Dialog open={similaridadeDemanda} sx={{ '& .MuiPaper-root': { backgroundColor: "#fff", borderRadius: "10px" } }}>
+                <ModalMostrarDemandasSimilares open={similaridadeDemanda} setOpen={setSimilaridadeDemanda} demandasSimilares={demandasSimilares} continuarCriacaoDemanda={continuarCriacaoDemanda}/>
+              </Dialog>
+            }
 
             <InputAnexos rascunho={props.rascunho} proposta={false} files={files} setFiles={setFiles} />
             <ContainerBotoes>
@@ -547,7 +582,7 @@ export default function CriacaoDemanda(props: {
                   }
                   onClick={(e) => {
                     lerTexto(e)
-                    gerarPDFDemanda()
+                    criarDemanda()
                   }}>
                   Enviar
                 </BotaoPrimario>
