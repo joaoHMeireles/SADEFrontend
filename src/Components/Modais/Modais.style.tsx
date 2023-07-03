@@ -92,7 +92,14 @@ export const BoxLinkDemandasSimilares = styled(Box)({
     overflowY: "auto",
     marginTop: 24,
     marginBottom: 24,
-    '&::-webkit-scrollbar': { backgroundColor: "transparent", }
+    '&::-webkit-scrollbar': { 
+        backgroundColor: "transparent", 
+        width: "5px" 
+    },
+    '&::-webkit-scrollbar-thumb': { 
+        backgroundColor: "#00579d",
+        borderRadius: "5px"
+    }
 })
 
 export const TypographyAtencaoDemandaSimilar = styled(Typography)({

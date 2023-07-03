@@ -1131,7 +1131,7 @@ export function Proposta(props: {
       key={decisaoProposta.id}
       sx={{ backgroundColor: "transparent" }}
     >
-      <CardProposta cor={getCorStatus(decisaoProposta.proposta.demanda.statusDemanda)}>
+      <CardProposta cor={getCorStatus(decisaoProposta.proposta.demanda.statusDemanda)} tamanhoCorCard={0.1} >
         <AccordionProposta {...expanded}>
           <AccordionSummary
             onClick={mudarAcordeon}

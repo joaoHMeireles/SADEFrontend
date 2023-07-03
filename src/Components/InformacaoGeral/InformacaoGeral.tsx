@@ -34,8 +34,6 @@ export default function InformacaoGeral(props: {
   const info = localStorage.getItem("DEMANDASELECIONADA") ? localStorage.getItem("DEMANDASELECIONADA") : localStorage.getItem("RASCUNHOESCOLHIDO")
   const demandaSelecionada = JSON.parse(info as string);
 
-  console.log("info", info);
-  
 
   useEffect(() => {
     api.get("/sade/centroCusto").then((res: any) => {
