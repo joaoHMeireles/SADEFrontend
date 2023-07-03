@@ -78,8 +78,6 @@ import api from "../../api/api";
 import { BotaoPrimarioHeader, BotaoSecundarioHeader, BoxBotoes } from "../../Components/ButtonsHeader/ButtonsHeader.styles";
 import imagemSemNada from "../../Assets/emptyFolder.png"
 
-
-
 export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
   const [avaliandoProcesso, setAvaliandoProcesso] = useState(false);
   const [verificacaoInputs, setVerificacaoInputs] = useState<boolean[]>([]);
@@ -95,7 +93,6 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
     idLocalStorage != null ? idLocalStorage : ""
   ))
   const idUsuario = localStorage.getItem("IDUSUARIO")
-
 
   useEffect(() => {
     const idRequisicao = informacaoColecaoProcesso.idPauta ? informacaoColecaoProcesso.idPauta : informacaoColecaoProcesso.pauta.idPauta
@@ -371,7 +368,6 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
     return true;
   }
 
-
   return (
     <>
       <Header
@@ -380,8 +376,8 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         setAvaliandoProcesso={setAvaliandoProcesso}
         aprovarProcesso={aprovarProcesso}
         fecharAvaliacao={fecharAvaliacao}
-        sidebarAberta={props.sidebarAberta}
-      />
+        sidebarAberta={props.sidebarAberta} />
+
       <BoxConteudo>
         <BoxContainer>
           <Container>
@@ -392,16 +388,15 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
               files={files}
               setFiles={setFiles}
               expanded={expanded}
-              setExpanded={setExpanded}
-            />
+              setExpanded={setExpanded} />
+
             <Snackbar
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               autoHideDuration={3000}
               open={feedbackAberto}
               onClose={() => {
                 setFeedbackAberto(false);
-              }}
-            >
+              }}>
               {conteudoFeedback}
             </Snackbar>
           </Container>
@@ -439,14 +434,14 @@ function Header(props: {
       } else {
         if (!informacaoColecaoProcesso.pertenceUmaATA) {
           // if (dataReuniao <= new Date()) {
-            setAcao("Informar parecer");
+          setAcao("Informar parecer");
           // }
         }
       }
     } else {
       if (!informacaoColecaoProcesso.numeroDG) {
         // if (dataReuniao <= new Date()) {
-          setAcao("Finalizar processo");
+        setAcao("Finalizar processo");
         // }
       }
     }
@@ -562,33 +557,42 @@ function ContainerColecaoProcesso(props: {
             <Typography variant="h4">
               {informacaoColecaoProcesso.tituloReuniao}
             </Typography>
+
+            <Divider />
           </GridTitulo>
+
           <Grid item xs={2}>
             <Bandeira cor={getCorTipo(informacaoColecaoProcesso.tipo)} />
           </Grid>
         </GridContainerHeader>
       </Grid>
+
       <GridPequenosAtributos item xs={6}>
         <TypographyTituloAtributo variant='body1'>
           Data da reunião:
         </TypographyTituloAtributo>
+
         <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
           {dataFormatada}
         </TypographyTexto>
       </GridPequenosAtributos>
+
       <GridPequenosAtributos item xs={6}>
         <TypographyTituloAtributo variant='body1'>
           Período da reunião:
         </TypographyTituloAtributo>
+
         <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
           {informacaoColecaoProcesso.inicioReuniao.slice(0, 5)} - {informacaoColecaoProcesso.finalReuniao.slice(0, 5)}
         </TypographyTexto>
       </GridPequenosAtributos>
+
       {informacaoColecaoProcesso.tipo != "ATA" ?
         <GridPequenosAtributos item xs={6}>
           <TypographyTituloAtributo variant='body1'>
             Fórum responsável:
           </TypographyTituloAtributo>
+
           <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
             {informacaoColecaoProcesso.forum.nomeForum}
           </TypographyTexto>
@@ -598,6 +602,7 @@ function ContainerColecaoProcesso(props: {
           <TypographyTexto variant='body1' >
             <b>Pessoas presentes na reunião:</b>
           </TypographyTexto>
+
           <List>
             {informacaoColecaoProcesso.usuariosReuniaoATA.map((usuario: any, index: number) => {
               return (
@@ -618,6 +623,7 @@ function ContainerColecaoProcesso(props: {
           Propostas:
         </TypographyTituloAtributo>
       </GridPequenosAtributos>
+
       <Propostas
         listaPropostas={informacaoColecaoProcesso.propostas}
         listaPropostasAnteriores={informacaoColecaoProcesso.propostasPauta}
@@ -628,8 +634,8 @@ function ContainerColecaoProcesso(props: {
         files={props.files}
         setFiles={props.setFiles}
         expanded={props.expanded}
-        setExpanded={props.setExpanded}
-      />
+        setExpanded={props.setExpanded} />
+
       {informacaoColecaoProcesso.tipo == "ATA" && !props.avaliandoProcesso && (
         <GridFooter item xs={12}>
           <Box display={"flex"}>
@@ -638,12 +644,14 @@ function ContainerColecaoProcesso(props: {
                 <TypographyTituloAtributo variant="body1">
                   Número da ATA da DG:
                 </TypographyTituloAtributo>
+
                 <TypographyTextoColecao variant="body1">
                   {informacaoColecaoProcesso.numeroAtaDG}
                 </TypographyTextoColecao>
               </>
             )}
           </Box>
+
           <BotaoTerciario variant="outlined" onClick={abrirModal}>
             Ver anexos
           </BotaoTerciario>
@@ -655,10 +663,12 @@ function ContainerColecaoProcesso(props: {
             <TypographyTituloModal variant='h5' >
               Anexos da {informacaoColecaoProcesso.tipo.toLowerCase()}
             </TypographyTituloModal>
+
             <IconButton onClick={() => { setModalAberto(false) }}>
               <CloseIcon />
             </IconButton>
           </BoxTituloModal>
+
           {anexos == null || anexos.length < 1 ?
             <ResultadoVazio imagem={imagemSemNada} legenda={"Sem anexos aqui!"} />
             :
@@ -710,8 +720,7 @@ function Propostas(props: {
         eUmaPauta={eUmaPauta}
         index={index}
         avaliandoProcesso={props.avaliandoProcesso}
-        verificacaoInputs={props.verificacaoInputs}
-      />
+        verificacaoInputs={props.verificacaoInputs} />
     );
   });
 
@@ -732,107 +741,137 @@ function Propostas(props: {
         <>
           {eUmaPauta ?
             <>
-              <Grid>
-                <AccordionProposta {...props.expanded} sx={{ border: "none", borderTop: "#fff" }} >
-                  <AccordionSummary
-                    onClick={mudarAcordeon}
-                    expandIcon={props.expanded.expanded ? <RemoveRoundedIcon /> : adicionarIcon}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                    sx={{ border: "none", borderTop: "#fff" }}
-                  >
-                    {props.expanded.expanded ?
-                      <>
-                        <Grid item xs={12}>
-                          <Typography variant="h5" sx={{ color: "#444" }}>
-                            Informações ATA
-                          </Typography>
-                        </Grid>
-                      </>
-                      :
-                      <>
-                        <Box sx={{ fontSize: "12px", width: "99%", display: "flex", justifyContent: "end" }}>
-                          <Tooltip title="Você pode já criar a ata da reunião da Direção geral">
-                            <span>
-                              Criar ATA
-                            </span>
-                          </Tooltip>
-                        </Box>
-                      </>
-                    }
-                  </AccordionSummary>
-                  <AccordionDetails sx={{ border: "none", borderTop: "#fff" }} >
-                    <Grid item xs={12}>
-                      <Grid container spacing={3}>
-                        <GridInfoATA item xs={12}>
-                          <TypographyTituloInput>
-                            Título da reunião
-                          </TypographyTituloInput>
-                          <TextField sx={{ width: "100%" }} id="tituloReuniao" defaultValue={props.tituloPauta} />
-                        </GridInfoATA>
-                        <GridInfoATA item xs={12}>
-                          <TypographyTituloInput>
-                            Data da reunião
-                          </TypographyTituloInput>
-                          <DatePicker
-                            value={valorData}
-                            onChange={(newValue) => {
-                              setValorData(newValue);
-                            }}
-                            renderInput={(params: any) => <TextField id='dataReuniao' {...params} />}
-                            disablePast
-                          />
-                        </GridInfoATA>
-                        <GridInfoATA item xs={6}>
-                          <TypographyTituloInput>
-                            Início da reunião
-                          </TypographyTituloInput>
-                          <TimePicker
-                            ampm={false}
-                            value={inicioReuniao}
-                            onChange={(newValue) => setInicioReuniao(newValue)}
-                            renderInput={(params: any) => {
-                              return <TextField id="inicioReuniao" {...params} />;
-                            }}
-                          />
-                        </GridInfoATA>
-                        <GridInfoATA item xs={6}>
-                          <TypographyTituloInput>
-                            Final da reunião
-                          </TypographyTituloInput>
-                          <TimePicker
-                            ampm={false}
-                            value={finalReuniao}
-                            onChange={(newValue) => setFinalReuniao(newValue)}
-                            renderInput={(params: any) => {
-                              return <TextField id="finalReuniao" {...params} />;
-                            }}
-                          />
-                        </GridInfoATA>
-                        <GridInfoATA item xs={12}>
-                          <InputAnexos rascunho={false} proposta={false} files={props.files} setFiles={props.setFiles} />
-                        </GridInfoATA>
-                      </Grid>
-                    </Grid>
-                  </AccordionDetails>
-                </AccordionProposta>
-              </Grid>
+              <AccordionProposta {...props.expanded} sx={{ border: "none", borderTop: "#fff" }} >
+                <AccordionSummary
+                  onClick={mudarAcordeon}
+                  expandIcon={props.expanded.expanded ? <RemoveRoundedIcon /> : adicionarIcon}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                  sx={{ border: "none", borderTop: "#fff" }}>
+                  {props.expanded.expanded ?
+                    <>
+                      <Typography variant="h5" sx={{ color: "#444" }}>
+                        Informações ATA
+                      </Typography>
+                    </>
+                    :
+                    <>
+                      <Box sx={{ fontSize: "12px", width: "100%", display: "flex", justifyContent: "end" }}>
+                        <Tooltip title="Você pode já criar a ata da reunião da Direção geral">
+                          <span>
+                            Criar ATA
+                          </span>
+                        </Tooltip>
+                      </Box>
+                    </>
+                  }
+                </AccordionSummary>
+
+                <AccordionDetails sx={{ border: "none", borderTop: "#fff" }}>
+                  <Box sx={{ alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "center", width: "100%" }}>
+                    <Box sx={{ marginBottom: "2rem", width: "100%" }}>
+                      <TypographyTituloInput>
+                        Título da reunião:
+                      </TypographyTituloInput>
+
+                      <TextFieldEdited sx={{ width: "100%" }} id="tituloReuniao" defaultValue={props.tituloPauta} />
+                    </Box>
+
+                    <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "2rem", width: "100%" }}>
+                      <Box>
+                        <TypographyTituloInput>
+                          Data da reunião:
+                        </TypographyTituloInput>
+
+                        <DatePicker
+                          value={valorData}
+                          onChange={(newValue) => {
+                            setValorData(newValue);
+                          }}
+                          renderInput={(params: any) => <TextField id='dataReuniao' {...params} />}
+                          InputProps={{
+                            sx: {
+                              backgroundColor: "#eee",
+                              borderRadius: "10px",
+                              boxShadow: "5px 5px 10px 0 #00000025",
+                              "& fieldset": { border: "none" },
+                              marginRight: "1rem",
+                              width: "15vw"
+                            }
+                          }}
+                          disablePast />
+                      </Box>
+
+                      <Box>
+                        <TypographyTituloInput>
+                          Início da reunião:
+                        </TypographyTituloInput>
+
+                        <TimePicker
+                          ampm={false}
+                          value={inicioReuniao}
+                          onChange={(newValue) => setInicioReuniao(newValue)}
+                          renderInput={(params: any) => {
+                            return <TextField id="inicioReuniao" {...params} />;
+                          }}
+                          InputProps={{
+                            sx: {
+                              backgroundColor: "#eee",
+                              borderRadius: "10px",
+                              boxShadow: "5px 5px 10px 0 #00000025",
+                              "& fieldset": { border: "none" },
+                              width: "15vw"
+                            }
+                          }} />
+                      </Box>
+
+                      <Box>
+                        <TypographyTituloInput>
+                          Final da reunião:
+                        </TypographyTituloInput>
+
+                        <TimePicker
+                          ampm={false}
+                          value={finalReuniao}
+                          onChange={(newValue) => setFinalReuniao(newValue)}
+                          renderInput={(params: any) => {
+                            return <TextField id="finalReuniao" {...params} />;
+                          }}
+                          InputProps={{
+                            sx: {
+                              backgroundColor: "#eee",
+                              borderRadius: "10px",
+                              boxShadow: "5px 5px 10px 0 #00000025",
+                              "& fieldset": { border: "none" },
+                              marginLeft: "1rem",
+                              width: "15vw"
+                            }
+                          }} />
+                      </Box>
+                    </Box>
+
+                    <InputAnexos rascunho={false} proposta={false} files={props.files} setFiles={props.setFiles} />
+                  </Box>
+                </AccordionDetails>
+              </AccordionProposta>
             </>
             :
             <>
-              <Grid item xs={12}>
-                <BoxInputsNumeros>
-                  <Box>
-                    <TypographyTituloDecisao>Numero/ano: </TypographyTituloDecisao>
-                    <TextField type="number" id="numeroAno"></TextField>
-                  </Box>
-                  <Box>
-                    <TypographyTituloDecisao>Numero DG: </TypographyTituloDecisao>
-                    <TextField type="number" id="numeroDG"></TextField>
-                  </Box>
-                </BoxInputsNumeros>
-                <InputAnexos rascunho={false} proposta={false} files={props.files} setFiles={props.setFiles} />
-              </Grid>
+              <BoxInputsNumeros>
+                <Box>
+                  <TypographyTituloDecisao>Número/Ano: </TypographyTituloDecisao>
+
+                  <TextFieldEdited type="number" id="numeroAno"></TextFieldEdited>
+                </Box>
+
+                <Box>
+                  <TypographyTituloDecisao>Número da DG: </TypographyTituloDecisao>
+
+                  <TextFieldEdited type="number" id="numeroDG"></TextFieldEdited>
+                </Box>
+              </BoxInputsNumeros>
+
+              <InputAnexos rascunho={false} proposta={false} files={props.files} setFiles={props.setFiles} />
             </>
           }
         </>
@@ -874,10 +913,12 @@ export function Proposta(props: {
           <TypographyTitulo variant='h5'>
             Informações Gerais
           </TypographyTitulo>
+
           <GridPequenosAtributos item xs={6}>
             <TypographyTituloAtributo variant="body1">
               Solicitante:
             </TypographyTituloAtributo>
+
             <TypographyTextoColecao variant="body1">
               {decisaoProposta.proposta.demanda.usuario.nomeUsuario}
             </TypographyTextoColecao>
@@ -889,8 +930,7 @@ export function Proposta(props: {
         <Grid item xs={12}>
           <TabelaBeneficios
             title="Benefícios reais"
-            atributos={beneficiosReais}
-          />
+            atributos={beneficiosReais} />
         </Grid>
       }
       {
@@ -898,8 +938,7 @@ export function Proposta(props: {
         <Grid item xs={12}>
           <TabelaBeneficios
             title="Benefícios potenciais"
-            atributos={beneficioPotenciais}
-          />
+            atributos={beneficioPotenciais} />
         </Grid>
       }
       {
@@ -909,145 +948,153 @@ export function Proposta(props: {
           </Grid>
         )
       }
-      {!props.eUmaPauta &&
-        <Grid item>
-          <Divider />
-          <Grid container xs={12} sx={{ marginY: "8px" }} spacing={1}>
-            <Grid item xs={12}>
-              <TypographyTitulo variant='h5'>
-                Informações de Avaliação do Fórum
-              </TypographyTitulo>
-            </Grid>
-            <GridPequenosAtributos item xs={6}>
-              <TypographyTituloAtributo variant='body1'>
-                Estará em pauta Publicada :
-              </TypographyTituloAtributo>
-              <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
-                {props.propostaAnterior.ataPublicada ? "Sim" : "Não"}
-              </TypographyTexto>
-            </GridPequenosAtributos>
-            <GridPequenosAtributos item xs={6}>
-              <TypographyTituloAtributo variant='body1'>
-                Status escolhido:
-              </TypographyTituloAtributo>
-              <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
-                {getNomeStatus(props.propostaAnterior.statusDemandaComissao)}
-              </TypographyTexto>
-            </GridPequenosAtributos>
-            <Grid item>
-              <TypographyTexto variant='body1' sx={{ color: "#444" }}>
-                <b>Comentário :</b>   {props.propostaAnterior.comentario}
-              </TypographyTexto>
-            </Grid>
-          </Grid>
-        </Grid>
-      }
       <Grid item xs={12}>
         <GridLinkTypograpfy variant="body2" width="auto !important">
           <Link
             to={props.linkProposta}
             onClick={() => {
               setProposta(decisaoProposta.proposta);
-            }}
-          >
+            }}>
             Ver mais
           </Link>
         </GridLinkTypograpfy>
       </Grid>
+      {!props.eUmaPauta &&
+        <Grid item>
+          <Divider />
+
+          <Grid container xs={12} sx={{ marginY: "8px" }} spacing={1}>
+            <Grid item xs={12}>
+              <TypographyTitulo variant='h5'>
+                Informações de Avaliação do Fórum
+              </TypographyTitulo>
+            </Grid>
+
+            <GridPequenosAtributos item xs={6}>
+              <TypographyTituloAtributo variant='body1'>
+                Estará em pauta Publicada:
+              </TypographyTituloAtributo>
+
+              <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+                {props.propostaAnterior.ataPublicada ? "Sim" : "Não"}
+              </TypographyTexto>
+            </GridPequenosAtributos>
+
+            <GridPequenosAtributos item xs={6}>
+              <TypographyTituloAtributo variant='body1'>
+                Status escolhido:
+              </TypographyTituloAtributo>
+
+              <TypographyTexto variant='body1' sx={{ marginLeft: "5px" }}>
+                {getNomeStatus(props.propostaAnterior.statusDemandaComissao)}
+              </TypographyTexto>
+            </GridPequenosAtributos>
+
+            <Grid item>
+              <TypographyTexto variant='body1' sx={{ color: "#444" }}>
+                <b>Comentário: </b>
+                {props.propostaAnterior.comentario}
+              </TypographyTexto>
+            </Grid>
+          </Grid>
+        </Grid>
+      }
     </>
   );
 
   const conteudoPropostaAvaliacao = (
-    <>
-      <Grid item xs>
-        <TypographyTituloDecisao variant="body1">
-          Parecer da {forumEscolhido}
+    <Box sx={{ margin: "2rem 0 0 1rem", width: "100%" }}>
+      <Box sx={{ width: "100%" }}>
+        <TypographyTituloDecisao variant="body1" sx={{ marginBottom: "0rem !important" }}>
+          Parecer da {forumEscolhido}:
         </TypographyTituloDecisao>
+
         <FormControl error>
           <RadioGroup sx={{ flexDirection: "row" }}>
             <FormControlLabel
               className={`radioButtonStatus${props.index}`}
               value="Cancelled"
               control={<Radio sx={{ "&.Mui-checked": { color: "#ff1616" } }} />}
-              label="Cancelled"
-            />
+              label="Cancelled" />
+
             <FormControlLabel
               className={`radioButtonStatus${props.index}`}
               value="Business Case"
               control={<Radio sx={{ "&.Mui-checked": { color: "#ffd600" } }} />}
-              label="Business Case"
-            />
+              label="Business Case" />
+
             <FormControlLabel
               className={`radioButtonStatus${props.index}`}
               value="To do"
               control={<Radio sx={{ "&.Mui-checked": { color: "#00612e" } }} />}
-              label="To do"
-            />
+              label="To do" />
+
             <FormControlLabel
               className={`radioButtonStatus${props.index}`}
               value="Assessment"
               control={<Radio sx={{ "&.Mui-checked": { color: "#ef8300" } }} />}
-              label="Assessment"
-            />
+              label="Assessment" />
           </RadioGroup>
+
           <FormHelperText id="component-error-text">
             {mensagemErroStatus}
           </FormHelperText>
         </FormControl>
-      </Grid>
+      </Box>
       {!props.eUmaPauta ? (
-        <>
-          <Grid item xs={4}>
+        <Box sx={{ marginTop: "1rem" }}>
+          <Box>
             <TypographyTituloDecisao variant="body1">
               Número Sequencial:
             </TypographyTituloDecisao>
-            <TextField
+
+            <TextFieldEdited
               type="number"
               id={`inputNumeroATA${props.index}`}
               onChange={checarValor}
-              {...objetoErroNumeroATA}
-            />
-          </Grid>
-        </>
+              {...objetoErroNumeroATA} />
+          </Box>
+        </Box>
       ) : (
         <Grid item xs={12}>
           <TypographyTituloDecisao variant="body1">
-            Forma de publicação
+            Forma de publicação:
           </TypographyTituloDecisao>
+
           <FormControl error>
             <RadioGroup sx={{ flexDirection: "row" }}>
               <FormControlLabel
                 className={`radioButtonPublicacao${props.index}`}
                 value="Ata publicada"
                 control={<Radio />}
-                label="Ata publicada"
-              />
+                label="Ata publicada" />
+
               <FormControlLabel
                 className={`radioButtonPublicacao${props.index}`}
                 value="Ata não publicada"
                 control={<Radio />}
-                label="Ata não publicada"
-              />
+                label="Ata não publicada" />
             </RadioGroup>
+
             <FormHelperText id="component-error-text">
               {mensagemErroATA}
             </FormHelperText>
           </FormControl>
         </Grid>
       )}
-      <Grid item xs={12}>
+      <Box sx={{ marginTop: "2rem" }}>
         <TypographyTituloDecisao variant="body1">
-          Comentários
+          Comentários:
         </TypographyTituloDecisao>
+
         <TextFieldEdited
           id={`comentario${props.index}`}
           placeholder="Coloque aqui pontos interessantes que foram discutidos durante a reunião"
           multiline
           rows={5}
-          sx={{ width: "100%" }}
-        />
-      </Grid>
-    </>
+          sx={{ width: "100%" }} />
+      </Box>
+    </Box>
   );
 
   useEffect(() => {
@@ -1130,22 +1177,22 @@ export function Proposta(props: {
       item
       xs={12}
       key={decisaoProposta.id}
-      sx={{ backgroundColor: "transparent" }}
-    >
+      sx={{ backgroundColor: "transparent" }}>
+
       <CardProposta cor={getCorStatus(decisaoProposta.proposta.demanda.statusDemanda)} tamanhoCorCard={0.1} >
         <AccordionProposta {...expanded}>
           <AccordionSummary
             onClick={mudarAcordeon}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
+            id="panel1a-header">
             <Typography variant="h5" sx={{ color: "#444" }}>
               {decisaoProposta.proposta.demanda.tituloDemanda}
             </Typography>
-
           </AccordionSummary>
+
           <Divider />
+
           <AccordionDetails>
             <Grid container spacing={2}>
               {!props.avaliandoProcesso

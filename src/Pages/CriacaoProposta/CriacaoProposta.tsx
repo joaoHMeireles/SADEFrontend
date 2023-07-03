@@ -267,16 +267,16 @@ export default function CriacaoProposta(props: {
       }
     }
 
-    // api.post(`/sade/proposta/${idUsuario}`, formData, {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   }
-    // }).then((res) => {
+    api.post(`/sade/proposta/${idUsuario}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    }).then((res) => {
       mostrarFeedback()
-    //   console.log(res);
-    // })
+      console.log(res);
+    })
 
-    // window.location.href = "/home"
+    window.location.href = "/home"
   }
 
   function checarPreenchimento(): number {

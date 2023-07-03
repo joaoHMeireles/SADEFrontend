@@ -43,8 +43,7 @@ export default function CardsProcesso(props: {
           setPropostaSelecionada={props.setPropostaSelecionada}
           demandaSelecionada={demandaSelecionada}
           setDemandaSelecionada={setDemandaSelecionada}
-          setListaRascunhos={props.setListaRascunhos}
-        />
+          setListaRascunhos={props.setListaRascunhos} />
       );
     } else {
       componente = (
@@ -53,8 +52,7 @@ export default function CardsProcesso(props: {
           grid={props.grid}
           criandoATA={props.criandoATA}
           pautaEscolhida={props.pautaEscolhida}
-          setPautaEscolhida={props.setPautaEscolhida}
-        />
+          setPautaEscolhida={props.setPautaEscolhida} />
       );
     }
 

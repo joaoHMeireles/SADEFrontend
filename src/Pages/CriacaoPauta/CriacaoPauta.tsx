@@ -67,7 +67,6 @@ export default function CriacaoPauta(props: {
 
   localStorage.setItem("PAGINATUAL", "createagenda");
 
-
   useEffect(() => {
     const idPropostaEscolhida = localStorage.getItem("PROPOSTACRIARPAUTA")
 

@@ -10,13 +10,16 @@ export const AccordionProposta = styled(Accordion)({
     "& .MuiPaper-root": { 
         borderRadius: "0 10px 10px 0", 
         boxShadow: "none" 
-    }
+    },
+    width: "100%"
 });
 
 export const BoxInputsNumeros = styled(Box)({
+    alignItems: "center",
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
+    margin: "2rem 0",
+    width: "100%"
 });
 
 export const GridContainerColecao = styled(GridContainer)({
@@ -57,5 +60,5 @@ export const TypographyTituloDecisao = styled(TypographyTituloAtributo)({
 
 export const TypographyTituloInput = styled(TypographyTitulo)({
     fontWeight: "bold",
-    margin: "2rem 0 1rem 0"
+    marginBottom: "1rem"
 });

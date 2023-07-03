@@ -922,7 +922,6 @@ function InfoGeral(props: { processo: any }) {
     const gridAtributosGrandes = []
     let chaveComponente = 0
 
-
     for (let atributo in atributosPequenos) {
         chaveComponente++
         const nomeAtributo = getNomeAtributo(atributo)
@@ -977,17 +976,18 @@ function InfoGeral(props: { processo: any }) {
         )
     }
 
-
     return (
         <Grid container sx={{ marginY: "20px" }}>
             <TypographyTitulo variant='h5' onClick={lerTexto}>
                 Informações Gerais
             </TypographyTitulo>
+
             <Grid item xs={12} sx={{ marginBottom: "8px" }}>
                 <Grid container spacing={1}>
                     {gridAtributosPequenos}
                 </Grid>
             </Grid >
+
             <Grid item xs={12}>
                 <Grid container spacing={1}>
                     {gridAtributosGrandes}
@@ -998,6 +998,7 @@ function InfoGeral(props: { processo: any }) {
                     <TypographyTexto variant='body1' onClick={lerTexto}>
                         <b>{getNomeAtributo("beneficiosQualitativos")}</b>
                     </TypographyTexto>
+                    
                     <List>
                         {componenteBeneficiosQualitativos}
                     </List>

@@ -86,8 +86,7 @@ export default function ComponenteColecaoProcesso(props: {
       pautaEscolhida={props.pautaEscolhida}
       setPautaEscolhida={props.setPautaEscolhida}
       checado={checado}
-      lerTexto={lerTexto}
-    />
+      lerTexto={lerTexto} />
   ) : (
     <ListComponent
       componente={componente}
@@ -101,8 +100,7 @@ export default function ComponenteColecaoProcesso(props: {
       pautaEscolhida={props.pautaEscolhida}
       setPautaEscolhida={props.setPautaEscolhida}
       checado={checado}
-      lerTexto={lerTexto}
-    />
+      lerTexto={lerTexto} />
   );
 
   return (
@@ -113,18 +111,16 @@ export default function ComponenteColecaoProcesso(props: {
 }
 
 function GridComponent(props: ComponentCollectionProps) {
-
   return (
     <>
       {props.criandoATA ?
         <>
           <Tooltip title={props.tituloToolTip} placement="left">
             <Grid item xs={1}>
-              <BoxGridCorProcesso
-                sx={{ backgroundColor: props.corComponente }}
-              />
+              <BoxGridCorProcesso sx={{ backgroundColor: props.corComponente }} />
             </Grid>
           </Tooltip>
+
           <GridComponenteProcesso item xs={11}
             onClick={(e: any) => {
               props.lerTexto(e)
@@ -137,16 +133,18 @@ function GridComponent(props: ComponentCollectionProps) {
               <GridTypography variant="h6">
                 {props.componente.tituloReuniao}
               </GridTypography>
-              <Radio
-                checked={props.checado}
-              />
+
+              <Radio checked={props.checado} />
             </GridBoxTituloRadio>
+
             <GridTypography variant="subtitle1">
               Propostas:
             </GridTypography>
+
             <GridTypography variant="body1">
               - {props.componente.propostas[0].proposta.demanda.tituloDemanda}
             </GridTypography>
+
             <GridTypography variant="body1" sx={{ display: "flex" }}>
               {props.componente.propostas.length > 1 ?
                 <BoxColecaoComponente onClick={props.lerTexto}>
@@ -172,10 +170,12 @@ function GridComponent(props: ComponentCollectionProps) {
               <BoxGridCorProcesso sx={{ backgroundColor: props.corComponente }} />
             </Grid>
           </Tooltip>
+
           <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
             <GridTypography variant="h6">
               {props.componente.tituloReuniao}
             </GridTypography>
+
             <GridTypography variant="subtitle1">
               Propostas:
             </GridTypography>
@@ -229,35 +229,38 @@ function ListComponent(props: ComponentCollectionProps) {
         <>
           <Tooltip title={props.tituloToolTip} placement="left">
             <Grid item xs={0.3}>
-              <BoxListaCorProcesso
-                sx={{ backgroundColor: props.corComponente }}
-              />
+              <BoxListaCorProcesso sx={{ backgroundColor: props.corComponente }} />
             </Grid>
           </Tooltip>
+
           <ListaComponenteProcesso item xs={11.7}
             onClick={(e: any) => {
               props.lerTexto(e)
               if (props.setPautaEscolhida) {
                 props.setPautaEscolhida(props.componente)
               }
-            }}
-          >
+            }} >
             <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
               {props.componente.id} - {props.componente.tituloReuniao}
             </ListaTypography>
+
             <ListaTypography variant="subtitle2" sx={{ minWidth: "14.3vw" }}>
               <span> Data: </span>{" "}
               {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
             </ListaTypography>
+
             <ListaTypography variant="subtitle2" sx={{ maxWidth: "8vw" }}>
               <span> Propostas: </span>
             </ListaTypography>
+
             {propostas}
+
             <ListaTypography variant="subtitle2">
               {/* <Link to={props.linkComponente} onClick={props.setProcesso}>
                 Ver mais
               </Link> */}
             </ListaTypography>
+
             <UltimaListaTypography variant="body2" sx={{ maxWidth: "8.5vw" }}>
               <Radio checked={props.checado} />
             </UltimaListaTypography>
@@ -270,18 +273,23 @@ function ListComponent(props: ComponentCollectionProps) {
               <BoxListaCorProcesso sx={{ backgroundColor: props.corComponente }} />
             </Grid>
           </Tooltip>
+
           <ListaComponenteProcesso item xs={11.7} onClick={props.verProcesso}>
             <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
               {props.componente.id} - {props.componente.tituloReuniao}
             </ListaTypography>
+
             <ListaTypography variant="subtitle2" sx={{ minWidth: "14.3vw" }}>
               <span> Data: </span>{" "}
               {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
             </ListaTypography>
+
             <ListaTypography variant="subtitle2" sx={{ maxWidth: "8vw" }}>
               <span> Propostas: </span>
             </ListaTypography>
+
             {propostas}
+
             <UltimaListaTypography variant="body2" sx={{ maxWidth: "8.5vw" }}>
               <Link to={props.linkComponente} onClick={props.setProcesso}>
                 Ver mais

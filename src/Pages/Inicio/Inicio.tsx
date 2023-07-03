@@ -65,13 +65,14 @@ export default function Inicio(props: {
   return (
     <BoxConteudo>
       <Breadcrumb />
+
       <Searchbar
         setFiltrar={props.setFiltrar}
         filtrar={props.filtrar}
         grid={grid}
         setGrid={setGrid}
-        filtrarResultados={props.filtrarResultados}
-      />
+        filtrarResultados={props.filtrarResultados} />
+
       {!temComponente ?
         <>
           {props.conteudoCarregou &&
@@ -91,8 +92,7 @@ export default function Inicio(props: {
           pauta={false}
           propostaSelecionada={0}
           setPropostaSelecionada={setPropostaSelecionada}
-          conteudoCarregou={props.conteudoCarregou}
-        />
+          conteudoCarregou={props.conteudoCarregou} />
       }
     </BoxConteudo>
   );
