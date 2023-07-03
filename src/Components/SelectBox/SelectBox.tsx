@@ -18,14 +18,14 @@ export default function SelectBox(props: { label?: string, valorInicial: any, mu
     })
 
     return (
-        <FormControl sx={{ maxWidth: (props.maxWidth ? props.maxWidth : "180px"), marginLeft: "20px" }}>
+        <FormControl sx={{ backgroundColor: "#eee", borderRadius: "10px", boxShadow: "5px 5px 10px 0 #00000025", "& fieldset": { border: "none" }, marginLeft: "1rem", width: "7vw" }}>
             <InputLabel onClick={lerTexto}>{props.label}</InputLabel>
+
             <Select
                 id={props.chave}
                 value={props.valorInicial}
                 label={props.label}
-                onChange={props.mudarValor}
-            >
+                onChange={props.mudarValor}>
                 {itens}
             </Select>
         </FormControl>

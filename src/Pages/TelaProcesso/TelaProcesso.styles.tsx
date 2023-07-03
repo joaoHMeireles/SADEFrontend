@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from '@mui/material';
-import CircleIcon from '@mui/icons-material/Circle';
 import { BoxConteudo } from '../App.styles';
+import CircleIcon from '@mui/icons-material/Circle';
 import styled from '@emotion/styled';
 
 export const BoxAviso = styled(Box)({
@@ -28,10 +28,11 @@ export const BoxBotoesModal = styled(Box)({
 });
 
 export const BoxConteudoModal = styled(BoxConteudo)({
+    alignItems: "center", 
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    margin: "30px 50px"
+    margin: "2rem"
 });
 
 export const BoxHeader = styled(Box)({
@@ -57,7 +58,7 @@ export const BoxTituloModal = styled(Box)({
     alignItems: "center",
     display: "flex",
     justifyContent: "space-between",
-    marginBottom: "30px",
+    marginBottom: "2rem",
     width: "100%"
 });
 
@@ -108,5 +109,5 @@ export const TypographyTituloAtributo = styled(Typography)({
 export const TypographyTituloModal = styled(TypographyTitulo)({
     color: "#00579d",
     fontWeight: "500",
-    marginBottom: "0px"
+    marginBottom: "0"
 });

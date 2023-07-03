@@ -1,55 +1,44 @@
 import { Box, TextField, Typography } from '@mui/material';
 import { TypographyTituloAtributo } from '../../Pages/TelaProcesso/TelaProcesso.styles';
-import { styled } from '@mui/material/styles';
-const styledBox = styled(Box)
+import styled from '@emotion/styled';
 
-export const BoxAtributoInfoModal = styledBox({
+export const BoxAtributoInfoModal = styled(Box)({
     alignItems: "center",
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "flex-start"
 });
 
 export const BoxAtributoInfoModal2 = styled(BoxAtributoInfoModal)({
-    display: "grid",
-    width: "40%"
-});
-
-export const BoxAtributosInfoModal = styledBox({
-    alignItems: "center",
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "20px",
-    width: "100%"
-});
-
-export const BoxBUsBeneficiadas = styledBox({
+    alignItems: "flex-start",
     display: "flex",
     flexDirection: "column",
-    marginBottom: "20px"
-});
-
-export const BoxInfoModal = styledBox({
-    display: "grid",
     justifyContent: "center",
     width: "100%"
 });
 
-export const BoxSessaoTI = styledBox({
+export const BoxAtributosInfoModal = styled(Box)({
     alignItems: "center",
     display: "flex",
-    marginBottom: "30px",
-});
-
-export const TextFieldURL = styled(TextField)({
-    marginBottom: "30px",
+    justifyContent: "space-between",
+    marginBottom: "2rem",
     width: "100%"
 });
 
-export const TypographyTituloAtributoModal = styled(TypographyTituloAtributo)({
-    marginBottom: "1rem"
+export const BoxBUsBeneficiadas = styled(Box)({
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: "2rem"
 });
 
-export const BoxMotivoDevolucao = styledBox({
+export const BoxInfoModal = styled(Box)({
+    alignItems: "flex-start",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    width: "100%"
+});
+
+export const BoxMotivoDevolucao = styled(Box)({
     color: "#444",
     padding: "8px",
     textAlign: "justify",

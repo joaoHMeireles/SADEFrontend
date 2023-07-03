@@ -56,13 +56,14 @@ import {
 import { GridLinkTypograpfy } from "../../Components/ComponenteProcesso/ComponenteProcesso.styles";
 import {
   AccordionProposta,
+  BoxInputsNumeros,
   GridContainerColecao,
   GridFooter,
+  TextFieldEdited,
   GridInfoATA,
   TypographyTextoColecao,
   TypographyTituloDecisao,
   TypographyTituloInput,
-  BoxInputsNumeros
 } from "./TelaColecaoProcesso.styles";
 import {
   GridContainerHeader,
@@ -1038,7 +1039,7 @@ export function Proposta(props: {
         <TypographyTituloDecisao variant="body1">
           Comentários
         </TypographyTituloDecisao>
-        <TextField
+        <TextFieldEdited
           id={`comentario${props.index}`}
           placeholder="Coloque aqui pontos interessantes que foram discutidos durante a reunião"
           multiline

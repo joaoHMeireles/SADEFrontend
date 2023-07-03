@@ -98,26 +98,31 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
     return (
         <>
             <Header informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} setFeedbackAberto={setFeedbackAberto} setConteudoFeedback={setConteudoFeedback} sidebarAberta={props.sidebarAberta} />
+            
             <BoxConteudo >
                 <BoxContainer>
                     <Container >
                         <ContainerProcesso informacaoProcesso={informacaoProcesso}>
                             <Divider />
+
                             <Contextualizacao processo={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
                             <Divider />
+
                             <InfoGeral processo={informacaoProcesso} />
                             <Divider />
+
                             <InfoComercial processo={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} />
                         </ContainerProcesso >
-                        <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { minWidth: "35vw" } }}>
+
+                        <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { backgroundColor: "#fff", borderRadius: "10px", minWidth: "30vw" } }}>
                             {conteudoModal}
                         </Dialog>
+                        
                         <Snackbar
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                             autoHideDuration={3000}
                             open={feedbackAberto}
-                            onClose={() => { setFeedbackAberto(false) }}
-                        >
+                            onClose={() => { setFeedbackAberto(false) }}>
                             {conteudoFeedback}
                         </Snackbar>
                     </Container>

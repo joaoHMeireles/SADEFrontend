@@ -24,7 +24,7 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                     setFotoUsuario(response.data);
                 });
         }
-    }, []);
+    }, [])
 
     // Pega o nome do usuário logado
     useEffect(() => {
@@ -34,7 +34,8 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
                     setNomeUsuario(response.data.nomeUsuario);
                 });
         }
-    }, []);
+    }, [])
+
 
     // Manhã --> 06h até 12h
     // Tarde --> 12h até 18h
@@ -74,7 +75,7 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
 
                             <Box sx={{ alignItems: "center", display: "flex" }}>
                                 <Box sx={{ marginLeft: "1rem" }}>
-                                    <p>{mensagem + nomeUsuario + "!"}</p>
+                                    <p>{nomeUsuario != null ? mensagem + nomeUsuario + "!" : ""}</p>
                                 </Box>
 
                                 <Box sx={{ height: "100%", marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}>
