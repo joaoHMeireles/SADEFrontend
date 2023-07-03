@@ -24,7 +24,6 @@ export default function ModalAdiconarInformacoes(props: Modal) {
         </Alert>
     )
 
-
     function checarValor(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const valor = Number.parseInt(e.target.value)
         if (valor < 0) {

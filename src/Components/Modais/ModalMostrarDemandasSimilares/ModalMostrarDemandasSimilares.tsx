@@ -7,12 +7,11 @@ import { BotaoPrimario, BotaoSecundario } from "../../../Pages/App.styles";
 import { BoxAtencaoModalSimilaridade, BoxBotoesModalDemandaSimilar, BoxConteudoModalDemandaSimilaridade, BoxIconeFecharModal, BoxLinkDemandasSimilares, TypographyAtencaoDemandaSimilar, TypographyFraseDemandaSimilar, TypographyLinkDemandaSimilar, TypographyLinkDemandasSimilar } from "../Modais.style";
 import { TipoComponenteProcesso } from "../../../constants/enuns";
 
-
-export default function ModalMostrarDemandasSimilares(props: { 
-    open: any, 
-    setOpen: any, 
+export default function ModalMostrarDemandasSimilares(props: {
+    open: any,
+    setOpen: any,
     demandasSimilares: any[],
-    continuarCriacaoDemanda: Function 
+    continuarCriacaoDemanda: Function
 }) {
     let { lerTexto } = useContext(TextReaderContext) as any
     const [modalOpen, setModalOpen] = useState<any>(true);
@@ -33,22 +32,21 @@ export default function ModalMostrarDemandasSimilares(props: {
         window.open(
             'http://localhost:8081/home/demand',
             '_blank'
-          );
+        );
     }
 
     return (
         <BoxConteudoModal>
-
             <BoxIconeFecharModal>
                 <CloseRoundedIcon sx={{ color: "#444", cursor: "pointer" }}
                     onClick={() => {
                         setModalOpen(false)
-                    }}
-                />
+                    }} />
             </BoxIconeFecharModal>
 
             <BoxAtencaoModalSimilaridade>
                 <TypographyAtencaoDemandaSimilar variant="h6" onClick={lerTexto}>Atenção</TypographyAtencaoDemandaSimilar>
+
                 <ReportProblemRoundedIcon sx={{ color: "#00579d", width: "80px", height: "80px", marginY: 2 }} />
             </BoxAtencaoModalSimilaridade>
 
@@ -60,6 +58,7 @@ export default function ModalMostrarDemandasSimilares(props: {
                             Para evitar redundância em nosso sistema, avalie a demanda abaixo.
                             Caso a problemática ou a solução seja diferente, prossiga com seu cadastro.
                         </TypographyFraseDemandaSimilar>
+
                         <BoxLinkDemandasSimilares>
                             {props.demandasSimilares.map((demanda: any) =>
                                 <TypographyLinkDemandasSimilar onClick={() => { verProcesso(demanda) }}>
@@ -75,10 +74,10 @@ export default function ModalMostrarDemandasSimilares(props: {
                             Para evitar redundância em nosso sistema, avalie a demanda abaixo.
                             Caso a problemática ou a solução seja diferente, prossiga com seu cadastro.
                         </TypographyFraseDemandaSimilar>
+
                         <TypographyLinkDemandaSimilar onClick={() => { verProcesso(props.demandasSimilares[0]) }}>{props.demandasSimilares[0].tituloDemanda}</TypographyLinkDemandaSimilar>
                     </>
                 }
-
             </BoxConteudoModalDemandaSimilaridade>
 
             <BoxBotoesModalDemandaSimilar>
@@ -89,6 +88,7 @@ export default function ModalMostrarDemandasSimilares(props: {
                 }} variant='outlined'>
                     Continuar
                 </BotaoSecundario>
+                
                 <BotaoPrimario onClick={(e: any) => {
                     lerTexto(e)
                     setModalOpen(false)

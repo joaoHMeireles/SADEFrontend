@@ -112,7 +112,7 @@ export default function ModalClassificacaoDemanda(props: Modal) {
                             Tamanho:
                         </TypographyTituloAtributo>
 
-                            <SelectBox listaLabelValores={valoresInputTamanho} listaValores={valoresInputTamanho} mudarValor={selecionarTamanho} valorInicial={tamanhoDemanda} chave="input-tamanho" />
+                        <SelectBox listaLabelValores={valoresInputTamanho} listaValores={valoresInputTamanho} mudarValor={selecionarTamanho} valorInicial={tamanhoDemanda} chave="input-tamanho" />
                     </BoxAtributoInfoModal>
 
                     <BoxAtributoInfoModal>
@@ -120,7 +120,7 @@ export default function ModalClassificacaoDemanda(props: Modal) {
                             BU Solicitante:
                         </TypographyTituloAtributo>
 
-                            <SelectBox listaLabelValores={nomesBU} listaValores={nomesBU} mudarValor={selecionarBU} valorInicial={BUSolicitante} chave="input-bu-solicitante" />
+                        <SelectBox listaLabelValores={nomesBU} listaValores={nomesBU} mudarValor={selecionarBU} valorInicial={BUSolicitante} chave="input-bu-solicitante" />
                     </BoxAtributoInfoModal>
                 </BoxAtributosInfoModal>
 
