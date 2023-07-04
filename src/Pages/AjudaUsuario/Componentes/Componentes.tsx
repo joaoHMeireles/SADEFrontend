@@ -1,5 +1,6 @@
 import "./Componentes.scss";
-import { BoxBackground, Title, P, BoxImage, Space } from "./Componentes.style";
+import { BoxBackground, BoxTitleStatus, Title, P, BoxImage, Space } from "./Componentes.style";
+import { Box } from "@mui/material";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded"
 // Introdução
@@ -425,3 +426,59 @@ export const AvaliarWorkflow = (
 // Informar o parecer da Diretoria Geral --> Analista de TI ou Gerente de TI
 // Iniciar o Workflow de Aprovação       --> Analista de TI ou Gerente de TI
 // Avaliar o Workflow de Aprovação       --> Analista de TI ou Gerente de TI
+
+export const CoresStatus = (
+    <BoxBackground>
+        <Title>
+            <p>Cores dos Status</p>
+        </Title>
+
+        <Box>
+            <BoxTitleStatus sx={{ color: "#444" }}>
+                <ul>
+                    <li>Aguardando revisão</li>
+                </ul>
+            </BoxTitleStatus>
+        </Box>
+
+        <Box>
+            <BoxTitleStatus sx={{ color: "#FF1616" }}>
+                <ul>
+                    <li>Cancelado (Cancelled)</li>
+                </ul>
+            </BoxTitleStatus>
+        </Box>
+
+        <Box>
+            <BoxTitleStatus sx={{ color: "#8862A2" }}>
+                <ul>
+                    <li>Aguardando Revisão (Backlog)</li>
+                </ul>
+            </BoxTitleStatus>
+        </Box>
+
+        <Box>
+            <BoxTitleStatus sx={{ color: "#00612E" }}>
+                <ul>
+                    <li>A Fazer (To Do)</li>
+                </ul>
+            </BoxTitleStatus>
+        </Box>
+
+        <Box>
+            <BoxTitleStatus sx={{ color: "#EF8300" }}>
+                <ul>
+                    <li>Em Planejamento (Assessment)</li>
+                </ul>
+            </BoxTitleStatus>
+        </Box>
+
+        <Box>
+            <BoxTitleStatus sx={{ color: "#FFD600" }}>
+                <ul>
+                    <li>Em Planejamento Demorado (Business Case)</li>
+                </ul>
+            </BoxTitleStatus>
+        </Box>
+    </BoxBackground>
+);
