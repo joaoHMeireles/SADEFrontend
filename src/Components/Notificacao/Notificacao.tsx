@@ -53,6 +53,9 @@ export default function Notificacao(props: {
             }
         }
 
+        if(e.target.id == "deleteButton" || e.target.nodeName == "path"){
+            return
+        }
 
         if (props.tipoNotificacao == "DEMANDA") {
             api.get("/sade/demanda/" + props.idComponenteLink).then((response) => {
@@ -146,6 +149,7 @@ export default function Notificacao(props: {
                     </NotificacaoLadoEsquerdo>
                     <NotificacaoLadoDireito>
                         <DeleteRoundedIcon
+                            id="deleteButton"
                             sx={{ color: "#444", cursor: "pointer" }}
                             onClick={() => {
                                 console.log(bodyNotificacaoDTO);

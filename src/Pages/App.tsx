@@ -296,7 +296,7 @@ export default function App() {
   return (
     <>
       <GlobalStyles styles={{ "div[vw]": { top: "30% !important" } }} />
-      <VLibras />
+      <VLibras forceOnload/>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <BrowserRouter>
           <WebSocketService>
