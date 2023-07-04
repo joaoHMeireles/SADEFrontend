@@ -98,7 +98,7 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
     return (
         <>
             <Header informacaoProcesso={informacaoProcesso} setModalAberto={setModalAberto} setConteudoModal={setConteudoModal} setFeedbackAberto={setFeedbackAberto} setConteudoFeedback={setConteudoFeedback} sidebarAberta={props.sidebarAberta} />
-            
+
             <BoxConteudo >
                 <BoxContainer>
                     <Container >
@@ -117,7 +117,7 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
                         <Dialog open={modalAberto} sx={{ '& .MuiPaper-root': { backgroundColor: "#fff", borderRadius: "10px", minWidth: "30vw" } }}>
                             {conteudoModal}
                         </Dialog>
-                        
+
                         <Snackbar
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                             autoHideDuration={3000}
@@ -176,7 +176,7 @@ export function Header(props: {
         try {
             console.log("processo", processo);
 
-            verificarHistoricoAprovado(processo.id ? processo.id: processo.idDemanda, setAprovadoGerente)
+            verificarHistoricoAprovado(processo.id ? processo.id : processo.idDemanda, setAprovadoGerente)
         } catch (erro: any) {
             console.log(erro);
         }
@@ -516,16 +516,6 @@ export function Header(props: {
                 }
             }
 
-            const formDataHistorico = new FormData()
-            formDataHistorico.append("historico", JSON.stringify(
-                {
-                    tarefa: "CRIARPROPOSTA",
-                    demanda: { idDemanda: processo.idDemanda },
-                    usuario: { idUsuario: idAnalista },
-                    acaoFeitaHistoricoAnterior: "ADICIONARINFORMACOESDEMANDA"
-                }
-            ))
-
             const formDataDemanda = new FormData()
             formDataDemanda.append("demanda", JSON.stringify(
                 {
@@ -537,27 +527,12 @@ export function Header(props: {
                 }
             ))
 
-
-            // Depois que conseguir fazer o arquivo de versionamento esse get não será mais necessário 
-            api.get(`/sade/historicoWorkflow/arquivo/11`).then((responseArquivo: any) => {
-                //colocar pdf
-                formDataDemanda.append("pdfVersaoHistorico", new File([responseArquivo.data.arquivo], "versaoHistorico.pdf"))
-
-                // faz a atualização do histórico da demanda
-                api.post(`/sade/historicoWorkflow/${idAnalista}`, formDataHistorico).then(() => {
-                    // atualiza informações de demanda
-                    api.put(`/sade/demanda/${processo.idDemanda}/${idAnalista}`, formDataDemanda, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        }
-                    }).then(() => {
-                        recarregarPaginaDemanda(conteudo)
-                    }).catch((err: any) => {
-                        console.log(err);
-                    })
-                }).catch((err: any) => {
-                    console.log(err);
-                })
+            api.put(`/sade/demanda/${processo.idDemanda}/${idAnalista}`, formDataDemanda, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            }).then(() => {
+                recarregarPaginaDemanda(conteudo)
             }).catch((err: any) => {
                 console.log(err);
             })
@@ -575,7 +550,6 @@ export function Header(props: {
         location.href = "/createproposal"
     } //feito
 
-    //testar depois de já ter como cadastrar proposta
     function iniciarNovoWorkflow() {
         const conteudoFeedback = (
             <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
@@ -590,25 +564,11 @@ export function Header(props: {
                 emWorkflow: true
             }))
 
-            // formDataHistorico.append("historico", JSON.stringify(
-            //     {
-            //         tarefa: "AVALIARWORKFLOW",
-            //         demanda: { idDemanda: processo.id },
-            //         usuario: { idUsuario: gerenteSolicitante.idUsuario },
-            //         acaoFeitaHistoricoAnterior: "INICIARWORKFLOW"
-            //     }
-            // ))
-
             api.put(`/sade/proposta/${processo.id}/${idAnalista}`, formData).then((res) => {
                 recarregarPaginaDemanda(conteudo)
             }).catch((err) => {
                 console.log(err);
             })
-            // api.post(`/sade/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response: any) => {
-            //     recarregarPaginaDemanda(conteudo)
-            // }).catch((err: any) => {
-            //     console.log(err);
-            // })
         }
 
         props.setConteudoModal(
@@ -887,7 +847,7 @@ function InfoGeral(props: { processo: any }) {
     const atributosPequenos = {
         numero: (processo.idDemanda ? processo.idDemanda : processo.idProposta),
         status: processo.statusDemanda,
-        solicitante: processo.usuario.nomeUsuario ,
+        solicitante: processo.usuario.nomeUsuario,
         departamento: processo.usuario.departamento,
         //num sei oq é iso
         // gerenteResponsavel: processo.gerenteResponsavel,
@@ -998,7 +958,7 @@ function InfoGeral(props: { processo: any }) {
                     <TypographyTexto variant='body1' onClick={lerTexto}>
                         <b>{getNomeAtributo("beneficiosQualitativos")}</b>
                     </TypographyTexto>
-                    
+
                     <List>
                         {componenteBeneficiosQualitativos}
                     </List>
