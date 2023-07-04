@@ -197,11 +197,6 @@ function GridComponent(props: ComponentCollectionProps) {
                   {""}
                 </BoxColecaoComponente>
               }
-              <GridLinkColecaoTypograpfy variant="body2">
-                <Link to={props.linkComponente} onClick={props.setProcesso}>
-                  Ver mais
-                </Link>
-              </GridLinkColecaoTypograpfy>
             </GridTypography>
           </GridComponenteProcesso>
         </>

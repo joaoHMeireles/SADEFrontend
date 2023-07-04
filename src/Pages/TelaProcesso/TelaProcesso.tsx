@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import api, { pegarAnalistaTIResponsavel, pegarGerenteSolicitante, pegarGerenteTISolicitante, pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
 import {
     getNomeComponente, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum, getValueEnum,
-    baixarArquivo, getBotoesPagina, getNomeAtributo
+    baixarArquivo, getBotoesPagina, getNomeAtributo, useLocationChange
 } from '../../utils';
 import { sessaoTI, StatusComponenteProcesso, TamanhoComponenteProcesso, TipoComponenteProcesso } from '../../constants/enuns';
 import { TextReaderContext } from '../../Components/TextReaderContext/TextReaderContext';
@@ -52,7 +52,7 @@ const valoresInputBU: any[] = [
  * @param props 
  * @returns 
  */
-export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }) {
+export default function TelaComponenteProcesso(props: { sidebarAberta: boolean}) {
     const [modalAberto, setModalAberto] = useState(false)
     const [conteudoModal, setConteudoModal] = useState(<div />)
     const [feedbackAberto, setFeedbackAberto] = useState(false)
@@ -94,6 +94,9 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
         }
     }, [])
 
+    useLocationChange(() => {
+        // window.location.reload()
+    })
 
     return (
         <>
@@ -804,6 +807,9 @@ export function Header(props: {
 
         abrirModal()
     }
+
+    console.log(props.sidebarAberta);
+    
 
     return (
         <>

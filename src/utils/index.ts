@@ -440,3 +440,8 @@ export function transformArquivosToFile(arquivos: any) {
 
     return listaArquivos
 }
+
+export function randomKeyGenerator(num:number){
+    const valor = Math.random() * num / Math.random()
+    return valor
+}

@@ -26,13 +26,14 @@ import CriacaoAta from "./CriacaoAta/CriacaoAta";
 import Enviadas from "./Enviadas/Enviadas";
 import api from "../api/api";
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../constants/enuns";
-import { getNomeStatus } from "../utils";
+import { getNomeStatus, randomKeyGenerator } from "../utils";
 import AjudaUsuario from "./AjudaUsuario/AjudaUsuario";
 
 import { WebSocketService } from "../api/websocketservice";
 import { TextReaderProvider, TextReaderComponent } from "../Components/TextReaderContext/TextReaderContext";
 import RascunhoObserver from "../Components/RascunhoObserver/RascunhoObserver";
 import { MainTheme } from "../Themes";
+import { randomInt } from "crypto";
 
 export default function App() {
   const [sidebarAberta, setSidebarAberta] = useState(false)
@@ -113,14 +114,31 @@ export default function App() {
     }).catch((err) => {
       console.log(err);
     })
-
-    localStorage.setItem("VALORFILTROTipo", "Demanda")
   }, [])
 
   useEffect(() => {
-    setListaComponents(listaDemandas)
-    filtrarResultados()
-  }, [listaDemandas])
+    const tipo = localStorage.getItem("VALORFILTROTipo")
+
+    switch(tipo){
+      case "Demanda":{
+        setListaComponents(listaDemandas)
+        break
+      }
+      case "Proposta":{
+        setListaComponents(listaPropostas)
+        break
+      }
+      case "Pauta":{
+        setListaComponents(listaPautas)
+        break
+      }
+      case "ATA":{
+        setListaComponents(listaATAs)
+        break
+      }
+    }
+
+  }, [listaDemandas, listaPropostas, listaPautas, listaATAs])
 
   useEffect(() => {
     filtrarResultados()
@@ -331,31 +349,31 @@ export default function App() {
                       <Route path="/createata" element={<CriacaoAta setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} setMensagemFeedback={setMensagemDoFeedback} />} />
 
 
-                      <Route path="/home/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
-                      <Route path="/mydemands/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
-                      <Route path="/notifications/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
-                      <Route path="/home/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
-                      <Route path="/home/agenda/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
-                      <Route path="/home/ata/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
-                      <Route path="/createproposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
+                      <Route path="/home/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(1)} />} />
+                      <Route path="/mydemands/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(12)} />} />
+                      <Route path="/notifications/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(64)} />} />
+                      <Route path="/home/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(10)} />} />
+                      <Route path="/home/agenda/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(100)} />} />
+                      <Route path="/home/ata/proposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(123)} />} />
+                      <Route path="/createproposal/demand" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(821)} />} />
 
 
-                      <Route path="/home/demand/history" element={<Historico />} />
-                      <Route path="/mydemands/demand/history" element={<Historico />} />
-                      <Route path="/notifications/demand/history" element={<Historico />} />
-                      <Route path="/home/proposal/demand/history" element={<Historico />} />
-                      <Route path="/home/agenda/proposal/demand/history" element={<Historico />} />
-                      <Route path="/home/ata/proposal/demand/history" element={<Historico />} />
-                      <Route path="/home/proposal/history" element={<Historico />} />
-                      <Route path="/home/agenda/proposal/history" element={<Historico />} />
-                      <Route path="/home/ata/proposal/history" element={<Historico />} />
+                      <Route path="/home/demand/history" element={<Historico sidebarAberta={sidebarAberta} />} />
+                      <Route path="/mydemands/demand/history" element={<Historico sidebarAberta={sidebarAberta} />} />
+                      <Route path="/notifications/demand/history" element={<Historico sidebarAberta={sidebarAberta} />} />
+                      <Route path="/home/proposal/demand/history" element={<Historico sidebarAberta={sidebarAberta} />} />
+                      <Route path="/home/agenda/proposal/demand/history" element={<Historico sidebarAberta={sidebarAberta} />} />
+                      <Route path="/home/ata/proposal/demand/history" element={<Historico sidebarAberta={sidebarAberta} />} />
+                      <Route path="/home/proposal/history" element={<Historico sidebarAberta={sidebarAberta} />} />
+                      <Route path="/home/agenda/proposal/history" element={<Historico sidebarAberta={sidebarAberta} />} />
+                      <Route path="/home/ata/proposal/history" element={<Historico sidebarAberta={sidebarAberta} />} />
 
 
-                      <Route path="/home/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
-                      <Route path="/home/agenda/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
-                      <Route path="/home/ata/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
-                      <Route path="/createagenda/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
-                      <Route path="/createata/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} />} />
+                      <Route path="/home/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(95)} />} />
+                      <Route path="/home/agenda/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(15)} />} />
+                      <Route path="/home/ata/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(573)} />} />
+                      <Route path="/createagenda/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(731)} />} />
+                      <Route path="/createata/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(45)} />} />
 
 
                       <Route path="/home/agenda" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />

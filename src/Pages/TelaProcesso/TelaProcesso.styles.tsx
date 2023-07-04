@@ -43,7 +43,6 @@ export const BoxHeader = styled(Box)({
     position: "fixed",
     padding: "19px 24px 24px 24px",
     top: "7.2vh",
-    width: "96.5%",
     zIndex: 10
 });
 

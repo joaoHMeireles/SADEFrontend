@@ -40,7 +40,7 @@ import { getValueEnum } from "../../utils";
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 
 
-export default function TelaHistoricos(props: {}) {
+export default function TelaHistoricos(props: {sidebarAberta: boolean}) {
   const { lerTexto } = useContext(TextReaderContext) as any
   const [historicosDemanda, setHistoricosDemanda] = useState<any[]>([])
   const [tamanhoPagina, setTamanhoPagina] = useState(5);
@@ -425,7 +425,7 @@ export default function TelaHistoricos(props: {}) {
           },
         }}
       />
-      <BoxHeader sx={{ paddingTop: "22px" }}>
+      <BoxHeader sx={{ paddingTop: "22px", width: (props.sidebarAberta ? "88.35%" : "96.5%") }}>
         <Breadcrumb />
       </BoxHeader>
       <Toolbar />

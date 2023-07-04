@@ -426,7 +426,7 @@ function GridComponent(props: ComponentProps) {
                 </StatusBox>
 
                 <GridLinkTypograpfy variant="body2">
-                  <Link to={props.linkComponente} onClick={props.setProcesso}>
+                  <Link to={props.linkComponente} target="_blank" onClick={props.setProcesso}>
                     Ver mais
                   </Link>
                 </GridLinkTypograpfy>
