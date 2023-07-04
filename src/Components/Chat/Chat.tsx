@@ -65,9 +65,7 @@ export default function Chat(props: {
           </BoxIconePessoa>
 
           <BoxContainerChat>
-            <BoxChat>
               <TypographyTitulo variant="h6">{props.titulo}</TypographyTitulo>
-            </BoxChat>
 
             <BoxChat>
               <TypographyPessoaMensagem variant="caption">{props.mensagem.length > 0 ? mensagem : ""}</TypographyPessoaMensagem>
@@ -83,9 +81,7 @@ export default function Chat(props: {
           </BoxIconePessoa>
 
           <BoxContainerChat>
-            <BoxChat>
               <TypographyTitulo variant="h6" >{props.titulo}</TypographyTitulo>
-            </BoxChat>
 
             <BoxChat>
               <TypographyPessoaMensagem variant="caption">{props.mensagem.length > 0 ? mensagem : ""}</TypographyPessoaMensagem>

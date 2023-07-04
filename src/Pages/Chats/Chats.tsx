@@ -6,7 +6,7 @@ import AttachmentRoundedIcon from '@mui/icons-material/AttachmentRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import {
-    BoxBarraPesquisa, ContainerChats, ContainerGeralChats, LadoEsquerdoChat, LadoEsquerdoGeralChats, LadoDiretoChat,
+    BoxBarraPesquisa, BoxBreadcrumb, ContainerChats, ContainerGeralChats, LadoEsquerdoChat, LadoEsquerdoGeralChats, LadoDiretoChat,
     LadoDireitoGeralChats, BarraPesquisa, TypographyMensagemEsquerda, TypographyMensagemDireita, BoxGeralMensagensLadoDireito,
     BoxMensagensLadoDireito, BoxMensagemLadoDireito, TypographyPessoa, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoEsquerdo,
     BoxMensagemLadoEsquerdo, InputPesquisaChat, BoxIconeEnviar, BoxLadoDireitoTituloDemanda, TypographyTituloDemandaLadoDireito, TypographyQuantidadeMembrosLadoDireito, BoxBreadcrumbTituloChat, BoxMensagemHorario, TypographyHoraMensagem
@@ -30,7 +30,6 @@ import Typography from "@mui/material/Typography";
 
 export default function Chats(props: { aberto: boolean }) {
     localStorage.setItem("PAGINATUAL", "chat")
-
     const [listaChats, setListaChats] = useState<any[]>([])
     const [componenteChats, setComponenteChats] = useState<any>()
     const [chatEscolhido, setChatEscolhido] = useState<any>({ mensagens: [] })
@@ -204,9 +203,9 @@ export default function Chats(props: { aberto: boolean }) {
         <>
             <ContainerGeralChats>
                 <BoxBreadcrumbTituloChat>
-                    <Box>
+                    <BoxBreadcrumb>
                         <Breadcrumb />
-                    </Box>
+                    </BoxBreadcrumb>
                     {(listaChats.length != 0 && chatEscolhido.demanda != null) &&
                         <BoxLadoDireitoTituloDemanda>
                             <TypographyTituloDemandaLadoDireito variant="h6">{chatEscolhido.demanda.tituloDemanda}</TypographyTituloDemandaLadoDireito>
@@ -216,7 +215,7 @@ export default function Chats(props: { aberto: boolean }) {
                     }
                 </BoxBreadcrumbTituloChat>
 
-                <ContainerChats sx={{ marginTop: "1rem", width: "100%" }}>
+                <ContainerChats>
                     {listaChats.length != 0 ?
                         <>
                             <LadoEsquerdoGeralChats>
@@ -302,7 +301,6 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
 
         setDefaultMensagem()
     }
-
 
     // rever scrolllllllllllll
     const scroll = useRef(null);
