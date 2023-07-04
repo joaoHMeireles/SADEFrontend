@@ -6,27 +6,32 @@ import styled from "@emotion/styled";
  */
 
 export const BarraPesquisa = styled(TextField)({
-    "& input": { padding: "5px", fontSize: "12px" },
-    padding: "5px",
-    width: "85%",
     backgroundColor: "#eee",
     borderRadius: "10px",
     boxShadow: "5px 5px 10px 0 #00000025",
     color: "#444",
     "& fieldset": { border: "none" },
-    "&::placeholder": { color: "#00579d" },
-    marginRight: "0.5rem",
+    // "& input": { padding: "5px", fontSize: "12px" },
+    marginRight: "1rem",
+    // padding: "5px",
+    // "&::placeholder": { color: "#00579d" },
+    width: "100%",
 });
 
 export const BoxIconeEnviar = styled(Box)({
+    alignItems: "center",
     backgroundColor: "#00579D",
     borderRadius: "360px",
+    boxShadow: "5px 5px 10px 0 #00000025",
     display: "flex",
+    height: "3rem",
     justifyContent: "center",
-    alignItems: "center",
-    width: "2rem",
-    height: "2rem"
-})
+    maxHeight: "3rem",
+    maxWidth: "3rem",
+    minHeight: "3rem",
+    minWidth: "3rem",
+    width: "3rem",
+});
 
 export const BoxBarraPesquisa = styled(Box)({
     alignItems: "center",
@@ -35,15 +40,15 @@ export const BoxBarraPesquisa = styled(Box)({
     justifyContent: "center",
     height: "10%",
     padding: 1,
-    width: "60%",
+    width: "40vw",
 });
 
 export const BoxBreadcrumbTituloChat = styled(Box)({
     alignItems: "center",
     display: "flex",
-    justifyContent: "space-between",
-    width: "60%",
-})
+    justifyContent: "flex-start",
+    width: "100%"
+});
 
 export const ContainerChats = styled(Box)({
     alignItems: "center",
@@ -75,7 +80,7 @@ export const InputPesquisaChat = styled(TextField)({
     marginBottom: "1rem",
     "&::placeholder": { color: "#00579d" },
     width: "90%",
-})
+});
 
 export const LadoEsquerdoGeralChats = styled(Box)({
     alignItems: "flex-start",
@@ -103,7 +108,7 @@ export const LadoDiretoChat = styled(Box)({
 
 export const LadoDireitoGeralChats = styled(Box)({
     alignItems: "center",
-    background: "#FFF",
+    background: "#fff",
     borderRadius: "5px",
     display: "flex",
     flexDirection: "column",
@@ -119,16 +124,16 @@ export const BoxLadoDireitoTituloDemanda = styled(Box)({
     alignItems: "flex-start",
     flexDirection: "column",
     width: "50%"
-})
+});
 
 export const TypographyTituloDemandaLadoDireito = styled(Typography)({
     color: "#444",
     fontWeight: "bold"
-})
+});
 
 export const TypographyQuantidadeMembrosLadoDireito = styled(Typography)({
     color: "#444"
-})
+});
 
 // ----------------------------------------------------------------------------
 
@@ -221,7 +226,7 @@ export const BoxMensagemHorario = styled(Box)({
     alignItems: "flex-end",
     margin: "0 2px 0 2px",
     wordWrap: "break-word",
-})
+});
 
 export const TypographyHoraMensagem = styled(Typography)({
     fontSize: "10px",
@@ -230,4 +235,4 @@ export const TypographyHoraMensagem = styled(Typography)({
     justifyContent: "center",
     alignItems: "flex-end",
     color: "#444"
-})
+});

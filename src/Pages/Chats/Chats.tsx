@@ -216,7 +216,7 @@ export default function Chats(props: { aberto: boolean }) {
                     }
                 </BoxBreadcrumbTituloChat>
 
-                <ContainerChats sx={{ width: "100%" }}>
+                <ContainerChats sx={{ marginTop: "1rem", width: "100%" }}>
                     {listaChats.length != 0 ?
                         <>
                             <LadoEsquerdoGeralChats>
@@ -359,7 +359,6 @@ function Mensagens(props: { mensagem: string, horaMensagem?: any, usuario: any }
     } else {
         data = "";
     }
-
 
     function HoraUltimaMensagem() {
         return (
