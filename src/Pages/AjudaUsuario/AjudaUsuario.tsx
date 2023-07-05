@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { Introducao, CriarDemanda, AvaliarDemanda3Opcoes, AvaliarDemanda2Opcoes, AdicionarInfoDemanda, CriarProposta, CriarPauta, InformarParecerComissao, CriarATA, InformarParecerDiretoriaGeral, IniciarWorkflow, AvaliarWorkflow } from "./Componentes/Componentes";
+import { Introducao, CriarDemanda, AvaliarDemanda3Opcoes, AvaliarDemanda2Opcoes, AdicionarInfoDemanda, CriarProposta, CriarPauta, InformarParecerComissao, CriarATA, InformarParecerDiretoriaGeral, IniciarWorkflow, AvaliarWorkflow, CoresStatus } from "./Componentes/Componentes";
 
 export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: boolean }) {
   const [processosPrincipaisOpen, setProcessosPrincipaisOpen] = useState(false);
@@ -169,6 +169,16 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                   </ListItemButton>
                 </List>
               </Collapse>
+
+              <ListItemButton onClick={() => {
+                setComponentes(CoresStatus);
+                setCor(12);
+              }}>
+                {cor == 12 ?
+                  <ListItemText primary="CORES DOS STATUS" sx={{ color: "#00579d" }} />
+                  :
+                  <ListItemText primary="CORES DOS STATUS" />}
+              </ListItemButton>
             </Lista>
           </FirstColumn>
 
