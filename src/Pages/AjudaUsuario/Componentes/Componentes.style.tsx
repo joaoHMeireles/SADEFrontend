@@ -16,19 +16,25 @@ export const BoxImage = styled(Box)({
     alignItems: "flex-start",
     display: "flex",
     justifyContent: "center",
-    marginBottom: "1rem", 
+    marginBottom: "1rem",
     width: "100%"
+});
+
+export const BoxTitleStatus = styled(Box)({
+    fontWeight: "bold",
+    marginBottom: "1rem"
 });
 
 export const P = styled(Box)({
     marginBottom: "1rem"
 });
 
-export const Space = styled(Box) ({
+export const Space = styled(Box)({
     color: "#fff"
 });
 
 export const Title = styled(Box)({
+    fontSize: "20px",
     fontWeight: "bold",
     marginBottom: "1rem"
 });
