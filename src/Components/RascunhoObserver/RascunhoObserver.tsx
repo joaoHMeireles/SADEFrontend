@@ -5,7 +5,7 @@ import { useLocationChange } from "../../utils";
 export default function RascunhoObserver() {
 
     useLocationChange((newLocation: Location, previousLocation: Location) => {
-        if (previousLocation.pathname == "/createdemand") {
+        if (previousLocation.pathname == "/createdemand"  && newLocation.pathname != "/createdemand") {
             const objetoDemanda = JSON.parse(localStorage.getItem("DADOSDEMANDACRIACAO") as string)
             
             if (objetoDemanda != null) {
@@ -29,7 +29,7 @@ export default function RascunhoObserver() {
                     }
                 }
 
-                if (temInformacao) {
+                if (temInformacao) {   
                     if (localStorage.getItem("DEMANDACADASTRADA") == "false") {
                         const formData = new FormData()
                         objetoDemanda.rascunho = true
@@ -42,7 +42,7 @@ export default function RascunhoObserver() {
             }
         }
 
-        if((previousLocation.pathname == "/createdemanda" && newLocation.pathname != "/createdemanda") || 
+        if((previousLocation.pathname == "/createdemanda" && newLocation.pathname != "/createdemand") || 
         (previousLocation.pathname == "/continuedemand" && newLocation.pathname != "/continuedemand") || 
         (previousLocation.pathname == "/editdemand" && newLocation.pathname != "/editdemand")){
             localStorage.removeItem("DADOSDEMANDACRIACAO")
