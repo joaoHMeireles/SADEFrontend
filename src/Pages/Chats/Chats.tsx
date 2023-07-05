@@ -37,10 +37,6 @@ export default function Chats(props: { aberto: boolean }) {
     const webSocketService: any = useContext(WebSocketContext)
     let requisitouChats = false
 
-    // let teste: HTMLElement = document.getElementById("ladoDireitoChat");
-    // if (teste) {
-    // }
-
     useEffect(() => {
         const idUsuario = localStorage.getItem("IDUSUARIO")
         if (listaChats.length == 0 && !requisitouChats) {
@@ -52,13 +48,9 @@ export default function Chats(props: { aberto: boolean }) {
         }
     }, []);
 
-    // useEffect(() => {
-    //     if (listaChats.length == 0) {
-    //         return
-    //     }
-
-    //     setChatEscolhido(listaChats[0])
-    // }, [listaChats])
+    useEffect(() => {
+       atualizarComponentes()       
+    }, [listaChats])
 
     useEffect(() => {
         atualizarTela()
@@ -304,17 +296,12 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
 
     // rever scrolllllllllllll
     const scroll = useRef(null);
-    useEffect(() => {
-        console.log("ashdbjhsakd");
-
+    useEffect(() => {;
         const boxScroll: HTMLElement | any = document.getElementById("ladoDireitoChat");
 
         if (boxScroll) {
-            console.log("ashdbjhsakd");
-
             boxScroll.scrollTo = boxScroll.scrollHeight
         }
-
     }, [props.mensagens])
 
     return (
@@ -327,6 +314,7 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
             <BoxBarraPesquisa>
                 <BarraPesquisa onChange={atualizarMensagem} placeholder="Mensagem"
                     InputProps={{
+                        id: "input-mensagem",
                         startAdornment: (
                             <InputAdornment position="start">
                                 <AttachmentRoundedIcon sx={{ color: "#444", "&:hover": { cursor: "pointer" } }} />
