@@ -121,20 +121,20 @@ export default function App() {
   useEffect(() => {
     const tipo = localStorage.getItem("VALORFILTROTipo")
 
-    switch(tipo){
-      case "Demanda":{
+    switch (tipo) {
+      case "Demanda": {
         setListaComponents(listaDemandas)
         break
       }
-      case "Proposta":{
+      case "Proposta": {
         setListaComponents(listaPropostas)
         break
       }
-      case "Pauta":{
+      case "Pauta": {
         setListaComponents(listaPautas)
         break
       }
-      case "ATA":{
+      case "ATA": {
         setListaComponents(listaATAs)
         break
       }
@@ -316,21 +316,27 @@ export default function App() {
   return (
     <>
       <GlobalStyles styles={{ "div[vw]": { top: "30% !important" } }} />
-      <VLibras forceOnload/>
+
+      <VLibras forceOnload />
+
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <BrowserRouter>
           <WebSocketService>
             <TextReaderProvider>
               <TextReaderComponent />
+
               <RascunhoObserver />
+
               <ThemeProvider theme={MainTheme}>
                 <Navbar aberto={sidebarAberta} setAberto={setSidebarAberta} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />
+
                 <Box sx={{ marginLeft: sidebarAberta ? `${tamanhoSideBar}px` : 0, display: "flex" }} >
                   <Sidebar aberto={sidebarAberta} tamanho={tamanhoSideBar} setAberto={setSidebarAberta} setFiltro={setFiltrar} />
+
                   <MainBox component="main" sx={{ marginLeft: tamanhoSideBar }}>
                     <Toolbar />
-                    <Routes>
 
+                    <Routes>
                       <Route path="/" element={<Login setAberto={setSidebarAberta} tamanhoNavbar={tamanhoNavbar} setFiltro={setFiltrar} />} />
                       <Route path="/home" element={<Inicio setFiltrar={setFiltrar} filtrar={filtrar} listaComponents={listaFiltrada} filtrarResultados={filtrarResultados} conteudoCarregou={conteudoCarregou} setConteudoCarregou={setConteudoCarregou} />} />
                       <Route path="/notifications" element={<Notificacoes />} />
@@ -380,7 +386,6 @@ export default function App() {
 
                       <Route path="/home/agenda" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
                       <Route path="/home/ata" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
-
                     </Routes>
 
                     <Snackbar
@@ -395,6 +400,7 @@ export default function App() {
                     </Snackbar>
 
                   </MainBox>
+
                   <Filter aberto={filtrar} setAberto={setFiltrar} setSidebar={setSidebarAberta} filtrarResultados={filtrarResultados} listaComponents={listaComponents} />
                 </Box>
               </ThemeProvider>
