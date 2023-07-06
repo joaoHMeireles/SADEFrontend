@@ -15,12 +15,8 @@ import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semChats from "../../Assets/leaf.png"
 import { WebSocketContext } from "../../api/websocketservice.jsx";
 import api from "../../api/api";
-import { useLocationChange } from "../../utils";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
 import selecionarChat from "../../Assets/selecionarChat.png"
-import Typography from "@mui/material/Typography";
 
 /**
  * Função que tem dois componentes jutamente a ela, sendo um para chats e outro para as mensagem de determinado chat
@@ -116,12 +112,12 @@ export default function Chats(props: { aberto: boolean }) {
 
                 setElementoMensagens(componenteMensagensNovo)
             }
-
+  
             webSocketService.inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagem)
         }
 
         atualizarTela()
-    }, [webSocketService.stompClient])
+    }, [webSocketService.stompClient, listaChats])
 
     function verChat(idChat: any) {
 
@@ -294,7 +290,7 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
         setDefaultMensagem()
     }
 
-    // rever scrolllllllllllll
+
     const scroll = useRef(null);
     useEffect(() => {;
         const boxScroll: HTMLElement | any = document.getElementById("ladoDireitoChat");

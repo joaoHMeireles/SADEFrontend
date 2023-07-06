@@ -127,8 +127,11 @@ export const WebSocketService = ({ children }: {children: any}) => {
     }
 
     const inscrever = (caminho: string, acao: Function) => {
+        if(stompClient == null){
+            inscrever(caminho, acao)
+        }
+
         if (!stompClient.subscriptions[caminho]) {
-            console.log("subescreveu: " + caminho);
             return stompClient.subscribe(caminho, acao);
         }
     }

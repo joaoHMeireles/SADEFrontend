@@ -33,7 +33,6 @@ import { WebSocketService } from "../api/websocketservice";
 import { TextReaderProvider, TextReaderComponent } from "../Components/TextReaderContext/TextReaderContext";
 import RascunhoObserver from "../Components/RascunhoObserver/RascunhoObserver";
 import { MainTheme } from "../Themes";
-import { randomInt } from "crypto";
 
 export default function App() {
   const [sidebarAberta, setSidebarAberta] = useState(false)

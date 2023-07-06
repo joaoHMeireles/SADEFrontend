@@ -35,6 +35,9 @@ export async function pegarGerenteSolicitante(id: number, setGerenteSolicitante:
 
 export async function pegarGerenteTISolicitante(id: number, setGerenteTISolicitante: React.Dispatch<SetStateAction<any>>) {
   axiosEntity.get(`${url}/sade/usuario/gerenteTI/usuario/${id}`).then((response: any) => {
+    console.log("Gerente de TI ", response.data);
+    
+
     setGerenteTISolicitante(response.data)
   }).catch((err: any) => {
     console.log(err);

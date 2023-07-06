@@ -164,6 +164,8 @@ export function Header(props: {
     const tipoProcesso = processo.tipo
     const idAnalista = localStorage.getItem("IDUSUARIO")
 
+    
+
 
     const listaBotoes = getBotoesPagina(
         processo,
@@ -177,8 +179,6 @@ export function Header(props: {
 
     useEffect(() => {
         try {
-            console.log("processo", processo);
-
             verificarHistoricoAprovado(processo.id ? processo.id : processo.idDemanda, setAprovadoGerente)
         } catch (erro: any) {
             console.log(erro);
@@ -622,6 +622,8 @@ export function Header(props: {
             const tipoUsuario = localStorage.getItem("TIPOUSUARIO")
             const formDataHistorico = new FormData()
 
+            console.log("id gerenete ti: ", gerenteTISolicitante);
+
             if (tipoUsuario == "GerenteTI") {
                 formDataHistorico.append("historico", JSON.stringify(
                     {
@@ -768,8 +770,6 @@ export function Header(props: {
         abrirModal()
     }
 
-    console.log(props.sidebarAberta);
-    
 
     return (
         <>

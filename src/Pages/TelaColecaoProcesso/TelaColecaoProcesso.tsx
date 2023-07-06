@@ -104,6 +104,11 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
     })
   }, [])
 
+  useEffect(() => {
+    console.log(expanded);
+    
+  }, [expanded])
+
   function fecharAvaliacao() {
     setAvaliandoProcesso(false);
     setVerificacaoInputs([]);
@@ -152,15 +157,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
 
     if (checarPreenchimento(novaVerificacaoInputs)) {
       if (informacaoColecaoProcesso.tipo != "ATA") {
-        console.log("entrou");
-
-        // console.log(document.getElementById("dataReuniao"));
-
-
         const decisoesPauta: any[] = []
-        // console.log(dataReuniao);
-        // console.log(dataReuniaoCerta);
-
 
         for (let i = 0; i < informacaoColecaoProcesso.propostas.length; i++) {
           const botoesStatusDemanda = document.getElementsByClassName(`radioButtonStatus${i}`)
@@ -211,12 +208,7 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
           }
         }
 
-        console.log(pautaEditar);
-
-
         api.put("/sade/pauta/" + idPauta + "/" + idUsuario, formDataPauta).then((response) => {
-          console.log(response);
-
 
           if (expanded.expanded) {
             const tituloReuniaoInput = (document.getElementById("tituloReuniao") as HTMLInputElement).value
@@ -235,9 +227,6 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
             }
 
             api.post("/sade/ata", ataDTO).then((responseATA) => {
-
-              console.log(responseATA);
-
               acaoFinalizada()
             })
           } else {
@@ -301,8 +290,6 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         }
 
         api.put("/sade/ata/" + informacaoColecaoProcesso.idATA + "/" + idUsuario, formData).then((response) => {
-          console.log(response);
-
           acaoFinalizada()
         }).catch((err) => {
           console.log(err);

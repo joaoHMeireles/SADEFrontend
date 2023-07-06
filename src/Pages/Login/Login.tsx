@@ -83,6 +83,7 @@ export default function Login(props: {
   }
 
   localStorage.setItem("PAGINATUAL", "login");
+  localStorage.setItem("VALORFILTROTipo", "Demanda")  
 
   useEffect(() => {
     //veriicar se tem o cookie do lembrar de mim e fazer o login com as informações
