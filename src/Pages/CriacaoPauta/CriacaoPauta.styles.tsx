@@ -58,6 +58,7 @@ export const BoxTituloProposta = styled(Box)({
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
+  width: "75%"
 });
 
 export const SelectEdited = styled(Select)({

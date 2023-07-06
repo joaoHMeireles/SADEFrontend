@@ -289,7 +289,7 @@ export default function CriacaoPauta(props: {
 
             <Box sx={{ paddingLeft: "1rem", position: "relative", width: "50%" }}>
               <BackgroundInputs>
-                <Box sx={{ width: "100%" }}>
+                <Box sx={{ marginBottom: "2rem", width: "100%" }}>
                   <TypographyTituloInput sx={{ marginTop: 0 }} onClick={lerTexto}>
                     Título da reunião
                   </TypographyTituloInput>
@@ -297,7 +297,7 @@ export default function CriacaoPauta(props: {
                   <TextFieldEdited id="tituloReuniao" />
                 </Box>
 
-                <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "100%" }}>
+                <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "2rem", width: "100%" }}>
                   <Box>
                     <TypographyTituloInput onClick={lerTexto}>
                       Fórum da reunião
