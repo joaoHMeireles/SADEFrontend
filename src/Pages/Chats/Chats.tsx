@@ -315,7 +315,6 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
 
     const scroll = useRef(null);
     useEffect(() => {
-        ;
         const boxScroll: HTMLElement | any = document.getElementById("ladoDireitoChat");
 
         if (boxScroll) {
@@ -357,19 +356,27 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
 function Mensagens(props: { mensagem: string, horaMensagem?: any, usuario: any }) {
     const idUsuarioLocalStorage = parseInt(localStorage.getItem("IDUSUARIO") as string);
 
-    let data: any;
+    let horarioCerto: any;
 
     if (props.horaMensagem) {
-        data = new Date(props.horaMensagem);
+        let data = new Date(props.horaMensagem);
+        console.log("hora: " + data.getHours());
+        console.log("minutes: " + data.getMinutes());
+
+        if (data.getMinutes() < 10) {
+            horarioCerto = data.getHours() + ":" + ("0" + data.getMinutes())
+        } else {
+            horarioCerto = data.getHours() + ":" + data.getMinutes()
+        }
     } else {
-        data = "";
+        horarioCerto = "";
     }
 
     function HoraUltimaMensagem() {
         return (
             <>
-                {data ?
-                    <TypographyHoraMensagem>{data.getHours() + ":" + data.getMinutes()}</TypographyHoraMensagem>
+                {horarioCerto ?
+                    <TypographyHoraMensagem>{horarioCerto}</TypographyHoraMensagem>
                     :
                     ""
                 }

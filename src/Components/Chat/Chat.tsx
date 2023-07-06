@@ -33,19 +33,25 @@ export default function Chat(props: {
     </>
   )
 
-  let data: any;
+  let horaCerta: any;
 
   if (props.horaMensagem) {
-    data = new Date(props.horaMensagem);
+    let data = new Date(props.horaMensagem);
+
+    if (data.getMinutes() < 10) {
+      horaCerta = data.getHours() + ":" + ("0" + data.getMinutes())
+    } else {
+      horaCerta = data.getHours() + ":" + data.getMinutes()
+    }
   } else {
-    data = "";
+    horaCerta = "";
   }
 
   function HoraUltimaMensagem() {
     return (
       <>
-        {data ?
-          <TypographyHoraMensagem>{data.getHours() + ":" + data.getMinutes()}</TypographyHoraMensagem>
+        {horaCerta ?
+          <TypographyHoraMensagem>{horaCerta}</TypographyHoraMensagem>
           :
           ""
         }
@@ -65,7 +71,7 @@ export default function Chat(props: {
           </BoxIconePessoa>
 
           <BoxContainerChat>
-              <TypographyTitulo variant="h6">{props.titulo}</TypographyTitulo>
+            <TypographyTitulo variant="h6">{props.titulo}</TypographyTitulo>
 
             <BoxChat>
               <TypographyPessoaMensagem variant="caption">{props.mensagem.length > 0 ? mensagem : ""}</TypographyPessoaMensagem>
@@ -81,7 +87,7 @@ export default function Chat(props: {
           </BoxIconePessoa>
 
           <BoxContainerChat>
-              <TypographyTitulo variant="h6" >{props.titulo}</TypographyTitulo>
+            <TypographyTitulo variant="h6" >{props.titulo}</TypographyTitulo>
 
             <BoxChat>
               <TypographyPessoaMensagem variant="caption">{props.mensagem.length > 0 ? mensagem : ""}</TypographyPessoaMensagem>

@@ -244,7 +244,6 @@ export default function ComponenteProcesso(props: {
 }
 
 function GridComponent(props: ComponentProps) {
-  //{props.componente.tituloDemanda != null ? (props.componente.tituloDemanda.length > 25 ? "..." : "") : ""}
   return (
     <>
       {!props.proposta && !props.pauta ? (

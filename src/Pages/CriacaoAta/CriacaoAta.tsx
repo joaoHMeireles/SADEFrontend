@@ -53,7 +53,7 @@ export default function CriacaoAta(props: {
   useEffect(() => {
     const pautaEscolhida = JSON.parse(localStorage.getItem("PAUTACRIARATA") as string)
 
-    api.get(`/sade/pauta`).then((response) => {
+    api.get(`/sade/pauta/criarATA`).then((response) => {
       let listaPautas: any[] = []
       for (let pauta of response.data) {
         pauta.propostas = pauta.propostasPauta
@@ -226,9 +226,9 @@ export default function CriacaoAta(props: {
       {valor == 1 && (
         <>
           <BoxInputsDataComissao>
-            <Box sx={{ width: "70%" }}>
+            <Box sx={{ margin: "2rem 0", width: "70%" }}>
               <TypographyTituloInput onClick={lerTexto}>
-                Título da reunião
+                Título da Reunião
               </TypographyTituloInput>
 
               <TextField sx={{ backgroundColor: "#eee", borderRadius: "10px", boxShadow: "5px 5px 10px 0 #00000025", "& fieldset": { border: "none" }, width: "100%" }} id="tituloReuniao" />

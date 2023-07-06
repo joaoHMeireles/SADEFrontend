@@ -121,7 +121,7 @@ export default function Filtro(props: {
       <ExcelExportColumn field={atributo} key={atributo} />
     )
   }
-  
+
   const _export = useRef(null);
   const exportExport = (event: any) => {
     lerTexto(event)
@@ -135,7 +135,7 @@ export default function Filtro(props: {
     api.get("/sade/forum").then((response) => {
       const forunsNovos = []
 
-      for(let forum of response.data){
+      for (let forum of response.data) {
         forum.nome = forum.nomeForum
         forunsNovos.push(forum)
       }
@@ -177,18 +177,20 @@ export default function Filtro(props: {
           open={props.aberto}
         >
           <Toolbar variant="dense" sx={{ marginBottom: "10px" }} />
-          <Item itens={tiposDeComponentes} titulo="Tipo" tipo={1} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto}/>
+          {localStorage.getItem("TIPOUSUARIO") != "Solicitante" &&
+            <Item itens={tiposDeComponentes} titulo="Tipo" tipo={1} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto} />
+          }
           {tipoFiltrado == "Demanda" || tipoFiltrado == "Proposta" ?
             <>
-              <Item itens={status} titulo="Status" tipo={1} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto}/>
-              <Item itens={tamanhos} titulo="Tamanho" tipo={2} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto}/>
+              <Item itens={status} titulo="Status" tipo={1} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto} />
+              <Item itens={tamanhos} titulo="Tamanho" tipo={2} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto} />
               {/* <Item itens={departamentos} titulo="Departamento" tipo={2} filtrarResultados={props.filtrarResultados} /> */}
-              <Item titulo="Código PPM" tipo={3} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto}/>
+              <Item titulo="Código PPM" tipo={3} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto} />
             </>
             :
             <>
-              <Item titulo="Número" tipo={3} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto}/>
-              <Item itens={foruns} titulo="Fórum" tipo={2} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto}/>
+              <Item titulo="Número" tipo={3} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto} />
+              <Item itens={foruns} titulo="Fórum" tipo={2} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto} />
             </>
           }
           <Box sx={{ padding: "8px" }}>
@@ -233,12 +235,12 @@ function Item(props: {
   let opcao: JSX.Element = <div />;
 
   if (!props.itens) {
-    opcao = <OpcaoInput filtrarResultados={props.filtrarResultados} lerTexto={props.lerTexto}/>;
+    opcao = <OpcaoInput filtrarResultados={props.filtrarResultados} lerTexto={props.lerTexto} />;
   } else {
     if (props.tipo == 1) {
-      opcao = <OpcoesRadio itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados} lerTexto={props.lerTexto}/>;
+      opcao = <OpcoesRadio itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados} lerTexto={props.lerTexto} />;
     } else if (props.tipo == 2) {
-      opcao = <OpcoesCheck itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados} lerTexto={props.lerTexto}/>;
+      opcao = <OpcoesCheck itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados} lerTexto={props.lerTexto} />;
     }
   }
 
@@ -276,7 +278,7 @@ function OpcoesRadio(props: OptionInterface) {
 
   const opcoes = props.itens.map((e) => {
 
-    function lerTextoClique(event: any){
+    function lerTextoClique(event: any) {
       props.lerTexto(event)
       handleClick(e.nome)
     }
@@ -349,7 +351,7 @@ function OpcoesCheck(props: OptionInterface) {
 
 function OpcaoInput(props: { filtrarResultados: Function, lerTexto: MouseEventHandler<HTMLElement> }) {
   return (
-    <TextField id="input-pesquisa-ppm" variant="standard" 
+    <TextField id="input-pesquisa-ppm" variant="standard"
       InputProps={{
         sx: {
           color: "#444"

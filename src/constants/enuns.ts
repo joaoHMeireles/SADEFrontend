@@ -61,6 +61,7 @@ export enum TarefaExecucao {
     REPROVARWORKFLOW = "Reprovar Workflow",
     CRIARPAUTA = "Criar Pauta",
     INFORMARPARECERFORUM = "Informar Parecer Fórum",
+    CRIARATA = "Criar ATA",
     INFORMARPARECERDG = "Informar Parecer DG",
     FINALIZAR = "Finalizar histórico"
 }

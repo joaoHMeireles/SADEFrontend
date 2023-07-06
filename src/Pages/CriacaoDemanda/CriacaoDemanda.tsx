@@ -87,7 +87,6 @@ export default function CriacaoDemanda(props: {
         :
         localStorage.getItem("DEMANDASELECIONADA") as string
       );
-
       preencherInformacoesCarregamento()
     }
   }, [])
@@ -332,7 +331,7 @@ export default function CriacaoDemanda(props: {
       })
     } else {
       console.log("chegou aqui");
-      
+
 
       api.post("/sade/demanda/false", formData, {
         headers: {
@@ -340,7 +339,7 @@ export default function CriacaoDemanda(props: {
         }
       }).then((res: any) => {
         console.log("aaaaaaaaaaaaaaaa");
-        
+
         const resposta = res.data
 
         if (resposta.length != null) {
@@ -402,7 +401,6 @@ export default function CriacaoDemanda(props: {
     const titulo = document.getElementById("titulo") as HTMLInputElement;
     const situacaoAtual = document.getElementById("situacaoAtual") as HTMLInputElement;
     const objetivo = document.getElementById("objetivo") as HTMLInputElement;
-
 
     if (titulo.value == "" || situacaoAtual.value == "" || objetivo.value == "" || centroCusto.length == 0) {
       setFeedbackAberto(true)
@@ -548,7 +546,7 @@ export default function CriacaoDemanda(props: {
           <>
             {similaridadeDemanda &&
               <Dialog open={similaridadeDemanda} sx={{ '& .MuiPaper-root': { backgroundColor: "#fff", borderRadius: "10px" } }}>
-                <ModalMostrarDemandasSimilares open={similaridadeDemanda} setOpen={setSimilaridadeDemanda} demandasSimilares={demandasSimilares} continuarCriacaoDemanda={continuarCriacaoDemanda}/>
+                <ModalMostrarDemandasSimilares open={similaridadeDemanda} setOpen={setSimilaridadeDemanda} demandasSimilares={demandasSimilares} continuarCriacaoDemanda={continuarCriacaoDemanda} />
               </Dialog>
             }
 

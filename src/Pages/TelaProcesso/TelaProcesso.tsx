@@ -52,7 +52,7 @@ const valoresInputBU: any[] = [
  * @param props 
  * @returns 
  */
-export default function TelaComponenteProcesso(props: { sidebarAberta: boolean}) {
+export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }) {
     const [modalAberto, setModalAberto] = useState(false)
     const [conteudoModal, setConteudoModal] = useState(<div />)
     const [feedbackAberto, setFeedbackAberto] = useState(false)
@@ -72,7 +72,7 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean})
         if (location.search) {
             let idProposta = location.search.replace("?", "")
 
-            api.get("/sod/proposta/" + idProposta).then((res) => {
+            api.get("/sade/proposta/" + idProposta).then((res) => {
                 const proposta = res.data
 
                 for (let atributo in proposta.demanda) {
@@ -164,7 +164,7 @@ export function Header(props: {
     const tipoProcesso = processo.tipo
     const idAnalista = localStorage.getItem("IDUSUARIO")
 
-    
+
 
 
     const listaBotoes = getBotoesPagina(
@@ -619,10 +619,11 @@ export function Header(props: {
         )
 
         function aprovarWorkflow(conteudoFeedback: JSX.Element) {
-            const tipoUsuario = localStorage.getItem("TIPOUSUARIO")
-            const formDataHistorico = new FormData()
+            const tipoUsuario = localStorage.getItem("TIPOUSUARIO");
+            const formDataHistorico = new FormData();
 
             console.log("id gerenete ti: ", gerenteTISolicitante);
+            console.log(analistaTIResponsavel);
 
             if (tipoUsuario == "GerenteTI") {
                 formDataHistorico.append("historico", JSON.stringify(
@@ -769,7 +770,6 @@ export function Header(props: {
 
         abrirModal()
     }
-
 
     return (
         <>
