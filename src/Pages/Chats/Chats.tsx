@@ -31,6 +31,7 @@ import Typography from "@mui/material/Typography";
 export default function Chats(props: { aberto: boolean }) {
     localStorage.setItem("PAGINATUAL", "chat")
     const [listaChats, setListaChats] = useState<any[]>([])
+    const [listaChatsFiltrados, setListaChatsFiltrados] = useState<any[]>([])
     const [componenteChats, setComponenteChats] = useState<any>()
     const [chatEscolhido, setChatEscolhido] = useState<any>({ mensagens: [] })
     const [elementoMensagens, setElementoMensagens] = useState<any>()
@@ -49,8 +50,12 @@ export default function Chats(props: { aberto: boolean }) {
     }, []);
 
     useEffect(() => {
-       atualizarComponentes()       
+        setListaChatsFiltrados(listaChats)
     }, [listaChats])
+
+    useEffect(() => {
+        atualizarComponentes()
+    }, [listaChatsFiltrados])
 
     useEffect(() => {
         atualizarTela()
@@ -135,7 +140,7 @@ export default function Chats(props: { aberto: boolean }) {
     }
 
     function atualizarComponentes() {
-        const componenteChatsNovo = listaChats.map((chat) => {
+        const componenteChatsNovo = listaChatsFiltrados.map((chat) => {
             if (chat.usuariosChat) {
                 let ultimaMensagem: any = null
 
@@ -191,6 +196,21 @@ export default function Chats(props: { aberto: boolean }) {
         setElementoMensagens(componenteMensagensNovo)
     }
 
+    function filtrarPelaSearchBar(e: any) {
+        const valorPesquisa = e.target.value
+
+        if (valorPesquisa !== '') {
+            const filteredData = listaChats.filter((chat) => {
+                return chat.demanda.tituloDemanda.toLowerCase().includes(valorPesquisa.toLowerCase())
+            })
+
+            setListaChatsFiltrados(filteredData)
+        }
+        else {
+            setListaChatsFiltrados(listaChats)
+        }
+    }
+
     return (
         <>
             <ContainerGeralChats>
@@ -198,7 +218,7 @@ export default function Chats(props: { aberto: boolean }) {
                     <BoxBreadcrumb>
                         <Breadcrumb />
                     </BoxBreadcrumb>
-                    {(listaChats.length != 0 && chatEscolhido.demanda != null) &&
+                    {(listaChatsFiltrados.length != 0 && chatEscolhido.demanda != null) &&
                         <BoxLadoDireitoTituloDemanda>
                             <TypographyTituloDemandaLadoDireito variant="h6">{chatEscolhido.demanda.tituloDemanda}</TypographyTituloDemandaLadoDireito>
 
@@ -208,7 +228,7 @@ export default function Chats(props: { aberto: boolean }) {
                 </BoxBreadcrumbTituloChat>
 
                 <ContainerChats>
-                    {listaChats.length != 0 ?
+                    {listaChatsFiltrados.length != 0 ?
                         <>
                             <LadoEsquerdoGeralChats>
                                 <LadoEsquerdoChat>
@@ -219,7 +239,9 @@ export default function Chats(props: { aberto: boolean }) {
                                                     <SearchRoundedIcon />
                                                 </InputAdornment>
                                             )
-                                        }} />
+                                        }}
+                                        onChange={filtrarPelaSearchBar} 
+                                    />
                                     {componenteChats}
                                 </LadoEsquerdoChat>
                             </LadoEsquerdoGeralChats>
@@ -296,7 +318,8 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
 
     // rever scrolllllllllllll
     const scroll = useRef(null);
-    useEffect(() => {;
+    useEffect(() => {
+        ;
         const boxScroll: HTMLElement | any = document.getElementById("ladoDireitoChat");
 
         if (boxScroll) {
