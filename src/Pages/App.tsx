@@ -52,6 +52,7 @@ export default function App() {
 
 
   useEffect(() => {
+    localStorage.setItem("VALORFILTROTipo", "Demanda")
     api.get("/sade/demanda/rascunho/" + false).then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {

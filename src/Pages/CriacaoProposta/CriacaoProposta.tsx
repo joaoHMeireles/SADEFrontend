@@ -441,16 +441,6 @@ export default function CriacaoProposta(props: {
               informacaoProcesso={informacaoProcesso}
               setInformacaoProcesso={setInformacaoProcesso}
             />
-            {/* <BeneficiosDemanda rascunho={false} proposta={true}
-              numeroBeneficiosReais={numeroBeneficiosReais}
-              numeroBeneficiosPotenciais={numeroBeneficiosPotenciais}
-              numeroBeneficiosQualitativos={numeroBeneficiosQualitativos}
-              setNumeroBeneficiosReais={setNumeroBeneficiosReais}
-              setNumeroBeneficiosPotenciais={setNumeroBeneficiosPotenciais}
-              setNumeroBeneficiosQualitativos={setNumeroBeneficiosQualitativos}
-              valor={valor}
-              informacaoProcesso={informacaoProcesso}
-              setInformacaoProcesso={setInformacaoProcesso} /> */}
 
             <InfomacoesAdicionais
               valorTamanho={valorTamanho}

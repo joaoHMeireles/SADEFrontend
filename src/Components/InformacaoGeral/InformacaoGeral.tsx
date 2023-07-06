@@ -62,6 +62,12 @@ export default function InformacaoGeral(props: {
             if (inputAtributo.id == "situacaoAtual") {
               inputAtributo.value = demandaSelecionada.situacaoAtual;
             }
+            if (inputAtributo.id == "centrosDeCusto") {
+              inputAtributo.value = demandaSelecionada.centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto)
+              if(props.setCentroCusto != null){
+                props.setCentroCusto(demandaSelecionada.centroCustoDemanda);
+              }
+            }
           }
         }
       }
@@ -201,7 +207,7 @@ export default function InformacaoGeral(props: {
                 multiple
                 disableCloseOnSelect
                 onChange={(e, valor: any) => {
-                  if (props.setInformacaoProcesso) {
+                  // if (props.setInformacaoProcesso != null) {
                     let centroCustoDemanda: Object[] = []
 
                     for (let centroCustoSelecionado of valor) {
@@ -211,8 +217,11 @@ export default function InformacaoGeral(props: {
                         }
                       }
                     }
+                    console.log("indo atualizou");
 
-                    if (props.setCentroCusto) {
+                    if (props.setCentroCusto != null) {
+                      console.log("atualizou");
+                      
                       props.setCentroCusto(centroCustoDemanda)
                     }
 
@@ -221,10 +230,10 @@ export default function InformacaoGeral(props: {
                       centroCustoDemanda: centroCustoDemanda,
                     };
 
-                    if (novaInfoDemanda) {
-                      props.setInformacaoProcesso(novaInfoDemanda);
-                    }
-                  }
+                  //   if (novaInfoDemanda) {
+                  //     props.setInformacaoProcesso(novaInfoDemanda);
+                  //   }
+                  // }
                 }}
                 renderOption={(props, nomeCentroCusto: any, { selected }) => {
                   const objetoCentroCusto = centrosCustoBanco.find((cc: any) => cc.nomeCentroCusto == nomeCentroCusto)
@@ -265,7 +274,7 @@ export default function InformacaoGeral(props: {
 
                   setCentrosDeCustoCriacao(centroCustoDemanda.map((centroCusto: any) => centroCusto.nomeCentroCusto))
 
-                  if (props.setCentroCusto) {
+                  if (props.setCentroCusto != null) {
                     props.setCentroCusto(centroCustoDemanda)
                   }
                 }}

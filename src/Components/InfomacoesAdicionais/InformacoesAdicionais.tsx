@@ -79,6 +79,8 @@ export default function InfomacoesAdicionais(props: {
 
     useEffect(() => {
         if (props.informacaoProcesso) {
+            console.log(props.informacaoProcesso);
+
 
             for (const bu of props.informacaoProcesso.busBeneficiadas) {
                 props.valorBUsBeneficadas.push({ idBU: bu.idBU, nomeBU: bu.nomeBU })
@@ -158,7 +160,7 @@ export default function InfomacoesAdicionais(props: {
                                         boxShadow: "5px 5px 10px 0 #00000025",
                                         "& fieldset": { border: "none" },
                                         width: "15vw"
-                                    }
+                                    },
                                 }}
                                 value={props.prazoElaboracao}
                                 onChange={(e: any) => {
@@ -179,6 +181,7 @@ export default function InfomacoesAdicionais(props: {
 
                         <SelectEdited
                             id="busolicitante"
+                            defaultValue={props.valorBUSolicitante}
                             value={props.valorBUSolicitante}
                             onChange={(e: any) => {
                                 props.setValorBUSolicitante(e.target.value as string)
@@ -315,59 +318,60 @@ export default function InfomacoesAdicionais(props: {
 
                 <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "2rem", width: "100%" }}>
                     {/* <Box sx={{ alignItems: "center", display: "flex", justifyContent: "space-between", width: "50%" }}> */}
-                        <Box>
-                            <TypographyPadrao onClick={lerTexto}>Sessão TI responsável:</TypographyPadrao>
+                    <Box>
+                        <TypographyPadrao onClick={lerTexto}>Sessão TI responsável:</TypographyPadrao>
 
-                            <SelectEdited
-                                id="sessaoTI"
-                                value={props.valorSessaoTI}
-                                onChange={(e: any) => {
-                                    const sessaoTI = {
-                                        nome: e.target.value,
-                                        abreviacao: props.informacaoProcesso.secaoTIResponsavel
+                        <SelectEdited
+                            id="sessaoTI"
+                            defaultValue={props.valorSessaoTI}
+                            value={props.valorSessaoTI}
+                            onChange={(e: any) => {
+                                const sessaoTI = {
+                                    nome: e.target.value,
+                                    abreviacao: props.informacaoProcesso.secaoTIResponsavel
+                                }
+                                props.setValorSessaoTI(sessaoTI.nome);
+
+                                let abreviacaoSessao;
+
+                                for (const sessaoTI of sessoesTI) {
+                                    if (sessaoTI.nome == e.target.value) {
+                                        abreviacaoSessao = sessaoTI.abreviacao;
                                     }
-                                    props.setValorSessaoTI(sessaoTI.nome);
-
-                                    let abreviacaoSessao;
-
-                                    for (const sessaoTI of sessoesTI) {
-                                        if (sessaoTI.nome == e.target.value) {
-                                            abreviacaoSessao = sessaoTI.abreviacao;
-                                        }
-                                    }
-
-                                    const novaInfoDemanda = {
-                                        ...props.informacaoProcesso,
-                                        secaoTIResponsavel: abreviacaoSessao,
-                                    };
-                                    props.setInformacaoProcesso(novaInfoDemanda);
-                                }}>
-                                {sessoesTI.map((sessao: any, index: number) => {
-                                    return (
-                                        <MenuItem key={index} value={sessao.nome} onClick={lerTexto}>
-                                            {sessao.nome}
-
-                                        </MenuItem>
-                                    )
-                                })}
-                            </SelectEdited>
-                        </Box>
-
-                        <Box>
-                            <TypographyPadrao onClick={lerTexto}>Código PPM:</TypographyPadrao>
-
-                            <TextFieldEdited sx={{ width: "15vw" }} id="codigoPPM" type="search" value={props.valorCodigoPPM} onChange={(e: any) => {
-
-                                props.setValorCodigoPPM(e.target.value)
+                                }
 
                                 const novaInfoDemanda = {
                                     ...props.informacaoProcesso,
-                                    codigoPPM: e.target.value,
+                                    secaoTIResponsavel: abreviacaoSessao,
                                 };
                                 props.setInformacaoProcesso(novaInfoDemanda);
                             }}>
-                            </TextFieldEdited>
-                        </Box>
+                            {sessoesTI.map((sessao: any, index: number) => {
+                                return (
+                                    <MenuItem key={index} value={sessao.nome} onClick={lerTexto}>
+                                        {sessao.nome}
+
+                                    </MenuItem>
+                                )
+                            })}
+                        </SelectEdited>
+                    </Box>
+
+                    <Box>
+                        <TypographyPadrao onClick={lerTexto}>Código PPM:</TypographyPadrao>
+
+                        <TextFieldEdited sx={{ width: "15vw" }} id="codigoPPM" type="search" value={props.valorCodigoPPM} onChange={(e: any) => {
+
+                            props.setValorCodigoPPM(e.target.value)
+
+                            const novaInfoDemanda = {
+                                ...props.informacaoProcesso,
+                                codigoPPM: e.target.value,
+                            };
+                            props.setInformacaoProcesso(novaInfoDemanda);
+                        }}>
+                        </TextFieldEdited>
+                    </Box>
                     {/* </Box> */}
                 </Box>
 
