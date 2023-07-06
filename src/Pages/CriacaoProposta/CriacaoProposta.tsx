@@ -280,48 +280,58 @@ export default function CriacaoProposta(props: {
   }
 
   function checarPreenchimento(): number {
+    console.log(">> Entrou no checarPreenchimento()")
     const dataExecucaoInicio = (document.getElementById("periodoExecucaoInicio") as HTMLInputElement).value
     const dataExecucaoFim = (document.getElementById("periodoExecucaoFim") as HTMLInputElement).value
-
+    
     if (escopoProposta == "" || (payback == "" || payback == undefined) || informacaoProcesso == "" || usuariosResponsaveis.length == 0 || dataExecucaoInicio == "" || dataExecucaoFim == "") {
+      console.log("> Entrou no PRIMEIRO if()")
       return 1
     }
-
+    
     let listaTabelas = document.getElementsByClassName("tabelaCustoCriacao");
     let tabelaPreenchida = 0
-
+    
     for (let i = 0; i < listaTabelas.length; i++) {
+      console.log("> Entrou no PRIMEIRO for()")
+      console.log("i = " + i + "\nlistaTabelas.length = " + listaTabelas.length)
       let listaLinhasTabela = document.getElementsByClassName(`linhaTabelaCustoCriacao${i}`);
-
+      
       for (let j = 0; j < listaLinhasTabela.length; j++) {
+        console.log("> Entrou no SEGUNDO for()")
+        console.log("i = " + i + "\nlistaTabelas.length = " + listaLinhasTabela.length)
         const nomeRecurso = (document.getElementById(`tituloLinha${i}-${j}`) as HTMLInputElement).value
         const quantidade = (document.getElementById(`esforco${i}-${j}`) as HTMLInputElement).value
         const valorQuantidade = (document.getElementById(`valorHora${i}-${j}`) as HTMLInputElement).value
-
+        
         if (nomeRecurso == "" || quantidade == "" || valorQuantidade == "") {
+          console.log("> Entrou no if() nomeRecurso,  quantidade e valorQuantidade")
           tabelaPreenchida = 1
           break
         }
       }
-
+      
       if (tabelaPreenchida != 0) {
+        console.log("> Entrou no PRIMEIRO if() tabelaPreenchida")
         break
       }
-
+      
       if (centroCustoEscolhidas.length < 2) {
+        console.log("> Entrou no if() centroCustoEscolhidas")
         tabelaPreenchida = 1
         break
       }
-
+      
       for (const centroCustos of centroCustoEscolhidas) {
+        console.log("> Entrou no TERCEIRO for()")
         if (centroCustos != undefined) {
           if (centroCustos.length == 0) {
             tabelaPreenchida = 1
             break
           }
-
+          
           let porcentagemTotal = 0
-
+          
           for (const centroCusto of centroCustos) {
             porcentagemTotal += Number.parseInt(centroCusto.porcentagem)
           }
@@ -332,17 +342,19 @@ export default function CriacaoProposta(props: {
           }
         }
       }
-
+      
       if (tabelaPreenchida != 0) {
+        console.log("> Entrou no SEGUNDO if() tabelaPreenchida")
         break
       }
-
+      
     }
-
+    
     if (tabelaPreenchida != 0) {
+      console.log("> Entrou no TERCEIRO if() tabelaPreenchida")
       return tabelaPreenchida
     }
-
+    
     return 0
   }
 

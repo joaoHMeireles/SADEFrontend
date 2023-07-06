@@ -154,9 +154,11 @@ function Tabela(props: {
         }
       }
     }
+    console.log(">>>> ", listaCentroCustoTabela);
+    
 
     setCentroCustoEscolhidos(listaCentroCustoTabela);
-    props.setCentroCustoEscolhidas(listaCentroCustoTabela)
+    // props.setCentroCustoEscolhidas(listaCentroCustoTabela)
   }
 
   function atualizarValor() {
