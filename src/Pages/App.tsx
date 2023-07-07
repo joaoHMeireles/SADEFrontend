@@ -50,9 +50,7 @@ export default function App() {
   const tamanhoNavbar = "8.5vh"
 
 
-  useEffect(() => {
-    localStorage.setItem("VALORFILTROTipo", "Demanda")
-    
+  useEffect(() => {    
     api.get("/sade/demanda/rascunho/" + false).then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
