@@ -49,7 +49,6 @@ export default function App() {
   const [listaATAs, setListaATAs] = useState<any[]>([])
   const tamanhoNavbar = "8.5vh"
 
-
   useEffect(() => {
     api.get("/sade/demanda/rascunho/" + false).then((response) => {
       let listaDemandas: any[] = []
@@ -179,8 +178,6 @@ export default function App() {
           filtrarTipoComponente(grupoOpcoesTipo)
         }
       }
-    } else {
-
     }
 
     const grupoOpcoesTamanho = document.getElementById("grupo-opcoes-Tamanho")

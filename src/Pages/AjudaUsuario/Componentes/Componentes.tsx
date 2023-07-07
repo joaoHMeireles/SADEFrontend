@@ -439,14 +439,8 @@ export const CoresStatus = (
                     <li>Aguardando revisão</li>
                 </ul>
             </BoxTitleStatus>
-        </Box>
 
-        <Box>
-            <BoxTitleStatus sx={{ color: "#FF1616" }}>
-                <ul>
-                    <li>Cancelado (Cancelled)</li>
-                </ul>
-            </BoxTitleStatus>
+            <P>Neste status, o solicitante criou uma demanda e está aguardando a avaliação por parte do analista responsável. A demanda pode ser reprovada, devolvida ou aprovada com base na análise realizada.</P>
         </Box>
 
         <Box>
@@ -455,14 +449,18 @@ export const CoresStatus = (
                     <li>Aguardando Revisão (Backlog)</li>
                 </ul>
             </BoxTitleStatus>
+
+            <P>Após a aprovação, a demanda entra nesse status e fica aguardando a revisão e inclusão de informações adicionais para se tornar uma proposta completa. Durante essa etapa, a demanda passa por um processo de revisão e refinamento.</P>
         </Box>
 
         <Box>
-            <BoxTitleStatus sx={{ color: "#00612E" }}>
+            <BoxTitleStatus sx={{ color: "#FF1616" }}>
                 <ul>
-                    <li>A Fazer (To Do)</li>
+                    <li>Cancelado (Cancelled)</li>
                 </ul>
             </BoxTitleStatus>
+
+            <P>Esse status indica que a demanda foi cancelada em algum ponto do processo. Uma vez cancelada, a demanda não pode mais progredir e é encerrada. O cancelamento pode ocorrer em diferentes estágios do processo.</P>
         </Box>
 
         <Box>
@@ -471,6 +469,8 @@ export const CoresStatus = (
                     <li>Em Planejamento (Assessment)</li>
                 </ul>
             </BoxTitleStatus>
+
+            <P>Neste status, a demanda já passou pela fase de revisão e se transformou em uma proposta. Ela está em processo de planejamento, sendo avaliada e analisada para viabilidade e adequação. A demanda também precisa ser aprovada pela ata das reuniões.</P>
         </Box>
 
         <Box>
@@ -479,6 +479,18 @@ export const CoresStatus = (
                     <li>Em Planejamento Demorado (Business Case)</li>
                 </ul>
             </BoxTitleStatus>
+
+            <P>Similar ao status anterior de "Em planejamento", porém indica que o processo de implementação da demanda será mais complexo e demorado do que o usual. Isso ocorre devido à necessidade de uma análise mais aprofundada, considerando as particularidades e desafios envolvidos na implementação.</P>
+        </Box>
+
+        <Box>
+            <BoxTitleStatus sx={{ color: "#00612E" }}>
+                <ul>
+                    <li>A Fazer (To Do)</li>
+                </ul>
+            </BoxTitleStatus>
+
+            <P>Neste status, o projeto foi aprovado pelas comissões responsáveis e está sendo preparado para a implementação. Essa etapa envolve o planejamento detalhado, alocação de recursos e todas as atividades necessárias para iniciar a execução do projeto.</P>
         </Box>
     </BoxBackground>
 );

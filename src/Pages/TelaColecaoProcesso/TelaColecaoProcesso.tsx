@@ -1043,8 +1043,8 @@ export function Proposta(props: {
           </Box>
         </Box>
       ) : (
-        <Grid item xs={12}>
-          <TypographyTituloDecisao variant="body1">
+        <>
+          <TypographyTituloDecisao variant="body1" sx={{ marginBottom: "0rem !important", marginTop: "2rem" }}>
             Forma de publicação:
           </TypographyTituloDecisao>
 
@@ -1067,7 +1067,7 @@ export function Proposta(props: {
               {mensagemErroATA}
             </FormHelperText>
           </FormControl>
-        </Grid>
+          </>
       )}
       <Box sx={{ marginTop: "2rem" }}>
         <TypographyTituloDecisao variant="body1">

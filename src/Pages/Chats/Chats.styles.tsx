@@ -77,7 +77,7 @@ export const ContainerChats = styled(Box)({
 });
 
 export const ContainerGeralChats = styled(Box)({
-    margin: "2rem",
+    margin: "2rem 3rem 2rem 2rem",
     height: "80vh"
 });
 
@@ -164,24 +164,22 @@ export const BoxMensagemHorario = styled(Box)({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-end",
-    margin: "0 2px 0 2px",
+    // margin: "0 0 0 1rem",
     wordWrap: "break-word",
 });
 
 export const BoxMensagemLadoEsquerdo = styled(Box)({
     background: "#EEEEEE",
-    borderRadius: "5px 5px 5px 0px",
+    borderRadius: "10px",
     boxShadow: "-5px 5px 10px 0 #00000025",
-    // padding: 4,
-    width: "auto",
+    padding: "0.5rem"
 });
 
 export const BoxMensagemLadoDireito = styled(Box)({
     background: "#9ACAE580",
-    borderRadius: "5px 5px 0 5px",
+    borderRadius: "10px",
     boxShadow: "-5px 5px 10px 0 #00000025",
-    // padding: 4,
-    width: "auto",
+    padding: "0.5rem"
 });
 
 export const BoxMensagensLadoDireito = styled(Box)({
@@ -211,35 +209,33 @@ export const BoxMensagensLadoEsquerdo = styled(Box)({
 });
 
 export const TypographyHoraMensagem = styled(Typography)({
-    fontSize: "10px",
-    // height: "2vh",
+    alignItems: "flex-end", 
+    color: "#444",
     display: "flex",
+    fontSize: "10px",
     justifyContent: "center",
-    alignItems: "flex-end",
-    color: "#444"
+    // height: "2vh",
+    marginLeft: "0.5rem"
 });
 
 export const TypographyMensagemEsquerda = styled(Typography)({
     color: "#444",
-    fontSize: "16px",
+    // padding: "0.3rem 1rem 1rem 0",
     textAlign: "justify",
-    wordWrap: "break-word",
-    width: "90%"
-    // padding: "0.3rem 1rem 1rem 0"
+    width: "90%",
+    wordWrap: "break-word"
 
 });
 
 export const TypographyMensagemDireita = styled(Typography)({
     color: "#444",
-    fontSize: "16px",
-    textAlign: "justify",
-    wordWrap: "break-word",
-    width: "90%"
     // padding: "0.3rem 1rem 1rem 0"
+    textAlign: "justify",
+    width: "90%",
+    wordWrap: "break-word"
 });
 
 export const TypographyPessoa = styled(Typography)({
     color: "#00579d",
-    fontSize: "16px",
-    fontWeight: "bold",
+    fontWeight: "bold"
 });
