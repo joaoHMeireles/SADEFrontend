@@ -40,7 +40,7 @@ const valoresInputBU: any[] = [
     { idBU: 3, nomeBU: 'Energia' },
     { idBU: 4, nomeBU: 'Automação' },
     { idBU: 5, nomeBU: 'Digital e Sistemas' },
-    { idBU: 6, nomeBU: ' Drives e Controles' },
+    { idBU: 6, nomeBU: 'Drives e Controles' },
     { idBU: 7, nomeBU: 'Tintas' },
     { idBU: 8, nomeBU: 'Transmissão e Distribuição' }
 ]
@@ -123,9 +123,11 @@ export default function TelaComponenteProcesso(props: { sidebarAberta: boolean }
 
                         <Snackbar
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                            autoHideDuration={3000}
+                            autoHideDuration={5000}
                             open={feedbackAberto}
-                            onClose={() => { setFeedbackAberto(false) }}>
+                            onClose={() => {
+                                setFeedbackAberto(false)
+                            }}>
                             {conteudoFeedback}
                         </Snackbar>
                     </Container>
@@ -267,8 +269,12 @@ export function Header(props: {
                 proposta.tipo = TipoComponenteProcesso.Proposta
                 proposta.id = proposta.idProposta
                 localStorage.setItem("PROPOSTAESCOLHIDA", JSON.stringify(proposta))
+
                 abrirFeedback(conteudo)
-                location.reload()
+                setTimeout(() => {
+                    location.reload()
+                }, 2000)
+
             }).catch((err: any) => {
                 console.log(err);
             })
@@ -312,15 +318,12 @@ export function Header(props: {
                 ))
 
                 const formDataDemanda = new FormData()
-                //arrumar isso auqi
-                const bu = valoresInputBU.find(bu => bu.nomeBU == nomeBUSolicitante)
 
-                // console.log(nomeBUSolicitante);
-
-                // console.log("bu ta aqui");
-
-                // console.log(bu);
-
+                const bu = valoresInputBU.find((bu) => {
+                    if (bu.nomeBU == nomeBUSolicitante) {
+                        return { idBU: bu.idBU, nomeBU: bu.nomeBU }
+                    }
+                })
 
                 formDataDemanda.append("demanda", JSON.stringify(
                     {
@@ -573,7 +576,7 @@ export function Header(props: {
     function iniciarNovoWorkflow() {
         const conteudoFeedback = (
             <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
-                Workflow iniciado
+                Workflow iniciado, email de workflow enviado.
             </Alert>
         )
 
@@ -623,11 +626,26 @@ export function Header(props: {
 
     //testar depois de já ter como cadastrar proposta
     function avaliarWorkflow() {
-        const conteudoFeedbackAprovado = (
-            <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
-                Workflow aprovado
-            </Alert>
-        )
+        const tipoUsuario = localStorage.getItem("TIPOUSUARIO");
+
+        let conteudoFeedbackAprovado;
+
+        {
+            tipoUsuario == "GerenteTI" ?
+                conteudoFeedbackAprovado = (
+                    <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                        Workflow aprovado
+                    </Alert>
+                )
+                :
+                conteudoFeedbackAprovado = (
+                    <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }}>
+                        Workflow aprovado, email de workflow enviado.
+                    </Alert>
+                )
+        }
+
+
 
         const conteudoFeedbackReprovado = (
             <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="info" sx={{ width: '100%' }}>
