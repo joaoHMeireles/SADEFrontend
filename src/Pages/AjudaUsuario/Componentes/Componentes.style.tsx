@@ -22,7 +22,8 @@ export const BoxImage = styled(Box)({
 
 export const BoxTitleStatus = styled(Box)({
     fontWeight: "bold",
-    marginBottom: "1rem"
+    marginBottom: "0.5rem",
+    marginLeft: "1rem"
 });
 
 export const P = styled(Box)({
