@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
-import api, { pegarAnalistaTIResponsavel, pegarGerenteSolicitante, pegarGerenteTISolicitante, pegarUltimoHistorico, verificarHistoricoAprovado } from '../../api/api';
+import api, { pegarAnalistaTIResponsavel, pegarGerenteSolicitante, pegarGerenteTISolicitante, pegarUltimoHistorico, pegarUltimoHistoricoConcluido, verificarHistoricoAprovado } from '../../api/api';
 import {
     getNomeComponente, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum, getValueEnum,
     baixarArquivo, getBotoesPagina, getNomeAtributo, useLocationChange
@@ -155,6 +155,7 @@ export function Header(props: {
     const [tempoExcedido, setTempoExcedido] = useState(false)
     const [aprovadoGerente, setAprovadoGerente] = useState(false)
     const [ultimoHistorico, setUltimoHistorico] = useState<any>({})
+    const [ultimoHistoricoConcluido, setUltimoHistoricoConcluido] = useState<any>({})
     const [gerenteSolicitante, setGerenteSolicitante] = useState<any>(null)
     const [gerenteTISolicitante, setGerenteTISolicitante] = useState<any>(null)
     const [analistaTIResponsavel, setAnalistaTIResponsavel] = useState<any>(null)
@@ -163,18 +164,16 @@ export function Header(props: {
     const prazoElaboracao = processo.prazoElaboracao
     const tipoProcesso = processo.tipo
     const idAnalista = localStorage.getItem("IDUSUARIO")
+    let listaBotoes: any[] = []
 
-
-
-
-    const listaBotoes = getBotoesPagina(
+    listaBotoes = getBotoesPagina(
         processo,
         [
             irChat, aprovarDemanda, reprovarDemanda, devolverDemanda, verHistorico, adicionarInformacoesDemanda,
             criarNovaProposta, iniciarNovoWorkflow, verDemandaProposta, criarNovaPauta, avaliarWorkflow, criarChat
         ],
         aprovadoGerente,
-        ultimoHistorico
+        ultimoHistoricoConcluido
     )
 
     useEffect(() => {
@@ -186,6 +185,12 @@ export function Header(props: {
 
         try {
             pegarUltimoHistorico(processo.id, setUltimoHistorico)
+        } catch (erro: any) {
+            console.log(erro);
+        }
+
+        try {
+            pegarUltimoHistoricoConcluido(processo.id, setUltimoHistoricoConcluido)
         } catch (erro: any) {
             console.log(erro);
         }
@@ -212,6 +217,18 @@ export function Header(props: {
             setTempoExcedido(true)
         }
     }, [])
+
+    useEffect(() => {
+        listaBotoes = getBotoesPagina(
+            processo,
+            [
+                irChat, aprovarDemanda, reprovarDemanda, devolverDemanda, verHistorico, adicionarInformacoesDemanda,
+                criarNovaProposta, iniciarNovoWorkflow, verDemandaProposta, criarNovaPauta, avaliarWorkflow, criarChat
+            ],
+            aprovadoGerente,
+            ultimoHistoricoConcluido
+        )
+    }, [ultimoHistoricoConcluido])
 
     function abrirModal() {
         props.setModalAberto(true)

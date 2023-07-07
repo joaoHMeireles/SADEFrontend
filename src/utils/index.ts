@@ -236,6 +236,7 @@ export function baixarArquivo(anexo: any) {
 
 export function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLButtonElement>[], aprovadoGerente: boolean, ultimoHistorico: any) {
     const tipoPessoa = localStorage.getItem("TIPOUSUARIO")
+    const idPessoa = localStorage.getItem("IDUSUARIO")
     const tipoProcesso = processo.tipo
     const statusProcesso = processo.statusDemanda
     const tamanho = processo.tamanho
@@ -257,7 +258,6 @@ export function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLBu
             listaBotoes.push({ nome: "chat", function: funcoes[11] })
         }
     }
-
     /**
      *  1º chat, reprovar, devolver, aprovar (Analista de TI, demanda)
         2º chat, histórico, reprovar aprovar (Gerente de negócio, demanda)
@@ -351,15 +351,24 @@ export function getBotoesPagina(processo: any, funcoes: MouseEventHandler<HTMLBu
                 } else {
                     if (workflowDeadline < new Date()) {
                         if (tipoPessoa == "GerenteTI" || tipoPessoa == "GerenteNegocio") {
-                            const workflow = { nome: "workflow!", function: funcoes[10] }
+                            if(ultimoHistorico.usuario != null){
+                                if(ultimoHistorico.usuario.idUsuario == idPessoa){
+                                    const workflow = { nome: "workflow!", function: funcoes[10] }
+        
+                                    listaBotoes.push(workflow)
 
-                            listaBotoes.push(workflow)
+                                }
+                            }
                         }
                     } else {
                         if (tipoPessoa == "GerenteTI" || tipoPessoa == "GerenteNegocio") {
-                            const workflow = { nome: "workflow", function: funcoes[10] }
-
-                            listaBotoes.push(workflow)
+                            if(ultimoHistorico.usuario != null){
+                                if(ultimoHistorico.usuario.idUsuario == idPessoa){
+                                    const workflow = { nome: "workflow", function: funcoes[10] }
+        
+                                    listaBotoes.push(workflow)
+                                }
+                            }
                         }
                     }
                     listaBotoes.push(verDemanda)

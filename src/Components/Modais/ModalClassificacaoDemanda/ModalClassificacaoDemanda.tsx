@@ -15,7 +15,7 @@ const valoresInputBU: any[] = [
     { idBU: 3, nomeBU: 'Energia' },
     { idBU: 4, nomeBU: 'Automação' },
     { idBU: 5, nomeBU: 'Digital e Sistemas' },
-    { idBU: 6, nomeBU: ' Drives e Controles' },
+    { idBU: 6, nomeBU: 'Drives e Controles' },
     { idBU: 7, nomeBU: 'Tintas' },
     { idBU: 8, nomeBU: 'Transmissão e Distribuição' }
 ]

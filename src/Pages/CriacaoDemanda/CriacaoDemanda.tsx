@@ -330,20 +330,15 @@ export default function CriacaoDemanda(props: {
         erroEncontrado()
       })
     } else {
-      console.log("chegou aqui");
-
-
       api.post("/sade/demanda/false", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }
       }).then((res: any) => {
-        console.log("aaaaaaaaaaaaaaaa");
-
         const resposta = res.data
 
         if (resposta.length != null) {
-          console.log(resposta);
+          console.log("resposta: ", resposta);
           setDemandasSimilares(resposta)
         } else {
           mostrarFeedback()

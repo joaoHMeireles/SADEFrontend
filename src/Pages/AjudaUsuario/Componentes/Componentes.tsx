@@ -97,7 +97,7 @@ export const CriarDemanda = (
     </BoxBackground>
 );
 
-export const AvaliarDemanda3Opcoes = (
+export const AvaliarDemanda = (
     <BoxBackground>
         {usuarioLogado == "AnalistaTI" || usuarioLogado == "GerenteTI" ?
             <>
@@ -132,15 +132,15 @@ export const AvaliarDemanda3Opcoes = (
     </BoxBackground>
 );
 
-export const AvaliarDemanda2Opcoes = (
+export const RevisarDemanda = (
     <BoxBackground>
         {usuarioLogado == "GerenteNegocio" || usuarioLogado == "GerenteTI" ?
             <>
                 <Title>
-                    <p>Avaliar Demanda</p>
+                    <p>Revisar Demanda</p>
                 </Title>
 
-                <P>Avalie a Demanda: Você pode reprovar ou aprovar uma Demanda.</P>
+                <P>Revise a Demanda: Você pode reprovar ou aprovar uma Demanda.</P>
 
                 <BoxImage>
                     <img id="imgs" src={avaliarDemandaGN} alt="Avaliar Demanda" />
@@ -417,7 +417,7 @@ export const AvaliarWorkflow = (
 
 // Criar Demanda                         --> Todos
 // Avaliar Demanda (três opções)         --> Analista de TI ou Gerente de TI
-// Avaliar Demanda (duas opções)         --> Gerente de Negócio ou Gerente de TI
+// Revisar Demanda (duas opções)         --> Gerente de Negócio ou Gerente de TI
 // Adicionar informações na Demanda      --> Analista de TI ou Gerente de TI
 // Criar Proposta                        --> Analista de TI ou Gerente de TI
 // Criar Pauta                           --> Analista de TI ou Gerente de TI

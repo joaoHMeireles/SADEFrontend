@@ -51,8 +51,6 @@ export default function App() {
 
 
   useEffect(() => {
-    localStorage.setItem("VALORFILTROTipo", "Demanda")
-    
     api.get("/sade/demanda/rascunho/" + false).then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
@@ -61,7 +59,7 @@ export default function App() {
         listaDemandas.push(demanda)
       }
 
-      setListaDemandas(listaDemandas);
+      setListaDemandas(listaDemandas.reverse());
     }).catch((err) => {
       console.log(err);
     })
@@ -80,7 +78,7 @@ export default function App() {
         listaPropostas.push(proposta)
       }
 
-      setListaPropostas(listaPropostas);
+      setListaPropostas(listaPropostas.reverse());
     }).catch((err: any) => {
       console.log(err);
     })
@@ -95,7 +93,7 @@ export default function App() {
         pauta.tipo = TipoColecaoComponenteProcesso.Pauta
         listaPautas.push(pauta)
       }
-      setListaPautas(listaPautas);
+      setListaPautas(listaPautas.reverse());
     }).catch((err) => {
       console.log(err);
     })
@@ -111,7 +109,7 @@ export default function App() {
         listaATAs.push(ata)
       }
 
-      setListaATAs(listaATAs);
+      setListaATAs(listaATAs.reverse());
     }).catch((err) => {
       console.log(err);
     })

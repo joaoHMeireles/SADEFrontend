@@ -25,6 +25,14 @@ export async function pegarUltimoHistorico(id: number, setUltimohistorico: React
   })
 }
 
+export async function pegarUltimoHistoricoConcluido(id: number, setUltimohistoricoConcluido: React.Dispatch<SetStateAction<any>>) {
+  axiosEntity.get(`${url}/sade/historicoWorkflow/demanda/ultimo/${id}`).then((response: any) => {
+    setUltimohistoricoConcluido(response.data)
+  }).catch((err: any) => {
+    console.log(err);
+  })
+}
+
 export async function pegarGerenteSolicitante(id: number, setGerenteSolicitante: React.Dispatch<SetStateAction<any>>) {
   axiosEntity.get(`${url}/sade/usuario/gerente/usuario/${id}`).then((response: any) => {
     setGerenteSolicitante(response.data)
@@ -35,9 +43,6 @@ export async function pegarGerenteSolicitante(id: number, setGerenteSolicitante:
 
 export async function pegarGerenteTISolicitante(id: number, setGerenteTISolicitante: React.Dispatch<SetStateAction<any>>) {
   axiosEntity.get(`${url}/sade/usuario/gerenteTI/usuario/${id}`).then((response: any) => {
-    console.log("Gerente de TI ", response.data);
-    
-
     setGerenteTISolicitante(response.data)
   }).catch((err: any) => {
     console.log(err);

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { Introducao, CriarDemanda, AvaliarDemanda3Opcoes, AvaliarDemanda2Opcoes, AdicionarInfoDemanda, CriarProposta, CriarPauta, InformarParecerComissao, CriarATA, InformarParecerDiretoriaGeral, IniciarWorkflow, AvaliarWorkflow, CoresStatus } from "./Componentes/Componentes";
+import { Introducao, CriarDemanda, AvaliarDemanda, RevisarDemanda, AdicionarInfoDemanda, CriarProposta, CriarPauta, InformarParecerComissao, CriarATA, InformarParecerDiretoriaGeral, IniciarWorkflow, AvaliarWorkflow, CoresStatus } from "./Componentes/Componentes";
 
 export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: boolean }) {
   const [processosPrincipaisOpen, setProcessosPrincipaisOpen] = useState(false);
@@ -69,7 +69,7 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                   </ListItemButton>
 
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
-                    setComponentes(AvaliarDemanda3Opcoes);
+                    setComponentes(AvaliarDemanda);
                     setCor(2);
                   }}>
                     {cor == 2 ?
@@ -79,13 +79,13 @@ export default function AjudaUsuario(props: { aberto: boolean, sidebarAberta: bo
                   </ListItemButton>
 
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {
-                    setComponentes(AvaliarDemanda2Opcoes);
+                    setComponentes(RevisarDemanda);
                     setCor(3);
                   }}>
                     {cor == 3 ?
-                      <ListItemText primary="Avaliar Demanda" sx={{ color: "#00579d" }} />
+                      <ListItemText primary="Revisar Demanda" sx={{ color: "#00579d" }} />
                       :
-                      <ListItemText primary="Avaliar Demanda" />}
+                      <ListItemText primary="Revisar Demanda" />}
                   </ListItemButton>
 
                   <ListItemButton sx={{ pl: 4 }} onClick={() => {

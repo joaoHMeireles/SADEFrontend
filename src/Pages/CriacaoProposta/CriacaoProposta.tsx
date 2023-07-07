@@ -276,7 +276,9 @@ export default function CriacaoProposta(props: {
       console.log(res);
     })
 
-    window.location.href = "/home"
+    setTimeout(() => {
+      window.location.href = "/home"
+    }, 2000) 
   }
 
   function checarPreenchimento(): number {

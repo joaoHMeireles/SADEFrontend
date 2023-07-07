@@ -116,6 +116,7 @@ export default function Chats(props: { aberto: boolean }) {
                 })
 
                 setElementoMensagens(componenteMensagensNovo)
+                atualizarComponentes()
             }
   
             webSocketService.inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagem)
@@ -125,7 +126,6 @@ export default function Chats(props: { aberto: boolean }) {
     }, [webSocketService.stompClient, listaChats])
 
     function verChat(idChat: any) {
-
         const chatAtual = listaChats.find(chat => chat.idChat == idChat)
         setChatEscolhido(chatAtual)
     }
