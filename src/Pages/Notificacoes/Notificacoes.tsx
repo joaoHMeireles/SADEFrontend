@@ -79,6 +79,8 @@ export default function Notificacoes() {
                 icone = CheckBoxRoundedIcon;
             } else if (acao == "VIROUPAUTA") {
                 icone = CheckBoxRoundedIcon;
+            }else if(acao = "VIROUPROPOSTA"){
+                icone = CheckBoxRoundedIcon;
             } else if (acao == "RASCUNHO") {
                 icone = DrawRoundedIcon;
             } else if (acao == "PRAZOELABORACAOPROPOSTA") {
@@ -88,6 +90,8 @@ export default function Notificacoes() {
     }
 
     const notificacoesElement = notificacoes.map((notificacao: any, index: number) => {
+        console.log(notificacao);
+        
         getTipoIcone(notificacao.acao)
         
         return (

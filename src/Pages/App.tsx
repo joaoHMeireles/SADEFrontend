@@ -375,11 +375,14 @@ export default function App() {
                       <Route path="/home/agenda/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(15)} />} />
                       <Route path="/home/ata/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(573)} />} />
                       <Route path="/createagenda/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(731)} />} />
+                      <Route path="/notifications/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(300)} />} />
                       <Route path="/createata/proposal" element={<TelaProcesso sidebarAberta={sidebarAberta} key={randomKeyGenerator(45)} />} />
 
 
                       <Route path="/home/agenda" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
+                      <Route path="/notifications/agenda" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
                       <Route path="/home/ata" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
+                      <Route path="/notifications/ata" element={<TelaColecaoProcesso sidebarAberta={sidebarAberta} />} />
                     </Routes>
 
                     <Snackbar
