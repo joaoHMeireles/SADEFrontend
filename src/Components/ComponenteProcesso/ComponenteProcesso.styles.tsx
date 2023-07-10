@@ -88,7 +88,7 @@ export const GridLinkColecaoTypograpfy = styled(GridLinkTypograpfy)({
 export const BoxListaCorProcesso = styled(Box)({
   borderRadius: "5px 0 0 5px",
   height: "100%",
-  maxWidth: "8px",
+  width: "0.5rem"
 });
 
 export const ListaComponenteProcesso = styled(Grid)({
@@ -100,8 +100,9 @@ export const ListaComponenteProcesso = styled(Grid)({
 });
 
 export const ListaTypography = styled(GridTypography)({
-  display: "flex",
   alignItems: "center",
+  display: "flex",
+  height: "100%",
   "& a": {
     color: "#3d83bc",
 
