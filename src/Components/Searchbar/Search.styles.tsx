@@ -5,7 +5,7 @@ export const BoxContainerInput = styled(Box)({
     alignItems: "center",
     display: "flex",
     justifyContent: "center",
-    margin: "2rem 0",
+    marginTop: "2rem",
     width: "100%"
 });
 

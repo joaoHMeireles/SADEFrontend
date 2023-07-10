@@ -61,7 +61,7 @@ export default function CardsProcesso(props: {
         {!props.grid &&
           <Grid item xs={1} />
         }
-        <Grid key={index} item xs={props.grid ? (!matches ? 4 : 6) : 10} sx={{ marginBottom: props.grid ? "2rem" : "1rem" }}>
+        <Grid key={index} item xs={props.grid ? (!matches ? 4 : 6) : 10} sx={{ marginTop: props.grid ? "2rem" : "1rem" }}>
           <BoxContainer>{componente}</BoxContainer>
         </Grid>
         {!props.grid &&
