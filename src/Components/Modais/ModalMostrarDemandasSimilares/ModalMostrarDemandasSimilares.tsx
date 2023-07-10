@@ -54,8 +54,8 @@ export default function ModalMostrarDemandasSimilares(props: {
                 {props.demandasSimilares.length > 1 ?
                     <>
                         <TypographyFraseDemandaSimilar onClick={lerTexto}>
-                            Foram encontradas {props.demandasSimilares.length} demandas similar a sua.
-                            Para evitar redundância em nosso sistema, avalie a demanda abaixo.
+                            Foram encontradas {props.demandasSimilares.length} demandas similares a sua.
+                            Para evitar redundância em nosso sistema, avalie as demandas abaixo.
                             Caso a problemática ou a solução seja diferente, prossiga com seu cadastro.
                         </TypographyFraseDemandaSimilar>
 

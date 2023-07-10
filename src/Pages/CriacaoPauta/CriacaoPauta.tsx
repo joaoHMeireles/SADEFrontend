@@ -414,7 +414,7 @@ export default function CriacaoPauta(props: {
 
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        autoHideDuration={5000}
+        autoHideDuration={2500}
         open={feedbackAberto}
         onClose={() => { setFeedbackAberto(false); setMensagemDoErro("") }}>
 

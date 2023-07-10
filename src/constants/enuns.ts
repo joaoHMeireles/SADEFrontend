@@ -42,7 +42,7 @@ export enum sessaoTI {
     SCO = "Sistemas Corporativos",
     SIM = "Sistemas de Manufatura",
     SIE = "Sistemas de Engenharia",
-    SVE = "Sistemas de Vendas e E Commerce "
+    SVE = "Sistemas de Vendas e E-Commerce"
 }
 
 export enum TarefaExecucao {
