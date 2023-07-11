@@ -411,7 +411,8 @@ export function getNomeAtributo(nomeAtributo: any) {
         objetivo: "Objetivos:",
         situacaoAtual: "Situação atual:",
         escopo: "Escopo:",
-        motivoDevolucao: "Motivo Devolução"
+        motivoDevolucao: "Motivo Devolução",
+        score: "Score"
     }
 
     if (nomeAtributo != undefined) {
@@ -453,4 +454,11 @@ export function transformArquivosToFile(arquivos: any) {
 export function randomKeyGenerator(num:number){
     const valor = Math.random() * num / Math.random()
     return valor
+}
+
+export function editarNumeroScore(score: number){
+    if(score != null){
+        return score.toFixed()
+    }
+    return ""
 }

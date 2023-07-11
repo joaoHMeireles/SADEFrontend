@@ -28,7 +28,7 @@ import {
   UltimaListaTypography,
 } from "./ComponenteProcesso.styles";
 import { GlobalStyles } from "@mui/styled-engine";
-import { getCorStatus, getNomeStatus } from "../../utils";
+import { editarNumeroScore, getCorStatus, getNomeStatus } from "../../utils";
 import api from "../../api/api";
 
 export default function ComponenteProcesso(props: {
@@ -268,7 +268,7 @@ function GridComponent(props: ComponentProps) {
               <>
                 {!props.rascunho ?
                   <GridTituloTypography variant="h6" sx={{ fontWeight: "500" }}>
-                    {props.componente.tituloDemanda} 
+                    {props.componente.tituloDemanda}
                   </GridTituloTypography>
                   :
                   <GridBoxTituloRadio>
@@ -459,7 +459,7 @@ function ListComponent(props: ComponentProps) {
             </ListaTypography>
 
             <ListaTypography variant="subtitle2" sx={{ width: "20%" }}>
-              Score: {props.componente.score}
+              Score: {editarNumeroScore(props.componente.score)}
             </ListaTypography>
 
             <Box sx={{ fontSize: "12px", display: "flex", alignItems: "center" }}>
@@ -505,7 +505,7 @@ function ListComponent(props: ComponentProps) {
             </ListaTypography>
 
             <ListaTypography variant="subtitle2" sx={{ width: "15%" }}>
-              Score: {props.componente.score}
+              Score: {editarNumeroScore(props.componente.score)}
             </ListaTypography>
 
             <StatusListaBox >
@@ -553,7 +553,7 @@ function ListComponent(props: ComponentProps) {
               </ListaTypography>
 
               <ListaTypography variant="subtitle2" sx={{ width: "15%" }}>
-                Score: {props.componente.score}
+                Score: {editarNumeroScore(props.componente.score)}
               </ListaTypography>
 
               <StatusListaBox >

@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import api, { pegarAnalistaTIResponsavel, pegarGerenteSolicitante, pegarGerenteTISolicitante, pegarUltimoHistorico, pegarUltimoHistoricoConcluido, verificarHistoricoAprovado } from '../../api/api';
 import {
     getNomeComponente, getIconeArquivo, getBeneficiosPorTipo, getKeyEnum, getValueEnum,
-    baixarArquivo, getBotoesPagina, getNomeAtributo, useLocationChange
+    baixarArquivo, getBotoesPagina, getNomeAtributo, useLocationChange, editarNumeroScore
 } from '../../utils';
 import { sessaoTI, StatusComponenteProcesso, TamanhoComponenteProcesso, TipoComponenteProcesso } from '../../constants/enuns';
 import { TextReaderContext } from '../../Components/TextReaderContext/TextReaderContext';
@@ -890,8 +890,7 @@ function InfoGeral(props: { processo: any }) {
         status: processo.statusDemanda,
         solicitante: processo.usuario.nomeUsuario,
         departamento: processo.usuario.departamento,
-        //num sei oq é iso
-        // gerenteResponsavel: processo.gerenteResponsavel,
+        score: editarNumeroScore(processo.score),
         frequenciaDeUso: processo.frequenciaUso,
         tamanho: getValueEnum(TamanhoComponenteProcesso, processo.tamanho),
         sessaoTIResponsavel: getValueEnum(sessaoTI, processo.secaoTIResponsavel),
