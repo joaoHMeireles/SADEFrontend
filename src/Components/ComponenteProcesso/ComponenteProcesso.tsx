@@ -290,7 +290,7 @@ function GridComponent(props: ComponentProps) {
             </GridTypography>
 
             <GridTypography variant="subtitle1">
-              Score: { editarNumeroScore(props.componente.score)}
+              Score: {editarNumeroScore(props.componente.score)}
             </GridTypography>
 
             <UltimaLinhaGridBox>
