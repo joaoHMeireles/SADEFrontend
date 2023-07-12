@@ -154,7 +154,6 @@ export const novaNotificacao = (response: any) => {
     }
 }
 
-
 interface TipoNotificacao {
     DEMANDA: string
     PROPOSTA: string

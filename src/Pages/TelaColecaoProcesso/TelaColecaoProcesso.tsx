@@ -240,6 +240,8 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         const decisoesATA: any[] = []
 
         for (let i = 0; i < informacaoColecaoProcesso.propostas.length; i++) {
+          console.log(informacaoColecaoProcesso.propostas.length);
+          
           const botoesStatusDemanda = document.getElementsByClassName(`radioButtonStatus${i}`)
           const numeroATADG = (document.getElementById(`inputNumeroATA${i}`) as HTMLInputElement).value
           const comentario = (document.getElementById(`comentario${i}`) as HTMLInputElement).value
@@ -260,10 +262,11 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
             comentario: comentario
           }
 
-          const { idDecisaoPropostaAta, ...propostaATACerta } = propostaATA
-
-          decisoesATA.push(propostaATACerta);
+          decisoesATA.push(propostaATA);
         }
+
+        console.log("Decisoes ATA -> ", decisoesATA);
+        
 
         const numeroAno = document.getElementById("numeroAno") as HTMLInputElement;
         const numeroDG = document.getElementById("numeroDG") as HTMLInputElement;
@@ -276,6 +279,10 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
         }
 
         const { tipo, propostasPauta, propostas, idATA, tituloReuniao, tituloReuniaoATA, pauta, arquivos, usuariosReuniaoATA, ...ataEditar } = todaInfoATA
+
+
+        console.log("ATA Editar -> ", ataEditar);
+        
 
         const formData = new FormData()
 
@@ -687,6 +694,7 @@ function Propostas(props: {
   const eUmaPauta = props.tipoColecao == "Pauta" ? true : false;
   const location = useLocation().pathname;
   const linkProposta = location + "/proposal";
+
   const propostas = props.listaPropostas.map((decisaoProposta: any, index: number) => {
     let propostaAnteriorEquivalente = null
 
