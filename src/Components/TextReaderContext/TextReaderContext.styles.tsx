@@ -9,7 +9,6 @@ export const BoxIcone = styled(Box)({
     justifyContent: "center",
     marginTop: "1rem",
     position: "fixed",
-    right: "10px",
     top: "34vh",
     width: "40px",
     zIndex: 3000

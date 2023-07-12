@@ -186,6 +186,7 @@ export default function Filtro(props: {
               <Item itens={tamanhos} titulo="Tamanho" tipo={2} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto} />
               {/* <Item itens={departamentos} titulo="Departamento" tipo={2} filtrarResultados={props.filtrarResultados} /> */}
               <Item titulo="Código PPM" tipo={3} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto} />
+              <Item titulo="Score" tipo={3} filtrarResultados={props.filtrarResultados} lerTexto={lerTexto} />
             </>
             :
             <>
@@ -235,7 +236,7 @@ function Item(props: {
   let opcao: JSX.Element = <div />;
 
   if (!props.itens) {
-    opcao = <OpcaoInput filtrarResultados={props.filtrarResultados} lerTexto={props.lerTexto} />;
+    opcao = <OpcaoInput titulo={props.titulo} filtrarResultados={props.filtrarResultados} lerTexto={props.lerTexto} />;
   } else {
     if (props.tipo == 1) {
       opcao = <OpcoesRadio itens={props.itens} titulo={props.titulo} filtrarResultados={props.filtrarResultados} lerTexto={props.lerTexto} />;
@@ -349,9 +350,9 @@ function OpcoesCheck(props: OptionInterface) {
   )
 }
 
-function OpcaoInput(props: { filtrarResultados: Function, lerTexto: MouseEventHandler<HTMLElement> }) {
+function OpcaoInput(props: {titulo: string, filtrarResultados: Function, lerTexto: MouseEventHandler<HTMLElement> }) {
   return (
-    <TextField id="input-pesquisa-ppm" variant="standard"
+    <TextField id={"input-pesquisa-" + props.titulo.toLowerCase().replace(" ", "-")} variant="standard"
       InputProps={{
         sx: {
           color: "#444"

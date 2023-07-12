@@ -16,7 +16,7 @@ export default function Enviadas(props: {
   setFiltrar: React.Dispatch<React.SetStateAction<boolean>>;
   filtrarResultados: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }) {
-  const [grid, setGrid] = useState(true);
+  const [grid, setGrid] = useState(JSON.parse(localStorage.getItem("VISUALIZARCOMOGRID") as string));
   const [conteudoCarregou, setConteudoCarregou] = useState(false)
   const [temComponente, setTemComponente] = useState(true)
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
@@ -50,6 +50,10 @@ export default function Enviadas(props: {
       setTemComponente(false)
     }
   }, [listaComponents])
+
+  useEffect(() => {
+    localStorage.setItem("VISUALIZARCOMOGRID", grid + "")
+  }, [grid])
 
   return (
     <>

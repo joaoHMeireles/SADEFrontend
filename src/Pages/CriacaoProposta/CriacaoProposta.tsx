@@ -41,7 +41,7 @@ export default function CriacaoProposta(props: {
   const [segundo, setSegundo] = useState(false);
   const [valor, setValor] = useState(0);
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
-  const [grid, setGrid] = useState(true);
+  const [grid, setGrid] = useState(JSON.parse(localStorage.getItem("VISUALIZARCOMOGRID") as string));
   const [conteudoCarregou, setConteudoCarregou] = useState(false)
   const [temComponente, setTemComponente] = useState(true)
   const [feedbackAberto, setFeedbackAberto] = useState(false);
@@ -142,6 +142,10 @@ export default function CriacaoProposta(props: {
       setFeedbackAberto(true)
     }
   }, [mensagemDoErro])
+
+  useEffect(() => {
+    localStorage.setItem("VISUALIZARCOMOGRID", grid + "")
+  }, [grid])
 
   useLocationChange(() => {
     localStorage.removeItem("DEMANDACRIARPROPOSTA")

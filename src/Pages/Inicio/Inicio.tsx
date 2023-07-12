@@ -23,11 +23,13 @@ export default function Inicio(props: {
   conteudoCarregou?: boolean;
   setConteudoCarregou?: React.Dispatch<SetStateAction<boolean>>
 }) {
-  const [grid, setGrid] = useState(true);
+  const [grid, setGrid] = useState(JSON.parse(localStorage.getItem("VISUALIZARCOMOGRID") as string));
   const [propostaSelecionada, setPropostaSelecionada] = useState(0);
   const [temComponente, setTemComponente] = useState(false)
   const [imagemSemNada, setImagemSemNada] = useState("")
   const [textoSemNada, setTextoSemNada] = useState("")
+
+  localStorage.setItem("PAGINATUAL", "home");
 
   useEffect(() => {
     if (props.listaComponents.length != 0) {
@@ -48,6 +50,10 @@ export default function Inicio(props: {
   }, [props.listaComponents, props.conteudoCarregou])
 
   useEffect(() => {
+    localStorage.setItem("VISUALIZARCOMOGRID", grid + "")
+  }, [grid])
+
+  useEffect(() => {
     if (!temComponente) {
       const inputPesquisa = document.getElementById("input-pesquisa") as HTMLInputElement
       if (inputPesquisa.value != "") {
@@ -59,8 +65,6 @@ export default function Inicio(props: {
       }
     }
   })
-
-  localStorage.setItem("PAGINATUAL", "home");
 
   return (
     <BoxConteudo>
