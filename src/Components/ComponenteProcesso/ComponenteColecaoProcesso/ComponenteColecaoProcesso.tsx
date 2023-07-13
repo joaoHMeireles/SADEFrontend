@@ -9,6 +9,7 @@ import {
   BoxColecaoComponente,
   BoxGridCorProcesso,
   BoxListaCorProcesso,
+  ContainerLista,
   GridBoxTituloRadio,
   GridComponenteProcesso,
   GridLinkColecaoTypograpfy,
@@ -155,7 +156,7 @@ function GridComponent(props: ComponentCollectionProps) {
                   {""}
                 </BoxColecaoComponente>
               }
-              <GridLinkColecaoTypograpfy variant="body2" sx={{width: "25% !important"}}>
+              <GridLinkColecaoTypograpfy sx={{width: "25% !important"}}>
                 <Link to={props.linkComponente} onClick={props.setProcesso}>
                   Ver mais
                 </Link>
@@ -212,7 +213,7 @@ function ListComponent(props: ComponentCollectionProps) {
     }
 
     return (
-      <ListaTypography variant="subtitle2" sx={{ maxWidth: "8vw" }} onClick={props.lerTexto}>
+      <ListaTypography onClick={props.lerTexto}>
         {"- " + e.proposta.demanda.tituloDemanda}
       </ListaTypography>
     );
@@ -221,46 +222,41 @@ function ListComponent(props: ComponentCollectionProps) {
   return (
     <>
       {props.criandoATA ?
-        <>
+        <ContainerLista>
           <Tooltip title={props.tituloToolTip} placement="left">
-            <Grid item xs={0.3}>
-              <BoxListaCorProcesso sx={{ backgroundColor: props.corComponente }} />
-            </Grid>
+            <BoxListaCorProcesso sx={{ backgroundColor: props.corComponente }} />
           </Tooltip>
 
-          <ListaComponenteProcesso item xs={11.7}
+          <ListaComponenteProcesso
             onClick={(e: any) => {
               props.lerTexto(e)
               if (props.setPautaEscolhida) {
                 props.setPautaEscolhida(props.componente)
               }
-            }} >
-            <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
+            }}>
+            <ListaTypography>
               {props.componente.id} - {props.componente.tituloReuniao}
             </ListaTypography>
 
-            <ListaTypography variant="subtitle2" sx={{ minWidth: "14.3vw" }}>
-              <span> Data: </span>{" "}
-              {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
+            <ListaTypography>
+              <p>Data: {new Date(props.componente.dataReuniao).toLocaleDateString()}</p>
             </ListaTypography>
 
-            <ListaTypography variant="subtitle2" sx={{ maxWidth: "8vw" }}>
-              <span> Propostas: </span>
+            <ListaTypography>
+              <p>Propostas: {propostas}</p>
             </ListaTypography>
 
-            {propostas}
-
-            <ListaTypography variant="subtitle2">
+            <ListaTypography>
               {/* <Link to={props.linkComponente} onClick={props.setProcesso}>
                 Ver mais
               </Link> */}
             </ListaTypography>
 
-            <UltimaListaTypography variant="body2" sx={{ maxWidth: "8.5vw" }}>
+            <UltimaListaTypography sx={{ maxWidth: "8.5vw" }}>
               <Radio checked={props.checado} />
             </UltimaListaTypography>
           </ListaComponenteProcesso>
-        </>
+        </ContainerLista>
         :
         <>
           <Tooltip title={props.tituloToolTip} placement="left">
@@ -269,23 +265,23 @@ function ListComponent(props: ComponentCollectionProps) {
             </Grid>
           </Tooltip>
 
-          <ListaComponenteProcesso item xs={11.7} onClick={props.verProcesso}>
-            <ListaTypography variant="subtitle1" sx={{ minWidth: "20vw" }}>
+          <ListaComponenteProcesso onClick={props.verProcesso}>
+            <ListaTypography sx={{ minWidth: "20vw" }}>
               {props.componente.id} - {props.componente.tituloReuniao}
             </ListaTypography>
 
-            <ListaTypography variant="subtitle2" sx={{ minWidth: "14.3vw" }}>
+            <ListaTypography sx={{ minWidth: "14.3vw" }}>
               <span> Data: </span>{" "}
               {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
             </ListaTypography>
 
-            <ListaTypography variant="subtitle2" sx={{ maxWidth: "8vw" }}>
+            <ListaTypography sx={{ maxWidth: "8vw" }}>
               <span> Propostas: </span>
             </ListaTypography>
 
             {propostas}
 
-            <UltimaListaTypography variant="body2" sx={{ maxWidth: "8.5vw" }}>
+            <UltimaListaTypography sx={{ maxWidth: "8.5vw" }}>
               <Link to={props.linkComponente} onClick={props.setProcesso}>
                 Ver mais
               </Link>

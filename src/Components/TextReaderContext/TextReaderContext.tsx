@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Box, IconButton } from "@mui/material";
 import SpatialAudioRoundedIcon from '@mui/icons-material/SpatialAudioRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { BoxIcone } from "./TextReaderContext.styles";
 
 export const TextReaderContext: any = createContext(null)
@@ -38,14 +39,14 @@ export function TextReaderComponent(props: { filtroAberto: boolean }) {
     const { leituraDeSiteAtiva, setLeituraDeSiteAtiva } = useContext(TextReaderContext) as any
 
     return (
-        <BoxIcone onClick={() => { setLeituraDeSiteAtiva(!leituraDeSiteAtiva) }} sx={{right: props.filtroAberto? "250px" : "10px"}}>
-            <BoxIcone sx={{
-                backgroundImage: (leituraDeSiteAtiva ? "linear-gradient(to right, #006281, #05274c)" : "linear-gradient(to right, #008db9, #0c529d)"),
-        
-            }}
-            >
+        <BoxIcone onClick={() => { setLeituraDeSiteAtiva(!leituraDeSiteAtiva) }} sx={{ right: props.filtroAberto ? "250px" : "10px" }}>
+            <BoxIcone sx={{ backgroundImage: (leituraDeSiteAtiva ? "linear-gradient(to right, #006281, #05274c)" : "linear-gradient(to right, #008db9, #0c529d)") }}>
                 <IconButton>
-                    <SpatialAudioRoundedIcon sx={{ width: "20px", color: (leituraDeSiteAtiva ? "#eee" : "#fff") }} />
+                    {leituraDeSiteAtiva ?
+                        <CloseRoundedIcon sx={{ color: "#fff" }} />
+                        :
+                        <SpatialAudioRoundedIcon sx={{ width: "20px", color: "#fff" }} />
+                    }
                 </IconButton>
             </BoxIcone>
         </BoxIcone>
