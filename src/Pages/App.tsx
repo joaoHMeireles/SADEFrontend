@@ -26,7 +26,7 @@ import CriacaoAta from "./CriacaoAta/CriacaoAta";
 import Enviadas from "./Enviadas/Enviadas";
 import api from "../api/api";
 import { TipoColecaoComponenteProcesso, TipoComponenteProcesso } from "../constants/enuns";
-import { getNomeStatus, randomKeyGenerator } from "../utils";
+import { editarNumeroScore, getNomeStatus, randomKeyGenerator } from "../utils";
 import AjudaUsuario from "./AjudaUsuario/AjudaUsuario";
 
 import { WebSocketService } from "../api/websocketservice";
@@ -200,11 +200,16 @@ export default function App() {
     //   }
     // }
 
-    const inputPesquisaPPM = document.getElementById("input-pesquisa-ppm") as HTMLInputElement
+    const inputPesquisaPPM = document.getElementById("input-pesquisa-código-ppm") as HTMLInputElement
     if (inputPesquisaPPM) {
       filtrarPelaSearchBarPPM(inputPesquisaPPM.value)
     }
 
+
+    const inputPesquisaScore = document.getElementById("input-pesquisa-score") as HTMLInputElement
+    if (inputPesquisaScore != null) {
+      filtrarPelaSearchBarScore(inputPesquisaScore.value)
+    }
   }
 
   function filtrarTipoComponente(opcoes: HTMLElement) {
@@ -307,17 +312,29 @@ export default function App() {
     }
   }
 
+  function filtrarPelaSearchBarScore(valorPesquisa: string) {
+    if (valorPesquisa !== '') {
+      const filteredData = listaComponents.filter((item) => {
+        let listaAtributos: string[] = [editarNumeroScore(item.score)]
+
+        return listaAtributos.join('').toLowerCase().includes(valorPesquisa.toLowerCase())
+      })
+      setListaFiltrada(filteredData)
+    }
+    else {
+      setListaFiltrada(listaComponents)
+    }
+  }
+
   return (
     <>
-      <GlobalStyles styles={{ "div[vw]": { top: "30% !important" } }} />
-
+      <GlobalStyles styles={{ "div[vw]": { top: "30% !important", right: filtrar ? "240px !important": ""} }} />
       <VLibras forceOnload />
-
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <BrowserRouter>
           <WebSocketService>
             <TextReaderProvider>
-              <TextReaderComponent />
+              <TextReaderComponent filtroAberto={filtrar}/>
 
               <RascunhoObserver />
 

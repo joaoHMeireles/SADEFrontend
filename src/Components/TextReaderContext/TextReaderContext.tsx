@@ -34,12 +34,16 @@ export function TextReaderProvider({ children }: { children: any }) {
     )
 }
 
-export function TextReaderComponent() {
+export function TextReaderComponent(props: { filtroAberto: boolean }) {
     const { leituraDeSiteAtiva, setLeituraDeSiteAtiva } = useContext(TextReaderContext) as any
 
     return (
-        <BoxIcone onClick={() => { setLeituraDeSiteAtiva(!leituraDeSiteAtiva) }}>
-            <BoxIcone sx={{ backgroundImage: (leituraDeSiteAtiva ? "linear-gradient(to right, #006281, #05274c)" : "linear-gradient(to right, #008db9, #0c529d)"), height: "100%", width: "100%"}}>
+        <BoxIcone onClick={() => { setLeituraDeSiteAtiva(!leituraDeSiteAtiva) }} sx={{right: props.filtroAberto? "250px" : "10px"}}>
+            <BoxIcone sx={{
+                backgroundImage: (leituraDeSiteAtiva ? "linear-gradient(to right, #006281, #05274c)" : "linear-gradient(to right, #008db9, #0c529d)"),
+        
+            }}
+            >
                 <IconButton>
                     <SpatialAudioRoundedIcon sx={{ width: "20px", color: (leituraDeSiteAtiva ? "#eee" : "#fff") }} />
                 </IconButton>
