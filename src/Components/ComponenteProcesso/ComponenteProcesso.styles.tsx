@@ -23,11 +23,12 @@ export const GridComponenteProcesso = styled(Grid)({
 });
 
 export const GridBoxTituloRadio = styled(Box)({
+  alignItems: "center",
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "center",
   overflow: "hidden",
   textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
 });
 
 export const GridTypography = styled(Typography)({
@@ -44,11 +45,11 @@ export const GridTypography = styled(Typography)({
 });
 
 export const GridTituloTypography = styled(GridTypography)({
-  width: "85%",
+  display: "block",
   overflow: "hidden",
-  whiteSpace: "nowrap",
   textOverflow: "ellipsis",
-  display: "block"
+  width: "85%",
+  whiteSpace: "nowrap",
 })
 
 export const GridLinkTypograpfy = styled(Typography)({
@@ -88,24 +89,31 @@ export const GridLinkColecaoTypograpfy = styled(GridLinkTypograpfy)({
 export const BoxListaCorProcesso = styled(Box)({
   borderRadius: "5px 0 0 5px",
   height: "100%",
-  width: "0.5rem"
+  width: "0.8%"
 });
 
-export const ListaComponenteProcesso = styled(Grid)({
+export const ListaComponenteProcesso = styled(Box)({
   alignItems: "center",
   color: "#444",
   cursor: "pointer",
   display: "flex",
-  padding: "5px",
+  height: "100%",
+  justifyContent: "flex-start",
+  padding: "0.5rem 1rem",
+  width: "99.2%"
 });
 
-export const ListaTypography = styled(GridTypography)({
+export const ListaTypography = styled(Box)({
   alignItems: "center",
-  display: "flex",
-  height: "100%",
+  display: "block",
+  justifyContent: "flex-start",
+  marginRight: "1rem",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  width: "15%",
+  whiteSpace: "nowrap",
   "& a": {
     color: "#3d83bc",
-
     "&:hover": {
       color: "#00579d",
       fontWeight: "500",
@@ -116,8 +124,9 @@ export const ListaTypography = styled(GridTypography)({
 export const StatusListaBox = styled(Box)({
   alignItems: "center",
   display: "flex",
-  fontSize: "12px",
-  width: "25%"
+  justifyContent: "flex-start",
+  marginRight: "0 !important",
+  width: "20%"
 })
 
 export const UltimaListaTypography = styled(ListaTypography)({
