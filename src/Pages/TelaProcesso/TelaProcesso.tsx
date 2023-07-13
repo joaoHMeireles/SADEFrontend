@@ -610,6 +610,7 @@ export function Header(props: {
     function verDemandaProposta() {
         api.get(`/sade/demanda/${processo.idProposta}`).then((response: any) => {
             const demanda = response.data
+            demanda.id = demanda.idDemanda
             demanda.tipo = TipoComponenteProcesso.Demanda
 
             localStorage.setItem("DEMANDAESCOLHIDA", JSON.stringify(demanda))

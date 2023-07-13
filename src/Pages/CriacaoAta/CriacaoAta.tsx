@@ -36,7 +36,7 @@ export default function CriacaoAta(props: {
 }) {
   const { lerTexto } = useContext(TextReaderContext) as any
   const [valor, setValor] = useState(0);
-  const [grid, setGrid] = useState(true);
+  const [grid, setGrid] = useState(JSON.parse(localStorage.getItem("VISUALIZARCOMOGRID") as string));
   const [conteudoCarregou, setConteudoCarregou] = useState(false)
   const [temComponente, setTemComponente] = useState(true)
   const [feedbackAberto, setFeedbackAberto] = useState(false);
@@ -93,6 +93,10 @@ export default function CriacaoAta(props: {
       setFeedbackAberto(true)
     }
   }, [mensagemDoErro])
+
+  useEffect(() => {
+    localStorage.setItem("VISUALIZARCOMOGRID", grid + "")
+  }, [grid])
 
   function mudarValor(event: React.SyntheticEvent, newValue: number) {
     setValor(newValue);
