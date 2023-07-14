@@ -4,7 +4,7 @@ import {
   InterfaceComponenteProcesso,
   InterfaceColecaoComponenteProcesso,
 } from "../../../constants/interfaces";
-import { Grid, Radio, Tooltip } from "@mui/material";
+import { Box, Grid, Radio, Tooltip } from "@mui/material";
 import {
   BoxColecaoComponente,
   BoxGridCorProcesso,
@@ -156,7 +156,7 @@ function GridComponent(props: ComponentCollectionProps) {
                   {""}
                 </BoxColecaoComponente>
               }
-              <GridLinkColecaoTypograpfy sx={{width: "25% !important"}}>
+              <GridLinkColecaoTypograpfy sx={{ width: "25% !important" }}>
                 <Link to={props.linkComponente} onClick={props.setProcesso}>
                   Ver mais
                 </Link>
@@ -213,8 +213,8 @@ function ListComponent(props: ComponentCollectionProps) {
     }
 
     return (
-      <ListaTypography onClick={props.lerTexto}>
-        {"- " + e.proposta.demanda.tituloDemanda}
+      <ListaTypography onClick={props.lerTexto} sx={{ width: "auto !important" }}>
+        {" - " + e.proposta.demanda.tituloDemanda}
       </ListaTypography>
     );
   });
@@ -234,60 +234,55 @@ function ListComponent(props: ComponentCollectionProps) {
                 props.setPautaEscolhida(props.componente)
               }
             }}>
-            <ListaTypography>
-              {props.componente.id} - {props.componente.tituloReuniao}
+            <ListaTypography sx={{ fontSize: "16px !important", width: "50% !important" }}>
+              {props.componente.tituloReuniao}
             </ListaTypography>
 
-            <ListaTypography>
-              <p>Data: {new Date(props.componente.dataReuniao).toLocaleDateString()}</p>
+            <ListaTypography sx={{ width: "12% !important" }}>
+              Data: {new Date(props.componente.dataReuniao).toLocaleDateString()}
             </ListaTypography>
 
-            <ListaTypography>
-              <p>Propostas: {propostas}</p>
+            <ListaTypography sx={{ width: "30% !important" }}>
+              <p style={{ alignItems: "center", display: "flex", justifyContent: "flex-start", width: "100%" }}>Propostas: {propostas}</p>
             </ListaTypography>
 
-            <ListaTypography>
-              {/* <Link to={props.linkComponente} onClick={props.setProcesso}>
+            <ListaTypography sx={{ width: "6% !important" }}>
+              <Link to={props.linkComponente} onClick={props.setProcesso}>
                 Ver mais
-              </Link> */}
+              </Link>
             </ListaTypography>
 
-            <UltimaListaTypography sx={{ maxWidth: "8.5vw" }}>
+            <UltimaListaTypography>
               <Radio checked={props.checado} />
             </UltimaListaTypography>
           </ListaComponenteProcesso>
         </ContainerLista>
         :
-        <>
+        <ContainerLista>
           <Tooltip title={props.tituloToolTip} placement="left">
-            <Grid item xs={0.3}>
-              <BoxListaCorProcesso sx={{ backgroundColor: props.corComponente }} />
-            </Grid>
+            <BoxListaCorProcesso sx={{ backgroundColor: props.corComponente }} />
           </Tooltip>
 
           <ListaComponenteProcesso onClick={props.verProcesso}>
-            <ListaTypography sx={{ minWidth: "20vw" }}>
-              {props.componente.id} - {props.componente.tituloReuniao}
+            <ListaTypography sx={{ fontSize: "16px !important", width: "50% !important" }}>
+              {props.componente.tituloReuniao}
             </ListaTypography>
 
-            <ListaTypography sx={{ minWidth: "14.3vw" }}>
-              <span> Data: </span>{" "}
-              {" " + new Date(props.componente.dataReuniao).toLocaleDateString()}
+            <ListaTypography sx={{ width: "14% !important" }}>
+              Data: {new Date(props.componente.dataReuniao).toLocaleDateString()}
             </ListaTypography>
 
-            <ListaTypography sx={{ maxWidth: "8vw" }}>
-              <span> Propostas: </span>
+            <ListaTypography sx={{ width: "30% !important" }}>
+              <p style={{ alignItems: "center", display: "flex", justifyContent: "flex-start", width: "100%" }}>Propostas: {propostas}</p>
             </ListaTypography>
 
-            {propostas}
-
-            <UltimaListaTypography sx={{ maxWidth: "8.5vw" }}>
+            <UltimaListaTypography sx={{ width: "6% !important" }}>
               <Link to={props.linkComponente} onClick={props.setProcesso}>
                 Ver mais
               </Link>
             </UltimaListaTypography>
           </ListaComponenteProcesso>
-        </>
+        </ContainerLista>
       }
     </>
   );

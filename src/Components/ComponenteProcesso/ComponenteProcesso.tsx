@@ -446,22 +446,22 @@ function ListComponent(props: ComponentProps) {
 
           <ListaComponenteProcesso onClick={props.verProcesso}>
             <ListaTypography sx={{ fontSize: "16px !important", width: "50% !important" }}>
-              <p>{props.componente.tituloDemanda}</p>
+              {props.componente.tituloDemanda}
             </ListaTypography>
 
             <ListaTypography>
-              <p>Solicitante: {props.componente.usuario.nomeUsuario}</p>
+              Solicitante: {props.componente.usuario.nomeUsuario}
             </ListaTypography>
 
             <ListaTypography>
-              <p>Score: {editarNumeroScore(props.componente.score)}</p>
+              Score: {editarNumeroScore(props.componente.score)}
             </ListaTypography>
 
             <Box sx={{ alignItems: "center", display: "flex", justifyContent: "flex-start", marginRight: "0 !important", width: "20%" }}>
               {!props.rascunho &&
                 <>
                   <ListaTypography sx={{ width: "auto !important" }}>
-                    <p>Status: {getNomeStatus(props.componente.statusDemanda)}</p>
+                    Status: {getNomeStatus(props.componente.statusDemanda)}
                   </ListaTypography>
 
                   <CircleIcon fontSize="inherit" sx={{ color: getCorStatus(props.componente.statusDemanda) }} />
@@ -490,20 +490,20 @@ function ListComponent(props: ComponentProps) {
               }
             }}>
             <ListaTypography sx={{ fontSize: "16px !important", width: "40% !important" }}>
-              <p>{props.componente.tituloDemanda}</p>
+              {props.componente.tituloDemanda}
             </ListaTypography>
 
             <ListaTypography sx={{ width: "14% !important" }}>
-              <p>Solicitante: {props.componente.usuario.nomeUsuario}</p>
+              Solicitante: {props.componente.usuario.nomeUsuario}
             </ListaTypography>
 
             <ListaTypography sx={{ width: "10% !important" }}>
-              <p>Score: {editarNumeroScore(props.componente.score)}</p>
+              Score: {editarNumeroScore(props.componente.score)}
             </ListaTypography>
 
             <StatusListaBox sx={{ alignItems: "center", display: "flex", justifyContent: "flex-start", marginRight: "0 !important", width: "24%" }}>
               <ListaTypography sx={{ width: "auto !important" }}>
-                <p>Status: {getNomeStatus(props.componente.statusDemanda)}</p>
+                Status: {getNomeStatus(props.componente.statusDemanda)}
               </ListaTypography>
 
               <CircleIcon fontSize="inherit" sx={{ color: getCorStatus(props.componente.statusDemanda), marginLeft: "5px" }} />
@@ -535,20 +535,20 @@ function ListComponent(props: ComponentProps) {
 
             <ListaComponenteProcesso>
               <ListaTypography sx={{ fontSize: "16px !important", width: "40% !important" }}>
-                <p>{props.componente.tituloDemanda}</p>
+                {props.componente.tituloDemanda}
               </ListaTypography>
 
               <ListaTypography sx={{ width: "14% !important" }}>
-                <p>Solicitante: {props.componente.usuario.nomeUsuario}</p>
+                Solicitante: {props.componente.usuario.nomeUsuario}
               </ListaTypography>
 
               <ListaTypography sx={{ width: "10% !important" }}>
-                <p>Score: {editarNumeroScore(props.componente.score)}</p>
+                Score: {editarNumeroScore(props.componente.score)}
               </ListaTypography>
 
               <Box sx={{ alignItems: "center", display: "flex", justifyContent: "flex-start", marginRight: "0 !important", width: "24%" }}>
                 <ListaTypography sx={{ width: "auto !important" }}>
-                  <p>Status: {getNomeStatus(props.componente.statusDemanda)}</p>
+                  Status: {getNomeStatus(props.componente.statusDemanda)}
                 </ListaTypography>
 
                 <CircleIcon fontSize="inherit" sx={{ color: getCorStatus(props.componente.statusDemanda) }} />
