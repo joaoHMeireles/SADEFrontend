@@ -50,7 +50,15 @@ export default function App() {
   const tamanhoNavbar = "8.5vh"
 
   useEffect(() => {
-    api.get("/sade/demanda/rascunho/" + false).then((response) => {
+    const usuarioObject = localStorage.getItem("USUARIO")
+
+    if(usuarioObject == null){
+      return
+    }
+
+    const usuario = JSON.parse(usuarioObject)
+
+    api.get("/sade/demanda/departamento/" + usuario.departamento).then((response) => {
       let listaDemandas: any[] = []
       for (let demanda of response.data) {
         demanda.id = demanda.idDemanda

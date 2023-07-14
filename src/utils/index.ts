@@ -500,3 +500,7 @@ export function stringToColor(string: string) {
 
     return color;
 }
+
+export function getDateFormat(data: Date){
+    return data.getDate() + "/" + data.getMonth() + "/" + data.getFullYear()
+}

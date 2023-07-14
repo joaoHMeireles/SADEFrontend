@@ -91,7 +91,7 @@ export default function CriacaoProposta(props: {
           setValor(1)
         }
 
-        listaDemandas.push(demanda)
+        listaDemandas.push(demanda.reverse())
       }
 
       setListaComponents(listaDemandas);

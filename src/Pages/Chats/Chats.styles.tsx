@@ -24,7 +24,7 @@ export const BoxBarraPesquisa = styledBox({
     display: "flex",
     justifyContent: "center",
     // height: "10%",
-    // padding: 1,
+    paddingTop: "1rem",
     width: "40vw"
 });
 
@@ -254,3 +254,20 @@ export const TypographyPessoa = styledTypography({
         cursor: "pointer"
     }
 });
+
+export const BoxContainerDiaMensagem = styledBox({
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+    width: "100%"
+})
+
+export const BoxTextoDiaMensagem = styledBox({
+    backgroundColor: "#EEEEEE",
+    borderRadius: "5px",
+    display: "flex",
+    fontSize: "12px",
+    justifyContent: "center",
+    padding: "0.5rem",
+    width: "auto", 
+})
