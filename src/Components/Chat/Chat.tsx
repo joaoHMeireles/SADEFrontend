@@ -22,9 +22,10 @@ export default function Chat(props: {
   verChat: any;
 }) {
   const { lerTexto } = useContext(TextReaderContext) as any
+  const usuario = JSON.parse(localStorage.getItem("USUARIO") as string)
   let mensagem = (
     <>
-      {props.pessoa} : {props.mensagem.length > 30 ?
+      {props.pessoa == usuario.nomeUsuario? "Você" : props.pessoa} : {props.mensagem.length > 30 ?
         props.mensagem.slice(0, 25) + "..."
         :
         props.mensagem}
