@@ -26,11 +26,13 @@ export default function Rascunho(props: {
   useEffect(() => {
     api.get("/sade/demanda/usuario/" + idUsuario + "/rascunho/").then((response) => {
       let listaDemandas: any[] = []
+      
       for (let demanda of response.data) {
         demanda.tipo = TipoComponenteProcesso.Demanda
         listaDemandas.push(demanda)
       }
-      setListaComponents(listaDemandas);
+
+      setListaComponents(listaDemandas.reverse());
     }).catch((err) => {
       console.log(err);
     }).finally(() => {
@@ -64,9 +66,9 @@ export default function Rascunho(props: {
         {!temComponente ?
           <>
             {conteudoCarregou &&
-            <Box sx={{ height: "70vh", width: "100%" }}>
-              <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda para completar"} />
-            </Box>
+              <Box sx={{ height: "70vh", width: "100%" }}>
+                <ResultadoVazio imagem={semDemanda} legenda={"Nenhuma demanda para completar"} />
+              </Box>
             }
           </>
           :

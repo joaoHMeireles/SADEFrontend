@@ -86,7 +86,7 @@ export default function CriacaoPauta(props: {
         listaPropostas.push(proposta)
       }
 
-      setListaComponents(listaPropostas);
+      setListaComponents(listaPropostas.reverse());
     }).catch((err) => {
       console.log(err);
     }).finally(() => {

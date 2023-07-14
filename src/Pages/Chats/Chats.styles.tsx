@@ -1,5 +1,7 @@
 import { Box, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
+const styledBox = styled(Box)
+const styledTypography = styled(Typography)
 
 /**
  * Estilização do componente de chat
@@ -16,17 +18,17 @@ export const BarraPesquisa = styled(TextField)({
     width: "100%",
 });
 
-export const BoxBarraPesquisa = styled(Box)({
+export const BoxBarraPesquisa = styledBox({
     alignItems: "center",
     backgroundColor: "transparent",
     display: "flex",
     justifyContent: "center",
     // height: "10%",
-    // padding: 1,
+    paddingTop: "1rem",
     width: "40vw"
 });
 
-export const BoxBreadcrumbTituloChat = styled(Box)({
+export const BoxBreadcrumbTituloChat = styledBox({
     alignItems: "center",
     display: "flex",
     justifyContent: "flex-start",
@@ -36,14 +38,14 @@ export const BoxBreadcrumbTituloChat = styled(Box)({
     width: "100%"
 });
 
-export const BoxBreadcrumb = styled(Box)({
+export const BoxBreadcrumb = styledBox({
     height: "56px", 
     axHeight: "56px",
     minHeight: "56px",
     width: "30%"
 });
 
-export const BoxIconeEnviar = styled(Box)({
+export const BoxIconeEnviar = styledBox({
     alignItems: "center",
     backgroundColor: "#00579D",
     borderRadius: "360px",
@@ -58,7 +60,7 @@ export const BoxIconeEnviar = styled(Box)({
     width: "3rem",
 });
 
-export const BoxLadoDireitoTituloDemanda = styled(Box)({
+export const BoxLadoDireitoTituloDemanda = styledBox({
     alignItems: "flex-start",
     display: "flex",
     flexDirection: "column",
@@ -69,14 +71,14 @@ export const BoxLadoDireitoTituloDemanda = styled(Box)({
     width: "70%",
 });
 
-export const ContainerChats = styled(Box)({
+export const ContainerChats = styledBox({
     alignItems: "flex-start",
     display: "flex",
     justifyContent: "space-between",
     height: "100%"
 });
 
-export const ContainerGeralChats = styled(Box)({
+export const ContainerGeralChats = styledBox({
     margin: "2rem 3rem 2rem 2rem",
     height: "80vh"
 });
@@ -92,7 +94,7 @@ export const InputPesquisaChat = styled(TextField)({
     width: "90%",
 });
 
-export const LadoEsquerdoChat = styled(Box)({
+export const LadoEsquerdoChat = styledBox({
     alignItems: "flex-start",
     display: "flex",
     flexDirection: "column",
@@ -101,7 +103,7 @@ export const LadoEsquerdoChat = styled(Box)({
     width: "100%"
 });
 
-export const LadoEsquerdoGeralChats = styled(Box)({
+export const LadoEsquerdoGeralChats = styledBox({
     alignItems: "flex-start",
     display: "flex",
     justifyContent: "flex-start",
@@ -111,7 +113,7 @@ export const LadoEsquerdoGeralChats = styled(Box)({
     width: "30%"
 });
 
-export const LadoDiretoChat = styled(Box)({
+export const LadoDiretoChat = styledBox({
     // maxHeight: "75vh",
     // minHeight: "70vh",
     height: "100%",
@@ -123,7 +125,7 @@ export const LadoDiretoChat = styled(Box)({
     width: "100%",
 });
 
-export const LadoDireitoGeralChats = styled(Box)({
+export const LadoDireitoGeralChats = styledBox({
     alignItems: "center",
     background: "#fff",
     borderRadius: "5px",
@@ -134,11 +136,16 @@ export const LadoDireitoGeralChats = styled(Box)({
     width: "70%",
 });
 
-export const TypographyQuantidadeMembrosLadoDireito = styled(Typography)({
-    color: "#444"
+export const TypographyQuantidadeMembrosLadoDireito = styledTypography({
+    color: "#444",
+    marginRight: "5px",
+    "&:hover": {
+        textDecoration: "underline",
+        cursor: "pointer"
+    }
 });
 
-export const TypographyTituloDemandaLadoDireito = styled(Typography)({
+export const TypographyTituloDemandaLadoDireito = styledTypography({
     color: "#444",
     fontWeight: "bold"
 });
@@ -148,19 +155,19 @@ export const TypographyTituloDemandaLadoDireito = styled(Typography)({
 /**
  * Estilização do componente de mensagem
  */
-export const BoxGeralMensagensLadoEsquerdo = styled(Box)({
+export const BoxGeralMensagensLadoEsquerdo = styledBox({
     alignItems: "center",
     display: "flex",
     justifyContent: "start",
 });
 
-export const BoxGeralMensagensLadoDireito = styled(Box)({
+export const BoxGeralMensagensLadoDireito = styledBox({
     alignItems: "center",
     display: "flex",
     justifyContent: "flex-end"
 });
 
-export const BoxMensagemHorario = styled(Box)({
+export const BoxMensagemHorario = styledBox({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-end",
@@ -168,23 +175,26 @@ export const BoxMensagemHorario = styled(Box)({
     wordWrap: "break-word",
 });
 
-export const BoxMensagemLadoEsquerdo = styled(Box)({
+export const BoxMensagemLadoEsquerdo = styledBox({
     background: "#EEEEEE",
     borderRadius: "10px",
     boxShadow: "-5px 5px 10px 0 #00000025",
-    padding: "0.5rem"
+    padding: "0.5rem",
+    marginLeft: "10px"
 });
 
-export const BoxMensagemLadoDireito = styled(Box)({
+export const BoxMensagemLadoDireito = styledBox({
     background: "#9ACAE580",
     borderRadius: "10px",
     boxShadow: "-5px 5px 10px 0 #00000025",
-    padding: "0.5rem"
+    padding: "0.5rem",
+    marginRight: "10px"
 });
 
-export const BoxMensagensLadoDireito = styled(Box)({
+export const BoxMensagensLadoDireito = styledBox({
     height: "100%",
     marginBottom: "1rem",
+    display: "flex",
     // marginTop: 8,
     maxWidth: "40%",
     minWidth: "10%",
@@ -195,9 +205,10 @@ export const BoxMensagensLadoDireito = styled(Box)({
     wordWrap: "break-word",
 });
 
-export const BoxMensagensLadoEsquerdo = styled(Box)({
+export const BoxMensagensLadoEsquerdo = styledBox({
     height: "100%",
     marginBottom: "1rem",
+    display: "flex",
     // marginTop: 8,
     maxWidth: "40%",
     minWidth: "10%",
@@ -208,7 +219,7 @@ export const BoxMensagensLadoEsquerdo = styled(Box)({
     wordWrap: "break-word",
 });
 
-export const TypographyHoraMensagem = styled(Typography)({
+export const TypographyHoraMensagem = styledTypography({
     alignItems: "flex-end", 
     color: "#444",
     display: "flex",
@@ -218,7 +229,7 @@ export const TypographyHoraMensagem = styled(Typography)({
     marginLeft: "0.5rem"
 });
 
-export const TypographyMensagemEsquerda = styled(Typography)({
+export const TypographyMensagemEsquerda = styledTypography({
     color: "#444",
     // padding: "0.3rem 1rem 1rem 0",
     textAlign: "justify",
@@ -227,7 +238,7 @@ export const TypographyMensagemEsquerda = styled(Typography)({
 
 });
 
-export const TypographyMensagemDireita = styled(Typography)({
+export const TypographyMensagemDireita = styledTypography({
     color: "#444",
     // padding: "0.3rem 1rem 1rem 0"
     textAlign: "justify",
@@ -235,7 +246,28 @@ export const TypographyMensagemDireita = styled(Typography)({
     wordWrap: "break-word"
 });
 
-export const TypographyPessoa = styled(Typography)({
+export const TypographyPessoa = styledTypography({
     color: "#00579d",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    "&:hover": {
+        color: "#003c6d",
+        cursor: "pointer"
+    }
 });
+
+export const BoxContainerDiaMensagem = styledBox({
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+    width: "100%"
+})
+
+export const BoxTextoDiaMensagem = styledBox({
+    backgroundColor: "#EEEEEE",
+    borderRadius: "5px",
+    display: "flex",
+    fontSize: "12px",
+    justifyContent: "center",
+    padding: "0.5rem",
+    width: "auto", 
+})

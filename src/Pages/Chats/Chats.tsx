@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext, useRef } from "react";
+import { getDateFormat, stringAvatar } from '../../utils/index'
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Chat from "../../Components/Chat/Chat";
 import Toolbar from "../../Components/Toolbar/Toolbar";
@@ -9,7 +10,7 @@ import {
     BoxBarraPesquisa, BoxBreadcrumb, ContainerChats, ContainerGeralChats, LadoEsquerdoChat, LadoEsquerdoGeralChats, LadoDiretoChat,
     LadoDireitoGeralChats, BarraPesquisa, TypographyMensagemEsquerda, TypographyMensagemDireita, BoxGeralMensagensLadoDireito,
     BoxMensagensLadoDireito, BoxMensagemLadoDireito, TypographyPessoa, BoxGeralMensagensLadoEsquerdo, BoxMensagensLadoEsquerdo,
-    BoxMensagemLadoEsquerdo, InputPesquisaChat, BoxIconeEnviar, BoxLadoDireitoTituloDemanda, TypographyTituloDemandaLadoDireito, TypographyQuantidadeMembrosLadoDireito, BoxBreadcrumbTituloChat, BoxMensagemHorario, TypographyHoraMensagem
+    BoxMensagemLadoEsquerdo, InputPesquisaChat, BoxIconeEnviar, BoxLadoDireitoTituloDemanda, TypographyTituloDemandaLadoDireito, TypographyQuantidadeMembrosLadoDireito, BoxBreadcrumbTituloChat, BoxMensagemHorario, TypographyHoraMensagem, BoxTextoDiaMensagem, BoxContainerDiaMensagem
 } from "./Chats.styles";
 import ResultadoVazio from "../../Components/ResultadoVazio/ResultadoVazio";
 import semChats from "../../Assets/leaf.png"
@@ -17,6 +18,8 @@ import { WebSocketContext } from "../../api/websocketservice.jsx";
 import api from "../../api/api";
 import InputAdornment from "@mui/material/InputAdornment";
 import selecionarChat from "../../Assets/selecionarChat.png"
+import { Avatar, Box } from "@mui/material";
+import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 
 /**
  * Função que tem dois componentes jutamente a ela, sendo um para chats e outro para as mensagem de determinado chat
@@ -25,14 +28,18 @@ import selecionarChat from "../../Assets/selecionarChat.png"
  */
 
 export default function Chats(props: { aberto: boolean }) {
-    localStorage.setItem("PAGINATUAL", "chat")
+    const { lerTexto } = useContext(TextReaderContext) as any
     const [listaChats, setListaChats] = useState<any[]>([])
     const [listaChatsFiltrados, setListaChatsFiltrados] = useState<any[]>([])
     const [componenteChats, setComponenteChats] = useState<any>()
     const [chatEscolhido, setChatEscolhido] = useState<any>({ mensagens: [] })
     const [elementoMensagens, setElementoMensagens] = useState<any>()
     const webSocketService: any = useContext(WebSocketContext)
+    const usuario = JSON.parse(localStorage.getItem("USUARIO") as string)
     let requisitouChats = false
+    let contagemMembros = 0
+
+    localStorage.setItem("PAGINATUAL", "chat")
 
     useEffect(() => {
         const idUsuario = localStorage.getItem("IDUSUARIO")
@@ -86,9 +93,7 @@ export default function Chats(props: { aberto: boolean }) {
 
 
                 if (localStorage.getItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`) == "false" && localStorage.getItem("PAGINATUAL") != "chat") {
-                    console.log("entrouhsbdjsahjsabdsahabdkabd")
                     api.post("/sade/notificacao/chat/" + chat.idChat, chat).then((res) => {
-                        console.log(res)
                         localStorage.setItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`, "true")
                     })
                 }
@@ -111,14 +116,14 @@ export default function Chats(props: { aberto: boolean }) {
                     const usuario = chat.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
 
                     return (
-                        <Mensagens mensagem={mensagem.mensagem} usuario={usuario} />
+                        <Mensagem mensagem={mensagem.mensagem} horaMensagem={mensagem.dataHoraMensagem} usuario={usuario} />
                     )
                 })
 
                 setElementoMensagens(componenteMensagensNovo)
                 atualizarComponentes()
             }
-  
+
             webSocketService.inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagem)
         }
 
@@ -185,7 +190,7 @@ export default function Chats(props: { aberto: boolean }) {
             const usuario = chatEscolhido.usuariosChat.find((usuario: any) => usuario.idUsuario == mensagem.usuario.idUsuario);
 
             return (
-                <Mensagens mensagem={mensagem.mensagem} horaMensagem={mensagem.dataHoraMensagem} usuario={usuario} />
+                <Mensagem mensagem={mensagem.mensagem} horaMensagem={mensagem.dataHoraMensagem} usuario={usuario} />
             )
         })
 
@@ -216,15 +221,31 @@ export default function Chats(props: { aberto: boolean }) {
                     </BoxBreadcrumb>
                     {(listaChatsFiltrados.length != 0 && chatEscolhido.demanda != null) &&
                         <BoxLadoDireitoTituloDemanda>
-                            <TypographyTituloDemandaLadoDireito variant="h6">{chatEscolhido.demanda.tituloDemanda}</TypographyTituloDemandaLadoDireito>
+                            <TypographyTituloDemandaLadoDireito variant="h6" onClick={lerTexto}>{chatEscolhido.demanda.tituloDemanda}</TypographyTituloDemandaLadoDireito>
 
-                            <TypographyQuantidadeMembrosLadoDireito>{chatEscolhido.usuariosChat.length} membros</TypographyQuantidadeMembrosLadoDireito>
+                            <Box sx={{ display: "flex" }}>
+                                <TypographyQuantidadeMembrosLadoDireito onClick={(e: any) => { lerTexto(e); window.open("/profile?", "_blank") }}>
+                                    Você,
+                                </TypographyQuantidadeMembrosLadoDireito>
+                                {chatEscolhido.usuariosChat.map((usuarioChat: any, index: number) => {
+                                    contagemMembros++
+                                    if (usuario.idUsuario == usuarioChat.idUsuario) {
+                                        return
+                                    }
+
+                                    return (
+                                        <TypographyQuantidadeMembrosLadoDireito onClick={(e: any) => { lerTexto(e); window.open("/profile?" + usuarioChat.idUsuario, "_blank") }}>
+                                            {usuarioChat.nomeUsuario}{contagemMembros != chatEscolhido.usuariosChat.length - 1 && ","}
+                                        </TypographyQuantidadeMembrosLadoDireito>
+                                    )
+                                })}
+                            </Box>
                         </BoxLadoDireitoTituloDemanda>
                     }
                 </BoxBreadcrumbTituloChat>
 
                 <ContainerChats>
-                    {listaChatsFiltrados.length != 0 ?
+                    {listaChats.length != 0 ?
                         <>
                             <LadoEsquerdoGeralChats>
                                 <LadoEsquerdoChat>
@@ -236,7 +257,7 @@ export default function Chats(props: { aberto: boolean }) {
                                                 </InputAdornment>
                                             )
                                         }}
-                                        onChange={filtrarPelaSearchBar} 
+                                        onChange={filtrarPelaSearchBar}
                                     />
                                     {componenteChats}
                                 </LadoEsquerdoChat>
@@ -261,7 +282,9 @@ export default function Chats(props: { aberto: boolean }) {
     );
 }
 
-function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Function }) {
+
+function ConversaChat(props: { chatEscolhido: any, mensagens: any[], enviar: Function }) {
+    const { lerTexto } = useContext(TextReaderContext) as any
     const [mensagem, setMensagem] = useState<any>({
         chat: {
             idChat: 1
@@ -272,6 +295,97 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
         dataHoraMensagem: new Date(),
         mensagem: null
     })
+    const [componenteCorpoMensagem, setComponenteCorpoMensagem] = useState<any>()
+    const [diasComMensagem, setDiasComMensagem] = useState<any[]>([])
+
+    useEffect(() => {
+        if (props.mensagens == null) {
+            return
+        } else {
+            if (props.mensagens.length == 0) {
+                return
+            }
+        }
+
+        let diasDasMensagens: any[] = []
+
+        props.mensagens.forEach((mensagem: any) => {
+            const dataMensagem = new Date(mensagem.props.horaMensagem)
+            const tituloDataMensagem = getDateFormat(dataMensagem)
+            let diaJaPresente = false
+
+            for (let dia of diasDasMensagens) {
+                if (tituloDataMensagem == dia.tituloFormatado) {
+                    diaJaPresente = true
+                }
+            }
+
+            if (diaJaPresente) {
+                return
+            }
+
+            let infoData = {
+                tituloFormatado: tituloDataMensagem,
+                ano: dataMensagem.getFullYear(),
+                mes: dataMensagem.getMonth(),
+                dia: dataMensagem.getDate(),
+                Date: dataMensagem
+            }
+
+            diasDasMensagens.push(infoData)
+        })
+
+        for (let i = 0; i < diasDasMensagens.length; i++) {
+            const listaMensagens: any[] = []
+            const dia = diasDasMensagens[i]
+
+            props.mensagens.forEach((mensagem: any) => {
+                const tituloDataMensagem = getDateFormat(new Date(mensagem.props.horaMensagem))
+
+                if (tituloDataMensagem == dia.tituloFormatado) {
+                    listaMensagens.push(mensagem)
+                }
+            })
+
+            dia.mensagens = listaMensagens
+            diasDasMensagens[i] = dia
+        }
+
+        setDiasComMensagem(diasDasMensagens)
+    }, [props.mensagens])
+
+    useEffect(() => {
+        const novoComponenteCorpoMensagem = diasComMensagem.map((dia: any) => {
+            const hoje = new Date()
+            const ontem = new Date()
+            ontem.setDate(hoje.getDate() - 1)
+
+            const dataFormatadaAtual = getDateFormat(hoje)
+            const dataFormatadaOntem = getDateFormat(ontem)
+            let tituloMostrado = ""
+
+            if (dia.tituloFormatado == dataFormatadaAtual) {
+                tituloMostrado = "Hoje"
+            } else if (dia.tituloFormatado == dataFormatadaOntem) {
+                tituloMostrado = "Ontem"
+            } else {
+                tituloMostrado = dia.tituloFormatado
+            }
+
+            return (
+                <>
+                    <BoxContainerDiaMensagem>
+                        <BoxTextoDiaMensagem onClick={lerTexto}>
+                            {tituloMostrado}
+                        </BoxTextoDiaMensagem>
+                    </BoxContainerDiaMensagem>
+                    {dia.mensagens}
+                </>
+            )
+        })
+
+        setComponenteCorpoMensagem(novoComponenteCorpoMensagem)
+    }, [diasComMensagem])
 
     function setDefaultMensagem() {
         let mensagemPadrao: any = {
@@ -312,7 +426,6 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
         setDefaultMensagem()
     }
 
-
     const scroll = useRef(null);
     useEffect(() => {
         const boxScroll: HTMLElement | any = document.getElementById("ladoDireitoChat");
@@ -325,7 +438,7 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
     return (
         <>
             <LadoDiretoChat id="ladoDireitoChat" ref={scroll}>
-                {props.mensagens}
+                {componenteCorpoMensagem}
                 <Toolbar />
             </LadoDiretoChat>
 
@@ -353,15 +466,23 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
  * @param props
  * @returns Retorna uma mensagem que será direcionada de acordo com quem é, e para qual lado a mensagem dever ir, sendo esquerdo ou direito
  */
-function Mensagens(props: { mensagem: string, horaMensagem?: any, usuario: any }) {
+function Mensagem(props: { mensagem: string, horaMensagem?: any, usuario: any }) {
+    const { lerTexto } = useContext(TextReaderContext) as any
     const idUsuarioLocalStorage = parseInt(localStorage.getItem("IDUSUARIO") as string);
-
+    const [fotoUsuario, setFotoUsuario] = useState<Blob>(new Blob);
     let horarioCerto: any;
+
+    useEffect(() => {
+        if (props.usuario != null) {
+            api.get("/sade/usuario/fotousuario/" + props.usuario.idUsuario, { responseType: 'blob' })
+                .then((response) => {
+                    setFotoUsuario(response.data);
+                });
+        }
+    }, [])
 
     if (props.horaMensagem) {
         let data = new Date(props.horaMensagem);
-        console.log("hora: " + data.getHours());
-        console.log("minutes: " + data.getMinutes());
 
         if (data.getMinutes() < 10) {
             horarioCerto = data.getHours() + ":" + ("0" + data.getMinutes())
@@ -390,16 +511,17 @@ function Mensagens(props: { mensagem: string, horaMensagem?: any, usuario: any }
             <BoxGeralMensagensLadoDireito>
                 <BoxMensagensLadoDireito>
                     <BoxMensagemLadoDireito>
-                        <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
+                        <TypographyPessoa variant="body1" onClick={(e: any) => { lerTexto(e); window.open("/profile", "_blank") }}>Você</TypographyPessoa>
 
                         <BoxMensagemHorario>
-                            <TypographyMensagemDireita variant="body2">
+                            <TypographyMensagemDireita variant="body2" onClick={lerTexto}>
                                 {props.mensagem}
                             </TypographyMensagemDireita>
 
                             <HoraUltimaMensagem />
                         </BoxMensagemHorario>
                     </BoxMensagemLadoDireito>
+                    <Avatar {...stringAvatar(props.usuario.nomeUsuario)} src={URL.createObjectURL(fotoUsuario)} />
                 </BoxMensagensLadoDireito>
             </BoxGeralMensagensLadoDireito>
         )
@@ -407,11 +529,12 @@ function Mensagens(props: { mensagem: string, horaMensagem?: any, usuario: any }
         return (
             <BoxGeralMensagensLadoEsquerdo>
                 <BoxMensagensLadoEsquerdo>
+                    <Avatar {...stringAvatar(props.usuario.nomeUsuario)} src={URL.createObjectURL(fotoUsuario)} />
                     <BoxMensagemLadoEsquerdo>
-                        <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
+                        <TypographyPessoa variant="body1" onClick={(e: any) => { lerTexto(e); window.open("/profile?" + props.usuario.idUsuario, "_blank") }}>{props.usuario.nomeUsuario}</TypographyPessoa>
 
                         <BoxMensagemHorario>
-                            <TypographyMensagemEsquerda variant="body2">
+                            <TypographyMensagemEsquerda variant="body2" onClick={lerTexto}>
                                 {props.mensagem}
                             </TypographyMensagemEsquerda>
 

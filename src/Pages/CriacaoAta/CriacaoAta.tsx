@@ -70,7 +70,7 @@ export default function CriacaoAta(props: {
         listaPautas.push(pauta)
       }
 
-      setListaComponents(listaPautas);
+      setListaComponents(listaPautas.reverse());
 
     }).catch((err) => {
       console.log(err);

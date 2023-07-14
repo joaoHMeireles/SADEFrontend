@@ -1,12 +1,10 @@
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import {
   BoxChat, BoxContainerChat, BoxIconePessoa, ContainerGeralChat,
   TypographyPessoaMensagem, TypographyTitulo, ContainerGeralChatEscolhido, TypographyHoraMensagem
 } from "./Chat.styles";
-import { useEffect } from "react";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { TextReaderContext } from '../TextReaderContext/TextReaderContext';
+import { useContext } from 'react';
 
 /**
  * 
@@ -23,7 +21,7 @@ export default function Chat(props: {
   horaMensagem: any;
   verChat: any;
 }) {
-
+  const { lerTexto } = useContext(TextReaderContext) as any
   let mensagem = (
     <>
       {props.pessoa} : {props.mensagem.length > 30 ?
@@ -32,8 +30,8 @@ export default function Chat(props: {
         props.mensagem}
     </>
   )
-
   let horaCerta: any;
+
 
   if (props.horaMensagem) {
     let data = new Date(props.horaMensagem);
@@ -71,10 +69,10 @@ export default function Chat(props: {
           </BoxIconePessoa>
 
           <BoxContainerChat>
-            <TypographyTitulo variant="h6">{props.titulo}</TypographyTitulo>
+            <TypographyTitulo variant="h6" onClick={lerTexto}>{props.titulo}</TypographyTitulo>
 
             <BoxChat>
-              <TypographyPessoaMensagem variant="caption">{props.mensagem.length > 0 ? mensagem : ""}</TypographyPessoaMensagem>
+              <TypographyPessoaMensagem variant="caption" onClick={lerTexto}>{props.mensagem.length > 0 ? mensagem : ""}</TypographyPessoaMensagem>
 
               <HoraUltimaMensagem />
             </BoxChat>
@@ -87,10 +85,10 @@ export default function Chat(props: {
           </BoxIconePessoa>
 
           <BoxContainerChat>
-            <TypographyTitulo variant="h6" >{props.titulo}</TypographyTitulo>
+            <TypographyTitulo variant="h6" onClick={lerTexto}>{props.titulo}</TypographyTitulo>
 
             <BoxChat>
-              <TypographyPessoaMensagem variant="caption">{props.mensagem.length > 0 ? mensagem : ""}</TypographyPessoaMensagem>
+              <TypographyPessoaMensagem variant="caption" onClick={lerTexto}>{props.mensagem.length > 0 ? mensagem : ""}</TypographyPessoaMensagem>
 
               <HoraUltimaMensagem />
             </BoxChat>
