@@ -34,9 +34,6 @@ export const GridBoxTituloRadio = styled(Box)({
   alignItems: "center",
   display: "flex",
   justifyContent: "space-between",
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  whiteSpace: "nowrap",
 });
 
 export const GridComponenteProcesso = styled(Grid)({
@@ -66,23 +63,22 @@ export const GridLinkTypograpfy = styled(Typography)({
 
 export const GridTituloTypography = styled(Box)({
   display: "block",
+  fontSize: "18px",
+  fontWeight: "500",
   overflow: "hidden",
   textOverflow: "ellipsis",
   width: "85%",
   whiteSpace: "nowrap",
 });
 
-export const GridTypography = styled(Typography)({
-  alignItems: "center",
-  display: "flex",
-  justifyContent: "start",
+export const GridTypography = styled(Box)({
+  // alignContent: "center",
+  display: "block",
+  // justifyContent: "flex-start",
   margin: "none",
   overflow: "hidden",
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
-  "& span": {
-    fontWeight: "500",
-  },
 });
 
 export const ListaComponenteProcesso = styled(Box)({
@@ -122,8 +118,9 @@ export const MainPaper = styled(Paper)({
 });
 
 export const StatusBox = styled(Box)({
-  alignItems: "center",
+  alignItems: "flex-start",
   display: "flex",
+  justifyContent: "flex-start",
 });
 
 export const StatusColorIconBox = styled(StatusBox)({
@@ -140,7 +137,7 @@ export const StatusListaBox = styled(Box)({
 });
 
 export const UltimaLinhaGridBox = styled(Box)({
-  alignItems: "center",
+  alignItems: "flex-start",
   display: "flex",
   justifyContent: "space-between",
   width: "95%"

@@ -13,6 +13,7 @@ import {
   GridBoxTituloRadio,
   GridComponenteProcesso,
   GridLinkColecaoTypograpfy,
+  GridTituloTypography,
   GridTypography,
   ListaComponenteProcesso,
   ListaTypography,
@@ -131,22 +132,22 @@ function GridComponent(props: ComponentCollectionProps) {
               }
             }}>
             <GridBoxTituloRadio>
-              <GridTypography variant="h6">
+              <GridTituloTypography>
                 {props.componente.tituloReuniao}
-              </GridTypography>
+              </GridTituloTypography>
 
               <Radio checked={props.checado} />
             </GridBoxTituloRadio>
 
-            <GridTypography variant="subtitle1">
+            <GridTypography >
               Propostas:
             </GridTypography>
 
-            <GridTypography variant="body1">
+            <GridTypography>
               - {props.componente.propostas[0].proposta.demanda.tituloDemanda}
             </GridTypography>
 
-            <GridTypography variant="body1" sx={{ display: "flex" }}>
+            <GridTypography sx={{ display: "flex" }}>
               {props.componente.propostas.length > 1 ?
                 <BoxColecaoComponente onClick={props.lerTexto}>
                   - {props.componente.propostas[1].proposta.demanda.tituloDemanda}
@@ -173,22 +174,22 @@ function GridComponent(props: ComponentCollectionProps) {
           </Tooltip>
 
           <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
-            <GridTypography variant="h6">
+            <GridTituloTypography>
               {props.componente.tituloReuniao}
-            </GridTypography>
+            </GridTituloTypography>
 
-            <GridTypography variant="subtitle1">
+            <GridTypography>
               Propostas:
             </GridTypography>
             {props.componente.propostas.length > 0 ?
-              <GridTypography variant="body1">
+              <GridTypography>
                 - {props.componente.propostas[0].proposta.demanda.tituloDemanda}
               </GridTypography>
               :
               ""
             }
 
-            <GridTypography variant="body1" sx={{ display: "flex" }}>
+            <GridTypography sx={{ display: "flex !important" }}>
               {props.componente.propostas.length > 1 ?
                 <BoxColecaoComponente>
                   - {props.componente.propostas[1].proposta.demanda.tituloDemanda}
