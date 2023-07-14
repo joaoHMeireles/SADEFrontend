@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext, useRef } from "react";
+import { stringAvatar } from '../../utils/index'
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Chat from "../../Components/Chat/Chat";
 import Toolbar from "../../Components/Toolbar/Toolbar";
@@ -17,6 +18,7 @@ import { WebSocketContext } from "../../api/websocketservice.jsx";
 import api from "../../api/api";
 import InputAdornment from "@mui/material/InputAdornment";
 import selecionarChat from "../../Assets/selecionarChat.png"
+import { Avatar, Box } from "@mui/material";
 
 /**
  * Função que tem dois componentes jutamente a ela, sendo um para chats e outro para as mensagem de determinado chat
@@ -86,9 +88,7 @@ export default function Chats(props: { aberto: boolean }) {
 
 
                 if (localStorage.getItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`) == "false" && localStorage.getItem("PAGINATUAL") != "chat") {
-                    console.log("entrouhsbdjsahjsabdsahabdkabd")
                     api.post("/sade/notificacao/chat/" + chat.idChat, chat).then((res) => {
-                        console.log(res)
                         localStorage.setItem(`NOVAMENSAGEMCHAT${chat.idChat}NOTIFICADA`, "true")
                     })
                 }
@@ -118,7 +118,7 @@ export default function Chats(props: { aberto: boolean }) {
                 setElementoMensagens(componenteMensagensNovo)
                 atualizarComponentes()
             }
-  
+
             webSocketService.inscrever(`/demanda/${chat.idChat}/chat`, acaoNovaMensagem)
         }
 
@@ -207,6 +207,7 @@ export default function Chats(props: { aberto: boolean }) {
         }
     }
 
+
     return (
         <>
             <ContainerGeralChats>
@@ -218,7 +219,15 @@ export default function Chats(props: { aberto: boolean }) {
                         <BoxLadoDireitoTituloDemanda>
                             <TypographyTituloDemandaLadoDireito variant="h6">{chatEscolhido.demanda.tituloDemanda}</TypographyTituloDemandaLadoDireito>
 
-                            <TypographyQuantidadeMembrosLadoDireito>{chatEscolhido.usuariosChat.length} membros</TypographyQuantidadeMembrosLadoDireito>
+                            <Box sx={{ display: "flex" }}>
+                                {chatEscolhido.usuariosChat.map((usuario: any, index: number) => {
+                                    return (
+                                        <TypographyQuantidadeMembrosLadoDireito onClick={() => { location.href = "/profile?" +usuario.idUsuario }}>
+                                            {usuario.nomeUsuario}{index + 1 != chatEscolhido.usuariosChat.length && ", "}
+                                        </TypographyQuantidadeMembrosLadoDireito>
+                                    )
+                                })}
+                            </Box>
                         </BoxLadoDireitoTituloDemanda>
                     }
                 </BoxBreadcrumbTituloChat>
@@ -236,7 +245,7 @@ export default function Chats(props: { aberto: boolean }) {
                                                 </InputAdornment>
                                             )
                                         }}
-                                        onChange={filtrarPelaSearchBar} 
+                                        onChange={filtrarPelaSearchBar}
                                     />
                                     {componenteChats}
                                 </LadoEsquerdoChat>
@@ -312,7 +321,6 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
         setDefaultMensagem()
     }
 
-
     const scroll = useRef(null);
     useEffect(() => {
         const boxScroll: HTMLElement | any = document.getElementById("ladoDireitoChat");
@@ -355,13 +363,20 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: [], enviar: Functi
  */
 function Mensagens(props: { mensagem: string, horaMensagem?: any, usuario: any }) {
     const idUsuarioLocalStorage = parseInt(localStorage.getItem("IDUSUARIO") as string);
-
+    const [fotoUsuario, setFotoUsuario] = useState<Blob>(new Blob);
     let horarioCerto: any;
+
+    useEffect(() => {
+        if (props.usuario != null) {
+            api.get("/sade/usuario/fotousuario/" + props.usuario.idUsuario, { responseType: 'blob' })
+                .then((response) => {
+                    setFotoUsuario(response.data);
+                });
+        }
+    }, [])
 
     if (props.horaMensagem) {
         let data = new Date(props.horaMensagem);
-        console.log("hora: " + data.getHours());
-        console.log("minutes: " + data.getMinutes());
 
         if (data.getMinutes() < 10) {
             horarioCerto = data.getHours() + ":" + ("0" + data.getMinutes())
@@ -390,7 +405,7 @@ function Mensagens(props: { mensagem: string, horaMensagem?: any, usuario: any }
             <BoxGeralMensagensLadoDireito>
                 <BoxMensagensLadoDireito>
                     <BoxMensagemLadoDireito>
-                        <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
+                        <TypographyPessoa variant="body1" onClick={() => {location.href = "/profile"}}>{props.usuario.nomeUsuario}</TypographyPessoa>
 
                         <BoxMensagemHorario>
                             <TypographyMensagemDireita variant="body2">
@@ -400,6 +415,7 @@ function Mensagens(props: { mensagem: string, horaMensagem?: any, usuario: any }
                             <HoraUltimaMensagem />
                         </BoxMensagemHorario>
                     </BoxMensagemLadoDireito>
+                    <Avatar {...stringAvatar(props.usuario.nomeUsuario)} src={URL.createObjectURL(fotoUsuario)} />
                 </BoxMensagensLadoDireito>
             </BoxGeralMensagensLadoDireito>
         )
@@ -407,8 +423,9 @@ function Mensagens(props: { mensagem: string, horaMensagem?: any, usuario: any }
         return (
             <BoxGeralMensagensLadoEsquerdo>
                 <BoxMensagensLadoEsquerdo>
+                    <Avatar {...stringAvatar(props.usuario.nomeUsuario)} src={URL.createObjectURL(fotoUsuario)} />
                     <BoxMensagemLadoEsquerdo>
-                        <TypographyPessoa variant="body1">{props.usuario.nomeUsuario}</TypographyPessoa>
+                        <TypographyPessoa variant="body1" onClick={() => {location.href = "/profile?" + props.usuario.idUsuario}}>{props.usuario.nomeUsuario}</TypographyPessoa>
 
                         <BoxMensagemHorario>
                             <TypographyMensagemEsquerda variant="body2">

@@ -1,12 +1,8 @@
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import {
   BoxChat, BoxContainerChat, BoxIconePessoa, ContainerGeralChat,
   TypographyPessoaMensagem, TypographyTitulo, ContainerGeralChatEscolhido, TypographyHoraMensagem
 } from "./Chat.styles";
-import { useEffect } from "react";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 
 /**
  * 

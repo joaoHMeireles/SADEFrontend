@@ -475,7 +475,7 @@ export function Header(props: {
                 props.setConteudoModal(conteudo)
             }
 
-            const segundaParteAprovacao = <ModalMotivoDevolucao abrirFeedback={finalizarReprovacao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} />
+            const segundaParteAprovacao = <ModalMotivoDevolucao abrirFeedback={finalizarReprovacao} fecharModal={fecharModal} setFeedbackAberto={props.setFeedbackAberto} reprovacao={true}/>
 
             props.setConteudoModal(
                 <ConteudoModalConfirmacao
@@ -680,6 +680,8 @@ export function Header(props: {
                     }
                 ))
             }
+
+            // recarregarPaginaDemanda(conteudoFeedback)
 
             api.post(`/sade/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response) => {
                 console.log(response.data);

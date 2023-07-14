@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { stringAvatar } from '../../utils/index'
 import './Navbar.scss';
 import { Avatar, Box, IconButton, Toolbar } from '@mui/material';
 import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
@@ -98,42 +99,4 @@ export default function Navbar(props: { aberto: boolean, setAberto: React.Dispat
             }
         </>
     )
-}
-
-/**
- * Com base no nome da pessoa passado, cria um objeto de style in line
- * 
- * @param name 
- * @returns 
- */
-function stringAvatar(name: string) {
-    return {
-        sx: {
-            bgcolor: stringToColor(name),
-        }
-    };
-}
-
-/**
- * Recebe um nome e o transforma em um código hexadecimal de uma cor
- * 
- * @param string 
- * @returns 
- */
-function stringToColor(string: string) {
-    let hash = 0;
-    let i;
-
-    for (i = 0; i < string.length; i += 1) {
-        hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    let color = '#';
-
-    for (i = 0; i < 3; i += 1) {
-        const value = (hash >> (i * 8)) & 0xff;
-        color += `00${value.toString(16)}`.slice(-2);
-    }
-
-    return color;
 }

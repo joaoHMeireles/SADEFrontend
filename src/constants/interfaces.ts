@@ -30,6 +30,7 @@ export interface Modal {
     fecharModal: MouseEventHandler<HTMLButtonElement>,
     abrirFeedback: Function,
     setFeedbackAberto: React.Dispatch<SetStateAction<boolean>>
+    reprovacao?: boolean
 }
 
 export interface Botao {

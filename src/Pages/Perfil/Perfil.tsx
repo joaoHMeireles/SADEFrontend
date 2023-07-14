@@ -8,19 +8,34 @@ import api from "../../api/api";
 import { TextReaderContext } from "../../Components/TextReaderContext/TextReaderContext";
 import { Box, Toolbar } from "@mui/material";
 import { BoxHeader } from "../TelaProcesso/TelaProcesso.styles";
+import { useLocation } from "react-router-dom";
 
 export default function InformacoesGerais(props: { aberto?: boolean, sidebarAberta: boolean }) {
   const { lerTexto } = useContext(TextReaderContext) as any
-  const usuario = JSON.parse(localStorage.getItem("USUARIO") as string);
+  const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem("USUARIO") as string))
   const [fotoUsuario, setFotoUsuario] = useState<any>({ size: 0 });
+  const location = useLocation()
 
   useEffect(() => {
-    api.get("/sade/usuario/fotousuario/" + usuario.idUsuario, { responseType: 'blob' })
-      .then((response) => {
-        console.log(response.data);
-        setFotoUsuario(response.data);
-      });
+    const search = location.search
+    if (search != "") {
+      const idUsuario = search.substring(1)
+
+      api.get("/sade/usuario/" + idUsuario).then((response) => {
+        setUsuario(response.data)
+        setFoto(response.data.idUsuario)
+      })
+    } else {
+      setFoto(usuario.idUsuario)
+    }
   }, []);
+
+  function setFoto(idUsuario: number){
+    api.get("/sade/usuario/fotousuario/" + idUsuario, { responseType: 'blob' })
+    .then((response) => {
+      setFotoUsuario(response.data);
+    });
+  }
 
   return (
     <Box>

@@ -10,9 +10,10 @@ import { TextFieldEdited } from "../../Modais/Modais.style"
 export default function ModalMotivoDevolucao(props: Modal) {
     let { lerTexto } = useContext(TextReaderContext) as any
     const [erroMotivoDevolucao, setErroMotivoDevolucao] = useState({ error: false, helperText: "" })
+    const nomeAcao = props.reprovacao ? "reprovação" :"devolução"
     const conteudoFeedback = (
         <Alert onClose={() => { props.setFeedbackAberto(false) }} severity="success" sx={{ width: '100%' }} onClick={lerTexto}>
-            Motivo da devolução enviado
+            Motivo da {nomeAcao} enviado
         </Alert>
     )
 
@@ -39,7 +40,7 @@ export default function ModalMotivoDevolucao(props: Modal) {
         <BoxConteudoModal>
             <BoxTituloModal >
                 <TypographyTituloModal variant='h5' onClick={lerTexto}>
-                    Informe o motivo da devolução
+                    Informe o motivo da {nomeAcao}
                 </TypographyTituloModal>
 
                 <IconButton onClick={props.fecharModal}>
