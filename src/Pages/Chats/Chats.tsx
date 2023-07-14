@@ -235,7 +235,7 @@ export default function Chats(props: { aberto: boolean }) {
 
                                     return (
                                         <TypographyQuantidadeMembrosLadoDireito onClick={(e: any) => { lerTexto(e); window.open("/profile?" + usuarioChat.idUsuario, "_blank") }}>
-                                            {usuarioChat.nomeUsuario}{contagemMembros != chatEscolhido.usuariosChat.length - 1 && ","}
+                                            {usuarioChat.nomeUsuario}{contagemMembros - 1 != chatEscolhido.usuariosChat.length - 1 && ","}
                                         </TypographyQuantidadeMembrosLadoDireito>
                                     )
                                 })}
@@ -443,7 +443,13 @@ function ConversaChat(props: { chatEscolhido: any, mensagens: any[], enviar: Fun
             </LadoDiretoChat>
 
             <BoxBarraPesquisa>
-                <BarraPesquisa onChange={atualizarMensagem} placeholder="Mensagem"
+                <BarraPesquisa 
+                    onKeyDown={(e:any) => {
+                        if(e.key == "Enter"){
+                            enviarMensagem(e)
+                        }
+                    }}
+                    onChange={atualizarMensagem} placeholder="Mensagem"
                     InputProps={{
                         id: "input-mensagem",
                         startAdornment: (
