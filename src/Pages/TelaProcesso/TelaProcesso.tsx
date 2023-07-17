@@ -587,8 +587,10 @@ export function Header(props: {
                 emWorkflow: true
             }))
 
+            recarregarPaginaDemanda(conteudo)
+
             api.put(`/sade/proposta/${processo.id}/${idAnalista}`, formData).then((res) => {
-                recarregarPaginaDemanda(conteudo)
+
             }).catch((err) => {
                 console.log(err);
             })
@@ -681,11 +683,11 @@ export function Header(props: {
                 ))
             }
 
-            // recarregarPaginaDemanda(conteudoFeedback)
+            recarregarPaginaDemanda(conteudoFeedback)
 
             api.post(`/sade/historicoWorkflow/${idAnalista}`, formDataHistorico).then((response) => {
                 console.log(response.data);
-                recarregarPaginaDemanda(conteudoFeedback)
+                // recarregarPaginaDemanda(conteudoFeedback)
             }).catch((err) => {
                 console.log(err);
             })
