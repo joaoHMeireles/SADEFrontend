@@ -191,7 +191,7 @@ export default function TelaHistoricos(props: {sidebarAberta: boolean}) {
           tarefaExecutada: getValueEnum(TarefaExecucao, historico.acaoFeita),
           usuario: {
             nome: historico.usuario != null ? historico.usuario.nomeUsuario : null,
-            tipoPessoa: localStorage.getItem("TIPOUSUARIO"),
+            tipoPessoa: historico.usuario != null ? historico.usuario.cargo : null,
           }
         }
         lista.push(objetoHistorico)

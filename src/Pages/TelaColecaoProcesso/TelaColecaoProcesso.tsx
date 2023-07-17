@@ -104,11 +104,6 @@ export default function TelaColecaoProcesso(props: { sidebarAberta: boolean }) {
     })
   }, [])
 
-  useEffect(() => {
-    console.log(expanded);
-    
-  }, [expanded])
-
   function fecharAvaliacao() {
     setAvaliandoProcesso(false);
     setVerificacaoInputs([]);
