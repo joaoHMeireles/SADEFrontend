@@ -390,7 +390,7 @@ function GridComponent(props: ComponentProps) {
             </Tooltip>
 
             <GridComponenteProcesso item xs={11} onClick={props.mudarIsChecked}>
-              <GridBoxTituloRadio>
+              <GridBoxTituloRadio sx={{width: "25rem !important"}}>
                 <GridTituloTypography>
                   {props.componente.tituloDemanda}
                 </GridTituloTypography>
@@ -406,7 +406,7 @@ function GridComponent(props: ComponentProps) {
                 Score: {editarNumeroScore(props.componente.score)}
               </GridTypography>
 
-              <UltimaLinhaGridBox>
+              <UltimaLinhaGridBox sx={{width: "100% !important", display: "flex", justifyContent: "space-between !important"}}>
                 <StatusBox>
                   <GridTypography>
                     Status: {getNomeStatus(props.componente.statusDemanda)}
