@@ -257,7 +257,7 @@ function GridComponent(props: ComponentProps) {
           <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
             {(props.temDemandaDevolvida && props.componente.devolvida) ?
               <GridBoxTituloRadio>
-                <GridTituloTypography>
+                <GridTituloTypography variant="h6">
                   {props.componente.tituloDemanda}
                 </GridTituloTypography>
 
@@ -266,12 +266,12 @@ function GridComponent(props: ComponentProps) {
               :
               <>
                 {!props.rascunho ?
-                  <GridTituloTypography>
+                  <GridTituloTypography variant="h6" sx={{ fontWeight: "500" }}>
                     {props.componente.tituloDemanda}
                   </GridTituloTypography>
                   :
                   <GridBoxTituloRadio>
-                    <GridTituloTypography>
+                    <GridTituloTypography variant="h6">
                       {props.componente.tituloDemanda}
                     </GridTituloTypography>
 
@@ -284,11 +284,11 @@ function GridComponent(props: ComponentProps) {
                 }
               </>
             }
-            <GridTypography>
+            <GridTypography variant="subtitle1">
               Solicitante: {props.componente.usuario.nomeUsuario}
             </GridTypography>
 
-            <GridTypography>
+            <GridTypography variant="subtitle1">
               Score: {editarNumeroScore(props.componente.score)}
             </GridTypography>
 
@@ -300,9 +300,9 @@ function GridComponent(props: ComponentProps) {
                   </Link>
                 </GridLinkTypograpfy>
                 :
-                <Box id="AQUI">
-                  <StatusBox sx={{ alignItems: "flex-start" }}>
-                    <GridTypography>
+                <>
+                  <StatusBox >
+                    <GridTypography variant="subtitle1">
                       Status: {getNomeStatus(props.componente.statusDemanda)}
                     </GridTypography>
 
@@ -322,7 +322,7 @@ function GridComponent(props: ComponentProps) {
                       }
                     </>
                   }
-                </Box>
+                </>
               }
             </UltimaLinhaGridBox>
           </GridComponenteProcesso>
@@ -348,24 +348,24 @@ function GridComponent(props: ComponentProps) {
               }
             }}>
             <GridBoxTituloRadio>
-              <GridTituloTypography>
+              <GridTituloTypography variant="h6">
                 {props.componente.tituloDemanda}
               </GridTituloTypography>
 
               <Radio checked={props.demandaSelecionada == props.componente.idDemanda || props.propostaSelecionada == props.componente.idDemanda} />
             </GridBoxTituloRadio>
 
-            <GridTypography>
+            <GridTypography variant="subtitle1">
               Solicitante: {props.componente.usuario.nomeUsuario}
             </GridTypography>
 
-            <GridTypography>
+            <GridTypography variant="subtitle1">
               Score: {editarNumeroScore(props.componente.score)}
             </GridTypography>
 
             <UltimaLinhaGridBox>
               <StatusBox >
-                <GridTypography>
+                <GridTypography variant="subtitle1">
                   Status: {getNomeStatus(props.componente.statusDemanda)}
                 </GridTypography>
 
@@ -393,24 +393,26 @@ function GridComponent(props: ComponentProps) {
 
             <GridComponenteProcesso item xs={11} onClick={props.mudarIsChecked}>
               <GridBoxTituloRadio>
-                <GridTituloTypography>
+                <GridTituloTypography variant="h6">
                   {props.componente.tituloDemanda}
                 </GridTituloTypography>
 
-                <Checkbox id="checkbox" checked={props.isChecked} />
+                <Checkbox
+                  id="checkbox"
+                  checked={props.isChecked} />
               </GridBoxTituloRadio>
 
-              <GridTypography>
+              <GridTypography variant="subtitle1">
                 Solicitante: {props.componente.usuario.nomeUsuario}
               </GridTypography>
 
-              <GridTypography>
+              <GridTypography variant="subtitle1">
                 Score: {editarNumeroScore(props.componente.score)}
               </GridTypography>
 
               <UltimaLinhaGridBox>
-                <StatusBox>
-                  <GridTypography>
+                <StatusBox >
+                  <GridTypography variant="subtitle1">
                     Status: {getNomeStatus(props.componente.statusDemanda)}
                   </GridTypography>
 
