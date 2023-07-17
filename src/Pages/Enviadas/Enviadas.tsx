@@ -35,7 +35,7 @@ export default function Enviadas(props: {
         listaDemandas.push(demanda)
       }
 
-      setListaComponents(listaDemandas.reverse());
+      setListaComponents(listaDemandas);
     }).catch((err: any) => {
       console.log(err);
     }).finally(() => {

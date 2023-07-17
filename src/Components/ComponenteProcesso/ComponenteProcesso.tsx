@@ -254,7 +254,7 @@ function GridComponent(props: ComponentProps) {
             </Grid>
           </Tooltip>
 
-          <GridComponenteProcesso item xs={11} onClick={props.verProcesso}>
+          <GridComponenteProcesso id="DISPLAY GRID AQUI" item xs={11} onClick={props.verProcesso}>
             {(props.temDemandaDevolvida && props.componente.devolvida) ?
               <GridBoxTituloRadio>
                 <GridTituloTypography>
@@ -270,16 +270,14 @@ function GridComponent(props: ComponentProps) {
                     {props.componente.tituloDemanda}
                   </GridTituloTypography>
                   :
-                  <GridBoxTituloRadio>
+                  <GridBoxTituloRadio sx={{width: (props.rascunho ? "65% !important": "")}}>
                     <GridTituloTypography>
                       {props.componente.tituloDemanda}
                     </GridTituloTypography>
 
-                    <Box>
-                      <IconButton onClick={props.deletarRascunho}>
-                        <DeleteRoundedIcon />
-                      </IconButton>
-                    </Box>
+                    <IconButton onClick={props.deletarRascunho}>
+                      <DeleteRoundedIcon />
+                    </IconButton>
                   </GridBoxTituloRadio>
                 }
               </>
@@ -292,15 +290,15 @@ function GridComponent(props: ComponentProps) {
               Score: {editarNumeroScore(props.componente.score)}
             </GridTypography>
 
-            <UltimaLinhaGridBox>
+            <UltimaLinhaGridBox sx={{width: (props.rascunho ? "65% !important": "")}}>
               {props.rascunho ?
-                <GridLinkTypograpfy variant="body2" sx={{ width: "95% !important" }}>
+                <GridLinkTypograpfy variant="body2" sx={{}}>
                   <Link to={"/continuedemand"} onClick={props.setProcesso}>
                     Continuar
                   </Link>
                 </GridLinkTypograpfy>
                 :
-                <Box id="AQUI">
+                <Box id="AQUI" sx={{ alignItems: "center", display: "flex", width: "100%", justifyContent: "space-between"}}>
                   <StatusBox sx={{ alignItems: "flex-start" }}>
                     <GridTypography>
                       Status: {getNomeStatus(props.componente.statusDemanda)}
@@ -314,7 +312,7 @@ function GridComponent(props: ComponentProps) {
                   {props.temDemandaDevolvida &&
                     <>
                       {props.componente.devolvida &&
-                        <GridLinkTypograpfy variant="body2">
+                        <GridLinkTypograpfy variant="body2" sx={{padding: "0 1rem 0 0"}}>
                           <Link to={"/editdemand"} onClick={props.setProcesso}>
                             Editar
                           </Link>

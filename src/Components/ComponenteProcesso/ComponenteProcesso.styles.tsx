@@ -34,6 +34,7 @@ export const GridBoxTituloRadio = styled(Box)({
   alignItems: "center",
   display: "flex",
   justifyContent: "space-between",
+  width: "100%"
 });
 
 export const GridComponenteProcesso = styled(Grid)({
@@ -42,6 +43,7 @@ export const GridComponenteProcesso = styled(Grid)({
   display: "grid",
   height: "21vh",
   padding: "15px 15px 15px 0",
+  width: "100%"
 });
 
 export const GridLinkColecaoTypograpfy = styled(Box)({
@@ -52,6 +54,7 @@ export const GridLinkTypograpfy = styled(Typography)({
   alignItems: "center",
   display: "flex",
   justifyContent: "end",
+  width: "auto",
   "& a": {
     color: "#3d83bc",
     "&:hover": {
@@ -118,7 +121,7 @@ export const MainPaper = styled(Paper)({
 });
 
 export const StatusBox = styled(Box)({
-  alignItems: "flex-start",
+  alignItems: "center",
   display: "flex",
   justifyContent: "flex-start",
 });
@@ -137,10 +140,10 @@ export const StatusListaBox = styled(Box)({
 });
 
 export const UltimaLinhaGridBox = styled(Box)({
-  alignItems: "flex-start",
+  alignItems: "center",
   display: "flex",
-  justifyContent: "space-between",
-  width: "95%"
+  justifyContent: "flex-end",
+  width: "95%",
 });
 
 export const UltimaListaTypography = styled(ListaTypography)({
